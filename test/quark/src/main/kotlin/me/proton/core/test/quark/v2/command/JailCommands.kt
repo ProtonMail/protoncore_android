@@ -1,7 +1,6 @@
 package me.proton.core.test.quark.v2.command
 
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
 import okhttp3.Response
 
 /*

@@ -373,19 +373,21 @@ public final class me/proton/core/test/quark/response/CreateUserQuarkResponse$Co
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/test/quark/v2/QuarkCommand {
+public class me/proton/core/test/quark/v2/QuarkCommand {
 	public static final field Companion Lme/proton/core/test/quark/v2/QuarkCommand$Companion;
 	public static final field quarkCommandTag Ljava/lang/String;
 	public fun <init> ()V
-	public final fun arg (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun args ([Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun baseUrl (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun build ()Lokhttp3/Request;
+	public final fun executeQuarkRequest (Lokhttp3/OkHttpClient;Lokhttp3/Request;)Lokhttp3/Response;
 	public final fun getClient ()Lokhttp3/OkHttpClient;
 	public final fun getJson ()Lkotlinx/serialization/json/Json;
 	public final fun httpClientTimeout-WzaCiaA (JJJ)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public static synthetic fun httpClientTimeout-WzaCiaA$default (Lme/proton/core/test/quark/v2/QuarkCommand;JJJILjava/lang/Object;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun onRequestBuilder (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/quark/v2/QuarkCommand;
+	public final fun onResponse (Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/quark/v2/QuarkCommand;
+	public static synthetic fun onResponse$default (Lme/proton/core/test/quark/v2/QuarkCommand;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun proxyToken (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 	public final fun route (Ljava/lang/String;)Lme/proton/core/test/quark/v2/QuarkCommand;
 }
@@ -394,7 +396,6 @@ public final class me/proton/core/test/quark/v2/QuarkCommand$Companion {
 }
 
 public final class me/proton/core/test/quark/v2/QuarkCommandKt {
-	public static final fun executeQuarkRequest (Lokhttp3/OkHttpClient;Lokhttp3/Request;)Lokhttp3/Response;
 	public static final fun toEncodedArgs (Ljava/util/List;Z)[Ljava/lang/String;
 	public static synthetic fun toEncodedArgs$default (Ljava/util/List;ZILjava/lang/Object;)[Ljava/lang/String;
 }

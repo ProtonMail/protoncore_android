@@ -20,7 +20,6 @@ package me.proton.core.test.quark.v2.command
 
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
 import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.Response
 

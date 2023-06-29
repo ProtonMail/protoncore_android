@@ -22,7 +22,6 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.randomPaidPlan
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
 import me.proton.core.test.quark.v2.toEncodedArgs
 import me.proton.core.util.kotlin.toInt
 import okhttp3.Response

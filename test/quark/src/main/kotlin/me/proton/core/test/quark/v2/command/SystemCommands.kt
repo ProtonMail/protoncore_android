@@ -1,7 +1,7 @@
 package me.proton.core.test.quark.v2.command
 
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.executeQuarkRequest
+import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
@@ -27,7 +27,9 @@ public const val SYSTEM_ENV: String = "system/env"
 
 public fun QuarkCommand.systemEnv(variable: String, value: String): Response =
     route(SYSTEM_ENV)
-        .arg("$variable=$value")
+        .args(
+            listOf(variable to value).toEncodedArgs()
+        )
         .onRequestBuilder { post("".toRequestBody()) }
         .build()
         .let {

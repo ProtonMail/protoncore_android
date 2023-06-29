@@ -43,14 +43,19 @@ class QuarkCommandTests {
 
     @Test
     fun testExecuteRequest() {
-        arrayOf(200, 503, 404).forEach {
-            val response = mockResponse(it)
+        fun QuarkCommand.test(statusCode: Int) {
+            val response = mockResponse(statusCode)
             quarkCommand
+                .onResponse({}, { false })
                 .client
                 .executeQuarkRequest(response.request)
                 .apply {
-                    assertEquals(it, code)
+                    assertEquals(statusCode, code)
                 }
+        }
+
+        arrayOf(200, 503, 404).forEach {
+            quarkCommand.test(it)
         }
     }
 
@@ -103,12 +108,13 @@ class QuarkCommandTests {
         assertTrue(quarkCommand.isReady())
 
         mockResponse(500)
-        assertFalse(quarkCommand.isReady())
+        assertFalse(quarkCommand.onResponse({}, { true }).isReady())
     }
-    
+
     private fun mockResponse(statusCode: Int): Response {
         val mockResponse: Response = mockk {
             every { code } returns statusCode
+            every { message } returns ""
             every { body } returns mockk {
                 every { string() } returns "{}"
             }

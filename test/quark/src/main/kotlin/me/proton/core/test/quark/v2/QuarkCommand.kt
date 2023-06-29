@@ -29,10 +29,12 @@ import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
+public typealias OnQuarkResponse = Pair<Response.() -> Boolean, Response.() -> Any>
+
 /**
  * Represents a command for making HTTP requests with Quark internal api.
  */
-public class QuarkCommand {
+public open class QuarkCommand {
 
     /** Properties **/
     private var route: String? = null
@@ -43,6 +45,8 @@ public class QuarkCommand {
     private var httpClientTimeout: Duration = 15.seconds
     private var httpClientReadTimeout: Duration = 30.seconds
     private var httpClientWriteTimeout: Duration = 30.seconds
+    private var onResponse: OnQuarkResponse =
+        { r: Response -> r.code > 300 } to { r: Response -> error(r.message) }
 
     /** JSON parser with configuration to ignore unknown keys **/
     public val json: Json = Json { ignoreUnknownKeys = true }
@@ -73,13 +77,6 @@ public class QuarkCommand {
     public fun args(args: Array<String>): QuarkCommand = apply { this.args = args.toMutableList() }
 
     /**
-     * Adds a single argument to the request.
-     * @param arg the argument to add
-     * @return the QuarkCommand instance for chaining
-     */
-    public fun arg(arg: String): QuarkCommand = apply { this.args.add(arg) }
-
-    /**
      * Sets the base URL for the request.
      * @param baseUrl the base URL as a string
      * @return the QuarkCommand instance for chaining
@@ -100,6 +97,19 @@ public class QuarkCommand {
      */
     public fun onRequestBuilder(requestBuilderBlock: Request.Builder.() -> Unit): QuarkCommand =
         apply { this.onRequestBuilder = requestBuilderBlock }
+
+    /**
+     * Configures the [QuarkCommand] to execute [responseBlock] based on the [predicate].
+     *
+     * @param responseBlock Block to execute when [predicate] is true.
+     * @param predicate Condition to check on the response; defaults to `code > 300`.
+     * @return The [QuarkCommand] instance with response handling set.
+     */
+    public fun onResponse(
+        responseBlock: Response.() -> Any,
+        predicate: Response.() -> Boolean = onResponse.first,
+    ): QuarkCommand =
+        apply { this.onResponse = predicate to responseBlock }
 
     /**
      * Sets timeouts for the HTTP client.
@@ -135,6 +145,28 @@ public class QuarkCommand {
             proxyToken?.let { header("x-atlas-secret", it) }
         }
         .build()
+        .also {
+            /** reset arguments after request **/
+            args = mutableListOf()
+            onRequestBuilder = {}
+            route = null
+        }
+
+    /**
+     * Executes a Quark HTTP request using the given HTTP client.
+     * @param request the Request to execute
+     * @return the Response from the server
+     */
+    public fun OkHttpClient.executeQuarkRequest(request: Request): Response =
+        newCall(request)
+            .execute()
+            .apply {
+                CoreLogger.i(quarkCommandTag, "Sent request to : ${request.url}; Response Code: $code")
+
+                if (onResponse.first(this)) {
+                    onResponse.second(this)
+                }
+            }
 
     /** build the internal URL with parameters **/
     private fun Request.Builder.internalUrl(
@@ -166,18 +198,3 @@ public fun List<Pair<String, String>?>.toEncodedArgs(ignoreEmpty: Boolean = true
             else
                 "$key=${URLEncoder.encode(value, "UTF-8")}"
         }.toTypedArray()
-
-/**
- * Executes a Quark HTTP request using the given HTTP client.
- * @param request the Request to execute
- * @return the Response from the server
- */
-public fun OkHttpClient.executeQuarkRequest(request: Request): Response =
-    newCall(request)
-        .execute()
-        .apply {
-            CoreLogger.i(QuarkCommand.quarkCommandTag, "Sent request to : ${request.url}; Response Code: $code")
-            if (code > 300) {
-                error(body!!.string())
-            }
-        }
