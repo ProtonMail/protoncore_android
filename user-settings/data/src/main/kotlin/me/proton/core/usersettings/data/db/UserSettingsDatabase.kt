@@ -53,5 +53,28 @@ interface UserSettingsDatabase : Database {
                 )
             }
         }
+
+        /**
+         * - Removed unused properties: "invoiceText", "theme", "themeType", "welcome" and "flags_welcomed".
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.dropTableColumn(
+                    table = "UserSettingsEntity",
+                    createTable = {
+                        execSQL("CREATE TABLE IF NOT EXISTS `UserSettingsEntity` (`userId` TEXT NOT NULL, `news` INTEGER, `locale` TEXT, `logAuth` INTEGER, `density` INTEGER, `weekStart` INTEGER, `dateFormat` INTEGER, `timeFormat` INTEGER, `earlyAccess` INTEGER, `email_value` TEXT, `email_status` INTEGER, `email_notify` INTEGER, `email_reset` INTEGER, `phone_value` TEXT, `phone_status` INTEGER, `phone_notify` INTEGER, `phone_reset` INTEGER, `password_mode` INTEGER, `password_expirationTime` INTEGER, `twoFA_enabled` INTEGER, `twoFA_allowed` INTEGER, `twoFA_expirationTime` INTEGER, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                    },
+                    createIndices = {},
+                    columns = listOf(
+                        "twoFA_u2fKeys", // Fix: if MIGRATION_1 is done inside same transaction.
+                        "invoiceText",
+                        "theme",
+                        "themeType",
+                        "welcome",
+                        "flags_welcomed"
+                    )
+                )
+            }
+        }
     }
 }

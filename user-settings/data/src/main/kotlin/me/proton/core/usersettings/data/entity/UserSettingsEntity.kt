@@ -49,17 +49,11 @@ data class UserSettingsEntity(
     val news: Int?,
     val locale: String?,
     val logAuth: Int?,
-    val invoiceText: String?,
     val density: Int?,
-    val theme: String?,
-    val themeType: Int?,
     val weekStart: Int?,
     val dateFormat: Int?,
     val timeFormat: Int?,
-    val welcome: Boolean?,
-    val earlyAccess: Boolean?,
-    @Embedded(prefix = "flags_")
-    val flags: FlagsEntity?
+    val earlyAccess: Boolean?
 )
 
 data class RecoverySettingEntity(

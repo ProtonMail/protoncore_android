@@ -30,16 +30,11 @@ data class UserSettings(
     val news: Int?,
     val locale: String?,
     val logAuth: IntEnum<LogAuth>?,
-    val invoiceText: String?,
     val density: IntEnum<Density>?,
-    val theme: String?,
-    val themeType: Int?,
     val weekStart: IntEnum<WeekStart>?,
     val dateFormat: IntEnum<DateFormat>?,
     val timeFormat: IntEnum<TimeFormat>?,
-    val welcome: Boolean?,
     val earlyAccess: Boolean?,
-    val flags: Flags?
 ) {
     enum class LogAuth(val value: Int) {
         Disabled(0),
@@ -114,8 +109,4 @@ data class TwoFASetting(
     val enabled: Boolean?,
     val allowed: Int?,
     val expirationTime: Int?,
-)
-
-data class Flags(
-    val welcomed: Boolean?
 )

@@ -37,26 +37,16 @@ data class UserSettingsResponse(
     val locale: String,
     @SerialName("LogAuth")
     val logAuth: Int,
-    @SerialName("InvoiceText")
-    val invoiceText: String,
     @SerialName("Density")
     val density: Int,
-    @SerialName("Theme")
-    val theme: String?,
-    @SerialName("ThemeType")
-    val themeType: Int,
     @SerialName("WeekStart")
     val weekStart: Int,
     @SerialName("DateFormat")
     val dateFormat: Int,
     @SerialName("TimeFormat")
     val timeFormat: Int,
-    @SerialName("Welcome")
-    val welcome: Int,
     @SerialName("EarlyAccess")
-    val earlyAccess: Int,
-    @SerialName("Flags")
-    val flags: FlagsResponse?
+    val earlyAccess: Int
 )
 
 @Serializable
@@ -87,10 +77,4 @@ data class TwoFAResponse(
     val allowed: Int,
     @SerialName("ExpirationTime")
     val expirationTime: Int?,
-)
-
-@Serializable
-data class FlagsResponse(
-    @SerialName("Welcomed")
-    val welcomed: Int
 )

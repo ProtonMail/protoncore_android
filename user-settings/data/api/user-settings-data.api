@@ -158,36 +158,6 @@ public final class me/proton/core/usersettings/data/api/request/UpdateRecoveryEm
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/usersettings/data/api/response/FlagsResponse {
-	public static final field Companion Lme/proton/core/usersettings/data/api/response/FlagsResponse$Companion;
-	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public final fun component1 ()I
-	public final fun copy (I)Lme/proton/core/usersettings/data/api/response/FlagsResponse;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/response/FlagsResponse;IILjava/lang/Object;)Lme/proton/core/usersettings/data/api/response/FlagsResponse;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getWelcomed ()I
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/usersettings/data/api/response/FlagsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
-}
-
-public final class me/proton/core/usersettings/data/api/response/FlagsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/usersettings/data/api/response/FlagsResponse$$serializer;
-	public static final synthetic field descriptor Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/usersettings/data/api/response/FlagsResponse;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/usersettings/data/api/response/FlagsResponse;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/usersettings/data/api/response/FlagsResponse$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class me/proton/core/usersettings/data/api/response/OrganizationKeysResponse {
 	public static final field Companion Lme/proton/core/usersettings/data/api/response/OrganizationKeysResponse$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -490,45 +460,35 @@ public final class me/proton/core/usersettings/data/api/response/UpdateUserSetti
 
 public final class me/proton/core/usersettings/data/api/response/UserSettingsResponse {
 	public static final field Companion Lme/proton/core/usersettings/data/api/response/UserSettingsResponse$Companion;
-	public synthetic fun <init> (ILme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;ILjava/lang/String;ILjava/lang/String;IIIIIILme/proton/core/usersettings/data/api/response/FlagsResponse;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;ILjava/lang/String;ILjava/lang/String;IIIIIILme/proton/core/usersettings/data/api/response/FlagsResponse;)V
+	public synthetic fun <init> (ILme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;IIIIIILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;IIIIII)V
 	public final fun component1 ()Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;
-	public final fun component10 ()Ljava/lang/String;
+	public final fun component10 ()I
 	public final fun component11 ()I
 	public final fun component12 ()I
-	public final fun component13 ()I
-	public final fun component14 ()I
-	public final fun component15 ()I
-	public final fun component16 ()I
-	public final fun component17 ()Lme/proton/core/usersettings/data/api/response/FlagsResponse;
 	public final fun component2 ()Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;
 	public final fun component3 ()Lme/proton/core/usersettings/data/api/response/PasswordResponse;
 	public final fun component4 ()Lme/proton/core/usersettings/data/api/response/TwoFAResponse;
 	public final fun component5 ()I
 	public final fun component6 ()Ljava/lang/String;
 	public final fun component7 ()I
-	public final fun component8 ()Ljava/lang/String;
+	public final fun component8 ()I
 	public final fun component9 ()I
-	public final fun copy (Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;ILjava/lang/String;ILjava/lang/String;IIIIIILme/proton/core/usersettings/data/api/response/FlagsResponse;)Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;ILjava/lang/String;ILjava/lang/String;IIIIIILme/proton/core/usersettings/data/api/response/FlagsResponse;ILjava/lang/Object;)Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;
+	public final fun copy (Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;IIIIII)Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;Lme/proton/core/usersettings/data/api/response/PasswordResponse;Lme/proton/core/usersettings/data/api/response/TwoFAResponse;ILjava/lang/String;IIIIIIILjava/lang/Object;)Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateFormat ()I
 	public final fun getDensity ()I
 	public final fun getEarlyAccess ()I
 	public final fun getEmail ()Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;
-	public final fun getFlags ()Lme/proton/core/usersettings/data/api/response/FlagsResponse;
-	public final fun getInvoiceText ()Ljava/lang/String;
 	public final fun getLocale ()Ljava/lang/String;
 	public final fun getLogAuth ()I
 	public final fun getNews ()I
 	public final fun getPassword ()Lme/proton/core/usersettings/data/api/response/PasswordResponse;
 	public final fun getPhone ()Lme/proton/core/usersettings/data/api/response/RecoverySettingResponse;
-	public final fun getTheme ()Ljava/lang/String;
-	public final fun getThemeType ()I
 	public final fun getTimeFormat ()I
 	public final fun getTwoFA ()Lme/proton/core/usersettings/data/api/response/TwoFAResponse;
 	public final fun getWeekStart ()I
-	public final fun getWelcome ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public static final fun write$Self (Lme/proton/core/usersettings/data/api/response/UserSettingsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
@@ -576,6 +536,7 @@ public abstract interface class me/proton/core/usersettings/data/db/UserSettings
 public final class me/proton/core/usersettings/data/db/UserSettingsDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/usersettings/data/db/dao/OrganizationDao : me/proton/core/data/room/db/BaseDao {
@@ -765,17 +726,12 @@ public final class me/proton/core/usersettings/data/entity/TwoFAEntity {
 }
 
 public final class me/proton/core/usersettings/data/entity/UserSettingsEntity {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/PasswordEntity;Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Boolean;Lme/proton/core/usersettings/data/entity/FlagsEntity;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/PasswordEntity;Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Boolean;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component10 ()Ljava/lang/Integer;
-	public final fun component11 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/Integer;
 	public final fun component12 ()Ljava/lang/Integer;
-	public final fun component13 ()Ljava/lang/Integer;
-	public final fun component14 ()Ljava/lang/Integer;
-	public final fun component15 ()Ljava/lang/Integer;
-	public final fun component16 ()Ljava/lang/Boolean;
-	public final fun component17 ()Ljava/lang/Boolean;
-	public final fun component18 ()Lme/proton/core/usersettings/data/entity/FlagsEntity;
+	public final fun component13 ()Ljava/lang/Boolean;
 	public final fun component2 ()Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;
 	public final fun component3 ()Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;
 	public final fun component4 ()Lme/proton/core/usersettings/data/entity/PasswordEntity;
@@ -783,28 +739,23 @@ public final class me/proton/core/usersettings/data/entity/UserSettingsEntity {
 	public final fun component6 ()Ljava/lang/Integer;
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/Integer;
-	public final fun component9 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/PasswordEntity;Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Boolean;Lme/proton/core/usersettings/data/entity/FlagsEntity;)Lme/proton/core/usersettings/data/entity/UserSettingsEntity;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/entity/UserSettingsEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/PasswordEntity;Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Boolean;Ljava/lang/Boolean;Lme/proton/core/usersettings/data/entity/FlagsEntity;ILjava/lang/Object;)Lme/proton/core/usersettings/data/entity/UserSettingsEntity;
+	public final fun component9 ()Ljava/lang/Integer;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/PasswordEntity;Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Boolean;)Lme/proton/core/usersettings/data/entity/UserSettingsEntity;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/entity/UserSettingsEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;Lme/proton/core/usersettings/data/entity/PasswordEntity;Lme/proton/core/usersettings/data/entity/TwoFAEntity;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/data/entity/UserSettingsEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDateFormat ()Ljava/lang/Integer;
 	public final fun getDensity ()Ljava/lang/Integer;
 	public final fun getEarlyAccess ()Ljava/lang/Boolean;
 	public final fun getEmail ()Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;
-	public final fun getFlags ()Lme/proton/core/usersettings/data/entity/FlagsEntity;
-	public final fun getInvoiceText ()Ljava/lang/String;
 	public final fun getLocale ()Ljava/lang/String;
 	public final fun getLogAuth ()Ljava/lang/Integer;
 	public final fun getNews ()Ljava/lang/Integer;
 	public final fun getPassword ()Lme/proton/core/usersettings/data/entity/PasswordEntity;
 	public final fun getPhone ()Lme/proton/core/usersettings/data/entity/RecoverySettingEntity;
-	public final fun getTheme ()Ljava/lang/String;
-	public final fun getThemeType ()Ljava/lang/Integer;
 	public final fun getTimeFormat ()Ljava/lang/Integer;
 	public final fun getTwoFA ()Lme/proton/core/usersettings/data/entity/TwoFAEntity;
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getWeekStart ()Ljava/lang/Integer;
-	public final fun getWelcome ()Ljava/lang/Boolean;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

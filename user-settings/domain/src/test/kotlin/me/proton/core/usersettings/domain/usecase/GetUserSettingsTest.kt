@@ -24,7 +24,6 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
@@ -52,15 +51,10 @@ class GetUserSettingsTest {
         locale = "en",
         logAuth = UserSettings.LogAuth.enumOf(1),
         density = UserSettings.Density.enumOf(1),
-        invoiceText = "",
         dateFormat = UserSettings.DateFormat.enumOf(1),
         timeFormat = UserSettings.TimeFormat.enumOf(2),
-        themeType = 1,
         weekStart = UserSettings.WeekStart.enumOf(7),
-        welcome = true,
-        earlyAccess = true,
-        theme = "test-theme",
-        flags = Flags(true)
+        earlyAccess = true
     )
     // endregion
     private lateinit var useCase: GetUserSettings

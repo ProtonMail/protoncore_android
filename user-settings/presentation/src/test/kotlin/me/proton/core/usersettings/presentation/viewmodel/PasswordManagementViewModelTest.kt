@@ -31,7 +31,6 @@ import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
@@ -70,15 +69,10 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         locale = "en",
         logAuth = UserSettings.LogAuth.enumOf(1),
         density = UserSettings.Density.enumOf(1),
-        invoiceText = "",
         dateFormat = UserSettings.DateFormat.enumOf(1),
         timeFormat = UserSettings.TimeFormat.enumOf(2),
-        themeType = 1,
         weekStart = UserSettings.WeekStart.enumOf(7),
-        welcome = true,
-        earlyAccess = true,
-        theme = "test-theme",
-        flags = Flags(true)
+        earlyAccess = true
     )
     private val testUser = User(
         userId = testUserId,

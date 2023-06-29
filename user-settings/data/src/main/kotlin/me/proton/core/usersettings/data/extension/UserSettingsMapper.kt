@@ -19,17 +19,14 @@
 package me.proton.core.usersettings.data.extension
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.usersettings.data.api.response.FlagsResponse
 import me.proton.core.usersettings.data.api.response.PasswordResponse
 import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
 import me.proton.core.usersettings.data.api.response.TwoFAResponse
 import me.proton.core.usersettings.data.api.response.UserSettingsResponse
-import me.proton.core.usersettings.data.entity.FlagsEntity
 import me.proton.core.usersettings.data.entity.PasswordEntity
 import me.proton.core.usersettings.data.entity.RecoverySettingEntity
 import me.proton.core.usersettings.data.entity.TwoFAEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
-import me.proton.core.usersettings.domain.entity.Flags
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
@@ -54,16 +51,11 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     news = news,
     locale = locale,
     logAuth = LogAuth.enumOf(logAuth),
-    invoiceText = invoiceText,
     density = Density.enumOf(density),
-    theme = theme,
-    themeType = themeType,
     weekStart = WeekStart.enumOf(weekStart),
     dateFormat = DateFormat.enumOf(dateFormat),
     timeFormat = TimeFormat.enumOf(timeFormat),
-    welcome = welcome.toBooleanOrFalse(),
     earlyAccess = earlyAccess.toBooleanOrFalse(),
-    flags = flags?.fromResponse()
 )
 
 internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(
@@ -84,10 +76,6 @@ internal fun TwoFAResponse.fromResponse() = TwoFASetting(
     expirationTime = expirationTime,
 )
 
-internal fun FlagsResponse.fromResponse() = Flags(
-    welcomed = welcomed.toBooleanOrFalse()
-)
-
 internal fun UserSettingsEntity.fromEntity() = UserSettings(
     userId = userId,
     email = email?.fromEntity(),
@@ -97,16 +85,11 @@ internal fun UserSettingsEntity.fromEntity() = UserSettings(
     news = news,
     locale = locale,
     logAuth = LogAuth.enumOf(logAuth),
-    invoiceText = invoiceText,
     density = Density.enumOf(density),
-    theme = theme,
-    themeType = themeType,
     weekStart = WeekStart.enumOf(weekStart),
     dateFormat = DateFormat.enumOf(dateFormat),
     timeFormat = TimeFormat.enumOf(timeFormat),
-    welcome = welcome,
     earlyAccess = earlyAccess,
-    flags = flags?.fromEntity()
 )
 
 internal fun UserSettings.toEntity() = UserSettingsEntity(
@@ -118,16 +101,11 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
     news = news,
     locale = locale,
     logAuth = logAuth?.value,
-    invoiceText = invoiceText,
     density = density?.value,
-    theme = theme,
-    themeType = themeType,
     weekStart = weekStart?.value,
     dateFormat = dateFormat?.value,
     timeFormat = timeFormat?.value,
-    welcome = welcome,
     earlyAccess = earlyAccess,
-    flags = flags?.toEntity()
 )
 
 internal fun RecoverySettingEntity.fromEntity() = RecoverySetting(
@@ -164,12 +142,4 @@ internal fun TwoFASetting.toEntity() = TwoFAEntity(
     enabled = enabled?.toInt(),
     allowed = allowed,
     expirationTime = expirationTime,
-)
-
-internal fun FlagsEntity.fromEntity() = Flags(
-    welcomed = welcomed
-)
-
-internal fun Flags.toEntity() = FlagsEntity(
-    welcomed = welcomed
 )

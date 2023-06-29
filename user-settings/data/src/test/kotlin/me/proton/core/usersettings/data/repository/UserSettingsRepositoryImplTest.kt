@@ -38,7 +38,6 @@ import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.usersettings.data.api.UserSettingsApi
-import me.proton.core.usersettings.data.api.response.FlagsResponse
 import me.proton.core.usersettings.data.api.response.PasswordResponse
 import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
@@ -107,15 +106,10 @@ class UserSettingsRepositoryImplTest {
             locale = "en",
             logAuth = 1,
             density = 1,
-            invoiceText = "",
             dateFormat = 1,
             timeFormat = 2,
-            themeType = 1,
             weekStart = 7,
-            welcome = 1,
-            earlyAccess = 1,
-            theme = "test-theme",
-            flags = FlagsResponse(1)
+            earlyAccess = 1
         )
         // GIVEN
         coEvery { userSettingsApi.getUserSettings() } returns SingleUserSettingsResponse(settingsResponse)
@@ -181,15 +175,10 @@ class UserSettingsRepositoryImplTest {
             locale = "en",
             logAuth = 1,
             density = 1,
-            invoiceText = "",
             dateFormat = 1,
             timeFormat = 2,
-            themeType = 1,
             weekStart = 7,
-            welcome = 1,
-            earlyAccess = 1,
-            theme = "test-theme",
-            flags = FlagsResponse(1)
+            earlyAccess = 1
         )
         coEvery { userSettingsApi.updateRecoveryEmail(any()) } returns UpdateUserSettingsResponse(
             settings = settingsResponse,
@@ -251,15 +240,10 @@ class UserSettingsRepositoryImplTest {
             locale = "en",
             logAuth = 1,
             density = 1,
-            invoiceText = "",
             dateFormat = 1,
             timeFormat = 2,
-            themeType = 1,
             weekStart = 7,
-            welcome = 1,
-            earlyAccess = 1,
-            theme = "test-theme",
-            flags = FlagsResponse(1)
+            earlyAccess = 1
         )
         val testSalt = "test-salt"
         val testModulusId = "test-modulus-id"
