@@ -65,6 +65,7 @@ dependencies {
 
     testImplementation(
         project(Module.androidTest),
+        project(Module.kotlinTest),
         `android-test-core-ktx`,
         `android-work-testing`,
         `coroutines-test`,

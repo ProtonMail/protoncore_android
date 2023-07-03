@@ -18,6 +18,7 @@
 
 package me.proton.core.observability.data
 
+import kotlinx.serialization.SerializationException
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.toObservabilityEventEntity
 import me.proton.core.observability.domain.ObservabilityRepository
@@ -46,14 +47,24 @@ public class ObservabilityRepositoryImpl @Inject constructor(
         observabilityDao.delete(event.toObservabilityEventEntity())
     }
 
-    override suspend fun getEvents(limit: Int?): List<ObservabilityEvent> {
+    override suspend fun getEventsAndSanitizeDb(limit: Int?): List<ObservabilityEvent> {
         val events = if (limit == null)
             observabilityDao.getAll()
         else
             observabilityDao.getAll(limit)
-        return events.map {
-            it.toObservabilityEvent()
+        val nonSerializableIds = mutableListOf<Long>()
+        val result = events.mapNotNull {
+            val event = try {
+                it.toObservabilityEvent()
+            } catch (error: SerializationException) {
+                // TODO: log to sentry
+                nonSerializableIds.add(it.id)
+                null
+            }
+            event
         }
+        observabilityDao.deleteAll(nonSerializableIds)
+        return result
     }
 
     override suspend fun getEventCount(): Long = observabilityDao.getCount()

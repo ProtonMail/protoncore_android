@@ -29,7 +29,7 @@ public final class me/proton/core/observability/data/ObservabilityRepositoryImpl
 	public fun deleteEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteEvents (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEventCount (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getEvents (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getEventsAndSanitizeDb (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/data/ObservabilityRepositoryImpl_Factory : dagger/internal/Factory {

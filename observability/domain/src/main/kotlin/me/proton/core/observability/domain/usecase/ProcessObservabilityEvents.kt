@@ -38,7 +38,7 @@ public class ProcessObservabilityEvents @Inject constructor(
     }
 
     private tailrec suspend fun processSingleBatch() {
-        val events = repository.getEvents(BATCH_SIZE)
+        val events = repository.getEventsAndSanitizeDb(BATCH_SIZE)
         if (events.isEmpty()) return
 
         sendObservabilityEvents(events)

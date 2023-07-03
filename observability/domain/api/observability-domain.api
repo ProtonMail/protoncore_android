@@ -34,11 +34,11 @@ public abstract interface class me/proton/core/observability/domain/Observabilit
 	public abstract fun deleteEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteEvents (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getEventCount (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getEvents (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEventsAndSanitizeDb (Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/domain/ObservabilityRepository$DefaultImpls {
-	public static synthetic fun getEvents$default (Lme/proton/core/observability/domain/ObservabilityRepository;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getEventsAndSanitizeDb$default (Lme/proton/core/observability/domain/ObservabilityRepository;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/domain/ObservabilityTimeTracker {

@@ -26,10 +26,10 @@ import me.proton.core.observability.data.entity.ObservabilityEventEntity
 @Dao
 public abstract class ObservabilityDao : BaseDao<ObservabilityEventEntity>() {
 
-    @Query("SELECT * FROM ObservabilityEventEntity")
+    @Query("SELECT * FROM ObservabilityEventEntity ORDER BY timestamp DESC")
     internal abstract fun getAll(): List<ObservabilityEventEntity>
 
-    @Query("SELECT * FROM ObservabilityEventEntity LIMIT :limit")
+    @Query("SELECT * FROM ObservabilityEventEntity ORDER BY timestamp DESC LIMIT :limit")
     internal abstract fun getAll(limit: Int): List<ObservabilityEventEntity>
 
     @Query("SELECT COUNT(*) FROM ObservabilityEventEntity")

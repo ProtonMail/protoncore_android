@@ -28,6 +28,9 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.data.db.ObservabilityDao
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
+import me.proton.core.observability.data.testing.allTestEvents
+import me.proton.core.observability.data.testing.testObservabilityEventNewFileName
+import me.proton.core.observability.data.testing.testObservabilityEventOldFileName
 import me.proton.core.observability.domain.ObservabilityRepository
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.metrics.ObservabilityData
@@ -158,7 +161,7 @@ class ObservabilityRepositoryImplTest {
         )
         every { dao.getAll() } returns listOf(event1, event2)
         // WHEN
-        val result = repository.getEvents(limit)
+        val result = repository.getEventsAndSanitizeDb(limit)
         // THEN
         coVerify(exactly = 1) { dao.getAll() }
         coVerify(exactly = 0) { dao.getAll(any()) }
@@ -180,11 +183,48 @@ class ObservabilityRepositoryImplTest {
         )
         every { dao.getAll(limit) } returns listOf(event1, event2)
         // WHEN
-        val result = repository.getEvents(limit)
+        val result = repository.getEventsAndSanitizeDb(limit)
         // THEN
         coVerify(exactly = 0) { dao.getAll() }
         coVerify(exactly = 1) { dao.getAll(limit) }
         assertEquals(1, result[0].id)
         assertEquals(2, result[1].id)
+    }
+
+    @Test
+    fun `old file name serializes properly`() = runTest {
+        // GIVEN
+        every { dao.getAll() } returns listOf(testObservabilityEventOldFileName)
+        // WHEN
+        val result = repository.getEventsAndSanitizeDb()
+        // THEN
+        assertEquals(0, result.size)
+    }
+
+    @Test
+    fun `new file name serializes properly`() = runTest {
+        // GIVEN
+        every { dao.getAll() } returns listOf(testObservabilityEventNewFileName)
+        // WHEN
+        val result = repository.getEventsAndSanitizeDb()
+        // THEN
+        assertEquals(1, result.size)
+        val event = result[0]
+        assertEquals("SignupFetchDomainsTotal", event.data::class.java.simpleName)
+    }
+
+    @Test
+    fun `different file name serializes properly`() = runTest {
+        // GIVEN
+        val eventSlot = slot<List<Long>>()
+        every { dao.getAll() } returns allTestEvents
+        // WHEN
+        val result = repository.getEventsAndSanitizeDb()
+        coVerify(exactly = 1) { dao.deleteAll(capture(eventSlot)) }
+        assertEquals(1, result.size)
+        val capturedList = eventSlot.captured
+        assertEquals(2, capturedList.size)
+        assertEquals(1, capturedList[0])
+        assertEquals(3, capturedList[1])
     }
 }

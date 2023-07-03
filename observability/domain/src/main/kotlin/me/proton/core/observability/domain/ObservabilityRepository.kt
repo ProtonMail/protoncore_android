@@ -25,6 +25,6 @@ public interface ObservabilityRepository {
     public suspend fun deleteAllEvents()
     public suspend fun deleteEvents(events: List<ObservabilityEvent>)
     public suspend fun deleteEvent(event: ObservabilityEvent)
-    public suspend fun getEvents(limit: Int? = null): List<ObservabilityEvent>
+    public suspend fun getEventsAndSanitizeDb(limit: Int? = null): List<ObservabilityEvent>
     public suspend fun getEventCount(): Long
 }

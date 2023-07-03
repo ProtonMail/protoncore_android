@@ -103,7 +103,7 @@ class ObservabilityWorkerTest {
     @Test
     fun noEvents() {
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { repository.getEvents(any()) } returns emptyList()
+        coEvery { repository.getEventsAndSanitizeDb(any()) } returns emptyList()
 
         val result = makeAndRunWorker()
         assertEquals(ListenableWorker.Result.success(), result)
@@ -116,7 +116,7 @@ class ObservabilityWorkerTest {
         val events = listOf(mockk<ObservabilityEvent>())
 
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { repository.getEvents(any()) } returns events andThen emptyList()
+        coEvery { repository.getEventsAndSanitizeDb(any()) } returns events andThen emptyList()
 
         val result = makeAndRunWorker()
         assertEquals(ListenableWorker.Result.success(), result)
@@ -131,7 +131,7 @@ class ObservabilityWorkerTest {
         val events2 = listOf(mockk<ObservabilityEvent>())
 
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { repository.getEvents(any()) }.returnsMany(events1, events2, emptyList())
+        coEvery { repository.getEventsAndSanitizeDb(any()) }.returnsMany(events1, events2, emptyList())
 
         val result = makeAndRunWorker()
         assertEquals(ListenableWorker.Result.success(), result)
@@ -148,7 +148,7 @@ class ObservabilityWorkerTest {
     @Test
     fun retryableError() {
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { repository.getEvents(any()) } returns listOf(mockk())
+        coEvery { repository.getEventsAndSanitizeDb(any()) } returns listOf(mockk())
         coEvery { sendObservabilityEvents.invoke(any()) } throws
             ApiException(ApiResult.Error.Http(HttpResponseCodes.HTTP_TOO_MANY_REQUESTS, "Error"))
 
@@ -159,7 +159,7 @@ class ObservabilityWorkerTest {
     @Test
     fun unrecoverableHttpError() {
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { repository.getEvents(any()) } returns listOf(mockk())
+        coEvery { repository.getEventsAndSanitizeDb(any()) } returns listOf(mockk())
         coEvery { sendObservabilityEvents.invoke(any()) } throws
             ApiException(ApiResult.Error.Http(HttpResponseCodes.HTTP_BAD_REQUEST, "Error"))
 
@@ -170,7 +170,7 @@ class ObservabilityWorkerTest {
     @Test
     fun unrecoverableError() {
         coEvery { isObservabilityEnabled.invoke() } returns true
-        coEvery { repository.getEvents(any()) } returns listOf(mockk())
+        coEvery { repository.getEventsAndSanitizeDb(any()) } returns listOf(mockk())
         coEvery { sendObservabilityEvents.invoke(any()) } throws Throwable("Unknown error")
 
         val result = makeAndRunWorker()
