@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Perioada de grație a început</string>
+  <string name="account_recovery_grace_started_subtitle">Perioada de grație de recuperare a contului a început și e în derulare.</string>
+  <string name="account_recovery_cancelled_title">Recuperarea contului a fost anulată</string>
+  <string name="account_recovery_cancelled_subtitle">Procesul de recuperare al contului a fost anulat.</string>
+  <string name="account_recovery_password_started_title">Parola de recuperare a contului poate fi schimbată</string>
+  <string name="account_recovery_password_started_subtitle">Perioada de schimbare a parolei de recuperare a contului a început. Acum puteți schimba parola.</string>
+  <string name="account_recovery_window_ended_title">Perioada de recuperare a contului s-a încheiat</string>
+  <string name="account_recovery_window_ended_subtitle">Perioada de recuperare a contului s-a încheiat.</string>
+  <string name="account_recovery_cancel">Anulare recuperare</string>
+  <string name="account_recovery_password_label">Introduceți parola pentru anulare</string>
+  <string name="account_recovery_password_placeholder">Parola</string>
+</resources>

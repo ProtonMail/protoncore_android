@@ -25,7 +25,7 @@
   <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>
   <string name="settings_recovery_email_confirm_hint">Увядзіце адрас электроннай пошты яшчэ раз</string>
   <string name="settings_save">Захаваць</string>
-  <string name="settings_password_required">Увядзіце ваш пароль для ўваходу</string>
+  <string name="settings_password_required">Увядзіце ваш пароль уваходу</string>
   <string name="settings_password_required_ok">Добра</string>
   <string name="settings_not_set">Не зададзена</string>
   <string name="settings_recovery_email_error_no_match">Новыя адрасы электроннай пошты для аднаўлення доступу не супадаюць</string>

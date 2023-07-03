@@ -65,6 +65,6 @@
   <string name="payments_giap_unredeemed_description">Płatność Google Play została przetworzona, ale proces ulepszenia konta został przerwany. Zastosować płatność, aby ulepszyć konto?</string>
   <string name="payments_giap_unredeemed_confirm">Potwierdź ulepszenie</string>
   <string name="payments_giap_redeem_success">Konto zostało ulepszone</string>
-  <string name="payments_giap_redeem_error">Nie można dokończyć ulepszenia. Spróbuj ponownie później.</string>
+  <string name="payments_giap_redeem_error">Nie można zakończyć ulepszenia. Spróbuj ponownie później.</string>
   <!-- endregion -->
 </resources>

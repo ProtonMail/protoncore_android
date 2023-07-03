@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Període de gràcia iniciat</string>
+  <string name="account_recovery_grace_started_subtitle">El període de gràcia de recuperació del compte ha començat i avança.</string>
+  <string name="account_recovery_cancelled_title">Recuperació del compte cancel·lat</string>
+  <string name="account_recovery_cancelled_subtitle">El procés de recuperació del compte s\'ha cancel·lat.</string>
+  <string name="account_recovery_password_started_title">La contrasenya de recuperació del compte es pot canviar</string>
+  <string name="account_recovery_password_started_subtitle">S\'ha iniciat el període de canvi de contrasenya de recuperació del compte. Ara podeu canviar la vostra contrasenya.</string>
+  <string name="account_recovery_window_ended_title">Finestra de recuperació del compte finalitzada</string>
+  <string name="account_recovery_window_ended_subtitle">La finestra de recuperació del compte ha finalitzat.</string>
+  <string name="account_recovery_cancel">Cancel·la la recuperació</string>
+  <string name="account_recovery_password_label">Introduïu la contrasenya per a cancel·lar</string>
+  <string name="account_recovery_password_placeholder">Contrasenya</string>
+</resources>

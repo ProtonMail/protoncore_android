@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Período de carência iniciado</string>
+  <string name="account_recovery_grace_started_subtitle">O período de carência para recuperação da sua conta foi iniciado e está em andamento.</string>
+  <string name="account_recovery_cancelled_title">Recuperação de conta cancelada.</string>
+  <string name="account_recovery_cancelled_subtitle">O processo de recuperação de sua conta foi cancelado.</string>
+  <string name="account_recovery_password_started_title">A senha de recuperação de conta foi alterada</string>
+  <string name="account_recovery_password_started_subtitle">O período de alteração da senha de recuperação da sua conta foi iniciado. Pode agora alterar a sua senha.</string>
+  <string name="account_recovery_window_ended_title">A janela de recuperação de conta terminou</string>
+  <string name="account_recovery_window_ended_subtitle">O período de recuperação da sua conta expirou.</string>
+  <string name="account_recovery_cancel">Cancelar recuperação</string>
+  <string name="account_recovery_password_label">Digite a senha para cancelar.</string>
+  <string name="account_recovery_password_placeholder">Senha</string>
+</resources>

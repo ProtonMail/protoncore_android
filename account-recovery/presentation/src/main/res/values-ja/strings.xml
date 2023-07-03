@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">猶予期間の開始</string>
+  <string name="account_recovery_grace_started_subtitle">アカウント回復の措置猶予期間が開始され、継続中です。</string>
+  <string name="account_recovery_cancelled_title">アカウント回復はキャンセルされました</string>
+  <string name="account_recovery_cancelled_subtitle">アカウント回復プロセスはキャンセルされました。</string>
+  <string name="account_recovery_password_started_title">アカウント回復パスワードの変更が可能</string>
+  <string name="account_recovery_password_started_subtitle">アカウント回復パスワード変更期間が始まりました。パスワードを変更することができます。</string>
+  <string name="account_recovery_window_ended_title">アカウント回復ウィンドウが終了</string>
+  <string name="account_recovery_window_ended_subtitle">アカウント回復ウィンドウが終了しました。</string>
+  <string name="account_recovery_cancel">回復をキャンセル</string>
+  <string name="account_recovery_password_label">キャンセルするにはパスワードを入力します</string>
+  <string name="account_recovery_password_placeholder">パスワード</string>
+</resources>

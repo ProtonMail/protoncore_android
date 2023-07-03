@@ -128,11 +128,11 @@
   <string name="unlimited_devices">Tanpa batasan jumlah perangkat</string>
   <string name="integrated_2fa_authenticator">Autentikator 2FA terintegrasi</string>
   <string name="multiple_vaults">Brankas berganda</string>
-  <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide-my-email</string>
+  <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide My Email</string>
   <string name="custom_email_alias_domains">Domain khusus untuk alias email</string>
   <string name="multiple_forwarding_mailboxes">Kotak surat penerusan berganda</string>
   <string name="priority_support">Dukungan prioritas</string>
   <string name="one_vault">1 brankas</string>
-  <string name="ten_hide_my_email_aliases">10 alias Hide-my-email</string>
+  <string name="ten_hide_my_email_aliases">10 alias Hide My Email</string>
   <!-- endregion -->
 </resources>

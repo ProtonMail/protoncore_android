@@ -45,7 +45,7 @@
   <string name="plans_used_space">%s de %s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Sua assinatura é gerenciada pela Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Sua assinatura não pode ser gerenciada no aplicativo móvel.</string>
+  <string name="plans_manage_your_subscription_other">Não é possível gerenciar sua assinatura no aplicativo móvel.</string>
   <string name="plans_autorenew_subscriptions">Apenas assinaturas anuais com renovação automática estão disponíveis por meio deste aplicativo.</string>
   <string name="plans_can_not_upgrade_from_mobile">Você não pode fazer upgrade do aplicativo móvel.</string>
   <string name="plans_limited_offer">Oferta por tempo limitado</string>
@@ -122,7 +122,7 @@
   <string name="plan_id_vpn2022_header" comment="new_plans">Sua privacidade e segurança são nossa prioridade.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Armazenamento em nuvem seguro que permite armazenar, sincronizar e compartilhar arquivos com facilidade e segurança.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privacidade e segurança abrangentes com todos os serviços da Proton combinados.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">Para um próximo nível em gerenciamento de senhas e proteção de identidade.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Para um gerenciamento de senhas e proteção de identidade de nível superior.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -142,7 +142,7 @@
   <string name="unlimited_devices">Dispositivos ilimitados</string>
   <string name="integrated_2fa_authenticator">Autenticador A2F integrado</string>
   <string name="multiple_vaults">Múltiplos cofres</string>
-  <string name="unlimited_email_alias">Endereços ilimitados do Hide-my-email</string>
+  <string name="unlimited_email_alias">Aliases ilimitados do Hide-my-email</string>
   <string name="custom_email_alias_domains">Domínios customizados para encaminhamento de mensagens</string>
   <string name="multiple_forwarding_mailboxes">Múltiplos redirecionadores de emails</string>
   <string name="priority_support">Suporte prioritário</string>

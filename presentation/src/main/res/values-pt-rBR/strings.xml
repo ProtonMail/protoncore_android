@@ -20,10 +20,10 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Não foi possível encontrar um navegador para abrir o link.</string>
   <string name="presentation_force_update_title">Atualização necessária</string>
-  <string name="presentation_force_update_message">Esta versão do aplicativo não é mais suportada. Por favor, atualize para continuar usando.</string>
+  <string name="presentation_force_update_message">Esta versão do aplicativo não é mais suportada. Atualizepara continuar usando.</string>
   <string name="presentation_force_update_learn_more">Saiba mais</string>
   <string name="presentation_force_update_update">Atualizar</string>
-  <string name="presentation_market_missing">Não é possível encontrar o aolicativo em seu dispositivo. Por favor, vá até a loja de aplicativos para instalá-lo.</string>
+  <string name="presentation_market_missing">Não é possível encontrar o aplicativo em seu dispositivo. Vá até à loja de aplicativos para instalá-lo.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Inicie a sessão para continuar</string>
   <string name="presentation_alert_title">Alerta</string>

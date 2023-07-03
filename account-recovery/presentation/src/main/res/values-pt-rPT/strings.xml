@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Início do período de carência</string>
+  <string name="account_recovery_grace_started_subtitle">Iniciou o período de carência para a recuperação da sua conta.</string>
+  <string name="account_recovery_cancelled_title">A recuperação de conta foi cancelada.</string>
+  <string name="account_recovery_cancelled_subtitle">O processo de recuperação da sua conta foi cancelado.</string>
+  <string name="account_recovery_password_started_title">É possível alterar a palavra-passe de recuperação da conta.</string>
+  <string name="account_recovery_password_started_subtitle">O período de alteração da palavra-passe de recuperação da sua conta foi iniciado. Pode agora alterar a sua palavra-passe.</string>
+  <string name="account_recovery_window_ended_title">A período de recuperação de conta terminou.</string>
+  <string name="account_recovery_window_ended_subtitle">O período de recuperação da sua conta expirou.</string>
+  <string name="account_recovery_cancel">Cancelar a recuperação</string>
+  <string name="account_recovery_password_label">Insira a palavra-passe para cancelar.</string>
+  <string name="account_recovery_password_placeholder">Palavra-passe</string>
+</resources>

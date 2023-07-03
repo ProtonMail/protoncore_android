@@ -40,10 +40,10 @@
   <string name="auth_account_details">Írja be a Proton fiókja adatait.</string>
   <string name="auth_sign_in">Bejelentkezés</string>
   <string name="auth_sign_in_action">Bejelentkezés</string>
-  <string name="auth_sign_in_sso">Sign in to your organization</string>
-  <string name="auth_sign_in_with_password">Sign in with a password</string>
+  <string name="auth_sign_in_sso">Jelentkezzen be a szervezetébe</string>
+  <string name="auth_sign_in_with_password">Bejelentkezés jelszóval</string>
   <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
-  <string name="auth_sign_in_with_sso">Sign in with SSO</string>
+  <string name="auth_sign_in_with_sso">Bejelentkezés SSO használatával</string>
   <string name="auth_help_label">Súgó</string>
   <string name="auth_login_assistive_text">Adja meg a Proton email címét vagy a felhasználónevét.</string>
   <string name="auth_login_sso_assistive_text">Kérjük adja meg az e-mail címét.</string>

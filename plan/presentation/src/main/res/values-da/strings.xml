@@ -48,7 +48,7 @@
   <string name="plans_manage_your_subscription_other">Dit abonnement kan ikke administreres i mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Kun årlige abonnementer med automatisk fornyelse er tilgængelige via denne app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Du kan ikke opgradere fra mobil-appen.</string>
-  <string name="plans_limited_offer">Limited time offer</string>
+  <string name="plans_limited_offer">Tidsbegrænset tilbud</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lager</item>
@@ -117,12 +117,12 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Flerbrugerunderstøttelse</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_family_header">Familie</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-mail med avancerede funktioner til din daglige kommunikation.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Vores topprioritet er dit privatliv og sikkerhed.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Sikker lagring i skyen der lader dig gemme, synkronisere og dele dine filer nemt og sikkert.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Omfattende privatliv og sikkerhed med alle Proton-tjenester kombineret.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">For next-level password management and identity protection.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">For avanceret adgangskodestyring og identitetsbeskyttelse.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -140,13 +140,13 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Ubegrænset antal logins og noter</string>
   <string name="unlimited_devices">Ubegrænset antal enheder</string>
-  <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
-  <string name="multiple_vaults">Multiple vaults</string>
-  <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
-  <string name="custom_email_alias_domains">Custom domains for email aliases</string>
-  <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
-  <string name="priority_support">Priority support</string>
-  <string name="one_vault">1 vault</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
+  <string name="integrated_2fa_authenticator">Integreret 2FA-godkendelse</string>
+  <string name="multiple_vaults">Flere bokse</string>
+  <string name="unlimited_email_alias">Ubegrænsede Hide My Email-aliasser</string>
+  <string name="custom_email_alias_domains">Tilpassede domæner til e-mailaliasser</string>
+  <string name="multiple_forwarding_mailboxes">Flere postkasser til videresendelse</string>
+  <string name="priority_support">Prioriteret support</string>
+  <string name="one_vault">1 boks</string>
+  <string name="ten_hide_my_email_aliases">10 Hide My Email-aliasser</string>
   <!-- endregion -->
 </resources>

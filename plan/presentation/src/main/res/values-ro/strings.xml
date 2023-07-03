@@ -25,7 +25,7 @@
   <string name="plan_price_monthly">pe lună</string>
   <string name="plan_price_annually">pe an</string>
   <string name="plans_current_plan">Plan actual</string>
-  <string name="plans_upgrade_plan">Modernizare plan</string>
+  <string name="plans_upgrade_plan">Modificare plan</string>
   <string name="plans_subscription">Abonament</string>
   <string name="plans_renewal_date">Abonamentul se va reînnoi automat la &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Abonamentul va expira la &lt;b&gt;%s&lt;/b&gt;</string>
@@ -39,7 +39,7 @@
     <item quantity="few">Pentru %d luni</item>
     <item quantity="other">Pentru %d de luni</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Modernizare plan</string>
+  <string name="plans_upgrade_your_plan">Modificare plan</string>
   <string name="plans_proton_for_free">Luați Proton gratuit</string>
   <string name="plans_get_proton">Luați %s</string>
   <string name="plans_manage_your_subscription">Gestionați abonamentul la <a href="https://account.proton.me">account.proton.me</a></string>

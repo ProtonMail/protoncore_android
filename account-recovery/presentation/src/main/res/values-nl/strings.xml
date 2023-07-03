@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Grace period started</string>
+  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
+  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
+  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
+  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
+  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
+  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
+  <string name="account_recovery_window_ended_subtitle">Het tijdsvenster voor uw accountherstel is ten einde.</string>
+  <string name="account_recovery_cancel">Cancel recovery</string>
+  <string name="account_recovery_password_label">Voer uw wachtwoord in om te annuleren</string>
+  <string name="account_recovery_password_placeholder">Wachtwoord</string>
+</resources>

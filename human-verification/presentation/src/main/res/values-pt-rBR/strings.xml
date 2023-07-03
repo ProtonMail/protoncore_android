@@ -20,15 +20,15 @@
   <!-- base common strings -->
   <string name="human_verification_help">Ajuda</string>
   <string name="human_verification_title">Verificação humana</string>
-  <string name="human_verification_main_subtitle">Para evitar abuso, por favor comprove que você é humano usando uma das seguintes opções</string>
+  <string name="human_verification_main_subtitle">Para evitar abuso, comprove que você é humano usando uma das seguintes opções</string>
   <string name="human_verification_enter_code_subtitle">Digite o código de verificação que foi enviado para %s.</string>
   <string name="human_verification_enter_code_subtitle_email">Digite o código de verificação que foi enviado para %s. Se você não encontrar o e-mail em sua caixa de entrada, verifique a pasta de spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Digite o código de verificação que você já tem:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">Seu e-mail será usado apenas para esta única verificação. Se você não encontrar o e-mail na sua caixa de entrada, por favor confira sua pasta de spam.</string>
+  <string name="human_verification_option_email_subtitle">Seu e-mail será usado apenas esta única verificação. Se você não encontrar o e-mail em sua caixa de entrada, confira a pasta de spam.</string>
   <string name="human_verification_option_sms">Número de telefone</string>
-  <string name="human_verification_option_sms_subtitle">O seu número de telefone será utilizado somente nesta verificação única.</string>
+  <string name="human_verification_option_sms_subtitle">O seu número de telefone será usado somente nesta verificação única.</string>
   <string name="human_verification_get_verification_code">Obter código de verificação</string>
   <string name="human_verification_already_have_code">Eu já tenho um código</string>
   <string name="human_verification_request_replacement_code">Não recebeu o código?</string>
@@ -48,10 +48,10 @@
   <string name="human_verification_help_manual">Se você estiver com problemas para criar sua conta, solicite um convite e nós responderemos em até um dia útil.</string>
   <string name="human_verification_help_website_title">Visite nosso Centro de Ajuda</string>
   <string name="human_verification_help_website">Entenda mais sobre a verificação humana e por que nós a solicitamos.</string>
-  <string name="human_verification_sending_failed">Falha ao enviar o código de verificação. Por favor, tente novamente.</string>
-  <string name="human_verification_incorrect_code">Código incorreto. Por favor, tente novamente.</string>
+  <string name="human_verification_sending_failed">Falha ao enviar o código de verificação. Tente novamente.</string>
+  <string name="human_verification_incorrect_code">Código incorreto. Tente novamente.</string>
   <string name="human_verification_resent_code">Enviamos um outro código.</string>
-  <string name="human_verification_captcha_failed">Verificação CAPTCHA falhou. Por favor, tento novamente ou escolha outra opção de verificação.</string>
+  <string name="human_verification_captcha_failed">Erro na verificação CAPTCHA. Tento novamente ou escolha outra opção de verificação.</string>
   <string name="human_verification_captcha_no_connectivity">Sem conexão. Não foi possível carregar o CAPTCHA.</string>
   <string name="human_verification_action_retry">Tentar novamente</string>
   <string name="human_verification_method_loading_failed">Não foi possível carregar o método de verificação atual. Se o problema persistir, tente um dos outros métodos caso eles estejam disponíveis ou consulte a tela \"Ajuda\".</string>

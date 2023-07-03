@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">寬限期開始</string>
+  <string name="account_recovery_grace_started_subtitle">您的帳號復原寬限期已開始且進行中。</string>
+  <string name="account_recovery_cancelled_title">帳號復原取消</string>
+  <string name="account_recovery_cancelled_subtitle">您的帳號復原流程已取消</string>
+  <string name="account_recovery_password_started_title">帳號復原密碼已變更</string>
+  <string name="account_recovery_password_started_subtitle">您的帳號復原密碼變更期已到。您可變更密碼</string>
+  <string name="account_recovery_window_ended_title">帳號復原視窗結束</string>
+  <string name="account_recovery_window_ended_subtitle">帳號復原視窗已結束</string>
+  <string name="account_recovery_cancel">取消復原</string>
+  <string name="account_recovery_password_label">輸入密碼以取消</string>
+  <string name="account_recovery_password_placeholder">密碼</string>
+</resources>

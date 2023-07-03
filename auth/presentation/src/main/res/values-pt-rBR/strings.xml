@@ -45,8 +45,8 @@
   <string name="auth_continue_to_proton_vpn">para continuar no Proton VPN</string>
   <string name="auth_sign_in_with_sso">Iniciar sessão com SSO</string>
   <string name="auth_help_label">Ajuda</string>
-  <string name="auth_login_assistive_text">Por favor entre seu e-mail ou nome de usuário Proton.</string>
-  <string name="auth_login_sso_assistive_text">Por favor, digite o seu e-mail.</string>
+  <string name="auth_login_assistive_text">Entre seu e-mail ou nome de usuário da Proton.</string>
+  <string name="auth_login_sso_assistive_text">Digite o seu e-mail.</string>
   <string name="auth_help_title">Como podemos ajudar?</string>
   <string name="auth_help_option_forgot_username">Esqueci meu nome de usuário</string>
   <string name="auth_help_option_forgot_password">Esqueceu sua senha</string>
@@ -101,8 +101,8 @@
   <string name="auth_account_not_found_error">Erro com a conta</string>
   <string name="auth_one_account_all_services">Uma conta para todos os serviços da Proton.</string>
   <string name="auth_create_account">Criar uma conta</string>
-  <string name="auth_long_signup">Por favor, aguarde…</string>
-  <string name="auth_long_login">Iniciando sessão, por favor aguarde…</string>
+  <string name="auth_long_signup">Aguarde…</string>
+  <string name="auth_long_login">Iniciando sessão. Aguarde…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crie sua conta Proton</string>
   <string name="auth_signup_current_email">Usar seu endereço de e-mail atual</string>
@@ -140,9 +140,9 @@
   <string name="auth_signup_verify">Verificar</string>
   <string name="auth_signup_verification_code">Código de verificação</string>
   <string name="auth_signup_enter_code_subtitle">Digite o código de verificação que foi enviado para $%s:</string>
-  <string name="auth_signup_error_human_verification_failed">Verificação humana falhou.</string>
+  <string name="auth_signup_error_human_verification_failed">Falha na verificação humana</string>
   <string name="auth_signup_token_code_resent">Código token reenviado.</string>
-  <string name="auth_signup_congratulations_subtitle">Sua conta da Proton foi criada com sucesso.\nAproveite o mundo da privacidade.</string>
+  <string name="auth_signup_congratulations_subtitle">Sua conta da Proton foi criada.\nAproveite o mundo da privacidade.</string>
   <string name="auth_signup_congratulations">Parabéns!</string>
   <string name="auth_signup_start_using_proton">Iniciar usando o Proton</string>
   <string name="auth_signup_start_using_calendar">Começar com Proton Calendar</string>

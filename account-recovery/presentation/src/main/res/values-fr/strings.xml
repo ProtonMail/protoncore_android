@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">La période de grâce a commencé.</string>
+  <string name="account_recovery_grace_started_subtitle">La période de grâce pour la récupération de votre compte a commencé et se poursuit.</string>
+  <string name="account_recovery_cancelled_title">Annulation de la récupération du compte</string>
+  <string name="account_recovery_cancelled_subtitle">Le processus de récupération de votre compte a été annulé.</string>
+  <string name="account_recovery_password_started_title">Le mot de passe de récupération du compte peut être modifié.</string>
+  <string name="account_recovery_password_started_subtitle">La période de modification du mot de passe de récupération de votre compte a commencé. Vous pouvez modifier votre mot de passe.</string>
+  <string name="account_recovery_window_ended_title">Fin de la période de récupération du compte</string>
+  <string name="account_recovery_window_ended_subtitle">La période de récupération de votre compte est arrivée à expiration.</string>
+  <string name="account_recovery_cancel">Annuler la récupération</string>
+  <string name="account_recovery_password_label">Entrez votre mot de passe pour annuler</string>
+  <string name="account_recovery_password_placeholder">Mot de passe</string>
+</resources>

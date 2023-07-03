@@ -166,7 +166,7 @@
   <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor праз VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Неабмежаваная колькасць лагінаў і нататак</string>
+  <string name="unlimited_logins_and_notes">Неабмежаваная колькасць запісаў уваходу і нататак</string>
   <string name="unlimited_devices">Неабмежаваная колькасць прылад</string>
   <string name="integrated_2fa_authenticator">Інтэграваная аўтэнтыфікацыя 2ФА</string>
   <string name="multiple_vaults">Некалькі сховішчаў</string>

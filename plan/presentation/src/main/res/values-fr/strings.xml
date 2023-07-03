@@ -142,11 +142,11 @@
   <string name="unlimited_devices">Nombre illimité d\'appareils</string>
   <string name="integrated_2fa_authenticator">Authentification à deux facteurs (A2F) intégrée</string>
   <string name="multiple_vaults">Plusieurs coffres-forts</string>
-  <string name="unlimited_email_alias">Nombre illimité d\'alias Hide-my-email</string>
+  <string name="unlimited_email_alias">Nombre illimité d\'alias « Hide My Email »</string>
   <string name="custom_email_alias_domains">Domaines personnalisés pour les alias d\'adresses e-mail</string>
   <string name="multiple_forwarding_mailboxes">Plusieurs messageries de transfert</string>
   <string name="priority_support">Assistance prioritaire</string>
   <string name="one_vault">1 coffre-fort</string>
-  <string name="ten_hide_my_email_aliases">10 alias Hide-my-email</string>
+  <string name="ten_hide_my_email_aliases">10 alias « Hide My Email »</string>
   <!-- endregion -->
 </resources>

@@ -21,7 +21,7 @@
   <string name="core_report_bug_close">Cerrar</string>
   <string name="core_report_bug_subject_field_hint">Asunto</string>
   <string name="core_report_bug_subject_field_required">Introduce un asunto</string>
-  <string name="core_report_bug_description_field_hint">¿Qué ha pasado? Mínimo 10 caracteres</string>
+  <string name="core_report_bug_description_field_hint">¿Cuál es el problema? Mínimo 10 caracteres</string>
   <string name="core_report_bug_description_field_placeholder">Describe el problema lo más detallado posible. Si hay un error en el mensaje, haznos saber lo que dice.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="one">Introduce al menos %d carácter</item>

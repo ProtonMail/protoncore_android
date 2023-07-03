@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Пачаты перыяд адтэрміноўкі</string>
+  <string name="account_recovery_grace_started_subtitle">Ваш перыяд адтэрміноўкі ўліковага запісу аднаўлення быў пачаты і пакуль працэс не завершаны.</string>
+  <string name="account_recovery_cancelled_title">Аднаўленне ўліковага запісу скасавана</string>
+  <string name="account_recovery_cancelled_subtitle">Працэс аднаўлення вашага ўліковага запісу быў скасаваны.</string>
+  <string name="account_recovery_password_started_title">Пароль аднаўлення ўліковага запісу можна змяніць</string>
+  <string name="account_recovery_password_started_subtitle">Быў пачаты перыяд аднаўлення змены пароля ўліковага запісу. Цяпер вы можаце змяніць свой пароль.</string>
+  <string name="account_recovery_window_ended_title">Тэрмін аднаўлення ўліковага запісу завершаны</string>
+  <string name="account_recovery_window_ended_subtitle">Тэрмін аднаўлення вашага ўліковага запісу завершаны.</string>
+  <string name="account_recovery_cancel">Скасаваць аднаўленне</string>
+  <string name="account_recovery_password_label">Увядзіце пароль, каб скасаваць</string>
+  <string name="account_recovery_password_placeholder">Пароль</string>
+</resources>

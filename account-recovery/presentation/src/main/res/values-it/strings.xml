@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Periodo di grazia iniziato</string>
+  <string name="account_recovery_grace_started_subtitle">Il tuo periodo di grazia per il recupero dell\'account è iniziato ed è in corso.</string>
+  <string name="account_recovery_cancelled_title">Recupero dell\'account annullato</string>
+  <string name="account_recovery_cancelled_subtitle">La tua operazione di recupero dell\'account è stata annullata.</string>
+  <string name="account_recovery_password_started_title">La password di recupero dell\'account può essere modificata</string>
+  <string name="account_recovery_password_started_subtitle">Il tuo periodo di modifica della password di recupero dell\'account è iniziato. Ora puoi modificare la password.</string>
+  <string name="account_recovery_window_ended_title">Finestra di recupero dell\'account finita</string>
+  <string name="account_recovery_window_ended_subtitle">La tua finestra di recupero dell\'account è finita.</string>
+  <string name="account_recovery_cancel">Annulla il recupero</string>
+  <string name="account_recovery_password_label">Inserisci la password per annullare</string>
+  <string name="account_recovery_password_placeholder">Password</string>
+</resources>

@@ -97,7 +97,7 @@
   <string name="auth_password_chooser_change">變更密碼</string>
   <string name="auth_user_check_one_free_error">僅允許一個免費的 Proton 帳號。</string>
   <string name="auth_user_check_delinquent_error">您的帳號目前因為發票過期而暫停。</string>
-  <string name="auth_user_check_delinquent_action">支付帳單</string>
+  <string name="auth_user_check_delinquent_action">支付繳款單</string>
   <string name="auth_account_not_found_error">帳號錯誤</string>
   <string name="auth_one_account_all_services">一組帳號，Proton 服務無限用。</string>
   <string name="auth_create_account">建立帳號</string>

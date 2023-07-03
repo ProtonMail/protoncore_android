@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_recovery_grace_started_title">Henstandsperiode startet</string>
+  <string name="account_recovery_grace_started_subtitle">Din henstandsperiode for gendannelse af kontoen er startet og pågår.</string>
+  <string name="account_recovery_cancelled_title">Gendannelse af konto annulleret</string>
+  <string name="account_recovery_cancelled_subtitle">Gendannelsesprocessen for kontoen er blevet annulleret.</string>
+  <string name="account_recovery_password_started_title">Adgangskode til gendannelse af konto kan ændres</string>
+  <string name="account_recovery_password_started_subtitle">Ændringsperioden for din adgangskode til gendannelse af konto er startet. Du kan nu ændre din adgangskode.</string>
+  <string name="account_recovery_window_ended_title">Perioden til at gendanne kontoen er slut</string>
+  <string name="account_recovery_window_ended_subtitle">Perioden til gendannelse af din konto er slut.</string>
+  <string name="account_recovery_cancel">Annuller gendannelse</string>
+  <string name="account_recovery_password_label">Indtast adgangskode for at annullere.</string>
+  <string name="account_recovery_password_placeholder">Adgangskode</string>
+</resources>

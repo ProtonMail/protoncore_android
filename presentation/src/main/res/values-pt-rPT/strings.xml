@@ -18,12 +18,12 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Can not find browser to open the link.</string>
-  <string name="presentation_force_update_title">Actualização requerida</string>
-  <string name="presentation_force_update_message">Esta versão da aplicação já não é suportada. Actualize para continuar a usá-la.</string>
+  <string name="presentation_browser_missing">Não é possível encontrar um navegador para abrir a ligação.</string>
+  <string name="presentation_force_update_title">Atualização obrigatória</string>
+  <string name="presentation_force_update_message">Esta versão da aplicação já não é suportada. Atualize para continuar a usá-la.</string>
   <string name="presentation_force_update_learn_more">Saiba mais</string>
-  <string name="presentation_force_update_update">Actualizar</string>
-  <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
+  <string name="presentation_force_update_update">Atualizar</string>
+  <string name="presentation_market_missing">Não é possível encontrar a aplicação no seu dispositivo. Aceda à loja de aplicações para a instalar.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Inicie sessão para continuar</string>
   <string name="presentation_alert_title">Alerta</string>
@@ -43,9 +43,9 @@
   <string name="presentation_retry">Tentar de novo</string>
   <string name="presentation_skip">Saltar</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Não é possível ligar ao servidor.</string>
+  <string name="presentation_general_connection_error">Não foi possível ligar ao servidor.</string>
   <string name="presentation_check_your_connection">Verifique a sua ligação.</string>
   <string name="presentation_connectivity_issues">Problemas de ligação</string>
-  <string name="presentation_field_required">This field is required.</string>
-  <string name="presentation_error_general">An error occurred.</string>
+  <string name="presentation_field_required">Este campo é obrigatório.</string>
+  <string name="presentation_error_general">Ocorreu um erro.</string>
 </resources>
