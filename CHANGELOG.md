@@ -11,6 +11,58 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [12.0.0] - 2023-07-03
+
+### Chores
+
+- Minor quark comamnd fixes.
+- Added Recovery Grafana Dashboard.
+- crypto-android:
+  - Make `SrpCrypto` safe to call from main thread (and avoid ANR).
+- observability:
+  - Additional label values for account creation.
+  - Add account type for signup observability metrics.
+
+### Features
+
+- account-recovery:
+  - Implement observability metrics.
+  - Add observability metrics.
+  - Ask the user for password, before cancelling account recovery attempt.
+- event-manager:
+  - Added configurable EventWorkerManager repeat/backoff intervals.
+- notification:
+  - Integrated DeeplinkManager into Notification modules.
+  - Added DeeplinkManager, DeeplinkIntentProvider and DeeplinkBroadcastReceiver.
+  - Observe Push objects to display notifications.
+  - Added Dagger CoreNotificationModule.
+  - Updated Notification Response/Payload structure (NotificationDatabase.MIGRATION_1).
+  - Added NotificationEventListener.
+  - Add initial notification data module.
+  - Add notification modules, domain entity and interfaces.
+
+### Bug Fixes
+
+- auth-presentation:
+  - Changed Create Address Subtitle string.
+- observability:
+  - Events serialization improvements.
+
+### Internationalization
+
+- Upgrade translations from crowdin (c3fb9362).
+
+### Refactoring
+
+- SessionManager now hold a Mutex for any session write (centralized).
+
+  Session is now separated into Authenticated and Unauthenticated.
+- Account Recovery (use UserRecovery.State, use NavHost).
+- account-recovery:
+  - Move classes related to notifications from `account-recovery` to `notification` module.
+- notification:
+  - Move classes related to notifications from `account-recovery` to `notification` module.
+
 ## [11.0.0] - 2023-06-19
 
 ### Chores
