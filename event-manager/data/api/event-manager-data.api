@@ -402,22 +402,25 @@ public class me/proton/core/eventmanager/data/work/EventWorker : androidx/work/C
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorker$Companion {
-	public final fun getRequestFor-HG0u8IE (Lme/proton/core/eventmanager/domain/EventManagerConfig;J)Landroidx/work/PeriodicWorkRequest;
+	public final fun getRequestFor-SxA4cEA (Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/EventManagerConfig;J)Landroidx/work/PeriodicWorkRequest;
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl : me/proton/core/eventmanager/domain/work/EventWorkerManager {
-	public fun <init> (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)V
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)V
 	public fun cancel (Lme/proton/core/eventmanager/domain/EventManagerConfig;)V
 	public fun enqueue (Lme/proton/core/eventmanager/domain/EventManagerConfig;Z)V
+	public fun getBackoffDelay-UwyO8pc ()J
+	public fun getRepeatIntervalBackground-UwyO8pc ()J
+	public fun getRepeatIntervalForeground-UwyO8pc ()J
 	public fun isRunning (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;
-	public static fun newInstance (Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkManager;Lme/proton/core/presentation/app/AppLifecycleProvider;)Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;
 }
 
 public abstract interface class me/proton/core/eventmanager/data/work/EventWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {

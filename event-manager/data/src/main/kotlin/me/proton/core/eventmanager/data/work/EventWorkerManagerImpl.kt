@@ -18,18 +18,24 @@
 
 package me.proton.core.eventmanager.data.work
 
+import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.await
-import kotlinx.coroutines.delay
+import dagger.hilt.android.qualifiers.ApplicationContext
+import me.proton.core.eventmanager.data.R
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
 import javax.inject.Inject
 import kotlin.time.Duration
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class EventWorkerManagerImpl @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val workManager: WorkManager,
     private val appLifecycleProvider: AppLifecycleProvider
 ) : EventWorkerManager {
@@ -38,11 +44,12 @@ class EventWorkerManagerImpl @Inject constructor(
 
     override fun enqueue(config: EventManagerConfig, immediately: Boolean) {
         val uniqueWorkName = getUniqueWorkName(config)
-        val initialDelay = if (immediately) Duration.ZERO else when (appLifecycleProvider.state.value) {
-            AppLifecycleProvider.State.Background -> EventWorkerManager.REPEAT_INTERVAL_BACKGROUND
-            AppLifecycleProvider.State.Foreground -> EventWorkerManager.REPEAT_INTERVAL_FOREGROUND
-        }
-        val request = EventWorker.getRequestFor(config, initialDelay)
+        val initialDelay =
+            if (immediately) Duration.ZERO else when (appLifecycleProvider.state.value) {
+                AppLifecycleProvider.State.Background -> getRepeatIntervalBackground()
+                AppLifecycleProvider.State.Foreground -> getRepeatIntervalForeground()
+            }
+        val request = EventWorker.getRequestFor(this, config, initialDelay)
         workManager.enqueueUniquePeriodicWork(uniqueWorkName, REPLACE, request)
     }
 
@@ -56,4 +63,16 @@ class EventWorkerManagerImpl @Inject constructor(
         val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().firstOrNull()
         return info?.state == WorkInfo.State.RUNNING
     }
+
+    override fun getRepeatIntervalForeground(): Duration = context.resources.getInteger(
+        R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds
+    ).toDuration(DurationUnit.SECONDS)
+
+    override fun getRepeatIntervalBackground(): Duration = context.resources.getInteger(
+        R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds
+    ).toDuration(DurationUnit.SECONDS)
+
+    override fun getBackoffDelay(): Duration = context.resources.getInteger(
+        R.integer.core_feature_event_manager_worker_backoff_delay_seconds
+    ).toDuration(DurationUnit.SECONDS)
 }

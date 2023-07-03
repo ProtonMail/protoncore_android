@@ -18,6 +18,7 @@
 
 package me.proton.core.eventmanager.data.work
 
+import android.content.Context
 import androidx.work.Data
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -40,6 +41,9 @@ internal class EventWorkerManagerImplTest {
 
     @get:Rule
     val mockKRule = MockKRule(this)
+
+    @MockK
+    lateinit var context: Context
 
     @MockK
     lateinit var workManager: WorkManager

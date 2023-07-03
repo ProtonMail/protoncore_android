@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="core_feature_event_manager_worker_repeat_internal_foreground_seconds" type="integer" />
+    <public name="core_feature_event_manager_worker_repeat_internal_background_seconds" type="integer" />
+    <public name="core_feature_event_manager_worker_backoff_delay_seconds" type="integer" />
+</resources>

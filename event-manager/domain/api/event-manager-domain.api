@@ -387,15 +387,11 @@ public abstract interface class me/proton/core/eventmanager/domain/repository/Ev
 }
 
 public abstract interface class me/proton/core/eventmanager/domain/work/EventWorkerManager {
-	public static final field Companion Lme/proton/core/eventmanager/domain/work/EventWorkerManager$Companion;
 	public abstract fun cancel (Lme/proton/core/eventmanager/domain/EventManagerConfig;)V
 	public abstract fun enqueue (Lme/proton/core/eventmanager/domain/EventManagerConfig;Z)V
+	public abstract fun getBackoffDelay-UwyO8pc ()J
+	public abstract fun getRepeatIntervalBackground-UwyO8pc ()J
+	public abstract fun getRepeatIntervalForeground-UwyO8pc ()J
 	public abstract fun isRunning (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/eventmanager/domain/work/EventWorkerManager$Companion {
-	public final fun getBACKOFF_DELAY-UwyO8pc ()J
-	public final fun getREPEAT_INTERVAL_BACKGROUND-UwyO8pc ()J
-	public final fun getREPEAT_INTERVAL_FOREGROUND-UwyO8pc ()J
 }
 

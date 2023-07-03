@@ -77,10 +77,14 @@ open class EventWorker @AssistedInject constructor(
     companion object {
         private const val KEY_INPUT_CONFIG = "config"
 
-        fun getRequestFor(config: EventManagerConfig, initialDelay: Duration): PeriodicWorkRequest {
+        fun getRequestFor(
+            manager: EventWorkerManager,
+            config: EventManagerConfig,
+            initialDelay: Duration
+        ): PeriodicWorkRequest {
             val initialDelaySeconds = initialDelay.inWholeSeconds
-            val backoffDelaySeconds = EventWorkerManager.BACKOFF_DELAY.inWholeSeconds
-            val repeatIntervalSeconds = EventWorkerManager.REPEAT_INTERVAL_BACKGROUND.inWholeSeconds
+            val backoffDelaySeconds = manager.getBackoffDelay().inWholeSeconds
+            val repeatIntervalSeconds = manager.getRepeatIntervalBackground().inWholeSeconds
             val serializedConfig = config.serialize()
             return PeriodicWorkRequestBuilder<EventWorker>(repeatIntervalSeconds, TimeUnit.SECONDS)
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, backoffDelaySeconds, TimeUnit.SECONDS)
