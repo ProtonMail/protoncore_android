@@ -11,6 +11,20 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [13.0.0] - 2023-07-04
+
+### Chores
+
+- Upgraded Kotlin to 1.8.10 (+Dagger 2.46.1, +Compose to 1.4.3, +AppCompat 1.6.1, +Lifecycle 2.6.1, +Robolectric 4.10.3).
+- Upgraded Gradle to 8.0.2.
+
+### Bug Fixes
+
+- detekt:
+  - Removed not existing import (net.rubygrapefruit.platform.file.FilePermissionException).
+- payment:
+  - Added Payment Activities in AndroidManifest.
+
 ## [12.0.0] - 2023-07-03
 
 ### Chores
