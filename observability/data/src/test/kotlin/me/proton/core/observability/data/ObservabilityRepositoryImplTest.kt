@@ -19,23 +19,28 @@
 package me.proton.core.observability.data
 
 import io.mockk.coVerify
+import io.mockk.core.ValueClassSupport.boxedValue
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.spyk
+import io.mockk.unmockkObject
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
+import kotlinx.serialization.json.JsonObject
 import me.proton.core.observability.data.db.ObservabilityDao
 import me.proton.core.observability.data.db.ObservabilityDatabase
 import me.proton.core.observability.data.entity.ObservabilityEventEntity
-import me.proton.core.observability.data.testing.allTestEvents
 import me.proton.core.observability.data.testing.testObservabilityEventNewFileName
-import me.proton.core.observability.data.testing.testObservabilityEventOldFileName
-import me.proton.core.observability.domain.ObservabilityRepository
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
-import me.proton.core.util.kotlin.deserialize
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
+import me.proton.core.util.kotlin.ProtonCoreConfig
 import me.proton.core.util.kotlin.serialize
 import org.junit.After
 import org.junit.Before
@@ -48,7 +53,8 @@ class ObservabilityRepositoryImplTest {
     // region mocks
     private val db = mockk<ObservabilityDatabase>(relaxed = true)
     private val dao = mockk<ObservabilityDao>(relaxed = true)
-    private lateinit var repository: ObservabilityRepository
+    private lateinit var repository: ObservabilityRepositoryImpl
+//    private val json = mockk<Json>(relaxed = true)
     // endregion
 
     // region test data
@@ -59,6 +65,7 @@ class ObservabilityRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
+        mockkObject(ProtonCoreConfig)
         mockkStatic("me.proton.core.util.kotlin.SerializationUtilsKt")
         every { db.observabilityDao() } returns dao
         repository = ObservabilityRepositoryImpl(db)
@@ -66,6 +73,7 @@ class ObservabilityRepositoryImplTest {
 
     @After
     fun afterEveryTest() {
+        unmockkObject(ProtonCoreConfig)
         unmockkStatic("me.proton.core.util.kotlin.SerializationUtilsKt")
     }
 
@@ -74,7 +82,6 @@ class ObservabilityRepositoryImplTest {
         // GIVEN
         val eventSlot = slot<ObservabilityEventEntity>()
         val eventData = sampleData
-        every { eventData.serialize() } returns "test-string"
         val event = ObservabilityEvent(
             id = 1, timestamp = Instant.MIN, data = eventData
         )
@@ -95,7 +102,6 @@ class ObservabilityRepositoryImplTest {
         // GIVEN
         val eventSlot = slot<ObservabilityEventEntity>()
         val eventData = sampleData
-        every { eventData.serialize() } returns "test-string"
         val event = ObservabilityEvent(
             id = 1, timestamp = Instant.MIN, data = eventData
         )
@@ -124,7 +130,6 @@ class ObservabilityRepositoryImplTest {
         // GIVEN
         val eventSlot = slot<ObservabilityEventEntity>()
         val eventData = sampleData
-        every { eventData.serialize() } returns "test-string"
         val event1 = ObservabilityEvent(
             id = 1, timestamp = Instant.MIN, data = eventData
         )
@@ -152,12 +157,25 @@ class ObservabilityRepositoryImplTest {
         // GIVEN
         val limit: Int? = null
         val eventData = "test-data"
-        every { eventData.deserialize<ObservabilityData>() } returns mockk()
-        val event1 = ObservabilityEventEntity(
-            id = 1, name = "test-name-1", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+        val event1 = spyk(
+            ObservabilityEventEntity(
+                id = 1, name = "test-name-1", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+            )
         )
-        val event2 = ObservabilityEventEntity(
-            id = 2, name = "test-name-2", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+        every { event1.toObservabilityEvent() } returns ObservabilityEvent(
+            id = 1,
+            data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail),
+            timestamp = Instant.MIN
+        )
+        val event2 = spyk(
+            ObservabilityEventEntity(
+                id = 2, name = "test-name-2", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+            )
+        )
+        every { event2.toObservabilityEvent() } returns ObservabilityEvent(
+            id = 2,
+            data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail),
+            timestamp = Instant.MIN
         )
         every { dao.getAll() } returns listOf(event1, event2)
         // WHEN
@@ -174,12 +192,25 @@ class ObservabilityRepositoryImplTest {
         // GIVEN
         val limit = 3
         val eventData = "test-data"
-        every { eventData.deserialize<ObservabilityData>() } returns mockk()
-        val event1 = ObservabilityEventEntity(
-            id = 1, name = "test-name-1", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+        val event1 = spyk(
+            ObservabilityEventEntity(
+                id = 1, name = "test-name-1", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+            )
         )
-        val event2 = ObservabilityEventEntity(
-            id = 2, name = "test-name-2", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+        every { event1.toObservabilityEvent() } returns ObservabilityEvent(
+            id = 1,
+            data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail),
+            timestamp = Instant.MIN
+        )
+        val event2 = spyk(
+            ObservabilityEventEntity(
+                id = 2, name = "test-name-2", version = 1, timestamp = Instant.MIN.epochSecond, data = eventData
+            )
+        )
+        every { event2.toObservabilityEvent() } returns ObservabilityEvent(
+            id = 2,
+            data = SignupScreenViewTotalV1(SignupScreenViewTotalV1.ScreenId.chooseInternalEmail),
+            timestamp = Instant.MIN
         )
         every { dao.getAll(limit) } returns listOf(event1, event2)
         // WHEN
@@ -192,39 +223,25 @@ class ObservabilityRepositoryImplTest {
     }
 
     @Test
-    fun `old file name serializes properly`() = runTest {
-        // GIVEN
-        every { dao.getAll() } returns listOf(testObservabilityEventOldFileName)
-        // WHEN
-        val result = repository.getEventsAndSanitizeDb()
-        // THEN
-        assertEquals(0, result.size)
-    }
-
-    @Test
     fun `new file name serializes properly`() = runTest {
         // GIVEN
-        every { dao.getAll() } returns listOf(testObservabilityEventNewFileName)
+        val event = spyk(testObservabilityEventNewFileName)
+        every { dao.getAll() } returns listOf(event)
+        every { event.toObservabilityEvent() } returns ObservabilityEvent(
+            id = 2,
+            timestamp = Instant.now(),
+            data = SignupFetchDomainsTotal(
+                Labels = HttpStatusLabels(status = HttpApiStatus.connectionError),
+                Value = 1
+            )
+        )
         // WHEN
         val result = repository.getEventsAndSanitizeDb()
         // THEN
         assertEquals(1, result.size)
-        val event = result[0]
-        assertEquals("SignupFetchDomainsTotal", event.data::class.java.simpleName)
-    }
+        val resultEvent = result[0]
+        val valueLiteral = (resultEvent.data as JsonObject).getValue("Value").boxedValue
 
-    @Test
-    fun `different file name serializes properly`() = runTest {
-        // GIVEN
-        val eventSlot = slot<List<Long>>()
-        every { dao.getAll() } returns allTestEvents
-        // WHEN
-        val result = repository.getEventsAndSanitizeDb()
-        coVerify(exactly = 1) { dao.deleteAll(capture(eventSlot)) }
-        assertEquals(1, result.size)
-        val capturedList = eventSlot.captured
-        assertEquals(2, capturedList.size)
-        assertEquals(1, capturedList[0])
-        assertEquals(3, capturedList[1])
+        assertEquals("1", valueLiteral.toString())
     }
 }

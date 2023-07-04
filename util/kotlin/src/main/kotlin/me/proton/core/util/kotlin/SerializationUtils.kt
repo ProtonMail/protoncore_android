@@ -124,7 +124,7 @@ inline fun <reified T : Any> List<T>.serialize() = Serializer.encodeToString(thi
 inline fun <reified T : Any, reified V : Any> Map<T, V>.serialize() = Serializer.encodeToString(this)
 
 @NeedSerializable
-inline fun <reified T> T.serializeToJson(
+inline fun <reified T> T.serializeToJsonElement(
     serializer: SerializationStrategy<T>? = null
 ): JsonElement =
     serializer?.let { JsonSerializer.encodeToJsonElement(serializer, this) } ?: JsonSerializer.encodeToJsonElement(this)

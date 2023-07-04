@@ -18,8 +18,11 @@
 
 package me.proton.core.observability.domain.entity
 
+import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.JsonNull
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.deserializeOrNull
+import me.proton.core.util.kotlin.serializeToJsonElement
 import java.time.Instant
 
 /**
@@ -33,7 +36,7 @@ public data class ObservabilityEvent internal constructor(
     val name: String,
     val version: Long,
     val timestamp: Long,
-    val data: ObservabilityData
+    val data: JsonElement
 ) {
     public constructor(
         id: Long? = null,
@@ -46,7 +49,7 @@ public data class ObservabilityEvent internal constructor(
         name = name,
         version = version,
         timestamp = timestamp.epochSecond,
-        data = data.deserialize()
+        data = data.deserializeOrNull() ?: JsonNull
     )
 
     public constructor(
@@ -58,7 +61,6 @@ public data class ObservabilityEvent internal constructor(
         name = data.metricName,
         version = data.metricVersion,
         timestamp = timestamp.epochSecond,
-        data = data
+        data = data.serializeToJsonElement()
     )
-
 }

@@ -43,5 +43,3 @@ internal val testObservabilityEventDifferentFileName = ObservabilityEventEntity(
     timestamp = 1,
     data = "{\"type\":\"someFileName\",\"Labels\":{\"status\":\"connectionError\"},\"Value\":1}"
 )
-internal val allTestEvents =
-    listOf(testObservabilityEventOldFileName, testObservabilityEventNewFileName, testObservabilityEventDifferentFileName)

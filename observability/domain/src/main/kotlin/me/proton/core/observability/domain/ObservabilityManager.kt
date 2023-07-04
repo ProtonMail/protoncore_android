@@ -19,6 +19,7 @@
 package me.proton.core.observability.domain
 
 import kotlinx.coroutines.launch
+import kotlinx.serialization.SerializationException
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
@@ -40,14 +41,13 @@ public class ObservabilityManager @Inject internal constructor(
 ) {
     /** Enqueues an event with a given [data] and [timestamp] to be sent at some point in the future.
      * If observability is disabled, the event won't be sent.
+     *
+     * Note: events that might produce [SerializationException] will not not be included.
      */
     public fun enqueue(data: ObservabilityData, timestamp: Instant = Instant.now()) {
-        enqueue(
-            ObservabilityEvent(
-                timestamp = timestamp,
-                data = data
-            )
-        )
+        runCatching { enqueue(ObservabilityEvent(timestamp = timestamp, data = data))}
+            .onFailure { CoreLogger.e(LogTag.ENQUEUE, it) }
+
     }
 
     /** Enqueues an [event] to be sent at some point in the future.

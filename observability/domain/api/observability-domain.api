@@ -59,11 +59,11 @@ public final class me/proton/core/observability/domain/entity/ObservabilityEvent
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()J
 	public final fun component4 ()J
-	public final fun component5 ()Lme/proton/core/observability/domain/metrics/ObservabilityData;
-	public final fun copy (Ljava/lang/Long;Ljava/lang/String;JJLme/proton/core/observability/domain/metrics/ObservabilityData;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Ljava/lang/Long;Ljava/lang/String;JJLme/proton/core/observability/domain/metrics/ObservabilityData;ILjava/lang/Object;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
+	public final fun component5 ()Lkotlinx/serialization/json/JsonElement;
+	public final fun copy (Ljava/lang/Long;Ljava/lang/String;JJLkotlinx/serialization/json/JsonElement;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Ljava/lang/Long;Ljava/lang/String;JJLkotlinx/serialization/json/JsonElement;ILjava/lang/Object;)Lme/proton/core/observability/domain/entity/ObservabilityEvent;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getData ()Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public final fun getData ()Lkotlinx/serialization/json/JsonElement;
 	public final fun getId ()Ljava/lang/Long;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getTimestamp ()J

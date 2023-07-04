@@ -25,7 +25,7 @@ import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.jsonObject
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.util.kotlin.ProtonCoreConfig.defaultJson
-import me.proton.core.util.kotlin.serializeToJson
+import me.proton.core.util.kotlin.serializeToJsonElement
 
 @Serializable
 internal data class DataMetricsRequest constructor(
@@ -45,7 +45,7 @@ internal data class MetricEvent constructor(
             version = event.version,
             timestamp = event.timestamp,
             data = JsonObject(
-                event.data.serializeToJson().jsonObject.toMutableMap().apply {
+                event.data.serializeToJsonElement().jsonObject.toMutableMap().apply {
                     // The server doesn't allow extra properties — remove "type" property:
                     remove(defaultJson.configuration.classDiscriminator)
                 }

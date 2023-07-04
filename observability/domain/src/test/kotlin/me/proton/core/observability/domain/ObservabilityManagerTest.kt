@@ -26,6 +26,8 @@ import io.mockk.verify
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
@@ -69,7 +71,8 @@ class ObservabilityManagerTest {
         coEvery { isObservabilityEnabled.invoke() } returns false
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
+
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.addEvent(any()) }
@@ -84,7 +87,7 @@ class ObservabilityManagerTest {
         coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT - 1
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
@@ -100,7 +103,7 @@ class ObservabilityManagerTest {
         coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
@@ -118,7 +121,7 @@ class ObservabilityManagerTest {
         currentClockMillis = ObservabilityManager.MAX_DELAY_MS
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
@@ -135,7 +138,7 @@ class ObservabilityManagerTest {
         currentClockMillis = ObservabilityManager.MAX_DELAY_MS - 1
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         coVerify(exactly = 0) { observabilityRepository.deleteAllEvents() }
@@ -154,7 +157,7 @@ class ObservabilityManagerTest {
         currentClockMillis = ObservabilityManager.MAX_DELAY_MS
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         // The first event should be enqueued with max delay.
@@ -167,7 +170,7 @@ class ObservabilityManagerTest {
         currentClockMillis += 10
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         // Subsequent events should be also enqueued with max delay.
@@ -180,7 +183,7 @@ class ObservabilityManagerTest {
         currentClockMillis += ObservabilityManager.MAX_DELAY_MS
 
         // WHEN
-        tested.enqueue(mockk<ObservabilityData>(relaxed = true))
+        tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         // Events enqueued after MAX_DELAY_MS since the first event,

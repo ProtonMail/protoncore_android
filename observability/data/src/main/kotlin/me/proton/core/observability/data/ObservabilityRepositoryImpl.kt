@@ -52,18 +52,9 @@ public class ObservabilityRepositoryImpl @Inject constructor(
             observabilityDao.getAll()
         else
             observabilityDao.getAll(limit)
-        val nonSerializableIds = mutableListOf<Long>()
         val result = events.mapNotNull {
-            val event = try {
-                it.toObservabilityEvent()
-            } catch (error: SerializationException) {
-                // TODO: log to sentry
-                nonSerializableIds.add(it.id)
-                null
-            }
-            event
+            it.toObservabilityEvent()
         }
-        observabilityDao.deleteAll(nonSerializableIds)
         return result
     }
 
