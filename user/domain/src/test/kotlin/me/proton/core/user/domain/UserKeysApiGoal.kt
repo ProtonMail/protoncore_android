@@ -28,8 +28,8 @@ import me.proton.core.key.domain.decryptAndVerifyText
 import me.proton.core.key.domain.decryptAndVerifyTextOrNull
 import me.proton.core.key.domain.decryptFile
 import me.proton.core.key.domain.decryptAndVerifyHashKey
-import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrNull
-import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrThrow
+import me.proton.core.key.domain.decryptNestedKeyOrNull
+import me.proton.core.key.domain.decryptNestedKeyOrThrow
 import me.proton.core.key.domain.decryptSessionKey
 import me.proton.core.key.domain.decryptText
 import me.proton.core.key.domain.decryptTextOrNull
@@ -120,7 +120,7 @@ internal fun nestedKeyCreation(
 
     // Use parent, UserAddress to decrypt the nested Private Key.
     val decryptedNestedPrivateKey = userAddress.useKeys(context) {
-        decryptAndVerifyNestedKeyOrThrow(encryptedNestedPrivateKey)
+        decryptNestedKeyOrThrow(encryptedNestedPrivateKey)
     }
     // Then directly use the Private Key (e.g. for single crypto function call).
     decryptedNestedPrivateKey.privateKey.encryptText(context, "text")
@@ -160,7 +160,7 @@ internal fun extendedKeyHolderApi(
 
     fun from(userAddress: UserAddress): Calendar {
         val nestedPrivateKey = userAddress.useKeys(context) {
-            decryptAndVerifyNestedKeyOrThrow(calendarKey, calendarPassphrase, calendarPassphraseSignature)
+            decryptNestedKeyOrThrow(calendarKey, calendarPassphrase, calendarPassphraseSignature)
         }
         // Build Calendar: specify privateKey + passphrase.
         return Calendar(listOf(CalendarPrivateKey(privateKey = nestedPrivateKey.privateKey)))
@@ -183,7 +183,7 @@ internal fun convertToKeyHolderApi(
     calendarKey: EncryptedMessage
 ) {
     val nestedPrivateKey = userAddress.useKeys(context) {
-        decryptAndVerifyNestedKeyOrThrow(calendarPassphrase, calendarPassphraseSignature, calendarKey)
+        decryptNestedKeyOrThrow(calendarPassphrase, calendarPassphraseSignature, calendarKey)
     }
 
     // One unlock-able PrivateKey is enough to convert into KeyHolder.
@@ -219,10 +219,10 @@ internal fun nestedNodeKeyCreation(
 
     val decryptedPrivateNestedKey = parentNode.useKeys(context) {
         val verificationKeyRing = userAddress.publicKeyRing(context)
-        decryptAndVerifyNestedKeyOrNull(
+        decryptNestedKeyOrNull(
             encryptedNestedPrivateKey,
             verifyKeyRing = verificationKeyRing
-        ) ?: decryptAndVerifyNestedKeyOrThrow(
+        ) ?: decryptNestedKeyOrThrow(
             encryptedNestedPrivateKey,
             // Retry decryption, but allowing the use of compromised keys
             verifyKeyRing = verificationKeyRing.allowCompromisedKeys()

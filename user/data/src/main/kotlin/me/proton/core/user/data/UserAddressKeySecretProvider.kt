@@ -24,8 +24,9 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.decryptAndVerifyNestedKeyOrNull
+import me.proton.core.key.domain.decryptNestedKeyOrNull
 import me.proton.core.key.domain.encryptData
 import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.key.domain.entity.key.KeyId
@@ -61,12 +62,15 @@ class UserAddressKeySecretProvider @Inject constructor(
             // Old address key format -> user passphrase.
             key.token == null || key.signature == null -> passphraseRepository.getPassphrase(userId)
             // New address key format -> user keys encrypt token + signature -> address passphrase.
-            else -> userContext.decryptAndVerifyNestedKeyOrNull(
+            else -> userContext.decryptNestedKeyOrNull(
                 key = key.privateKey.key,
                 passphrase = requireNotNull(key.token),
                 signature = requireNotNull(key.signature),
-                validTokenPredicate = UserAddressKeySecretProvider::tokenHasValidFormat,
-            )?.privateKey?.passphrase
+                validTokenPredicate = UserAddressKeySecretProvider::tokenHasValidFormat
+            )?.takeIf { nestedPrivateKey ->
+                nestedPrivateKey.status == VerificationStatus.Success
+            }?.privateKey?.passphrase
+
             // If the passphrase can't be decrypted, null is returned, key will be set as inactive locally.
         }
     }

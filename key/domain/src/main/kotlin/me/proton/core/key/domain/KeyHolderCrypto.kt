@@ -40,6 +40,7 @@ import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.VerificationContext
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.decryptAndVerifyDataOrNull
 import me.proton.core.crypto.common.pgp.decryptAndVerifyTextOrNull
@@ -1269,39 +1270,41 @@ fun KeyHolderContext.getEncryptedPackets(message: EncryptedMessage): List<Encryp
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
  * @throws [IllegalStateException] if there is no encrypted passphrase or signature.
- * If the passphrase cannot be decrypted or verified.
+ * @throws [CryptoException] if [nestedPrivateKey.passphrase] cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignNestedKey]
  */
-fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
+fun KeyHolderContext.decryptNestedKeyOrThrow(
     nestedPrivateKey: NestedPrivateKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
     validTokenPredicate: (ByteArray) -> Boolean = { true },
-    verificationContext: VerificationContext? = null
+    verificationContext: VerificationContext? = null,
 ): NestedPrivateKey {
-    checkNotNull(nestedPrivateKey.passphrase) { "Cannot decrypt key without encrypted passphrase." }
-    checkNotNull(nestedPrivateKey.passphraseSignature) { "Cannot verify without passphrase signature." }
-    val passphrase = decryptData(nestedPrivateKey.passphrase).use { decrypted ->
-        val verified = verifyKeyRing.verifyData(
-            context,
-            decrypted.array,
-            nestedPrivateKey.passphraseSignature,
-            verificationContext = verificationContext
-        )
-        check(verified) { "Cannot verify key passphrase using provided signature." }
+    val nestedPrivateKeyPassphrase = nestedPrivateKey.passphrase
+    val nestedPrivateKeyPassphraseSignature = nestedPrivateKey.passphraseSignature
+    checkNotNull(nestedPrivateKeyPassphrase) { "Cannot decrypt key without encrypted passphrase." }
+    checkNotNull(nestedPrivateKeyPassphraseSignature) { "Cannot verify without passphrase signature." }
+    return decryptData(nestedPrivateKeyPassphrase).use { decrypted ->
         check(validTokenPredicate(decrypted.array)) {
             "Passphrase doesn't have the expected format"
         }
-        decrypted.encrypt(context.keyStoreCrypto)
-    }
-    return nestedPrivateKey.copy(
-        privateKey = nestedPrivateKey.privateKey.copy(
-            isActive = true,
-            passphrase = passphrase
+        val verified = verifyKeyRing.verifyData(
+            context,
+            decrypted.array,
+            nestedPrivateKeyPassphraseSignature,
+            verificationContext = verificationContext,
         )
-    )
+        val passphrase = decrypted.encrypt(context.keyStoreCrypto)
+        val status = VerificationStatus.Success.takeIf { verified } ?: VerificationStatus.Failure
+        nestedPrivateKey.copy(
+            privateKey = nestedPrivateKey.privateKey.copy(
+                isActive = true,
+                passphrase = passphrase,
+            ),
+            status = status,
+        )
+    }
 }
-
 
 /**
  * Decrypt [passphrase] using [KeyHolderContext.privateKeyRing]] and verify [signature] using [verifyKeyRing].
@@ -1315,18 +1318,18 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
  *
  * @throws [IllegalStateException] if there is no encrypted passphrase or signature.
- * If the passphrase cannot be decrypted or verified.
+ * @throws [CryptoException] if [nestedPrivateKey.passphrase] cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignNestedKey]
  */
-fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
+fun KeyHolderContext.decryptNestedKeyOrThrow(
     key: Armored,
     passphrase: EncryptedMessage,
     signature: Signature,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
     validTokenPredicate: (ByteArray) -> Boolean = { true },
     verificationContext: VerificationContext? = null
-): NestedPrivateKey = decryptAndVerifyNestedKeyOrThrow(
+): NestedPrivateKey = decryptNestedKeyOrThrow(
     NestedPrivateKey.from(key, passphrase, signature),
     verifyKeyRing,
     validTokenPredicate,
@@ -1343,19 +1346,19 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrThrow(
  * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
- * Or null if its passphrase cannot be decrypted or verified.
+ * Or null if its passphrase cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignNestedKey]
  */
-fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
+fun KeyHolderContext.decryptNestedKeyOrNull(
     nestedPrivateKey: NestedPrivateKey,
     verifyKeyRing: PublicKeyRing = publicKeyRing,
     validTokenPredicate: (ByteArray) -> Boolean = { true },
     verificationContext: VerificationContext? = null
 ): NestedPrivateKey? = runCatching {
-    decryptAndVerifyNestedKeyOrThrow(nestedPrivateKey, verifyKeyRing, validTokenPredicate, verificationContext)
+    decryptNestedKeyOrThrow(nestedPrivateKey, verifyKeyRing, validTokenPredicate, verificationContext)
 }.onFailure {
-    CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt and/or verify nested key.")
+    CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt nested key.")
 }.getOrNull()
 
 /**
@@ -1368,11 +1371,11 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
  * @param verificationContext: If set, the context is used to verify the signature was made in the right context.
  *
  * @return [NestedPrivateKey] with ready to use [PrivateKey].
- * Or null if its passphrase cannot be decrypted or verified.
+ * Or null if its passphrase cannot be decrypted.
  *
  * @see [KeyHolderContext.encryptAndSignNestedKey]
  */
-fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
+fun KeyHolderContext.decryptNestedKeyOrNull(
     key: Armored,
     passphrase: EncryptedMessage,
     signature: Signature,
@@ -1380,7 +1383,7 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
     validTokenPredicate: (ByteArray) -> Boolean = { true },
     verificationContext: VerificationContext? = null
 ): NestedPrivateKey? = runCatching {
-    decryptAndVerifyNestedKeyOrThrow(
+    decryptNestedKeyOrThrow(
         key,
         passphrase,
         signature,
@@ -1389,7 +1392,7 @@ fun KeyHolderContext.decryptAndVerifyNestedKeyOrNull(
         verificationContext
     )
 }.onFailure {
-    CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt and/or verify nested key.")
+    CoreLogger.d(LogTag.DEFAULT, it, "Cannot decrypt nested key.")
 }.getOrNull()
 
 /**

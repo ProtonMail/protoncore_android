@@ -116,7 +116,7 @@ internal fun nestedKeyCreation(
         check(encryptedKey.isEncrypted)
 
         // Use this parent to decrypt the nested Private Key.
-        decryptAndVerifyNestedKeyOrThrow(encryptedKey)
+        decryptNestedKeyOrThrow(encryptedKey)
     }
     // Then directly use the Private Key (e.g. for single crypto function call).
     decryptedNestedPrivateKey.privateKey.encryptText(context, "text")

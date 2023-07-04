@@ -39,7 +39,6 @@ import java.nio.file.Files
 import kotlin.random.Random
 import kotlin.system.measureTimeMillis
 import kotlin.test.assertEquals
-import kotlin.test.assertFails
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
@@ -648,7 +647,7 @@ class KeyHolderTest {
     }
 
     @Test
-    fun useKeys_generate_encrypt_and_decrypt_nested_key() {
+    fun useKeys_generate_encrypt_and_decrypt_no_verify_nested_key() {
         // given
         val encryptedNestedKey = keyHolder1.useKeys(context){
             val nestedKey = generateNestedPrivateKey("user", "example.proton.me")
@@ -656,7 +655,7 @@ class KeyHolderTest {
         }
         // when
         val decryptedNestedKey = keyHolder1.useKeys(context){
-            decryptAndVerifyNestedKeyOrThrow(encryptedNestedKey)
+            decryptNestedKeyOrThrow(encryptedNestedKey)
         }
         // then
         assertEquals(
@@ -664,10 +663,11 @@ class KeyHolderTest {
             decryptedNestedKey.privateKey.fingerprint(context)
         )
         assertTrue(decryptedNestedKey.privateKey.isActive)
+        assertEquals(VerificationStatus.Success, decryptedNestedKey.status)
     }
 
     @Test
-    fun useKeys_generate_encrypt_and_decrypt_nested_key_wrong_signature() {
+    fun useKeys_generate_encrypt_and_decrypt_no_verify_nested_key_wrong_signature() {
         // given
         val encryptedNestedKey = keyHolder1.useKeysAs(context){ encryptContext ->
             val nestedKey = encryptContext.generateNestedPrivateKey("user", "example.proton.me")
@@ -679,11 +679,16 @@ class KeyHolderTest {
             }
 
         }
-        // when & then
-        assertFails {
-            keyHolder1.useKeys(context){
-                decryptAndVerifyNestedKeyOrThrow(encryptedNestedKey)
-            }
+        // when
+        val decryptedNestedKey = keyHolder1.useKeys(context){
+            decryptNestedKeyOrThrow(encryptedNestedKey)
         }
+        // then
+        assertEquals(
+            encryptedNestedKey.privateKey.fingerprint(context),
+            decryptedNestedKey.privateKey.fingerprint(context)
+        )
+        assertTrue(decryptedNestedKey.privateKey.isActive)
+        assertEquals(VerificationStatus.Failure, decryptedNestedKey.status)
     }
 }

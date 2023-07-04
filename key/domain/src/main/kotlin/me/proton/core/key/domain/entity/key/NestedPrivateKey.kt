@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.crypto.common.pgp.VerificationStatus
 import me.proton.core.key.domain.entity.keyholder.KeyHolder
 
 /**
@@ -35,7 +36,8 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolder
 data class NestedPrivateKey(
     val privateKey: PrivateKey,
     val passphrase: EncryptedMessage?,
-    val passphraseSignature: Signature?
+    val passphraseSignature: Signature?,
+    val status: VerificationStatus = VerificationStatus.Unknown,
 ) {
 
     val isEncrypted = passphrase != null && passphraseSignature != null && privateKey.passphrase == null
