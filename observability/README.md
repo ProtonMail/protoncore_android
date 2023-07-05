@@ -23,9 +23,9 @@
 
 You can export the dashboards from Grafana as JSON files. The JSON files can be later used if
 you need to restore/re-import the dashboards into Grafana.
-You will need to pass your session cookie (`grafana_session`) from Grafana.
-
+You need to pass your api key from Grafana (`grafana-api-key`).
+You can optionally pass a query to filter dashboards (`query`, default to "Android").
 ```shell
 cd proton-libs
-./gradlew :observability:observability-tools:run --args="download --grafana-session-cookie=your_session_cookie --grafana-url=https://grafana-url --output-dir=../dashboard"
+./gradlew :observability:observability-tools:run --args="download --grafana-api-key=your_api_key --grafana-url=https://grafana-url --output-dir=../dashboard"
 ```

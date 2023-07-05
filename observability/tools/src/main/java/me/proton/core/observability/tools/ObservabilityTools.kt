@@ -38,7 +38,10 @@ import com.github.victools.jsonschema.module.swagger2.Swagger2Module
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.JsonArray
 import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -47,7 +50,7 @@ import okhttp3.Request
 import java.io.File
 
 fun main(args: Array<String>) {
-    BaseCommand().subcommands(GenerateCommand(), DownloadCommand()).main(args)
+    BaseCommand().subcommands(GenerateCommand(), SearchCommand(), DownloadCommand()).main(args)
 }
 
 class BaseCommand : NoOpCliktCommand()
@@ -117,15 +120,48 @@ class GenerateCommand : CliktCommand() {
             .build()
 }
 
-class DownloadCommand : CliktCommand() {
-    private val dashboards = mapOf(
-        "gnNWal14k" to "core-android-checkout.json",
-        "xY-mRl1Vz" to "core-android-hv.json",
-        "MSUvfY-Vz" to "core-android-signin.json",
-        "nccm8bJVk" to "core-android-signup.json",
-    )
-    private val grafanaSessionCookie by option().required()
-    private val grafanaUrl by option().required()
+abstract class ApiCommand : CliktCommand() {
+
+    protected val grafanaApiKey by option().required()
+    protected val grafanaUrl by option().required()
+
+    protected fun execute(link: String): String {
+        val url = requireNotNull(grafanaUrl.toHttpUrl().resolve(link)) {
+            "Could not create URL for $grafanaUrl."
+        }
+        val bearer = "Bearer $grafanaApiKey"
+        val request = Request.Builder()
+            .url(url)
+            .header("Authorization", bearer)
+            .build()
+        val response = OkHttpClient().newCall(request).execute()
+        check(response.isSuccessful) { "Could not execute `$request`" }
+        return requireNotNull(response.body?.use { it.charStream().readText() }) {
+            "Could not read response body for $url."
+        }
+    }
+
+    protected fun search(query: String): JsonArray {
+        val json = Json { prettyPrint = true }
+        val response = execute("/api/search?query=$query")
+        return json.decodeFromString(response)
+    }
+}
+
+class SearchCommand : ApiCommand() {
+
+    private val query by option()
+
+    override fun run() {
+        println("Searching ...")
+        val response = search(query ?: "")
+        println("Response: $response")
+    }
+}
+
+class DownloadCommand : ApiCommand() {
+
+    private val query by option()
     private val outputDir by option().file(
         canBeDir = true,
         canBeFile = false,
@@ -135,37 +171,25 @@ class DownloadCommand : CliktCommand() {
 
     override fun run() {
         require(grafanaUrl.isNotBlank())
-        require(grafanaSessionCookie.isNotBlank())
+        require(grafanaApiKey.isNotBlank())
 
-        val json = Json {
-            prettyPrint = true
+        val json = Json { prettyPrint = true }
+
+        val dashboards = search(query ?: "Android").associate {
+            val uid = it.jsonObject["uid"]?.jsonPrimitive?.content
+            val uri = it.jsonObject["uri"]?.jsonPrimitive?.content
+            val filename = uri?.split("/")?.last()
+            requireNotNull(uid) to "${requireNotNull(filename)}.json"
         }
 
         dashboards.forEach { (uid, filename) ->
-            println("Downloading $uid...")
-            val response = getDashboard(uid)
-            val jsonResponse = json.decodeFromString<JsonObject>(response)
-            val dashboard =
-                requireNotNull(jsonResponse["dashboard"]) { "Dashboard not found for $uid." }
+            println("Downloading $filename ($uid) ...")
+            val response = execute("/api/dashboards/uid/$uid")
+            val obj = json.decodeFromString<JsonObject>(response)
+            val dashboard = requireNotNull(obj["dashboard"]) { "Dashboard not found for $uid." }
             val file = File(outputDir, filename)
             file.writeText(json.encodeToString(dashboard))
             println("Written to ${file.absolutePath}")
-        }
-    }
-
-    private fun getDashboard(dashboardUid: String): String {
-        val url =
-            requireNotNull(grafanaUrl.toHttpUrl().resolve("/api/dashboards/uid/$dashboardUid")) {
-                "Could not create URL for $dashboardUid."
-            }
-        val request = Request.Builder()
-            .url(url)
-            .header("Cookie", "grafana_session=$grafanaSessionCookie")
-            .build()
-        val response = OkHttpClient().newCall(request).execute()
-        check(response.isSuccessful) { "Could not download $request" }
-        return requireNotNull(response.body?.use { it.charStream().readText() }) {
-            "Could not read response body for $url."
         }
     }
 }

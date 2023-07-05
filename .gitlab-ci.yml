@@ -25,6 +25,7 @@ include:
 
 workflow:
   rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       variables:
         # deploy to Atlas with prep job
@@ -107,6 +108,17 @@ i18n-commit-locales:
     I18N_COMMIT_CROWDIN_PROJECT: 'android-core'
     I18N_COMMIT_BRANCH_PUSH: 'main'
     I18N_COMMIT_BRANCH_ALLOWED: 'main'
+
+grafana-commit-dashboards:
+  extends: .gradle-job
+  stage: prepare
+  allow_failure: true
+  before_script:
+    - source /load-env.sh
+  script:
+    - ./ci/script/pushDashboards.sh
+  rules:
+    - if: $DASHBOARDS_SCHEDULES_FILTER == "commit-dashboards"
 
 ## build stage #####################################################################################
 assemble:
