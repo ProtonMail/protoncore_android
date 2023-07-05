@@ -14,7 +14,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.net.URLEncoder
-import kotlin.time.Duration.Companion.seconds
 
 class QuarkCommandTests {
 
@@ -25,10 +24,10 @@ class QuarkCommandTests {
         mockkObject(quarkCommand)
         every { quarkCommand.client } returns mockk()
 
-        quarkCommand.route("test/route")
+        quarkCommand
+            .route("test/route")
             .baseUrl("https://test.com")
             .proxyToken("testToken")
-            .httpClientTimeout(10.seconds)
     }
 
     @Test
@@ -74,21 +73,21 @@ class QuarkCommandTests {
         quarkCommand.route("route1")
             .baseUrl("https://example1.com")
             .proxyToken("token1")
-            .httpClientTimeout(5.seconds)
+            .args(listOf("1" to "1", "2" to "2").toEncodedArgs())
 
         val request1 = quarkCommand.build()
 
         quarkCommand.route("route2")
             .baseUrl("https://example2.com")
             .proxyToken("token2")
-            .httpClientTimeout(10.seconds)
+            .args(listOf("3" to "3", "4" to "4").toEncodedArgs())
 
         val request2 = quarkCommand.build()
 
         // Check that properties from the first call are not preserved in the second call
-        assertEquals("https://example1.com/route1?", request1.url.toString())
+        assertEquals("https://example1.com/route1?1=1&2=2", request1.url.toString())
+        assertEquals("https://example2.com/route2?3=3&4=4", request2.url.toString())
         assertEquals("token1", request1.header("x-atlas-secret"))
-        assertNotEquals(request1.url, request2.url)
         assertNotEquals(request1.header("x-atlas-secret"), request2.header("x-atlas-secret"))
     }
 

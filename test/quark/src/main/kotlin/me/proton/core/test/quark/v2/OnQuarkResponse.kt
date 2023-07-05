@@ -16,12 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.quark.v2.extension
+package me.proton.core.test.quark.v2
 
-import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.command.jailUnban
 import okhttp3.Response
 
-public fun QuarkCommand.isReady(
-    checkCommand: QuarkCommand.() -> Response = { jailUnban() }
-): Boolean = checkCommand().code < 300
+/**
+ * Represents a response from the Quark API.
+ *
+ * @property isFailureCondition A function to determine if the response represents a failure condition.
+ * @property responseHandler A function to handle the response.
+ */
+public data class OnQuarkResponse(
+    val isFailureCondition: Response.() -> Boolean,
+    val responseHandler: Response.() -> Any
+) {
+    public fun check(response: Response): Boolean =
+        isFailureCondition(response).also { if (it) responseHandler(response) }
+}

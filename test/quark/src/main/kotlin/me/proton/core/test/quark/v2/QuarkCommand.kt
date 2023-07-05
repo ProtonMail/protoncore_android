@@ -25,42 +25,26 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 import java.net.URLEncoder
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
-
-public typealias OnQuarkResponse = Pair<Response.() -> Boolean, Response.() -> Any>
 
 /**
  * Represents a command for making HTTP requests with Quark internal api.
  */
-public open class QuarkCommand {
-
+public open class QuarkCommand(
+    public val client: OkHttpClient = QuarkDefaultClient
+) {
     /** Properties **/
     private var route: String? = null
     private var proxyToken: String? = null
     private var baseUrl: String? = null
-    private var args: MutableList<String> = ArrayList()
+    private var args: List<String> = ArrayList()
     private var onRequestBuilder: Request.Builder.() -> Unit = {}
-    private var httpClientTimeout: Duration = 15.seconds
-    private var httpClientReadTimeout: Duration = 30.seconds
-    private var httpClientWriteTimeout: Duration = 30.seconds
     private var onResponse: OnQuarkResponse =
-        { r: Response -> r.code > 300 } to { r: Response -> error(r.message) }
+        OnQuarkResponse({ code > 300 }, { error("Quark response failed with status code: $code:\n$message") })
 
     /** JSON parser with configuration to ignore unknown keys **/
     public val json: Json = Json { ignoreUnknownKeys = true }
-
-    /**
-     * The HTTP client used to send requests.
-     */
-    public val client: OkHttpClient
-        get() = OkHttpClient
-            .Builder()
-            .connectTimeout(httpClientTimeout.toJavaDuration())
-            .readTimeout(httpClientReadTimeout.toJavaDuration())
-            .writeTimeout(httpClientWriteTimeout.toJavaDuration())
-            .build()
 
     /**
      * Sets the route for the request.
@@ -74,14 +58,17 @@ public open class QuarkCommand {
      * @param args the array of strings to set as arguments
      * @return the QuarkCommand instance for chaining
      */
-    public fun args(args: Array<String>): QuarkCommand = apply { this.args = args.toMutableList() }
+    public fun args(args: Array<String>): QuarkCommand = apply { this.args = args.toList() }
 
     /**
      * Sets the base URL for the request.
      * @param baseUrl the base URL as a string
      * @return the QuarkCommand instance for chaining
      */
-    public fun baseUrl(baseUrl: String): QuarkCommand = apply { this.baseUrl = baseUrl }
+    public fun baseUrl(baseUrl: String): QuarkCommand = apply {
+        check(baseUrl.isNotEmpty())
+        this.baseUrl = baseUrl
+    }
 
     /**
      * Sets the proxy token for the request.
@@ -99,34 +86,17 @@ public open class QuarkCommand {
         apply { this.onRequestBuilder = requestBuilderBlock }
 
     /**
-     * Configures the [QuarkCommand] to execute [responseBlock] based on the [predicate].
+     * Configures the [QuarkCommand] to execute [handlerBlock] based on the [condition].
      *
-     * @param responseBlock Block to execute when [predicate] is true.
-     * @param predicate Condition to check on the response; defaults to `code > 300`.
+     * @param handlerBlock Block to execute when [condition] is true.
+     * @param condition Condition to check on the response.
      * @return The [QuarkCommand] instance with response handling set.
      */
     public fun onResponse(
-        responseBlock: Response.() -> Any,
-        predicate: Response.() -> Boolean = onResponse.first,
+        handlerBlock: Response.() -> Any,
+        condition: Response.() -> Boolean,
     ): QuarkCommand =
-        apply { this.onResponse = predicate to responseBlock }
-
-    /**
-     * Sets timeouts for the HTTP client.
-     * @param clientTimeout the timeout for the client connection
-     * @param readTimeout the timeout for reading responses. Default - [clientTimeout]
-     * @param writeTimeout the timeout for writing requests. Default - [clientTimeout]
-     * @return the QuarkCommand instance for chaining
-     */
-    public fun httpClientTimeout(
-        clientTimeout: Duration,
-        readTimeout: Duration = clientTimeout,
-        writeTimeout: Duration = clientTimeout
-    ): QuarkCommand = apply {
-        this.httpClientTimeout = clientTimeout
-        this.httpClientReadTimeout = readTimeout
-        this.httpClientWriteTimeout = writeTimeout
-    }
+        apply { this.onResponse = OnQuarkResponse(condition, handlerBlock) }
 
     /**
      * Builds the Request object to be sent.
@@ -145,12 +115,6 @@ public open class QuarkCommand {
             proxyToken?.let { header("x-atlas-secret", it) }
         }
         .build()
-        .also {
-            /** reset arguments after request **/
-            args = mutableListOf()
-            onRequestBuilder = {}
-            route = null
-        }
 
     /**
      * Executes a Quark HTTP request using the given HTTP client.
@@ -162,17 +126,14 @@ public open class QuarkCommand {
             .execute()
             .apply {
                 CoreLogger.i(quarkCommandTag, "Sent request to : ${request.url}; Response Code: $code")
-
-                if (onResponse.first(this)) {
-                    onResponse.second(this)
-                }
+                onResponse.check(this)
             }
 
     /** build the internal URL with parameters **/
     private fun Request.Builder.internalUrl(
         baseUrl: String,
         route: String,
-        args: MutableList<String>
+        args: List<String>
     ): Request.Builder = args
         .filter { it.isNotEmpty() }
         .joinToString("&")
@@ -182,6 +143,17 @@ public open class QuarkCommand {
 
     public companion object {
         public const val quarkCommandTag: String = "quark_command"
+
+        private val defaultTimeout = 10.seconds.toJavaDuration()
+
+        public val QuarkDefaultClient: OkHttpClient by lazy {
+            OkHttpClient
+                .Builder()
+                .connectTimeout(defaultTimeout)
+                .readTimeout(defaultTimeout)
+                .writeTimeout(defaultTimeout)
+                .build()
+        }
     }
 }
 
