@@ -223,6 +223,7 @@ class SetupAccountCheckTest {
             every { userId } returns testUserId
             every { name } returns "username"
             every { keys } returns emptyList()
+            every { private } returns true
         }
     }
 
@@ -231,6 +232,7 @@ class SetupAccountCheckTest {
             every { userId } returns testUserId
             every { name } returns "username"
             every { keys } returns listOf(mockk())
+            every { private } returns true
         }
     }
 

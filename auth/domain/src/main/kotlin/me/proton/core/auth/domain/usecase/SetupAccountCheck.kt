@@ -34,6 +34,7 @@ import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.user.domain.extension.hasMissingKeys
 import me.proton.core.user.domain.extension.hasUsername
 import me.proton.core.user.domain.extension.filterInternal
+import me.proton.core.user.domain.extension.isPrivate
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -78,17 +79,17 @@ class SetupAccountCheck @Inject constructor(
             AccountType.Username -> NoSetupNeeded
             AccountType.External -> when {
                 isTemporaryPassword -> ChangePasswordNeeded
-                !user.hasKeys() -> SetupPrimaryKeysNeeded
+                !user.hasKeys() && user.isPrivate() -> SetupPrimaryKeysNeeded
                 isTwoPassModeNeeded && product != Product.Vpn -> TwoPassNeeded
-                fetchAddresses(userId).needsExternalUserAddressKeySetup() -> SetupExternalAddressKeysNeeded
+                fetchAddresses(userId).needsExternalUserAddressKeySetup() && user.isPrivate() -> SetupExternalAddressKeysNeeded
                 else -> NoSetupNeeded
             }
             AccountType.Internal -> when {
                 isTemporaryPassword -> ChangePasswordNeeded
                 !user.hasUsername() -> ChooseUsernameNeeded
-                !user.hasKeys() -> SetupPrimaryKeysNeeded
+                !user.hasKeys() && user.isPrivate() -> SetupPrimaryKeysNeeded
                 isTwoPassModeNeeded && product != Product.Vpn -> TwoPassNeeded
-                fetchAddresses(userId).needsInternalUserAddressKeySetup() -> SetupInternalAddressNeeded
+                fetchAddresses(userId).needsInternalUserAddressKeySetup() && user.isPrivate() -> SetupInternalAddressNeeded
                 else -> NoSetupNeeded
             }
         }
