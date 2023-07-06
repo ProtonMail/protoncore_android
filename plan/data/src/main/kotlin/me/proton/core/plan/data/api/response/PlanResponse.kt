@@ -136,7 +136,7 @@ internal data class Offer(
     @SerialName("StartTime")
     val startTime: Long,
     @SerialName("EndTime")
-    val endTime: Long,
+    val endTime: Long? = null,
     @SerialName("Pricing")
     val pricing: OfferPricing
 ) {

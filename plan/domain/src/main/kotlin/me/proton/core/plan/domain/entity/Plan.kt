@@ -68,7 +68,7 @@ data class PlanPricing(
 data class PlanOffer(
     val name: String,
     val startTime: Long,
-    val endTime: Long,
+    val endTime: Long? = null,
     val pricing: PlanOfferPricing
 )
 data class PlanOfferPricing(

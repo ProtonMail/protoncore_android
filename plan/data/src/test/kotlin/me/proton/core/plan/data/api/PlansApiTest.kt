@@ -33,6 +33,7 @@ import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class PlansApiTest {
@@ -64,6 +65,46 @@ class PlansApiTest {
 
         assertEquals("mail2022", plans[0].name)
         assertEquals("Mail Plus", plans[0].title)
+        assertEquals(1699698232, plans[0].offers!![0].endTime)
+        assertEquals(499, plans[0].pricing?.monthly)
+        assertEquals(4788, plans[0].pricing?.yearly)
+        assertEquals(8376, plans[0].pricing?.twoYearly)
+        assertEquals(1, plans[0].cycle)
+        assertEquals(true, plans[0].enabled)
+        assertEquals(499, plans[0].amount)
+        assertEquals(MASK_MAIL, plans[0].services)
+        assertEquals(
+            mapOf(
+                AppStore.GooglePlay to PlanVendorData(
+                    customerId = "cus_google_unCjt-CANFkU-RVD8s0y",
+                    names = mapOf(
+                        PlanDuration(12) to "googlemail_mail2022_12_renewing"
+                    )
+                )
+            ),
+            plans[0].vendors
+        )
+
+        assertEquals(MASK_MAIL or MASK_CALENDAR or MASK_DRIVE or MASK_VPN, plans[1].services)
+
+        assertEquals(false, plans[2].enabled)
+    }
+
+    @Test
+    fun `get plans with offers no endtime`() = runTest {
+        // Given
+        webServer.enqueueFromResourceFile("GET/payments/v4/plans-offers-no-endtime.json", javaClass.classLoader)
+
+        // When
+        val response = tested.getPlans()
+        val plans = response.plans.map { it.toPlan() }
+
+        // Then
+        assertEquals(3, plans.size)
+
+        assertEquals("mail2022", plans[0].name)
+        assertEquals("Mail Plus", plans[0].title)
+        assertNull(plans[0].offers!![0].endTime)
         assertEquals(499, plans[0].pricing?.monthly)
         assertEquals(4788, plans[0].pricing?.yearly)
         assertEquals(8376, plans[0].pricing?.twoYearly)

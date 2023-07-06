@@ -95,15 +95,16 @@ public final class me/proton/core/plan/domain/entity/PlanKt {
 }
 
 public final class me/proton/core/plan/domain/entity/PlanOffer {
-	public fun <init> (Ljava/lang/String;JJLme/proton/core/plan/domain/entity/PlanOfferPricing;)V
+	public fun <init> (Ljava/lang/String;JLjava/lang/Long;Lme/proton/core/plan/domain/entity/PlanOfferPricing;)V
+	public synthetic fun <init> (Ljava/lang/String;JLjava/lang/Long;Lme/proton/core/plan/domain/entity/PlanOfferPricing;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()J
-	public final fun component3 ()J
+	public final fun component3 ()Ljava/lang/Long;
 	public final fun component4 ()Lme/proton/core/plan/domain/entity/PlanOfferPricing;
-	public final fun copy (Ljava/lang/String;JJLme/proton/core/plan/domain/entity/PlanOfferPricing;)Lme/proton/core/plan/domain/entity/PlanOffer;
-	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/PlanOffer;Ljava/lang/String;JJLme/proton/core/plan/domain/entity/PlanOfferPricing;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/PlanOffer;
+	public final fun copy (Ljava/lang/String;JLjava/lang/Long;Lme/proton/core/plan/domain/entity/PlanOfferPricing;)Lme/proton/core/plan/domain/entity/PlanOffer;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/PlanOffer;Ljava/lang/String;JLjava/lang/Long;Lme/proton/core/plan/domain/entity/PlanOfferPricing;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/PlanOffer;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getEndTime ()J
+	public final fun getEndTime ()Ljava/lang/Long;
 	public final fun getName ()Ljava/lang/String;
 	public final fun getPricing ()Lme/proton/core/plan/domain/entity/PlanOfferPricing;
 	public final fun getStartTime ()J
