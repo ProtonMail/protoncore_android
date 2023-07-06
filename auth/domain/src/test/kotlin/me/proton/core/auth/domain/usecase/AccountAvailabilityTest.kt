@@ -20,6 +20,7 @@ package me.proton.core.auth.domain.usecase
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.just
@@ -41,13 +42,11 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
 internal class AccountAvailabilityTest {
+
     private lateinit var tested: AccountAvailability
 
     @MockK
     private lateinit var domainRepository: DomainRepository
-
-    @MockK(relaxUnitFun = true)
-    private lateinit var observabilityManager: ObservabilityManager
 
     @MockK
     private lateinit var userRepository: UserRepository
@@ -55,12 +54,14 @@ internal class AccountAvailabilityTest {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = AccountAvailability(userRepository, domainRepository, observabilityManager)
+        tested = AccountAvailability(userRepository, domainRepository)
     }
 
     @Test
     fun `checkUsername observability success`() = runTest {
         // GIVEN
+        val userId = UserId("123")
+        val username = "test-user"
         coEvery { userRepository.getUser(any()) } returns mockk {
             every { name } returns null
         }
@@ -68,23 +69,19 @@ internal class AccountAvailabilityTest {
 
         // WHEN
         tested.checkUsernameAuthenticated(
-            userId = UserId("123"),
-            username = "test-user",
-            metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
+            userId = userId,
+            username = username
         )
 
         // THEN
-        verify {
-            observabilityManager.enqueue(
-                SignupUsernameAvailabilityTotal(HttpApiStatus.http2xx),
-                any()
-            )
-        }
+        coVerify { userRepository.checkUsernameAvailable(userId, username) }
     }
 
     @Test
-    fun `checkUsername observability failure`() = runTest {
+    fun `checkUsername failure`() = runTest {
         // GIVEN
+        val userId = UserId("123")
+        val username = "test-user"
         coEvery { userRepository.getUser(any()) } returns mockk {
             every { name } returns null
         }
@@ -95,18 +92,12 @@ internal class AccountAvailabilityTest {
         // WHEN
         assertFailsWith<ApiException> {
             tested.checkUsernameAuthenticated(
-                userId = UserId("123"),
-                username = "test-user",
-                metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
+                userId = userId,
+                username = username,
             )
         }
 
         // THEN
-        verify {
-            observabilityManager.enqueue(
-                SignupUsernameAvailabilityTotal(HttpApiStatus.notConnected),
-                any()
-            )
-        }
+        coVerify { userRepository.checkUsernameAvailable(userId, username) }
     }
 }

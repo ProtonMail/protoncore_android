@@ -196,22 +196,25 @@ class UserRepositoryImpl @Inject constructor(
         }.valueOrThrow
     }
 
-    override suspend fun removeLockedAndPasswordScopes(sessionUserId: SessionUserId): Boolean =
-        provider.get<UserApi>(sessionUserId).invoke {
-            lockPasswordAndLockedScopes().isSuccess()
-        }.valueOrThrow
+    override suspend fun removeLockedAndPasswordScopes(
+        sessionUserId: SessionUserId
+    ): Boolean = provider.get<UserApi>(sessionUserId).invoke {
+        lockPasswordAndLockedScopes().isSuccess()
+    }.valueOrThrow
 
     override suspend fun unlockUserForLockedScope(
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String
-    ): Boolean =
-        provider.get<UserApi>(sessionUserId).invoke {
-            val request = UnlockRequest(srpProofs.clientEphemeral, srpProofs.clientProof, srpSession)
-            val response = unlockLockedScope(request)
-            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "getting locked scope failed" }
-            response.isSuccess()
-        }.valueOrThrow
+    ): Boolean = provider.get<UserApi>(sessionUserId).invoke {
+        val request = UnlockRequest(srpProofs.clientEphemeral, srpProofs.clientProof, srpSession)
+        val response = unlockLockedScope(request)
+        validateServerProof(
+            response.serverProof,
+            srpProofs.expectedServerProof
+        ) { "getting locked scope failed" }
+        response.isSuccess()
+    }.valueOrThrow
 
     override suspend fun unlockUserForPasswordScope(
         sessionUserId: SessionUserId,
@@ -227,14 +230,21 @@ class UserRepositoryImpl @Inject constructor(
                 twoFactorCode
             )
             val response = unlockPasswordScope(request)
-            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "getting password scope failed" }
+            validateServerProof(
+                response.serverProof,
+                srpProofs.expectedServerProof
+            ) { "getting password scope failed" }
             response.isSuccess()
         }.valueOrThrow
 
-    override suspend fun checkUsernameAvailable(sessionUserId: SessionUserId?, username: String) =
+    override suspend fun checkUsernameAvailable(
+        sessionUserId: SessionUserId?,
+        username: String
+    ) = result("checkUsernameAvailable") {
         provider.get<UserApi>(sessionUserId).invoke {
             usernameAvailable(username)
         }.throwIfError()
+    }
 
     override suspend fun checkExternalEmailAvailable(email: String) = result("checkExternalEmailAvailable") {
         provider.get<UserApi>().invoke {
@@ -244,7 +254,10 @@ class UserRepositoryImpl @Inject constructor(
 
     // region PassphraseRepository
 
-    private suspend fun internalSetPassphrase(userId: UserId, passphrase: EncryptedByteArray?): Unit =
+    private suspend fun internalSetPassphrase(
+        userId: UserId,
+        passphrase: EncryptedByteArray?
+    ): Unit =
         db.inTransaction {
             if (passphrase != getPassphrase(userId)) {
                 userDao.setPassphrase(userId, passphrase)

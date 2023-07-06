@@ -93,9 +93,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
         coEvery { accountAvailability.getDomains(any()) } coAnswers {
-            println("Running accountAvailability.getDomains")
             result("getAvailableDomains") {
-                println("Running accountAvailability.getDomains in result..")
                 listOf("protonmail.com", "protonmail.ch")
             }
         }
@@ -151,8 +149,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery {
             accountAvailability.checkUsernameAuthenticated(
                 userId = any(),
-                username = any(),
-                metricData = any()
+                username = any()
             )
         } returns Unit
 
@@ -185,8 +182,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery {
             accountAvailability.checkUsernameAuthenticated(
                 userId = any(),
-                username = any(),
-                metricData = any()
+                username = any()
             )
         } coAnswers {
             yield()
@@ -229,8 +225,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery {
             accountAvailability.checkUsernameAuthenticated(
                 userId = any(),
-                username = any(),
-                metricData = any()
+                username = any()
             )
         } coAnswers {
             yield()
@@ -272,8 +267,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
             coEvery {
                 accountAvailability.checkUsernameAuthenticated(
                     userId = any(),
-                    username = any(),
-                    metricData = any()
+                    username = any()
                 )
             } returns Unit
 

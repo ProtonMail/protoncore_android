@@ -24,6 +24,7 @@ import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
+import io.mockk.mockk
 import io.mockk.slot
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
@@ -61,8 +62,8 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        accountAvailability =
-            AccountAvailability(userRepository, domainRepository, observabilityManager)
+        accountAvailability = AccountAvailability(userRepository, domainRepository)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
     }
 
     @Test
@@ -72,7 +73,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
+        // WHEN
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -101,7 +102,6 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
             )
         )
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -123,7 +123,6 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
             "proton.ch"
         )
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -146,7 +145,6 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         )
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -164,9 +162,8 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
+        // WHEN
         viewModel.state.test {
-            // WHEN
             viewModel.checkExternalEmail(testEmail)
             assertIs<State.Idle>(awaitItem())
             assertIs<State.Processing>(awaitItem())
@@ -182,7 +179,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
 
     @Test
     fun `observability data is enqueued`() = coroutinesTest {
-        // GIVEN
+    // GIVEN
         coEvery { domainRepository.getAvailableDomains(any()) } coAnswers {
             result("getAvailableDomains") { listOf("domain") }
         }
@@ -191,7 +188,6 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         }
 
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.checkExternalEmail("username@email.text").join()
 
         // THEN

@@ -24,6 +24,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Checking for username availability during the signup.")
@@ -33,4 +34,5 @@ public data class SignupUsernameAvailabilityTotal(
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
     public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
+    public constructor(result: Result<*>) : this(result.toHttpApiStatus())
 }

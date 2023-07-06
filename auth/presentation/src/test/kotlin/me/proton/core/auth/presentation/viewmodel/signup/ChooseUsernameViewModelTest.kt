@@ -60,7 +60,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        accountAvailability = AccountAvailability(userRepository, domainRepository, observabilityManager)
+        accountAvailability = AccountAvailability(userRepository, domainRepository)
     }
 
     @Test
@@ -130,8 +130,14 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @Test
     fun `observability data is enqueued`() = coroutinesTest {
         // GIVEN
+        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotal>()
+        val usernameAvailabilityEventSlot = slot<SignupUsernameAvailabilityTotal>()
+
+        coEvery { domainRepository.getAvailableDomains(any()) } coAnswers {
+            result("getAvailableDomains") { listOf("protonmail.com", "protonmail.ch") }
+        }
         coEvery { userRepository.checkUsernameAvailable(any(), any()) } coAnswers {
-            result("getAvailableDomains") { /* Unit */ }
+            result("checkUsernameAvailable") { /* Unit */ }
         }
 
         // WHEN
@@ -139,9 +145,6 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         viewModel.checkUsername("test-username").join()
 
         // THEN
-        val fetchDomainsEventSlot = slot<SignupFetchDomainsTotal>()
-        val usernameAvailabilityEventSlot = slot<SignupUsernameAvailabilityTotal>()
-
         coVerify {
             observabilityManager.enqueue(capture(fetchDomainsEventSlot), any())
             observabilityManager.enqueue(capture(usernameAvailabilityEventSlot), any())

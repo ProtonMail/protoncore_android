@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,7 +32,6 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
@@ -90,23 +90,30 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
         emit(State.Processing)
         preFillUsername = username
         preFillDomain = domain
-        emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
+        emit(
+            State.Ready(
+                username = preFillUsername,
+                domain = preFillDomain,
+                domains = domainsState.value
+            )
+        )
     }.catch { error ->
         emit(State.Error.Message(error))
     }.onEach {
         mainState.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun checkUsername(username: String, domain: String) = flow {
-        emit(State.Processing)
-        accountAvailability.checkUsernameUnauthenticated(
-            "$username@$domain",
-            metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
-        )
-        emit(State.Success(username, domain))
-    }.catch { error ->
-        emit(State.Error.Message(error))
-    }.onEach {
-        mainState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun checkUsername(username: String, domain: String) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("checkUsernameAvailable") { SignupUsernameAvailabilityTotal(this) }
+
+        flow {
+            emit(State.Processing)
+            accountAvailability.checkUsernameUnauthenticated("$username@$domain")
+            emit(State.Success(username, domain))
+        }.catch { error ->
+            emit(State.Error.Message(error))
+        }.onEach {
+            mainState.tryEmit(it)
+        }.collect()
+    }
 }

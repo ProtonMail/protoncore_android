@@ -19,9 +19,6 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.DomainRepository
@@ -33,8 +30,7 @@ import javax.inject.Inject
  */
 class AccountAvailability @Inject constructor(
     private val userRepository: UserRepository,
-    private val domainRepository: DomainRepository,
-    private val observabilityManager: ObservabilityManager
+    private val domainRepository: DomainRepository
 ) {
 
     suspend fun getDomains(
@@ -49,13 +45,15 @@ class AccountAvailability @Inject constructor(
     suspend fun checkUsernameAuthenticated(
         userId: UserId,
         username: String,
-        metricData: ((Result<Unit>) -> ObservabilityData)? = null
-    ) = checkUsername(userId, username, metricData)
+    ) {
+        checkUsername(userId, username)
+    }
 
     suspend fun checkUsernameUnauthenticated(
         username: String,
-        metricData: ((Result<Unit>) -> ObservabilityData)? = null
-    ) = checkUsername(null, username, metricData)
+    ) {
+        checkUsername(null, username)
+    }
 
     suspend fun checkExternalEmail(email: String) {
         check(email.isNotBlank()) { "Email must not be blank." }
@@ -64,12 +62,9 @@ class AccountAvailability @Inject constructor(
 
     private suspend fun checkUsername(
         userId: UserId?,
-        username: String,
-        metricData: ((Result<Unit>) -> ObservabilityData)? = null
+        username: String
     ) {
         check(username.isNotBlank()) { "Username must not be blank." }
-        userRepository.runWithObservability(observabilityManager, metricData) {
-            checkUsernameAvailable(sessionUserId = userId, username = username)
-        }
+        userRepository.checkUsernameAvailable(sessionUserId = userId, username = username)
     }
 }

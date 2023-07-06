@@ -24,6 +24,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
@@ -96,6 +97,7 @@ class ChooseAddressViewModel @Inject constructor(
 
     fun startWorkFlow(userId: UserId) = viewModelScope.launchWithResultContext {
         onResultEnqueue("getAvailableDomains") { LoginEaToIaFetchDomainsTotal(this) }
+        onResultEnqueue("checkUsernameAvailable") { LoginEaToIaUsernameAvailabilityTotal(this) }
 
         flow {
             emit(State.Processing)
@@ -150,8 +152,7 @@ class ChooseAddressViewModel @Inject constructor(
         return runCatching {
             accountAvailability.checkUsernameAuthenticated(
                 userId = userId,
-                username = "$username@$domain",
-                metricData = { LoginEaToIaUsernameAvailabilityTotal(it.toHttpApiStatus()) }
+                username = "$username@$domain"
             )
         }.fold(
             onSuccess = { State.Data.UsernameOption(username) },

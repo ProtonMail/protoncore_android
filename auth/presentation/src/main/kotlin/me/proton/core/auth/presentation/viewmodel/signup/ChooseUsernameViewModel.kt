@@ -29,7 +29,6 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
@@ -54,15 +53,13 @@ internal class ChooseUsernameViewModel @Inject constructor(
 
     fun checkUsername(username: String) = viewModelScope.launchWithResultContext {
         onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
+        onResultEnqueue("checkUsernameAvailable") { SignupUsernameAvailabilityTotal(this) }
 
         flow {
             emit(State.Processing)
             // See CP-5335.
             accountAvailability.getDomains(userId = null)
-            accountAvailability.checkUsernameUnauthenticated(
-                username = username,
-                metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
-            )
+            accountAvailability.checkUsernameUnauthenticated(username = username)
             emit(State.Success(username))
         }.catch { error ->
             emit(State.Error.Message(error))

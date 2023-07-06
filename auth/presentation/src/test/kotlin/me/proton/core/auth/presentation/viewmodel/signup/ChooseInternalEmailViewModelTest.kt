@@ -46,21 +46,27 @@ import kotlin.test.assertIs
 
 class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+
+    private val userRepository = mockk<UserRepository> {
+        coEvery { checkUsernameAvailable(any(), any()) } coAnswers {
+            result("checkUsernameAvailable") { }
+        }
+    }
+
+    private val domainRepository = mockk<DomainRepository> {
+        coEvery { getAvailableDomains(any()) } coAnswers {
+            result("getAvailableDomains") { listOf("protonmail.com", "protonmail.ch") }
+        }
+    }
+
     private lateinit var accountAvailability: AccountAvailability
-    private lateinit var domainRepository: DomainRepository
-    private lateinit var observabilityManager: ObservabilityManager
-    private lateinit var userRepository: UserRepository
 
     private lateinit var viewModel: ChooseInternalEmailViewModel
 
     @Before
     fun beforeEveryTest() {
-        domainRepository = mockk(relaxed = true) {
-            coEvery { getAvailableDomains(any()) } returns listOf("protonmail.com", "protonmail.ch")
-        }
-        userRepository = mockk(relaxed = true)
-        observabilityManager = mockk(relaxed = true)
-        accountAvailability = AccountAvailability(userRepository, domainRepository, observabilityManager)
+        accountAvailability = AccountAvailability(userRepository, domainRepository)
     }
 
     @Test
@@ -187,7 +193,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         viewModel.state.first { it is State.Ready } // wait for domains
 
         // THEN
-        verify(exactly = 1) { observabilityManager.enqueue(capture(dataSlot), any()) }
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 
@@ -197,11 +203,10 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         // WHEN
         viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
-        viewModel.checkUsername("test-user", "proton.test")
-        viewModel.state.first { it is State.Success } // wait for validation success
+        viewModel.checkUsername("test-user", "proton.test").join()
 
         // THEN
-        verify(exactly = 1) { observabilityManager.enqueue(capture(dataSlot), any()) }
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
         assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }
