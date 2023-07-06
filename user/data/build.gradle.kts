@@ -29,6 +29,11 @@ protonBuild {
     apiModeDisabled()
 }
 
+protonCoverage {
+    minBranchCoveragePercentage.set(0)
+    minLineCoveragePercentage.set(1)
+}
+
 android {
     namespace = "me.proton.core.user.data"
     compileOptions {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Delinquent
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasSubscription
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 /**
@@ -61,13 +62,18 @@ open class DefaultUserCheck @Inject constructor(
             userManager.getUser(it).hasSubscription()
         }
 
-    override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult = when {
-        user.delinquent in listOf(Delinquent.InvoiceDelinquent, Delinquent.InvoiceMailDisabled) -> {
-            errorDelinquent()
+    override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
+        result("defaultUserCheck") {
+            when {
+                user.delinquent in listOf(
+                    Delinquent.InvoiceDelinquent,
+                    Delinquent.InvoiceMailDisabled
+                ) -> errorDelinquent()
+
+                !user.hasSubscription() && !allReadyHaveSubscription() ->
+                    errorMessage(R.string.auth_user_check_one_free_error)
+
+                else -> PostLoginAccountSetup.UserCheckResult.Success
+            }
         }
-        !user.hasSubscription() && !allReadyHaveSubscription() -> {
-            errorMessage(R.string.auth_user_check_one_free_error)
-        }
-        else -> PostLoginAccountSetup.UserCheckResult.Success
-    }
 }

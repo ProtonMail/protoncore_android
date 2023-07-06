@@ -43,10 +43,12 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
+import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
@@ -419,22 +421,25 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
                 any()
             )
         } coAnswers {
-            result("unlockUserPrimaryKey") { PostLoginAccountSetup.Result.UserUnlocked(mockk()) }
+            result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Success }
+            result("unlockUserPrimaryKey") { UserManager.UnlockResult.Success }
+            PostLoginAccountSetup.Result.UserUnlocked(mockk())
         }
         val viewModel = makeLoginViewModel()
         val loginData = mockk<SignupLoginTotal>()
         val unlockData = mockk<SignupUnlockUserTotalV1>()
+        val userCheckData = mockk<SignupUserCheckTotalV1>()
 
         viewModel.startLoginWorkflow(
             username = testUserName,
             password = testPassword,
             requiredAccountType = mockk(),
             loginMetricData = { loginData },
-            unlockUserMetricData = { unlockData }
+            unlockUserMetricData = { unlockData },
+            userCheckMetricData = { userCheckData }
         ).join()
 
         // THEN
@@ -442,6 +447,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         verify { observabilityManager.enqueue(capture(dataSlots), any()) }
         assertTrue(dataSlots.contains(loginData))
         assertTrue(dataSlots.contains(unlockData))
+        assertTrue(dataSlots.contains(userCheckData))
     }
 
     private fun makeLoginViewModel(isSsoEnabled: IsSsoEnabled = IsSsoEnabled { false }): LoginViewModel =

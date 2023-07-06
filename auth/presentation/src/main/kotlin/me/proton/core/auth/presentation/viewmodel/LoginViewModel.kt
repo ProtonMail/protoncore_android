@@ -97,7 +97,7 @@ internal class LoginViewModel @Inject constructor(
         billingDetails: BillingDetails? = null,
         loginMetricData: ((Result<*>) -> ObservabilityData)? = null,
         unlockUserMetricData: ((Result<*>) -> ObservabilityData)? = null,
-        userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
+        userCheckMetricData: ((Result<*>) -> ObservabilityData)? = null
     ): Job = startLoginWorkflowWithEncryptedPassword(
         username = username,
         encryptedPassword = password.encrypt(keyStoreCrypto),
@@ -115,13 +115,16 @@ internal class LoginViewModel @Inject constructor(
         billingDetails: BillingDetails? = null,
         loginMetricData: ((Result<*>) -> ObservabilityData)? = null,
         unlockUserMetricData: ((Result<*>) -> ObservabilityData)? = null,
-        userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
+        userCheckMetricData: ((Result<*>) -> ObservabilityData)? = null
     ) = viewModelScope.launchWithResultContext {
         loginMetricData?.let {
             onResultEnqueue("performLogin") { it(this) }
         }
         unlockUserMetricData?.let {
             onResultEnqueue("unlockUserPrimaryKey") { it(this) }
+        }
+        userCheckMetricData?.let {
+            onResultEnqueue("defaultUserCheck") { it(this)}
         }
 
         flow {
@@ -144,8 +147,7 @@ internal class LoginViewModel @Inject constructor(
                         result.toHttpApiStatus(),
                         management.toCheckoutBillingSubscribeManager()
                     )
-                },
-                userCheckMetricData = userCheckMetricData
+                }
             )
             emit(State.AccountSetupResult(result))
         }.retryOnceWhen(Throwable::primaryKeyExists) {

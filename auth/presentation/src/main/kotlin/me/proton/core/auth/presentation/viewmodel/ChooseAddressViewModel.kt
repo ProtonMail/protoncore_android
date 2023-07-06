@@ -24,7 +24,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
@@ -119,6 +118,7 @@ class ChooseAddressViewModel @Inject constructor(
         isTwoPassModeNeeded: Boolean
     ) = viewModelScope.launchWithResultContext {
         onResultEnqueue("unlockUserPrimaryKey") { LoginEaToIaUnlockUserTotalV1(this.toUnlockUserStatus()) }
+        onResultEnqueue("defaultUserCheck") { LoginEaToIaUserCheckTotalV1(this.toUserCheckStatus())}
 
         flow {
             emit(State.Processing)
@@ -180,8 +180,7 @@ class ChooseAddressViewModel @Inject constructor(
                     result.toHttpApiStatus(),
                     management.toCheckoutBillingSubscribeManager()
                 )
-            },
-            userCheckMetricData = { LoginEaToIaUserCheckTotalV1(it.toUserCheckStatus()) }
+            }
         )
         return State.AccountSetupResult(result)
     }
