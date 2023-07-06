@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.api.DomainApi
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.repository.DomainRepository
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.minutes
@@ -35,9 +36,12 @@ class DomainRepositoryImpl @Inject constructor(
 
     private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Domain>>()
 
-    override suspend fun getAvailableDomains(sessionUserId: UserId?): List<Domain> = cache.get(Unit) {
-        provider.get<DomainApi>(sessionUserId).invoke {
-            getAvailableDomains().domains
-        }.valueOrThrow
-    }
+    override suspend fun getAvailableDomains(sessionUserId: UserId?): List<Domain> =
+        result("getAvailableDomains") {
+            cache.get(Unit) {
+                provider.get<DomainApi>(sessionUserId).invoke {
+                    getAvailableDomains().domains
+                }.valueOrThrow
+            }
+        }
 }

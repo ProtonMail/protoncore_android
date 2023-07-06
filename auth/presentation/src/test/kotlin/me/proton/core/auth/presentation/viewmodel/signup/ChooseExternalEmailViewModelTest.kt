@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,12 +37,14 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
+class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
+    CoroutinesTest by CoroutinesTest() {
     private lateinit var accountAvailability: AccountAvailability
 
     @MockK(relaxed = true)
@@ -59,7 +61,8 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        accountAvailability = AccountAvailability(userRepository, domainRepository, observabilityManager)
+        accountAvailability =
+            AccountAvailability(userRepository, domainRepository, observabilityManager)
     }
 
     @Test
@@ -69,7 +72,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -98,7 +101,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             )
         )
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -115,9 +118,12 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "username"
         val testDomain = "proton.me"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf("proton.me", "proton.ch")
+        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf(
+            "proton.me",
+            "proton.ch"
+        )
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -134,10 +140,13 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf("proton.me", "proton.ch")
+        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf(
+            "proton.me",
+            "proton.ch"
+        )
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
             // THEN
@@ -155,7 +164,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             // WHEN
             viewModel.checkExternalEmail(testEmail)
@@ -174,22 +183,27 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @Test
     fun `observability data is enqueued`() = coroutinesTest {
         // GIVEN
-        coEvery { userRepository.checkExternalEmailAvailable(any()) } returns Unit
+        coEvery { domainRepository.getAvailableDomains(any()) } coAnswers {
+            result("getAvailableDomains") { listOf("domain") }
+        }
+        coEvery { userRepository.checkExternalEmailAvailable(any()) } coAnswers {
+            result("checkExternalEmailAvailable") { /* Unit */ }
+        }
 
         // WHEN
-        viewModel = ChooseExternalEmailViewModel(accountAvailability)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.checkExternalEmail("username@email.text").join()
 
         // THEN
         val fetchDomainsEventSlot = slot<SignupFetchDomainsTotal>()
-        val usernameAvailabilityEventSlot = slot<SignupEmailAvailabilityTotal>()
+        val emailAvailabilityEventSlot = slot<SignupEmailAvailabilityTotal>()
 
         coVerify {
             observabilityManager.enqueue(capture(fetchDomainsEventSlot), any())
-            observabilityManager.enqueue(capture(usernameAvailabilityEventSlot), any())
+            observabilityManager.enqueue(capture(emailAvailabilityEventSlot), any())
         }
 
         assertEquals(HttpApiStatus.http2xx, fetchDomainsEventSlot.captured.Labels.status)
-        assertEquals(HttpApiStatus.http2xx, usernameAvailabilityEventSlot.captured.Labels.status)
+        assertEquals(HttpApiStatus.http2xx, emailAvailabilityEventSlot.captured.Labels.status)
     }
 }

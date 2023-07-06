@@ -245,7 +245,14 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             passwordInput.validatePassword()
                 .onFailure { passwordInput.setInputError() }
                 .onSuccess { password ->
-                    viewModel.startLoginWorkflow(username, password, input.requiredAccountType)
+                    viewModel.startLoginWorkflow(
+                        username = username,
+                        password = password,
+                        requiredAccountType = input.requiredAccountType,
+                        loginMetricData = null,
+                        unlockUserMetricData = null,
+                        userCheckMetricData = null
+                    )
                 }
         }
     }

@@ -1968,9 +1968,14 @@ public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDia
 	public static fun injectNetworkPrefs (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/network/domain/NetworkPrefs;)V
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
+	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lkotlinx/coroutines/Job;
 	public final fun startWorkFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun stopWorkflow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
@@ -2283,11 +2288,11 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_HiltModules {
@@ -2464,11 +2469,11 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewMod
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExternalEmailViewModel_HiltModules {
@@ -2491,11 +2496,11 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseExter
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInternalEmailViewModel_HiltModules {
@@ -2518,11 +2523,11 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseInter
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsernameViewModel_HiltModules {

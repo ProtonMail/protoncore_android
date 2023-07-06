@@ -26,13 +26,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
-import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
@@ -48,14 +45,16 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS
 import me.proton.core.network.domain.ResponseCodes.AUTH_SWITCH_TO_SSO
 import me.proton.core.network.domain.isPotentialBlocking
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
-import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
@@ -67,7 +66,8 @@ internal class LoginViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     isSsoEnabled: IsSsoEnabled,
-) : ViewModel() {
+    override val manager: ObservabilityManager
+) : ViewModel(), ObservabilityContext {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
@@ -95,8 +95,8 @@ internal class LoginViewModel @Inject constructor(
         password: String,
         requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null,
-        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null,
-        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
+        loginMetricData: ((Result<*>) -> ObservabilityData)? = null,
+        unlockUserMetricData: ((Result<*>) -> ObservabilityData)? = null,
         userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
     ): Job = startLoginWorkflowWithEncryptedPassword(
         username = username,
@@ -113,48 +113,55 @@ internal class LoginViewModel @Inject constructor(
         encryptedPassword: EncryptedString,
         requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null,
-        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null,
-        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
+        loginMetricData: ((Result<*>) -> ObservabilityData)? = null,
+        unlockUserMetricData: ((Result<*>) -> ObservabilityData)? = null,
         userCheckMetricData: ((PostLoginAccountSetup.UserCheckResult) -> ObservabilityData)? = null
-    ) = flow {
-        emit(State.Processing)
+    ) = viewModelScope.launchWithResultContext {
+        loginMetricData?.let {
+            onResultEnqueue("performLogin") { it(this) }
+        }
+        unlockUserMetricData?.let {
+            onResultEnqueue("unlockUserPrimaryKey") { it(this) }
+        }
 
-        val sessionInfo =
-            createLoginSession(username, encryptedPassword, requiredAccountType, loginMetricData)
+        flow {
+            emit(State.Processing)
 
-        savedStateHandle[STATE_USER_ID] = sessionInfo.userId.id
+            val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType)
 
-        val result = postLoginAccountSetup(
-            userId = sessionInfo.userId,
-            encryptedPassword = encryptedPassword,
-            requiredAccountType = requiredAccountType,
-            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
-            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
-            temporaryPassword = sessionInfo.temporaryPassword,
-            billingDetails = billingDetails,
-            subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotal(
-                    result.toHttpApiStatus(),
-                    management.toCheckoutBillingSubscribeManager()
-                )
-            },
-            unlockUserMetricData = unlockUserMetricData,
-            userCheckMetricData = userCheckMetricData
-        )
-        emit(State.AccountSetupResult(result))
-    }.retryOnceWhen(Throwable::primaryKeyExists) {
-        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
-    }.catchWhen(Throwable::isWrongPassword) {
-        emit(State.InvalidPassword(it))
-    }.catchWhen(Throwable::isExternalAccountNotSupported) {
-        emit(State.ExternalAccountNotSupported(it))
-    }.catchWhen(Throwable::isSwitchToSso) {
-        emit(State.SignInWithSso(username, it))
-    }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
-        emit(State.Error(it, it.isPotentialBlocking()))
-    }.onEach { state ->
-        _state.tryEmit(state)
-    }.launchIn(viewModelScope)
+            savedStateHandle[STATE_USER_ID] = sessionInfo.userId.id
+
+            val result = postLoginAccountSetup(
+                userId = sessionInfo.userId,
+                encryptedPassword = encryptedPassword,
+                requiredAccountType = requiredAccountType,
+                isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+                isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+                temporaryPassword = sessionInfo.temporaryPassword,
+                billingDetails = billingDetails,
+                subscribeMetricData = { result, management ->
+                    CheckoutBillingSubscribeTotal(
+                        result.toHttpApiStatus(),
+                        management.toCheckoutBillingSubscribeManager()
+                    )
+                },
+                userCheckMetricData = userCheckMetricData
+            )
+            emit(State.AccountSetupResult(result))
+        }.retryOnceWhen(Throwable::primaryKeyExists) {
+            CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying login flow")
+        }.catchWhen(Throwable::isWrongPassword) {
+            emit(State.InvalidPassword(it))
+        }.catchWhen(Throwable::isExternalAccountNotSupported) {
+            emit(State.ExternalAccountNotSupported(it))
+        }.catchWhen(Throwable::isSwitchToSso) {
+            emit(State.SignInWithSso(username, it))
+        }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
+            emit(State.Error(it, it.isPotentialBlocking()))
+        }.collect { state ->
+            _state.tryEmit(state)
+        }
+    }
 
     companion object {
         const val STATE_USER_ID = "userId"

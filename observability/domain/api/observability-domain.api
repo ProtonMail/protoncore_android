@@ -1233,6 +1233,7 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1937,6 +1938,7 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 public final class me/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1971,6 +1973,7 @@ public final class me/proton/core/observability/domain/metrics/SignupEmailAvaila
 public final class me/proton/core/observability/domain/metrics/SignupFetchDomainsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupFetchDomainsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -2005,6 +2008,7 @@ public final class me/proton/core/observability/domain/metrics/SignupFetchDomain
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;Lme/proton/core/account/domain/entity/AccountType;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
@@ -2407,6 +2411,7 @@ public final class me/proton/core/observability/domain/metrics/common/UnlockUser
 	public static final field noPrimaryKey Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
 	public static final field primaryKeyInvalidPassphrase Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
 	public static final field success Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
 }

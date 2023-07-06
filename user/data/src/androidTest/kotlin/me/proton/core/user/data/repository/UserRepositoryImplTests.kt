@@ -50,7 +50,8 @@ import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.session.SessionListener
+import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -78,7 +79,6 @@ import kotlin.test.assertTrue
 class UserRepositoryImplTests {
 
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val sessionListener = mockk<SessionListener>(relaxed = true)
     private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
 
     private val userApi = mockk<UserApi>(relaxed = true)
@@ -600,5 +600,18 @@ class UserRepositoryImplTests {
         // THEN
         val createUserResult = assertSingleResult("createExternalEmailUser")
         assertEquals(Result.success(TestUsers.User1.response.toUser()), createUserResult)
+    }
+
+    @Test
+    fun checkExternalEmailAvailable_result() = runTestWithResultContext {
+        // GIVEN
+        coEvery { userApi.externalEmailAvailable(any()) } returns GenericResponse(ResponseCodes.OK)
+
+        // WHEN
+        userRepository.checkExternalEmailAvailable("user@email.test")
+
+        // THEN
+        val result = assertSingleResult("checkExternalEmailAvailable")
+        assertTrue(result.isSuccess)
     }
 }

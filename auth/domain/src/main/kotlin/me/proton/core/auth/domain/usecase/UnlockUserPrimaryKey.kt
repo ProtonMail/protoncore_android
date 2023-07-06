@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.extension.hasKeys
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 /**
@@ -54,6 +55,8 @@ class UnlockUserPrimaryKey @Inject constructor(
             else -> password.decrypt(keyStoreCrypto).toByteArray().use {
                 userManager.unlockWithPassword(userId, it)
             }
+        }.let { unlockResult ->
+            result("unlockUserPrimaryKey") { unlockResult }
         }
     }
 }

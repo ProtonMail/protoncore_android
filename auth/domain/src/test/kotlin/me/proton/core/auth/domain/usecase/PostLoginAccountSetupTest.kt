@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,6 +36,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.payment.domain.entity.Currency
@@ -45,6 +46,7 @@ import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.util.kotlin.CoreLogger
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -436,6 +438,16 @@ class PostLoginAccountSetupTest {
         coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
         coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
         justRun { observabilityManager.enqueue(any(), any()) }
+        coJustRun {
+            performSubscribe.invoke(
+                userId = any(),
+                amount = any(),
+                currency = any(),
+                cycle = any(),
+                planNames = any(),
+                subscriptionManagement = any()
+            )
+        }
 
         // WHEN
         tested.invoke(
@@ -446,14 +458,11 @@ class PostLoginAccountSetupTest {
             isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
             temporaryPassword = sessionInfo.temporaryPassword,
             subscribeMetricData = { _, _ -> mockk<CheckoutBillingSubscribeTotal>() },
-            unlockUserMetricData = { mockk<SignupUnlockUserTotalV1>() },
             userCheckMetricData = { mockk<SignupUserCheckTotalV1>() }
         )
 
         // THEN
-        verify { observabilityManager.enqueue(any<CheckoutBillingSubscribeTotal>(), any()) }
-        verify { observabilityManager.enqueue(any<SignupUnlockUserTotalV1>(), any()) }
-        verify { observabilityManager.enqueue(any<SignupUserCheckTotalV1>(), any()) }
+        verify { observabilityManager.enqueue(ofType<SignupUserCheckTotalV1>(), any()) }
     }
 
     private fun mockSessionInfo(

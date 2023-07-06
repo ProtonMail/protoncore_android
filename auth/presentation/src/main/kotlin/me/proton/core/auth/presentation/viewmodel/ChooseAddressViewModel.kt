@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
@@ -39,6 +37,7 @@ import me.proton.core.auth.presentation.observability.toUnlockUserStatus
 import me.proton.core.auth.presentation.observability.toUserCheckStatus
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotal
@@ -54,6 +53,7 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.emailSplit
 import me.proton.core.usersettings.domain.usecase.SetupUsername
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
@@ -61,10 +61,10 @@ import javax.inject.Inject
 class ChooseAddressViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val accountAvailability: AccountAvailability,
-    private val observabilityManager: ObservabilityManager,
+    override val manager: ObservabilityManager,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val setupUsername: SetupUsername
-) : ProtonViewModel() {
+) : ProtonViewModel(), ObservabilityContext {
 
     private val mainState = MutableStateFlow<State>(State.Processing)
     val state = mainState.asStateFlow()
@@ -94,19 +94,20 @@ class ChooseAddressViewModel @Inject constructor(
         mainState.emit(State.Finished)
     }
 
-    fun startWorkFlow(userId: UserId) = flow {
-        emit(State.Processing)
-        val domains = accountAvailability.getDomains(
-            userId = userId,
-            metricData = { LoginEaToIaFetchDomainsTotal(it.toHttpApiStatus()) }
-        )
-        emit(State.Data.Domains(domains))
-        emit(checkAccount(userId, domains))
-    }.catch { error ->
-        emit(State.Error.Start(error))
-    }.onEach {
-        mainState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun startWorkFlow(userId: UserId) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("getAvailableDomains") { LoginEaToIaFetchDomainsTotal(this) }
+
+        flow {
+            emit(State.Processing)
+            val domains = accountAvailability.getDomains(userId = userId)
+            emit(State.Data.Domains(domains))
+            emit(checkAccount(userId, domains))
+        }.catch { error ->
+            emit(State.Error.Start(error))
+        }.collect {
+            mainState.tryEmit(it)
+        }
+    }
 
     fun setUsername(
         userId: UserId,
@@ -114,17 +115,21 @@ class ChooseAddressViewModel @Inject constructor(
         password: EncryptedString,
         domain: String,
         isTwoPassModeNeeded: Boolean
-    ) = flow {
-        emit(State.Processing)
-        setupUsername(userId, username)
-        emit(postLoginSetup(userId, password, domain, isTwoPassModeNeeded))
-    }.retryOnceWhen(Throwable::primaryKeyExists) {
-        CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
-    }.catch { error ->
-        emit(State.Error.SetUsername(error))
-    }.onEach {
-        mainState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    ) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("unlockUserPrimaryKey") { LoginEaToIaUnlockUserTotalV1(this.toUnlockUserStatus()) }
+
+        flow {
+            emit(State.Processing)
+            setupUsername(userId, username)
+            emit(postLoginSetup(userId, password, domain, isTwoPassModeNeeded))
+        }.retryOnceWhen(Throwable::primaryKeyExists) {
+            CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying to upgrade an account")
+        }.catch { error ->
+            emit(State.Error.SetUsername(error))
+        }.collect {
+            mainState.tryEmit(it)
+        }
+    }
 
     private suspend fun checkAccount(userId: UserId, domains: List<Domain>): State {
         val user = accountAvailability.getUser(userId, refresh = true)
@@ -175,13 +180,12 @@ class ChooseAddressViewModel @Inject constructor(
                     management.toCheckoutBillingSubscribeManager()
                 )
             },
-            userCheckMetricData = { LoginEaToIaUserCheckTotalV1(it.toUserCheckStatus()) },
-            unlockUserMetricData = { LoginEaToIaUnlockUserTotalV1(it.toUnlockUserStatus()) }
+            userCheckMetricData = { LoginEaToIaUserCheckTotalV1(it.toUserCheckStatus()) }
         )
         return State.AccountSetupResult(result)
     }
 
     internal fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
-        observabilityManager.enqueue(LoginScreenViewTotal(screenId))
+        manager.enqueue(LoginScreenViewTotal(screenId))
     }
 }

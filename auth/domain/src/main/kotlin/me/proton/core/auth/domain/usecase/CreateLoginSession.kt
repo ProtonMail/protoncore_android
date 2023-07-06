@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,8 +28,6 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.network.domain.session.Session
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import javax.inject.Inject
 
 /** Logs in the user, and creates the session locally. */
@@ -40,10 +38,9 @@ class CreateLoginSession @Inject constructor(
     suspend operator fun invoke(
         username: String,
         encryptedPassword: EncryptedString,
-        requiredAccountType: AccountType,
-        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null
+        requiredAccountType: AccountType
     ): SessionInfo {
-        val sessionInfo = performLogin.invoke(username, encryptedPassword, loginMetricData)
+        val sessionInfo = performLogin.invoke(username, encryptedPassword)
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
         return sessionInfo
     }

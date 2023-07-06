@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,11 +38,8 @@ class AccountAvailability @Inject constructor(
 ) {
 
     suspend fun getDomains(
-        userId: UserId?,
-        metricData: ((Result<List<Domain>>) -> ObservabilityData)? = null
-    ): List<Domain> = domainRepository.runWithObservability(observabilityManager, metricData) {
-        getAvailableDomains(userId)
-    }
+        userId: UserId?
+    ): List<Domain> = domainRepository.getAvailableDomains(userId)
 
     suspend fun getUser(
         userId: UserId,
@@ -60,14 +57,9 @@ class AccountAvailability @Inject constructor(
         metricData: ((Result<Unit>) -> ObservabilityData)? = null
     ) = checkUsername(null, username, metricData)
 
-    suspend fun checkExternalEmail(
-        email: String,
-        metricData: ((Result<Unit>) -> ObservabilityData)? = null
-    ) {
+    suspend fun checkExternalEmail(email: String) {
         check(email.isNotBlank()) { "Email must not be blank." }
-        userRepository.runWithObservability(observabilityManager, metricData) {
-            checkExternalEmailAvailable(email)
-        }
+        userRepository.checkExternalEmailAvailable(email)
     }
 
     private suspend fun checkUsername(

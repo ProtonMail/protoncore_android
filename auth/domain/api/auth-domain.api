@@ -233,21 +233,18 @@ public final class me/proton/core/auth/domain/testing/LoginTestHelper {
 
 public final class me/proton/core/auth/domain/usecase/AccountAvailability {
 	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/DomainRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun checkExternalEmail (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun checkExternalEmail$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun checkExternalEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun checkUsernameAuthenticated (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun checkUsernameAuthenticated$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public final fun checkUsernameUnauthenticated (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun checkUsernameUnauthenticated$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public final fun getDomains (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun getDomains$default (Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun getDomains (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginSession {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLogin;)V
-	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/CreateLoginSession;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginSsoSession {
@@ -281,9 +278,8 @@ public final class me/proton/core/auth/domain/usecase/LoginChallengeConfig$Compa
 }
 
 public final class me/proton/core/auth/domain/usecase/PerformLogin {
-	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PerformLogin;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;)V
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/PerformLoginSso {
@@ -303,8 +299,8 @@ public final class me/proton/core/auth/domain/usecase/PerformSecondFactor {
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$Result {

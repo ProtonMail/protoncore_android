@@ -60,7 +60,7 @@ fun runTestWithResultContext(
     }
 }
 
-interface TestScopeWithResults : ResultCollector<Any?> {
+interface TestScopeWithResults : ResultCollector<Any?>, CoroutineScope {
     // region kotlinx.coroutines.test.TestScope
     val backgroundScope: CoroutineScope
     val testScheduler: TestCoroutineScheduler
@@ -83,7 +83,7 @@ interface TestScopeWithResults : ResultCollector<Any?> {
 private class TestScopeWithResultsImpl(
     private val resultCollector: ResultCollector<*>,
     private val testScope: TestScope
-) : TestScopeWithResults, ResultCollector<Any?> {
+) : TestScopeWithResults, ResultCollector<Any?>, CoroutineScope by testScope {
     override val backgroundScope: CoroutineScope
         get() = testScope.backgroundScope
 

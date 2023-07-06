@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -88,7 +88,6 @@ class PostLoginAccountSetup @Inject constructor(
         billingDetails: BillingDetails? = null,
         internalAddressDomain: String? = null,
         subscribeMetricData: ((kotlin.Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
-        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)? = null,
         userCheckMetricData: ((UserCheckResult) -> ObservabilityData)? = null
     ): Result {
         // Subscribe to any pending subscription/billing.
@@ -136,7 +135,6 @@ class PostLoginAccountSetup @Inject constructor(
                     userId,
                     encryptedPassword,
                     onSetupSuccess,
-                    unlockUserMetricData,
                     userCheckMetricData
                 )
             }
@@ -145,7 +143,6 @@ class PostLoginAccountSetup @Inject constructor(
                     userId,
                     encryptedPassword,
                     onSetupSuccess,
-                    unlockUserMetricData,
                     userCheckMetricData
                 ) {
                     setupExternalAddressKeys.invoke(userId)
@@ -156,7 +153,6 @@ class PostLoginAccountSetup @Inject constructor(
                     userId,
                     encryptedPassword,
                     onSetupSuccess,
-                    unlockUserMetricData,
                     userCheckMetricData
                 ) {
                     setupInternalAddress.invoke(userId, internalAddressDomain)
@@ -167,7 +163,6 @@ class PostLoginAccountSetup @Inject constructor(
                     userId,
                     encryptedPassword,
                     onSetupSuccess,
-                    unlockUserMetricData,
                     userCheckMetricData
                 )
             }
@@ -178,15 +173,10 @@ class PostLoginAccountSetup @Inject constructor(
         userId: UserId,
         password: EncryptedString,
         onSetupSuccess: (suspend () -> Unit)?,
-        unlockUserMetricData: ((UserManager.UnlockResult) -> ObservabilityData)?,
         userCheckMetricData: ((UserCheckResult) -> ObservabilityData)?,
         onUnlockSuccess: (suspend () -> Unit)? = null,
     ): Result {
-        val result = unlockUserPrimaryKey.invoke(userId, password)
-        if (unlockUserMetricData != null) {
-            observabilityManager.enqueue(unlockUserMetricData(result))
-        }
-        return when (result) {
+        return when (val result = unlockUserPrimaryKey.invoke(userId, password)) {
             is UserManager.UnlockResult.Success -> {
                 // Invoke unlock success action.
                 onUnlockSuccess?.invoke()

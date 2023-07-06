@@ -9,6 +9,7 @@ public final class me/proton/core/test/kotlin/BuildRetrofitApi {
 
 public abstract interface class me/proton/core/test/kotlin/CoroutinesTest {
 	public abstract fun coroutinesTest (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
+	public abstract fun coroutinesTestWithResultContext (Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
 	public abstract fun getCoroutinesRule ()Lme/proton/core/test/kotlin/CoroutinesTestRule;
 	public abstract fun getDispatchers ()Lme/proton/core/util/kotlin/DispatcherProvider;
 }
@@ -16,6 +17,8 @@ public abstract interface class me/proton/core/test/kotlin/CoroutinesTest {
 public final class me/proton/core/test/kotlin/CoroutinesTest$DefaultImpls {
 	public static fun coroutinesTest (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
 	public static synthetic fun coroutinesTest$default (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
+	public static fun coroutinesTestWithResultContext (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;)V
+	public static synthetic fun coroutinesTestWithResultContext$default (Lme/proton/core/test/kotlin/CoroutinesTest;Lkotlin/coroutines/CoroutineContext;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)V
 	public static fun getDispatchers (Lme/proton/core/test/kotlin/CoroutinesTest;)Lme/proton/core/util/kotlin/DispatcherProvider;
 }
 
@@ -64,7 +67,7 @@ public final class me/proton/core/test/kotlin/TestDispatcherProvider : me/proton
 	public fun getMain ()Lkotlinx/coroutines/test/TestDispatcher;
 }
 
-public abstract interface class me/proton/core/test/kotlin/TestScopeWithResults : me/proton/core/util/kotlin/coroutine/ResultCollector {
+public abstract interface class me/proton/core/test/kotlin/TestScopeWithResults : kotlinx/coroutines/CoroutineScope, me/proton/core/util/kotlin/coroutine/ResultCollector {
 	public abstract fun assertNoResult (Ljava/lang/String;)V
 	public abstract fun assertResults (Ljava/lang/String;)Ljava/util/List;
 	public abstract fun assertSingleResult-IoAF18A (Ljava/lang/String;)Ljava/lang/Object;
@@ -80,6 +83,7 @@ public final class me/proton/core/test/kotlin/TestScopeWithResults$DefaultImpls 
 
 public final class me/proton/core/test/kotlin/TurbineUtilsKt {
 	public static final fun flowTest (Lkotlinx/coroutines/test/TestScope;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static final fun flowTest (Lme/proton/core/test/kotlin/TestScopeWithResults;Lkotlinx/coroutines/flow/Flow;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
 }
 
 public final class me/proton/core/test/kotlin/UnconfinedTestCoroutineScopeProvider : me/proton/core/test/kotlin/TestCoroutineScopeProvider {

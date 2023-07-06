@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -27,6 +27,15 @@ import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
 fun <T> TestScope.flowTest(flow: Flow<T>, validate: suspend ReceiveTurbine<T>.() -> Unit): Job {
+    return launch(UnconfinedTestDispatcher(testScheduler)) {
+        flow.test(validate = validate)
+    }
+}
+
+fun <T> TestScopeWithResults.flowTest(
+    flow: Flow<T>,
+    validate: suspend ReceiveTurbine<T>.() -> Unit
+): Job {
     return launch(UnconfinedTestDispatcher(testScheduler)) {
         flow.test(validate = validate)
     }

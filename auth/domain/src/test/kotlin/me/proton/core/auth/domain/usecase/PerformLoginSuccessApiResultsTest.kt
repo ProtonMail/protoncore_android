@@ -99,7 +99,7 @@ class PerformLoginSuccessApiResultsTest {
     fun beforeEveryTest() {
         // GIVEN
         useCase =
-            PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig, mockk())
+            PerformLogin(authRepository, srpCrypto, keyStoreCrypto, challengeManager, loginChallengeConfig)
         coEvery {
             srpCrypto.generateSrpProofs(any(), any(), any(), any(), any(), any())
         } returns testSrpProofs

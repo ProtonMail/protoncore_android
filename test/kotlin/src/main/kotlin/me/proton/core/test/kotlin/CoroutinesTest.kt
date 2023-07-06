@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@ import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import me.proton.core.util.kotlin.DispatcherProvider
+import me.proton.core.util.kotlin.coroutine.withResultContext
 import org.junit.Rule
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
@@ -67,6 +68,14 @@ interface CoroutinesTest {
         context: CoroutineContext = coroutinesRule.dispatchers.Main,
         block: suspend TestScope.() -> Unit
     ) = runTest(context, testBody = block)
+
+    /**
+     * The same as [coroutinesTest], but the [block] is run with a [withResultContext] function.
+     */
+    fun coroutinesTestWithResultContext(
+        context: CoroutineContext = coroutinesRule.dispatchers.Main,
+        block: suspend TestScopeWithResults.() -> Unit
+    ) = runTestWithResultContext(context, testBody = block)
 }
 
 /** Helper for constructing a [CoroutinesTest]. */

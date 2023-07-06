@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,19 +24,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ChooseUsernameViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
-) : ProtonViewModel() {
+    override val manager: ObservabilityManager
+) : ProtonViewModel(), ObservabilityContext {
 
     private val mainState = MutableStateFlow<State>(State.Idle)
     val state = mainState.asStateFlow()
@@ -50,21 +52,22 @@ internal class ChooseUsernameViewModel @Inject constructor(
         }
     }
 
-    fun checkUsername(username: String) = flow {
-        emit(State.Processing)
-        // See CP-5335.
-        accountAvailability.getDomains(
-            userId = null,
-            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
-        )
-        accountAvailability.checkUsernameUnauthenticated(
-            username = username,
-            metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
-        )
-        emit(State.Success(username))
-    }.catch { error ->
-        emit(State.Error.Message(error))
-    }.onEach {
-        mainState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun checkUsername(username: String) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
+
+        flow {
+            emit(State.Processing)
+            // See CP-5335.
+            accountAvailability.getDomains(userId = null)
+            accountAvailability.checkUsernameUnauthenticated(
+                username = username,
+                metricData = { SignupUsernameAvailabilityTotal(it.toHttpApiStatus()) }
+            )
+            emit(State.Success(username))
+        }.catch { error ->
+            emit(State.Error.Message(error))
+        }.collect {
+            mainState.tryEmit(it)
+        }
+    }
 }

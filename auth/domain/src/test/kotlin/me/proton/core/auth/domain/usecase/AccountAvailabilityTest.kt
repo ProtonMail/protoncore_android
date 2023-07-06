@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.auth.domain.usecase
 
 import io.mockk.MockKAnnotations
@@ -13,8 +31,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
-import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
@@ -40,44 +56,6 @@ internal class AccountAvailabilityTest {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = AccountAvailability(userRepository, domainRepository, observabilityManager)
-    }
-
-    @Test
-    fun `getDomains observability success`() = runTest {
-        // GIVEN
-        coEvery { domainRepository.getAvailableDomains(any()) } returns listOf("a", "b")
-
-        // WHEN
-        tested.getDomains(
-            userId = null,
-            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
-        )
-
-        // THEN
-        verify {
-            observabilityManager.enqueue(SignupFetchDomainsTotal(HttpApiStatus.http2xx), any())
-        }
-    }
-
-    @Test
-    fun `getDomains observability 4xx failure`() = runTest {
-        // GIVEN
-        coEvery { domainRepository.getAvailableDomains(any()) } throws ApiException(
-            ApiResult.Error.Http(400, "Bad request")
-        )
-
-        // WHEN
-        assertFailsWith<ApiException> {
-            tested.getDomains(
-                userId = null,
-                metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
-            )
-        }
-
-        // THEN
-        verify {
-            observabilityManager.enqueue(SignupFetchDomainsTotal(HttpApiStatus.http4xx), any())
-        }
     }
 
     @Test
@@ -127,50 +105,6 @@ internal class AccountAvailabilityTest {
         verify {
             observabilityManager.enqueue(
                 SignupUsernameAvailabilityTotal(HttpApiStatus.notConnected),
-                any()
-            )
-        }
-    }
-
-    @Test
-    fun `checkExternalEmail observability success`() = runTest {
-        // GIVEN
-        coEvery { userRepository.checkExternalEmailAvailable(any()) } just runs
-
-        // WHEN
-        tested.checkExternalEmail(
-            email = "test@email.test",
-            metricData = { SignupEmailAvailabilityTotal(it.toHttpApiStatus()) }
-        )
-
-        // THEN
-        verify {
-            observabilityManager.enqueue(
-                SignupEmailAvailabilityTotal(HttpApiStatus.http2xx),
-                any()
-            )
-        }
-    }
-
-    @Test
-    fun `checkExternalEmail observability failure`() = runTest {
-        // GIVEN
-        coEvery { userRepository.checkExternalEmailAvailable(any()) } throws ApiException(
-            ApiResult.Error.Http(500, "Server error")
-        )
-
-        // WHEN
-        assertFailsWith<ApiException> {
-            tested.checkExternalEmail(
-                email = "test@email.test",
-                metricData = { SignupEmailAvailabilityTotal(it.toHttpApiStatus()) }
-            )
-        }
-
-        // THEN
-        verify {
-            observabilityManager.enqueue(
-                SignupEmailAvailabilityTotal(HttpApiStatus.http5xx),
                 any()
             )
         }

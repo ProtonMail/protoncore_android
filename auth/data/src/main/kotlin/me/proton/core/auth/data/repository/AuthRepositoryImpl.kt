@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -48,6 +48,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.coroutine.result
 
 class AuthRepositoryImpl(
     private val provider: ApiProvider,
@@ -83,18 +84,20 @@ class AuthRepositoryImpl(
         srpProofs: SrpProofs,
         srpSession: String,
         frames: List<ChallengeFrameDetails>
-    ) = provider.get<AuthenticationApi>().invoke {
-        val request = LoginRequest(
-            username,
-            srpProofs.clientEphemeral,
-            srpProofs.clientProof,
-            srpSession,
-            getFrameMap(frames)
-        )
-        val response = performLogin(request)
-        validateServerProof(requireNotNull(response.serverProof), srpProofs.expectedServerProof) { "login failed" }
-        response.toSessionInfo(username)
-    }.valueOrThrow
+    ) = result("performLogin") {
+        provider.get<AuthenticationApi>().invoke {
+            val request = LoginRequest(
+                username,
+                srpProofs.clientEphemeral,
+                srpProofs.clientProof,
+                srpSession,
+                getFrameMap(frames)
+            )
+            val response = performLogin(request)
+            validateServerProof(requireNotNull(response.serverProof), srpProofs.expectedServerProof) { "login failed" }
+            response.toSessionInfo(username)
+        }.valueOrThrow
+    }
 
     override suspend fun performLoginSso(
         email: String,

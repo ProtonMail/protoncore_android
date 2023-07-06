@@ -21,9 +21,12 @@ package me.proton.core.observability.domain.metrics
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
 
 @Serializable
 @Schema(description = "Logging in just after the signup.")
@@ -33,6 +36,10 @@ public data class SignupLoginTotal(
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
     public constructor(status: HttpApiStatus, type: AccountTypeLabels) : this(LabelsData(status, type))
+    public constructor(result: Result<*>, accountType: AccountType) : this(
+        result.toHttpApiStatus(),
+        accountType.toObservabilityAccountType()
+    )
 
     @Serializable
     public data class LabelsData constructor(

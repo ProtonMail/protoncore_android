@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,19 +24,20 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ChooseExternalEmailViewModel @Inject constructor(
-    private val accountAvailability: AccountAvailability
-) : ProtonViewModel() {
+    private val accountAvailability: AccountAvailability,
+    override val manager: ObservabilityManager
+) : ProtonViewModel(), ObservabilityContext {
 
     private val mainState = MutableStateFlow<State>(State.Idle)
     val state = mainState.asStateFlow()
@@ -51,33 +52,33 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
         }
     }
 
-    fun checkExternalEmail(email: String) = flow {
-        emit(State.Processing)
+    fun checkExternalEmail(email: String) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("checkExternalEmailAvailable") { SignupEmailAvailabilityTotal(this) }
+        onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
 
-        // See CP-5335.
-        val domains = accountAvailability.getDomains(
-            userId = null,
-            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
-        )
-        val emailSplit = email.split("@")
-        val username = emailSplit.getOrNull(0)
-        val domain = emailSplit.getOrNull(1)
+        flow {
+            emit(State.Processing)
 
-        when {
-            username != null && domain != null && domain in domains -> {
-                emit(State.SwitchInternal(username, domain))
+            // See CP-5335.
+            val domains = accountAvailability.getDomains(userId = null)
+            val emailSplit = email.split("@")
+            val username = emailSplit.getOrNull(0)
+            val domain = emailSplit.getOrNull(1)
+
+            when {
+                username != null && domain != null && domain in domains -> {
+                    emit(State.SwitchInternal(username, domain))
+                }
+
+                else -> {
+                    accountAvailability.checkExternalEmail(email = email)
+                    emit(State.Success(email))
+                }
             }
-            else -> {
-                accountAvailability.checkExternalEmail(
-                    email = email,
-                    metricData = { SignupEmailAvailabilityTotal(it.toHttpApiStatus()) }
-                )
-                emit(State.Success(email))
-            }
+        }.catch { error ->
+            emit(State.Error.Message(error))
+        }.collect {
+            mainState.tryEmit(it)
         }
-    }.catch { error ->
-        emit(State.Error.Message(error))
-    }.onEach {
-        mainState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    }
 }

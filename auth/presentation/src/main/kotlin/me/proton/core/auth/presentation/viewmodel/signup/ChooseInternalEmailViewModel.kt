@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,17 +27,21 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ChooseInternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
-) : ProtonViewModel() {
+    override val manager: ObservabilityManager
+) : ProtonViewModel(), ObservabilityContext {
 
     private var preFillUsername: String? = null
     private var preFillDomain: String? = null
@@ -67,19 +71,20 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
         getDomains()
     }
 
-    fun getDomains() = flow {
-        emit(State.Processing)
-        // See CP-5335.
-        domainsState.value = accountAvailability.getDomains(
-            userId = null,
-            metricData = { SignupFetchDomainsTotal(it.toHttpApiStatus()) }
-        )
-        emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
-    }.catch { error ->
-        emit(State.Error.DomainsNotAvailable(error))
-    }.onEach {
-        mainState.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun getDomains() = viewModelScope.launchWithResultContext {
+        onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
+
+        flow {
+            emit(State.Processing)
+            // See CP-5335.
+            domainsState.value = accountAvailability.getDomains(userId = null)
+            emit(State.Ready(username = preFillUsername, domain = preFillDomain, domains = domainsState.value))
+        }.catch { error ->
+            emit(State.Error.DomainsNotAvailable(error))
+        }.collect {
+            mainState.tryEmit(it)
+        }
+    }
 
     fun preFill(username: String?, domain: String?) = flow {
         emit(State.Processing)

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -38,6 +38,7 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -65,7 +66,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
     @Test
     fun `domains are loaded correctly`() = coroutinesTest {
         // GIVEN
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         // WHEN
         viewModel.state.test {
             // THEN
@@ -86,7 +87,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 message = "Error"
             )
         )
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         // WHEN
         viewModel.state.test {
             // THEN
@@ -104,7 +105,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkUsernameAvailable(any(), testEmail) } returns Unit
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
@@ -136,7 +137,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             )
         )
         // WHEN
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             // THEN
@@ -156,7 +157,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
         coEvery { userRepository.checkUsernameAvailable(any(), testEmail) } returns Unit
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkUsername(testUsername, testDomain)
             assertIs<State.Idle>(awaitItem())
@@ -175,10 +176,14 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
     @Test
     fun `fetchDomains observability`() = coroutinesTest {
+        // GIVEN
         val dataSlot = slot<SignupFetchDomainsTotal>()
+        coEvery { domainRepository.getAvailableDomains(any()) } coAnswers {
+            result("getAvailableDomains") { listOf("domain") }
+        }
 
         // WHEN
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.state.first { it is State.Ready } // wait for domains
 
         // THEN
@@ -191,7 +196,7 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         val dataSlot = slot<SignupUsernameAvailabilityTotal>()
 
         // WHEN
-        viewModel = ChooseInternalEmailViewModel(accountAvailability)
+        viewModel = ChooseInternalEmailViewModel(accountAvailability, observabilityManager)
         viewModel.checkUsername("test-user", "proton.test")
         viewModel.state.first { it is State.Success } // wait for validation success
 

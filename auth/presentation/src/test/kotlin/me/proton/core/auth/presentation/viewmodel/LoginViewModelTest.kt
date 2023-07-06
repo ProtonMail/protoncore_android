@@ -20,9 +20,11 @@ package me.proton.core.auth.presentation.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
@@ -37,10 +39,15 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.SignupLoginTotal
+import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -56,6 +63,9 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
     private val createLoginSession = mockk<CreateLoginSession>()
     private val postLoginAccountSetup = mockk<PostLoginAccountSetup>()
+
+    @MockK(relaxUnitFun = true)
+    private lateinit var observabilityManager: ObservabilityManager
     // endregion
 
     // region test data
@@ -68,6 +78,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
         viewModel = makeLoginViewModel()
         every { keyStoreCrypto.encrypt(any<String>()) } returns testPassword
     }
@@ -390,6 +401,49 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         assertEquals(expected = true, actual = viewModel.isSsoEnabled)
     }
 
+    @Test
+    fun observabilityEventsAreEnqueued() = coroutinesTest {
+        // GIVEN
+        val sessionInfo = mockSessionInfo()
+        coEvery { createLoginSession.invoke(any(), any(), any()) } coAnswers {
+            result("performLogin") { sessionInfo }
+        }
+        coEvery {
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } coAnswers {
+            result("unlockUserPrimaryKey") { PostLoginAccountSetup.Result.UserUnlocked(mockk()) }
+        }
+        val viewModel = makeLoginViewModel()
+        val loginData = mockk<SignupLoginTotal>()
+        val unlockData = mockk<SignupUnlockUserTotalV1>()
+
+        viewModel.startLoginWorkflow(
+            username = testUserName,
+            password = testPassword,
+            requiredAccountType = mockk(),
+            loginMetricData = { loginData },
+            unlockUserMetricData = { unlockData }
+        ).join()
+
+        // THEN
+        val dataSlots = mutableListOf<ObservabilityData>()
+        verify { observabilityManager.enqueue(capture(dataSlots), any()) }
+        assertTrue(dataSlots.contains(loginData))
+        assertTrue(dataSlots.contains(unlockData))
+    }
+
     private fun makeLoginViewModel(isSsoEnabled: IsSsoEnabled = IsSsoEnabled { false }): LoginViewModel =
         LoginViewModel(
             savedStateHandle,
@@ -397,7 +451,8 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
             createLoginSession,
             keyStoreCrypto,
             postLoginAccountSetup,
-            isSsoEnabled
+            isSsoEnabled,
+            observabilityManager
         )
 
     private fun mockSessionInfo(

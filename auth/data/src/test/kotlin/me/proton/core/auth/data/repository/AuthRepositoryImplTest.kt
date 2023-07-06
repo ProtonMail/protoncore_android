@@ -44,6 +44,7 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.runTestWithResultContext
 import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
@@ -146,7 +147,7 @@ class AuthRepositoryImplTest {
     }
 
     @Test
-    fun `login success result`() = runTest(testDispatcherProvider.Main) {
+    fun `login success result`() = runTestWithResultContext(testDispatcherProvider.Main) {
         // GIVEN
         every { successSessionInfo.username } returns testUsername
         every { successSessionInfo.accessToken } returns testAccessToken
@@ -165,6 +166,9 @@ class AuthRepositoryImplTest {
         assertNotNull(sessionInfoResponse)
         assertEquals(testUsername, sessionInfoResponse.username)
         assertEquals(testAccessToken, sessionInfoResponse.accessToken)
+
+        val result = assertSingleResult("performLogin")
+        assertTrue(result.isSuccess)
     }
 
     @Test

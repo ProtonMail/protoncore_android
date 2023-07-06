@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,9 +28,6 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.runWithObservability
 import javax.inject.Inject
 
 /**
@@ -42,12 +39,10 @@ class PerformLogin @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: LoginChallengeConfig,
-    private val observabilityManager: ObservabilityManager,
 ) {
     suspend operator fun invoke(
         username: String,
-        password: EncryptedString,
-        loginMetricData: ((Result<SessionInfo>) -> ObservabilityData)? = null
+        password: EncryptedString
     ): SessionInfo {
         val loginInfo = authRepository.getAuthInfoSrp(
             sessionId = null,
@@ -63,14 +58,12 @@ class PerformLogin @Inject constructor(
                 serverEphemeral = loginInfo.serverEphemeral
             )
             return challengeManager.useFlow(challengeConfig.flowName) { frames ->
-                authRepository.runWithObservability(observabilityManager, loginMetricData) {
-                    performLogin(
-                        frames = frames,
-                        username = username,
-                        srpProofs = srpProofs,
-                        srpSession = loginInfo.srpSession
-                    )
-                }
+                authRepository.performLogin(
+                    frames = frames,
+                    username = username,
+                    srpProofs = srpProofs,
+                    srpSession = loginInfo.srpSession
+                )
             }
         }
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -37,6 +37,7 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Test
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
@@ -68,7 +69,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         val testUsername = "test-username"
         coEvery { userRepository.checkUsernameAvailable(any(), testUsername) } returns Unit
         // WHEN
-        viewModel = ChooseUsernameViewModel(accountAvailability)
+        viewModel = ChooseUsernameViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             // THEN
@@ -94,7 +95,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             )
         )
         // WHEN
-        viewModel = ChooseUsernameViewModel(accountAvailability)
+        viewModel = ChooseUsernameViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             // THEN
@@ -111,7 +112,7 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         val testUsername = "test-username"
         coEvery { userRepository.checkUsernameAvailable(any(), testUsername) } returns Unit
         // WHEN
-        viewModel = ChooseUsernameViewModel(accountAvailability)
+        viewModel = ChooseUsernameViewModel(accountAvailability, observabilityManager)
         viewModel.state.test {
             viewModel.checkUsername(testUsername)
             assertIs<State.Idle>(awaitItem())
@@ -129,10 +130,12 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @Test
     fun `observability data is enqueued`() = coroutinesTest {
         // GIVEN
-        coEvery { userRepository.checkUsernameAvailable(any(), any()) } returns Unit
+        coEvery { userRepository.checkUsernameAvailable(any(), any()) } coAnswers {
+            result("getAvailableDomains") { /* Unit */ }
+        }
 
         // WHEN
-        viewModel = ChooseUsernameViewModel(accountAvailability)
+        viewModel = ChooseUsernameViewModel(accountAvailability, observabilityManager)
         viewModel.checkUsername("test-username").join()
 
         // THEN

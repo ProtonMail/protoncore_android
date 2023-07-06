@@ -236,10 +236,11 @@ class UserRepositoryImpl @Inject constructor(
             usernameAvailable(username)
         }.throwIfError()
 
-    override suspend fun checkExternalEmailAvailable(email: String) =
+    override suspend fun checkExternalEmailAvailable(email: String) = result("checkExternalEmailAvailable") {
         provider.get<UserApi>().invoke {
             externalEmailAvailable(email)
         }.throwIfError()
+    }
 
     // region PassphraseRepository
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -24,6 +24,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
+import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Fetching the domains during the signup.")
@@ -33,4 +34,5 @@ public data class SignupFetchDomainsTotal(
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
     public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
+    public constructor(result: Result<*>) : this(result.toHttpApiStatus())
 }

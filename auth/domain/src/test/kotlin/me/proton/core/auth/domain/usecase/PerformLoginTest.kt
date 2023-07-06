@@ -23,20 +23,10 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
-import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupLoginTotal
-import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import kotlin.test.BeforeTest
-import kotlin.test.Test
-import kotlin.test.assertEquals
 
 class PerformLoginTest {
     @MockK
@@ -47,9 +37,6 @@ class PerformLoginTest {
 
     @MockK
     private lateinit var keyStoreCrypto: KeyStoreCrypto
-
-    @MockK(relaxUnitFun = true)
-    private lateinit var observabilityManager: ObservabilityManager
 
     private lateinit var tested: PerformLogin
 
@@ -67,23 +54,7 @@ class PerformLoginTest {
             mockk(relaxed = true),
             keyStoreCrypto,
             challengeManager,
-            LoginChallengeConfig(),
-            observabilityManager
+            LoginChallengeConfig()
         )
-    }
-
-    @Test
-    fun `login after signup observability data`() = runTest {
-        // WHEN
-        tested.invoke(
-            username = "test-username",
-            password = "encrypted-test-password",
-            loginMetricData = { SignupLoginTotal(it.toHttpApiStatus(), AccountTypeLabels.internal) }
-        )
-
-        // THEN
-        val loginEventSlot = slot<SignupLoginTotal>()
-        verify { observabilityManager.enqueue(capture(loginEventSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, loginEventSlot.captured.Labels.status)
     }
 }

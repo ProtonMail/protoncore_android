@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,6 +21,8 @@ package me.proton.core.auth.presentation.viewmodel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
+import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.yield
 import me.proton.core.auth.domain.AccountWorkflowHandler
@@ -30,11 +32,15 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotal
+import me.proton.core.observability.domain.metrics.LoginEaToIaUnlockUserTotalV1
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.User
 import me.proton.core.usersettings.domain.usecase.SetupUsername
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -86,10 +92,13 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         // GIVEN
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains(any(), any()) } returns listOf(
-            "protonmail.com",
-            "protonmail.ch"
-        )
+        coEvery { accountAvailability.getDomains(any()) } coAnswers {
+            println("Running accountAvailability.getDomains")
+            result("getAvailableDomains") {
+                println("Running accountAvailability.getDomains in result..")
+                listOf("protonmail.com", "protonmail.ch")
+            }
+        }
 
         flowTest(viewModel.state) {
             // WHEN
@@ -104,13 +113,17 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
             assertEquals("protonmail.com", data.domains.first())
 
             cancelAndIgnoreRemainingEvents()
+
+            val dataSlot = slot<ObservabilityData>()
+            verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+            assertIs<LoginEaToIaFetchDomainsTotal>(dataSlot.captured)
         }
     }
 
     @Test
     fun `available domains error path`() = coroutinesTest {
         // GIVEN
-        coEvery { accountAvailability.getDomains(any(), any()) } throws ApiException(ApiResult.Error.NoInternet())
+        coEvery { accountAvailability.getDomains(any()) } throws ApiException(ApiResult.Error.NoInternet())
 
         flowTest(viewModel.state) {
             // WHEN
@@ -131,7 +144,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { user.name } returns null
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains(any(), any()) } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
@@ -165,7 +178,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { user.name } returns null
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains(any(), any()) } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
@@ -209,7 +222,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { user.name } returns null
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains(any(), any()) } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
@@ -243,8 +256,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
                 onSetupSuccess = any(),
                 internalAddressDomain = any(),
                 subscribeMetricData = any(),
-                userCheckMetricData = any(),
-                unlockUserMetricData = any()
+                userCheckMetricData = any()
             )
         } returns PostLoginAccountSetup.Result.UserUnlocked(userId)
 
@@ -291,7 +303,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
         coEvery { user.name } returns "testemail"
         coEvery { user.email } returns "testemail@test.com"
         coEvery { user.keys } returns emptyList()
-        coEvery { accountAvailability.getDomains(any(), any()) } returns listOf(
+        coEvery { accountAvailability.getDomains(any()) } returns listOf(
             "protonmail.com",
             "protonmail.ch"
         )
@@ -309,5 +321,39 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
 
             cancelAndIgnoreRemainingEvents()
         }
+    }
+
+    @Test
+    fun `startWorkFlow result`() = coroutinesTest {
+        // GIVEN
+        coEvery { accountAvailability.getDomains(any()) } coAnswers {
+            result("getAvailableDomains") { emptyList() }
+        }
+
+        // WHEN
+        viewModel.startWorkFlow(userId).join()
+
+        // THEN
+        verify { observabilityManager.enqueue(ofType<LoginEaToIaFetchDomainsTotal>(), any()) }
+    }
+
+    @Test
+    fun `setUsername result`() = coroutinesTest {
+        // GIVEN
+        coEvery { setupUsername(any(), any()) } coAnswers {
+            result("unlockUserPrimaryKey") { /* Unit */ }
+        }
+
+        // WHEN
+        viewModel.setUsername(
+            userId = userId,
+            username = "username",
+            password = "password",
+            domain = "domain",
+            isTwoPassModeNeeded = false
+        ).join()
+
+        // THEN
+        verify { observabilityManager.enqueue(ofType<LoginEaToIaUnlockUserTotalV1>(), any()) }
     }
 }
