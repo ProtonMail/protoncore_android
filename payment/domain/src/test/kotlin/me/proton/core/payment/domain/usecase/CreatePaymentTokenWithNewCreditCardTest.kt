@@ -21,14 +21,8 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotal
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
@@ -44,18 +38,20 @@ import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
 class CreatePaymentTokenWithNewCreditCardTest {
-    // region mocks
-    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    private val repository = mockk<PaymentsRepository>(relaxed = true)
-    // endregion
 
-    // region test data
+    private val repository = mockk<PaymentsRepository>(relaxed = true)
+
     private val testUserId = UserId("test-user-id")
     private val testAmount = 5L
     private val testCurrency = Currency.CHF
     private val testDefaultCardWithPaymentDetails = Card.CardWithPaymentDetails(
-        number = "123456789", cvc = "123",
-        expirationMonth = "01", expirationYear = "2021", name = "Test", country = "Test Country", zip = "123"
+        number = "123456789",
+        cvc = "123",
+        expirationMonth = "01",
+        expirationYear = "2021",
+        name = "Test",
+        country = "Test Country",
+        zip = "123"
     )
     private val testPayment = PaymentType.CreditCard(testDefaultCardWithPaymentDetails)
     private val testToken = ProtonPaymentToken("test-token")
@@ -64,15 +60,14 @@ class CreatePaymentTokenWithNewCreditCardTest {
     private val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
         PaymentTokenStatus.PENDING, testApprovalUrl, testToken, testReturnHost
     )
-    // endregion
 
-    private lateinit var useCase: CreatePaymentTokenWithNewCreditCard
+    private lateinit var useCase: CreatePaymentToken
 
     @Before
     fun beforeEveryTest() {
-        useCase = CreatePaymentTokenWithNewCreditCard(repository, observabilityManager)
+        useCase = CreatePaymentToken(repository, mockk())
         coEvery {
-            repository.createPaymentTokenNewCreditCard(any(), any(), any(), any())
+            repository.createPaymentToken(any(), any(), any(), any())
         } returns createTokenResult
     }
 
@@ -81,7 +76,7 @@ class CreatePaymentTokenWithNewCreditCardTest {
         val result = useCase.invoke(testUserId, testAmount, testCurrency, testPayment)
 
         coVerify(exactly = 1) {
-            repository.createPaymentTokenNewCreditCard(
+            repository.createPaymentToken(
                 sessionUserId = testUserId,
                 amount = testAmount,
                 currency = testCurrency,
@@ -101,7 +96,7 @@ class CreatePaymentTokenWithNewCreditCardTest {
         val result = useCase.invoke(null, testAmount, testCurrency, testPayment)
 
         coVerify(exactly = 1) {
-            repository.createPaymentTokenNewCreditCard(
+            repository.createPaymentToken(
                 sessionUserId = null,
                 amount = testAmount,
                 currency = testCurrency,
@@ -122,7 +117,7 @@ class CreatePaymentTokenWithNewCreditCardTest {
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
         coEvery {
-            repository.createPaymentTokenNewCreditCard(testUserId, testAmount, testCurrency, any())
+            repository.createPaymentToken(testUserId, testAmount, testCurrency, any())
         } returns createTokenChargeableResult
 
         val result = useCase.invoke(testUserId, testAmount, testCurrency, testPayment)
@@ -138,19 +133,5 @@ class CreatePaymentTokenWithNewCreditCardTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(testUserId, -1, testCurrency, testPayment)
         }
-    }
-
-    @Test
-    fun `observability metrics are recorded`() = runTest {
-        useCase.invoke(
-            testUserId,
-            testAmount,
-            testCurrency,
-            testPayment,
-            metricData = { CheckoutCardBillingCreatePaymentTokenTotal(it.toHttpApiStatus()) })
-
-        val dataSlot = slot<CheckoutCardBillingCreatePaymentTokenTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

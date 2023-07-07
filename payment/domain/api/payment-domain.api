@@ -408,10 +408,7 @@ public abstract interface class me/proton/core/payment/domain/repository/GoogleP
 
 public abstract interface class me/proton/core/payment/domain/repository/PaymentsRepository {
 	public abstract fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun createPaymentTokenExistingPaymentMethod (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun createPaymentTokenGoogleIAP (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun createPaymentTokenNewCreditCard (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun createPaymentTokenNewPayPal (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun createPaymentToken (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAvailablePaymentMethods (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPaymentStatus (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPaymentTokenStatus-moyEFhY (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -421,10 +418,7 @@ public abstract interface class me/proton/core/payment/domain/repository/Payment
 
 public final class me/proton/core/payment/domain/repository/PaymentsRepository$DefaultImpls {
 	public static synthetic fun createOrUpdateSubscription$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun createPaymentTokenExistingPaymentMethod$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun createPaymentTokenGoogleIAP$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun createPaymentTokenNewCreditCard$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun createPaymentTokenNewPayPal$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun createPaymentToken$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun validateSubscription$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
@@ -440,28 +434,9 @@ public final class me/proton/core/payment/domain/usecase/CanUpgradeToPaid {
 	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/CanUpgradeToPaid;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod {
-	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithExistingPaymentMethod;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP {
-	public fun <init> (Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$GoogleIAP;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard {
-	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewCreditCard;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$CreditCard;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal {
-	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithNewPayPal;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType$PayPal;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+public final class me/proton/core/payment/domain/usecase/CreatePaymentToken {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {

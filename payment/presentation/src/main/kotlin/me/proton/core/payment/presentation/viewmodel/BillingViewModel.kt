@@ -36,10 +36,7 @@ import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
+import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
@@ -52,26 +49,20 @@ import javax.inject.Inject
 public class BillingViewModel @Inject constructor(
     private val activePaymentProvider: ActivePaymentProvider,
     validatePlanSubscription: ValidateSubscriptionPlan,
-    createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
-    createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
-    createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
-    createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
+    createPaymentToken: CreatePaymentToken,
     performSubscribe: PerformSubscribe,
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
     clientIdProvider: ClientIdProvider,
-    observabilityManager: ObservabilityManager
+    override val manager: ObservabilityManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
-    createPaymentTokenWithNewCreditCard,
-    createPaymentTokenWithNewPayPal,
-    createPaymentTokenWithExistingPaymentMethod,
-    createPaymentTokenWithGoogleIAP,
+    createPaymentToken,
     performSubscribe,
     getCountry,
     humanVerificationManager,
     clientIdProvider,
-    observabilityManager
+    manager
 ) {
     private val _state = MutableStateFlow<State>(State.Idle)
     public val state: StateFlow<State> = _state.asStateFlow()

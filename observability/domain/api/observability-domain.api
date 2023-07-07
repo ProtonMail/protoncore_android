@@ -301,6 +301,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutBillingSu
 public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -484,6 +485,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -722,6 +724,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/Object;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V

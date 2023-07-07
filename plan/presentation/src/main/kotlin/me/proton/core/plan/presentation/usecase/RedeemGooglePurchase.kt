@@ -29,7 +29,7 @@ import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
+import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.plan.domain.entity.Plan
@@ -41,7 +41,7 @@ import javax.inject.Inject
 
 internal class RedeemGooglePurchase @Inject constructor(
     private val acknowledgeGooglePlayPurchaseOptional: Optional<AcknowledgeGooglePlayPurchase>,
-    private val createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
+    private val createPaymentToken: CreatePaymentToken,
     private val performSubscribe: PerformSubscribe,
     private val validateSubscriptionPlan: ValidateSubscriptionPlan
 ) {
@@ -70,18 +70,18 @@ internal class RedeemGooglePurchase @Inject constructor(
         val planCycle = getPlanCycleForPurchase(googlePurchase, purchasedPlan)
         val planNames = listOf(purchasedPlan.name)
         val subscriptionStatus = validateSubscriptionPlan(
-            userId,
+            userId = userId,
             codes = null,
             plans = planNames,
-            currency.toSubscriptionCurrency(),
-            planCycle.toSubscriptionCycle(),
+            currency = currency.toSubscriptionCurrency(),
+            cycle = planCycle.toSubscriptionCycle(),
             metricData  = { CheckoutGiapBillingValidatePlanTotal(it.toHttpApiStatus()) }
         )
-        val tokenResult = createPaymentTokenWithGoogleIAP(
-            userId,
-            subscriptionStatus.amountDue,
-            subscriptionStatus.currency,
-            PaymentType.GoogleIAP(
+        val tokenResult = createPaymentToken(
+            userId = userId,
+            amount = subscriptionStatus.amountDue,
+            currency = subscriptionStatus.currency,
+            paymentType = PaymentType.GoogleIAP(
                 productId = googlePurchase.productIds.first(),
                 purchaseToken = googlePurchase.purchaseToken,
                 orderId = googlePurchase.orderId,
@@ -93,14 +93,14 @@ internal class RedeemGooglePurchase @Inject constructor(
 
         // performSubscribe also acknowledges Google purchase:
         performSubscribe(
-            userId,
-            subscriptionStatus.amountDue,
-            subscriptionStatus.currency,
-            subscriptionStatus.cycle,
-            planNames,
+            userId = userId,
+            amount = subscriptionStatus.amountDue,
+            currency = subscriptionStatus.currency,
+            cycle = subscriptionStatus.cycle,
+            planNames = planNames,
             codes = null,
-            tokenResult.token,
-            SubscriptionManagement.GOOGLE_MANAGED,
+            paymentToken = tokenResult.token,
+            subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED,
             subscribeMetricData = subscribeMetricData
         )
     }

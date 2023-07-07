@@ -914,7 +914,7 @@ public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentTokenWithGoogleIAP;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
 }
 
 public final class me/proton/core/plan/presentation/view/LogTag {

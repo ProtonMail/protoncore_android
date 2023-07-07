@@ -43,89 +43,73 @@ import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PlanQuantity
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 public class PaymentsRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : PaymentsRepository {
 
-    /**
-     * Unauthenticated.
-     * Creates a new payment token which will be used later for a new subscription with PayPal.
-     */
-    override suspend fun createPaymentTokenNewPayPal(
+    override suspend fun createPaymentToken(
         sessionUserId: SessionUserId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.PayPal
-    ): PaymentTokenResult.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
-            val request = CreatePaymentToken(amount, currency.name, PaymentTypeEntity.PayPal, null)
-            createPaymentToken(request).toCreatePaymentTokenResult()
-        }.valueOrThrow
-
-    /**
-     * Unauthenticated.
-     * Creates a new payment token which will be used later for a new subscription with new Credit Card.
-     */
-    override suspend fun createPaymentTokenNewCreditCard(
-        sessionUserId: SessionUserId?,
-        amount: Long,
-        currency: Currency,
-        paymentType: PaymentType.CreditCard
-    ): PaymentTokenResult.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
-            val paymentCard = paymentType.card
-            require(paymentCard is Card.CardWithPaymentDetails) { "Insufficient Payment Details provided." }
-            val payment = PaymentTypeEntity.Card(
-                CardDetailsBody(
-                    number = paymentCard.number,
-                    cvc = paymentCard.cvc,
-                    expirationMonth = paymentCard.expirationMonth,
-                    expirationYear = paymentCard.expirationYear,
-                    name = paymentCard.name,
-                    country = paymentCard.country,
-                    zip = paymentCard.zip
-                )
+        paymentType: PaymentType
+    ): PaymentTokenResult.CreatePaymentTokenResult = result("createPaymentToken") {
+        val request = when (paymentType) {
+            is PaymentType.PayPal -> CreatePaymentToken(
+                amount = amount,
+                currency = currency.name,
+                paymentEntity = PaymentTypeEntity.PayPal,
+                paymentMethodId = null
             )
-            val request = CreatePaymentToken(amount, currency.name, payment, null)
-            createPaymentToken(request).toCreatePaymentTokenResult()
-        }.valueOrThrow
 
-    /**
-     * Unauthenticated.
-     * Creates a new payment token which will be used later for a new subscription with existing saved payment method.
-     */
-    override suspend fun createPaymentTokenExistingPaymentMethod(
-        sessionUserId: SessionUserId?,
-        amount: Long,
-        currency: Currency,
-        paymentMethodId: String
-    ): PaymentTokenResult.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
-            val request = CreatePaymentToken(amount, currency.name, null, paymentMethodId)
-            createPaymentToken(request).toCreatePaymentTokenResult()
-        }.valueOrThrow
-
-    override suspend fun createPaymentTokenGoogleIAP(
-        sessionUserId: SessionUserId?,
-        amount: Long,
-        currency: Currency,
-        paymentType: PaymentType.GoogleIAP
-    ): PaymentTokenResult.CreatePaymentTokenResult =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
-            val payment = PaymentTypeEntity.GoogleIAP(
-                IAPDetailsBody(
-                    productId = paymentType.productId,
-                    purchaseToken = paymentType.purchaseToken.value,
-                    orderId = paymentType.orderId,
-                    packageName = paymentType.packageName,
-                    customerId = paymentType.customerId
+            is PaymentType.CreditCard -> when (paymentType.card) {
+                is Card.CardReadOnly -> throw IllegalArgumentException("Insufficient Payment Details provided.")
+                is Card.CardWithPaymentDetails -> CreatePaymentToken(
+                    amount = amount,
+                    currency = currency.name,
+                    paymentEntity = PaymentTypeEntity.Card(
+                        CardDetailsBody(
+                            number = (paymentType.card as Card.CardWithPaymentDetails).number,
+                            cvc = (paymentType.card as Card.CardWithPaymentDetails).cvc,
+                            expirationMonth = paymentType.card.expirationMonth,
+                            expirationYear = paymentType.card.expirationYear,
+                            name = paymentType.card.name,
+                            country = paymentType.card.country,
+                            zip = paymentType.card.zip
+                        )
+                    ),
+                    paymentMethodId = null
                 )
+            }
+
+            is PaymentType.GoogleIAP -> CreatePaymentToken(
+                amount = amount,
+                currency = currency.name,
+                paymentEntity = PaymentTypeEntity.GoogleIAP(
+                    IAPDetailsBody(
+                        productId = paymentType.productId,
+                        purchaseToken = paymentType.purchaseToken.value,
+                        orderId = paymentType.orderId,
+                        packageName = paymentType.packageName,
+                        customerId = paymentType.customerId
+                    )
+                ),
+                paymentMethodId = null
             )
-            val request = CreatePaymentToken(amount, currency.name, payment, null)
+
+            is PaymentType.PaymentMethod -> CreatePaymentToken(
+                amount = amount,
+                currency = currency.name,
+                paymentEntity = null,
+                paymentMethodId = paymentType.paymentMethodId
+            )
+        }
+        provider.get<PaymentsApi>(sessionUserId).invoke {
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
+    }
 
     override suspend fun getPaymentTokenStatus(
         sessionUserId: SessionUserId?,

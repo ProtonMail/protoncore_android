@@ -36,6 +36,7 @@ import me.proton.core.payment.data.api.PaymentsApi
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
@@ -50,6 +51,7 @@ import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
+import me.proton.core.test.kotlin.runTestWithResultContext
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -239,7 +241,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `create payment token logged in new credit card success`() = runTest(dispatcherProvider.Main) {
+    fun `create payment token logged in new credit card success`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -247,7 +249,7 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
+        val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = SessionUserId(testUserId),
             amount = 1L,
             currency = Currency.EUR,
@@ -257,10 +259,11 @@ class PaymentsRepositoryImplTest {
         assertNotNull(createPaymentTokenResult)
         assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
         assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
+        assertTrue(assertSingleResult("createPaymentToken").isSuccess)
     }
 
     @Test
-    fun `create payment token sign up new credit card success`() = runTest(dispatcherProvider.Main) {
+    fun `create payment token sign up new credit card success`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -268,7 +271,7 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
+        val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = null,
             amount = 1L,
             currency = Currency.EUR,
@@ -278,10 +281,11 @@ class PaymentsRepositoryImplTest {
         assertNotNull(createPaymentTokenResult)
         assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
         assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
+        assertTrue(assertSingleResult("createPaymentToken").isSuccess)
     }
 
     @Test
-    fun `create payment token logged in new credit card error`() = runTest(dispatcherProvider.Main) {
+    fun `create payment token logged in new credit card error`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Error.Http(
@@ -289,7 +293,7 @@ class PaymentsRepositoryImplTest {
             )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.createPaymentTokenNewCreditCard(
+            repository.createPaymentToken(
                 sessionUserId = SessionUserId(testUserId),
                 amount = 1L,
                 currency = Currency.EUR,
@@ -301,10 +305,11 @@ class PaymentsRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("createPaymentToken").isFailure)
     }
 
     @Test
-    fun `create payment token logged in paypal success`() = runTest(dispatcherProvider.Main) {
+    fun `create payment token giap success`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -312,16 +317,91 @@ class PaymentsRepositoryImplTest {
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
             ApiResult.Success(createTokenResult)
         // WHEN
-        val createPaymentTokenResult = repository.createPaymentTokenNewCreditCard(
+        val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = SessionUserId(testUserId),
             amount = 1L,
             currency = Currency.EUR,
-            paymentType = PaymentType.CreditCard(testCardWithPaymentDetails)
+            paymentType = PaymentType.GoogleIAP(
+                productId = "productId",
+                purchaseToken = GooglePurchaseToken("token"),
+                 orderId = "orderId",
+                packageName = "packageName",
+                customerId = "customerID"
+            )
         )
         // THEN
         assertNotNull(createPaymentTokenResult)
         assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
         assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
+        assertTrue(assertSingleResult("createPaymentToken").isSuccess)
+    }
+
+    @Test
+    fun `create payment token giap error`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
+                ApiResult.Error.Http(
+                    httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+                )
+        // WHEN
+        assertFailsWith(ApiException::class) {
+            repository.createPaymentToken(
+                sessionUserId = SessionUserId(testUserId),
+                amount = 1L,
+                currency = Currency.EUR,
+                paymentType = PaymentType.GoogleIAP(
+                    productId = "productId",
+                    purchaseToken = GooglePurchaseToken("token"),
+                    orderId = "orderId",
+                    packageName = "packageName",
+                    customerId = "customerID"
+                )
+            )
+        }
+        // THEN
+        assertTrue(assertSingleResult("createPaymentToken").isFailure)
+    }
+
+    @Test
+    fun `create payment token paypal success`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
+        )
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
+                ApiResult.Success(createTokenResult)
+        // WHEN
+        val createPaymentTokenResult = repository.createPaymentToken(
+            sessionUserId = SessionUserId(testUserId),
+            amount = 1L,
+            currency = Currency.EUR,
+            paymentType = PaymentType.PayPal
+        )
+        // THEN
+        assertNotNull(createPaymentTokenResult)
+        assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
+        assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
+        assertTrue(assertSingleResult("createPaymentToken").isSuccess)
+    }
+
+    @Test
+    fun `create payment token paypal error`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
+                ApiResult.Error.Http(
+                    httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+                )
+        // WHEN
+        assertFailsWith(ApiException::class) {
+            repository.createPaymentToken(
+                sessionUserId = SessionUserId(testUserId),
+                amount = 1L,
+                currency = Currency.EUR,
+                paymentType = PaymentType.PayPal
+            )
+        }
+        // THEN
+        assertTrue(assertSingleResult("createPaymentToken").isFailure)
     }
 
     @Test

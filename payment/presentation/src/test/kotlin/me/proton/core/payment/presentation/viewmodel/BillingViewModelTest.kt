@@ -41,10 +41,7 @@ import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
+import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.domain.usecase.PerformSubscribe
@@ -65,10 +62,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
     // region mocks
     private val validateSubscription = mockk<ValidateSubscriptionPlan>()
-    private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>()
-    private val createPaymentTokenWithExistingPayMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
-    private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
-    private val createPaymentTokenWithGoogleIAP = mockk<CreatePaymentTokenWithGoogleIAP>()
+    private val createPaymentToken = mockk<CreatePaymentToken>()
     private val performSubscribe = mockk<PerformSubscribe>()
     private val getCountryCode = mockk<GetCountry>()
     private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
@@ -105,9 +99,6 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             activePaymentProvider,
             validateSubscription,
             createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPayMethod,
-            createPaymentTokenWithGoogleIAP,
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
@@ -204,20 +195,20 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentTokenWithGoogleIAP.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                paymentType
+            createPaymentToken.invoke(
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = paymentType
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, ProtonPaymentToken("test-token"), null
@@ -225,14 +216,14 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             performSubscribe.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                testSubscriptionCycle,
-                testPlanIds,
-                null,
-                ProtonPaymentToken("test-token"),
-                SubscriptionManagement.GOOGLE_MANAGED
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle,
+                planNames = testPlanIds,
+                codes = null,
+                paymentToken = ProtonPaymentToken("test-token"),
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
             )
         } returns mockk()
 
@@ -258,7 +249,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentTokenWithGoogleIAP.invoke(testUserId, 2, testCurrency, paymentType) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(testUserId, 2, testCurrency, paymentType) }
         coVerify(exactly = 1) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
     }
 
@@ -281,19 +272,19 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             validateSubscription.invoke(
-                null,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = null,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
         coEvery {
             createPaymentToken.invoke(
-                null,
-                2,
-                testCurrency,
-                expectedCard
+                userId = null,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -344,19 +335,19 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                null,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = null,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
         coEvery {
-            createPaymentTokenWithGoogleIAP.invoke(
-                null,
-                2,
-                testCurrency,
-                paymentType
+            createPaymentToken.invoke(
+                userId = null,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = paymentType
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, null, ProtonPaymentToken("test-token"), null
@@ -381,7 +372,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 1) { createPaymentTokenWithGoogleIAP.invoke(null, 2, testCurrency, paymentType) }
+        coVerify(exactly = 1) { createPaymentToken.invoke(null, 2, testCurrency, paymentType) }
         coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
     }
 
@@ -403,20 +394,20 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         )
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentTokenWithExistingPayMethod.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                testPaymentMethodId
+            createPaymentToken.invoke(
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = paymentType
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -447,11 +438,11 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // THEN
         coVerify(exactly = 1) {
-            createPaymentTokenWithExistingPayMethod.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                testPaymentMethodId
+            createPaymentToken.invoke(
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = paymentType
             )
         }
         coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
@@ -476,20 +467,20 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                null,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = null,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
 
         coEvery {
-            createPaymentTokenWithExistingPayMethod.invoke(
-                null,
-                2,
-                testCurrency,
-                testPaymentMethodId
+            createPaymentToken.invoke(
+                userId = null,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = paymentType
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -513,9 +504,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         job.join()
 
         // THEN
-        coVerify(exactly = 0) {
-            createPaymentTokenWithExistingPayMethod.invoke(any(), any(), any(), any())
-        }
+        coVerify(exactly = 0) { createPaymentToken.invoke(any(), any(), any(), any()) }
         coVerify(exactly = 0) { performSubscribe.invoke(any(), any(), any(), any(), any(), any(), any(), any()) }
     }
 
@@ -538,24 +527,24 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
 
         coEvery {
             performSubscribe.invoke(
-                testUserId,
-                0,
-                testCurrency,
-                testSubscriptionCycle,
-                testPlanIds,
-                null,
-                null,
-                SubscriptionManagement.PROTON_MANAGED
+                userId = testUserId,
+                amount = 0,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle,
+                planNames = testPlanIds,
+                codes = null,
+                paymentToken = null,
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         } returns mockk()
 
@@ -571,30 +560,28 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // WHEN
         billingViewModel.subscribe(
-            testUserId,
-            testPlanIds,
-            null,
-            testCurrency,
-            testSubscriptionCycle,
-            paymentType,
-            SubscriptionManagement.PROTON_MANAGED
+            userId = testUserId,
+            planNames = testPlanIds,
+            codes = null,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            paymentType = paymentType,
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         job.join()
 
         // THEN
-        coVerify(exactly = 0) {
-            createPaymentTokenWithExistingPayMethod.invoke(any(), any(), any(), any())
-        }
+        coVerify(exactly = 0) { createPaymentToken.invoke(any(), any(), any(), any()) }
         coVerify(exactly = 1) {
             performSubscribe.invoke(
-                testUserId,
-                0,
-                testCurrency,
-                testSubscriptionCycle,
-                testPlanIds,
-                null,
-                null,
-                SubscriptionManagement.PROTON_MANAGED
+                userId = testUserId,
+                amount = 0,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle,
+                planNames = testPlanIds,
+                codes = null,
+                paymentToken = null,
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         }
     }
@@ -617,21 +604,21 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
 
         val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             createPaymentToken.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                expectedCard
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.CHARGEABLE, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -639,14 +626,14 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             performSubscribe.invoke(
-                testUserId,
-                2,
-                testCurrency,
-                testSubscriptionCycle,
-                testPlanIds,
-                null,
-                ProtonPaymentToken("test-token"),
-                SubscriptionManagement.PROTON_MANAGED
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle,
+                planNames = testPlanIds,
+                codes = null,
+                paymentToken = ProtonPaymentToken("test-token"),
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         } returns mockk()
 
@@ -663,13 +650,13 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // WHEN
         billingViewModel.subscribe(
-            testUserId,
-            testPlanIds,
-            null,
-            testCurrency,
-            testSubscriptionCycle,
-            paymentType,
-            SubscriptionManagement.PROTON_MANAGED
+            userId = testUserId,
+            planNames = testPlanIds,
+            codes = null,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            paymentType = paymentType,
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         job.join()
 
@@ -690,11 +677,11 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -718,13 +705,13 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // WHEN
         billingViewModel.subscribe(
-            testUserId,
-            testPlanIds,
-            null,
-            testCurrency,
-            testSubscriptionCycle,
-            paymentType,
-            SubscriptionManagement.PROTON_MANAGED
+            userId = testUserId,
+            planNames = testPlanIds,
+            codes = null,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            paymentType = paymentType,
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         job.join()
 
@@ -752,19 +739,19 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         val expectedCard = PaymentType.CreditCard(testCard.copy(expirationYear = "2025"))
         coEvery {
             validateSubscription.invoke(
-                null,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = null,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
         coEvery {
             createPaymentToken.invoke(
-                null,
-                2,
-                testCurrency,
-                expectedCard
+                userId = null,
+                amount = 2,
+                currency = testCurrency,
+                paymentType = expectedCard
             )
         } returns PaymentTokenResult.CreatePaymentTokenResult(
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
@@ -784,18 +771,23 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // WHEN
         billingViewModel.subscribe(
-            null, testPlanIds, null, testCurrency, testSubscriptionCycle,
-            paymentType, SubscriptionManagement.PROTON_MANAGED
+            userId = null,
+            planNames = testPlanIds,
+            codes = null,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            paymentType = paymentType,
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         billingViewModel.onThreeDSTokenApproved(
-            null,
-            testPlanIds,
-            null,
-            2,
-            testCurrency,
-            testSubscriptionCycle,
-            ProtonPaymentToken("test-token"),
-            SubscriptionManagement.PROTON_MANAGED
+            userId = null,
+            planIds = testPlanIds,
+            codes = null,
+            amount = 2,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            token = ProtonPaymentToken("test-token"),
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         job.join()
 
@@ -834,8 +826,14 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             performSubscribe.invoke(
-                testUserId, 2, testCurrency, testSubscriptionCycle, testPlanIds, null,
-                ProtonPaymentToken("test-token"), SubscriptionManagement.PROTON_MANAGED
+                userId = testUserId,
+                amount = 2,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle,
+                planNames = testPlanIds,
+                codes = null,
+                paymentToken = ProtonPaymentToken("test-token"),
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
             )
         } returns mockk()
 
@@ -853,23 +851,23 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         // WHEN
         billingViewModel.subscribe(
-            testUserId,
-            testPlanIds,
-            null,
-            testCurrency,
-            testSubscriptionCycle,
-            paymentType,
-            SubscriptionManagement.PROTON_MANAGED
+            userId = testUserId,
+            planNames = testPlanIds,
+            codes = null,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            paymentType = paymentType,
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         billingViewModel.onThreeDSTokenApproved(
-            testUserId,
-            testPlanIds,
-            null,
-            2,
-            testCurrency,
-            testSubscriptionCycle,
-            ProtonPaymentToken("test-token"),
-            SubscriptionManagement.PROTON_MANAGED
+            userId = testUserId,
+            planIds = testPlanIds,
+            codes = null,
+            amount = 2,
+            currency = testCurrency,
+            cycle = testSubscriptionCycle,
+            token = ProtonPaymentToken("test-token"),
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
         )
         job.join()
 
@@ -895,11 +893,11 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
 
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } returns testSubscriptionPlanStatus
 
@@ -922,11 +920,11 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
         // GIVEN
         coEvery {
             validateSubscription.invoke(
-                testUserId,
-                null,
-                testPlanIds,
-                testCurrency,
-                testSubscriptionCycle
+                userId = testUserId,
+                codes = null,
+                plans = testPlanIds,
+                currency = testCurrency,
+                cycle = testSubscriptionCycle
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -962,9 +960,6 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             activePaymentProvider,
             validateSubscription,
             createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPayMethod,
-            createPaymentTokenWithGoogleIAP,
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
@@ -990,9 +985,6 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             activePaymentProvider,
             validateSubscription,
             createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPayMethod,
-            createPaymentTokenWithGoogleIAP,
             performSubscribe,
             getCountryCode,
             humanVerificationManager,
@@ -1019,9 +1011,6 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             activePaymentProvider,
             validateSubscription,
             createPaymentToken,
-            createPaymentTokenWithNewPayPal,
-            createPaymentTokenWithExistingPayMethod,
-            createPaymentTokenWithGoogleIAP,
             performSubscribe,
             getCountryCode,
             humanVerificationManager,

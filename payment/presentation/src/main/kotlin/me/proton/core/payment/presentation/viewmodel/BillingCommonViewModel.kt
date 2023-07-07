@@ -24,6 +24,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -31,7 +32,11 @@ import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
+import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotal
+import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotal
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.entity.Card
@@ -44,10 +49,7 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
+import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.LogTag
@@ -61,7 +63,7 @@ import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
-import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.hasFlag
 
 /**
@@ -70,16 +72,13 @@ import me.proton.core.util.kotlin.hasFlag
  */
 public abstract class BillingCommonViewModel(
     private val validatePlanSubscription: ValidateSubscriptionPlan,
-    private val createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
-    private val createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
-    private val createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
-    private val createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
+    private val createPaymentToken: CreatePaymentToken,
     private val performSubscribe: PerformSubscribe,
     private val getCountry: GetCountry,
     private val humanVerificationManager: HumanVerificationManager,
     private val clientIdProvider: ClientIdProvider,
     private val observabilityManager: ObservabilityManager
-) : ProtonViewModel() {
+) : ProtonViewModel(), ObservabilityContext {
 
     private val _subscriptionState = MutableStateFlow<State>(State.Idle)
     private val _plansValidationState = MutableStateFlow<PlansValidationState>(PlansValidationState.Idle)
@@ -164,125 +163,119 @@ public abstract class BillingCommonViewModel(
         cycle: SubscriptionCycle,
         paymentType: PaymentType,
         subscriptionManagement: SubscriptionManagement,
-        paymentTokenMetricData: ((Result<PaymentTokenResult.CreatePaymentTokenResult>) -> ObservabilityData)? = null,
         subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
         validatePlanMetricData: ((Result<SubscriptionStatus>) -> ObservabilityData)? = null
-    ): Job = flow {
-        emit(State.Processing)
-        val signUp = userId == null
-
-        val subscription = validatePlanSubscription(userId, codes, planNames, currency, cycle, validatePlanMetricData)
-        emit(State.Success.SubscriptionPlanValidated(subscription))
-
-        if (!signUp && subscription.amountDue == 0L) {
-            // directly create the subscription
-            val subscriptionResult =
-                performSubscribe(
-                    userId!!,
-                    0,
-                    currency,
-                    cycle,
-                    planNames,
-                    codes,
-                    paymentToken = null,
-                    subscriptionManagement,
-                    subscribeMetricData = subscribeMetricData
-                )
-            emit(
-                State.Success.SubscriptionCreated(
-                    0,
-                    currency,
-                    cycle,
-                    subscriptionResult,
-                    null,
-                    subscriptionManagement
-                )
-            )
-        } else {
-            if (signUp && paymentType is PaymentType.PaymentMethod) {
-                emit(State.Error.SignUpWithPaymentMethodUnsupported)
-                return@flow
+    ): Job = viewModelScope.launchWithResultContext {
+        onResultEnqueue("createPaymentToken") {
+            when (paymentType) {
+                is PaymentType.CreditCard -> CheckoutCardBillingCreatePaymentTokenTotal(this)
+                is PaymentType.GoogleIAP -> CheckoutGiapBillingCreatePaymentTokenTotal(this)
+                is PaymentType.PaymentMethod -> CheckoutPaymentMethodsCreatePaymentTokenTotal(this)
+                is PaymentType.PayPal -> throw NotImplementedError("Paypal not supported.")
             }
-            // region create payment token with the amountDue (will most probably lead to a token approval screen).
-            val paymentTokenResult = when (paymentType) {
-                is PaymentType.PaymentMethod -> {
-                    createPaymentTokenWithExistingPaymentMethod(
-                        userId = userId,
-                        amount = subscription.amountDue,
+        }
+
+        flow {
+            emit(State.Processing)
+            val signUp = userId == null
+
+            val subscription = validatePlanSubscription(
+                userId = userId,
+                codes = codes,
+                plans = planNames,
+                currency = currency,
+                cycle = cycle,
+                metricData = validatePlanMetricData
+            )
+            emit(State.Success.SubscriptionPlanValidated(subscription))
+
+            if (!signUp && subscription.amountDue == 0L) {
+                // directly create the subscription
+                val subscriptionResult =
+                    performSubscribe(
+                        userId = userId!!,
+                        amount = 0,
                         currency = currency,
-                        paymentMethodId = paymentType.paymentMethodId,
-                        metricData = paymentTokenMetricData
+                        cycle = cycle,
+                        planNames = planNames,
+                        codes = codes,
+                        paymentToken = null,
+                        subscriptionManagement = subscriptionManagement,
+                        subscribeMetricData = subscribeMetricData
                     )
+                emit(
+                    State.Success.SubscriptionCreated(
+                        amount = 0,
+                        currency = currency,
+                        cycle = cycle,
+                        subscriptionStatus = subscriptionResult,
+                        paymentToken = null,
+                        subscriptionManagement = subscriptionManagement
+                    )
+                )
+            } else {
+                if (signUp && paymentType is PaymentType.PaymentMethod) {
+                    emit(State.Error.SignUpWithPaymentMethodUnsupported)
+                    return@flow
                 }
-                is PaymentType.CreditCard -> {
-                    val countryName = paymentType.card.country
-                    val country = getCountry(countryName)
-                    val paymentTypeRefined =
+                // region create payment token with the amountDue (will most probably lead to a token approval screen).
+                val paymentTypeRefined = when (paymentType) {
+                    is PaymentType.CreditCard -> {
+                        val countryName = paymentType.card.country
+                        val country = getCountry(countryName)
                         paymentType.copy(
                             card = (paymentType.card as Card.CardWithPaymentDetails).copy(
                                 country = country?.code ?: countryName,
                                 expirationYear = paymentType.card.expirationYear.adjustExpirationYear()
                             )
                         )
-                    createPaymentTokenWithNewCreditCard(
-                        userId = userId,
-                        amount = subscription.amountDue,
-                        currency = currency,
-                        paymentType = paymentTypeRefined,
-                        metricData = paymentTokenMetricData
-                    )
-                }
-                is PaymentType.PayPal -> createPaymentTokenWithNewPayPal(
-                    userId = userId,
-                    amount = subscription.amountDue,
-                    currency = currency,
-                    paymentType = paymentType,
-                    metricData = paymentTokenMetricData
-                )
-                is PaymentType.GoogleIAP -> createPaymentTokenWithGoogleIAP(
-                    userId = userId,
-                    amount = subscription.amountDue,
-                    currency = currency,
-                    paymentType = paymentType,
-                    metricData = paymentTokenMetricData
-                )
-            }.exhaustive
-            emit(State.Success.TokenCreated(paymentTokenResult))
+                    }
 
-            if (paymentTokenResult.status == PaymentTokenStatus.CHARGEABLE) {
-                val amount = subscription.amountDue
-                val token = paymentTokenResult.token
-                emit(
-                    onTokenApproved(
-                        userId,
-                        planNames,
-                        codes,
-                        amount,
-                        currency,
-                        cycle,
-                        token,
-                        subscriptionManagement,
-                        subscribeMetricData
-                    )
+                    else -> paymentType
+                }
+                val paymentTokenResult = createPaymentToken(
+                    userId = userId,
+                    amount = subscription.amountDue,
+                    currency = currency,
+                    paymentType = paymentTypeRefined
                 )
-            } else {
-                // should show 3DS approval URL WebView
-                emit(State.Incomplete.TokenApprovalNeeded(paymentTokenResult, subscription.amountDue))
+                emit(State.Success.TokenCreated(paymentTokenResult))
+
+                if (paymentTokenResult.status == PaymentTokenStatus.CHARGEABLE) {
+                    val amount = subscription.amountDue
+                    val token = paymentTokenResult.token
+                    emit(
+                        onTokenApproved(
+                            userId = userId,
+                            planNames = planNames,
+                            codes = codes,
+                            amount = amount,
+                            currency = currency,
+                            cycle = cycle,
+                            token = token,
+                            subscriptionManagement = subscriptionManagement,
+                            subscribeMetricData = subscribeMetricData
+                        )
+                    )
+                }  else {
+                    // should show 3DS approval URL WebView
+                    emit(State.Incomplete.TokenApprovalNeeded(paymentTokenResult, subscription.amountDue))
+                }
+                // endregion
             }
-            // endregion
-        }
-    }.catch {
-        if (paymentType is PaymentType.GoogleIAP) {
-            CoreLogger.e(
-                LogTag.SUBSCRIPTION_CREATION,
-                it,
-                "Subscription creation error for purchase token: ${paymentType.purchaseToken} and customerId: ${paymentType.customerId}"
-            )
-        }
-        _subscriptionState.tryEmit(State.Error.General(it))
-    }.onEach {
-        _subscriptionState.tryEmit(it)
-    }.launchIn(viewModelScope)
+        }.catch {
+            if (paymentType is PaymentType.GoogleIAP) {
+                CoreLogger.e(
+                    LogTag.SUBSCRIPTION_CREATION,
+                    it,
+                    "Subscription creation error for purchase token: ${paymentType.purchaseToken} and customerId: ${paymentType.customerId}"
+                )
+            }
+            _subscriptionState.tryEmit(State.Error.General(it))
+        }.onEach {
+            _subscriptionState.tryEmit(it)
+        }.collect()
+    }
 
     /**
      * Completes the subscription after payment is 3DS approved in a WebView.
@@ -301,15 +294,15 @@ public abstract class BillingCommonViewModel(
     ): Job = flow {
         emit(
             onTokenApproved(
-                userId,
-                planIds,
-                codes,
-                amount,
-                currency,
-                cycle,
-                token,
-                subscriptionManagement,
-                subscribeMetricData
+                userId = userId,
+                planNames = planIds,
+                codes = codes,
+                amount = amount,
+                currency = currency,
+                cycle = cycle,
+                token = token,
+                subscriptionManagement = subscriptionManagement,
+                subscribeMetricData = subscribeMetricData
             )
         )
     }.catch {
@@ -334,12 +327,12 @@ public abstract class BillingCommonViewModel(
         emit(
             PlansValidationState.Success(
                 validatePlanSubscription(
-                    userId,
-                    codes,
-                    plans,
-                    currency,
-                    cycle,
-                    validatePlanMetricData
+                    userId = userId,
+                    codes = codes,
+                    plans = plans,
+                    currency = currency,
+                    cycle = cycle,
+                    metricData = validatePlanMetricData
                 )
             )
         )
@@ -373,14 +366,14 @@ public abstract class BillingCommonViewModel(
                 currency = currency,
                 cycle = cycle,
                 subscriptionStatus = performSubscribe(
-                    userId,
-                    amount,
-                    currency,
-                    cycle,
-                    planNames,
-                    codes,
-                    token,
-                    subscriptionManagement,
+                    userId = userId,
+                    amount = amount,
+                    currency = currency,
+                    cycle = cycle,
+                    planNames = planNames,
+                    codes = codes,
+                    paymentToken = token,
+                    subscriptionManagement = subscriptionManagement,
                     subscribeMetricData = subscribeMetricData
                 ),
                 paymentToken = token,

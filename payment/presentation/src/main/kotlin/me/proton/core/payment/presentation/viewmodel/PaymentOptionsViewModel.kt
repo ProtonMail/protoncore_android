@@ -33,7 +33,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotal
 import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotal
 import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsSubscribeTotal
 import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsValidatePlanTotal
@@ -46,10 +45,7 @@ import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
+import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
@@ -73,26 +69,20 @@ internal class PaymentOptionsViewModel @Inject constructor(
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getCurrentSubscription: GetCurrentSubscription,
     validatePlanSubscription: ValidateSubscriptionPlan,
-    createPaymentTokenWithNewCreditCard: CreatePaymentTokenWithNewCreditCard,
-    createPaymentTokenWithNewPayPal: CreatePaymentTokenWithNewPayPal,
-    createPaymentTokenWithExistingPaymentMethod: CreatePaymentTokenWithExistingPaymentMethod,
-    createPaymentTokenWithGoogleIAP: CreatePaymentTokenWithGoogleIAP,
+    createPaymentToken: CreatePaymentToken,
     performSubscribe: PerformSubscribe,
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
     clientIdProvider: ClientIdProvider,
-    observabilityManager: ObservabilityManager
+    override val manager: ObservabilityManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
-    createPaymentTokenWithNewCreditCard,
-    createPaymentTokenWithNewPayPal,
-    createPaymentTokenWithExistingPaymentMethod,
-    createPaymentTokenWithGoogleIAP,
+    createPaymentToken,
     performSubscribe,
     getCountry,
     humanVerificationManager,
     clientIdProvider,
-    observabilityManager
+    manager
 ) {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
@@ -172,7 +162,6 @@ internal class PaymentOptionsViewModel @Inject constructor(
         cycle,
         paymentType,
         subscriptionManagement,
-        paymentTokenMetricData = { CheckoutPaymentMethodsCreatePaymentTokenTotal(it.toHttpApiStatus()) },
         subscribeMetricData = { result, _ -> CheckoutPaymentMethodsSubscribeTotal(result.toHttpApiStatus()) },
         validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotal(it.toHttpApiStatus()) }
     )

@@ -19,41 +19,33 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import javax.inject.Inject
 
-/**
- * Creates new payment token.
- * Only for new PayPal payments methods provided with [PaymentType.PayPal].
- * For payment tokens with new Credit Card payment method @see [CreatePaymentTokenWithNewCreditCard].
- * For payment tokens with existing payment method @see [CreatePaymentTokenWithExistingPaymentMethod].
- */
-public class CreatePaymentTokenWithNewPayPal @Inject constructor(
+public class CreatePaymentToken @Inject constructor(
     private val paymentsRepository: PaymentsRepository,
-    private val observabilityManager: ObservabilityManager
+    private val googlePurchaseRepository: GooglePurchaseRepository
 ) {
     public suspend operator fun invoke(
         userId: UserId?,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.PayPal,
-        metricData: ((Result<PaymentTokenResult.CreatePaymentTokenResult>) -> ObservabilityData)? = null
+        paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
+        return paymentsRepository.createPaymentToken(userId, amount, currency, paymentType).also {
+            when (paymentType) {
+                is PaymentType.GoogleIAP -> googlePurchaseRepository.updateGooglePurchase(
+                    googlePurchaseToken = paymentType.purchaseToken,
+                    paymentToken = it.token
+                )
 
-        return paymentsRepository.runWithObservability(observabilityManager, metricData) {
-            createPaymentTokenNewPayPal(
-                userId,
-                amount,
-                currency,
-                paymentType
-            )
+                else -> Unit
+            }
         }
     }
 }

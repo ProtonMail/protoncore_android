@@ -182,7 +182,6 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     customerId = customerId
                 ),
                 subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED,
-                paymentTokenMetricData = { r -> CheckoutGiapBillingCreatePaymentTokenTotal(r.toHttpApiStatus()) },
                 subscribeMetricData = { result, management ->
                     CheckoutBillingSubscribeTotal(
                         result.toHttpApiStatus(),

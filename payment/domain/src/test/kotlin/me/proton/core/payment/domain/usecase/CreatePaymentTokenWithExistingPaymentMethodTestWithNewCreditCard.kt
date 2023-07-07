@@ -21,17 +21,13 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotal
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
+import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import org.junit.Before
@@ -52,6 +48,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     private val testAmount = 5L
     private val testCurrency = Currency.CHF
     private val testPaymentMethodId = "test-paymentMethodID"
+    private val testPaymentType = PaymentType.PaymentMethod(testPaymentMethodId)
     private val testToken = ProtonPaymentToken("test-token")
     private val testApprovalUrl = "test-approval-url"
     private val testReturnHost = "test-return-host"
@@ -60,26 +57,26 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     )
     // endregion
 
-    private lateinit var useCase: CreatePaymentTokenWithExistingPaymentMethod
+    private lateinit var useCase: CreatePaymentToken
 
     @Before
     fun beforeEveryTest() {
-        useCase = CreatePaymentTokenWithExistingPaymentMethod(repository, observabilityManager)
+        useCase = CreatePaymentToken(repository, mockk())
         coEvery {
-            repository.createPaymentTokenExistingPaymentMethod(any(), any(), any(), any())
+            repository.createPaymentToken(any(), any(), any(), any())
         } returns createTokenResult
     }
 
     @Test
     fun `create payment token upgrade success response`() = runTest {
-        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentMethodId)
+        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentType)
 
         coVerify(exactly = 1) {
-            repository.createPaymentTokenExistingPaymentMethod(
+            repository.createPaymentToken(
                 sessionUserId = testUserId,
                 amount = testAmount,
                 currency = testCurrency,
-                paymentMethodId = testPaymentMethodId
+                paymentType = testPaymentType
             )
         }
 
@@ -92,14 +89,14 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
 
     @Test
     fun `create payment token sign up success response`() = runTest {
-        val result = useCase.invoke(null, testAmount, testCurrency, testPaymentMethodId)
+        val result = useCase.invoke(null, testAmount, testCurrency, testPaymentType)
 
         coVerify(exactly = 1) {
-            repository.createPaymentTokenExistingPaymentMethod(
+            repository.createPaymentToken(
                 sessionUserId = null,
                 amount = testAmount,
                 currency = testCurrency,
-                paymentMethodId = testPaymentMethodId
+                paymentType = testPaymentType
             )
         }
 
@@ -116,15 +113,15 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
             PaymentTokenStatus.CHARGEABLE, null, testToken, null
         )
         coEvery {
-            repository.createPaymentTokenExistingPaymentMethod(
-                testUserId,
-                testAmount,
-                testCurrency,
-                testPaymentMethodId
+            repository.createPaymentToken(
+                sessionUserId = testUserId,
+                amount = testAmount,
+                currency = testCurrency,
+                paymentType = testPaymentType
             )
         } returns createTokenChargeableResult
 
-        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentMethodId)
+        val result = useCase.invoke(testUserId, testAmount, testCurrency, testPaymentType)
         assertNotNull(result)
         assertEquals(testToken, result.token)
         assertEquals(PaymentTokenStatus.CHARGEABLE, result.status)
@@ -135,22 +132,7 @@ class CreatePaymentTokenWithExistingPaymentMethodTestWithNewCreditCard {
     @Test
     fun `create payment token negative amount response`() = runTest {
         assertFailsWith(IllegalArgumentException::class) {
-            useCase.invoke(testUserId, -1, testCurrency, testPaymentMethodId)
+            useCase.invoke(testUserId, -1, testCurrency, testPaymentType)
         }
-    }
-
-    @Test
-    fun `observability metrics are recorded`() = runTest {
-        useCase.invoke(
-            userId = testUserId,
-            amount = testAmount,
-            currency = testCurrency,
-            paymentMethodId = testPaymentMethodId,
-            metricData = { CheckoutPaymentMethodsCreatePaymentTokenTotal(it.toHttpApiStatus()) }
-        )
-
-        val dataSlot = slot<CheckoutPaymentMethodsCreatePaymentTokenTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

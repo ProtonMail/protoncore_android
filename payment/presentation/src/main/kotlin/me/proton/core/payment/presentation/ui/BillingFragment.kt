@@ -166,7 +166,6 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                 )
             ),
             SubscriptionManagement.PROTON_MANAGED,
-            paymentTokenMetricData = { CheckoutCardBillingCreatePaymentTokenTotal(it.toHttpApiStatus()) },
             subscribeMetricData = { result, management ->
                 CheckoutBillingSubscribeTotal(
                     result.toHttpApiStatus(),

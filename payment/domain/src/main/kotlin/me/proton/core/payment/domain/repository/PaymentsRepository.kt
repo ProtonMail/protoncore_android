@@ -36,52 +36,15 @@ public typealias PlanQuantity = Map<String, Int> // the plan name along with the
 
 public interface PaymentsRepository {
 
-    // region payment tokens
     /**
-     * Unauthenticated.
      * Creates a new payment token which will be used later for a new subscription.
      * Before that there can be a token validation step.
      */
-    public suspend fun createPaymentTokenNewPayPal(
+    public suspend fun createPaymentToken(
         sessionUserId: SessionUserId? = null,
         amount: Long,
         currency: Currency,
-        paymentType: PaymentType.PayPal
-    ): PaymentTokenResult.CreatePaymentTokenResult
-
-    /**
-     * Unauthenticated.
-     * Creates a new payment token which will be used later for a new subscription.
-     * Before that there can be a token validation step.
-     */
-    public suspend fun createPaymentTokenNewCreditCard(
-        sessionUserId: SessionUserId? = null,
-        amount: Long,
-        currency: Currency,
-        paymentType: PaymentType.CreditCard
-    ): PaymentTokenResult.CreatePaymentTokenResult
-
-    /**
-     * Unauthenticated.
-     * Creates a new payment token which will be used later for a new subscription.
-     * Before that there can be a token validation step.
-     */
-    public suspend fun createPaymentTokenExistingPaymentMethod(
-        sessionUserId: SessionUserId? = null,
-        amount: Long,
-        currency: Currency,
-        paymentMethodId: String
-    ): PaymentTokenResult.CreatePaymentTokenResult
-
-    /**
-     * Unauthenticated.
-     * Creates a new payment token which will be used later for a new subscription.
-     */
-    public suspend fun createPaymentTokenGoogleIAP(
-        sessionUserId: SessionUserId? = null,
-        amount: Long,
-        currency: Currency,
-        paymentType: PaymentType.GoogleIAP
+        paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult
 
     /**

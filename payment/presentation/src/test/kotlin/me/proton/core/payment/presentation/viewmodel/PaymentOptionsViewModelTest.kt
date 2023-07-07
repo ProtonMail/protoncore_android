@@ -43,10 +43,7 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithExistingPaymentMethod
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithGoogleIAP
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewCreditCard
-import me.proton.core.payment.domain.usecase.CreatePaymentTokenWithNewPayPal
+import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentMethods
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
@@ -73,10 +70,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     private val getAvailablePaymentMethods = mockk<GetAvailablePaymentMethods>(relaxed = true)
     private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>()
     private val getCurrentSubscription = mockk<GetCurrentSubscription>(relaxed = true)
-    private val createPaymentToken = mockk<CreatePaymentTokenWithNewCreditCard>()
-    private val createPaymentTokenWithExistingPayMethod = mockk<CreatePaymentTokenWithExistingPaymentMethod>()
-    private val createPaymentTokenWithNewPayPal = mockk<CreatePaymentTokenWithNewPayPal>()
-    private val createPaymentTokenWithGoogleIAP = mockk<CreatePaymentTokenWithGoogleIAP>()
+    private val createPaymentToken = mockk<CreatePaymentToken>()
     private val performSubscribe = mockk<PerformSubscribe>()
     private val humanVerificationManager = mockk<HumanVerificationManager>(relaxed = true)
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
@@ -154,9 +148,6 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                     getCurrentSubscription,
                     validateSubscription,
                     createPaymentToken,
-                    createPaymentTokenWithNewPayPal,
-                    createPaymentTokenWithExistingPayMethod,
-                    createPaymentTokenWithGoogleIAP,
                     performSubscribe,
                     getCountryCode,
                     humanVerificationManager,
@@ -221,9 +212,6 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 getCurrentSubscription,
                 validateSubscription,
                 createPaymentToken,
-                createPaymentTokenWithNewPayPal,
-                createPaymentTokenWithExistingPayMethod,
-                createPaymentTokenWithGoogleIAP,
                 performSubscribe,
                 getCountryCode,
                 humanVerificationManager,
@@ -261,9 +249,6 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 getCurrentSubscription,
                 validateSubscription,
                 createPaymentToken,
-                createPaymentTokenWithNewPayPal,
-                createPaymentTokenWithExistingPayMethod,
-                createPaymentTokenWithGoogleIAP,
                 performSubscribe,
                 getCountryCode,
                 humanVerificationManager,
@@ -305,9 +290,6 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 getCurrentSubscription,
                 validateSubscription,
                 createPaymentToken,
-                createPaymentTokenWithNewPayPal,
-                createPaymentTokenWithExistingPayMethod,
-                createPaymentTokenWithGoogleIAP,
                 performSubscribe,
                 getCountryCode,
                 humanVerificationManager,
