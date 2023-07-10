@@ -129,7 +129,8 @@ interface UserManager {
      */
     suspend fun unlockWithPassword(
         userId: UserId,
-        password: PlainByteArray
+        password: PlainByteArray,
+        refreshKeySalts: Boolean = true
     ): UnlockResult
 
     /**

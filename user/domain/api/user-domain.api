@@ -63,7 +63,7 @@ public abstract interface class me/proton/core/user/domain/UserManager {
 	public abstract fun observeUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun setupPrimaryKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun unlockWithPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun unlockWithPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/PlainByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun unlockWithPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/PlainByteArray;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/user/domain/UserManager$DefaultImpls {
@@ -74,6 +74,7 @@ public final class me/proton/core/user/domain/UserManager$DefaultImpls {
 	public static synthetic fun getUserFlow$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun observeAddresses$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun observeUser$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun unlockWithPassword$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/PlainByteArray;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/user/domain/UserManager$UnlockResult {

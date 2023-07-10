@@ -108,13 +108,14 @@ class UserManagerImpl @Inject constructor(
 
     override suspend fun unlockWithPassword(
         userId: UserId,
-        password: PlainByteArray
+        password: PlainByteArray,
+        refreshKeySalts: Boolean
     ): UnlockResult {
         val user = userRepository.getUser(userId)
         val userPrimaryKey = user.keys.primary()
             ?: return UnlockResult.Error.NoPrimaryKey
 
-        val salts = keySaltRepository.getKeySalts(userId)
+        val salts = keySaltRepository.getKeySalts(userId, refreshKeySalts)
         val primaryKeySalt = salts.find { it.keyId == userPrimaryKey.keyId }?.keySalt?.takeIf { it.isNotEmpty() }
             ?: return UnlockResult.Error.NoKeySaltsForPrimaryKey
 

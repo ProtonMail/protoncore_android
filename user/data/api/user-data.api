@@ -206,7 +206,7 @@ public final class me/proton/core/user/data/UserManagerImpl : me/proton/core/use
 	public fun observeUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun setupPrimaryKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun unlockWithPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun unlockWithPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/PlainByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun unlockWithPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/PlainByteArray;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/user/data/UserManagerImpl_Factory : dagger/internal/Factory {
