@@ -20,8 +20,6 @@ package me.proton.core.paymentiap.data.usecase
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.paymentiap.domain.entity.wrap
@@ -31,22 +29,15 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
-    private val billingRepositoryProvider: Provider<GoogleBillingRepository>,
-    private val observabilityManager: ObservabilityManager
+    private val billingRepositoryProvider: Provider<GoogleBillingRepository>
 ) : FindUnacknowledgedGooglePurchase {
-    public override suspend operator fun invoke(
-        querySubscriptionsMetricData: ((Result<List<GooglePurchase>>) -> ObservabilityData?)?
-    ): List<GooglePurchase> {
+    public override suspend operator fun invoke(): List<GooglePurchase> {
         return runCatching {
             billingRepositoryProvider.get().use { repository ->
                 repository.querySubscriptionPurchases()
                     .filter { it.isPurchasedButNotAcknowledged() }
                     .sortedByDescending { it.purchaseTime }
                     .map { it.wrap() }
-            }
-        }.also { result ->
-            querySubscriptionsMetricData?.invoke(result)?.let {
-                observabilityManager.enqueue(it)
             }
         }.getOrElse {
             if (it is BillingClientError && it.responseCode in ALLOWED_BILLING_ERRORS) {
@@ -57,20 +48,14 @@ public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
         }
     }
 
-    override suspend fun byCustomer(
-        customerId: String,
-        querySubscriptionsMetricData: ((Result<List<GooglePurchase>>) -> ObservabilityData?)?
-    ): GooglePurchase? {
-        return invoke(querySubscriptionsMetricData).find { purchase ->
+    override suspend fun byCustomer(customerId: String): GooglePurchase? {
+        return invoke().find { purchase ->
             purchase.customerId == customerId
         }
     }
 
-    override suspend fun byProduct(
-        productId: String,
-        querySubscriptionsMetricData: ((Result<List<GooglePurchase>>) -> ObservabilityData?)?
-    ): GooglePurchase? {
-        return invoke(querySubscriptionsMetricData).find { purchase ->
+    override suspend fun byProduct(productId: String): GooglePurchase? {
+        return invoke().find { purchase ->
             purchase.productIds.contains(productId)
         }
     }

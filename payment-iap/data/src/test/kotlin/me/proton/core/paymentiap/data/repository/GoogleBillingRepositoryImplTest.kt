@@ -39,11 +39,13 @@ import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.runTestWithResultContext
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 internal class GoogleBillingRepositoryImplTest {
     private lateinit var billingClientFactory: FakeBillingClientFactory
@@ -125,7 +127,7 @@ internal class GoogleBillingRepositoryImplTest {
     }
 
     @Test
-    fun `query subscription purchases`() = runTest {
+    fun `query subscription purchases`() = runTestWithResultContext {
         val purchaseList = listOf(mockk<Purchase>())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
         mockClientResult {
@@ -139,10 +141,11 @@ internal class GoogleBillingRepositoryImplTest {
         }
         val result = tested.use { it.querySubscriptionPurchases() }
         assertSame(result, purchaseList)
+        assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
     }
 
     @Test
-    fun `query subscription purchases yielding`() = runTest {
+    fun `query subscription purchases yielding`() = runTestWithResultContext {
         val purchaseList = listOf(mockk<Purchase>())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
         mockClientResult {
@@ -156,6 +159,7 @@ internal class GoogleBillingRepositoryImplTest {
         }
         val result = tested.use { it.querySubscriptionPurchases() }
         assertSame(result, purchaseList)
+        assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
     }
 
     @Test

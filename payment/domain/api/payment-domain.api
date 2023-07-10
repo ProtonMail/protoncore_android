@@ -440,15 +440,9 @@ public final class me/proton/core/payment/domain/usecase/CreatePaymentToken {
 }
 
 public abstract interface class me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {
-	public abstract fun byCustomer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun byProduct (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun invoke (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
-public final class me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase$DefaultImpls {
-	public static synthetic fun byCustomer$default (Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun byProduct$default (Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public abstract fun byCustomer (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun byProduct (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentMethods {

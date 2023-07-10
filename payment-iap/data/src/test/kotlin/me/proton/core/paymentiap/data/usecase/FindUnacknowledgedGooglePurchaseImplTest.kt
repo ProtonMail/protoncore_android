@@ -51,7 +51,7 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     fun setUp() {
         googleBillingRepository = mockk(relaxed = true)
         observabilityManager = mockk(relaxed = true)
-        tested = FindUnacknowledgedGooglePurchaseImpl({ googleBillingRepository }, observabilityManager)
+        tested = FindUnacknowledgedGooglePurchaseImpl { googleBillingRepository }
     }
 
     @Test
@@ -163,24 +163,6 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
             "Error"
         )
         assertFailsWith<BillingClientError> { tested() }
-    }
-
-    @Test
-    fun `observability data is recorder for querying subscriptions`() = runTest {
-        // GIVEN
-        coEvery { googleBillingRepository.querySubscriptionPurchases() } returns emptyList()
-
-        // WHEN
-        tested(
-            querySubscriptionsMetricData = { result ->
-                result.toGiapStatus()?.let { CheckoutGiapBillingQuerySubscriptionsTotal(it) }
-            }
-        )
-
-        // THEN
-        val dataSlot = slot<CheckoutGiapBillingQuerySubscriptionsTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(GiapStatus.success, dataSlot.captured.Labels.status)
     }
 
     private fun mockAccountIdentifiers(customerId: String? = null): AccountIdentifiers =

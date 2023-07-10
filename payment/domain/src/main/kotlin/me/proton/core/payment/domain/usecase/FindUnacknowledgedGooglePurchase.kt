@@ -18,7 +18,6 @@
 
 package me.proton.core.payment.domain.usecase
 
-import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.entity.GooglePurchase
 
 public interface FindUnacknowledgedGooglePurchase {
@@ -26,19 +25,11 @@ public interface FindUnacknowledgedGooglePurchase {
      * The most recent purchases are at the beginning of the list.
      * May return an empty list if Billing service is not available (either temporarily or permanently).
      */
-    public suspend operator fun invoke(
-        querySubscriptionsMetricData: ((Result<List<GooglePurchase>>) -> ObservabilityData?)? = null
-    ): List<GooglePurchase>
+    public suspend operator fun invoke(): List<GooglePurchase>
 
     /** Return the most recent purchase for the given [customerId]. */
-    public suspend fun byCustomer(
-        customerId: String,
-        querySubscriptionsMetricData: ((Result<List<GooglePurchase>>) -> ObservabilityData?)? = null
-    ): GooglePurchase?
+    public suspend fun byCustomer(customerId: String): GooglePurchase?
 
     /** Return the most recent purchase for the given [productId]. */
-    public suspend fun byProduct(
-        productId: String,
-        querySubscriptionsMetricData: ((Result<List<GooglePurchase>>) -> ObservabilityData?)? = null
-    ): GooglePurchase?
+    public suspend fun byProduct(productId: String): GooglePurchase?
 }

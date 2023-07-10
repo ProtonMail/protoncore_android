@@ -81,7 +81,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `observability data is recorded unredeemed purchase is returned`() = coroutinesTest {
         // GIVEN
-        coEvery { findUnacknowledgedGooglePurchase.byProduct(any(), any()) } returns mockk()
+        coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns mockk()
         tested.queryProductDetails("test-plan-name").join()
 
         // WHEN

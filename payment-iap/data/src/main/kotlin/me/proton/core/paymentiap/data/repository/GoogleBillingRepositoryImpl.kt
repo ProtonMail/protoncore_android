@@ -49,6 +49,7 @@ import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.util.kotlin.DispatcherProvider
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 public class GoogleBillingRepositoryImpl @Inject internal constructor(
@@ -100,14 +101,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         connectedBillingClient.withClient { it.launchBillingFlow(activity, billingFlowParams) }
     }
 
-    override suspend fun querySubscriptionPurchases(): List<Purchase> {
-        val params = QueryPurchasesParams.newBuilder()
-            .setProductType(BillingClient.ProductType.SUBS)
-            .build()
+    override suspend fun querySubscriptionPurchases(): List<Purchase> = result("querySubscriptionPurchases") {
+        val params = QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
         val result = connectedBillingClient.withClient { it.queryPurchasesAsync(params) }
         result.billingResult.checkOk()
-
-        return result.purchasesList
+        result.purchasesList
     }
 
     private fun BillingResult.checkOk() {

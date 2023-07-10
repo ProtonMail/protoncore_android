@@ -27,9 +27,9 @@ public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayP
 }
 
 public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl : me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {
-	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public fun byCustomer (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun byProduct (Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun invoke (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public fun byCustomer (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun byProduct (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
