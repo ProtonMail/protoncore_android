@@ -11,6 +11,24 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [13.0.1] - 2023-07-10
+
+### Chores
+
+- Added Grafana Dashboards tools.
+- observability:
+  - ObservabilityEvent set data to JsonElement.
+  - Update grafana checkout availability dashboards formula.
+- user:
+  - allow to configure refreshKeySalts on UserManager.unlock
+
+### Bug Fixes
+
+- plan:
+  - Make offer endtime nullable.
+- user:
+  - Avoid address creation for non private sub users.
+
 ## [13.0.0] - 2023-07-04
 
 ### Chores
