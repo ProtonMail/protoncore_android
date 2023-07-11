@@ -34,9 +34,6 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
-import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
@@ -78,13 +75,7 @@ class TwoPassModeViewModel @Inject constructor(
             isSecondFactorNeeded = false,
             isTwoPassModeNeeded = false,
             temporaryPassword = false,
-            onSetupSuccess = { accountWorkflow.handleTwoPassModeSuccess(userId) },
-            subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotal(
-                    result.toHttpApiStatus(),
-                    management.toCheckoutBillingSubscribeManager()
-                )
-            }
+            onSetupSuccess = { accountWorkflow.handleTwoPassModeSuccess(userId) }
         )
         emit(State.AccountSetupResult(result))
     }.catch { error ->

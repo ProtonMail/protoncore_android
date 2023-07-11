@@ -19,7 +19,6 @@
 package me.proton.core.payment.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.Subscription
@@ -44,7 +43,6 @@ public interface PerformSubscribe {
         planNames: List<String>,
         codes: List<String>? = null,
         paymentToken: ProtonPaymentToken? = null,
-        subscriptionManagement: SubscriptionManagement,
-        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null
+        subscriptionManagement: SubscriptionManagement
     ): Subscription
 }

@@ -29,16 +29,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotal
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotal
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
@@ -181,14 +176,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     packageName = requireContext().packageName,
                     customerId = customerId
                 ),
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED,
-                subscribeMetricData = { result, management ->
-                    CheckoutBillingSubscribeTotal(
-                        result.toHttpApiStatus(),
-                        management.toCheckoutBillingSubscribeManager()
-                    )
-                },
-                validatePlanMetricData = { result -> CheckoutGiapBillingValidatePlanTotal(result.toHttpApiStatus()) }
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
             )
         }
     }

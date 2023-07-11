@@ -132,12 +132,13 @@ public class PaymentsRepositoryImpl @Inject constructor(
         plans: PlanQuantity,
         currency: Currency,
         cycle: SubscriptionCycle
-    ): SubscriptionStatus =
+    ): SubscriptionStatus = result("validateSubscription") {
         provider.get<PaymentsApi>(sessionUserId).invoke {
             validateSubscription(
                 CheckSubscription(codes, plans, currency.name, cycle.value)
             ).toSubscriptionStatus()
         }.valueOrThrow
+    }
 
     override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
         provider.get<PaymentsApi>(sessionUserId).invoke {
@@ -153,23 +154,21 @@ public class PaymentsRepositoryImpl @Inject constructor(
         plans: PlanQuantity,
         cycle: SubscriptionCycle,
         subscriptionManagement: SubscriptionManagement
-    ): Subscription =
+    ): Subscription = result("createOrUpdateSubscription") {
         provider.get<PaymentsApi>(sessionUserId).invoke {
-            val paymentBodyEntity = if (payment is PaymentTokenEntity) {
-                payment.token.value
-            } else null
             createUpdateSubscription(
-                CreateSubscription(
-                    amount,
-                    currency.name,
-                    paymentBodyEntity,
-                    codes,
-                    plans,
-                    cycle.value,
-                    subscriptionManagement.value
+                body = CreateSubscription(
+                    amount = amount,
+                    currency = currency.name,
+                    paymentToken = payment?.token?.value,
+                    codes = codes,
+                    plans = plans,
+                    cycle = cycle.value,
+                    external = subscriptionManagement.value
                 )
             ).subscription.toSubscription()
         }.valueOrThrow
+    }
 
     override suspend fun getPaymentStatus(sessionUserId: SessionUserId?, appStore: AppStore): PaymentStatus {
         val appStoreCode = when (appStore) {

@@ -275,13 +275,7 @@ internal class BillingActivity : PaymentsActivity<ActivityBillingBinding>(Activi
                 plan.currency,
                 plan.subscriptionCycle,
                 token,
-                SubscriptionManagement.PROTON_MANAGED,
-                subscribeMetricData = { result, management ->
-                    CheckoutBillingSubscribeTotal(
-                        result.toHttpApiStatus(),
-                        management.toCheckoutBillingSubscribeManager()
-                    )
-                }
+                SubscriptionManagement.PROTON_MANAGED
             )
         }
     }

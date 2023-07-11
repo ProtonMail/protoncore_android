@@ -89,8 +89,7 @@ class TwoPassModeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Uncon
                 any(),
                 any(),
                 any(),
-                capture(lambdaSlot),
-                subscribeMetricData = any()
+                capture(lambdaSlot)
             )
         } returns success
         // WHEN

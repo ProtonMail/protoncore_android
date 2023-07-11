@@ -44,7 +44,6 @@ import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQue
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
-import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -117,6 +116,7 @@ internal class BillingIAPViewModel @Inject constructor(
     }
 
     override fun onCleared() {
+        super.onCleared()
         billingRepository.destroy()
     }
 

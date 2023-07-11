@@ -84,8 +84,7 @@ class PostLoginAccountSetup @Inject constructor(
         temporaryPassword: Boolean,
         onSetupSuccess: (suspend () -> Unit)? = null,
         billingDetails: BillingDetails? = null,
-        internalAddressDomain: String? = null,
-        subscribeMetricData: ((kotlin.Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null
+        internalAddressDomain: String? = null
     ): Result {
         // Subscribe to any pending subscription/billing.
         if (billingDetails != null) {
@@ -97,8 +96,7 @@ class PostLoginAccountSetup @Inject constructor(
                     cycle = billingDetails.cycle,
                     planNames = listOf(billingDetails.planName),
                     paymentToken = billingDetails.token,
-                    subscriptionManagement = billingDetails.subscriptionManagement,
-                    subscribeMetricData = subscribeMetricData
+                    subscriptionManagement = billingDetails.subscriptionManagement
                 )
             }
         }

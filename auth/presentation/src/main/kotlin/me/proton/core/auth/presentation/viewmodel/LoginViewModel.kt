@@ -47,10 +47,7 @@ import me.proton.core.network.domain.ResponseCodes.AUTH_SWITCH_TO_SSO
 import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
-import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
@@ -141,13 +138,7 @@ internal class LoginViewModel @Inject constructor(
                 isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
                 isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
                 temporaryPassword = sessionInfo.temporaryPassword,
-                billingDetails = billingDetails,
-                subscribeMetricData = { result, management ->
-                    CheckoutBillingSubscribeTotal(
-                        result.toHttpApiStatus(),
-                        management.toCheckoutBillingSubscribeManager()
-                    )
-                }
+                billingDetails = billingDetails
             )
             emit(State.AccountSetupResult(result))
         }.retryOnceWhen(Throwable::primaryKeyExists) {

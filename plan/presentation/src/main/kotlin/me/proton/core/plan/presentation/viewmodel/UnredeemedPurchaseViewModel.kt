@@ -24,29 +24,34 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal.Manager.google
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
-import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.RedeemGooglePurchase
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class UnredeemedPurchaseViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
-    private val redeemGooglePurchase: RedeemGooglePurchase
-) : ProtonViewModel() {
+    private val redeemGooglePurchase: RedeemGooglePurchase,
+    override val manager: ObservabilityManager
+) : ProtonViewModel(), ObservabilityContext {
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     internal val state: StateFlow<State> = _state.asStateFlow()
 
@@ -57,33 +62,31 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
     internal fun redeemPurchase(
         unredeemedPurchase: UnredeemedGooglePurchase,
         userId: UserId
-    ) = flow {
-        emit(State.Loading)
-        redeemGooglePurchase(
-            unredeemedPurchase.googlePurchase,
-            unredeemedPurchase.purchasedPlan,
-            unredeemedPurchase.status,
-            userId,
-            subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotal(
-                    result.toHttpApiStatus(),
-                    management.toCheckoutBillingSubscribeManager()
+    ) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("createOrUpdateSubscription") { CheckoutBillingSubscribeTotal(toHttpApiStatus(), google) }
+
+        flow {
+            emit(State.Loading)
+            redeemGooglePurchase(
+                googlePurchase = unredeemedPurchase.googlePurchase,
+                purchasedPlan = unredeemedPurchase.purchasedPlan,
+                purchaseStatus = unredeemedPurchase.status,
+                userId = userId
+            )
+            emit(State.PurchaseRedeemed)
+        }.catch {
+            with (unredeemedPurchase.googlePurchase) {
+                CoreLogger.e(
+                    LogTag.SUBSCRIPTION_CREATION_REDEEM,
+                    it,
+                    "Subscription creation error for purchase token: $purchaseToken and customerId: $customerId"
                 )
             }
-        )
-        emit(State.PurchaseRedeemed)
-    }.catch {
-        with (unredeemedPurchase.googlePurchase) {
-            CoreLogger.e(
-                LogTag.SUBSCRIPTION_CREATION_REDEEM,
-                it,
-                "Subscription creation error for purchase token: $purchaseToken and customerId: $customerId"
-            )
-        }
-        _state.emit(State.Error)
-    }.onEach {
-        _state.emit(it)
-    }.launchIn(viewModelScope)
+            _state.emit(State.Error)
+        }.onEach {
+            _state.emit(it)
+        }.collect()
+    }
 
     private fun performCheck() = flow {
         emit(State.Loading)

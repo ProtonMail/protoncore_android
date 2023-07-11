@@ -420,12 +420,12 @@ public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommo
 	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotalV1$ScreenId;)V
-	public final fun onThreeDSTokenApproved-VcnQ5bA (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-	public static synthetic fun onThreeDSTokenApproved-VcnQ5bA$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
-	public final fun subscribe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/Job;
-	public static synthetic fun subscribe$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
-	public final fun validatePlan (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/Job;
-	public static synthetic fun validatePlan$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun onThreeDSTokenApproved-TdXInxU (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onThreeDSTokenApproved-TdXInxU$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun subscribe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
+	public static synthetic fun subscribe$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun validatePlan (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;)Lkotlinx/coroutines/Job;
+	public static synthetic fun validatePlan$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion {
@@ -579,7 +579,7 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingCommonVi
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel {
+public class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel {
 	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun announcePlan ()V
 	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
@@ -735,6 +735,12 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingViewMode
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/ObservabilityPaymentTypeKt {
+	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory : dagger/internal/Factory {

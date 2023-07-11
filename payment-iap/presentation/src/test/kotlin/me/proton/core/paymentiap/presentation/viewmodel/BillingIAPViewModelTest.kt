@@ -23,7 +23,6 @@ import com.android.billingclient.api.BillingResult
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
@@ -45,26 +44,23 @@ import kotlin.test.assertEquals
 
 class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
 
-    @MockK(relaxed = true)
-    private lateinit var billingRepository: GoogleBillingRepository
-
-    @MockK(relaxed = true)
-    private lateinit var findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
-
-    @MockK(relaxed = true)
-    private lateinit var observabilityManager: ObservabilityManager
+    private val billingRepository = mockk<GoogleBillingRepository>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+    private val findUnacknowledgedGooglePurchase = mockk<FindUnacknowledgedGooglePurchase>()
 
     private lateinit var tested: BillingIAPViewModel
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = BillingIAPViewModel(
-            billingRepository,
-            findUnacknowledgedGooglePurchase,
-            observabilityManager
-        )
+        tested = createViewModel()
     }
+
+    private fun createViewModel() = BillingIAPViewModel(
+        billingRepository,
+        findUnacknowledgedGooglePurchase,
+        observabilityManager
+    )
 
     @Test
     fun `observability data is recorded for product query`() = coroutinesTest {
@@ -105,11 +101,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         )
 
         // WHEN
-        tested = BillingIAPViewModel(
-            billingRepository,
-            findUnacknowledgedGooglePurchase,
-            observabilityManager
-        )
+        tested = createViewModel()
         // wait until `onPurchasesUpdated` is called:
         tested.billingIAPState.first { it is BillingIAPViewModel.State.Error.ProductPurchaseError.Message }
 

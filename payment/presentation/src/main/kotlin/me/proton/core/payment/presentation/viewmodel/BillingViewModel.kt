@@ -46,7 +46,7 @@ import me.proton.core.payment.presentation.entity.PlanShortDetails
 import javax.inject.Inject
 
 @HiltViewModel
-public class BillingViewModel @Inject constructor(
+public open class BillingViewModel @Inject constructor(
     private val activePaymentProvider: ActivePaymentProvider,
     validatePlanSubscription: ValidateSubscriptionPlan,
     createPaymentToken: CreatePaymentToken,

@@ -97,8 +97,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         } returns PostLoginAccountSetup.Result.Need.SecondFactor(testUserId)
 
@@ -133,8 +132,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         } returns PostLoginAccountSetup.Result.UserUnlocked(testUserId)
 
@@ -169,8 +167,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         } throws ApiException(ApiResult.Error.NoInternet())
 
@@ -231,8 +228,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         } returns PostLoginAccountSetup.Result.Need.ChangePassword(testUserId)
 
@@ -264,8 +260,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -299,8 +294,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         }
     }
@@ -338,8 +332,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any(),
                 any(),
-                any(),
-                subscribeMetricData = any()
+                any()
             )
         }
     }
@@ -412,7 +405,6 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         }
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
                 any(),
                 any(),
                 any(),

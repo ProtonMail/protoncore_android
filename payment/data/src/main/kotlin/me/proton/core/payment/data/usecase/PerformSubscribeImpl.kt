@@ -21,9 +21,6 @@ package me.proton.core.payment.data.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
@@ -41,8 +38,7 @@ public class PerformSubscribeImpl @Inject constructor(
     private val acknowledgeGooglePlayPurchase: Optional<AcknowledgeGooglePlayPurchase>,
     private val paymentsRepository: PaymentsRepository,
     private val humanVerificationManager: HumanVerificationManager,
-    private val clientIdProvider: ClientIdProvider,
-    private val observabilityManager: ObservabilityManager
+    private val clientIdProvider: ClientIdProvider
 ) : PerformSubscribe {
     /**
      * @param codes optional an array of [String] coupon or gift codes used for discounts.
@@ -56,30 +52,23 @@ public class PerformSubscribeImpl @Inject constructor(
         planNames: List<String>,
         codes: List<String>?,
         paymentToken: ProtonPaymentToken?,
-        subscriptionManagement: SubscriptionManagement,
-        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)?
+        subscriptionManagement: SubscriptionManagement
     ): Subscription {
         require(amount >= 0)
         require(planNames.isNotEmpty())
         require(paymentToken != null || amount <= 0) {
             "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null."
         }
-
-        val metricData: ((Result<Subscription>) -> ObservabilityData)? = if (subscribeMetricData != null) {
-            { subscribeMetricData(it, subscriptionManagement) }
-        } else null
-        val subscription = paymentsRepository.runWithObservability(observabilityManager, metricData) {
-            createOrUpdateSubscription(
-                sessionUserId = userId,
-                amount = amount,
-                currency = currency,
-                payment = if (amount == 0L) null else PaymentTokenEntity(paymentToken!!),
-                codes = codes,
-                plans = planNames.map { it to MAX_PLAN_QUANTITY }.toMap(),
-                cycle = cycle,
-                subscriptionManagement = subscriptionManagement
-            )
-        }
+        val subscription = paymentsRepository.createOrUpdateSubscription(
+            sessionUserId = userId,
+            amount = amount,
+            currency = currency,
+            payment = if (amount == 0L) null else PaymentTokenEntity(paymentToken!!),
+            codes = codes,
+            plans = planNames.associateWith { MAX_PLAN_QUANTITY },
+            cycle = cycle,
+            subscriptionManagement = subscriptionManagement
+        )
 
         if (paymentToken != null) {
             // Clear any previous payment token (unauthenticated session cookie HV details).

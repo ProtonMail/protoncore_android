@@ -21,14 +21,8 @@ package me.proton.core.payment.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotal
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
@@ -41,12 +35,6 @@ import kotlin.test.assertNotNull
 
 class ValidateSubscriptionPlanTest {
 
-    // region mocks
-    private val repository = mockk<PaymentsRepository>(relaxed = true)
-    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    // endregion
-
-    // region test data
     private val testUserId = UserId("test-user-id")
     private val testAmount = 5L
     private val testAmountDue = 3L
@@ -64,14 +52,16 @@ class ValidateSubscriptionPlanTest {
         cycle = SubscriptionCycle.YEARLY,
         gift = null
     )
-    // endregion
+
+    private val repository = mockk<PaymentsRepository>(relaxed = true) {
+        coEvery { validateSubscription(any(), any(), any(), any(), any()) } returns defaultSubscriptionStatus
+    }
 
     private lateinit var useCase: ValidateSubscriptionPlan
 
     @Before
     fun beforeEveryTest() {
-        useCase = ValidateSubscriptionPlan(repository, observabilityManager)
-        coEvery { repository.validateSubscription(any(), any(), any(), any(), any()) } returns defaultSubscriptionStatus
+        useCase = ValidateSubscriptionPlan(repository)
     }
 
     @Test
@@ -85,11 +75,11 @@ class ValidateSubscriptionPlanTest {
         )
         coVerify(exactly = 1) {
             repository.validateSubscription(
-                testUserId,
-                null,
-                mapOf(testPlanName to 1),
-                Currency.CHF,
-                SubscriptionCycle.YEARLY
+                sessionUserId = testUserId,
+                codes = null,
+                plans = mapOf(testPlanName to 1),
+                currency = Currency.CHF,
+                cycle = SubscriptionCycle.YEARLY
             )
         }
         assertNotNull(result)
@@ -131,21 +121,5 @@ class ValidateSubscriptionPlanTest {
                 cycle = SubscriptionCycle.YEARLY
             )
         }
-    }
-
-    @Test
-    fun `observability data is recorded`() = runTest {
-        useCase.invoke(
-            userId = null,
-            codes = null,
-            plans = listOf(testPlanName),
-            currency = Currency.CHF,
-            cycle = SubscriptionCycle.YEARLY,
-            metricData = { CheckoutCardBillingValidatePlanTotal(it.toHttpApiStatus()) }
-        )
-
-        val dataSlot = slot<CheckoutCardBillingValidatePlanTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

@@ -34,11 +34,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotal
-import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotal
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsCreatePaymentTokenTotal
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
-import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
@@ -162,18 +158,11 @@ public abstract class BillingCommonViewModel(
         currency: Currency,
         cycle: SubscriptionCycle,
         paymentType: PaymentType,
-        subscriptionManagement: SubscriptionManagement,
-        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
-        validatePlanMetricData: ((Result<SubscriptionStatus>) -> ObservabilityData)? = null
+        subscriptionManagement: SubscriptionManagement
     ): Job = viewModelScope.launchWithResultContext {
-        onResultEnqueue("createPaymentToken") {
-            when (paymentType) {
-                is PaymentType.CreditCard -> CheckoutCardBillingCreatePaymentTokenTotal(this)
-                is PaymentType.GoogleIAP -> CheckoutGiapBillingCreatePaymentTokenTotal(this)
-                is PaymentType.PaymentMethod -> CheckoutPaymentMethodsCreatePaymentTokenTotal(this)
-                is PaymentType.PayPal -> throw NotImplementedError("Paypal not supported.")
-            }
-        }
+        onResultEnqueue("createPaymentToken") { getCreatePaymentTokenObservabilityData(paymentType) }
+        onResultEnqueue("createOrUpdateSubscription") { getSubscribeObservabilityData(paymentType) }
+        onResultEnqueue("validateSubscription") { getValidatePlanObservabilityData(paymentType) }
 
         flow {
             emit(State.Processing)
@@ -184,8 +173,7 @@ public abstract class BillingCommonViewModel(
                 codes = codes,
                 plans = planNames,
                 currency = currency,
-                cycle = cycle,
-                metricData = validatePlanMetricData
+                cycle = cycle
             )
             emit(State.Success.SubscriptionPlanValidated(subscription))
 
@@ -200,8 +188,7 @@ public abstract class BillingCommonViewModel(
                         planNames = planNames,
                         codes = codes,
                         paymentToken = null,
-                        subscriptionManagement = subscriptionManagement,
-                        subscribeMetricData = subscribeMetricData
+                        subscriptionManagement = subscriptionManagement
                     )
                 emit(
                     State.Success.SubscriptionCreated(
@@ -253,8 +240,7 @@ public abstract class BillingCommonViewModel(
                             currency = currency,
                             cycle = cycle,
                             token = token,
-                            subscriptionManagement = subscriptionManagement,
-                            subscribeMetricData = subscribeMetricData
+                            subscriptionManagement = subscriptionManagement
                         )
                     )
                 }  else {
@@ -289,8 +275,7 @@ public abstract class BillingCommonViewModel(
         currency: Currency,
         cycle: SubscriptionCycle,
         token: ProtonPaymentToken,
-        subscriptionManagement: SubscriptionManagement,
-        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null
+        subscriptionManagement: SubscriptionManagement
     ): Job = flow {
         emit(
             onTokenApproved(
@@ -301,8 +286,7 @@ public abstract class BillingCommonViewModel(
                 currency = currency,
                 cycle = cycle,
                 token = token,
-                subscriptionManagement = subscriptionManagement,
-                subscribeMetricData = subscribeMetricData
+                subscriptionManagement = subscriptionManagement
             )
         )
     }.catch {
@@ -320,8 +304,7 @@ public abstract class BillingCommonViewModel(
         plans: List<String>,
         codes: List<String>? = null,
         currency: Currency,
-        cycle: SubscriptionCycle,
-        validatePlanMetricData: ((Result<SubscriptionStatus>) -> ObservabilityData)? = null
+        cycle: SubscriptionCycle
     ): Job = flow {
         emit(PlansValidationState.Processing)
         emit(
@@ -331,8 +314,7 @@ public abstract class BillingCommonViewModel(
                     codes = codes,
                     plans = plans,
                     currency = currency,
-                    cycle = cycle,
-                    metricData = validatePlanMetricData
+                    cycle = cycle
                 )
             )
         )
@@ -350,8 +332,7 @@ public abstract class BillingCommonViewModel(
         currency: Currency,
         cycle: SubscriptionCycle,
         token: ProtonPaymentToken,
-        subscriptionManagement: SubscriptionManagement,
-        subscribeMetricData: ((Result<Subscription>, SubscriptionManagement) -> ObservabilityData)? = null,
+        subscriptionManagement: SubscriptionManagement
     ): State =
         if (userId == null) {
             // Token will be used during sign up (create user), as part of HumanVerification headers.
@@ -373,8 +354,7 @@ public abstract class BillingCommonViewModel(
                     planNames = planNames,
                     codes = codes,
                     paymentToken = token,
-                    subscriptionManagement = subscriptionManagement,
-                    subscribeMetricData = subscribeMetricData
+                    subscriptionManagement = subscriptionManagement
                 ),
                 paymentToken = token,
                 subscriptionManagement = subscriptionManagement

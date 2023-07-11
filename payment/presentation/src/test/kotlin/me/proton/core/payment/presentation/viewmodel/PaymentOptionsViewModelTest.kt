@@ -367,8 +367,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 listOf("test-plan-id"),
                 null,
                 testCurrency,
-                testSubscriptionCycle,
-                validatePlanMetricData = any()
+                testSubscriptionCycle
             )
         }
     }
@@ -404,8 +403,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 testCurrency,
                 testSubscriptionCycle,
                 testToken,
-                SubscriptionManagement.PROTON_MANAGED,
-                subscribeMetricData = any()
+                SubscriptionManagement.PROTON_MANAGED
             )
         }
     }

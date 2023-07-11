@@ -39,14 +39,11 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.LoginEaToIaFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.LoginEaToIaUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.LoginEaToIaUserCheckTotalV1
 import me.proton.core.observability.domain.metrics.LoginEaToIaUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
-import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
@@ -174,13 +171,7 @@ class ChooseAddressViewModel @Inject constructor(
             isTwoPassModeNeeded = isTwoPassModeNeeded,
             temporaryPassword = false,
             onSetupSuccess = { accountWorkflow.handleCreateAddressSuccess(userId) },
-            internalAddressDomain = domain,
-            subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotal(
-                    result.toHttpApiStatus(),
-                    management.toCheckoutBillingSubscribeManager()
-                )
-            }
+            internalAddressDomain = domain
         )
         return State.AccountSetupResult(result)
     }

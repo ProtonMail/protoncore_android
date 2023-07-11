@@ -251,8 +251,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
                 isTwoPassModeNeeded = any(),
                 temporaryPassword = any(),
                 onSetupSuccess = any(),
-                internalAddressDomain = any(),
-                subscribeMetricData = any()
+                internalAddressDomain = any()
             )
         } returns PostLoginAccountSetup.Result.UserUnlocked(userId)
 

@@ -98,8 +98,7 @@ class PerformSubscribeTest {
             Optional.empty(),
             repository,
             humanVerificationManager,
-            clientIdProvider,
-            observabilityManager
+            clientIdProvider
         )
         coEvery {
             repository.createOrUpdateSubscription(
@@ -342,30 +341,5 @@ class PerformSubscribeTest {
         )
 
         coVerify(exactly = 0) { humanVerificationManager.clearDetails(any()) }
-    }
-
-    @Test
-    fun `observability data is recorded`() = runTest {
-        useCase.invoke(
-            userId = testUserId,
-            amount = 1,
-            currency = Currency.CHF,
-            cycle = SubscriptionCycle.YEARLY,
-            planNames = listOf(testPlanName),
-            codes = null,
-            paymentToken = testPaymentToken,
-            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED,
-            subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotal(
-                    result.toHttpApiStatus(),
-                    management.toCheckoutBillingSubscribeManager()
-                )
-            }
-        )
-
-        val dataSlot = slot<CheckoutBillingSubscribeTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(CheckoutBillingSubscribeTotal.Manager.proton, dataSlot.captured.Labels.manager)
-        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

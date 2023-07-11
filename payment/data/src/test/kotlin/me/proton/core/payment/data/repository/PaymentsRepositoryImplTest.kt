@@ -405,7 +405,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `validate subscription returns success`() = runTest(dispatcherProvider.Main) {
+    fun `validate subscription returns success`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val subscriptionStatus = SubscriptionStatus(
             amount = 5,
@@ -428,10 +428,11 @@ class PaymentsRepositoryImplTest {
         )
         // THEN
         assertNotNull(validationResult)
+        assertTrue(assertSingleResult("validateSubscription").isSuccess)
     }
 
     @Test
-    fun `validate subscription returns error`() = runTest(dispatcherProvider.Main) {
+    fun `validate subscription returns error`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SubscriptionStatus>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -450,10 +451,11 @@ class PaymentsRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("validateSubscription").isFailure)
     }
 
     @Test
-    fun `create subscription returns success`() = runTest(dispatcherProvider.Main) {
+    fun `create subscription returns success`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val subscription = Subscription(
             id = "test-subscription-id",
@@ -485,10 +487,11 @@ class PaymentsRepositoryImplTest {
         )
         // THEN
         assertNotNull(createSubscriptionResult)
+        assertTrue(assertSingleResult("createOrUpdateSubscription").isSuccess)
     }
 
     @Test
-    fun `create subscription returns error`() = runTest(dispatcherProvider.Main) {
+    fun `create subscription returns error`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Subscription>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -511,6 +514,7 @@ class PaymentsRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("createOrUpdateSubscription").isFailure)
     }
 
     @Test

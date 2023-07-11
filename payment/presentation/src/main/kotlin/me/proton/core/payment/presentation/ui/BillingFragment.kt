@@ -165,14 +165,7 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
                     zip = postalCodeInput.text.toString()
                 )
             ),
-            SubscriptionManagement.PROTON_MANAGED,
-            subscribeMetricData = { result, management ->
-                CheckoutBillingSubscribeTotal(
-                    result.toHttpApiStatus(),
-                    management.toCheckoutBillingSubscribeManager()
-                )
-            },
-            validatePlanMetricData = { CheckoutCardBillingValidatePlanTotal(it.toHttpApiStatus()) }
+            SubscriptionManagement.PROTON_MANAGED
         )
     }
 

@@ -152,18 +152,15 @@ internal class PaymentOptionsViewModel @Inject constructor(
         codes: List<String>? = null,
         currency: Currency,
         cycle: SubscriptionCycle,
-        paymentType: PaymentType,
-        subscriptionManagement: SubscriptionManagement,
+        paymentType: PaymentType
     ) = super.subscribe(
-        userId,
-        currentPlans.createSubscriptionPlansList(planName, planServices, planType),
-        codes,
-        currency,
-        cycle,
-        paymentType,
-        subscriptionManagement,
-        subscribeMetricData = { result, _ -> CheckoutPaymentMethodsSubscribeTotal(result.toHttpApiStatus()) },
-        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotal(it.toHttpApiStatus()) }
+        userId = userId,
+        planNames = currentPlans.createSubscriptionPlansList(planName, planServices, planType),
+        codes = codes,
+        currency = currency,
+        cycle = cycle,
+        paymentType = paymentType,
+        subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
     )
 
     fun onThreeDSTokenApproved(
@@ -178,17 +175,14 @@ internal class PaymentOptionsViewModel @Inject constructor(
         token: ProtonPaymentToken,
         external: SubscriptionManagement
     ) = super.onThreeDSTokenApproved(
-        userId,
-        currentPlans.createSubscriptionPlansList(planName, planServices, planType),
-        codes,
-        amount,
-        currency,
-        cycle,
-        token,
-        external,
-        subscribeMetricData = { result, _ ->
-            CheckoutPaymentMethodsSubscribeTotal(result.toHttpApiStatus())
-        }
+        userId = userId,
+        planIds = currentPlans.createSubscriptionPlansList(planName, planServices, planType),
+        codes = codes,
+        amount = amount,
+        currency = currency,
+        cycle = cycle,
+        token = token,
+        subscriptionManagement = external
     )
 
     fun validatePlan(
@@ -200,12 +194,11 @@ internal class PaymentOptionsViewModel @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle
     ) = super.validatePlan(
-        userId,
-        currentPlans.createSubscriptionPlansList(planName, planServices, planType),
-        codes,
-        currency,
-        cycle,
-        validatePlanMetricData = { CheckoutPaymentMethodsValidatePlanTotal(it.toHttpApiStatus()) }
+        userId = userId,
+        plans = currentPlans.createSubscriptionPlansList(planName, planServices, planType),
+        codes = codes,
+        currency = currency,
+        cycle = cycle
     )
 
     private fun Set<PaymentProvider>.createGIAPPaymentMethod() =

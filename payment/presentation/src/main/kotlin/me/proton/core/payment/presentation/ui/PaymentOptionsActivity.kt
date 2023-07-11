@@ -208,8 +208,7 @@ internal class PaymentOptionsActivity :
             input.codes,
             input.plan.currency,
             input.plan.subscriptionCycle,
-            PaymentType.PaymentMethod(selectedPaymentMethodId!!),
-            SubscriptionManagement.PROTON_MANAGED
+            PaymentType.PaymentMethod(selectedPaymentMethodId!!)
         )
     }
 
