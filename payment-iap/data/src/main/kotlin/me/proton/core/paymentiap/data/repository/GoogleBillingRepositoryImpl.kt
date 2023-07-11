@@ -46,8 +46,10 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
+import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.DispatcherProvider
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
@@ -83,7 +85,9 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         connectedBillingClient.destroy()
     }
 
-    override suspend fun getProductDetails(googlePlayPlanName: String): ProductDetails? {
+    override suspend fun getProductDetails(
+        googlePlayPlanName: String
+    ): ProductDetails? = result("getProductDetails") {
         val product = QueryProductDetailsParams.Product.newBuilder()
             .setProductId(googlePlayPlanName)
             .setProductType(BillingClient.ProductType.SUBS)
@@ -93,8 +97,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
             .build()
         val result = connectedBillingClient.withClient { it.queryProductDetails(params) }
         result.billingResult.checkOk()
-
-        return result.productDetailsList?.firstOrNull()
+        val productDetails = result.productDetailsList?.firstOrNull()
+        if (productDetails == null) {
+            CoreLogger.i(LogTag.GIAP_ERROR, "Google product not found: `$googlePlayPlanName`.")
+        }
+        productDetails
     }
 
     override suspend fun launchBillingFlow(activity: Activity, billingFlowParams: BillingFlowParams) {

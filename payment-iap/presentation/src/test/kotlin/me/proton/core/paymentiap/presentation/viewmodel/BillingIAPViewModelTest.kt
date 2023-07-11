@@ -38,11 +38,13 @@ import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.util.kotlin.coroutine.result
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
+
     @MockK(relaxed = true)
     private lateinit var billingRepository: GoogleBillingRepository
 
@@ -67,7 +69,9 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `observability data is recorded for product query`() = coroutinesTest {
         // GIVEN
-        coEvery { billingRepository.getProductDetails(any()) } returns mockk()
+        coEvery { billingRepository.getProductDetails(any()) } coAnswers {
+            result("getProductDetails") { mockk() }
+        }
 
         // WHEN
         tested.queryProductDetails("test-plan-name").join()
@@ -129,10 +133,6 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
             BillingIAPViewModel.State.Error.ProductDetailsError.ProductMismatch,
             tested.billingIAPState.value
         )
-
-        val dataSlot = slot<CheckoutGiapBillingProductQueryTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(GiapStatus.notFound, dataSlot.captured.Labels.status)
     }
 
     @Test
@@ -150,9 +150,5 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
             BillingIAPViewModel.State.Error.ProductDetailsError.ResponseCode,
             tested.billingIAPState.value
         )
-
-        val dataSlot = slot<CheckoutGiapBillingProductQueryTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(GiapStatus.featureNotSupported, dataSlot.captured.Labels.status)
     }
 }

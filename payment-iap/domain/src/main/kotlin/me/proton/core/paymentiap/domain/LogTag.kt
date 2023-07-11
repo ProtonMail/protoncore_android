@@ -1,6 +1,6 @@
 package me.proton.core.paymentiap.domain
 
-internal object LogTag {
+public object LogTag {
     /** Errors related to Google In App Purchases. */
-    const val GIAP_ERROR: String = "core.paymentiap.giap"
+    public const val GIAP_ERROR: String = "core.paymentiap.giap"
 }

@@ -44,8 +44,6 @@ import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQue
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
@@ -54,9 +52,7 @@ import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.toGiapStatus
-import me.proton.core.paymentiap.presentation.LogTag
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
@@ -124,13 +120,13 @@ internal class BillingIAPViewModel @Inject constructor(
         billingRepository.destroy()
     }
 
-    fun queryProductDetails(googlePlanName: String) = viewModelScope.launch {
+    fun queryProductDetails(googlePlanName: String) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("getProductDetails") { CheckoutGiapBillingProductQueryTotal(toGiapStatus()) }
+
         flow {
             emit(State.QueryingProductDetails)
 
-            val productDetails = runWithObservability(manager, { it.observeProductDetailsResult(googlePlanName) }) {
-                billingRepository.getProductDetails(googlePlanName)
-            }
+            val productDetails = billingRepository.getProductDetails(googlePlanName)
             if (productDetails == null) {
                 emit(State.Error.ProductDetailsError.ProductMismatch)
                 return@flow
@@ -165,7 +161,7 @@ internal class BillingIAPViewModel @Inject constructor(
             _billingIAPState.tryEmit(error)
         }.onEach { subscriptionState ->
             _billingIAPState.tryEmit(subscriptionState)
-        }.launchIn(viewModelScope)
+        }.collect()
     }
 
     fun makePurchase(activity: FragmentActivity, customerId: String): Job = viewModelScope.launchWithResultContext {
@@ -192,15 +188,6 @@ internal class BillingIAPViewModel @Inject constructor(
 
     fun redeemExistingPurchase(purchase: GooglePurchase) = viewModelScope.launch {
         onSubscriptionPurchased(purchase.unwrap())
-    }
-
-    /** Processes the result of a product query (i.e. observability, logs). */
-    private fun Result<ProductDetails?>.observeProductDetailsResult(googlePlanName: String): ObservabilityData? {
-        val status = toGiapStatus()
-        if (status == GiapStatus.notFound) {
-            CoreLogger.e(LogTag.DEFAULT, GoogleProductNotFound(googlePlanName))
-        }
-        return status?.let { CheckoutGiapBillingProductQueryTotal(it) }
     }
 
     /** Launches Google billing flow. */
@@ -273,6 +260,3 @@ internal class BillingIAPViewModel @Inject constructor(
 
 private fun ProductDetails.getProductPrice(): ProductDetails.PricingPhase? =
     subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)
-
-private class GoogleProductNotFound(googlePlanName: String) :
-    Throwable("Google product not found: $googlePlanName.")

@@ -107,7 +107,7 @@ internal class GoogleBillingRepositoryImplTest {
     }
 
     @Test
-    fun `get product details null`() = runTest {
+    fun `get product details null`() = runTestWithResultContext {
         mockClientResult {
             every { queryProductDetailsAsync(any(), any()) } answers {
                 val listener = invocation.args[1] as ProductDetailsResponseListener
@@ -116,6 +116,7 @@ internal class GoogleBillingRepositoryImplTest {
         }
         val result = tested.use { it.getProductDetails("plan-name") }
         assertSame(result, null)
+        assertTrue(assertSingleResult("getProductDetails").isSuccess)
     }
 
     @Test
