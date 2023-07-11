@@ -966,11 +966,11 @@ public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewMod
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;)Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UnredeemedPurchaseViewModel_HiltModules {

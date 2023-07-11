@@ -20,10 +20,15 @@ public final class me/proton/core/paymentiap/data/repository/GoogleBillingReposi
 	public fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl : me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {
+public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl : me/proton/core/observability/domain/ObservabilityContext, me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {
 	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public fun invoke-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke-vl4Hrws (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl : me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {

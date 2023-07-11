@@ -18,24 +18,24 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotal
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.observability.domain.runWithObservability
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.toGiapStatus
+import me.proton.core.util.kotlin.coroutine.withResultContext
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
     private val googleBillingRepositoryProvider: Provider<GoogleBillingRepository>,
     private val googlePurchaseRepository: GooglePurchaseRepository,
-    private val observabilityManager: ObservabilityManager
-) : AcknowledgeGooglePlayPurchase {
+    override val manager: ObservabilityManager
+) : AcknowledgeGooglePlayPurchase, ObservabilityContext {
     override suspend fun invoke(paymentToken: ProtonPaymentToken) {
         val googlePurchaseToken = requireNotNull(googlePurchaseRepository.findGooglePurchaseToken(paymentToken)) {
             "Could not find corresponding Google purchase token."
@@ -43,15 +43,12 @@ public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
         invoke(googlePurchaseToken)
     }
 
-    override suspend fun invoke(purchaseToken: GooglePurchaseToken) {
-        val metricData: ((Result<Unit>) -> ObservabilityData?) =
-            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingAcknowledgeTotal(it) } }
+    override suspend fun invoke(purchaseToken: GooglePurchaseToken): Unit = withResultContext {
+        onResultEnqueue("acknowledgePurchase") { CheckoutGiapBillingAcknowledgeTotal(toGiapStatus()) }
 
         // Create a new instance of `GoogleBillingRepository` and clean up after it:
         googleBillingRepositoryProvider.get().use { googleBillingRepository ->
-            googleBillingRepository.runWithObservability(observabilityManager, metricData) {
-                acknowledgePurchase(purchaseToken)
-            }
+            googleBillingRepository.acknowledgePurchase(purchaseToken)
         }
         googlePurchaseRepository.deleteByGooglePurchaseToken(purchaseToken)
     }

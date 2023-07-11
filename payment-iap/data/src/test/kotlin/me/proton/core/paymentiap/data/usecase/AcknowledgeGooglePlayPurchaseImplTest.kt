@@ -31,25 +31,29 @@ import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.util.kotlin.coroutine.result
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 internal class AcknowledgeGooglePlayPurchaseImplTest {
-    private lateinit var googleBillingRepository: GoogleBillingRepository
-    private lateinit var googlePurchaseRepository: GooglePurchaseRepository
-    private lateinit var observabilityManager: ObservabilityManager
+
+    private val googleBillingRepository = mockk<GoogleBillingRepository>(relaxed = true) {
+        coEvery { acknowledgePurchase(any()) } coAnswers {
+            result("acknowledgePurchase") { Unit }
+        }
+    }
+    private val googlePurchaseRepository = mockk<GooglePurchaseRepository>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+
     private lateinit var tested: AcknowledgeGooglePlayPurchaseImpl
 
     @BeforeTest
     fun setUp() {
-        googleBillingRepository = mockk(relaxed = true)
-        googlePurchaseRepository = mockk(relaxed = true)
-        observabilityManager = mockk(relaxed = true)
         tested = AcknowledgeGooglePlayPurchaseImpl(
-            { googleBillingRepository },
-            googlePurchaseRepository,
-            observabilityManager
+            googleBillingRepositoryProvider = { googleBillingRepository },
+            googlePurchaseRepository = googlePurchaseRepository,
+            manager = observabilityManager
         )
     }
 

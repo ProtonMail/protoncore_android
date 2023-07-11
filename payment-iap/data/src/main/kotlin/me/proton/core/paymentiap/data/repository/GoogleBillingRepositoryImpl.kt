@@ -71,7 +71,9 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
 
     private val connectedBillingClient = connectedBillingClientFactory(purchasesUpdatedListener)
 
-    override suspend fun acknowledgePurchase(purchaseToken: GooglePurchaseToken) {
+    override suspend fun acknowledgePurchase(
+        purchaseToken: GooglePurchaseToken
+    ): Unit = result("acknowledgePurchase") {
         val params = AcknowledgePurchaseParams.newBuilder()
             .setPurchaseToken(purchaseToken.value)
             .build()
