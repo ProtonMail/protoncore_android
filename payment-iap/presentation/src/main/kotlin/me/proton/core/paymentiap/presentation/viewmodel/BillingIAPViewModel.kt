@@ -166,6 +166,7 @@ internal class BillingIAPViewModel @Inject constructor(
 
     fun makePurchase(activity: FragmentActivity, customerId: String): Job = viewModelScope.launchWithResultContext {
         onResultEnqueue("querySubscriptionPurchases") { CheckoutGiapBillingQuerySubscriptionsTotal(toGiapStatus()) }
+        onResultEnqueue("launchBillingFlow") { CheckoutGiapBillingLaunchBillingTotal(toGiapStatus()) }
 
         flow {
             require(this@BillingIAPViewModel::selectedProduct.isInitialized) {
@@ -208,12 +209,7 @@ internal class BillingIAPViewModel @Inject constructor(
             .setObfuscatedAccountId(customerId)
             .build()
 
-        billingRepository.runWithObservability(
-            manager,
-            { result -> result.toGiapStatus()?.let { CheckoutGiapBillingLaunchBillingTotal(it) } }
-        ) {
-            launchBillingFlow(activity, billingFlowParams)
-        }
+        billingRepository.launchBillingFlow(activity, billingFlowParams)
         emit(State.Success.PurchaseFlowLaunched)
     }
 

@@ -104,7 +104,10 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         productDetails
     }
 
-    override suspend fun launchBillingFlow(activity: Activity, billingFlowParams: BillingFlowParams) {
+    override suspend fun launchBillingFlow(
+        activity: Activity,
+        billingFlowParams: BillingFlowParams
+    ): Unit = result("launchBillingFlow") {
         connectedBillingClient.withClient { it.launchBillingFlow(activity, billingFlowParams) }
     }
 

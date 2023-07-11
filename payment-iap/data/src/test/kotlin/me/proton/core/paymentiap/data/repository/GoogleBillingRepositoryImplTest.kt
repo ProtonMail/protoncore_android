@@ -120,11 +120,12 @@ internal class GoogleBillingRepositoryImplTest {
     }
 
     @Test
-    fun `launch billing flow`() = runTest {
+    fun `launch billing flow`() = runTestWithResultContext {
         mockClientResult {
             every { launchBillingFlow(any(), any()) } returns BillingResult()
         }
         tested.use { it.launchBillingFlow(mockk(), mockk()) }
+        assertTrue(assertSingleResult("launchBillingFlow").isSuccess)
     }
 
     @Test

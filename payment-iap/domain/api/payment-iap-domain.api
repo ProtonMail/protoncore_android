@@ -9,6 +9,11 @@ public final class me/proton/core/paymentiap/domain/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/paymentiap/domain/LogTag {
+	public static final field GIAP_ERROR Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/paymentiap/domain/LogTag;
+}
+
 public final class me/proton/core/paymentiap/domain/ObservabilityExtKt {
 	public static final fun toGiapStatus (Lcom/android/billingclient/api/BillingResult;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final fun toGiapStatus (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
