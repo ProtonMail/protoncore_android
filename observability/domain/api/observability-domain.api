@@ -24,10 +24,6 @@ public final class me/proton/core/observability/domain/ObservabilityManager {
 	public static synthetic fun enqueue$default (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/observability/domain/metrics/ObservabilityData;Ljava/time/Instant;ILjava/lang/Object;)V
 }
 
-public final class me/proton/core/observability/domain/ObservabilityManagerKt {
-	public static final fun runWithObservability (Ljava/lang/Object;Lme/proton/core/observability/domain/ObservabilityManager;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public abstract interface class me/proton/core/observability/domain/ObservabilityRepository {
 	public abstract fun addEvent (Lme/proton/core/observability/domain/entity/ObservabilityEvent;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun deleteAllEvents (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

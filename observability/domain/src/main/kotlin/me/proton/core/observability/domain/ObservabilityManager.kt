@@ -95,18 +95,3 @@ public class ObservabilityManager @Inject internal constructor(
         internal const val MAX_DELAY_MS = 30 * 1000L
     }
 }
-
-/** Enqueues an observability data event from the [Result] of executing a [block].
- * The event is recorded if [metricData] is not null.
- **/
-public suspend fun <T, R> T.runWithObservability(
-    observabilityManager: ObservabilityManager,
-    metricData: ((Result<R>) -> ObservabilityData?)?,
-    block: suspend T.() -> R
-): R = runCatching {
-    block()
-}.also { result ->
-    if (result.exceptionOrNull() !is CancellationException) {
-        metricData?.invoke(result)?.let { observabilityManager.enqueue(it) }
-    }
-}.getOrThrow()
