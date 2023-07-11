@@ -119,12 +119,15 @@ public class PaymentsRepositoryImpl @Inject constructor(
             getPaymentTokenStatus(paymentToken.value).toPaymentTokenStatusResult()
         }.valueOrThrow
 
-    override suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod> =
+    override suspend fun getAvailablePaymentMethods(
+        sessionUserId: SessionUserId
+    ): List<PaymentMethod> = result("getAvailablePaymentMethods") {
         provider.get<PaymentsApi>(sessionUserId).invoke {
             getPaymentMethods().paymentMethods.map {
                 PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
         }.valueOrThrow
+    }
 
     override suspend fun validateSubscription(
         sessionUserId: SessionUserId?,

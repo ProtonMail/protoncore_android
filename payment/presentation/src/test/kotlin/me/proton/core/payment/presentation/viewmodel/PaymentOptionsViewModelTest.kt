@@ -161,7 +161,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     fun `available payment methods success handled correctly`() = coroutinesTest {
         // GIVEN
         every { context.getString(any()) } returns "google"
-        coEvery { getAvailablePaymentMethods.invoke(testUserId, any()) } returns testPaymentMethodsList
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
 
         val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
@@ -183,7 +183,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
         // GIVEN
         every { context.getString(any()) } returns "google"
         coEvery { getAvailablePaymentProviders.invoke(refresh = true) } returns setOf(PaymentProvider.CardPayment)
-        coEvery { getAvailablePaymentMethods.invoke(testUserId, any()) } returns testPaymentMethodsList
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns testPaymentMethodsList
 
         val job = flowTest(viewModel.availablePaymentMethodsState) {
             // THEN
@@ -319,7 +319,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @Test
     fun `available payment methods error handled correctly`() = coroutinesTest {
         // GIVEN
-        coEvery { getAvailablePaymentMethods.invoke(testUserId, any()) } throws ApiException(
+        coEvery { getAvailablePaymentMethods.invoke(testUserId) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",

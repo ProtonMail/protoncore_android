@@ -39,12 +39,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
 class GetAvailablePaymentMethodsTest {
-    // region mocks
-    private val repository = mockk<PaymentsRepository>(relaxed = true)
-    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    // endregion
 
-    // region test data
     private val testUserId = UserId("test-user-id")
     private val testReadOnlyCard = Card.CardReadOnly(
         brand = "visa", last4 = "1234", expirationMonth = "01",
@@ -52,34 +47,36 @@ class GetAvailablePaymentMethodsTest {
     )
     private val testDefaultPaymentMethods = listOf(
         PaymentMethod(
-            "1",
-            PaymentMethodType.CARD,
-            Details.CardDetails(testReadOnlyCard)
+            id = "1",
+            type = PaymentMethodType.CARD,
+            details = Details.CardDetails(testReadOnlyCard)
         ),
         PaymentMethod(
-            "2",
-            PaymentMethodType.PAYPAL,
-            Details.PayPalDetails(
+            id = "2",
+            type = PaymentMethodType.PAYPAL,
+            details = Details.PayPalDetails(
                 billingAgreementId = "3",
                 payer = "test payer"
             )
         )
     )
-    // endregion
+
+    private val repository = mockk<PaymentsRepository>(relaxed = true) {
+        coEvery { getAvailablePaymentMethods(testUserId) } returns testDefaultPaymentMethods
+    }
 
     private lateinit var useCase: GetAvailablePaymentMethods
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetAvailablePaymentMethods(repository, observabilityManager)
-        coEvery {
-            repository.getAvailablePaymentMethods(testUserId)
-        } returns testDefaultPaymentMethods
+        useCase = GetAvailablePaymentMethods(repository)
     }
 
     @Test
     fun `get payment methods returns non empty list success`() = runTest {
+        // WHEN
         val result = useCase.invoke(testUserId)
+        // THEN
         assertNotNull(result)
         assertEquals(2, result.size)
         assertEquals(PaymentMethodType.CARD, result[0].type)
@@ -88,19 +85,11 @@ class GetAvailablePaymentMethodsTest {
 
     @Test
     fun `get payment methods returns empty list success`() = runTest {
-        coEvery {
-            repository.getAvailablePaymentMethods(testUserId)
-        } returns emptyList()
+        coEvery { repository.getAvailablePaymentMethods(testUserId) } returns emptyList()
+        // WHEN
         val result = useCase.invoke(testUserId)
+        // THEN
         assertNotNull(result)
         assertEquals(0, result.size)
-    }
-
-    @Test
-    fun `observability data is recorded`() = runTest {
-        useCase(testUserId, metricData = { CheckoutPaymentMethodsGetPaymentMethodsTotal(it.toHttpApiStatus()) })
-        val dataSlot = slot<CheckoutPaymentMethodsGetPaymentMethodsTotal>()
-        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

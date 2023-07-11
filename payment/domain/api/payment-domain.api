@@ -446,9 +446,8 @@ public abstract interface class me/proton/core/payment/domain/usecase/FindUnackn
 }
 
 public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentMethods {
-	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/domain/usecase/GetAvailablePaymentProviders {

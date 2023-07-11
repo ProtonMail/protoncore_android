@@ -25,8 +25,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.domain.usecase.GetCountry
 import me.proton.core.domain.entity.UserId
@@ -55,6 +55,7 @@ import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -111,38 +112,42 @@ internal class PaymentOptionsViewModel @Inject constructor(
     /**
      * Returns the existing available (saved) payment methods for a user.
      */
-    fun getAvailablePaymentMethods(userId: UserId) = flow {
-        emit(State.Processing)
-        val currentSubscription = getCurrentSubscription(userId)
-        currentSubscription?.let {
-            it.plans.forEach { plan ->
-                currentPlans.add(plan)
-            }
-        } ?: run {
-            emit(State.Error.SubscriptionInRecoverableError)
+    fun getAvailablePaymentMethods(userId: UserId) = viewModelScope.launchWithResultContext {
+        onResultEnqueue("getAvailablePaymentMethods") {
+            CheckoutPaymentMethodsGetPaymentMethodsTotal(toHttpApiStatus())
         }
 
-        val paymentProviders = getAvailablePaymentProviders()
-        val paymentMethods = availablePaymentMethods(userId, metricData = {
-            CheckoutPaymentMethodsGetPaymentMethodsTotal(it.toHttpApiStatus())
-        }).filter {
-            when (it.type) {
-                PaymentMethodType.CARD -> PaymentProvider.CardPayment in paymentProviders
-                PaymentMethodType.PAYPAL -> PaymentProvider.PayPal in paymentProviders
+        flow {
+            emit(State.Processing)
+            val currentSubscription = getCurrentSubscription(userId)
+            currentSubscription?.let {
+                it.plans.forEach { plan ->
+                    currentPlans.add(plan)
+                }
+            } ?: run {
+                emit(State.Error.SubscriptionInRecoverableError)
             }
-        }.mapPaymentMethods()
-        val giapPaymentMethod = paymentProviders.createGIAPPaymentMethod()
-        emit(
-            State.Success.PaymentMethodsSuccess(
-                if (giapPaymentMethod != null) paymentMethods + giapPaymentMethod
-                else paymentMethods
+
+            val paymentProviders = getAvailablePaymentProviders()
+            val paymentMethods = availablePaymentMethods(userId).filter {
+                when (it.type) {
+                    PaymentMethodType.CARD -> PaymentProvider.CardPayment in paymentProviders
+                    PaymentMethodType.PAYPAL -> PaymentProvider.PayPal in paymentProviders
+                }
+            }.mapPaymentMethods()
+            val giapPaymentMethod = paymentProviders.createGIAPPaymentMethod()
+            emit(
+                State.Success.PaymentMethodsSuccess(
+                    if (giapPaymentMethod != null) paymentMethods + giapPaymentMethod
+                    else paymentMethods
+                )
             )
-        )
-    }.catch { error ->
-        _availablePaymentMethodsState.tryEmit(State.Error.General(error))
-    }.onEach { methods ->
-        _availablePaymentMethodsState.tryEmit(methods)
-    }.launchIn(viewModelScope)
+        }.catch { error ->
+            _availablePaymentMethodsState.tryEmit(State.Error.General(error))
+        }.onEach { methods ->
+            _availablePaymentMethodsState.tryEmit(methods)
+        }.collect()
+    }
 
     fun subscribe(
         userId: UserId?,

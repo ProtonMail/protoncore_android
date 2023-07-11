@@ -104,7 +104,7 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
-    fun `payment methods return success single card`() = runTest(dispatcherProvider.Main) {
+    fun `payment methods return success single card`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val paymentMethods = listOf(
             PaymentMethod(
@@ -129,10 +129,11 @@ class PaymentsRepositoryImplTest {
         assertEquals("1", method1.id)
         assertEquals(PaymentMethodType.CARD, method1.type)
         assertIs<Details.CardDetails>(method1.details)
+        assertTrue(assertSingleResult("getAvailablePaymentMethods").isSuccess)
     }
 
     @Test
-    fun `payment methods return success card and paypal`() = runTest(dispatcherProvider.Main) {
+    fun `payment methods return success card and paypal`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         val paymentMethods = listOf(
             PaymentMethod(
@@ -163,10 +164,11 @@ class PaymentsRepositoryImplTest {
         assertEquals("2", method2.id)
         assertEquals(PaymentMethodType.PAYPAL, method2.type)
         assertIs<Details.PayPalDetails>(method2.details)
+        assertTrue(assertSingleResult("getAvailablePaymentMethods").isSuccess)
     }
 
     @Test
-    fun `payment methods return error`() = runTest(dispatcherProvider.Main) {
+    fun `payment methods return error`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<List<PaymentMethod>>(any()) } returns ApiResult.Error.Http(
             httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
@@ -180,6 +182,7 @@ class PaymentsRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("getAvailablePaymentMethods").isFailure)
     }
 
     @Test
