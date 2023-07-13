@@ -1,0 +1,34 @@
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:pathData="M2,4.5C2,3.119 3.119,2 4.5,2H19.5C20.881,2 22,3.119 22,4.5V19.5C22,20.881 20.881,22 19.5,22H4.5C3.119,22 2,20.881 2,19.5V4.5Z"
+        android:fillColor="#DADBE0" />
+    <group>
+        <clip-path android:pathData="M6,6h12v12h-12z" />
+        <path
+            android:pathData="M15.606,7.539C14.762,6.726 13.387,6.726 12.543,7.539L8.331,11.598C7.032,12.85 7.032,14.873 8.331,16.125C9.64,17.386 11.769,17.386 13.078,16.125L16.785,12.553C16.97,12.375 17.264,12.38 17.441,12.565C17.619,12.75 17.614,13.044 17.429,13.222L13.723,16.794C12.054,18.402 9.356,18.402 7.687,16.794C6.009,15.176 6.009,12.547 7.687,10.929L11.899,6.87C13.102,5.71 15.047,5.71 16.25,6.87C17.463,8.039 17.463,9.942 16.25,11.111L12.038,15.17C11.3,15.882 10.11,15.882 9.372,15.17C8.624,14.45 8.624,13.274 9.372,12.553L13.078,8.981C13.263,8.803 13.557,8.808 13.735,8.993C13.913,9.178 13.907,9.472 13.723,9.65L10.016,13.222C9.647,13.577 9.647,14.146 10.016,14.501C10.395,14.866 11.015,14.866 11.394,14.501L15.606,10.442C16.44,9.638 16.44,8.343 15.606,7.539Z"
+            android:fillColor="#3A3F4A"
+            android:fillType="evenOdd" />
+    </group>
+</vector>
