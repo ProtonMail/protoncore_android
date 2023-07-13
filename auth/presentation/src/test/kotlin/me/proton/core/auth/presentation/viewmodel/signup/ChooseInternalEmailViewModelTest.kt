@@ -34,6 +34,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.UsernameAvailabilityStatus
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.repository.DomainRepository
@@ -207,6 +208,6 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         // THEN
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(HttpApiStatus.http2xx, dataSlot.captured.Labels.status)
+        assertEquals(UsernameAvailabilityStatus.http2xx, dataSlot.captured.Labels.status)
     }
 }

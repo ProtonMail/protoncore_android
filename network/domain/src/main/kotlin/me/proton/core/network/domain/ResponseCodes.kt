@@ -35,6 +35,7 @@ object ResponseCodes {
     const val DEVICE_VERIFICATION_REQUIRED = 9002 // new error code for device verification
     const val USER_CREATE_NAME_INVALID = 12_081
     const val USER_CREATE_TOKEN_INVALID = 12_087
+    const val USER_EXISTS_USERNAME_ALREADY_USED = 12_106
     const val PAYMENTS_SUBSCRIPTION_NOT_EXISTS = 22_110
 
     val FORCE_UPDATE = listOf(APP_VERSION_BAD, API_VERSION_INVALID)

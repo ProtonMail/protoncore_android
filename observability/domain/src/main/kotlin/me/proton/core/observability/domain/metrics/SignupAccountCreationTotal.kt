@@ -21,8 +21,6 @@ package me.proton.core.observability.domain.metrics
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_BAD_REQUEST
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_CONFLICT
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNAUTHORIZED
@@ -32,6 +30,7 @@ import me.proton.core.network.domain.hasProtonErrorCode
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.isHttpError
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
@@ -88,9 +87,6 @@ private fun Result<*>.isHvRequiredError(): Boolean = isHttpError(HTTP_UNPROCESSA
 
 private fun Result<*>.isUsernameConflictError(): Boolean = isHttpError(HTTP_CONFLICT) &&
         exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.NOT_ALLOWED) == true
-
-private fun Result<*>.isHttpError(httpCode: Int): Boolean =
-    ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)?.httpCode == httpCode
 
 private fun HttpApiStatus.toAccountCreationApiStatus(): SignupAccountCreationTotal.ApiStatus =
     when (this) {

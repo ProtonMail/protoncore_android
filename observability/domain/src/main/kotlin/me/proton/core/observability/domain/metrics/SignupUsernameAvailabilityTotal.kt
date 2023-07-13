@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,17 +22,17 @@ import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.observability.domain.metrics.common.UsernameAvailabilityLabels
+import me.proton.core.observability.domain.metrics.common.UsernameAvailabilityStatus
+import me.proton.core.observability.domain.metrics.common.toUsernameAvailabilityStatus
 
 @Serializable
 @Schema(description = "Checking for username availability during the signup.")
 @SchemaId("https://proton.me/android_core_signup_usernameAvailability_total_v2.schema.json")
 public data class SignupUsernameAvailabilityTotal(
-    override val Labels: HttpStatusLabels,
+    override val Labels: UsernameAvailabilityLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
-    public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
-    public constructor(result: Result<*>) : this(result.toHttpApiStatus())
+    public constructor(status: UsernameAvailabilityStatus) : this(UsernameAvailabilityLabels(status))
+    public constructor(result: Result<*>) : this(result.toUsernameAvailabilityStatus())
 }
