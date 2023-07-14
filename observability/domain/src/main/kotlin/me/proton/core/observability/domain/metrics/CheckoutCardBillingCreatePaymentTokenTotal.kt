@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,17 +22,17 @@ import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.observability.domain.metrics.common.CreatePaymentTokenLabels
+import me.proton.core.observability.domain.metrics.common.CreatePaymentTokenStatus
+import me.proton.core.observability.domain.metrics.common.toCreatePaymentTokenStatus
 
 @Serializable
 @Schema(description = "Creating payment token for Card billing.")
 @SchemaId("https://proton.me/android_core_checkout_cardBilling_createPaymentToken_total_v2.schema.json")
 public data class CheckoutCardBillingCreatePaymentTokenTotal(
-    override val Labels: HttpStatusLabels,
+    override val Labels: CreatePaymentTokenLabels,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
-    public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
-    public constructor(result: Result<*>) : this(result.toHttpApiStatus())
+    public constructor(status: CreatePaymentTokenStatus) : this(CreatePaymentTokenLabels(status))
+    public constructor(result: Result<*>) : this(result.toCreatePaymentTokenStatus())
 }

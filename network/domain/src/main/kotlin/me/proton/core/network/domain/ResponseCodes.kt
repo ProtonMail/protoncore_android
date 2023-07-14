@@ -23,11 +23,17 @@ package me.proton.core.network.domain
  */
 object ResponseCodes {
     const val OK = 1000
+    const val INVALID_REQUIREMENTS = 2000
+    const val INVALID_VALUE = 2001
+    const val VALUE_OUT_OF_BOUNDS = 2003
+    const val NOT_SAME_AS_FIELD = 2010
     const val NOT_ALLOWED = 2011
+    const val CURRENCY_FORMAT = 2053
     const val NOT_EXISTS = 2501
     const val APP_VERSION_BAD = 5003
     const val API_VERSION_INVALID = 5005
     const val APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS = 5099
+    const val BODY_PARSE_FAILURE = 6001
     const val PASSWORD_WRONG = 8002
     const val AUTH_SWITCH_TO_SSO = 8100
     const val AUTH_SWITCH_TO_SRP = 8101
