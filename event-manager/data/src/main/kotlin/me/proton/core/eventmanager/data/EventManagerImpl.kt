@@ -323,7 +323,10 @@ class EventManagerImpl @AssistedInject constructor(
                     }
                     when (update) {
                         null -> Action.None
-                        else -> Action.Enqueue.also { eventMetadataRepository.update(update) }
+                        else -> runCatching { eventMetadataRepository.update(update) }.fold(
+                            onSuccess = { Action.Enqueue },
+                            onFailure = { Action.None }
+                        )
                     }
                 }
             }

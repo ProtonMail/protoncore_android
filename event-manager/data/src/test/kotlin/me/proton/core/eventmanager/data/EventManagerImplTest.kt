@@ -18,6 +18,7 @@
 
 package me.proton.core.eventmanager.data
 
+import android.database.SQLException
 import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coInvoke
@@ -561,6 +562,40 @@ class EventManagerImplTest {
         coVerify(ordering = Ordering.ORDERED) {
             userEventListener.onResetAll(user1Config)
             userEventListener.onComplete(user1Config)
+        }
+    }
+
+    @Test
+    fun getNextActionUpdateThrowExceptionThenNoEnqueue() = runTest {
+        // GIVEN
+        // Second eventMetadataRepository.update call, during getNextAction, will throw Exception.
+        var call = 0
+        coEvery { eventMetadataRepository.update(any()) } answers {
+            if (call++ == 0) Unit else throw SQLException("Error")
+        }
+        // WHEN
+        user1Manager.process()
+        // THEN
+        coVerify(exactly = 1) { userEventListener.inTransaction(any()) }
+        coVerify(exactly = 1) { contactEventListener.inTransaction(any()) }
+        coVerify(ordering = Ordering.ORDERED) {
+            userEventListener.onPrepare(user1Config, any())
+            userEventListener.onUpdate(user1Config, any())
+            userEventListener.onSuccess(user1Config)
+            userEventListener.onComplete(user1Config)
+        }
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Persisted)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyPrepare)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyEvents)
+            eventMetadataRepository.updateState(user1Config, any(), State.Success)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifySuccess)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyComplete)
+            eventMetadataRepository.updateState(user1Config, any(), State.Completed)
+        }
+        coVerify(exactly = 0) {
+            eventWorkerManager.enqueue(any(), any())
         }
     }
 }
