@@ -83,8 +83,8 @@ class AndroidKeyStoreCrypto internal constructor(
 
     internal fun initKey(): Key? {
         val keyStore = keyStoreFactory.invoke().apply { load(null) }
-        val key = getKeyOrRetryOrNull(keyStore) ?: generateNewKey(keyStore)
-        return if (isUsableKey(key)) key else null
+        val key = getKeyOrRetryOrNull(keyStore) ?: generateKeyOrRetryOrNull(keyStore)
+        return if (key != null && isUsableKey(key)) key else null
     }
 
     internal fun getKey(keyStore: KeyStore): Key? = when {
@@ -94,6 +94,10 @@ class AndroidKeyStoreCrypto internal constructor(
 
     internal fun getKeyOrRetryOrNull(keyStore: KeyStore): Key? {
         return runCatching { runOrRetryOnce(LogTag.KEYSTORE_INIT_RETRY) { getKey(keyStore) } }.getOrNull()
+    }
+
+    internal fun generateKeyOrRetryOrNull(keyStore: KeyStore): Key? {
+        return runCatching { runOrRetryOnce(LogTag.KEYSTORE_INIT_RETRY) { generateNewKey(keyStore) } }.getOrNull()
     }
 
     internal fun generateNewKey(keyStore: KeyStore): Key {
