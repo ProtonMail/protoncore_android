@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,6 +27,12 @@ import me.proton.core.test.android.robots.payments.PaymentRobot
 public class GoogleIAPRobot : PaymentRobot() {
 
     public inline fun <reified T> payWithGPay(): T = clickElement(R.id.gPayButton)
+
+    public inline fun <reified T> redeemExistingPurchase(): T {
+        view.withText(R.string.payments_giap_unredeemed_confirm)
+            .click()
+        return T::class.java.newInstance()
+    }
 
     @Suppress("FINAL_UPPER_BOUND")
     public fun <V : Verify> verify(block: Verify.() -> Unit): Verify = Verify().apply(block)

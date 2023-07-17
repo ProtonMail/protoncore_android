@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -20,20 +20,25 @@ package me.proton.core.paymentiap.presentation.viewmodel
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.Purchase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
+import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -59,7 +64,8 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     private fun createViewModel() = BillingIAPViewModel(
         billingRepository,
         findUnacknowledgedGooglePurchase,
-        observabilityManager
+        observabilityManager,
+        mockk(relaxed = true)
     )
 
     @Test
@@ -85,7 +91,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested.queryProductDetails("test-plan-name").join()
 
         // WHEN
-        tested.makePurchase(mockk(), "customer-id").join()
+        tested.makePurchase(mockk(), mockk()).join()
 
         // THEN
         verify { observabilityManager.enqueue(any<CheckoutGiapBillingUnredeemedTotalV1>(), any()) }
@@ -108,7 +114,10 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         // THEN
         val dataSlot = slot<CheckoutGiapBillingPurchaseTotal>()
         verify { observabilityManager.enqueue(capture(dataSlot), any()) }
-        assertEquals(GiapStatus.developerError, dataSlot.captured.Labels.status)
+        assertEquals(
+            CheckoutGiapBillingPurchaseTotal.PurchaseStatus.developerError,
+            dataSlot.captured.Labels.status
+        )
     }
 
     @Test
@@ -141,6 +150,59 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         assertEquals(
             BillingIAPViewModel.State.Error.ProductDetailsError.ResponseCode,
             tested.billingIAPState.value
+        )
+    }
+
+    @Test
+    fun `customerId is not matching`() = coroutinesTest {
+        // GIVEN
+        val googleProductId = "google-product"
+        val purchaseUpdatedFlow = MutableSharedFlow<Pair<BillingResult, List<Purchase>?>>()
+        every { billingRepository.purchaseUpdated } returns purchaseUpdatedFlow
+        coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
+        coEvery { billingRepository.getProductDetails(any()) } returns mockk {
+            every { productId } returns googleProductId
+        }
+
+        tested = createViewModel()
+        tested.queryProductDetails(googleProductId).join()
+
+        // WHEN
+        val billingInput = mockk<BillingInput> {
+            every { plan } returns mockk {
+                every { vendors } returns mapOf(
+                    AppStore.GooglePlay to PaymentVendorDetails(
+                        customerId = "customerId",
+                        vendorPlanName = googleProductId
+                    )
+                )
+            }
+        }
+        tested.makePurchase(mockk(), billingInput).join()
+
+        purchaseUpdatedFlow.emit(
+            BillingResult.newBuilder()
+                .setResponseCode(BillingClient.BillingResponseCode.OK)
+                .build() to listOf(mockk {
+                every { accountIdentifiers } returns mockk {
+                    every { obfuscatedAccountId } returns "" // empty clientId
+                }
+                every { products } returns listOf(googleProductId)
+                every { purchaseState } returns Purchase.PurchaseState.PURCHASED
+            })
+        )
+
+        // THEN
+        assertEquals(
+            BillingIAPViewModel.State.Error.ProductPurchaseError.IncorrectCustomerId,
+            tested.billingIAPState.value
+        )
+
+        val dataSlot = slot<CheckoutGiapBillingPurchaseTotal>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertEquals(
+            CheckoutGiapBillingPurchaseTotal.PurchaseStatus.incorrectCustomerId,
+            dataSlot.captured.Labels.status
         )
     }
 }

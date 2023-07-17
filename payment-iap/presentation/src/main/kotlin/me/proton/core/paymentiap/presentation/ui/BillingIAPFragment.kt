@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -61,7 +61,6 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
     private val billingIAPViewModel by viewModels<BillingIAPViewModel>()
     private val binding by viewBinding(FragmentBillingIapBinding::bind)
 
-    private var billingInput: BillingInput? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -119,7 +118,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                         viewModel.setGPayButtonState(true)
                     }
                     is BillingIAPViewModel.State.Success.PurchaseSuccess -> {
-                        onPurchaseSuccess(it.productId, it.purchaseToken, it.orderID, it.customerId)
+                        onPurchaseSuccess(it.productId, it.purchaseToken, it.orderID, it.customerId, it.billingInput)
                     }
                     is BillingIAPViewModel.State.Error.ProductPurchaseError.Message -> {
                         onError(it.error ?: R.string.payments_iap_general_error)
@@ -130,6 +129,10 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     is BillingIAPViewModel.State.Error.ProductPurchaseError.ItemAlreadyOwned -> {
                         CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_already_owned))
                         onError(R.string.payments_iap_error_already_owned)
+                    }
+                    is BillingIAPViewModel.State.Error.ProductPurchaseError.IncorrectCustomerId -> {
+                        CoreLogger.i(DEFAULT, "Customer ID is incorrect.")
+                        onError(R.string.payments_iap_general_error)
                     }
                 }.exhaustive
             }.launchIn(lifecycleScope)
@@ -148,21 +151,17 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
     }
 
     private fun onPay(input: BillingInput) {
-        this.billingInput = input
-        val customerId = requireNotNull(input.plan.vendors[AppStore.GooglePlay]?.customerId) {
-            "Missing Vendor data for Google Play."
-        }
-        billingIAPViewModel.makePurchase(requireActivity(), customerId = customerId)
+        billingIAPViewModel.makePurchase(requireActivity(), input)
     }
 
     private fun onPurchaseSuccess(
         productId: String,
         purchaseToken: GooglePurchaseToken,
         orderId: String,
-        customerId: String
+        customerId: String,
+        billingInput: BillingInput
     ) {
-        requireNotNull(billingInput)
-        billingInput?.let {
+        billingInput.let {
             viewModel.subscribe(
                 userId = it.user,
                 planNames = it.existingPlans.buildPlansList(it.plan.name, it.plan.services, it.plan.type),

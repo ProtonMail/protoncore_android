@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -23,8 +23,11 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.Purchase
 import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
+import io.mockk.mockk
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
@@ -34,6 +37,7 @@ import me.proton.core.plan.presentation.ui.UpgradeActivity
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
+import me.proton.core.test.android.mocks.mockQueryPurchasesAsync
 import me.proton.core.test.android.mocks.mockStartConnection
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
@@ -222,6 +226,70 @@ class SignupWithGoogleIapTests : BaseMockTest {
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
             .skipConfirm<SignupFinishedRobot>()
+            .verify {
+                signupFinishedDisplayed()
+            }
+    }
+
+    @Test
+    fun signUpAndSubscribeUnredeemedGiap() {
+        billingClientFactory.mockBillingClientSuccess()
+        billingClientFactory.billingClient.mockQueryPurchasesAsync(BillingResponseCode.OK, listOf(
+            mockk {
+                every { accountIdentifiers } returns mockk {
+                    // Note: the `obfuscatedAccountId` is different than
+                    // the `customerId` that is returned from `payments/v4/plans.json`.
+                    every { obfuscatedAccountId } returns "cus_google_1"
+                }
+                every { purchaseState } returns Purchase.PurchaseState.PURCHASED
+                every { isAcknowledged } returns false // <- Note: unacknowledged
+                every { orderId } returns "order-id"
+                every { products } returns listOf("googlemail_mail2022_12_renewing")
+                every { purchaseTime } returns 0
+                every { purchaseToken } returns "google-purchase-token"
+            }
+        ))
+
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/domains/available",
+            "GET/core/v4/domains/available.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-iap-only.json"
+        )
+        dispatcher.mockFromAssets(
+            "POST", "/payments/v4/subscription",
+            "POST/payments/v4/subscription-mail-plus-google-managed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/users",
+            "GET/core/v4/users-with-keys-subscribed.json"
+        )
+        dispatcher.mockFromAssets(
+            "GET", "/core/v4/addresses",
+            "GET/core/v4/addresses-with-keys.json"
+        )
+
+        ActivityScenario.launch(AddAccountActivity::class.java)
+        AddAccountRobot()
+            .createAccount()
+            .chooseInternalEmail()
+            .setUsername(testUsername)
+            .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
+            .skip()
+            .skipConfirm<SelectPlanRobot>()
+            .toggleExpandPlan(TestPlan.MailPlus)
+            .selectPlan<GoogleIAPRobot>(TestPlan.MailPlus)
+            .apply {
+                verify<GoogleIAPRobot.Verify> {
+                    payWithGoogleButtonIsClickable()
+                    payWithCardButtonIsNotVisible()
+                    switchPaymentProviderButtonIsNotVisible()
+                }
+            }
+            .payWithGPay<GoogleIAPRobot>()
+            .redeemExistingPurchase<SignupFinishedRobot>()
             .verify {
                 signupFinishedDisplayed()
             }

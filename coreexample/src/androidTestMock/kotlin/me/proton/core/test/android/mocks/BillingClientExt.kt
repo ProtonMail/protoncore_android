@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -36,7 +36,7 @@ import io.mockk.mockk
 internal fun BillingClient.mockBillingClientSuccess(listeners: () -> List<PurchasesUpdatedListener>) {
     val purchases = listOf(mockk<Purchase> {
         every { accountIdentifiers } returns mockk {
-            every { obfuscatedAccountId } returns "obfuscated-acc-id"
+            every { obfuscatedAccountId } returns "cus_google_QTqe7W-dkfX09qtIy7Mb"
         }
         every { isAcknowledged } returns true
         every { orderId } returns "order-id"
