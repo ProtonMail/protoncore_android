@@ -475,6 +475,130 @@
                         "axisPlacement": "auto",
                         "barAlignment": 0,
                         "drawStyle": "line",
+                        "fillOpacity": 10,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 17
+            },
+            "id": 41,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_usernameAvailability_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "Successes",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_usernameAvailability_total{status!=\"http2xx\", status!=\"http409UsernameConflict\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "Failures",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$A / ($A + $B) * 100",
+                    "hide": false,
+                    "refId": "Availability",
+                    "type": "math"
+                }
+            ],
+            "title": "Is username available - availability/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
                         "fillOpacity": 0,
                         "gradientMode": "none",
                         "hideFrom": {
@@ -549,22 +673,9 @@
                     "legendFormat": "username {{status}}",
                     "range": true,
                     "refId": "username availability"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_signup_emailAvailability_total{status=\"http2xx\"}[$increase_interval]))",
-                    "hide": false,
-                    "interval": "$increase_interval",
-                    "legendFormat": "email {{status}}",
-                    "range": true,
-                    "refId": "email availability"
                 }
             ],
-            "title": "Is username/email available - successes/$increase_interval",
+            "title": "Is username available - successes/$increase_interval",
             "type": "timeseries"
         },
         {
@@ -658,7 +769,189 @@
                     "legendFormat": "username {{status}}",
                     "range": true,
                     "refId": "username availability"
+                }
+            ],
+            "title": "Is username available - failures/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
                 },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 25
+            },
+            "id": 38,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(status) (increase(client_android_core_signup_emailAvailability_total{status=\"http2xx\"}[$increase_interval]))",
+                    "hide": false,
+                    "interval": "$increase_interval",
+                    "legendFormat": "email {{status}}",
+                    "range": true,
+                    "refId": "email availability"
+                }
+            ],
+            "title": "Is email available - successes/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 25
+            },
+            "id": 39,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
                 {
                     "datasource": {
                         "type": "prometheus",
@@ -673,7 +966,7 @@
                     "refId": "email availability"
                 }
             ],
-            "title": "Is username/email available - failures/$increase_interval",
+            "title": "Is email available - failures/$increase_interval",
             "type": "timeseries"
         },
         {
@@ -682,7 +975,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 25
+                "y": 33
             },
             "id": 16,
             "panels": [
@@ -758,7 +1051,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 26
+                "y": 34
             },
             "id": 34,
             "options": {
@@ -879,7 +1172,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 26
+                "y": 34
             },
             "id": 18,
             "options": {
@@ -975,7 +1268,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 26
+                "y": 34
             },
             "id": 20,
             "options": {
@@ -1072,7 +1365,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 34
+                "y": 42
             },
             "id": 36,
             "options": {
@@ -1192,7 +1485,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 34
+                "y": 42
             },
             "id": 22,
             "options": {
@@ -1288,7 +1581,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 34
+                "y": 42
             },
             "id": 24,
             "options": {
@@ -1384,7 +1677,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 42
+                "y": 50
             },
             "id": 26,
             "options": {
@@ -1481,7 +1774,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 6,
-                "y": 42
+                "y": 50
             },
             "id": 28,
             "options": {
@@ -1577,7 +1870,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 12,
-                "y": 42
+                "y": 50
             },
             "id": 30,
             "options": {
@@ -1673,7 +1966,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 18,
-                "y": 42
+                "y": 50
             },
             "id": 32,
             "options": {
@@ -1797,8 +2090,8 @@
     "timepicker": {
     },
     "timezone": "",
-    "title": "Android / Sign up",
+    "title": "Android / Sign-up",
     "uid": "nccm8bJVk",
-    "version": 3,
+    "version": 6,
     "weekStart": ""
 }

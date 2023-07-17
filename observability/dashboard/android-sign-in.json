@@ -1839,7 +1839,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum(increase(client_android_core_login_eaToIaUsernameAvailability_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_eaToIaUsernameAvailability_total{status!=\"http2xx\",status!=\"http409UsernameConflict\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
@@ -2419,8 +2419,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2541,8 +2540,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2638,8 +2636,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2779,8 +2776,8 @@
     "timepicker": {
     },
     "timezone": "",
-    "title": "Android / Sign in",
+    "title": "Android / Sign-in",
     "uid": "MSUvfY-Vz",
-    "version": 10,
+    "version": 12,
     "weekStart": ""
 }
