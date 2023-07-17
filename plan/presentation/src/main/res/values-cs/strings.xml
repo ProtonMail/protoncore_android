@@ -145,7 +145,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Podpora pro více uživatelů</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Rodina</string>
+  <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Zabezpečený e-mail s pokročilými funkcemi pro každodenní komunikaci.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Vaše soukromí a bezpečnost jsou pro nás prioritou.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Bezpečné kloudové úložiště, které vám umožňuje uchovávat, synchronizovat a sdílet soubory jednoduše a bezpečně.</string>

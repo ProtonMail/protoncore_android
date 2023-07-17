@@ -18,5 +18,5 @@
   -->
 <resources>
   <string name="core_notification_account_channel_name">Обліковий запис</string>
-  <string name="core_notification_rationale">Ввімкніть сповіщення, щоб ми могли допомогти відновити ваш обліковий запис.</string>
+  <string name="core_notification_rationale">Увімкніть сповіщення, щоб ми могли допомогти відновити ваш обліковий запис.</string>
 </resources>

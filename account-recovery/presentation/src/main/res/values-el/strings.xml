@@ -18,13 +18,13 @@
   -->
 <resources>
   <string name="account_recovery_grace_started_title">Ξεκίνησε η περίοδος χάριτος</string>
-  <string name="account_recovery_grace_started_subtitle">Η περίοδος χάριτος ανάκτησης του λογαριασμού σας έχει ξεκινήσει και συνεχίζεται.</string>
+  <string name="account_recovery_grace_started_subtitle">Η περίοδος χάριτος για ανάκτηση του λογαριασμού σας ξεκίνησε να μετράει αντίστροφα.</string>
   <string name="account_recovery_cancelled_title">Η ανάκτηση λογαριασμού ακυρώθηκε</string>
   <string name="account_recovery_cancelled_subtitle">Η διαδικασία ανάκτησης του λογαριασμού σας ακυρώθηκε.</string>
-  <string name="account_recovery_password_started_title">Ο κωδικός πρόσβασης ανάκτησης λογαριασμού μπορεί να αλλάξει</string>
+  <string name="account_recovery_password_started_title">Ο κωδικός ανάκτησης λογαριασμού μπορεί να αλλάξει</string>
   <string name="account_recovery_password_started_subtitle">Η περίοδος αλλαγής κωδικού πρόσβασης ανάκτησης λογαριασμού έχει ξεκινήσει. Τώρα μπορείτε να αλλάξετε τον κωδικό πρόσβασής σας.</string>
-  <string name="account_recovery_window_ended_title">Το παράθυρο ανάκτησης λογαριασμού έληξε</string>
-  <string name="account_recovery_window_ended_subtitle">Το παράθυρο ανάκτησης λογαριασμού έχει λήξει.</string>
+  <string name="account_recovery_window_ended_title">Λήξη περιόδου ανάκτησης λογαριασμού</string>
+  <string name="account_recovery_window_ended_subtitle">Το περιθώριο ανάκτησης του λογαριασμού σας έχει εκπνεύσει.</string>
   <string name="account_recovery_cancel">Ακύρωση ανάκτησης</string>
   <string name="account_recovery_password_label">Εισαγάγετε τον κωδικό πρόσβασης για ακύρωση</string>
   <string name="account_recovery_password_placeholder">Κωδικός πρόσβασης</string>

@@ -103,7 +103,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">支持多用户</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">家庭</string>
+  <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">包含多种高级功能的安全邮箱，充分满足您的日常通讯需求。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隐私和安全是我们的首要任务。</string>
   <string name="plan_id_drive2022_header" comment="new_plans">安全的云存储，让您轻松安全地存储、同步和共享文件。</string>

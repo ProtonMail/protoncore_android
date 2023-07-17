@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">Anmeldedaten müssen eingegeben werden.</string>
   <string name="auth_mailbox_empty_credentials">Anmeldedaten müssen eingegeben werden.</string>
   <string name="auth_create_address_title">Proton-Adresse erforderlich</string>
-  <string name="auth_create_address_subtitle">%1$s wird als deine Wiederherstellungsadresse eingestellt. Zur Sicherung deiner Daten ist eine Proton-Adresse erforderlich. Du kannst dich weiterhin mit %2$s anmelden.</string>
+  <string name="auth_create_address_subtitle">Du benötigst eine Proton E-Mail-Adresse, um Proton Mail und Proton Calendar nutzen zu können. Du kannst dich weiterhin mit %1$s anmelden und dein Konto wiederherstellen.</string>
   <string name="auth_username">Benutzername</string>
   <string name="auth_username_next_action">Fortfahren</string>
   <string name="auth_create_address_result_title">%s ist verfügbar</string>
@@ -120,9 +120,9 @@
   <string name="auth_signup_recovery_method_subtitle">Wir senden dir Anweisungen zur Wiederherstellung an diese E-Mail-Adresse oder Telefonnummer, wenn du von deinem Konto ausgesperrt wurdest.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">Falls du von deinem Konto ausgesperrt wirst, senden wir dir Anweisungen zur Wiederherstellung an diese E-Mail-Adresse oder Telefonnummer.</string>
   <string name="auth_signup_recovery_method_email">E-Mail-Adresse</string>
-  <string name="auth_signup_recovery_method_phone">Rufnummer</string>
+  <string name="auth_signup_recovery_method_phone">Telefonnummer</string>
   <string name="auth_signup_recovery_method_email_hint">E-Mail-Adresse für die Wiederherstellung</string>
-  <string name="auth_signup_recovery_method_phone_hint">Rufnummer für die Wiederherstellung</string>
+  <string name="auth_signup_recovery_method_phone_hint">Telefonnummer für die Wiederherstellung</string>
   <string name="auth_signup_terms_conditions">Allgemeine Geschäftsbedingungen</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Indem du auf „Weiter“ klickst, erklärst du dich mit den <annotation link="terms">Nutzungsbedingungen</annotation> von Proton einverstanden.</string>
   <string name="auth_signup_skip_recovery_title">Wiederherstellungsmethode überspringen?</string>

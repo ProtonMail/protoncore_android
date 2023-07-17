@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
-  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
+  <string name="account_recovery_grace_started_title">Masa tenggang dimulai</string>
+  <string name="account_recovery_grace_started_subtitle">Masa tenggang pemulihan akun Anda telah dimulai dan sedang berjalan.</string>
+  <string name="account_recovery_cancelled_title">Pemulihan akun dibatalkan</string>
+  <string name="account_recovery_cancelled_subtitle">Proses pemulihan akun Anda telah dibatalkan.</string>
+  <string name="account_recovery_password_started_title">Kata sandi pemulihan akun dapat diubah</string>
+  <string name="account_recovery_password_started_subtitle">Masa tenggang perubahan kata sandi untuk akun Anda telah dimulai. Anda kini dapat mengubah kata sandi Anda.</string>
   <string name="account_recovery_window_ended_title">Rentang waktu pemulihan akun telah berakhir</string>
   <string name="account_recovery_window_ended_subtitle">Rentang waktu pemulihan akun Anda telah berakhir.</string>
   <string name="account_recovery_cancel">Batalkan pemulihan</string>

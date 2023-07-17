@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
-  <string name="payments_iap_terms_conditions">“Google Pay で購入” をタップすることで Google Pay の利用規約に同意し、Google による定期購入が有効になります。</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
-  <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
+  <string name="payments_iap_surcharge_info">* 追加プロバイダー料金および税金が含まれます。</string>
+  <string name="payments_iap_terms_conditions">「Google Payで購入」をタップすると、Google Payの利用規約に同意し、Googleとの定期的な支払いを設定することに同意したことになります。</string>
+  <string name="payments_iap_invalid_google_plan">無効なプラン名が選択されました。処理をやり直してください。</string>
+  <string name="payments_iap_error_google_plan_price">Googleの商品価格に問題があります。処理を再開してください。</string>
+  <string name="payments_iap_error_fetching_google_plan">Google製品の取得に問題があります。処理を再開してください。</string>
+  <string name="payments_iap_error_already_owned">この商品はすでにお持ちです。別の商品を選択してください。</string>
   <string name="payments_iap_error_billing_client_unavailable">Google でのお支払いは現在利用できません。</string>
-  <string name="payments_iap_general_error">An error has occurred. Please restart the process.</string>
+  <string name="payments_iap_general_error">エラーが発生しました。処理を再開してください。</string>
 </resources>

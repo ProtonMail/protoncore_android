@@ -24,8 +24,8 @@
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>
-  <string name="plans_current_plan">Plano atual</string>
-  <string name="plans_upgrade_plan">Atualizar o seu plano</string>
+  <string name="plans_current_plan">Plano actual</string>
+  <string name="plans_upgrade_plan">Actualizar o seu plano</string>
   <string name="plans_subscription">Subscrição</string>
   <string name="plans_renewal_date">O seu plano será automaticamente renovado em &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">O seu plano expirará em &lt;b&gt;%s&lt;/b&gt;</string>
@@ -38,7 +38,7 @@
     <item quantity="one">Por %d mês</item>
     <item quantity="other">Por %d meses</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Atualizar o seu plano</string>
+  <string name="plans_upgrade_your_plan">Actualizar o seu plano</string>
   <string name="plans_proton_for_free">Obtenha Proton gratuitamente</string>
   <string name="plans_get_proton">Obter %s</string>
   <string name="plans_manage_your_subscription">Gere a sua subscrição em <a href="https://account.proton.me">account.proton.me</a></string>
@@ -47,7 +47,7 @@
   <string name="plans_manage_your_subscription_google">A sua subscrição é gerida pelo Google Play.</string>
   <string name="plans_manage_your_subscription_other">Não é possível gerir a sua subscrição na aplicação móvel.</string>
   <string name="plans_autorenew_subscriptions">Apenas as subscrições anuais de renovação automática estão disponíveis através desta aplicação.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Não é possível atualizar a partir da aplicação móvel.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Não é possível actualizar a partir da aplicação móvel.</string>
   <string name="plans_limited_offer">Oferta por tempo limitado</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

@@ -22,13 +22,13 @@
   <string name="settings_recovery_email_current">Endereço de e-mail de recuperação atual</string>
   <string name="settings_recovery_email_new">Novo endereço de e-mail de recuperação</string>
   <string name="settings_recovery_email_confirm">Confirme o endereço de e-mail de recuperação</string>
-  <string name="settings_recovery_email_new_hint">Insira o endereço de e-mail</string>
+  <string name="settings_recovery_email_new_hint">Digite o endereço de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Digite novamente o endereço de e-mail</string>
   <string name="settings_save">Salvar</string>
   <string name="settings_password_required">Digite sua senha de início de sessão</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Não definido</string>
-  <string name="settings_recovery_email_error_no_match">Novos e-mails de recuperação não correspondem</string>
+  <string name="settings_recovery_email_error_no_match">Os novos e-mails de recuperação não correspondem</string>
   <string name="settings_validation_email">E-mail inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->

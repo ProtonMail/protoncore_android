@@ -103,7 +103,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">多使用者支援</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">家庭</string>
+  <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">為您的日常通訊提供進階功能的安全電子郵件。</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">您的隱私與安全是我們的首要任務。</string>
   <string name="plan_id_drive2022_header" comment="new_plans">安全的雲端儲存空間，讓您輕鬆安全地儲存、同步與分享檔案。</string>

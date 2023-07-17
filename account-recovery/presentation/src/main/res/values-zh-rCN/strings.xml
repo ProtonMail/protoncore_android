@@ -17,15 +17,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
-  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
-  <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
-  <string name="account_recovery_cancel">Cancel recovery</string>
-  <string name="account_recovery_password_label">Enter password to cancel</string>
-  <string name="account_recovery_password_placeholder">Password</string>
+  <string name="account_recovery_grace_started_title">宽限期开始</string>
+  <string name="account_recovery_grace_started_subtitle">您的账户恢复宽限期已开始并持续进行。</string>
+  <string name="account_recovery_cancelled_title">账户恢复已取消</string>
+  <string name="account_recovery_cancelled_subtitle">您的账户恢复过程已被取消。</string>
+  <string name="account_recovery_password_started_title">账户恢复密码可以更改</string>
+  <string name="account_recovery_password_started_subtitle">您的账户恢复密码更改期已开始。您现在可以更改密码。</string>
+  <string name="account_recovery_window_ended_title">账户恢复窗口已结束</string>
+  <string name="account_recovery_window_ended_subtitle">您的账户恢复窗口已结束。</string>
+  <string name="account_recovery_cancel">取消恢复</string>
+  <string name="account_recovery_password_label">输入密码以取消</string>
+  <string name="account_recovery_password_placeholder">密码</string>
 </resources>

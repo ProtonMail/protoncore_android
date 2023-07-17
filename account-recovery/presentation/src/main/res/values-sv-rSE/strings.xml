@@ -18,12 +18,12 @@
   -->
 <resources>
   <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
+  <string name="account_recovery_grace_started_subtitle">Din respitperiod för kontoåterställning har påbörjats och pågår.</string>
   <string name="account_recovery_cancelled_title">Kontoåterställning avbröts</string>
   <string name="account_recovery_cancelled_subtitle">Din kontoåterställningsprocess har avbrutits.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
+  <string name="account_recovery_password_started_title">Lösenord för kontoåterställning kan ändras</string>
+  <string name="account_recovery_password_started_subtitle">Perioden för att byta lösenord för kontoåterställning har påbörjats. Du kan nu ändra ditt lösenord.</string>
+  <string name="account_recovery_window_ended_title">Perioden för kontoåterställning har avslutats</string>
   <string name="account_recovery_window_ended_subtitle">Din kontoåterställningsperiod har avslutats.</string>
   <string name="account_recovery_cancel">Avbryt återställning</string>
   <string name="account_recovery_password_label">Ange lösenord för att avbryta</string>

@@ -131,7 +131,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Suport utilizatori multipli</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Familie</string>
+  <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">E-mail securizat cu funcții avansate pentru comunicațiile personale zilnice.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Intimitatea și securitatea dvs. sunt prioritatea noastră.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Stocare sigură în cloud care permite stocarea, sincronizarea și partajarea ușoară și sigură a fișierelor.</string>

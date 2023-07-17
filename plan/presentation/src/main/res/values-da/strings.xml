@@ -117,11 +117,11 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Flerbrugerunderstøttelse</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Familie</string>
+  <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-mail med avancerede funktioner til din daglige kommunikation.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Vores topprioritet er dit privatliv og sikkerhed.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Beskyttelse af dit privatliv og din sikkerhed er vores førsteprioritet.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Sikker lagring i skyen der lader dig gemme, synkronisere og dele dine filer nemt og sikkert.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Omfattende privatliv og sikkerhed med alle Proton-tjenester kombineret.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Omfattende privatlivsbeskyttelse og sikkerhed med alle Proton-tjenester kombineret.</string>
   <string name="plan_id_pass2023_header" comment="new_plans">For avanceret adgangskodestyring og identitetsbeskyttelse.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
@@ -143,7 +143,7 @@
   <string name="integrated_2fa_authenticator">Integreret 2FA-godkendelse</string>
   <string name="multiple_vaults">Flere bokse</string>
   <string name="unlimited_email_alias">Ubegrænsede Hide My Email-aliasser</string>
-  <string name="custom_email_alias_domains">Tilpassede domæner til e-mailaliasser</string>
+  <string name="custom_email_alias_domains">Brugerdomæner til e-mailaliasser</string>
   <string name="multiple_forwarding_mailboxes">Flere postkasser til videresendelse</string>
   <string name="priority_support">Prioriteret support</string>
   <string name="one_vault">1 boks</string>

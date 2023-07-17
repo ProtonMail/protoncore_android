@@ -17,15 +17,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
-  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
+  <string name="account_recovery_grace_started_title">De respijtperiode is begonnen</string>
+  <string name="account_recovery_grace_started_subtitle">De respijtperiode voor accountherstel is gestart en loopt nog.</string>
+  <string name="account_recovery_cancelled_title">Accountherstel geannuleerd</string>
+  <string name="account_recovery_cancelled_subtitle">Uw accountherstelproces is geannuleerd.</string>
+  <string name="account_recovery_password_started_title">Het wachtwoord voor accountherstel kan worden gewijzigd</string>
+  <string name="account_recovery_password_started_subtitle">De periode voor het wijzigen van uw accountherstelwachtwoord is gestart. U kunt nu uw wachtwoord wijzigen.</string>
+  <string name="account_recovery_window_ended_title">Het tijdsvenster voor uw accountherstel is ten einde</string>
   <string name="account_recovery_window_ended_subtitle">Het tijdsvenster voor uw accountherstel is ten einde.</string>
-  <string name="account_recovery_cancel">Cancel recovery</string>
+  <string name="account_recovery_cancel">Herstel annuleren</string>
   <string name="account_recovery_password_label">Voer uw wachtwoord in om te annuleren</string>
   <string name="account_recovery_password_placeholder">Wachtwoord</string>
 </resources>

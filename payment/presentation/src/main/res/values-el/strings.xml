@@ -26,7 +26,7 @@
   <string name="payments_error_cvc">Παρακαλούμε πληκτρολογήστε ένα έγκυρο κωδικό ασφαλείας.</string>
   <string name="payments_error_session">Απαιτείται έγκυρο αναγνωριστικό περιόδου λειτουργίας κατά την εγγραφή ενός συνδεδεμένου χρήστη.</string>
   <string name="payments_error_signup_paymentmethod">Δεν ήταν δυνατή η εγγραφή με τον υπάρχοντα τρόπο πληρωμής.</string>
-  <string name="payments_error_invalid_session">Μη έγκυρη συνεδρία</string>
+  <string name="payments_error_invalid_session">Μη έγκυρη συνεδρία.</string>
   <string name="payments_no_payment_provider">Δεν βρέθηκε ενεργός πάροχος πληρωμών.</string>
   <!-- endregion -->
   <!-- region payment options -->

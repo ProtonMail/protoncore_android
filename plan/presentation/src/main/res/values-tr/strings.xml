@@ -144,7 +144,7 @@
   <string name="multiple_vaults">Birden çok kasa</string>
   <string name="unlimited_email_alias">Sınırsız Hide My Email takma adı</string>
   <string name="custom_email_alias_domains">E-posta takma adları için özel etki alanları</string>
-  <string name="multiple_forwarding_mailboxes">Çok sayıda iletici e-posta kutusu</string>
+  <string name="multiple_forwarding_mailboxes">Çok sayıda iletme e-posta kutusu</string>
   <string name="priority_support">Öncelikli destek</string>
   <string name="one_vault">1 kasa</string>
   <string name="ten_hide_my_email_aliases">10 Hide My Email takma adı</string>

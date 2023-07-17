@@ -17,15 +17,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
-  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
-  <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
-  <string name="account_recovery_cancel">Cancel recovery</string>
-  <string name="account_recovery_password_label">Enter password to cancel</string>
-  <string name="account_recovery_password_placeholder">Password</string>
+  <string name="account_recovery_grace_started_title">Начался льготный период</string>
+  <string name="account_recovery_grace_started_subtitle">Льготный период восстановления вашей учетной записи начался и продолжается.</string>
+  <string name="account_recovery_cancelled_title">Восстановление учетной записи отменено</string>
+  <string name="account_recovery_cancelled_subtitle">Процесс восстановления вашей учетной записи был отменен.</string>
+  <string name="account_recovery_password_started_title">Пароль для восстановления учетной записи может быть изменен</string>
+  <string name="account_recovery_password_started_subtitle">Начался период смены пароля для восстановления вашей учетной записи. Теперь вы можете изменить свой пароль.</string>
+  <string name="account_recovery_window_ended_title">Окно восстановления учетной записи завершено</string>
+  <string name="account_recovery_window_ended_subtitle">Окно восстановления вашей учетной записи завершено.</string>
+  <string name="account_recovery_cancel">Отменить восстановление</string>
+  <string name="account_recovery_password_label">Введите пароль для отмены</string>
+  <string name="account_recovery_password_placeholder">Пароль</string>
 </resources>

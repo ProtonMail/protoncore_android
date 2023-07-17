@@ -26,6 +26,6 @@
   <string name="account_recovery_window_ended_title">Account recovery window ended</string>
   <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
   <string name="account_recovery_cancel">Cancel recovery</string>
-  <string name="account_recovery_password_label">Enter password to cancel</string>
-  <string name="account_recovery_password_placeholder">Password</string>
+  <string name="account_recovery_password_label">Zadejte heslo pro zrušení</string>
+  <string name="account_recovery_password_placeholder">Heslo</string>
 </resources>

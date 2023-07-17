@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_mailbox_empty_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_title">Alamat Proton dibutuhkan</string>
-  <string name="auth_create_address_subtitle">Alamat pemulihan Anda akan ditetapkan ke %1$s. Untuk mengamankan data Anda, Anda membutuhkan alamat Proton. Anda masih akan dapat masuk dengan %2$s.</string>
+  <string name="auth_create_address_subtitle">You need a Proton email address to use Proton Mail and Proton Calendar. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
   <string name="auth_username">Nama pengguna</string>
   <string name="auth_username_next_action">Lanjutkan</string>
   <string name="auth_create_address_result_title">%s tersedia</string>

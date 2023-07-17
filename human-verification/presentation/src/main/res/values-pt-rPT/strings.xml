@@ -54,5 +54,5 @@
   <string name="human_verification_captcha_failed">Falha na verificação CAPTCHA. Tente mais uma vez ou escolha outra opção de verificação.</string>
   <string name="human_verification_captcha_no_connectivity">Sem ligação. Não é possível carregar o CAPTCHA.</string>
   <string name="human_verification_action_retry">Tentar novamente</string>
-  <string name="human_verification_method_loading_failed">Não foi possível carregar o método de verificação atual. Se o problema persistir, tente um dos outros métodos, se estiverem disponíveis, ou consulte o ecrã de Ajuda.</string>
+  <string name="human_verification_method_loading_failed">Não foi possível carregar o método de verificação actual. Se o problema persistir, tente um dos outros métodos, se estiverem disponíveis, ou consulte o ecrã de Ajuda.</string>
 </resources>

@@ -27,9 +27,9 @@
   <string name="welcome_subtitle_calendar_alt">Vores end-to-end-krypterede kalender hjælper dig med at holde dig organiseret, på sporet og have kontrol.</string>
   <string name="welcome_subtitle_vpn">Højhastigheds, schweizisk VPN, der beskytter dit privatliv ved at kryptere din internetforbindelse.</string>
   <string name="welcome_subtitle_vpn_alt">Højhastigheds schweizisk VPN, der beskytter dit privatliv. Maksimal sikkerhed, 1.600+ servere og ingen begrænsninger.</string>
-  <string name="welcome_subtitle_pass">Alle dine adgangskoder. Sikkert gemt ét sted og beskyttet af det mest betroede navn inden for privatliv.</string>
-  <string name="welcome_subtitle_pass_alt">Alle dine adgangskoder. Sikkert gemt ét sted og beskyttet af det mest betroede navn inden for privatliv.</string>
-  <string name="welcome_privacy_by_default">Fortrolighed som standard</string>
+  <string name="welcome_subtitle_pass">Alle dine adgangskoder. Sikkert gemt ét sted og beskyttet af det mest betroede navn inden for privatlivsbeskyttelse.</string>
+  <string name="welcome_subtitle_pass_alt">Alle dine adgangskoder. Sikkert gemt ét sted og beskyttet af det mest betroede navn inden for privatlivsbeskyttelse.</string>
+  <string name="welcome_privacy_by_default">Privatlivsbeskyttelse som standard</string>
   <string name="auth_password_label">Adgangskode</string>
   <string name="auth_password_help">Adgangskode skal indeholde mindst 8 tegn</string>
   <string name="auth_current_login_password">Nuværende login-adgangskode</string>
@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
   <string name="auth_mailbox_empty_credentials">Brugeroplysninger må ikke være tomme.</string>
   <string name="auth_create_address_title">Proton-adresse påkrævet</string>
-  <string name="auth_create_address_subtitle">Din gendannelses-adresse vil blive sat til %1$s. For at sikre dine data er en Proton-adresse stadig påkrævet. Du vil stadig kunne logge ind med %2$s.</string>
+  <string name="auth_create_address_subtitle">You need a Proton email address to use Proton Mail and Proton Calendar. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
   <string name="auth_username">Brugernavn</string>
   <string name="auth_username_next_action">Fortsæt</string>
   <string name="auth_create_address_result_title">%s er tilgængelig</string>

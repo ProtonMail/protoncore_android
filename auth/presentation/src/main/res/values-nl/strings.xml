@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_mailbox_empty_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_create_address_title">Proton-adres vereist</string>
-  <string name="auth_create_address_subtitle">Uw hersteladres is %1$s. Om uw data te beveiligen is een Protonadres vereist. U kunt dan nog steeds inloggen met %2$s.</string>
+  <string name="auth_create_address_subtitle">U hebt een Proton e-mailadres nodig om Proton Mail en Proton Calendar te gebruiken. U zult nog steeds in staat zijn om %1$s te gebruiken om in te loggen en uw account te herstellen.</string>
   <string name="auth_username">Gebruikersnaam</string>
   <string name="auth_username_next_action">Doorgaan</string>
   <string name="auth_create_address_result_title">%s is beschikbaar</string>

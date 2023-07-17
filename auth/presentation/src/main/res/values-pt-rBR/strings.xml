@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">As credenciais não deveriam estar vazias.</string>
   <string name="auth_mailbox_empty_credentials">As credenciais não deveriam estar vazias.</string>
   <string name="auth_create_address_title">Endereço da Proton obrigatório</string>
-  <string name="auth_create_address_subtitle">Seu endereço de recuperação será %1$s. Para proteger seus dados, é necessário um endereço da Proton. Você ainda poderá entrar com %2$s.</string>
+  <string name="auth_create_address_subtitle">Você precisa de um endereço de e-mail Proton para usar o Proton Mail e o Proton Calendar. Você ainda poderá usar %1$s para fazer login e recuperar sua conta.</string>
   <string name="auth_username">Nome de usuário</string>
   <string name="auth_username_next_action">Continuar</string>
   <string name="auth_create_address_result_title">%s está disponível</string>
@@ -89,8 +89,8 @@
   <string name="auth_create_address_error_signed_key_list">A geração da lista de chaves falhou.</string>
   <string name="auth_create_address_error_setusername">Falha ao criar o nome de usuário.</string>
   <string name="auth_create_address_error_username_unavailable">O nome de usuário escolhido está indisponível.</string>
-  <string name="auth_mailbox_login_error_no_primary_key">Nenhuma chave primária encontrada.</string>
-  <string name="auth_mailbox_login_error_primary_key_error">Erro na chave primária.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Nenhuma chave principal encontrada.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Erro na chave principal.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Senha inválida.</string>
   <string name="auth_password_chooser_title">Altere sua senha</string>
   <string name="auth_password_chooser_description">Para usar o app Proton como membro de uma organização, você precisa primeiro trocar sua senha acessado o Proton através de um navegador.</string>

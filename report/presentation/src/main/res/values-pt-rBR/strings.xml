@@ -37,5 +37,5 @@
   </plurals>
   <string name="core_report_bug_general_error">Ocorreu um erro. Tente novamente em alguns minutos.</string>
   <string name="core_report_bug_send">Enviar relatório</string>
-  <string name="core_report_bug_success">Obrigado por seu relatório</string>
+  <string name="core_report_bug_success">Nós lhe agradecemos por seu relatório.</string>
 </resources>

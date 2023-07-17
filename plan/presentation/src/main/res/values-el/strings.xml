@@ -144,7 +144,7 @@
   <string name="multiple_vaults">Πολλαπλά θησαυροφυλάκια</string>
   <string name="unlimited_email_alias">Απεριόριστα ψευδώνυμα απόκρυψης του email μου</string>
   <string name="custom_email_alias_domains">Προσαρμοσμένοι τομείς για ψευδώνυμα email</string>
-  <string name="multiple_forwarding_mailboxes">Πολλαπλά προωθούμενα γραμματοκιβώτια</string>
+  <string name="multiple_forwarding_mailboxes">Πολλαπλές θυρίδες προώθησης</string>
   <string name="priority_support">Υποστήριξη κατά προτεραιότητα</string>
   <string name="one_vault">1 θησαυροφυλάκιο</string>
   <string name="ten_hide_my_email_aliases">10 ψευδώνυμα Hide My Email</string>

@@ -22,7 +22,7 @@
   <string name="core_report_bug_subject_field_hint">件名</string>
   <string name="core_report_bug_subject_field_required">件名を入力</string>
   <string name="core_report_bug_description_field_hint">何が起きましたか? 10 文字以上</string>
-  <string name="core_report_bug_description_field_placeholder">Please describe the problem in as much detail as you can. If there was an error message, let us know what it said.</string>
+  <string name="core_report_bug_description_field_placeholder">問題をできるだけ詳しく説明してください。エラーメッセージがある場合は、その内容をお知らせください。</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="other">%d 文字以上入力</item>
   </plurals>

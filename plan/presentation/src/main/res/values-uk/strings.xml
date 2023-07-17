@@ -145,7 +145,7 @@
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Підтримка кількох користувачів</string>
   <string name="plan_id_visionary_header">Visionary</string>
-  <string name="plan_id_family_header">Сімейний</string>
+  <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Захищена електронна пошта з розширеними можливостями для щоденного спілкування.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Ваша приватність і безпека — наш пріоритет.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Безпечне хмарне сховище, яке дає змогу легко та безпечно зберігати, синхронізувати та ділитися файлами.</string>
