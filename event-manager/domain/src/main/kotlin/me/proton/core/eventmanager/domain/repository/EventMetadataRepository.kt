@@ -18,7 +18,6 @@
 
 package me.proton.core.eventmanager.domain.repository
 
-import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.EventId
@@ -28,9 +27,6 @@ import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.eventmanager.domain.entity.State
 
 interface EventMetadataRepository {
-
-    fun observe(config: EventManagerConfig): Flow<List<EventMetadata>>
-    fun observe(config: EventManagerConfig, eventId: EventId): Flow<EventMetadata?>
 
     suspend fun deleteAll(config: EventManagerConfig)
     suspend fun delete(config: EventManagerConfig, eventId: EventId)

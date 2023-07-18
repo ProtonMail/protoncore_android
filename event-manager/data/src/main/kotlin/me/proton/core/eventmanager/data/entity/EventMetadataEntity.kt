@@ -20,6 +20,7 @@ package me.proton.core.eventmanager.data.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Ignore
 import androidx.room.Index
 import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerConfig
@@ -50,7 +51,6 @@ data class EventMetadataEntity(
     val nextEventId: String?,
     val refresh: RefreshType?,
     val more: Boolean?,
-    val response: String?,
     val retry: Int,
     val state: State,
     val createdAt: Long,

@@ -20,6 +20,7 @@ package me.proton.core.eventmanager.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.dropTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.eventmanager.data.db.dao.EventMetadataDao
 
@@ -36,6 +37,28 @@ interface EventMetadataDatabase : Database {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_EventMetadataEntity_userId` ON `EventMetadataEntity` (`userId`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_EventMetadataEntity_config` ON `EventMetadataEntity` (`config`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_EventMetadataEntity_createdAt` ON `EventMetadataEntity` (`createdAt`)")
+            }
+        }
+
+        /**
+         * - Remove EventMetadataEntity response.
+         */
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.dropTableColumn(
+                    table = "EventMetadataEntity",
+                    createTable = {
+                        database.execSQL("CREATE TABLE IF NOT EXISTS `EventMetadataEntity` (`userId` TEXT NOT NULL, `config` TEXT NOT NULL, `eventId` TEXT, `nextEventId` TEXT, `refresh` TEXT, `more` INTEGER, `retry` INTEGER NOT NULL, `state` TEXT NOT NULL, `createdAt` INTEGER NOT NULL, `updatedAt` INTEGER, PRIMARY KEY(`userId`, `config`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                    },
+                    createIndices = {
+                        database.execSQL("CREATE INDEX IF NOT EXISTS `index_EventMetadataEntity_userId` ON `EventMetadataEntity` (`userId`)")
+                        database.execSQL("CREATE INDEX IF NOT EXISTS `index_EventMetadataEntity_config` ON `EventMetadataEntity` (`config`)")
+                        database.execSQL("CREATE INDEX IF NOT EXISTS `index_EventMetadataEntity_createdAt` ON `EventMetadataEntity` (`createdAt`)")
+                    },
+                    column = "response"
+                )
+                // Change state to Enqueued -> Force fetch again.
+                database.execSQL("UPDATE `EventMetadataEntity` SET state = 'Enqueued' WHERE state != 'Cancelled' ")
             }
         }
     }

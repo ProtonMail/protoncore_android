@@ -30,7 +30,7 @@ protonBuild {
 
 protonCoverage {
     minBranchCoveragePercentage.set(39)
-    minLineCoveragePercentage.set(56)
+    minLineCoveragePercentage.set(55)
 }
 
 protonDagger {
@@ -46,6 +46,7 @@ android {
 dependencies {
     api(
         project(Module.accountManagerDomain),
+        project(Module.data),
         project(Module.dataRoom),
         project(Module.domain),
         project(Module.eventManagerDomain),

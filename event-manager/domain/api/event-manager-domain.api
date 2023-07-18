@@ -372,8 +372,6 @@ public abstract interface class me/proton/core/eventmanager/domain/repository/Ev
 	public abstract fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getEvents (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLatestEventId (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lkotlinx/coroutines/flow/Flow;
-	public abstract fun observe (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateNextEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

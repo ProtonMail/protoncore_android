@@ -30,21 +30,20 @@ fun EventMetadata.toEntity() = EventMetadataEntity(
     nextEventId = nextEventId?.id,
     refresh = refresh,
     more = more,
-    response = response?.body,
     retry = retry,
     state = state,
     createdAt = createdAt,
     updatedAt = updatedAt ?: System.currentTimeMillis()
 )
 
-fun EventMetadataEntity.fromEntity() = EventMetadata(
+fun EventMetadataEntity.fromEntity(response: EventsResponse?) = EventMetadata(
     userId = userId,
     config = config,
     eventId = eventId?.let { EventId(it) },
     nextEventId = nextEventId?.let { EventId(it) },
     refresh = refresh,
     more = more,
-    response = response?.let { EventsResponse(it) },
+    response = response,
     retry = retry,
     state = state,
     createdAt = createdAt,
