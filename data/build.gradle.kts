@@ -47,6 +47,7 @@ dependencies {
 
     implementation(
         project(Module.kotlinUtil),
+        cache4k
     )
 
     testImplementation(
