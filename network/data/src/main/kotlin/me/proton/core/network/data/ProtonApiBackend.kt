@@ -144,6 +144,9 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             session.accessToken.takeIfNotBlank()?.let { accessToken ->
                 request.header("Authorization", "Bearer $accessToken")
             }
+            deviceVerificationProvider.getSolvedChallenge(session.sessionId)?.let { solvedChallenge ->
+                request.header("x-pm-dv", solvedChallenge)
+            }
         }
 
         // Add human verification and device verification headers
@@ -155,10 +158,6 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 details.tokenCode?.let { tokenCode ->
                     request.header("x-pm-human-verification-token", tokenCode)
                 }
-            }
-
-            deviceVerificationProvider.getSolvedChallenge(sessionId)?.let { solvedChallenge ->
-                request.header("x-pm-dv", solvedChallenge)
             }
         }
 
