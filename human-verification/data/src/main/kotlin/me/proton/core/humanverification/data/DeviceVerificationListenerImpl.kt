@@ -29,6 +29,7 @@ import me.proton.core.network.domain.deviceverification.DeviceVerificationProvid
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
+import kotlin.time.measureTimedValue
 
 /**
  * An implementation of [DeviceVerificationListener] that uses a [DeviceVerificationProvider]
@@ -59,27 +60,32 @@ class DeviceVerificationListenerImpl @Inject constructor(
             return DeviceVerificationResult.Success
         }
 
-        // Solve the challenge.
-        val solvedChallenge = try {
-            when (methods.challengeType.enum) {
-                WASM -> srpChallenge.argon2PreimageChallenge(methods.challengePayload)
-                Ecdlp -> srpChallenge.ecdlpChallenge(methods.challengePayload)
-                Argon2 -> srpChallenge.argon2PreimageChallenge(methods.challengePayload)
-                null -> throw UnsupportedOperationException("Unsupported challenge type: ${methods.challengeType.value}.")
+        val solvedChallenge = measureTimedValue {
+            try {
+                when (methods.challengeType.enum) {
+                    WASM -> srpChallenge.argon2PreimageChallenge(methods.challengePayload)
+                    Ecdlp -> srpChallenge.ecdlpChallenge(methods.challengePayload)
+                    Argon2 -> srpChallenge.argon2PreimageChallenge(methods.challengePayload)
+                    null -> throw UnsupportedOperationException("Unsupported challenge type: ${methods.challengeType.value}.")
+                }
+            } catch (e: Exception) {
+                CoreLogger.e(LogTag.SRP_CHALLENGE_ERROR, e)
+                // If an exception occurs, return a failure result.
+                return DeviceVerificationResult.Failure
             }
-        } catch (e: Exception) {
-            CoreLogger.e(LogTag.SRP_CHALLENGE_ERROR, e)
-            // If an exception occurs, return a failure result.
-            return DeviceVerificationResult.Failure
         }
 
         // If the challenge is not solved, return a failure result.
-        if (solvedChallenge.isEmpty()) {
+        if (solvedChallenge.value.isEmpty()) {
             return DeviceVerificationResult.Failure
         }
 
+        // Add duration to solved challenge.
+        val solved = "${solvedChallenge.value}, ${solvedChallenge.duration.inWholeMilliseconds}"
+
+
         // Use the deviceVerificationProvider to save the solved challenge
-        deviceVerificationProvider.setSolvedChallenge(sessionId, methods.challengePayload, solvedChallenge)
+        deviceVerificationProvider.setSolvedChallenge(sessionId, methods.challengePayload, solved)
 
         return DeviceVerificationResult.Success
     }

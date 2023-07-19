@@ -263,7 +263,6 @@ internal class HumanVerificationTests {
             testTlsHelper.initPinning(it, TestTLSHelper.TEST_PINS)
         }
 
-        coEvery { deviceVerificationProvider.getSolvedChallenge(null) } returns null
         webServer.prepareResponse(
             422,
             humanVerificationResponse
@@ -280,6 +279,7 @@ internal class HumanVerificationTests {
         )
 
         coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
+        coEvery { deviceVerificationProvider.getSolvedChallenge(session.sessionId) } returns null
 
         val result = backend(ApiManager.Call(0) { test() })
         assertTrue(result is ApiResult.Error.Http)
@@ -377,7 +377,7 @@ internal class HumanVerificationTests {
         )
 
         coEvery { humanVerificationProvider.getHumanVerificationDetails(clientId) } returns humanVerificationDetails
-        coEvery { deviceVerificationProvider.getSolvedChallenge(null) } returns null
+        coEvery { deviceVerificationProvider.getSolvedChallenge(session.sessionId) } returns null
 
         backend(ApiManager.Call(0) { test() })
         val headers = webServer.takeRequestWithDefaultTimeout()?.headers
