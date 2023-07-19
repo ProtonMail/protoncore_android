@@ -97,6 +97,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val USE_DEFAULT_PINS = "USE_DEFAULT_PINS"
             val CAN_USE_DOH = "USE_DOH"
             val KEY_TRANSPARENCY_ENV = "KEY_TRANSPARENCY_ENV"
+            val SENTRY_DSN = "SENTRY_DSN"
         }
         val flavorDimensions = object {
             val env = "env"
@@ -109,6 +110,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, true.toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
         }
 
         productFlavors.register("dev") {
@@ -119,6 +121,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "proton.black".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "black".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
@@ -127,6 +130,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "production".toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
         }
         productFlavors.register("localProperties") {
             dimension = flavorDimensions.env
@@ -145,6 +149,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val quarkHost = localProperties.getProperty(buildConfigFieldKeys.QUARK_HOST) ?: host
             val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
             val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
+            val sentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.SENTRY_DSN)
 
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, useDefaultPins.toBoolean().toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, proxyToken.toBuildConfigValue())
@@ -156,6 +161,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
                 buildConfigFieldKeys.KEY_TRANSPARENCY_ENV,
                 keyTransparencyEnv.toBuildConfigValue()
             )
+            buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, sentryDsn.toBuildConfigValue())
         }
         productFlavors.register("mock") {
             buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.mock".toBuildConfigValue())
@@ -163,6 +169,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "quark.mock".toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
 
             dimension = flavorDimensions.env
             testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
@@ -226,6 +233,7 @@ dependencies {
         project(Module.userSettings),
         project(Module.strictModeUtil),
         project(Module.keyTransparency),
+        project(Module.sentryUtil),
 
         // Android
         activity,

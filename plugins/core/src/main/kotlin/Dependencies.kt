@@ -148,6 +148,14 @@ public val DependencyHandler.`lifecycle-savedState`: Any
     get() = androidxLifecycle("viewmodel-savedstate") version `lifecycle version`
 public val DependencyHandler.lottie: Any
     get() = dependency("com.airbnb.android", module = "lottie") version `lottie version`
+public val DependencyHandler.timber: Any
+    get() = dependency("com.jakewharton.timber", module = "timber") version `timber version`
+public val DependencyHandler.sentry: Any
+    get() = dependency("io.sentry", module = "sentry") version `sentry version`
+public val DependencyHandler.`sentry-android-core`: Any
+    get() = dependency("io.sentry", module = "sentry-android-core") version `sentry version`
+public val DependencyHandler.`sentry-timber`: Any
+    get() = dependency("io.sentry", module = "sentry-android-timber") version `sentry version`
 public val DependencyHandler.`javax-inject`: Any
     get() = dependency("javax.inject", module = "javax.inject") version `javax-inject version`
 public val DependencyHandler.`ez-vcard`: Any

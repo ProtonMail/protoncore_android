@@ -141,7 +141,6 @@
     <string name="auth_signup_verification_code">Verification Code</string>
     <string name="auth_signup_enter_code_subtitle">Enter the verification code that was sent to %s:</string>
     <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
-    <string name="auth_signup_token_code_resent">Token code resent.</string>
     <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
     <string name="auth_signup_congratulations">Congratulations!</string>
     <string name="auth_signup_start_using_proton">Start using Proton</string>

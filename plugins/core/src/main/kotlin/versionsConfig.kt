@@ -115,6 +115,7 @@ public const val `store4 version`: String =                "4.0.5"
 public const val `cache4k version`: String =               "0.9.0"
 public const val `lifecycle-extensions version`: String =  "2.2.0"             // Released: Jan 00, 2020
 public const val `lottie version`: String =                "4.1.0"
+public const val `sentry version`: String =                "6.25.0"
 public const val `javax-inject version`: String =          "1"
 public const val `ez-vcard_version`: String =              "0.11.3"
 public const val `desugar_jdk_libs version`: String =      "1.2.2"

@@ -29,6 +29,7 @@ public object Module {
     public const val workManagersUtil: String = "$androidUtil:util-android-work-manager"
     public const val gradleUtil: String = "$util:util-gradle"
     public const val strictModeUtil: String = "$androidUtil:util-android-strict-mode"
+    public const val sentryUtil: String = "$androidUtil:util-android-sentry"
 
     // Test
     private const val test = ":test"

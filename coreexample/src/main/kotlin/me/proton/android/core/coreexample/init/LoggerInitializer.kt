@@ -37,7 +37,9 @@ class LoggerInitializer : Initializer<Unit> {
         CoreLogger.set(CoreExampleLogger())
     }
 
-    override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
+    override fun dependencies(): List<Class<out Initializer<*>>> = listOf(
+        SentryInitializer::class.java
+    )
 
     private class CrashReportingTree : Timber.Tree() {
         override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {

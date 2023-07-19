@@ -224,4 +224,5 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:util-android-shared-preferences       |
 | me.proton.core:util-android-strict-mode              |
 | me.proton.core:util-android-work-manager             |
+| me.proton.core:util-android-sentry                   |
 | me.proton.core:util-kotlin                           |
