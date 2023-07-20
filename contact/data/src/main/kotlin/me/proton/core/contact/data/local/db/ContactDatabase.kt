@@ -24,6 +24,7 @@ import me.proton.core.contact.data.local.db.dao.ContactDao
 import me.proton.core.contact.data.local.db.dao.ContactEmailDao
 import me.proton.core.contact.data.local.db.dao.ContactEmailLabelDao
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface ContactDatabase: Database {
@@ -50,6 +51,16 @@ interface ContactDatabase: Database {
 
                 // Create ContactEmailLabelEntity table
                 database.execSQL("CREATE TABLE IF NOT EXISTS `ContactEmailLabelEntity` (`contactEmailId` TEXT NOT NULL, `labelId` TEXT NOT NULL, PRIMARY KEY(`contactEmailId`, `labelId`), FOREIGN KEY(`contactEmailId`) REFERENCES `ContactEmailEntity`(`contactEmailId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+            }
+        }
+
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "ContactEmailEntity",
+                    column = "isProton",
+                    type = "INTEGER"
+                )
             }
         }
     }

@@ -32,5 +32,6 @@ data class ContactEmail(
     val order: Int,
     val contactId: ContactId,
     val canonicalEmail: String?,
-    val labelIds: List<String>
+    val labelIds: List<String>,
+    val isProton: Boolean?
 )

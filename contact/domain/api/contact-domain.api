@@ -78,8 +78,9 @@ public final class me/proton/core/contact/domain/entity/ContactCardType$Companio
 }
 
 public final class me/proton/core/contact/domain/entity/ContactEmail {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;Ljava/util/List;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;Ljava/util/List;Ljava/lang/Boolean;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Ljava/lang/Boolean;
 	public final fun component2 ()Lme/proton/core/contact/domain/entity/ContactEmailId;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
@@ -88,8 +89,8 @@ public final class me/proton/core/contact/domain/entity/ContactEmail {
 	public final fun component7 ()Lme/proton/core/contact/domain/entity/ContactId;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/util/List;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;Ljava/util/List;)Lme/proton/core/contact/domain/entity/ContactEmail;
-	public static synthetic fun copy$default (Lme/proton/core/contact/domain/entity/ContactEmail;Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/domain/entity/ContactEmail;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;Ljava/util/List;Ljava/lang/Boolean;)Lme/proton/core/contact/domain/entity/ContactEmail;
+	public static synthetic fun copy$default (Lme/proton/core/contact/domain/entity/ContactEmail;Lme/proton/core/domain/entity/UserId;Lme/proton/core/contact/domain/entity/ContactEmailId;Ljava/lang/String;Ljava/lang/String;IILme/proton/core/contact/domain/entity/ContactId;Ljava/lang/String;Ljava/util/List;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/contact/domain/entity/ContactEmail;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCanonicalEmail ()Ljava/lang/String;
 	public final fun getContactId ()Lme/proton/core/contact/domain/entity/ContactId;
@@ -101,6 +102,7 @@ public final class me/proton/core/contact/domain/entity/ContactEmail {
 	public final fun getOrder ()I
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
+	public final fun isProton ()Ljava/lang/Boolean;
 	public fun toString ()Ljava/lang/String;
 }
 

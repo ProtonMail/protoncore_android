@@ -23,6 +23,7 @@ import androidx.room.Relation
 import me.proton.core.contact.data.local.db.entity.ContactEmailEntity
 import me.proton.core.contact.data.local.db.entity.ContactEmailLabelEntity
 import me.proton.core.contact.domain.entity.ContactEmail
+import me.proton.core.util.kotlin.toBooleanOrFalse
 
 data class ContactEmailWithLabelsRelation(
     @Embedded
@@ -45,5 +46,6 @@ fun ContactEmailWithLabelsRelation.toContactEmail() = ContactEmail(
     order = contactEmail.order,
     contactId = contactEmail.contactId,
     canonicalEmail = contactEmail.canonicalEmail,
-    labelIds = labelIds
+    labelIds = labelIds,
+    isProton = contactEmail.isProton?.toBooleanOrFalse()
 )

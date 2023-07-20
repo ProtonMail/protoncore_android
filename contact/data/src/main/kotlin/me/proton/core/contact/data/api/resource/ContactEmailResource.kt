@@ -24,6 +24,7 @@ import me.proton.core.contact.domain.entity.ContactEmail
 import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.toBooleanOrFalse
 
 @Serializable
 data class ContactEmailResource(
@@ -42,7 +43,9 @@ data class ContactEmailResource(
     @SerialName("CanonicalEmail")
     val canonicalEmail: String? = null,
     @SerialName("LabelIDs")
-    val labelIds: List<String>
+    val labelIds: List<String>,
+    @SerialName("IsProton")
+    val isProton: Int? = null
 ) {
     fun toContactEmail(userId: UserId): ContactEmail = ContactEmail(
         userId,
@@ -53,6 +56,7 @@ data class ContactEmailResource(
         order,
         ContactId(contactId),
         canonicalEmail,
-        labelIds
+        labelIds,
+        isProton?.toBooleanOrFalse()
     )
 }

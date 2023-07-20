@@ -131,5 +131,6 @@ fun contactEmail(
     order = 0,
     contactId = contactId,
     canonicalEmail = null,
-    labelIds = labelIds
+    labelIds = labelIds,
+    isProton = false
 )

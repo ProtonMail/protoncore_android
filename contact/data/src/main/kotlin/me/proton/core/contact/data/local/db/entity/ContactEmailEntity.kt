@@ -26,6 +26,7 @@ import me.proton.core.contact.domain.entity.ContactEmailId
 import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.util.kotlin.toInt
 
 @Entity(
     primaryKeys = ["contactEmailId"],
@@ -56,7 +57,8 @@ data class ContactEmailEntity(
     val defaults: Int,
     val order: Int,
     val contactId: ContactId,
-    val canonicalEmail: String?
+    val canonicalEmail: String?,
+    val isProton: Int?
 )
 
 fun ContactEmail.toContactEmailEntity() = ContactEmailEntity(
@@ -67,5 +69,6 @@ fun ContactEmail.toContactEmailEntity() = ContactEmailEntity(
     defaults = defaults,
     order = order,
     contactId = contactId,
-    canonicalEmail = canonicalEmail
+    canonicalEmail = canonicalEmail,
+    isProton = isProton?.toInt()
 )
