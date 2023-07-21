@@ -618,7 +618,7 @@ internal fun ProtonColors.toMaterial3ThemeColors() = androidx.compose.material3.
     onTertiaryContainer = textNorm,
     background = backgroundNorm,
     onBackground = textNorm,
-    surface = backgroundSecondary,
+    surface = backgroundNorm,
     onSurface = textNorm,
     surfaceVariant = backgroundNorm,
     onSurfaceVariant = textNorm,
@@ -631,7 +631,7 @@ internal fun ProtonColors.toMaterial3ThemeColors() = androidx.compose.material3.
     outline = brandNorm,
     surfaceTint = Color.Unspecified,
     outlineVariant = brandNorm,
-    scrim = brandDarken40
+    scrim = blenderNorm
 )
 
 internal fun ProtonColors.toMaterialThemeColors() = Colors(
