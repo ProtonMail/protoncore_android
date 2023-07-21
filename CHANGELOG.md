@@ -11,6 +11,66 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [14.0.0] - 2023-07-21
+
+### Chores
+
+- Add default file type drawable.
+
+  Added the latest version of the default file type icon used in mail android v6 for attachments
+- data:
+  - Added FileContext/AndroidFileContext.
+- observability:
+  - Log a case when `customerId` is empty.
+  - Additional label values for creating payment tokens.
+  - Additional label values for username availability metrics.
+- payment-iap:
+  - Log a case when `customerId` is empty.
+
+### Features
+
+- contact:
+  - Add "isProton" field to ContactEmail.
+- key:
+  - Decrypt and returns unverified key.
+- pow:
+  - Add pow challenge solver duration for backend.
+  - Fix pow issue on login with unauth session.
+- util:
+  - Add Core Sentry integration.
+
+### Bug Fixes
+
+- crypto-android:
+  - Added retryOnce mechanism for Android KeyStore Key generation.
+- event-manager:
+  - Don't enqueue on EventMetadata update failure (e.g. SQLiteConstraintException).
+- presentation-compose:
+  - Fix Material 3 coloring as incorrect scrim was used as default.
+
+### Internationalization
+
+- Upgrade translations from crowdin (740ccb4d).
+
+### Refactoring
+
+- auth:
+  - Migrate sign-up metrics to Result API.
+  - Migrated SignUp metrics to Result API.
+  - Migrate sign-up metrics to Result API.
+- observability:
+  - Removed obsolete runWithObservability extension.
+- payment:
+  - Migrated Checkout Payment Methods Metrics to Result API.
+  - Migrated Checkout Subscribe and Validate Metrics to Result API.
+  - Migrated Checkout Acknowledge Purchase Metrics to Result API.
+  - Migrated Checkout Launch Billing Metrics to Result API.
+  - Migrated Checkout Query Product Metrics to Result API.
+  - Migrated Checkout Query Purchases Metrics to Result API.
+  - Migrated Checkout Create Payment Token Metrics to Result API.
+- user:
+  - Migrate sign-up metrics to Result API.
+
 ## [13.0.1] - 2023-07-10
 
 ### Chores
