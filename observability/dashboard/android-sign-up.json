@@ -37,6 +37,188 @@
             },
             "fieldConfig": {
                 "defaults": {
+                    "mappings": [
+                    ],
+                    "max": 100,
+                    "min": 0,
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "red",
+                                "value": null
+                            },
+                            {
+                                "color": "orange",
+                                "value": 84
+                            },
+                            {
+                                "color": "#EAB839",
+                                "value": 89
+                            },
+                            {
+                                "color": "green",
+                                "value": 94
+                            }
+                        ]
+                    },
+                    "unit": "percent"
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 5,
+                "w": 24,
+                "x": 0,
+                "y": 0
+            },
+            "id": 40,
+            "options": {
+                "orientation": "auto",
+                "reduceOptions": {
+                    "calcs": [
+                    ],
+                    "fields": "/^Mean$/",
+                    "values": true
+                },
+                "showThresholdLabels": false,
+                "showThresholdMarkers": true
+            },
+            "pluginVersion": "9.5.1",
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_fetchDomains_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_fetchDomains_total{status!=\"http2xx\", status!=\"notConnected\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "B"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$A / ($A + $B) * 100",
+                    "hide": false,
+                    "refId": "Email/Domain check",
+                    "type": "math"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_accountCreation_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "D"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_accountCreation_total{status!=\"http2xx\", status!=\"http409UsernameConflict\", status!=\"http422HvRequired\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "E"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$D / ($D + $E) * 100",
+                    "hide": false,
+                    "refId": "Account Creation",
+                    "type": "math"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_login_total{status=\"http2xx\"}[$increase_interval])) or vector(0)    ",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "G"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_signup_login_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "H"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$G / ($G + $H) * 100",
+                    "hide": false,
+                    "refId": "Post creation sign-in",
+                    "type": "math"
+                }
+            ],
+            "title": "Sign-up Android Availability",
+            "transformations": [
+                {
+                    "id": "reduce",
+                    "options": {
+                        "includeTimeField": false,
+                        "labelsToFields": true,
+                        "mode": "seriesToRows",
+                        "reducers": [
+                            "mean"
+                        ]
+                    }
+                }
+            ],
+            "type": "gauge"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
                     "color": {
                         "mode": "palette-classic"
                     },
@@ -93,7 +275,7 @@
                 "h": 8,
                 "w": 24,
                 "x": 0,
-                "y": 0
+                "y": 5
             },
             "id": 2,
             "options": {
@@ -132,7 +314,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 8
+                "y": 13
             },
             "id": 8,
             "panels": [
@@ -156,6 +338,8 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 10,
@@ -207,7 +391,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 9
+                "y": 14
             },
             "id": 37,
             "options": {
@@ -235,7 +419,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -248,14 +432,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -328,7 +512,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 9
+                "y": 14
             },
             "id": 4,
             "options": {
@@ -424,7 +608,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 9
+                "y": 14
             },
             "id": 10,
             "options": {
@@ -473,6 +657,8 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 10,
@@ -524,7 +710,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 17
+                "y": 22
             },
             "id": 41,
             "options": {
@@ -552,7 +738,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -565,14 +751,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -645,7 +831,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 17
+                "y": 22
             },
             "id": 12,
             "options": {
@@ -741,7 +927,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 17
+                "y": 22
             },
             "id": 14,
             "options": {
@@ -838,9 +1024,9 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 25
+                "y": 30
             },
-            "id": 38,
+            "id": 42,
             "options": {
                 "legend": {
                     "calcs": [
@@ -935,9 +1121,9 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 25
+                "y": 30
             },
-            "id": 39,
+            "id": 43,
             "options": {
                 "legend": {
                     "calcs": [
@@ -975,13 +1161,110 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 33
+                "y": 38
             },
             "id": 16,
             "panels": [
             ],
             "title": "Screen: Creating an account",
             "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 39
+            },
+            "id": 38,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum (increase(client_android_core_signup_accountCreation_total{}[$increase_interval]))",
+                    "interval": "$increase_interval",
+                    "legendFormat": "Account creation total",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Account creation - total",
+            "type": "timeseries"
         },
         {
             "datasource": {
@@ -1000,6 +1283,8 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -1051,7 +1336,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 34
+                "y": 47
             },
             "id": 34,
             "options": {
@@ -1080,7 +1365,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1093,14 +1378,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1172,7 +1457,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 34
+                "y": 47
             },
             "id": 18,
             "options": {
@@ -1268,7 +1553,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 34
+                "y": 47
             },
             "id": 20,
             "options": {
@@ -1316,7 +1601,104 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 24,
+                "x": 0,
+                "y": 55
+            },
+            "id": 39,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum (increase(client_android_core_signup_login_total{}[$increase_interval]))",
+                    "interval": "$increase_interval",
+                    "legendFormat": "Login after signup total",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Login after signup - total",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -1365,7 +1747,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 42
+                "y": 63
             },
             "id": 36,
             "options": {
@@ -1393,7 +1775,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1406,14 +1788,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1485,7 +1867,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 42
+                "y": 63
             },
             "id": 22,
             "options": {
@@ -1581,7 +1963,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 42
+                "y": 63
             },
             "id": 24,
             "options": {
@@ -1677,7 +2059,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 0,
-                "y": 50
+                "y": 71
             },
             "id": 26,
             "options": {
@@ -1774,7 +2156,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 6,
-                "y": 50
+                "y": 71
             },
             "id": 28,
             "options": {
@@ -1870,7 +2252,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 12,
-                "y": 50
+                "y": 71
             },
             "id": 30,
             "options": {
@@ -1966,7 +2348,7 @@
                 "h": 8,
                 "w": 6,
                 "x": 18,
-                "y": 50
+                "y": 71
             },
             "id": 32,
             "options": {
@@ -2000,8 +2382,8 @@
             "type": "timeseries"
         }
     ],
-    "refresh": "5m",
-    "schemaVersion": 37,
+    "refresh": "1m",
+    "schemaVersion": 38,
     "style": "dark",
     "tags": [
     ],
@@ -2076,10 +2458,30 @@
                     }
                 ],
                 "query": "1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
-                "queryValue": "30m",
+                "queryValue": "",
                 "refresh": 2,
                 "skipUrlSync": false,
                 "type": "interval"
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                    "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                },
+                "description": "$S - successes\n$F - failures\n\nThe formula for availability percentage (S / (S+F)), but in case both $S and $F are `0`, the availability is set to 100%.",
+                "hide": 2,
+                "name": "sf_availability",
+                "options": [
+                    {
+                        "selected": false,
+                        "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                        "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                    }
+                ],
+                "query": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                "skipUrlSync": false,
+                "type": "constant"
             }
         ]
     },
@@ -2092,6 +2494,6 @@
     "timezone": "",
     "title": "Android / Sign-up",
     "uid": "nccm8bJVk",
-    "version": 6,
+    "version": 9,
     "weekStart": ""
 }

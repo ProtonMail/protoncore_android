@@ -157,9 +157,11 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 25,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -173,7 +175,7 @@
                             "type": "linear"
                         },
                         "showPoints": "auto",
-                        "spanNulls": false,
+                        "spanNulls": true,
                         "stacking": {
                             "group": "A",
                             "mode": "none"
@@ -228,12 +230,12 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_sso_obtainChallengeToken_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_sso_obtainChallengeToken_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -241,20 +243,19 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_sso_obtainChallengeToken_total{status!=\"http2xx\", status!=\"notConnected\", status!=\"ssoDomainNotFound\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_sso_obtainChallengeToken_total{status!=\"http2xx\", status!=\"notConnected\", status!=\"ssoDomainNotFound\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -473,9 +474,11 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 25,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -544,12 +547,12 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_ssoIdentityProvider_pageLoad_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_ssoIdentityProvider_pageLoad_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -557,20 +560,19 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_ssoIdentityProvider_pageLoad_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_ssoIdentityProvider_pageLoad_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -789,9 +791,11 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 25,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -860,12 +864,12 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_ssoIdentityProvider_result_total{status=\"success\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_ssoIdentityProvider_result_total{status=\"success\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -873,20 +877,19 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_ssoIdentityProvider_result_total{status!=\"success\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_ssoIdentityProvider_result_total{status!=\"success\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1105,9 +1108,11 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
-                        "fillOpacity": 0,
+                        "fillOpacity": 25,
                         "gradientMode": "none",
                         "hideFrom": {
                             "legend": false,
@@ -1176,12 +1181,12 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_sso_auth_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_sso_auth_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1189,20 +1194,19 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum by(status) (increase(client_android_core_login_sso_auth_total{status!=\"http2xx\", status!=\"notConnected\", status!=\"http422\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_sso_auth_total{status!=\"http2xx\", status!=\"notConnected\", status!=\"http422\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1436,6 +1440,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -1515,7 +1520,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1528,15 +1533,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1755,6 +1759,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -1831,7 +1836,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1839,20 +1844,19 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum(increase(client_android_core_login_eaToIaUsernameAvailability_total{status!=\"http2xx\",status!=\"http409UsernameConflict\"}[$increase_interval])) or vector(0)",
+                    "expr": "sum(increase(client_android_core_login_eaToIaUsernameAvailability_total{status!=\"http2xx\", status!=\"http409UsernameConflict\"}[$increase_interval])) or vector(0)",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -2071,6 +2075,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -2147,7 +2152,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -2160,15 +2165,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -2388,6 +2392,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -2419,7 +2424,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2463,7 +2469,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -2476,15 +2482,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -2540,7 +2545,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2636,7 +2642,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2686,8 +2693,8 @@
             "type": "timeseries"
         }
     ],
-    "refresh": false,
-    "schemaVersion": 37,
+    "refresh": "1m",
+    "schemaVersion": 38,
     "style": "dark",
     "tags": [
     ],
@@ -2766,6 +2773,26 @@
                 "refresh": 2,
                 "skipUrlSync": false,
                 "type": "interval"
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                    "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                },
+                "description": "$S - successes\n$F - failures\n\nThe formula for availability percentage (S / (S+F)), but in case both $S and $F are `0`, the availability is set to 100%.",
+                "hide": 2,
+                "name": "sf_availability",
+                "options": [
+                    {
+                        "selected": false,
+                        "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                        "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                    }
+                ],
+                "query": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                "skipUrlSync": false,
+                "type": "constant"
             }
         ]
     },
@@ -2778,6 +2805,6 @@
     "timezone": "",
     "title": "Android / Sign-in",
     "uid": "MSUvfY-Vz",
-    "version": 12,
+    "version": 14,
     "weekStart": ""
 }

@@ -172,6 +172,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -249,7 +250,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -262,7 +263,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
@@ -282,7 +283,7 @@
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "($A / ($A + $B + $C)) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Success Ratio",
                     "type": "math"
@@ -517,6 +518,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -595,7 +597,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -608,14 +610,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -834,6 +836,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -912,7 +915,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -925,14 +928,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1137,7 +1140,7 @@
         }
     ],
     "refresh": "5m",
-    "schemaVersion": 37,
+    "schemaVersion": 38,
     "style": "dark",
     "tags": [
     ],
@@ -1216,6 +1219,26 @@
                 "refresh": 2,
                 "skipUrlSync": false,
                 "type": "interval"
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                    "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                },
+                "description": "$S - successes\n$F - failures\n\nThe formula for availability percentage (S / (S+F)), but in case both $S and $F are `0`, the availability is set to 100%.",
+                "hide": 2,
+                "name": "sf_availability",
+                "options": [
+                    {
+                        "selected": false,
+                        "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                        "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                    }
+                ],
+                "query": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                "skipUrlSync": false,
+                "type": "constant"
             }
         ]
     },
@@ -1228,6 +1251,6 @@
     "timezone": "",
     "title": "Android / HV",
     "uid": "xY-mRl1Vz",
-    "version": 3,
+    "version": 5,
     "weekStart": ""
 }

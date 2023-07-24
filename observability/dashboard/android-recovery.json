@@ -143,6 +143,8 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 10,
@@ -159,7 +161,7 @@
                             "type": "linear"
                         },
                         "showPoints": "auto",
-                        "spanNulls": false,
+                        "spanNulls": true,
                         "stacking": {
                             "group": "A",
                             "mode": "none"
@@ -219,7 +221,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -232,15 +234,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Avalability",
                     "type": "math"
@@ -442,7 +443,8 @@
             "type": "timeseries"
         }
     ],
-    "schemaVersion": 37,
+    "refresh": "1m",
+    "schemaVersion": 38,
     "style": "dark",
     "tags": [
     ],
@@ -453,9 +455,9 @@
                 "auto_count": 100,
                 "auto_min": "1m",
                 "current": {
-                    "selected": true,
-                    "text": "1m",
-                    "value": "1m"
+                    "selected": false,
+                    "text": "auto",
+                    "value": "$__auto_interval_increase_interval"
                 },
                 "hide": 0,
                 "name": "increase_interval",
@@ -521,11 +523,31 @@
                 "refresh": 2,
                 "skipUrlSync": false,
                 "type": "interval"
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                    "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                },
+                "description": "$S - successes\n$F - failures\n\nThe formula for availability percentage (S / (S+F)), but in case both $S and $F are `0`, the availability is set to 100%.",
+                "hide": 2,
+                "name": "sf_availability",
+                "options": [
+                    {
+                        "selected": false,
+                        "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                        "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                    }
+                ],
+                "query": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                "skipUrlSync": false,
+                "type": "constant"
             }
         ]
     },
     "time": {
-        "from": "now-6h",
+        "from": "now-7d",
         "to": "now"
     },
     "timepicker": {
@@ -533,6 +555,6 @@
     "timezone": "",
     "title": "Android / Recovery",
     "uid": "fwrsXJX4z",
-    "version": 5,
+    "version": 7,
     "weekStart": ""
 }

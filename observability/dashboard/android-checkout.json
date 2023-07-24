@@ -87,30 +87,6 @@
                     }
                 },
                 "overrides": [
-                    {
-                        "__systemRef": "hideSeriesFrom",
-                        "matcher": {
-                            "id": "byNames",
-                            "options": {
-                                "mode": "exclude",
-                                "names": [
-                                    "giapBilling"
-                                ],
-                                "prefix": "All except:",
-                                "readOnly": true
-                            }
-                        },
-                        "properties": [
-                            {
-                                "id": "custom.hideFrom",
-                                "value": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": true
-                                }
-                            }
-                        ]
-                    }
                 ]
             },
             "gridPos": {
@@ -181,6 +157,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -191,6 +168,9 @@
                             "viz": false
                         },
                         "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
                         "lineWidth": 1,
                         "pointSize": 5,
                         "scaleDistribution": {
@@ -200,7 +180,7 @@
                         "spanNulls": true,
                         "stacking": {
                             "group": "A",
-                            "mode": "none"
+                            "mode": "normal"
                         },
                         "thresholdsStyle": {
                             "mode": "off"
@@ -232,6 +212,7 @@
                 "y": 9
             },
             "id": 24,
+            "interval": "15m",
             "options": {
                 "legend": {
                     "calcs": [
@@ -257,7 +238,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -270,14 +251,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -494,6 +475,8 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -564,34 +547,33 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "editorMode": "builder",
+                    "editorMode": "code",
                     "expr": "sum(increase(client_android_core_checkout_billing_subscribe_total{status=\"http2xx\", manager=\"proton\"}[$increase_interval]))",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "editorMode": "builder",
+                    "editorMode": "code",
                     "expr": "sum(increase(client_android_core_checkout_billing_subscribe_total{status!=\"http2xx\", manager=\"proton\"}[$increase_interval]))",
                     "hide": true,
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
-                        "name": "Expression",
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "C",
                     "type": "math"
@@ -818,6 +800,8 @@
                                 "axisColorMode": "text",
                                 "axisLabel": "",
                                 "axisPlacement": "auto",
+                                "axisSoftMax": 100,
+                                "axisSoftMin": 0,
                                 "barAlignment": 0,
                                 "drawStyle": "line",
                                 "fillOpacity": 25,
@@ -888,34 +872,33 @@
                                 "type": "prometheus",
                                 "uid": "prometheus"
                             },
-                            "editorMode": "builder",
+                            "editorMode": "code",
                             "expr": "sum(increase(client_android_core_checkout_cardBilling_validatePlan_total{status=\"http2xx\"}[$increase_interval]))",
                             "hide": true,
                             "interval": "$increase_interval",
                             "legendFormat": "Successes",
                             "range": true,
-                            "refId": "A"
+                            "refId": "S"
                         },
                         {
                             "datasource": {
                                 "type": "prometheus",
                                 "uid": "prometheus"
                             },
-                            "editorMode": "builder",
+                            "editorMode": "code",
                             "expr": "sum(increase(client_android_core_checkout_cardBilling_validatePlan_total{status!=\"http2xx\"}[$increase_interval]))",
                             "hide": true,
                             "interval": "$increase_interval",
                             "legendFormat": "Failures",
                             "range": true,
-                            "refId": "B"
+                            "refId": "F"
                         },
                         {
                             "datasource": {
-                                "name": "Expression",
                                 "type": "__expr__",
                                 "uid": "__expr__"
                             },
-                            "expression": "$A / ($A + $B) * 100",
+                            "expression": "$sf_availability",
                             "hide": false,
                             "refId": "C",
                             "type": "math"
@@ -1132,6 +1115,8 @@
                                 "axisColorMode": "text",
                                 "axisLabel": "",
                                 "axisPlacement": "auto",
+                                "axisSoftMax": 100,
+                                "axisSoftMin": 0,
                                 "barAlignment": 0,
                                 "drawStyle": "line",
                                 "fillOpacity": 25,
@@ -1202,34 +1187,33 @@
                                 "type": "prometheus",
                                 "uid": "prometheus"
                             },
-                            "editorMode": "builder",
+                            "editorMode": "code",
                             "expr": "sum(increase(client_android_core_checkout_cardBilling_createPaymentToken_total{status=\"http2xx\"}[$increase_interval]))",
                             "hide": true,
                             "interval": "$increase_interval",
                             "legendFormat": "Successes",
                             "range": true,
-                            "refId": "A"
+                            "refId": "S"
                         },
                         {
                             "datasource": {
                                 "type": "prometheus",
                                 "uid": "prometheus"
                             },
-                            "editorMode": "builder",
+                            "editorMode": "code",
                             "expr": "sum(increase(client_android_core_checkout_cardBilling_createPaymentToken_total{status!=\"http2xx\"}[$increase_interval]))",
                             "hide": true,
                             "interval": "$increase_interval",
                             "legendFormat": "Failures",
                             "range": true,
-                            "refId": "B"
+                            "refId": "F"
                         },
                         {
                             "datasource": {
-                                "name": "Expression",
                                 "type": "__expr__",
                                 "uid": "__expr__"
                             },
-                            "expression": "$A / ($A + $B) * 100",
+                            "expression": "$sf_availability",
                             "hide": false,
                             "refId": "C",
                             "type": "math"
@@ -1465,6 +1449,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -1541,7 +1526,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1554,14 +1539,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -1779,6 +1764,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -1855,7 +1841,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -1868,14 +1854,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A +$B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -2193,6 +2179,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -2220,6 +2207,8 @@
                     },
                     "mappings": [
                     ],
+                    "max": 100,
+                    "min": 0,
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -2232,33 +2221,10 @@
                                 "value": 80
                             }
                         ]
-                    }
+                    },
+                    "unit": "percent"
                 },
                 "overrides": [
-                    {
-                        "__systemRef": "hideSeriesFrom",
-                        "matcher": {
-                            "id": "byNames",
-                            "options": {
-                                "mode": "exclude",
-                                "names": [
-                                    "Successes"
-                                ],
-                                "prefix": "All except:",
-                                "readOnly": true
-                            }
-                        },
-                        "properties": [
-                            {
-                                "id": "custom.hideFrom",
-                                "value": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": true
-                                }
-                            }
-                        ]
-                    }
                 ]
             },
             "gridPos": {
@@ -2293,7 +2259,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -2306,16 +2272,26 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
+                    "type": "math"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$S / ($S + $F) * 100",
+                    "hide": true,
+                    "refId": "Availability (old)",
                     "type": "math"
                 }
             ],
@@ -2533,6 +2509,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -2609,7 +2586,27 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "Success"
+                    "refId": "S"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$ServiceTimeout + $ServiceUnavailable + $GooglePlayError + $ItemUnavailable + $DeveloperError",
+                    "hide": true,
+                    "refId": "F",
+                    "type": "math"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$sf_availability",
+                    "hide": false,
+                    "refId": "Availability",
+                    "type": "math"
                 },
                 {
                     "datasource": {
@@ -2623,16 +2620,6 @@
                     "legendFormat": "Failures",
                     "range": true,
                     "refId": "BillingUnavailable"
-                },
-                {
-                    "datasource": {
-                        "type": "__expr__",
-                        "uid": "__expr__"
-                    },
-                    "expression": "($Success / ($Success + $ServiceTimeout + $ServiceUnavailable + $GooglePlayError + $ItemUnavailable + $DeveloperError)) * 100",
-                    "hide": false,
-                    "refId": "Availability",
-                    "type": "math"
                 },
                 {
                     "datasource": {
@@ -2894,7 +2881,7 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "editorMode": "builder",
+                    "editorMode": "code",
                     "expr": "sum by(status) (increase(client_android_core_checkout_giapBilling_purchase_total{status=\"success\"}[$increase_interval]))",
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
@@ -2962,30 +2949,6 @@
                     }
                 },
                 "overrides": [
-                    {
-                        "__systemRef": "hideSeriesFrom",
-                        "matcher": {
-                            "id": "byNames",
-                            "options": {
-                                "mode": "exclude",
-                                "names": [
-                                    "unknown"
-                                ],
-                                "prefix": "All except:",
-                                "readOnly": true
-                            }
-                        },
-                        "properties": [
-                            {
-                                "id": "custom.hideFrom",
-                                "value": {
-                                    "legend": false,
-                                    "tooltip": false,
-                                    "viz": true
-                                }
-                            }
-                        ]
-                    }
                 ]
             },
             "gridPos": {
@@ -3014,7 +2977,7 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "editorMode": "builder",
+                    "editorMode": "code",
                     "expr": "sum by(status) (increase(client_android_core_checkout_giapBilling_purchase_total{status!=\"success\"}[$increase_interval]))",
                     "interval": "$increase_interval",
                     "legendFormat": "__auto",
@@ -3042,6 +3005,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -3118,7 +3082,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -3131,14 +3095,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -3356,6 +3320,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -3407,6 +3372,7 @@
                 "y": 73
             },
             "id": 43,
+            "interval": "15m",
             "options": {
                 "legend": {
                     "calcs": [
@@ -3432,7 +3398,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -3445,14 +3411,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -3698,6 +3664,7 @@
                         "axisLabel": "",
                         "axisPlacement": "auto",
                         "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 25,
@@ -3749,6 +3716,7 @@
                 "y": 81
             },
             "id": 58,
+            "interval": "15m",
             "options": {
                 "legend": {
                     "calcs": [
@@ -3774,7 +3742,7 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Successes",
                     "range": true,
-                    "refId": "A"
+                    "refId": "S"
                 },
                 {
                     "datasource": {
@@ -3787,14 +3755,14 @@
                     "interval": "$increase_interval",
                     "legendFormat": "Failures",
                     "range": true,
-                    "refId": "B"
+                    "refId": "F"
                 },
                 {
                     "datasource": {
                         "type": "__expr__",
                         "uid": "__expr__"
                     },
-                    "expression": "$A / ($A + $B) * 100",
+                    "expression": "$sf_availability",
                     "hide": false,
                     "refId": "Availability",
                     "type": "math"
@@ -3998,7 +3966,7 @@
             "type": "timeseries"
         },
         {
-            "collapsed": false,
+            "collapsed": true,
             "gridPos": {
                 "h": 1,
                 "w": 24,
@@ -4007,1266 +3975,1270 @@
             },
             "id": 2,
             "panels": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "description": "Fetching already saved payment methods (`payments/v4/methods`).",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "axisSoftMax": 100,
+                                "axisSoftMin": 0,
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 25,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": true,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 0,
+                        "y": 90
+                    },
+                    "id": 17,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                            "hide": true,
+                            "interval": "$increase_interval",
+                            "legendFormat": "Successes",
+                            "range": true,
+                            "refId": "S"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
+                            "hide": true,
+                            "interval": "$increase_interval",
+                            "legendFormat": "Failures",
+                            "range": true,
+                            "refId": "F"
+                        },
+                        {
+                            "datasource": {
+                                "type": "__expr__",
+                                "uid": "__expr__"
+                            },
+                            "expression": "$sf_availability",
+                            "hide": false,
+                            "refId": "Availability",
+                            "type": "math"
+                        }
+                    ],
+                    "title": "Get payment methods - availability/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 8,
+                        "y": 90
+                    },
+                    "id": 18,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Get payment methods - successes/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 16,
+                        "y": 90
+                    },
+                    "id": 19,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Get payment methods - failures/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "description": "Validate a plan before subscribing (`payments/v4/subscription/check`).",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "axisSoftMax": 100,
+                                "axisSoftMin": 0,
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 25,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "percent"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 0,
+                        "y": 98
+                    },
+                    "id": 14,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_validatePlan_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "Successes",
+                            "range": true,
+                            "refId": "S"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_validatePlan_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "hide": false,
+                            "interval": "$increase_interval",
+                            "legendFormat": "Failures",
+                            "range": true,
+                            "refId": "F"
+                        },
+                        {
+                            "datasource": {
+                                "type": "__expr__",
+                                "uid": "__expr__"
+                            },
+                            "expression": "$sf_availability",
+                            "hide": false,
+                            "refId": "C",
+                            "type": "math"
+                        }
+                    ],
+                    "title": "Validate plan - availability/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 8,
+                        "y": 98
+                    },
+                    "id": 15,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_validatePlan_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Validate plan - successes/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 16,
+                        "y": 98
+                    },
+                    "id": 16,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_validatePlan_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Validate plan - failures/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "description": "Creating a payment token when paying with an existing payment method.",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "axisSoftMax": 100,
+                                "axisSoftMin": 0,
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 25,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "percent"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 0,
+                        "y": 106
+                    },
+                    "id": 10,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "Successes",
+                            "range": true,
+                            "refId": "S"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "hide": false,
+                            "interval": "$increase_interval",
+                            "legendFormat": "Failures",
+                            "range": true,
+                            "refId": "F"
+                        },
+                        {
+                            "datasource": {
+                                "type": "__expr__",
+                                "uid": "__expr__"
+                            },
+                            "expression": "$sf_availability",
+                            "hide": false,
+                            "refId": "C",
+                            "type": "math"
+                        }
+                    ],
+                    "title": "Create payment token - availability/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 8,
+                        "y": 106
+                    },
+                    "id": 12,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Create payment token - successes/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 16,
+                        "y": 106
+                    },
+                    "id": 13,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Create payment token - failures/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "description": "Creating or updating a subscription using an existing payment method (`payments/v4/subscription`).",
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "axisSoftMax": 100,
+                                "axisSoftMin": 0,
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 25,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "percent"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 0,
+                        "y": 114
+                    },
+                    "id": 8,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "multi",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_subscribe_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "Successes",
+                            "range": true,
+                            "refId": "S"
+                        },
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "code",
+                            "expr": "sum(increase(client_android_core_checkout_paymentMethods_subscribe_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "hide": false,
+                            "interval": "$increase_interval",
+                            "legendFormat": "Failures",
+                            "range": true,
+                            "refId": "F"
+                        },
+                        {
+                            "datasource": {
+                                "type": "__expr__",
+                                "uid": "__expr__"
+                            },
+                            "expression": "$sf_availability",
+                            "hide": false,
+                            "refId": "C",
+                            "type": "math"
+                        }
+                    ],
+                    "title": "Subscribe - availability/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 8,
+                        "y": 114
+                    },
+                    "id": 4,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_subscribe_total{status=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Subscribe - successes/$increase_interval",
+                    "type": "timeseries"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "fieldConfig": {
+                        "defaults": {
+                            "color": {
+                                "mode": "palette-classic"
+                            },
+                            "custom": {
+                                "axisCenteredZero": false,
+                                "axisColorMode": "text",
+                                "axisLabel": "",
+                                "axisPlacement": "auto",
+                                "barAlignment": 0,
+                                "drawStyle": "line",
+                                "fillOpacity": 0,
+                                "gradientMode": "none",
+                                "hideFrom": {
+                                    "legend": false,
+                                    "tooltip": false,
+                                    "viz": false
+                                },
+                                "lineInterpolation": "linear",
+                                "lineWidth": 1,
+                                "pointSize": 5,
+                                "scaleDistribution": {
+                                    "type": "linear"
+                                },
+                                "showPoints": "auto",
+                                "spanNulls": false,
+                                "stacking": {
+                                    "group": "A",
+                                    "mode": "none"
+                                },
+                                "thresholdsStyle": {
+                                    "mode": "off"
+                                }
+                            },
+                            "mappings": [
+                            ],
+                            "thresholds": {
+                                "mode": "absolute",
+                                "steps": [
+                                    {
+                                        "color": "green",
+                                        "value": null
+                                    },
+                                    {
+                                        "color": "red",
+                                        "value": 80
+                                    }
+                                ]
+                            }
+                        },
+                        "overrides": [
+                        ]
+                    },
+                    "gridPos": {
+                        "h": 8,
+                        "w": 8,
+                        "x": 16,
+                        "y": 114
+                    },
+                    "id": 6,
+                    "options": {
+                        "legend": {
+                            "calcs": [
+                            ],
+                            "displayMode": "list",
+                            "placement": "bottom",
+                            "showLegend": true
+                        },
+                        "tooltip": {
+                            "mode": "single",
+                            "sort": "none"
+                        }
+                    },
+                    "targets": [
+                        {
+                            "datasource": {
+                                "type": "prometheus",
+                                "uid": "prometheus"
+                            },
+                            "editorMode": "builder",
+                            "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_subscribe_total{status!=\"http2xx\"}[$increase_interval]))",
+                            "interval": "$increase_interval",
+                            "legendFormat": "__auto",
+                            "range": true,
+                            "refId": "A"
+                        }
+                    ],
+                    "title": "Subscribe - failures/$increase_interval",
+                    "type": "timeseries"
+                }
             ],
             "title": "Existing payment methods",
             "type": "row"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "description": "Fetching already saved payment methods (`payments/v4/methods`).",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "axisSoftMax": 100,
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 25,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": true,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
-                "y": 90
-            },
-            "id": 17,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
-                    "hide": true,
-                    "interval": "$increase_interval",
-                    "legendFormat": "Successes",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "code",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
-                    "hide": true,
-                    "interval": "$increase_interval",
-                    "legendFormat": "Failures",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "type": "__expr__",
-                        "uid": "__expr__"
-                    },
-                    "expression": "$A / ($A + $B) * 100",
-                    "hide": false,
-                    "refId": "Availability",
-                    "type": "math"
-                }
-            ],
-            "title": "Get payment methods - availability/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 8,
-                "y": 90
-            },
-            "id": 18,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Get payment methods - successes/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 90
-            },
-            "id": 19,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_getPaymentMethods_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Get payment methods - failures/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "description": "Validate a plan before subscribing (`payments/v4/subscription/check`).",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 25,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "percent"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
-                "y": 98
-            },
-            "id": 14,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_validatePlan_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "Successes",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_validatePlan_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "hide": false,
-                    "interval": "$increase_interval",
-                    "legendFormat": "Failures",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "name": "Expression",
-                        "type": "__expr__",
-                        "uid": "__expr__"
-                    },
-                    "expression": "$A / ($A + $B) * 100",
-                    "hide": false,
-                    "refId": "C",
-                    "type": "math"
-                }
-            ],
-            "title": "Validate plan - availability/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 8,
-                "y": 98
-            },
-            "id": 15,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_validatePlan_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Validate plan - successes/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 98
-            },
-            "id": 16,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_validatePlan_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Validate plan - failures/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "description": "Creating a payment token when paying with an existing payment method.",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 25,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "percent"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
-                "y": 106
-            },
-            "id": 10,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "Successes",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "hide": false,
-                    "interval": "$increase_interval",
-                    "legendFormat": "Failures",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "name": "Expression",
-                        "type": "__expr__",
-                        "uid": "__expr__"
-                    },
-                    "expression": "$A / ($A + $B) * 100",
-                    "hide": false,
-                    "refId": "C",
-                    "type": "math"
-                }
-            ],
-            "title": "Create payment token - availability/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 8,
-                "y": 106
-            },
-            "id": 12,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Create payment token - successes/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 106
-            },
-            "id": 13,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_createPaymentToken_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Create payment token - failures/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "description": "Creating or updating a subscription using an existing payment method (`payments/v4/subscription`).",
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 25,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "percent"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 0,
-                "y": 114
-            },
-            "id": 8,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "multi",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_subscribe_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "Successes",
-                    "range": true,
-                    "refId": "A"
-                },
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum(increase(client_android_core_checkout_paymentMethods_subscribe_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "hide": false,
-                    "interval": "$increase_interval",
-                    "legendFormat": "Failures",
-                    "range": true,
-                    "refId": "B"
-                },
-                {
-                    "datasource": {
-                        "name": "Expression",
-                        "type": "__expr__",
-                        "uid": "__expr__"
-                    },
-                    "expression": "$A / ($A + $B) * 100",
-                    "hide": false,
-                    "refId": "C",
-                    "type": "math"
-                }
-            ],
-            "title": "Subscribe - availability/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 8,
-                "y": 114
-            },
-            "id": 4,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_subscribe_total{status=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Subscribe - successes/$increase_interval",
-            "type": "timeseries"
-        },
-        {
-            "datasource": {
-                "type": "prometheus",
-                "uid": "prometheus"
-            },
-            "fieldConfig": {
-                "defaults": {
-                    "color": {
-                        "mode": "palette-classic"
-                    },
-                    "custom": {
-                        "axisCenteredZero": false,
-                        "axisColorMode": "text",
-                        "axisLabel": "",
-                        "axisPlacement": "auto",
-                        "barAlignment": 0,
-                        "drawStyle": "line",
-                        "fillOpacity": 0,
-                        "gradientMode": "none",
-                        "hideFrom": {
-                            "legend": false,
-                            "tooltip": false,
-                            "viz": false
-                        },
-                        "lineInterpolation": "linear",
-                        "lineWidth": 1,
-                        "pointSize": 5,
-                        "scaleDistribution": {
-                            "type": "linear"
-                        },
-                        "showPoints": "auto",
-                        "spanNulls": false,
-                        "stacking": {
-                            "group": "A",
-                            "mode": "none"
-                        },
-                        "thresholdsStyle": {
-                            "mode": "off"
-                        }
-                    },
-                    "mappings": [
-                    ],
-                    "thresholds": {
-                        "mode": "absolute",
-                        "steps": [
-                            {
-                                "color": "green",
-                                "value": null
-                            },
-                            {
-                                "color": "red",
-                                "value": 80
-                            }
-                        ]
-                    }
-                },
-                "overrides": [
-                ]
-            },
-            "gridPos": {
-                "h": 8,
-                "w": 8,
-                "x": 16,
-                "y": 114
-            },
-            "id": 6,
-            "options": {
-                "legend": {
-                    "calcs": [
-                    ],
-                    "displayMode": "list",
-                    "placement": "bottom",
-                    "showLegend": true
-                },
-                "tooltip": {
-                    "mode": "single",
-                    "sort": "none"
-                }
-            },
-            "targets": [
-                {
-                    "datasource": {
-                        "type": "prometheus",
-                        "uid": "prometheus"
-                    },
-                    "editorMode": "builder",
-                    "expr": "sum by(status) (increase(client_android_core_checkout_paymentMethods_subscribe_total{status!=\"http2xx\"}[$increase_interval]))",
-                    "interval": "$increase_interval",
-                    "legendFormat": "__auto",
-                    "range": true,
-                    "refId": "A"
-                }
-            ],
-            "title": "Subscribe - failures/$increase_interval",
-            "type": "timeseries"
         }
     ],
-    "refresh": "",
-    "schemaVersion": 37,
+    "refresh": "1m",
+    "schemaVersion": 38,
     "style": "dark",
     "tags": [
     ],
@@ -5345,6 +5317,26 @@
                 "refresh": 2,
                 "skipUrlSync": false,
                 "type": "interval"
+            },
+            {
+                "current": {
+                    "selected": false,
+                    "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                    "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                },
+                "description": "$S - successes\n$F - failures\n\nThe formula for availability percentage (S / (S+F)), but in case both $S and $F are `0`, the availability is set to 100%.",
+                "hide": 2,
+                "name": "sf_availability",
+                "options": [
+                    {
+                        "selected": false,
+                        "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                        "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
+                    }
+                ],
+                "query": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
+                "skipUrlSync": false,
+                "type": "constant"
             }
         ]
     },
@@ -5357,6 +5349,6 @@
     "timezone": "",
     "title": "Android / Checkout",
     "uid": "gnNWal14k",
-    "version": 4,
+    "version": 7,
     "weekStart": ""
 }
