@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,15 +76,3 @@ data class PlanOfferPricing(
     val yearly: Int? = null,
     val twoYearly: Int? = null
 )
-
-/**
- * @param customerId Customer ID used with the vendor.
- * @param names Mapping from plan duration (cycle) to vendor plan name.
- */
-data class PlanVendorData constructor(
-    val customerId: String,
-    val names: Map<PlanDuration, String>
-)
-
-@JvmInline
-value class PlanDuration(val months: Int)
