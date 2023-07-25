@@ -40,6 +40,7 @@ import me.proton.core.eventmanager.data.extension.runInTransaction
 import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManager
 import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.LogTag
 import me.proton.core.eventmanager.domain.entity.EventId
 import me.proton.core.eventmanager.domain.entity.EventMetadata
 import me.proton.core.eventmanager.domain.entity.EventsResponse

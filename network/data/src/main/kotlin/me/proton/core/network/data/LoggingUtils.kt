@@ -19,6 +19,7 @@ package me.proton.core.network.data
 
 import android.os.SystemClock
 import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.LogTag
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

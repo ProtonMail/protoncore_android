@@ -19,6 +19,7 @@
 package me.proton.core.humanverification.data
 
 import me.proton.core.crypto.common.srp.SrpChallenge
+import me.proton.core.humanverification.domain.LogTag
 import me.proton.core.network.domain.deviceverification.ChallengeType.Argon2
 import me.proton.core.network.domain.deviceverification.ChallengeType.Ecdlp
 import me.proton.core.network.domain.deviceverification.ChallengeType.WASM

@@ -32,16 +32,13 @@ android {
 dependencies {
     implementation(
         project(Module.kotlinUtil),
-        project(Module.presentation),
-        project(Module.networkData),
-        project(Module.eventManagerData),
-        project(Module.accountManagerData),
+        project(Module.networkDomain),
+        project(Module.eventManagerDomain),
+        project(Module.accountManagerDomain),
         `timber`,
     )
 
     api(
         `sentry`,
-        `sentry-android-core`,
-        `sentry-timber`
     )
 }

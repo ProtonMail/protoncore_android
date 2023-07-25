@@ -20,7 +20,7 @@ package me.proton.core.humanverification.data.utils
 
 import androidx.annotation.VisibleForTesting
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
-import me.proton.core.network.data.LogTag
+import me.proton.core.network.domain.LogTag
 import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.di.SharedOkHttpClient
 import me.proton.core.network.data.initSPKIleafPinning

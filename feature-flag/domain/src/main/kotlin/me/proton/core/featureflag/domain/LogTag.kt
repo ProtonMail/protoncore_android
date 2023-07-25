@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.data
+package me.proton.core.featureflag.domain
 
 public object LogTag {
     /** Tag for feature flags not found. */

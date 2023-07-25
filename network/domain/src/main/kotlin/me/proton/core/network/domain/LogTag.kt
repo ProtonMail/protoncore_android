@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.network.data
+package me.proton.core.network.domain
 
 import me.proton.core.util.kotlin.LoggerLogTag
 

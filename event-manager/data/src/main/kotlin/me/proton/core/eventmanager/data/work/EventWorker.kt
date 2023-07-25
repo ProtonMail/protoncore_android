@@ -30,7 +30,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import me.proton.core.eventmanager.data.LogTag
+import me.proton.core.eventmanager.domain.LogTag
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.work.EventWorkerManager

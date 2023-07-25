@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.eventmanager.data
+package me.proton.core.eventmanager.domain
 
 import me.proton.core.util.kotlin.LoggerLogTag
 

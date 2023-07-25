@@ -18,10 +18,10 @@
 
 package me.proton.core.accountmanager.data
 
-import me.proton.core.accountmanager.data.LogTag.SESSION_CREATE
-import me.proton.core.accountmanager.data.LogTag.SESSION_FORCE_LOGOUT
-import me.proton.core.accountmanager.data.LogTag.SESSION_REFRESH
-import me.proton.core.accountmanager.data.LogTag.SESSION_SCOPES
+import me.proton.core.accountmanager.domain.LogTag.SESSION_CREATE
+import me.proton.core.accountmanager.domain.LogTag.SESSION_FORCE_LOGOUT
+import me.proton.core.accountmanager.domain.LogTag.SESSION_REFRESH
+import me.proton.core.accountmanager.domain.LogTag.SESSION_SCOPES
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session

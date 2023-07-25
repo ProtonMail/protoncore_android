@@ -18,7 +18,7 @@
 
 package me.proton.core.network.data.interceptor
 
-import me.proton.core.network.data.LogTag
+import me.proton.core.network.domain.LogTag
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Interceptor

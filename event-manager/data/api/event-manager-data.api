@@ -87,15 +87,6 @@ public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : m
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/eventmanager/data/LogTag {
-	public static final field COLLECT_ERROR Ljava/lang/String;
-	public static final field FETCH_ERROR Ljava/lang/String;
-	public static final field INSTANCE Lme/proton/core/eventmanager/data/LogTag;
-	public static final field NOTIFY_ERROR Ljava/lang/String;
-	public static final field WORKER_ERROR Ljava/lang/String;
-	public final fun getREPORT_MAX_RETRY-WnFgrgw ()Ljava/lang/String;
-}
-
 public abstract interface class me/proton/core/eventmanager/data/api/EventApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
 	public abstract fun getEvents (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLatestEventId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

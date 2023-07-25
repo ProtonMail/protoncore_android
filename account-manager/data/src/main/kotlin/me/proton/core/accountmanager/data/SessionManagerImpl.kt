@@ -23,6 +23,7 @@ import kotlinx.coroutines.sync.withLock
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.accountmanager.domain.LogTag
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.UserId

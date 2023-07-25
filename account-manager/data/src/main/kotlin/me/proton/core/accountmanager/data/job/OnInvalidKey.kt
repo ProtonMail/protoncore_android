@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.data.AccountStateHandler
-import me.proton.core.accountmanager.data.LogTag
+import me.proton.core.accountmanager.domain.LogTag
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.areAllInactive

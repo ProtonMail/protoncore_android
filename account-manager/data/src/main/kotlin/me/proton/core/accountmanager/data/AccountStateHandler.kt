@@ -25,6 +25,7 @@ import me.proton.core.accountmanager.data.job.onInvalidUserAddressKey
 import me.proton.core.accountmanager.data.job.onInvalidUserKey
 import me.proton.core.accountmanager.data.job.onMigrationNeeded
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.LogTag
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup
 import me.proton.core.domain.entity.Product

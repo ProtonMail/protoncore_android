@@ -21,7 +21,7 @@ package me.proton.core.featureflag.data.remote
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.LogTag
+import me.proton.core.featureflag.domain.LogTag
 import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag

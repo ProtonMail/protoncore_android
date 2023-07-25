@@ -228,6 +228,15 @@ public final class me/proton/core/network/domain/HttpResponseCodes {
 	public static final field INSTANCE Lme/proton/core/network/domain/HttpResponseCodes;
 }
 
+public final class me/proton/core/network/domain/LogTag {
+	public static final field DEFAULT Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/network/domain/LogTag;
+	public final fun getAPI_ERROR-WnFgrgw ()Ljava/lang/String;
+	public final fun getAPI_REQUEST-WnFgrgw ()Ljava/lang/String;
+	public final fun getAPI_RESPONSE-WnFgrgw ()Ljava/lang/String;
+	public final fun getSERVER_TIME_PARSE_ERROR-WnFgrgw ()Ljava/lang/String;
+}
+
 public abstract class me/proton/core/network/domain/NetworkManager {
 	public fun <init> ()V
 	public abstract fun getNetworkStatus ()Lme/proton/core/network/domain/NetworkStatus;

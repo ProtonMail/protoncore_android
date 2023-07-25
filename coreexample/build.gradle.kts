@@ -259,6 +259,7 @@ dependencies {
         `room-ktx`,
         retrofit,
         timber,
+        `sentry-android-core`,
         `ez-vcard`
     )
 

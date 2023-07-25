@@ -1,4 +1,4 @@
-package me.proton.core.accountmanager.data
+package me.proton.core.accountmanager.domain
 
 import me.proton.core.util.kotlin.LoggerLogTag
 

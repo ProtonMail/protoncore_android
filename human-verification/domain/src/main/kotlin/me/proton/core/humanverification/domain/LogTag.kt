@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.data
+package me.proton.core.humanverification.domain
 
 object LogTag {
     /** Default tag for this module. */

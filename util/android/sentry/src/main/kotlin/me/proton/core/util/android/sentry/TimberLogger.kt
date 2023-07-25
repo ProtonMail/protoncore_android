@@ -18,12 +18,12 @@
 
 package me.proton.core.util.android.sentry
 
-import me.proton.core.accountmanager.data.LogTag.SESSION_FORCE_LOGOUT
-import me.proton.core.eventmanager.data.LogTag.REPORT_MAX_RETRY
-import me.proton.core.network.data.LogTag.API_ERROR
-import me.proton.core.network.data.LogTag.API_REQUEST
-import me.proton.core.network.data.LogTag.API_RESPONSE
-import me.proton.core.network.data.LogTag.SERVER_TIME_PARSE_ERROR
+import me.proton.core.accountmanager.domain.LogTag.SESSION_FORCE_LOGOUT
+import me.proton.core.eventmanager.domain.LogTag.REPORT_MAX_RETRY
+import me.proton.core.network.domain.LogTag.API_ERROR
+import me.proton.core.network.domain.LogTag.API_REQUEST
+import me.proton.core.network.domain.LogTag.API_RESPONSE
+import me.proton.core.network.domain.LogTag.SERVER_TIME_PARSE_ERROR
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.util.kotlin.Logger

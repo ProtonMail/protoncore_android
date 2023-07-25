@@ -25,6 +25,18 @@ public final class me/proton/core/accountmanager/domain/AccountManagerExtensions
 	public static synthetic fun onSessionState$default (Lme/proton/core/accountmanager/domain/AccountManager;[Lme/proton/core/account/domain/entity/SessionState;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 }
 
+public final class me/proton/core/accountmanager/domain/LogTag {
+	public static final field DEFAULT Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/accountmanager/domain/LogTag;
+	public static final field INVALID_USER_ADDRESS_KEY Ljava/lang/String;
+	public static final field INVALID_USER_KEY Ljava/lang/String;
+	public final fun getSESSION_CREATE-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_FORCE_LOGOUT-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_REFRESH-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_REQUEST-WnFgrgw ()Ljava/lang/String;
+	public final fun getSESSION_SCOPES-WnFgrgw ()Ljava/lang/String;
+}
+
 public abstract interface class me/proton/core/accountmanager/domain/SessionManager : me/proton/core/network/domain/session/SessionProvider {
 	public abstract fun refreshScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun refreshSession (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
