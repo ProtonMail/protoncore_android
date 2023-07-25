@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [14.0.1] - 2023-07-25
+
+### Refactoring
+
+- Moved LogTag to domain layer.
+
 ## [14.0.0] - 2023-07-21
 
 ### Chores
