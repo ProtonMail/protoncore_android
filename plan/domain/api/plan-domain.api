@@ -17,6 +17,191 @@ public abstract interface annotation class me/proton/core/plan/domain/SupportSig
 public abstract interface annotation class me/proton/core/plan/domain/SupportUpgradePaidPlans : java/lang/annotation/Annotation {
 }
 
+public final class me/proton/core/plan/domain/entity/DynamicPlan {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanType;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/List;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanType;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/List;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/util/List;
+	public final fun component11 ()Lme/proton/core/domain/type/StringEnum;
+	public final fun component12 ()Ljava/util/List;
+	public final fun component13 ()Ljava/lang/String;
+	public final fun component14 ()Ljava/util/EnumSet;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Lme/proton/core/plan/domain/entity/DynamicPlanState;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/plan/domain/entity/DynamicPlanType;
+	public final fun component6 ()Ljava/util/List;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/util/List;
+	public final fun component9 ()Ljava/util/EnumSet;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanType;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/List;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;)Lme/proton/core/plan/domain/entity/DynamicPlan;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlan;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlanType;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/List;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlan;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDecorations ()Ljava/util/List;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEntitlements ()Ljava/util/List;
+	public final fun getFeatures ()Ljava/util/EnumSet;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getInstances ()Ljava/util/List;
+	public final fun getLayout ()Lme/proton/core/domain/type/StringEnum;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOffers ()Ljava/util/List;
+	public final fun getParentMetaPlanID ()Ljava/lang/String;
+	public final fun getServices ()Ljava/util/EnumSet;
+	public final fun getState ()Lme/proton/core/plan/domain/entity/DynamicPlanState;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Lme/proton/core/plan/domain/entity/DynamicPlanType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/plan/domain/entity/DynamicPlanDecoration {
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanDecoration$Star : me/proton/core/plan/domain/entity/DynamicPlanDecoration {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanDecoration$Star;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanDecoration$Star;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanDecoration$Star;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIconSvg ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/plan/domain/entity/DynamicPlanEntitlement {
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanEntitlement$Description : me/proton/core/plan/domain/entity/DynamicPlanEntitlement {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanEntitlement$Description;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanEntitlement$Description;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanEntitlement$Description;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHint ()Ljava/lang/String;
+	public final fun getIconBase64 ()Ljava/lang/String;
+	public final fun getIconName ()Ljava/lang/String;
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanEntitlement$Storage : me/proton/core/plan/domain/entity/DynamicPlanEntitlement {
+	public fun <init> (JJ)V
+	public final fun component1 ()J
+	public final fun component2 ()J
+	public final fun copy (JJ)Lme/proton/core/plan/domain/entity/DynamicPlanEntitlement$Storage;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanEntitlement$Storage;JJILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanEntitlement$Storage;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCurrent ()J
+	public final fun getMax ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanFeature : java/lang/Enum {
+	public static final field CatchAll Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
+	public final fun getCode ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanInstance {
+	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/time/Instant;Lme/proton/core/plan/domain/entity/DynamicPlanPrice;Ljava/util/Map;)V
+	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/time/Instant;Lme/proton/core/plan/domain/entity/DynamicPlanPrice;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/time/Instant;
+	public final fun component5 ()Lme/proton/core/plan/domain/entity/DynamicPlanPrice;
+	public final fun component6 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;ILjava/lang/String;Ljava/time/Instant;Lme/proton/core/plan/domain/entity/DynamicPlanPrice;Ljava/util/Map;)Lme/proton/core/plan/domain/entity/DynamicPlanInstance;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanInstance;Ljava/lang/String;ILjava/lang/String;Ljava/time/Instant;Lme/proton/core/plan/domain/entity/DynamicPlanPrice;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanInstance;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getMonths ()I
+	public final fun getPeriodEnd ()Ljava/time/Instant;
+	public final fun getPrice ()Lme/proton/core/plan/domain/entity/DynamicPlanPrice;
+	public final fun getVendors ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanLayout : java/lang/Enum {
+	public static final field Default Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
+	public final fun getCode ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanOffer {
+	public fun <init> (Ljava/lang/String;Ljava/time/Instant;Ljava/time/Instant;ILjava/util/List;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/time/Instant;
+	public final fun component3 ()Ljava/time/Instant;
+	public final fun component4 ()I
+	public final fun component5 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/time/Instant;Ljava/time/Instant;ILjava/util/List;)Lme/proton/core/plan/domain/entity/DynamicPlanOffer;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanOffer;Ljava/lang/String;Ljava/time/Instant;Ljava/time/Instant;ILjava/util/List;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanOffer;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEndTime ()Ljava/time/Instant;
+	public final fun getMonths ()I
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPrice ()Ljava/util/List;
+	public final fun getStartTime ()Ljava/time/Instant;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanPrice {
+	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;)V
+	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;ILjava/lang/Integer;)Lme/proton/core/plan/domain/entity/DynamicPlanPrice;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanPrice;Ljava/lang/String;ILjava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanPrice;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCurrency ()Ljava/lang/String;
+	public final fun getCurrent ()I
+	public final fun getDefault ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanService : java/lang/Enum {
+	public static final field Calendar Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public static final field Drive Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public static final field Mail Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public static final field Pass Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public static final field Vpn Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public final fun getCode ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanService;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanState : java/lang/Enum {
+	public static final field Available Lme/proton/core/plan/domain/entity/DynamicPlanState;
+	public static final field Unavailable Lme/proton/core/plan/domain/entity/DynamicPlanState;
+	public final fun getCode ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanState;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanState;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanType : java/lang/Enum {
+	public static final field Free Lme/proton/core/plan/domain/entity/DynamicPlanType;
+	public static final field Primary Lme/proton/core/plan/domain/entity/DynamicPlanType;
+	public static final field Secondary Lme/proton/core/plan/domain/entity/DynamicPlanType;
+	public final fun getCode ()Ljava/lang/Integer;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanType;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanType;
+}
+
 public final class me/proton/core/plan/domain/entity/Plan {
 	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V

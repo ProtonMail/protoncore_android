@@ -16,36 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.plan.domain.entity
 
-plugins {
-    protonKotlinLibrary
-}
+import java.time.Instant
 
-protonBuild {
-    apiModeDisabled()
-}
-
-protonCoverage {
-    minBranchCoveragePercentage.set(41)
-    minLineCoveragePercentage.set(42)
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.domain),
-        `javax-inject`
-    )
-
-    implementation(
-        project(Module.kotlinUtil)
-    )
-
-    testImplementation(
-        `coroutines-test`,
-        junit,
-        mockk
-    )
-}
+data class DynamicPlanOffer(
+    val name: String,
+    val startTime: Instant,
+    val endTime: Instant,
+    val months: Int,
+    val price: List<DynamicPlanPrice>
+)

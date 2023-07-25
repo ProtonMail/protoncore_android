@@ -16,36 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.plan.domain.entity
 
-plugins {
-    protonKotlinLibrary
-}
-
-protonBuild {
-    apiModeDisabled()
-}
-
-protonCoverage {
-    minBranchCoveragePercentage.set(41)
-    minLineCoveragePercentage.set(42)
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.domain),
-        `javax-inject`
-    )
-
-    implementation(
-        project(Module.kotlinUtil)
-    )
-
-    testImplementation(
-        `coroutines-test`,
-        junit,
-        mockk
-    )
+sealed class DynamicPlanDecoration {
+    data class Star(val iconSvg: String) : DynamicPlanDecoration()
 }
