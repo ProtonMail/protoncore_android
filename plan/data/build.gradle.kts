@@ -43,12 +43,14 @@ dependencies {
         project(Module.domain),
         project(Module.planDomain),
         project(Module.networkData),
+        `hilt-android`,
         `javax-inject`,
     )
 
     implementation(
         project(Module.kotlinUtil),
         project(Module.networkDomain),
+        project(Module.featureFlagDomain),
         retrofit,
         serialization("core"),
         cache4k

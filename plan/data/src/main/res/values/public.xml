@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="core_feature_dynamic_plan_enabled" type="bool" />
+</resources>

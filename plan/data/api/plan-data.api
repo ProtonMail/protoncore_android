@@ -5,6 +5,18 @@ public final class me/proton/core/plan/data/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/plan/data/IsDynamicPlanEnabledImpl : me/proton/core/plan/domain/IsDynamicPlanEnabled {
+	public static final field Companion Lme/proton/core/plan/data/IsDynamicPlanEnabledImpl$Companion;
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
+public final class me/proton/core/plan/data/IsDynamicPlanEnabledImpl$Companion {
+	public final fun getFeatureId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
+}
+
 public final class me/proton/core/plan/data/repository/PlansRepositoryImpl : me/proton/core/plan/domain/repository/PlansRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
 	public fun getPlans (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
