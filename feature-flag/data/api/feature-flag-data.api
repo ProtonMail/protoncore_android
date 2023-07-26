@@ -2,6 +2,10 @@ public class hilt_aggregated_deps/_me_proton_core_featureflag_data_remote_worker
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_featureflag_data_remote_worker_FetchUnleashTogglesWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_featureflag_data_remote_worker_UpdateFeatureFlagWorker_HiltModule {
 	public fun <init> ()V
 }
@@ -16,9 +20,11 @@ public final class me/proton/core/featureflag/data/BuildConfig {
 public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrDefault (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lme/proton/core/featureflag/domain/entity/FeatureFlag;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Z
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observeOrDefault (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lme/proton/core/featureflag/domain/entity/FeatureFlag;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
+	public fun refreshAll (Lme/proton/core/domain/entity/UserId;)V
 	public fun update (Lme/proton/core/featureflag/domain/entity/FeatureFlag;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -83,6 +89,7 @@ public final class me/proton/core/featureflag/data/local/FeatureFlagLocalDataSou
 public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroidx/work/WorkManager;)V
 	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
 	public fun update (Lme/proton/core/featureflag/domain/entity/FeatureFlag;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -124,6 +131,133 @@ public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlag
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloadResource {
+	public static final field Companion Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
+	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getType ()Ljava/lang/String;
+	public final fun getValue ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashToggleResource {
+	public static final field Companion Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;)Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;
+	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;Ljava/lang/String;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;ILjava/lang/Object;)Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getVariant ()Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashToggleResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashToggleResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashVariantResource {
+	public static final field Companion Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource$Companion;
+	public synthetic fun <init> (ILjava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;)V
+	public synthetic fun <init> (Ljava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Z
+	public final fun component3 ()Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
+	public final fun copy (Ljava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;)Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
+	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Ljava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;ILjava/lang/Object;)Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEnabled ()Z
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPayload ()Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashVariantResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/resource/UnleashVariantResource$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse {
+	public static final field Companion Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$Companion;
+	public synthetic fun <init> (IILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (ILjava/util/List;)V
+	public final fun component1 ()I
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (ILjava/util/List;)Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;
+	public static synthetic fun copy$default (Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;ILjava/util/List;ILjava/lang/Object;)Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()I
+	public final fun getToggles ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
 }
 
@@ -142,6 +276,26 @@ public final class me/proton/core/featureflag/data/remote/worker/FetchFeatureIds
 
 public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_HiltModule {
 	public abstract fun bind (Lme/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_AssistedFactory_Impl : me/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker;
+	public static fun create (Lme/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/featureflag/domain/usecase/FetchUnleashTogglesRemote;)Lme/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker;
+}
+
+public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/featureflag/data/remote/worker/FetchUnleashTogglesWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 
 public abstract interface class me/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
@@ -167,17 +321,20 @@ public abstract interface class me/proton/core/featureflag/data/remote/worker/Up
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository {
 	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Ljava/lang/Boolean;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
+	public fun refreshAll (Lme/proton/core/domain/entity/UserId;)V
 	public fun update (Lme/proton/core/featureflag/domain/entity/FeatureFlag;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Landroidx/work/WorkManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
 }
 

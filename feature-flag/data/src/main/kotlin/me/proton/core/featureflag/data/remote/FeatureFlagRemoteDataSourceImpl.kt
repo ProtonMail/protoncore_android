@@ -21,6 +21,8 @@ package me.proton.core.featureflag.data.remote
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.data.remote.resource.UnleashToggleResource
+import me.proton.core.featureflag.data.remote.response.toFeatureFlag
 import me.proton.core.featureflag.domain.LogTag
 import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
@@ -35,6 +37,11 @@ public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val workManager: WorkManager
 ) : FeatureFlagRemoteDataSource {
+
+    override suspend fun getAll(userId: UserId?): List<FeatureFlag> =
+        apiProvider.get<FeaturesApi>(userId).invoke {
+            getUnleashToggles().toggles.map { it.toFeatureFlag(userId) }
+        }.valueOrThrow
 
     override suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag> =
         apiProvider.get<FeaturesApi>(userId).invoke {
@@ -65,6 +72,5 @@ public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
             ExistingWorkPolicy.REPLACE,
             FetchFeatureIdsWorker.getRequest(userId, featureIds),
         )
-
     }
 }

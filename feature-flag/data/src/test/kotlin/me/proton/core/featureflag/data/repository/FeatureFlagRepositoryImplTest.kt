@@ -18,6 +18,8 @@
 
 package me.proton.core.featureflag.data.repository
 
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import app.cash.turbine.test
 import io.mockk.Called
@@ -42,6 +44,7 @@ import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
+import me.proton.core.featureflag.data.remote.worker.FetchUnleashTogglesWorker
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureApiResponse
@@ -71,6 +74,9 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
@@ -91,7 +97,12 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         )
     }
     private val apiManagerFactory = mockk<ApiManagerFactory> {
-        every { this@mockk.create(any(), interfaceClass = FeaturesApi::class) } returns TestApiManager(featuresApi)
+        every {
+            this@mockk.create(
+                any(),
+                interfaceClass = FeaturesApi::class
+            )
+        } returns TestApiManager(featuresApi)
     }
     private val workManager = mockk<WorkManager>(relaxed = true)
 
@@ -108,6 +119,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         repository = FeatureFlagRepositoryImpl(
             local,
             remote,
+            workManager,
             TestCoroutineScopeProvider(coroutinesRule.dispatchers)
         )
     }
@@ -134,7 +146,11 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val dbFlow = flowOf(
             listOf(
                 enabledFeatureEntity.copy(userId = userId, scope = Scope.User, value = false),
-                enabledFeatureEntity.copy(userId = nullUserId.orGlobal(), scope = Scope.Global, value = true)
+                enabledFeatureEntity.copy(
+                    userId = nullUserId.orGlobal(),
+                    scope = Scope.Global,
+                    value = true
+                )
             )
         )
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
@@ -161,7 +177,11 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val dbFlow = flowOf(
             listOf(
                 enabledFeatureEntity.copy(userId = userId, scope = Scope.User, value = false),
-                enabledFeatureEntity.copy(userId = nullUserId.orGlobal(), scope = Scope.Global, value = true)
+                enabledFeatureEntity.copy(
+                    userId = nullUserId.orGlobal(),
+                    scope = Scope.Global,
+                    value = true
+                )
             )
         )
         coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns dbFlow
@@ -187,7 +207,12 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     fun featureFlagValueIsObservedInDb() = coroutinesTest {
         // Given
         val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
-        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
+        coEvery {
+            featureFlagDao.observe(
+                userId.withGlobal(),
+                listOf(featureId.id)
+            )
+        } returns mutableDbFlow
 
         // When
         repository.observe(userId, featureId).test {
@@ -211,27 +236,33 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     }
 
     @Test
-    fun featureFlagValueIsFetchedFromApiAndObservedInDbWhenNotAlreadyAvailableLocally() = coroutinesTest {
-        // Given
-        val mutableDbFlow = MutableStateFlow<List<FeatureFlagEntity>>(emptyList())
-        coEvery { featureFlagDao.observe(userId.withGlobal(), listOf(featureId.id)) } returns mutableDbFlow
+    fun featureFlagValueIsFetchedFromApiAndObservedInDbWhenNotAlreadyAvailableLocally() =
+        coroutinesTest {
+            // Given
+            val mutableDbFlow = MutableStateFlow<List<FeatureFlagEntity>>(emptyList())
+            coEvery {
+                featureFlagDao.observe(
+                    userId.withGlobal(),
+                    listOf(featureId.id)
+                )
+            } returns mutableDbFlow
 
-        // When
-        flowTest(repository.observe(userId, featureId)) {
-            // Then
-            // First item is emitted from DB is null
-            assertNull(awaitItem())
+            // When
+            flowTest(repository.observe(userId, featureId)) {
+                // Then
+                // First item is emitted from DB is null
+                assertNull(awaitItem())
 
-            // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
-            coVerify { featureFlagDao.insertOrUpdate(enabledFeatureEntity) }
+                // enabledFeatureFlagEntity is the corresponding entity that the mocked API response
+                coVerify { featureFlagDao.insertOrUpdate(enabledFeatureEntity) }
 
-            // Inserting the API response into DB causes it to be emitted
-            mutableDbFlow.emit(listOf(enabledFeatureEntity))
+                // Inserting the API response into DB causes it to be emitted
+                mutableDbFlow.emit(listOf(enabledFeatureEntity))
 
-            val expected = enabledFeature
-            assertEquals(expected, awaitItem())
+                val expected = enabledFeature
+                assertEquals(expected, awaitItem())
+            }
         }
-    }
 
     @Test
     fun featureFlagValuesAreFetchedFromApiWhenNotAllAvailableLocally() = coroutinesTest {
@@ -327,5 +358,139 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         // Then
         coVerify { local.upsert(listOf(featureFlag)) }
         coVerify { remote.update(featureFlag) }
+    }
+
+    @Test
+    fun getValueReturnTrue() = coroutinesTest {
+        // Given
+        val featureId = FeatureId("Test")
+        coEvery { remote.getAll(any()) } returns listOf(
+            FeatureFlag(
+                userId = userId,
+                featureId = featureId,
+                scope = Scope.Unleash,
+                defaultValue = false,
+                value = true
+            )
+        )
+        // When
+        repository.getAll(userId)
+        // Then
+        val result = repository.getValue(userId, featureId)
+        assertNotNull(result)
+        assertTrue(result)
+    }
+
+    @Test
+    fun getValueReturnFalse() = coroutinesTest {
+        // Given
+        val featureId = FeatureId("Test")
+        coEvery { remote.getAll(any()) } returns listOf(
+            FeatureFlag(
+                userId = userId,
+                featureId = featureId,
+                scope = Scope.Unleash,
+                defaultValue = false,
+                value = false
+            )
+        )
+        // When
+        repository.getAll(userId)
+        // Then
+        val result = repository.getValue(userId, featureId)
+        assertNotNull(result)
+        assertFalse(result)
+    }
+
+    @Test
+    fun getValueReturnNull() = coroutinesTest {
+        // Given
+        val featureId = FeatureId("Test")
+        coEvery { remote.getAll(userId) } returns emptyList()
+        // When
+        repository.getAll(userId)
+        // Then
+        val result = repository.getValue(userId, featureId)
+        assertNull(result)
+    }
+
+    @Test
+    fun getValueReturnTrueForUser1FalseForUser2() = coroutinesTest {
+        // Given
+        val userId1 = UserId("1")
+        val userId2 = UserId("2")
+        val featureId = FeatureId("Test")
+        coEvery { remote.getAll(userId1) } returns listOf(
+            FeatureFlag(
+                userId = userId,
+                featureId = featureId,
+                scope = Scope.Unleash,
+                defaultValue = false,
+                value = true
+            )
+        )
+        coEvery { remote.getAll(userId2) } returns listOf(
+            FeatureFlag(
+                userId = userId,
+                featureId = featureId,
+                scope = Scope.Unleash,
+                defaultValue = false,
+                value = false
+            )
+        )
+        // When
+        repository.getAll(userId1)
+        repository.getAll(userId2)
+        // Then
+        val result1 = repository.getValue(userId1, featureId)
+        assertNotNull(result1)
+        assertTrue(result1)
+
+        val result2 = repository.getValue(userId2, featureId)
+        assertNotNull(result2)
+        assertFalse(result2)
+    }
+
+    @Test
+    fun getValueReturnTrueThenNull() = coroutinesTest {
+        // Given
+        val featureId = FeatureId("Test")
+        coEvery { remote.getAll(userId) } returns listOf(
+            FeatureFlag(
+                userId = userId,
+                featureId = featureId,
+                scope = Scope.Unleash,
+                defaultValue = false,
+                value = true
+            )
+        )
+        // When
+        repository.getAll(userId)
+        // Then
+        val result1 = repository.getValue(userId, featureId)
+        assertNotNull(result1)
+        assertTrue(result1)
+
+        // Given
+        coEvery { remote.getAll(userId) } returns emptyList()
+        // When
+        repository.getAll(userId)
+        // Then
+        val result2 = repository.getValue(userId, featureId)
+        assertNull(result2)
+    }
+
+    @Test
+    fun refreshAllFeatureFlagsEnqueueWorker() = coroutinesTest {
+        // When
+        repository.refreshAll(userId)
+        // Then
+        coVerify {
+            workManager.enqueueUniqueWork(
+                /* uniqueWorkName = */ FetchUnleashTogglesWorker.getUniqueWorkName(userId),
+                /* existingWorkPolicy = */ ExistingWorkPolicy.REPLACE,
+                /* work = */ any<OneTimeWorkRequest>()
+            )
+        }
     }
 }

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -31,6 +32,17 @@ import javax.inject.Inject
 public class FeatureFlagManagerImpl @Inject internal constructor(
     private val repository: FeatureFlagRepository
 ) : FeatureFlagManager {
+
+    @ExperimentalProtonFeatureFlag
+    override fun getValue(
+        userId: UserId?,
+        featureId: FeatureId
+    ): Boolean = repository.getValue(userId, featureId) ?: false
+
+    @ExperimentalProtonFeatureFlag
+    override fun refreshAll(
+        userId: UserId?
+    ): Unit = repository.refreshAll(userId)
 
     override fun observe(
         userId: UserId?,

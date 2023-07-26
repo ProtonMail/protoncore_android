@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
- * This file is part of Proton AG and ProtonCore.
+ * Copyright (c) 2021 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.repository
+package me.proton.core.featureflag.domain.usecase
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
+import javax.inject.Inject
 
-public interface FeatureFlagRemoteDataSource {
-    public suspend fun getAll(userId: UserId?): List<FeatureFlag>
-    public suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag>
-    public suspend fun update(featureFlag: FeatureFlag)
-    public fun prefetch(userId: UserId?, featureIds: Set<FeatureId>)
+public class FetchUnleashTogglesRemote @Inject constructor(
+    private val repository: FeatureFlagRepository,
+) {
+    public suspend operator fun invoke(userId: UserId?) {
+        repository.getAll(userId = userId)
+    }
 }

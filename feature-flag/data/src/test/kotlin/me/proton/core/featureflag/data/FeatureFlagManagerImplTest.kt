@@ -31,6 +31,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId
 import me.proton.core.featureflag.data.testdata.UserIdTestData
+import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -40,6 +41,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
+@OptIn(ExperimentalProtonFeatureFlag::class)
 class FeatureFlagManagerImplTest {
 
     private val repository = mockk<FeatureFlagRepository>()
@@ -111,5 +113,30 @@ class FeatureFlagManagerImplTest {
 
         // Then
         coVerify { repository.update(featureFlag) }
+    }
+
+    @Test
+    fun getValueAllCallsRepository() = runTest {
+        // Given
+        val featureId = FeatureId("Test")
+        every { repository.getValue(any(), any()) } returns true
+
+        // When
+        manager.getValue(userId = null, featureId)
+
+        // Then
+        coVerify { repository.getValue(null, featureId) }
+    }
+
+    @Test
+    fun refreshAllCallsRepository() = runTest {
+        // Given
+        coEvery { repository.refreshAll(any()) } just Runs
+
+        // When
+        manager.refreshAll(userId = null)
+
+        // Then
+        coVerify { repository.refreshAll(null) }
     }
 }

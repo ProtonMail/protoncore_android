@@ -24,16 +24,30 @@ import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 
 /**
- * Manager to access Remote [FeatureFlag]s.
+ * Manager to access [FeatureFlag]s.
  *
- * The suggested usage is for clients to call [prefetch] at boot, passing a list of all the featureIds
- * that will be needed during the lifecycle. This will help ensuring that the flags' values are always
- * up-to-date with remote while avoiding to perform an API call to each time we need a flag.
+ * The suggested usage is for clients to call [prefetch] at boot.
  *
- * Clients should take care of implementing some logic to use default values when it wasn't possible to
- * receive them through this repo.
+ * Note: Clients should take care of implementing the logic to fallback to default value.
  */
 public interface FeatureFlagManager {
+
+    /**
+     * Get a feature flag value.
+     */
+    @ExperimentalProtonFeatureFlag
+    public fun getValue(
+        userId: UserId? = null,
+        featureId: FeatureId
+    ): Boolean
+
+    /**
+     * Fetches all feature flags from the remote source and stores them, in background.
+     */
+    @ExperimentalProtonFeatureFlag
+    public fun refreshAll(
+        userId: UserId? = null
+    )
 
     /**
      * Observe a feature flag value from the local source, if exist, or from remote source otherwise.
@@ -44,7 +58,12 @@ public interface FeatureFlagManager {
      *
      * @throws me.proton.core.network.domain.ApiException on remote source error
      */
-    public fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): Flow<FeatureFlag?>
+    @Deprecated("A new synchronous API will replace this.")
+    public fun observe(
+        userId: UserId?,
+        featureId: FeatureId,
+        refresh: Boolean = false
+    ): Flow<FeatureFlag?>
 
     /**
      * Observe a feature flag value from the local source, if exist, or from remote source otherwise.
@@ -53,6 +72,7 @@ public interface FeatureFlagManager {
      *
      * @return [FeatureFlag] or [default] if it is unknown remotely or on error.
      */
+    @Deprecated("A new synchronous API will replace this.")
     public fun observeOrDefault(
         userId: UserId?,
         featureId: FeatureId,
@@ -69,7 +89,12 @@ public interface FeatureFlagManager {
      *
      * @throws me.proton.core.network.domain.ApiException on remote source error
      */
-    public suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean = false): FeatureFlag?
+    @Deprecated("A new synchronous API will replace this.")
+    public suspend fun get(
+        userId: UserId?,
+        featureId: FeatureId,
+        refresh: Boolean = false
+    ): FeatureFlag?
 
     /**
      * Get a feature flag value from the local source, if exist, or from remote source otherwise.
@@ -78,6 +103,7 @@ public interface FeatureFlagManager {
      *
      * @return [FeatureFlag] or [default] if it is unknown remotely or on error.
      */
+    @Deprecated("A new synchronous API will replace this.")
     public suspend fun getOrDefault(
         userId: UserId?,
         featureId: FeatureId,
@@ -91,10 +117,22 @@ public interface FeatureFlagManager {
      * @param featureIds a set of features to be fetched. Passing any id that does not exist in the
      * remote source will not have no consequence (said ids will just be ignored).
      */
-    public fun prefetch(userId: UserId?, featureIds: Set<FeatureId>)
+    @Deprecated("A new synchronous API will replace this.")
+    public fun prefetch(
+        userId: UserId?,
+        featureIds: Set<FeatureId>
+    )
 
     /**
      * Updates the given feature flag with the given values
      */
-    public suspend fun update(featureFlag: FeatureFlag)
+    @Deprecated("A new synchronous API will replace this.")
+    public suspend fun update(
+        featureFlag: FeatureFlag
+    )
 }
+
+@RequiresOptIn(message = "This API is experimental. It may be changed in the future without notice.")
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
+public annotation class ExperimentalProtonFeatureFlag

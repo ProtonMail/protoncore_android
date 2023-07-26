@@ -50,4 +50,7 @@ public enum class Scope(public val value: Int) {
 
     /* For all Users. */
     Global(3),
+
+    /* Source: Unleash */
+    Unleash(4),
 }

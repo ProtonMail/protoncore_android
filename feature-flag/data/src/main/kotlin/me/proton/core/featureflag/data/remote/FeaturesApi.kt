@@ -20,6 +20,7 @@ package me.proton.core.featureflag.data.remote
 
 import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
+import me.proton.core.featureflag.data.remote.response.GetUnleashTogglesResponse
 import me.proton.core.featureflag.data.remote.response.PutFeatureResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import retrofit2.http.Body
@@ -29,6 +30,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 internal interface FeaturesApi : BaseRetrofitApi {
+
+    @GET("feature/v2/frontend")
+    suspend fun getUnleashToggles(): GetUnleashTogglesResponse
 
     /**
      * @param code can be a single featureId or a comma-separated list of featureIds (eg. "feature1,feature2,[...]")

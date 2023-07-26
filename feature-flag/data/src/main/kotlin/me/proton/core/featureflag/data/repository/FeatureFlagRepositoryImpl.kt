@@ -18,6 +18,8 @@
 
 package me.proton.core.featureflag.data.repository
 
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -26,6 +28,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.data.remote.worker.FetchUnleashTogglesWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.entity.Scope
@@ -40,6 +43,7 @@ import javax.inject.Singleton
 public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val localDataSource: FeatureFlagLocalDataSource,
     private val remoteDataSource: FeatureFlagRemoteDataSource,
+    private val workManager: WorkManager,
     scopeProvider: CoroutineScopeProvider
 ) : FeatureFlagRepository {
 
@@ -62,6 +66,32 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         )
     ).disableCache().buildProtonStore(scopeProvider)
 
+    private val unleashFeatureMap = mutableMapOf<UserId?, MutableMap<FeatureId, FeatureFlag>>()
+
+    override fun getValue(
+        userId: UserId?,
+        featureId: FeatureId
+    ): Boolean? = unleashFeatureMap[userId]?.get(featureId)?.value
+
+    override suspend fun getAll(
+        userId: UserId?
+    ): List<FeatureFlag> = remoteDataSource.getAll(userId).also { list ->
+        unleashFeatureMap.getOrPut(userId) { mutableMapOf() }.also { map ->
+            map.clear()
+            map.putAll(list.associateBy { flag -> flag.featureId })
+        }
+    }
+
+    override fun refreshAll(
+        userId: UserId?
+    ) {
+        workManager.enqueueUniqueWork(
+            FetchUnleashTogglesWorker.getUniqueWorkName(userId),
+            ExistingWorkPolicy.REPLACE,
+            FetchUnleashTogglesWorker.getRequest(userId),
+        )
+    }
+
     override fun observe(
         userId: UserId?,
         featureIds: Set<FeatureId>,
@@ -79,10 +109,18 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         if (refresh) store.fresh(key) else store.get(key)
     }.filterNot { flag -> flag.scope == Scope.Unknown }
 
-    override fun observe(userId: UserId?, featureId: FeatureId, refresh: Boolean): Flow<FeatureFlag?> =
+    override fun observe(
+        userId: UserId?,
+        featureId: FeatureId,
+        refresh: Boolean
+    ): Flow<FeatureFlag?> =
         observe(userId, setOf(featureId), refresh).map { it.firstOrNull() }
 
-    override suspend fun get(userId: UserId?, featureId: FeatureId, refresh: Boolean): FeatureFlag? =
+    override suspend fun get(
+        userId: UserId?,
+        featureId: FeatureId,
+        refresh: Boolean
+    ): FeatureFlag? =
         get(userId, setOf(featureId), refresh).firstOrNull()
 
     override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {

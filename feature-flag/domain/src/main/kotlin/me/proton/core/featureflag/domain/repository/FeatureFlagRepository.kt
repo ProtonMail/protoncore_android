@@ -29,6 +29,23 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 public interface FeatureFlagRepository {
 
     /**
+     * Get a feature flag value, synchronously.
+     *
+     * @return [Boolean] or `null` if it is unknown.
+     */
+    public fun getValue(userId: UserId? = null, featureId: FeatureId): Boolean?
+
+    /**
+     * Fetches all feature flags from the remote source, and update local.
+     */
+    public suspend fun getAll(userId: UserId? = null): List<FeatureFlag>
+
+    /**
+     * Fetches all feature flags from the remote source, update local, in background.
+     */
+    public fun refreshAll(userId: UserId? = null)
+
+    /**
      * Observe a feature flag value from the local source, if exist, or from remote source otherwise.
      *
      * @param refresh allows to force refresh against the remote source.
