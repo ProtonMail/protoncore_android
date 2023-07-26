@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,21 @@ package me.proton.core.plan.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.plan.data.api.response.DefaultPlanResponse
+import me.proton.core.plan.data.api.response.DynamicPlansResponse
 import me.proton.core.plan.data.api.response.PlansResponse
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 internal interface PlansApi : BaseRetrofitApi {
+    /**
+     * Returns a list of dynamic plans available at the moment.
+     * Plans can be filtered by [state] and/or [vendorName].
+     */
+    @GET("payments/v5/plans")
+    suspend fun getDynamicPlans(
+        @Query("state") state: Int? = null,
+        @Query("vendorName") vendorName: String? = null
+    ): DynamicPlansResponse
 
     /**
      * Returns from the API all plans available for the user in the moment.

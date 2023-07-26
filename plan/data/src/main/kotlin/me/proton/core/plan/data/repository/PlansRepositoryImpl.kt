@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,8 @@ import io.github.reactivecircus.cache4k.Cache
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.plan.data.api.PlansApi
+import me.proton.core.plan.data.api.response.toDynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Inject
@@ -32,13 +34,21 @@ import kotlin.time.Duration.Companion.minutes
 class PlansRepositoryImpl @Inject constructor(
     private val provider: ApiProvider
 ) : PlansRepository {
+    private val dynamicPlansCache =
+        Cache.Builder().expireAfterWrite(1.minutes).build<String, List<DynamicPlan>>()
+    private val plansCache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
 
-    private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
+    override suspend fun getDynamicPlans(sessionUserId: SessionUserId?): List<DynamicPlan> =
+        dynamicPlansCache.get(sessionUserId?.id ?: "") {
+            provider.get<PlansApi>(sessionUserId).invoke {
+                getDynamicPlans().plans.mapIndexed { index, resource -> resource.toDynamicPlan(index) }
+            }.valueOrThrow
+        }
 
     /**
      * Returns from the API all plans available for the user in the moment.
      */
-    override suspend fun getPlans(sessionUserId: SessionUserId?) = cache.get(Unit) {
+    override suspend fun getPlans(sessionUserId: SessionUserId?) = plansCache.get(Unit) {
         provider.get<PlansApi>(sessionUserId).invoke {
             getPlans().plans.map { it.toPlan() }
         }.valueOrThrow

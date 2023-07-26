@@ -24,6 +24,7 @@ import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.domain.type.IntEnum
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiException
@@ -32,6 +33,9 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.plan.data.api.PlansApi
+import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlanState
+import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanOffer
 import me.proton.core.plan.domain.entity.PlanOfferPricing
@@ -39,6 +43,7 @@ import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -285,5 +290,26 @@ class PlansRepositoryImplTest {
         // THEN
         assertNotNull(plansResponse)
         assertEquals("plan-id-1", plansResponse.id)
+    }
+
+    @Test
+    fun `get dynamic plans`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val plan = DynamicPlan(
+            id = "id",
+            name = "name",
+            order = 0,
+            state = DynamicPlanState.Available,
+            title = "title",
+            type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
+        )
+        val plans = listOf(plan)
+        coEvery { apiManager.invoke<List<DynamicPlan>>(any()) } returns ApiResult.Success(plans)
+
+        // WHEN
+        val result = repository.getDynamicPlans(sessionUserId = null)
+
+        // THEN
+        assertContentEquals(plans, result)
     }
 }

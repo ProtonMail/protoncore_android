@@ -28,14 +28,17 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(33)
-    minLineCoveragePercentage.set(83)
+    minBranchCoveragePercentage.set(59)
+    minLineCoveragePercentage.set(88)
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.plan.data"
+    compileOptions {
+        isCoreLibraryDesugaringEnabled = true
+    }
 }
 
 dependencies {
@@ -47,12 +50,15 @@ dependencies {
         `javax-inject`,
     )
 
+    coreLibraryDesugaring(`desugar-jdk-libs`)
+
     implementation(
         project(Module.kotlinUtil),
         project(Module.networkDomain),
         project(Module.featureFlagDomain),
         retrofit,
         serialization("core"),
+        `serialization-json`,
         cache4k
     )
 

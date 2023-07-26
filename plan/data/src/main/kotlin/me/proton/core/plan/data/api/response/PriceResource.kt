@@ -16,16 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.entity
+package me.proton.core.plan.data.api.response
 
-import me.proton.core.domain.entity.AppStore
-import java.time.Instant
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.plan.domain.entity.DynamicPlanPrice
 
-data class DynamicPlanInstance(
-    val id: String,
-    val months: Int,
-    val description: String,
-    val periodEnd: Instant,
-    val price: List<DynamicPlanPrice>,
-    val vendors: Map<AppStore, PlanVendorData> = emptyMap()
+@Serializable
+internal data class PriceResource(
+    @SerialName("Currency")
+    val currency: String,
+
+    @SerialName("Current")
+    val current: Int, // cents
+
+    @SerialName("Default")
+    val default: Int? = null // cents
+)
+
+internal fun PriceResource.toDynamicPlanPrice(): DynamicPlanPrice = DynamicPlanPrice(
+    currency = currency,
+    current = current,
+    default = default
 )

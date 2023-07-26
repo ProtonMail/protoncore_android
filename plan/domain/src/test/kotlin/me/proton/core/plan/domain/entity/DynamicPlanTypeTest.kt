@@ -18,14 +18,15 @@
 
 package me.proton.core.plan.domain.entity
 
-import me.proton.core.domain.entity.AppStore
-import java.time.Instant
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-data class DynamicPlanInstance(
-    val id: String,
-    val months: Int,
-    val description: String,
-    val periodEnd: Instant,
-    val price: List<DynamicPlanPrice>,
-    val vendors: Map<AppStore, PlanVendorData> = emptyMap()
-)
+class DynamicPlanTypeTest {
+    @Test
+    fun fromCodeToObject() {
+        assertEquals(DynamicPlanType.Secondary, DynamicPlanType.from(0))
+        assertEquals(DynamicPlanType.Primary, DynamicPlanType.from(1))
+        assertEquals(null, DynamicPlanType.from(2))
+        assertEquals(null, DynamicPlanType.from(-1))
+    }
+}

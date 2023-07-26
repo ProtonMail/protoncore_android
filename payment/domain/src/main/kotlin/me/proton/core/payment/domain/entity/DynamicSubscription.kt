@@ -39,5 +39,5 @@ public data class DynamicSubscription(
 
     val couponCode: String? = null,
     val decorations: List<DynamicPlanDecoration> = emptyList(),
-    val entitlements: List<DynamicPlanEntitlement> = emptyList(),
+    val entitlements: List<DynamicPlanEntitlement> = emptyList()
 )

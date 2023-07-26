@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,14 @@
 package me.proton.core.plan.domain.repository
 
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.Plan
 
 interface PlansRepository {
+    /**
+     * Returns a list of dynamic plans that are available for the user.
+     */
+    suspend fun getDynamicPlans(sessionUserId: SessionUserId?): List<DynamicPlan>
 
     /**
      * Returns from the API all plans available for the user in the moment.

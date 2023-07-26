@@ -27,7 +27,7 @@ sealed class DynamicPlanEntitlement {
     ) : DynamicPlanEntitlement()
 
     data class Storage(
-        val current: Long,
-        val max: Long
+        val currentMBytes: Long,
+        val maxMBytes: Long
     ) : DynamicPlanEntitlement()
 }

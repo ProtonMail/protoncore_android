@@ -16,16 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.entity
+package me.proton.core.plan.data.api.response
 
-import me.proton.core.domain.entity.AppStore
-import java.time.Instant
+import me.proton.core.util.kotlin.deserialize
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-data class DynamicPlanInstance(
-    val id: String,
-    val months: Int,
-    val description: String,
-    val periodEnd: Instant,
-    val price: List<DynamicPlanPrice>,
-    val vendors: Map<AppStore, PlanVendorData> = emptyMap()
-)
+class DynamicPlansResponseTest {
+    @Test
+    fun fromJsonToResource() {
+        assertEquals(
+            DynamicPlansResponse(
+                code = 1000,
+                plans = emptyList()
+            ),
+            """
+                {
+                "Code": 1000,
+                "Plans": []
+                }
+            """.trimIndent().deserialize()
+        )
+    }
+}

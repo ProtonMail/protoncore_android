@@ -18,15 +18,18 @@
 
 package me.proton.core.plan.domain.entity
 
+import me.proton.core.domain.entity.Product
+import me.proton.core.domain.type.IntEnum
 import me.proton.core.domain.type.StringEnum
 import java.util.EnumSet
 
 data class DynamicPlan(
     val id: String,
     val name: String, // code name
+    val order: Int,
     val state: DynamicPlanState,
     val title: String,
-    val type: DynamicPlanType,
+    val type: IntEnum<DynamicPlanType>?,
 
     val decorations: List<DynamicPlanDecoration> = emptyList(),
     val description: String? = null,
@@ -41,6 +44,22 @@ data class DynamicPlan(
     val parentMetaPlanID: String? = null,
     val services: EnumSet<DynamicPlanService> = EnumSet.noneOf(DynamicPlanService::class.java)
 )
+
+fun DynamicPlan.hasServiceFor(product: Product, exclusive: Boolean): Boolean {
+    val service = when (product) {
+        Product.Calendar -> DynamicPlanService.Calendar
+        Product.Drive -> DynamicPlanService.Drive
+        Product.Mail -> DynamicPlanService.Mail
+        Product.Vpn -> DynamicPlanService.Vpn
+        Product.Pass -> DynamicPlanService.Pass
+    }
+    return when (exclusive) {
+        true -> services.map { it.code }.toSet() == setOf(service.code)
+        false -> services.contains(service)
+    }
+}
+
+fun DynamicPlan.isFree(): Boolean = type == null
 
 enum class DynamicPlanFeature(val code: Int) {
     CatchAll(1)
@@ -63,8 +82,15 @@ enum class DynamicPlanState(val code: Int) {
     Available(1)
 }
 
-enum class DynamicPlanType(val code: Int?) {
-    Free(null),
+enum class DynamicPlanType(val code: Int) {
     Secondary(0),
-    Primary(1)
+    Primary(1);
+
+    companion object {
+        fun from(code: Int): DynamicPlanType? = when (code) {
+            Primary.code -> Primary
+            Secondary.code -> Secondary
+            else -> null
+        }
+    }
 }
