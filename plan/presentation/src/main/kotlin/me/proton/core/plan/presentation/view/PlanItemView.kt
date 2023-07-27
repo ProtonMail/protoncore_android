@@ -68,16 +68,19 @@ class PlanItemView @JvmOverloads constructor(
     private val mappedFreePlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_free_plan_layouts) }
     private val mappedPaidPlanLayouts by lazy { context.getStringArrayByName(R.array.plan_mapping_paid_plan_layouts) }
 
-    private fun getMappedLayout(plan: PlanDetailsItem, mappedPlanLayouts: Array<String>?): String {
-        val indexOfPlanName = mappedPlanIds?.indexOf(plan.name) ?: return "plan_id_${plan.name}"
-        return mappedPlanLayouts?.getOrNull(indexOfPlanName) ?: "plan_id_${plan.name}"
+    private fun getMappedLayout(planName: String, mappedPlanLayouts: Array<String>?, defaultLayout: String): String {
+        val indexOfPlanName = mappedPlanIds?.indexOf(planName) ?: return defaultLayout
+        return mappedPlanLayouts?.getOrNull(indexOfPlanName) ?: defaultLayout
     }
 
-    private fun getCurrentLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedCurrentPlanLayouts)
+    private fun getCurrentLayout(plan: PlanDetailsItem) =
+        getMappedLayout(plan.name, mappedCurrentPlanLayouts, "plan_current")
 
-    private fun getFreeLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedFreePlanLayouts)
+    private fun getFreeLayout(plan: PlanDetailsItem) =
+        getMappedLayout(plan.name, mappedFreePlanLayouts, "plan_id_${plan.name}")
 
-    private fun getPaidLayout(plan: PlanDetailsItem) = getMappedLayout(plan, mappedPaidPlanLayouts)
+    private fun getPaidLayout(plan: PlanDetailsItem) =
+        getMappedLayout(plan.name, mappedPaidPlanLayouts, "plan_id_${plan.name}")
 
     /**
      * Sets plans data and binds to according plan item UIs.
