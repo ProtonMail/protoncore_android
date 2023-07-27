@@ -106,6 +106,7 @@ public const val `startup-runtime version`: String =           "1.1.1"
 // region Other
 public const val `apacheCommon-codec version`: String =    "1.15"
 public const val `bcrypt version`: String =                "0.9.0"             // Released: Oct 29, 2019
+public const val `coil version`: String =                  "2.4.0"
 public const val `googleTink version`: String =            "1.7.0"
 public const val `guavaListenableFuture version`: String = "1.0"
 public const val `leakCanary version`: String =            "2.10"

@@ -54,6 +54,8 @@ dependencies {
         project(Module.userDomain),
         `activity-noktx`,
         appcompat,
+        coil,
+        coilSvg,
         `constraint-layout`,
         coordinatorlayout,
         `hilt-android`,

@@ -19,7 +19,6 @@
 package me.proton.core.plan.presentation.view
 
 import android.content.Context
-import android.content.res.Resources.NotFoundException
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -38,7 +37,6 @@ import me.proton.core.presentation.utils.PRICE_ZERO
 import me.proton.core.presentation.utils.Price
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.onClick
-import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import java.text.DateFormat
 

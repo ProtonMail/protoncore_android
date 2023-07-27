@@ -106,6 +106,10 @@ public val DependencyHandler.`appcompat-resources`: Any
     get() = androidx("appcompat", moduleSuffix = "resources") version `appcompat version`
 public val DependencyHandler.bcrypt: Any
     get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
+public val DependencyHandler.coil: Any
+    get() = dependency("io.coil-kt", module = "coil") version `coil version`
+public val DependencyHandler.coilSvg: Any
+    get() = dependency("io.coil-kt", module = "coil-svg") version `coil version`
 public val DependencyHandler.coordinatorlayout: Any
     get() = dependency("androidx.coordinatorlayout", module = "coordinatorlayout") version `coordinatorlayout version`
 public val DependencyHandler.datastore: Any

@@ -108,6 +108,43 @@ public final class me/proton/core/plan/presentation/databinding/ConnectivityIssu
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/plan/presentation/databinding/ConnectivityIssueViewBinding;
 }
 
+public final class me/proton/core/plan/presentation/databinding/DynamicPlanEntitlementDescriptionViewBinding : androidx/viewbinding/ViewBinding {
+	public final field icon Landroidx/appcompat/widget/AppCompatImageView;
+	public final field text Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/DynamicPlanEntitlementDescriptionViewBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/plan/presentation/databinding/DynamicPlanEntitlementDescriptionViewBinding;
+}
+
+public final class me/proton/core/plan/presentation/databinding/DynamicPlanEntitlementStorageViewBinding : androidx/viewbinding/ViewBinding {
+	public final field progress Lcom/google/android/material/progressindicator/LinearProgressIndicator;
+	public final field text Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/DynamicPlanEntitlementStorageViewBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/plan/presentation/databinding/DynamicPlanEntitlementStorageViewBinding;
+}
+
+public final class me/proton/core/plan/presentation/databinding/DynamicPlanViewBinding : androidx/viewbinding/ViewBinding {
+	public final field collapse Landroid/widget/ImageButton;
+	public final field content Landroid/widget/LinearLayout;
+	public final field contentButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field contentEntitlements Landroid/widget/LinearLayout;
+	public final field contentRenewal Landroid/widget/TextView;
+	public final field contentSeparator Landroid/view/View;
+	public final field description Landroid/widget/TextView;
+	public final field priceCycle Landroid/widget/TextView;
+	public final field priceLayout Landroid/widget/LinearLayout;
+	public final field pricePercentage Landroid/widget/TextView;
+	public final field priceText Landroid/widget/TextView;
+	public final field promoPercentage Landroid/widget/TextView;
+	public final field promoTitle Landroid/widget/TextView;
+	public final field starred Landroid/widget/ImageView;
+	public final field title Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/DynamicPlanViewBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/plan/presentation/databinding/DynamicPlanViewBinding;
+}
+
 public final class me/proton/core/plan/presentation/databinding/FragmentPlansBinding : androidx/viewbinding/ViewBinding {
 	public final field connectivityIssueView Landroidx/constraintlayout/widget/ConstraintLayout;
 	public final field icCalendar Landroid/widget/ImageView;
@@ -915,6 +952,64 @@ public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
 	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+}
+
+public final class me/proton/core/plan/presentation/view/DynamicPlanEntitlementDescriptionView : androidx/constraintlayout/widget/ConstraintLayout {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getIcon ()Ljava/lang/Object;
+	public final fun getText ()Ljava/lang/String;
+	public final fun setIcon (Ljava/lang/Object;)V
+	public final fun setText (Ljava/lang/String;)V
+}
+
+public final class me/proton/core/plan/presentation/view/DynamicPlanEntitlementStorageView : androidx/constraintlayout/widget/ConstraintLayout {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getProgress ()I
+	public final fun getText ()Ljava/lang/String;
+	public final fun setProgress (I)V
+	public final fun setText (Ljava/lang/String;)V
+}
+
+public final class me/proton/core/plan/presentation/view/DynamicPlanView : androidx/constraintlayout/widget/ConstraintLayout {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getButtonText ()Ljava/lang/String;
+	public final fun getButtonTextIsVisible ()Z
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getEntitlements ()Landroid/view/ViewGroup;
+	public final fun getPricePercentage ()Ljava/lang/String;
+	public final fun getPriceText ()Ljava/lang/String;
+	public final fun getPromoPercentage ()Ljava/lang/String;
+	public final fun getPromoTitle ()Ljava/lang/String;
+	public final fun getRenewalText ()Ljava/lang/String;
+	public final fun getRenewalTextIsVisible ()Z
+	public final fun getStarred ()Z
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun isCollapsable ()Z
+	public final fun isCollapsed ()Z
+	public final fun setButtonText (Ljava/lang/String;)V
+	public final fun setButtonTextIsVisible (Z)V
+	public final fun setCollapsable (Z)V
+	public final fun setCollapsed (Z)V
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setPricePercentage (Ljava/lang/String;)V
+	public final fun setPriceText (Ljava/lang/String;)V
+	public final fun setPromoPercentage (Ljava/lang/String;)V
+	public final fun setPromoTitle (Ljava/lang/String;)V
+	public final fun setRenewalText (Ljava/lang/String;)V
+	public final fun setRenewalTextIsVisible (Z)V
+	public final fun setStarred (Z)V
+	public final fun setTitle (Ljava/lang/String;)V
 }
 
 public final class me/proton/core/plan/presentation/view/LogTag {
