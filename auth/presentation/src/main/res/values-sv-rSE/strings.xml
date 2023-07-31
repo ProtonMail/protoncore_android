@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Din e-postadress för återställning är:</string>
   <string name="auth_create_address_create">Skapa adress</string>
   <string name="auth_create_address_creating">Skapar adress</string>
-  <string name="auth_create_address_terms">Genom att klicka på ”Skapa adress” godkänner du Protons <a href="https://proton.me/legal/terms">användarvillkor.</a></string>
+  <string name="auth_create_address_terms">Genom att klicka på ”Skapa adress” godkänner du Protons <a href="https://proton.me/legal/terms">användarvillkor.</a>.</string>
   <string name="auth_create_address_error_credentials">Inloggningsuppgifter ska inte vara tomma.</string>
   <string name="auth_create_address_error_no_available_domain">Ingen tillgänglig domän.</string>
   <string name="auth_create_address_error_private_key">Misslyckades att generera privat nyckel.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Verifieringskod</string>
   <string name="auth_signup_enter_code_subtitle">Ange verifieringskoden som skickades till %s:</string>
   <string name="auth_signup_error_human_verification_failed">Mänsklig verifiering misslyckades.</string>
-  <string name="auth_signup_token_code_resent">Token-kod skickat igen.</string>
   <string name="auth_signup_congratulations_subtitle">Ditt Proton-konto har skapats.\nNjut av en värld av integritet.</string>
   <string name="auth_signup_congratulations">Grattis!</string>
   <string name="auth_signup_start_using_proton">Börja använda Proton</string>

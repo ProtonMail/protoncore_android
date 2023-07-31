@@ -22,11 +22,11 @@
   <string name="payments_no_connectivity">Sem conectividade para exibir a página de confirmação 3DS.</string>
   <string name="payments_3ds_not_approved">A aprovação 3DS foi rejeitada.</string>
   <string name="payments_error_card_name">Obrigatório o nome no cartão.</string>
-  <string name="payments_error_card_number">Número do cartão inválido.</string>
+  <string name="payments_error_card_number">O número do cartão não é válido.</string>
   <string name="payments_error_cvc">Entre um código de segurança válido.</string>
   <string name="payments_error_session">Um ID de sessão válido é necessário ao fazer a assinatura de um usuário conectado.</string>
   <string name="payments_error_signup_paymentmethod">Não foi possível criar uma conta com o método de pagamento existente.</string>
-  <string name="payments_error_invalid_session">Sessão inválida.</string>
+  <string name="payments_error_invalid_session">A sessão não é válida.</string>
   <string name="payments_no_payment_provider">Sem provedor de pagamento ativo encontrado.</string>
   <!-- endregion -->
   <!-- region payment options -->

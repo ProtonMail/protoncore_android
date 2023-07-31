@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">回復用メールアドレス:</string>
   <string name="auth_create_address_create">アドレスの作成</string>
   <string name="auth_create_address_creating">アドレスの作成中</string>
-  <string name="auth_create_address_terms">アドレスを作成することで、Proton の<a href="https://proton.me/legal/terms">利用規約</a>に同意したことになります。</string>
+  <string name="auth_create_address_terms">アドレスの作成をクリックすると、プロトンの<a href="https://proton.me/legal/terms">利用規約</a>に同意したことになります。</string>
   <string name="auth_create_address_error_credentials">認証情報を空にできません。</string>
   <string name="auth_create_address_error_no_available_domain">利用可能なドメインがありません。</string>
   <string name="auth_create_address_error_private_key">プライベートキーの生成に失敗しました。</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">検証コード</string>
   <string name="auth_signup_enter_code_subtitle">%s に送信された認証コードを入力:</string>
   <string name="auth_signup_error_human_verification_failed">人間による検証に失敗しました。</string>
-  <string name="auth_signup_token_code_resent">トークン コードを再送信しました。</string>
   <string name="auth_signup_congratulations_subtitle">Proton アカウントが正常に作成されました。\nプライバシーの世界をお楽しみください。</string>
   <string name="auth_signup_congratulations">おめでとうございます!</string>
   <string name="auth_signup_start_using_proton">Proton を使い始める</string>

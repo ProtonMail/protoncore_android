@@ -87,7 +87,7 @@
   <string name="auth_create_address_error_no_available_domain">No hay dominio disponible.</string>
   <string name="auth_create_address_error_private_key">Error al generar la clave privada.</string>
   <string name="auth_create_address_error_signed_key_list">Error al generar la lista de claves.</string>
-  <string name="auth_create_address_error_setusername">El nombre de usuario asociado ha fallado.</string>
+  <string name="auth_create_address_error_setusername">No se pudo asociar el nombre de usuario.</string>
   <string name="auth_create_address_error_username_unavailable">El nombre de usuario elegido no está disponible.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Clave principal no encontrada.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Error de clave principal.</string>
@@ -140,8 +140,7 @@
   <string name="auth_signup_verify">Verificar</string>
   <string name="auth_signup_verification_code">Código de verificación</string>
   <string name="auth_signup_enter_code_subtitle">Ingrese el código de verificación enviado a %s:</string>
-  <string name="auth_signup_error_human_verification_failed">Falló la verificación humana.</string>
-  <string name="auth_signup_token_code_resent">Código token reenviado.</string>
+  <string name="auth_signup_error_human_verification_failed">Error con la verificación humana</string>
   <string name="auth_signup_congratulations_subtitle">Su cuenta de Proton se creó corectamente.\nDisfrute del mundo de la privacidad.</string>
   <string name="auth_signup_congratulations">¡Felicitaciones!</string>
   <string name="auth_signup_start_using_proton">Comenzar con Proton</string>

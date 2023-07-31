@@ -18,13 +18,13 @@
   -->
 <resources>
   <string name="account_recovery_grace_started_title">Die Karenzzeit hat begonnen</string>
-  <string name="account_recovery_grace_started_subtitle">Die Karenzzeit deiner Kontowiederherstellung hat begonnen und läuft gerade.</string>
-  <string name="account_recovery_cancelled_title">Kontowiederherstellung abgebrochen.</string>
+  <string name="account_recovery_grace_started_subtitle">Die Karenzfrist deiner Kontowiederherstellung hat begonnen und läuft gerade.</string>
+  <string name="account_recovery_cancelled_title">Die Kontowiederherstellung wurde abgebrochen.</string>
   <string name="account_recovery_cancelled_subtitle">Der Prozess zur Kontowiederherstellung wurde abgebrochen.</string>
-  <string name="account_recovery_password_started_title">Passwort zur Kontowiederherstellung kann geändert werden</string>
+  <string name="account_recovery_password_started_title">Das Passwort zur Kontowiederherstellung kann geändert werden</string>
   <string name="account_recovery_password_started_subtitle">Der Zeitraum zur Änderung des Passworts für die Wiederherstellung deines Kontos wurde gestartet. Du kannst dein Passwort jetzt ändern.</string>
-  <string name="account_recovery_window_ended_title">Der Zeitraum zur Kontowiederherstellung ist abgelaufen.</string>
-  <string name="account_recovery_window_ended_subtitle">Der Zeitraum zur Wiederherstellung deines Kontos ist abgelaufen.</string>
+  <string name="account_recovery_window_ended_title">Das Zeitfenster zur Kontowiederherstellung ist abgelaufen.</string>
+  <string name="account_recovery_window_ended_subtitle">Das Zeitfenster zur Wiederherstellung deines Kontos ist abgelaufen.</string>
   <string name="account_recovery_cancel">Wiederherstellung abbrechen</string>
   <string name="account_recovery_password_label">Passwort eingeben, um abzubrechen</string>
   <string name="account_recovery_password_placeholder">Passwort</string>

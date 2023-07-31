@@ -27,5 +27,5 @@
   <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
   <string name="account_recovery_cancel">Cancel recovery</string>
   <string name="account_recovery_password_label">Enter password to cancel</string>
-  <string name="account_recovery_password_placeholder">Password</string>
+  <string name="account_recovery_password_placeholder">Jelszó</string>
 </resources>

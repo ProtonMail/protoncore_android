@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Uw herstel e-mailadres is:</string>
   <string name="auth_create_address_create">Adres toevoegen</string>
   <string name="auth_create_address_creating">Adres aanmaken</string>
-  <string name="auth_create_address_terms">Door op Volgende te klikken, gaat u akkoord met de <a href="https://proton.me/legal/terms">Algemene Voorwaarden</a></string>
+  <string name="auth_create_address_terms">Door op Adres maken te klikken, gaat u akkoord met de <a href="https://proton.me/legal/terms">Algemene voorwaarden</a> van Proton.</string>
   <string name="auth_create_address_error_credentials">De inloggegevens mogen niet leeg zijn.</string>
   <string name="auth_create_address_error_no_available_domain">Geen beschikbaar domein.</string>
   <string name="auth_create_address_error_private_key">Genereren van private sleutel mislukt.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Verificatiecode</string>
   <string name="auth_signup_enter_code_subtitle">Voer de verificatiecode in die is verzonden naar %s:</string>
   <string name="auth_signup_error_human_verification_failed">Persoonsverificatie is mislukt.</string>
-  <string name="auth_signup_token_code_resent">Token code opnieuw verzonden.</string>
   <string name="auth_signup_congratulations_subtitle">Uw Proton account is succesvol aangemaakt.\nGeniet van de wereld van privacy.</string>
   <string name="auth_signup_congratulations">Gefeliciteerd!</string>
   <string name="auth_signup_start_using_proton">Aan de slag met Proton</string>

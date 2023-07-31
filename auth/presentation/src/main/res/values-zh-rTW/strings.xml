@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">您的備援電子郵件地址為：</string>
   <string name="auth_create_address_create">建立電郵位址</string>
   <string name="auth_create_address_creating">正在創建電郵位址</string>
-  <string name="auth_create_address_terms">點擊「建立電子郵件地址」，即表示您同意 Proton 的<a href="https://proton.me/legal/terms">條款與細則。</a></string>
+  <string name="auth_create_address_terms">點擊建立電子郵件地址，即表示您同意 Proton 的<a href="https://proton.me/legal/terms">條款與細則</a>。</string>
   <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">驗證碼</string>
   <string name="auth_signup_enter_code_subtitle">請輸入傳送到 %s 的驗證碼：</string>
   <string name="auth_signup_error_human_verification_failed">真人驗證失敗。</string>
-  <string name="auth_signup_token_code_resent">通證代碼已重新傳送。</string>
   <string name="auth_signup_congratulations_subtitle">您的 Proton 帳號已成功建立。\n享受隱私的世界吧。</string>
   <string name="auth_signup_congratulations">恭喜！</string>
   <string name="auth_signup_start_using_proton">開始使用 Proton</string>

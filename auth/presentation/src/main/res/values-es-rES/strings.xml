@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_mailbox_empty_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_create_address_title">Es necesaria una dirección Proton.</string>
-  <string name="auth_create_address_subtitle">Necesitas una dirección de correo de Proton para usar Proton Mail y Proton Calendar. Aún podrás usar %1$s para iniciar sesión y recuperar tu cuenta.</string>
+  <string name="auth_create_address_subtitle">Necesitas una dirección de correo de Proton para utilizar Proton Mail y Proton Calendar. Aún podrás utilizar %1$s para iniciar sesión y recuperar tu cuenta.</string>
   <string name="auth_username">Nombre de usuario</string>
   <string name="auth_username_next_action">Continuar</string>
   <string name="auth_create_address_result_title">%s está disponible</string>
@@ -82,18 +82,18 @@
   <string name="auth_create_address_result_recovery_title">Tu dirección de correo electrónico de recuperación:</string>
   <string name="auth_create_address_create">Crear dirección</string>
   <string name="auth_create_address_creating">Creando dirección</string>
-  <string name="auth_create_address_terms">Al hacer clic en Crear dirección, aceptas los <a href="https://proton.me/legal/terms">Términos y condiciones</a> de Proton.</string>
+  <string name="auth_create_address_terms">Al hacer clic en Crear dirección, aceptas los <a href="https://proton.me/legal/terms">Términos y condiciones de Proton.</a>.</string>
   <string name="auth_create_address_error_credentials">Las credenciales no deben estar vacías.</string>
   <string name="auth_create_address_error_no_available_domain">No hay dominio disponible.</string>
-  <string name="auth_create_address_error_private_key">La generación de la clave privada ha fallado.</string>
-  <string name="auth_create_address_error_signed_key_list">La generación de la lista de claves ha fallado.</string>
-  <string name="auth_create_address_error_setusername">La asociación de el nombre de usuario ha fallado.</string>
+  <string name="auth_create_address_error_private_key">No se ha podido generar la clave privada.</string>
+  <string name="auth_create_address_error_signed_key_list">No se ha podido generar la lista de claves.</string>
+  <string name="auth_create_address_error_setusername">No se ha podido asociar el nombre de usuario.</string>
   <string name="auth_create_address_error_username_unavailable">El nombre de usuario elegido no está disponible.</string>
   <string name="auth_mailbox_login_error_no_primary_key">No se ha encontrado la clave primaria.</string>
   <string name="auth_mailbox_login_error_primary_key_error">Error en la clave primaria.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Frase de acceso inválida.</string>
   <string name="auth_password_chooser_title">Cambia tu contraseña</string>
-  <string name="auth_password_chooser_description">Para usar la aplicación de Proton como miembro de una organización, primero debe cambiar su contraseña accediendo desde un navegador web.</string>
+  <string name="auth_password_chooser_description">Para utilizar la aplicación de Proton como miembro de una organización, primero debe cambiar su contraseña accediendo desde un navegador web.</string>
   <string name="auth_password_chooser_change">Cambiar contraseña</string>
   <string name="auth_user_check_one_free_error">Solo se permite una cuenta Proton gratuita.</string>
   <string name="auth_user_check_delinquent_error">Tu cuenta se encuentra suspendida en este momento debido a una factura vencida.</string>
@@ -140,15 +140,14 @@
   <string name="auth_signup_verify">Verificar</string>
   <string name="auth_signup_verification_code">Código de verificación</string>
   <string name="auth_signup_enter_code_subtitle">Introduce el código de verificación enviado a %s:</string>
-  <string name="auth_signup_error_human_verification_failed">La verificación humana ha fallado.</string>
-  <string name="auth_signup_token_code_resent">Código token reenviado.</string>
+  <string name="auth_signup_error_human_verification_failed">Error con la verificación humana</string>
   <string name="auth_signup_congratulations_subtitle">Tu cuenta Proton ha sido creada correctamente.\nDisfruta el mundo de la privacidad.</string>
   <string name="auth_signup_congratulations">¡Enhorabuena!</string>
-  <string name="auth_signup_start_using_proton">Empezar a usar Proton</string>
-  <string name="auth_signup_start_using_calendar">Empezar a usar Proton Calendar</string>
-  <string name="auth_signup_start_using_mail">Empezar a usar Proton Mail</string>
-  <string name="auth_signup_start_using_drive">Empezar a usar Proton Drive</string>
-  <string name="auth_signup_start_using_vpn">Empezar a usar Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Empezar a usar Proton Pass</string>
+  <string name="auth_signup_start_using_proton">Empezar a utilizar Proton</string>
+  <string name="auth_signup_start_using_calendar">Empezar a utilizar Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Empezar a utilizar Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Empezar a utilizar Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Empezar a utilizar Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Empezar a utilizar Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">El destino de recuperación no es válido.</string>
 </resources>

@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">* Comprend des frais et taxes supplémentaires de votre fournisseur.</string>
-  <string name="payments_iap_terms_conditions">En cliquant sur « Acheter avec Google Pay », vous acceptez les conditions générales de Google Pay et acceptez de configurer un paiement récurrent avec Google.</string>
+  <string name="payments_iap_terms_conditions">En appuyant sur « Acheter avec Google Pay », vous acceptez les conditions générales de Google Pay et acceptez de configurer un paiement récurrent avec Google.</string>
   <string name="payments_iap_invalid_google_plan">Le nom de l\'abonnement sélectionné n\'est pas valide. Nous vous invitons à recommencer.</string>
   <string name="payments_iap_error_google_plan_price">Un problème est survenu avec le prix du produit Google. Veuillez recommencer.</string>
   <string name="payments_iap_error_fetching_google_plan">Un problème est survenu en chargeant le produit Google. Veuillez recommencer.</string>

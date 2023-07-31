@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Kod weryfikacyjny</string>
   <string name="auth_signup_enter_code_subtitle">Wpisz kod weryfikacyjny wysłany do %s:</string>
   <string name="auth_signup_error_human_verification_failed">Weryfikacja antyspamowa nie powiodła się.</string>
-  <string name="auth_signup_token_code_resent">Kod tokena został ponownie wysłany.</string>
   <string name="auth_signup_congratulations_subtitle">Konto Proton zostało utworzone.\nCiesz się prywatnością.</string>
   <string name="auth_signup_congratulations">Gratulacje!</string>
   <string name="auth_signup_start_using_proton">Zacznij korzystać z Proton</string>

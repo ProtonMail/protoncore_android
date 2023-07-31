@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">O seu e-mail de recuperação é:</string>
   <string name="auth_create_address_create">Criar endereço</string>
   <string name="auth_create_address_creating">Criação de endereço</string>
-  <string name="auth_create_address_terms">Ao clicar em Criar endereço, está a concordar com os <a href="https://proton.me/legal/terms">Termos e Condições</a> do Proton.</string>
+  <string name="auth_create_address_terms">Ao clicar em Criar endereço, concorda com os <a href="https://proton.me/legal/terms">Termos e Condições</a>.</string>
   <string name="auth_create_address_error_credentials">As credenciais não podem estar vazias.</string>
   <string name="auth_create_address_error_no_available_domain">Nenhum domínio disponível.</string>
   <string name="auth_create_address_error_private_key">A chave privada não pôde ser gerada.</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_set_recovery">Definir método de recuperação</string>
   <string name="auth_signup_no_connectivity">Sem ligação para exibir os Termos e Condições.</string>
   <string name="auth_signup_error_username_blank">O nome de utilizador não pode estar em branco.</string>
-  <string name="auth_signup_error_passwords_do_not_match">As palavras-passe não coincidem.</string>
+  <string name="auth_signup_error_passwords_do_not_match">As palavras-passe não correspondem.</string>
   <string name="auth_signup_validation_password_length">A palavra-passe deve ter pelo menos 8 carateres.</string>
   <string name="auth_signup_validation_password">A palavra-passe é obrigatória.</string>
   <string name="auth_signup_your_account_is_being_setup">A sua conta está a ser criada…</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Código de verificação</string>
   <string name="auth_signup_enter_code_subtitle">Introduza o código de verificação enviado para %s:</string>
   <string name="auth_signup_error_human_verification_failed">A verificação humana falhou.</string>
-  <string name="auth_signup_token_code_resent">Código Token reenviado.</string>
   <string name="auth_signup_congratulations_subtitle">A sua conta Proton foi criada.\nDesfrute do mundo da privacidade.</string>
   <string name="auth_signup_congratulations">Parabéns!</string>
   <string name="auth_signup_start_using_proton">Comece a usar o Proton</string>

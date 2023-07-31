@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">آدرس ایمیل بازیابی شما این است:</string>
   <string name="auth_create_address_create">ایجاد آدرس</string>
   <string name="auth_create_address_creating">در حال ایجاد نشانی</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
   <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">دامنه در دسترس نیست.</string>
   <string name="auth_create_address_error_private_key">ساخت کلید خصوصی موفقیت آمیز نبود.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">کد تایید</string>
   <string name="auth_signup_enter_code_subtitle">کد تاییدی که به %s ارسال شد را وارد نمایید:</string>
   <string name="auth_signup_error_human_verification_failed">تشخیص انسان موفقیت آمیز نبود.</string>
-  <string name="auth_signup_token_code_resent">کد توکن دوباره ارسال شد.</string>
   <string name="auth_signup_congratulations_subtitle">حساب کاربری Proton شما با موفقیت ساخته شد.\n از دنیای حریم خصوصی لذت ببرید.</string>
   <string name="auth_signup_congratulations">تبریک!</string>
   <string name="auth_signup_start_using_proton">شروع به استفاده از Proton کنید</string>

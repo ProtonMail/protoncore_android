@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">E-mailová adresa pro obnovení je:</string>
   <string name="auth_create_address_create">Vytvořit adresu</string>
   <string name="auth_create_address_creating">Vytváření adresy</string>
-  <string name="auth_create_address_terms">Kliknutím na Vytvořit adresu, souhlasíte se <a href="https://proton.me/legal/terms">smluvními podmínkami užívání</a> společnosti Proton.</string>
+  <string name="auth_create_address_terms">Kliknutím na Vytvořit adresu, souhlasíte s Proton <a href="https://proton.me/legal/terms">smluvními podmínkami užívání</a>.</string>
   <string name="auth_create_address_error_credentials">Přihlašovací údaje by neměly chybět.</string>
   <string name="auth_create_address_error_no_available_domain">Žádná dostupná doména.</string>
   <string name="auth_create_address_error_private_key">Generování soukromého klíče se nezdařilo.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Ověřovací kód</string>
   <string name="auth_signup_enter_code_subtitle">Zadejte ověřovací kód, který byl odeslán na %s:</string>
   <string name="auth_signup_error_human_verification_failed">Ověření CAPTCHA se nezdařilo.</string>
-  <string name="auth_signup_token_code_resent">Kód tokenu byl znovu odeslán.</string>
   <string name="auth_signup_congratulations_subtitle">Váš účet Proton byl úspěšně vytvořen.\nUžívejte si svět soukromí.</string>
   <string name="auth_signup_congratulations">Blahopřejeme!</string>
   <string name="auth_signup_start_using_proton">Začněte používat Proton</string>

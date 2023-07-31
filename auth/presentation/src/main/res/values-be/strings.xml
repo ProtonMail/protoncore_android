@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Праверачны код</string>
   <string name="auth_signup_enter_code_subtitle">Увядзіце праверачны код, які быў адпраўлены на %s:</string>
   <string name="auth_signup_error_human_verification_failed">Збой антыспамавай праверкі.</string>
-  <string name="auth_signup_token_code_resent">Код токена адпраўлены паўторна.</string>
   <string name="auth_signup_congratulations_subtitle">Ваш уліковы запіс Proton паспяхова створаны.\nДалучайцеся да свету прыватнасці.</string>
   <string name="auth_signup_congratulations">Віншуем!</string>
   <string name="auth_signup_start_using_proton">Пачаць выкарыстоўваць Proton</string>

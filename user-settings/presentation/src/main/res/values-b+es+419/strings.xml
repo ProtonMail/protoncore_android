@@ -48,6 +48,6 @@
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetría anónima</string>
   <string name="device_settings_telemetry_hint">Para mejorar nuestros servicios, a veces recolectamos datos de uso anónimos.</string>
-  <string name="device_settings_crashreport_title">Reportes anónimos de fallos</string>
-  <string name="device_settings_crashreport_hint">Si la app falla, se enviará un reporte a nuestros ingenieros con detalles de la causa.</string>
+  <string name="device_settings_crashreport_title">Reportes anónimos de errores</string>
+  <string name="device_settings_crashreport_hint">Si la app no funciona, se enviará un informe a nuestros ingenieros con los detalles del motivo. Solo lo utilizaremos para mejorar la aplicación.</string>
 </resources>

@@ -18,5 +18,5 @@
   -->
 <resources>
   <string name="core_notification_account_channel_name">Hesap</string>
-  <string name="core_notification_rationale">Hesabınızın kurtarılmasına yardımcı olabilmemiz için bildirimleri etkinleştirin.</string>
+  <string name="core_notification_rationale">Hesabınızın kurtarılmasına yardımcı olabilmemiz için bildirimleri açın.</string>
 </resources>

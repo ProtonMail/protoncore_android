@@ -18,14 +18,14 @@
   -->
 <resources>
   <string name="account_recovery_grace_started_title">Розпочався пільговий період</string>
-  <string name="account_recovery_grace_started_subtitle">Пільговий період відновлення облікового запису розпочато й триває.</string>
+  <string name="account_recovery_grace_started_subtitle">Наразі триває пільговий період відновлення вашого облікового запису.</string>
   <string name="account_recovery_cancelled_title">Відновлення облікового запису скасовано</string>
   <string name="account_recovery_cancelled_subtitle">Процес відновлення вашого облікового запису скасовано.</string>
   <string name="account_recovery_password_started_title">Пароль для відновлення облікового запису можна змінити</string>
   <string name="account_recovery_password_started_subtitle">Період відновлення пароля облікового запису було розпочато. Тепер ви можете змінити свій пароль.</string>
-  <string name="account_recovery_window_ended_title">Період відновлення облікового запису завершено</string>
+  <string name="account_recovery_window_ended_title">Період відновлення облікового запису закінчився</string>
   <string name="account_recovery_window_ended_subtitle">Період відновлення вашого облікового запису закінчився.</string>
   <string name="account_recovery_cancel">Скасувати відновлення</string>
-  <string name="account_recovery_password_label">Введіть пароль для скасування</string>
+  <string name="account_recovery_password_label">Щоб скасувати, введіть пароль</string>
   <string name="account_recovery_password_placeholder">Пароль</string>
 </resources>

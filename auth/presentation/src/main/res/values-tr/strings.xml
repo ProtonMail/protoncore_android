@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Kurtarma e-posta adresiniz:</string>
   <string name="auth_create_address_create">Adres oluştur</string>
   <string name="auth_create_address_creating">Adres oluşturuluyor</string>
-  <string name="auth_create_address_terms">Adres oluştur üzerine tıklayarak, Proton <a href="https://proton.me/legal/terms">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz</string>
+  <string name="auth_create_address_terms">Adres oluştur üzerine tıklayarak, Proton <a href="https://proton.me/legal/terms">Hüküm ve Koşullar</a> metnini kabul etmiş olursunuz.</string>
   <string name="auth_create_address_error_credentials">Kimlik doğrulama bilgileri boş olamaz.</string>
   <string name="auth_create_address_error_no_available_domain">Kullanılabilecek bir etki alanı yok.</string>
   <string name="auth_create_address_error_private_key">Kişisel anahtar oluşturulamadı.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Doğrulama kodu</string>
   <string name="auth_signup_enter_code_subtitle">%s alıcısına gönderilen doğrulama kodunu yazın:</string>
   <string name="auth_signup_error_human_verification_failed">Kişinin gerçekliği doğrulanamadı.</string>
-  <string name="auth_signup_token_code_resent">Kod yeniden gönderildi.</string>
   <string name="auth_signup_congratulations_subtitle">Proton hesabınız açıldı.\nGizliliğe saygı duyulan bir dünyanın tadını çıkarın.</string>
   <string name="auth_signup_congratulations">Tebrikler!</string>
   <string name="auth_signup_start_using_proton">Proton kullanmaya başlayın</string>

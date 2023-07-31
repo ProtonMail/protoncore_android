@@ -23,7 +23,7 @@
   <string name="account_recovery_cancelled_subtitle">您的帳號復原流程已取消</string>
   <string name="account_recovery_password_started_title">帳號復原密碼已變更</string>
   <string name="account_recovery_password_started_subtitle">您的帳號復原密碼變更期已到。您可變更密碼</string>
-  <string name="account_recovery_window_ended_title">帳號復原視窗結束</string>
+  <string name="account_recovery_window_ended_title">帳號救援視窗結束</string>
   <string name="account_recovery_window_ended_subtitle">帳號復原視窗已結束</string>
   <string name="account_recovery_cancel">取消復原</string>
   <string name="account_recovery_password_label">輸入密碼以取消</string>

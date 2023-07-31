@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Ваш резервный адрес электронной почты:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
-  <string name="auth_create_address_terms">Нажимая кнопку \"Создать адрес\", вы соглашаетесь с <a href="https://proton.me/legal/terms"> условиями Proton.</a></string>
+  <string name="auth_create_address_terms">Нажимая кнопку Создать адрес, вы соглашаетесь с <a href="https://proton.me/legal/terms"> условиями Proton</a>.</string>
   <string name="auth_create_address_error_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Код подтверждения</string>
   <string name="auth_signup_enter_code_subtitle">Введите код подтверждения, отправленный на $%s:</string>
   <string name="auth_signup_error_human_verification_failed">Проверка пользователя не удалась.</string>
-  <string name="auth_signup_token_code_resent">Код токена выслан повторно.</string>
   <string name="auth_signup_congratulations_subtitle">Ваш аккаунт Proton был успешно создан.\nОткройте для себя мир конфиденциальности.</string>
   <string name="auth_signup_congratulations">Поздравляем!</string>
   <string name="auth_signup_start_using_proton">Начать использовать Proton</string>

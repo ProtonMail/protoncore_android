@@ -31,7 +31,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Выберыце спосаб аплаты</string>
-  <string name="payments_add_credit_debit_card">Дадаць новую банкаўскую картку</string>
+  <string name="payments_add_credit_debit_card">Дадаць новую крэдытную/плацежную картку</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Аплаціць %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Аплаціць з дапамогай</string>
   <string name="payments_method_icon">Значок спосабу аплаты.</string>

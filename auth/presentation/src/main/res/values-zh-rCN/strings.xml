@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">验证码</string>
   <string name="auth_signup_enter_code_subtitle">请输入发送到 %s 的验证码：</string>
   <string name="auth_signup_error_human_verification_failed">人机验证失败。</string>
-  <string name="auth_signup_token_code_resent">验证码已重新发送。</string>
   <string name="auth_signup_congratulations_subtitle">您的 Proton 账户已创建完成。\n欢迎来到隐私的世界。</string>
   <string name="auth_signup_congratulations">祝贺您！</string>
   <string name="auth_signup_start_using_proton">开始使用 Proton</string>

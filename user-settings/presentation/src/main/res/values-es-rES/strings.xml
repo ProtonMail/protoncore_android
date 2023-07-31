@@ -49,5 +49,5 @@
   <string name="device_settings_telemetry_title">Telemetría anónima</string>
   <string name="device_settings_telemetry_hint">Para mejorar nuestros servicios, a veces recopilamos datos de uso anonimizados.</string>
   <string name="device_settings_crashreport_title">Informes anónimos de errores</string>
-  <string name="device_settings_crashreport_hint">Si la aplicación falla, se enviará un informe a nuestros ingenieros con los detalles del motivo. Solo lo utilizaremos para mejorar la aplicación.</string>
+  <string name="device_settings_crashreport_hint">Si la aplicación no funciona, se enviará un informe a nuestros ingenieros con los detalles del motivo. Solo lo utilizaremos para mejorar la aplicación.</string>
 </resources>

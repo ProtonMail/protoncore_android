@@ -48,7 +48,7 @@
   <string name="human_verification_help_manual">Se você estiver com problemas para criar sua conta, solicite um convite e nós responderemos em até um dia útil.</string>
   <string name="human_verification_help_website_title">Visite nosso Centro de Ajuda</string>
   <string name="human_verification_help_website">Entenda mais sobre a verificação humana e por que nós a solicitamos.</string>
-  <string name="human_verification_sending_failed">Falha ao enviar o código de verificação. Tente novamente.</string>
+  <string name="human_verification_sending_failed">Erro ao enviar o código de verificação. Tente novamente.</string>
   <string name="human_verification_incorrect_code">Código incorreto. Tente novamente.</string>
   <string name="human_verification_resent_code">Enviamos um outro código.</string>
   <string name="human_verification_captcha_failed">Erro na verificação CAPTCHA. Tento novamente ou escolha outra opção de verificação.</string>

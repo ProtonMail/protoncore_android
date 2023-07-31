@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Cod de verificare</string>
   <string name="auth_signup_enter_code_subtitle">Introduceți codul de verificare trimis la %s:</string>
   <string name="auth_signup_error_human_verification_failed">Verificarea umană a eșuat.</string>
-  <string name="auth_signup_token_code_resent">Codul tokenului a fost retrimis.</string>
   <string name="auth_signup_congratulations_subtitle">Contul Proton v-a fost creat cu succes.\nBucurați-vă de lumea confidențialității.</string>
   <string name="auth_signup_congratulations">Felicitări!</string>
   <string name="auth_signup_start_using_proton">Începeți să utilizați Proton</string>

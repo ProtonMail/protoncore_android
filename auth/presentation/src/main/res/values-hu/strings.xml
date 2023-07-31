@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Az ön helyreállító e-mail címe:</string>
   <string name="auth_create_address_create">Cím létrehozása</string>
   <string name="auth_create_address_creating">Cím létrehozása</string>
-  <string name="auth_create_address_terms">A Cím létrehozása gombra kattintva kijelenti, hogy elfogadja a Proton <a href="https://proton.me/legal/terms">Felhasználási feltételeit</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
   <string name="auth_create_address_error_credentials">Az azonosítók nem lehetnek üresek.</string>
   <string name="auth_create_address_error_no_available_domain">Nincs elérhető domain.</string>
   <string name="auth_create_address_error_private_key">Titkos kulcs létrehozása sikertelen.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Ellenőrző kód</string>
   <string name="auth_signup_enter_code_subtitle">Írja be a %s címre küldött ellenőrző kódot:</string>
   <string name="auth_signup_error_human_verification_failed">Robot ellenőrzés sikertelen.</string>
-  <string name="auth_signup_token_code_resent">Token kód újraküldve.</string>
   <string name="auth_signup_congratulations_subtitle">A Proton fiókja sikeresen elkészült.\nÉlvezze a magánszférája védelmét.</string>
   <string name="auth_signup_congratulations">Gratulálunk!</string>
   <string name="auth_signup_start_using_proton">A Proton használatának elkezdése</string>

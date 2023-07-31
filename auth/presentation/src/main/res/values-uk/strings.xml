@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">Потрібно ввести облікові дані.</string>
   <string name="auth_mailbox_empty_credentials">Потрібно ввести облікові дані.</string>
   <string name="auth_create_address_title">Введіть адресу Proton</string>
-  <string name="auth_create_address_subtitle">Для використання Proton Mail і Proton Calendar потрібна електронна адреса Proton. Ви все одно зможете використовувати %1$s для входу та відновлення свого облікового запису.</string>
+  <string name="auth_create_address_subtitle">Щоб користуватися Proton Mail і Proton Calendar, потрібна адреса електронної пошти Proton. Ви й надалі зможете використовувати %1$s для входу та відновлення свого облікового запису.</string>
   <string name="auth_username">Ім\'я користувача</string>
   <string name="auth_username_next_action">Продовжити</string>
   <string name="auth_create_address_result_title">%s доступно</string>
@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Ваша електронна пошта для відновлення:</string>
   <string name="auth_create_address_create">Створити адресу</string>
   <string name="auth_create_address_creating">Створення адреси</string>
-  <string name="auth_create_address_terms">Натискаючи Створити адресу, ви погоджуєтеся з <a href="https://proton.me/legal/terms">Умовами та положеннями</a> Proton</string>
+  <string name="auth_create_address_terms">Натискаючи кнопку Створити адресу, ви погоджуєтеся з <a href="https://proton.me/legal/terms">Умовами та положеннями</a> компанії Proton.</string>
   <string name="auth_create_address_error_credentials">Потрібно ввести облікові дані.</string>
   <string name="auth_create_address_error_no_available_domain">Немає доступного домену.</string>
   <string name="auth_create_address_error_private_key">Не вдалося згенерувати приватний ключ.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Код підтвердження</string>
   <string name="auth_signup_enter_code_subtitle">Введіть код перевірки, який був надісланий на %s:</string>
   <string name="auth_signup_error_human_verification_failed">Не вдалося перевірити чи ви людина.</string>
-  <string name="auth_signup_token_code_resent">Код повторно надіслано.</string>
   <string name="auth_signup_congratulations_subtitle">Ваш обліковий запис Proton успішно створено.\nНасолоджуйтеся світом приватності.</string>
   <string name="auth_signup_congratulations">Вітаємо!</string>
   <string name="auth_signup_start_using_proton">Почати роботу з Proton</string>

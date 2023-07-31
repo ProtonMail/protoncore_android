@@ -30,7 +30,7 @@
   <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Invoeren</string>
   <string name="presentation_alert_cancel">Annuleren</string>
-  <string name="presentation_alert_continue">Continue</string>
+  <string name="presentation_alert_continue">Doorgaan</string>
   <string name="presentation_alert_submit">Versturen</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Meld een probleem</string>

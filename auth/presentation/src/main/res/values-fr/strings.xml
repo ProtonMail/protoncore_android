@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Votre adresse e-mail de récupération est :</string>
   <string name="auth_create_address_create">Créer une adresse</string>
   <string name="auth_create_address_creating">Création de l’adresse</string>
-  <string name="auth_create_address_terms">En cliquant sur Créer une adresse, vous acceptez les <a href="https://proton.me/legal/terms">conditions générales d\'utilisation</a> de Proton.</string>
+  <string name="auth_create_address_terms">En cliquant sur Créer une adresse, vous acceptez les <a href="https://proton.me/legal/terms">Conditions générales d\'utilisation</a> de Proton.</string>
   <string name="auth_create_address_error_credentials">Saisissez vos identifiants.</string>
   <string name="auth_create_address_error_no_available_domain">Aucun domaine n\'est disponible.</string>
   <string name="auth_create_address_error_private_key">La clé privée n\'a pas pu être générée.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Code de vérification</string>
   <string name="auth_signup_enter_code_subtitle">Saisissez le code de vérification qui a été envoyé à %s :</string>
   <string name="auth_signup_error_human_verification_failed">La vérification que vous n\'êtes pas un robot n\'a pas abouti.</string>
-  <string name="auth_signup_token_code_resent">Le code jeton a été renvoyé.</string>
   <string name="auth_signup_congratulations_subtitle">Votre compte Proton a été créé.\nProfitez du respect de la vie privée.</string>
   <string name="auth_signup_congratulations">Félicitations !</string>
   <string name="auth_signup_start_using_proton">Commencez à utiliser Proton</string>

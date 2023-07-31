@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Your recovery email address is:</string>
   <string name="auth_create_address_create">Snulfu-d tansa</string>
   <string name="auth_create_address_creating">Creating address</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions.</a></string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
   <string name="auth_create_address_error_credentials">Credentials should not be empty.</string>
   <string name="auth_create_address_error_no_available_domain">No available domain.</string>
   <string name="auth_create_address_error_private_key">Generating private key failed.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Tangalt n usenqed</string>
   <string name="auth_signup_enter_code_subtitle">Sekcem tangalt n usenged i yettwaznen ɣer %s:</string>
   <string name="auth_signup_error_human_verification_failed">Human verification failed.</string>
-  <string name="auth_signup_token_code_resent">Token code resent.</string>
   <string name="auth_signup_congratulations_subtitle">Your Proton account was successfully created.\nEnjoy the world of privacy.</string>
   <string name="auth_signup_congratulations">Ayuz!</string>
   <string name="auth_signup_start_using_proton">Bdu aseqdec n Proton</string>

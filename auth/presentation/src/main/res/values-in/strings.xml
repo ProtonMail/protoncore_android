@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Alamat email pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>
-  <string name="auth_create_address_terms">Dengan mengklik Buat alamat, Anda menyatakan diri setuju pada <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton</string>
+  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
   <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Kode Verifikasi</string>
   <string name="auth_signup_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s:</string>
   <string name="auth_signup_error_human_verification_failed">Gagal melakukan verifikasi manusia.</string>
-  <string name="auth_signup_token_code_resent">Kode token dikirim ulang.</string>
   <string name="auth_signup_congratulations_subtitle">Akun Proton Anda berhasil dibuat. \nNikmati dunia yang mengedepankan privasi.</string>
   <string name="auth_signup_congratulations">Selamat!</string>
   <string name="auth_signup_start_using_proton">Mulai menggunakan Proton</string>

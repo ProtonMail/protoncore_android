@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Η ηλ. διεύθυνσή σας ανάκτησης είναι:</string>
   <string name="auth_create_address_create">Δημιουργία διεύθυνσης</string>
   <string name="auth_create_address_creating">Δημιουργία διεύθυνσης</string>
-  <string name="auth_create_address_terms">Κάνοντας κλικ στην επιλογή Δημιουργία διεύθυνσης, συμφωνείτε με τους <a href="https://proton.me/legal/terms">Όρους και Προϋποθέσεις</a> του Proton</string>
+  <string name="auth_create_address_terms">Κάνοντας κλικ στην επιλογή Δημιουργία διεύθυνσης, συμφωνείτε με τους <a href="https://proton.me/legal/terms">Όρους και Προϋποθέσεις</a> του Proton.</string>
   <string name="auth_create_address_error_credentials">Τα διαπιστευτήρια δεν πρέπει να είναι κενά.</string>
   <string name="auth_create_address_error_no_available_domain">Μη διαθέσιμος τομέας.</string>
   <string name="auth_create_address_error_private_key">Αποτυχία δημιουργίας ιδιωτικού κλειδιού.</string>
@@ -141,7 +141,6 @@
   <string name="auth_signup_verification_code">Κωδικός Επαλήθευσης</string>
   <string name="auth_signup_enter_code_subtitle">Εισάγετε τον κωδικό επαλήθευσης στον οποίο εστάλη %s:</string>
   <string name="auth_signup_error_human_verification_failed">Αποτυχία επαλήθευσης ανθρώπου.</string>
-  <string name="auth_signup_token_code_resent">Ο κωδικός διακριτικού έχει αποσταλεί ξανά.</string>
   <string name="auth_signup_congratulations_subtitle">Ο λογαριασμός σας Proton δημιουργήθηκε επιτυχώς.\nΑπολαύστε τον κόσμο τις ιδιωτικότητας.</string>
   <string name="auth_signup_congratulations">Συγχαρητήρια!</string>
   <string name="auth_signup_start_using_proton">Ξεκινήστε να χρησιμοποιείτε το Proton</string>

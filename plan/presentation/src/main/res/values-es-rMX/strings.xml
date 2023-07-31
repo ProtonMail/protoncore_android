@@ -71,8 +71,8 @@
     <item quantity="other">#proton_addresses# direcciones / usuario</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d de #proton_addresses# dirección</item>
-    <item quantity="other">%d de #proton_addresses# direcciones</item>
+    <item quantity="one">%d dirección de #proton_addresses#</item>
+    <item quantity="other">%d direcciones de #proton_addresses#</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Soporte para #proton_domains# dominio de correo personalizado</item>
@@ -83,8 +83,8 @@
     <item quantity="other">#proton_calendars# calendarios personales</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d de #proton_calendars# calendario</item>
-    <item quantity="other">%d de #proton_calendars# calendarios</item>
+    <item quantity="one">%d calendario de #proton_calendars#</item>
+    <item quantity="other">%d calendarios de #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN gratuita en un solo dispositivo</item>
@@ -99,8 +99,8 @@
     <item quantity="other">#proton_users# usuarios</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d de #proton_users# usuario</item>
-    <item quantity="other">%d de #proton_users# usuarios</item>
+    <item quantity="one">%d usuario de #proton_users#</item>
+    <item quantity="other">%d usuarios de #proton_users#</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->

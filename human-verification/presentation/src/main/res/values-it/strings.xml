@@ -26,7 +26,7 @@
   <string name="human_verification_enter_code_subtitle_already_have_code">Inserisci il codice di verifica che già possiedi:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Email</string>
-  <string name="human_verification_option_email_subtitle">La tua email verrà utilizzata solo per questa verifica una tantum. Se non trovi l\'e-mail nella tua casella di posta, controlla la cartella spam.</string>
+  <string name="human_verification_option_email_subtitle">La tua email verrà utilizzata solo per questa verifica una tantum. Se non trovi l\'email nella tua casella di posta, controlla la cartella spam.</string>
   <string name="human_verification_option_sms">Numero di telefono</string>
   <string name="human_verification_option_sms_subtitle">Il tuo numero di telefono sarà utilizzato solo per questa verifica una tantum.</string>
   <string name="human_verification_get_verification_code">Ottieni il codice di verifica</string>

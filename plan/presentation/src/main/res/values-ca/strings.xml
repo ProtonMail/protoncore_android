@@ -83,8 +83,8 @@
     <item quantity="other">#proton_calendars# calendaris personals</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d de #proton_calendars# calendari</item>
-    <item quantity="other">%d de #proton_calendars# calendaris</item>
+    <item quantity="one">%d calendari de #proton_calendars#</item>
+    <item quantity="other">%d calendaris de #proton_calendars#</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN gratuïta en un sol dispositiu</item>
@@ -130,7 +130,7 @@
     <item>CHF</item>
   </string-array>
   <!-- region plans hardcoded texts -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Carpetes, etiquetes i filtres sense límit</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Carpetes, etiquetes i filtres il·limitats</string>
   <string name="highest_vpn_speed" comment="new_plans">La velocitat VPN més alta</string>
   <string name="servers_in_countries" comment="new_plans">Més de 1500 servidors en 63 països</string>
   <string name="ad_blocker" comment="new_plans">Bloquejador d\'anuncis integrat (NetShield)</string>

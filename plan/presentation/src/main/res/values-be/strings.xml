@@ -137,7 +137,7 @@
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 краіны</string>
   <string name="plan_id_vpnbasic_high_speed">Высокая хуткасць</string>
-  <string name="plan_id_vpnplus_adblock">Блакіроўка рэкламы (NetShield)</string>
+  <string name="plan_id_vpnplus_adblock">Блакіроўшчык рэкламы (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Падтрымка сэрвісу трансляцыі</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 краіны</string>
@@ -150,7 +150,7 @@
   <string name="plan_id_vpn2022_header" comment="new_plans">Ваша прыватнасць і бяспека - наш прыярытэт.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Бяспечнае воблачнае сховішча, якое дазваляе вам лёгка і бяспечна захоўваць, сінхранізаваць і абагуляць файлы.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная прыватнасць і бяспека ў спалучэнні з усімі сэрвісамі Proton.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">Для больш высокага ўзроўню кіравання паролямі і абароны асобы.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Для больш высокага ўзроўню кіравання паролямі і абароны асабістых даных.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

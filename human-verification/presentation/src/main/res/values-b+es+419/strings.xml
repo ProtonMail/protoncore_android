@@ -51,7 +51,7 @@
   <string name="human_verification_sending_failed">Error al enviar el código de verificación. Vuelva a intentarlo.</string>
   <string name="human_verification_incorrect_code">Código incorrecto. Vuelva a intentarlo.</string>
   <string name="human_verification_resent_code">Le hemos enviado otro código.</string>
-  <string name="human_verification_captcha_failed">Falló la verificación del CAPTCHA. Intente una vez más o elija otra opción de verificación.</string>
+  <string name="human_verification_captcha_failed">Error en la verificación del CAPTCHA. Intente una vez más o elija otra opción de verificación.</string>
   <string name="human_verification_captcha_no_connectivity">Sin conexión. No se pudo cargar el CAPTCHA.</string>
   <string name="human_verification_action_retry">Reintentar</string>
   <string name="human_verification_method_loading_failed">Error al cargar el método de verificación actual. Si el problema persiste, intente con otro método si estuviera disponible o revise la pantalla de ayuda.</string>
