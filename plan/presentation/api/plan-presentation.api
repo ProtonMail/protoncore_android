@@ -18,6 +18,14 @@ public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_UpgradePl
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_DynamicPlansViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_DynamicPlansViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_SignupPlansViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -1031,6 +1039,33 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 
 public final class me/proton/core/plan/presentation/view/PlanViewUtilsKt {
 	public static final field HUNDRED_PERCENT I
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel;
+	public static fun newInstance (Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlansViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory : dagger/internal/Factory {
