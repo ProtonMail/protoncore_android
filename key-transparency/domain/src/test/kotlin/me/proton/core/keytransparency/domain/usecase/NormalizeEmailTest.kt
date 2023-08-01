@@ -74,4 +74,14 @@ internal class NormalizeEmailTest {
         kotlin.test.assertEquals(expected, actual)
     }
 
+    @Test
+    fun normalizeDomainTest() {
+        // given
+        val email = "normalize_this-test.proton@prOtOn.black"
+        val expected = "normalizethistestproton@proton.black"
+        // when
+        val actual = normalizeEmail(email)
+        // then
+        kotlin.test.assertEquals(expected, actual)
+    }
 }

@@ -26,7 +26,7 @@ public class NormalizeEmail @Inject constructor() {
         val split = email.split("@")
         require(split.size == 2) { "Email is not correctly using `@` delimiter." }
         val user = split[0]
-        val domain = split[1]
+        val domain = split[1].lowercase()
         return if (isCatchAll) {
             "@$domain"
         } else {
