@@ -45,27 +45,27 @@ class DynamicPlanView @JvmOverloads constructor(
 
     val entitlements: ViewGroup = binding.contentEntitlements
 
-    var title: String?
-        get() = binding.title.text.toString()
+    var title: CharSequence?
+        get() = binding.title.text
         set(value) {
             binding.title.text = value
         }
 
-    var description: String?
-        get() = binding.description.text.toString()
+    var description: CharSequence?
+        get() = binding.description.text
         set(value) {
             binding.description.text = value
         }
 
-    var promoTitle: String?
-        get() = binding.promoTitle.text.toString()
+    var promoTitle: CharSequence?
+        get() = binding.promoTitle.text
         set(value) {
             binding.promoTitle.text = value
             binding.promoTitle.isVisible = !promoTitle.isNullOrBlank()
         }
 
-    var promoPercentage: String?
-        get() = binding.pricePercentage.text.toString()
+    var promoPercentage: CharSequence?
+        get() = binding.pricePercentage.text
         set(value) {
             binding.promoPercentage.text = value
             binding.promoPercentage.isVisible = !promoPercentage.isNullOrBlank()
@@ -77,15 +77,21 @@ class DynamicPlanView @JvmOverloads constructor(
             binding.starred.isVisible = value
         }
 
-    var priceText: String?
-        get() = binding.priceText.text.toString()
+    var priceText: CharSequence?
+        get() = binding.priceText.text
         set(value) {
             binding.priceText.text = value
             binding.priceLayout.isVisible = !priceText.isNullOrBlank()
         }
 
-    var pricePercentage: String?
-        get() = binding.pricePercentage.text.toString()
+    var priceCycle: CharSequence?
+        get() = binding.priceCycle.text
+        set(value) {
+            binding.priceCycle.text = value
+        }
+
+    var pricePercentage: CharSequence?
+        get() = binding.pricePercentage.text
         set(value) {
             binding.pricePercentage.text = value
             binding.priceLayout.isVisible = !priceText.isNullOrBlank()
@@ -122,8 +128,8 @@ class DynamicPlanView @JvmOverloads constructor(
             binding.contentSeparator.isVisible = value
         }
 
-    var renewalText: String?
-        get() = binding.contentRenewal.text.toString()
+    var renewalText: CharSequence?
+        get() = binding.contentRenewal.text
         set(value) {
             binding.contentRenewal.text = value
         }
@@ -134,8 +140,8 @@ class DynamicPlanView @JvmOverloads constructor(
             binding.contentButton.isVisible = value
         }
 
-    var buttonText: String?
-        get() = binding.contentButton.text.toString()
+    var buttonText: CharSequence?
+        get() = binding.contentButton.text
         set(value) {
             binding.contentButton.text = value
         }

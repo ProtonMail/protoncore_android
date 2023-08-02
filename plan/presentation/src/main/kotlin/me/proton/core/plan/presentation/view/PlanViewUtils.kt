@@ -22,13 +22,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
+import android.text.Spanned
 import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.ArrayRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.text.HtmlCompat
 import me.proton.core.plan.presentation.R
 import me.proton.core.presentation.utils.formatByteToHumanReadable
 import me.proton.core.user.domain.entity.User
 import me.proton.core.util.kotlin.CoreLogger
+import java.text.DateFormat
+import java.time.Instant
+import java.util.Calendar
 
 const val HUNDRED_PERCENT = 100
 
@@ -87,6 +92,18 @@ internal fun formatUsedSpace(context: Context, usedSpace: Long, maxSpace: Long):
     usedSpace.formatByteToHumanReadable(),
     maxSpace.formatByteToHumanReadable()
 )
+
+internal fun formatRenew(context: Context, renew: Boolean, periodEnd: Instant): Spanned {
+    val date = Calendar.getInstance().apply { timeInMillis = periodEnd.toEpochMilli() }.time
+    val renewalText = if (renew) R.string.plans_renewal_date else R.string.plans_expiration_date
+    return HtmlCompat.fromHtml(
+        String.format(
+            context.getString(renewalText),
+            DateFormat.getDateInstance().format(date)
+        ),
+        HtmlCompat.FROM_HTML_MODE_LEGACY
+    )
+}
 
 internal fun PlanItemView.rotate() = with(binding) {
     if (!collapsible) {

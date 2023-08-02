@@ -48,8 +48,8 @@ class DynamicPlanEntitlementDescriptionView @JvmOverloads constructor(
             icon.load(value, imageLoader)
         }
 
-    var text: String?
-        get() = binding.text.text.toString()
+    var text: CharSequence?
+        get() = binding.text.text
         set(value) {
             binding.text.text = value
         }

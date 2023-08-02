@@ -20,21 +20,20 @@ package me.proton.core.payment.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.dynamicSubscription
 import me.proton.core.payment.domain.repository.PaymentsRepository
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
 
-class GetCurrentDynamicSubscriptionTest {
+class GetDynamicSubscriptionTest {
     // region mocks
     private val repository = mockk<PaymentsRepository>(relaxed = true)
     // endregion
@@ -44,11 +43,11 @@ class GetCurrentDynamicSubscriptionTest {
     private val testSubscription = dynamicSubscription
     // endregion
 
-    private lateinit var useCase: GetCurrentDynamicSubscription
+    private lateinit var useCase: GetDynamicSubscription
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetCurrentDynamicSubscription(repository)
+        useCase = GetDynamicSubscription(repository)
     }
 
     @Test
@@ -61,7 +60,7 @@ class GetCurrentDynamicSubscriptionTest {
         assertEquals(testSubscription, result)
         assertNotNull(result)
         assertNotNull(result)
-        assertEquals(0, result!!.amount)
+        assertEquals(0, result.amount)
     }
 
     @Test

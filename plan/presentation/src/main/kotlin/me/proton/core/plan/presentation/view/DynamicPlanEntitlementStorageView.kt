@@ -18,8 +18,8 @@ class DynamicPlanEntitlementStorageView @JvmOverloads constructor(
 
     private val binding by lazy { inflate(LayoutInflater.from(context), this) }
 
-    var text: String?
-        get() = binding.text.text.toString()
+    var text: CharSequence?
+        get() = binding.text.text
         set(value) {
             binding.text.text = value
         }

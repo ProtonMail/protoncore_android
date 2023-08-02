@@ -28,9 +28,10 @@ import javax.inject.Inject
  * Authorized. This means that it could only be used for upgrades. New accounts created during sign ups logically do not
  * have existing subscriptions.
  */
-public class GetCurrentDynamicSubscription @Inject constructor(
+public class GetDynamicSubscription @Inject constructor(
     private val plansRepository: PaymentsRepository
 ) {
-    public suspend operator fun invoke(userId: UserId): DynamicSubscription? =
-        plansRepository.getDynamicSubscription(userId)
+    public suspend operator fun invoke(userId: UserId): DynamicSubscription {
+        return plansRepository.getDynamicSubscription(userId)
+    }
 }
