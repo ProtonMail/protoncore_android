@@ -25,6 +25,8 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.contact.data.api.ContactRemoteDataSourceImpl
 import me.proton.core.contact.data.local.db.ContactLocalDataSourceImpl
 import me.proton.core.contact.data.repository.ContactRepositoryImpl
+import me.proton.core.contact.domain.CryptoUtils
+import me.proton.core.contact.domain.CryptoUtilsImpl
 import me.proton.core.contact.domain.repository.ContactLocalDataSource
 import me.proton.core.contact.domain.repository.ContactRemoteDataSource
 import me.proton.core.contact.domain.repository.ContactRepository
@@ -41,4 +43,8 @@ abstract class CoreContactsModule {
 
     @Binds
     abstract fun provideContactsRepository(impl: ContactRepositoryImpl): ContactRepository
+
+    @Binds
+    abstract fun provideCryptoUtils(impl: CryptoUtilsImpl): CryptoUtils
+
 }

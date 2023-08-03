@@ -22,13 +22,13 @@ plugins {
     protonKotlinLibrary
 }
 
-protonCoverage {
-    minBranchCoveragePercentage.set(0)
-    minLineCoveragePercentage.set(4)
-}
-
 protonBuild {
     apiModeDisabled()
+}
+
+protonCoverage {
+    minBranchCoveragePercentage.set(25)
+    minLineCoveragePercentage.set(50)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -37,20 +37,24 @@ dependencies {
     api(
         project(Module.cryptoCommon),
         project(Module.domain),
-        project(Module.eventManagerDomain),
         project(Module.keyDomain),
-        `ez-vcard`,
+        project(Module.mailSettingsDomain),
+        project(Module.mailMessageDomain),
+        project(Module.userDomain),
+        project(Module.contactDomain),
         `javax-inject`
     )
 
     implementation(
-        `coroutines-core`
+        project(Module.kotlinUtil),
+
     )
 
     testImplementation(
-        project(Module.kotlinTest),
-        junit,
-        `kotlin-test`,
-        mockk,
+            project(Module.kotlinTest),
+            `coroutines-test`,
+            junit,
+            `kotlin-test`,
+            mockk,
     )
 }

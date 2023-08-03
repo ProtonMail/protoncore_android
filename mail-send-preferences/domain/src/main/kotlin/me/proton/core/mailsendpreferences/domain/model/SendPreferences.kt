@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,32 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.mailsendpreferences.domain.model
 
-plugins {
-    protonKotlinLibrary
-}
+import me.proton.core.key.domain.entity.key.PublicKey
+import me.proton.core.mailsettings.domain.entity.MimeType
+import me.proton.core.mailsettings.domain.entity.PackageType
 
-protonBuild {
-    apiModeDisabled()
-}
-
-protonCoverage {
-    minBranchCoveragePercentage.set(33)
-    minLineCoveragePercentage.set(40)
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.cryptoCommon),
-        project(Module.domain),
-    )
-
-    testImplementation(
-        junit,
-        `kotlin-test`,
-        mockk
-    )
-}
+/**
+ * Set of user's preferences for sending emails to a given recipient. This is combined
+ * from email settings, public key repository and Proton contact settings, including
+ * pinned public keys for recipient email address.
+ */
+data class SendPreferences(
+    val encrypt: Boolean,
+    val sign: Boolean,
+    val pgpScheme: PackageType,
+    val mimeType: MimeType,
+    val publicKey: PublicKey?
+)

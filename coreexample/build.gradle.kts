@@ -222,6 +222,7 @@ dependencies {
         project(Module.label),
         project(Module.mailMessage),
         project(Module.mailSettings),
+        project(Module.mailSendPreferences),
         project(Module.notification),
         project(Module.observability),
         project(Module.payment),

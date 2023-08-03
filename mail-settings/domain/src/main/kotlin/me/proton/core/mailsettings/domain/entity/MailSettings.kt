@@ -188,6 +188,19 @@ enum class PackageType(val type: Int) {
     companion object {
         val map = values().associateBy { it.type }
         fun enumOf(value: Int?) = value?.let { IntEnum(it, map[it]) }
+
+        fun enumFromScheme(scheme: String, encrypt: Boolean, sign: Boolean): PackageType? =
+            if (scheme == "pgp-mime") {
+                if (!encrypt && sign) {
+                    ClearMime
+                } else if (encrypt) {
+                    PgpMime
+                } else Cleartext
+            } else if (scheme == "pgp-inline") {
+                if (encrypt) {
+                    PgpInline
+                } else Cleartext
+            } else null
     }
 }
 
@@ -199,5 +212,7 @@ enum class MimeType(val value: String) {
     companion object {
         val map = values().associateBy { it.value }
         fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
+
+        fun enumFromContentType(contentType: String?): MimeType? = map[contentType]
     }
 }

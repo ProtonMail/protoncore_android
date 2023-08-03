@@ -1,7 +1,58 @@
+public abstract interface class me/proton/core/contact/domain/CryptoUtils {
+	public abstract fun extractPinnedPublicKeys (Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose;Ljava/lang/String;Lezvcard/VCard;Lme/proton/core/key/domain/entity/key/PublicAddress;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError;
+}
+
+public abstract class me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError {
+}
+
+public abstract class me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error : me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError {
+}
+
+public final class me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error$NoEmailInVCard : me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error {
+	public static final field INSTANCE Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error$NoEmailInVCard;
+}
+
+public final class me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error$NoKeysAvailable : me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error {
+	public static final field INSTANCE Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Error$NoKeysAvailable;
+}
+
+public final class me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Success : me/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError {
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Success;
+	public static synthetic fun copy$default (Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Success;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPinnedPublicKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose {
+}
+
+public final class me/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose$Encrypting : me/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose {
+	public static final field INSTANCE Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose$Encrypting;
+}
+
+public final class me/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose$VerifyingSignature : me/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose {
+	public static final field INSTANCE Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose$VerifyingSignature;
+}
+
+public final class me/proton/core/contact/domain/CryptoUtilsImpl : me/proton/core/contact/domain/CryptoUtils {
+	public fun <init> ()V
+	public fun extractPinnedPublicKeys (Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysPurpose;Ljava/lang/String;Lezvcard/VCard;Lme/proton/core/key/domain/entity/key/PublicAddress;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/contact/domain/CryptoUtils$PinnedKeysOrError;
+}
+
 public final class me/proton/core/contact/domain/VCardCryptoKt {
 	public static final fun decryptContactCard (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lme/proton/core/contact/domain/entity/ContactCard;)Lme/proton/core/contact/domain/entity/DecryptedVCard;
 	public static final fun encryptAndSignContactCard (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lezvcard/VCard;)Lme/proton/core/contact/domain/entity/ContactCard$Encrypted;
 	public static final fun signContactCard (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Lezvcard/VCard;)Lme/proton/core/contact/domain/entity/ContactCard$Signed;
+}
+
+public final class me/proton/core/contact/domain/VCardUtilsKt {
+	public static final fun getGroupForEmail (Lezvcard/VCard;Ljava/lang/String;)Ljava/lang/String;
+	public static final fun getKeysForGroup (Lezvcard/VCard;Ljava/lang/String;)Ljava/util/List;
+	public static final fun getProperty (Lezvcard/VCard;Ljava/lang/String;Ljava/lang/String;)Lezvcard/property/RawProperty;
 }
 
 public final class me/proton/core/contact/domain/entity/Contact {

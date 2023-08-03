@@ -363,6 +363,14 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: getFingerprint")
     }
 
+    override fun isKeyExpired(key: Armored): Boolean {
+        TODO("Not yet implemented: isKeyExpired")
+    }
+
+    override fun isKeyRevoked(key: Armored): Boolean {
+        TODO("Not yet implemented: isKeyRevoked")
+    }
+
     override fun getJsonSHA256Fingerprints(key: Armored): String {
         TODO("Not yet implemented: getJsonSHA256Fingerprints")
     }

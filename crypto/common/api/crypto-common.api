@@ -241,6 +241,8 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun getUnarmored (Ljava/lang/String;)[B
 	public abstract fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
 	public abstract fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ZLme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
+	public abstract fun isKeyExpired (Ljava/lang/String;)Z
+	public abstract fun isKeyRevoked (Ljava/lang/String;)Z
 	public abstract fun isPrivateKey (Ljava/lang/String;)Z
 	public abstract fun isPublicKey (Ljava/lang/String;)Z
 	public abstract fun isValidKey (Ljava/lang/String;)Z

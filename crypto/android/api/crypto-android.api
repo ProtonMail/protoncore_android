@@ -85,6 +85,8 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun getUnarmored (Ljava/lang/String;)[B
 	public fun getVerifiedTimestampOfData ([BLjava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
 	public fun getVerifiedTimestampOfText (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;ZLme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
+	public fun isKeyExpired (Ljava/lang/String;)Z
+	public fun isKeyRevoked (Ljava/lang/String;)Z
 	public fun isPrivateKey (Ljava/lang/String;)Z
 	public fun isPublicKey (Ljava/lang/String;)Z
 	public fun isValidKey (Ljava/lang/String;)Z

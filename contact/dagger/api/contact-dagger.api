@@ -14,5 +14,6 @@ public abstract class me/proton/core/contact/dagger/CoreContactsModule {
 	public abstract fun bindContactLocalDataSource (Lme/proton/core/contact/data/local/db/ContactLocalDataSourceImpl;)Lme/proton/core/contact/domain/repository/ContactLocalDataSource;
 	public abstract fun bindContactRemoteDataSource (Lme/proton/core/contact/data/api/ContactRemoteDataSourceImpl;)Lme/proton/core/contact/domain/repository/ContactRemoteDataSource;
 	public abstract fun provideContactsRepository (Lme/proton/core/contact/data/repository/ContactRepositoryImpl;)Lme/proton/core/contact/domain/repository/ContactRepository;
+	public abstract fun provideCryptoUtils (Lme/proton/core/contact/domain/CryptoUtilsImpl;)Lme/proton/core/contact/domain/CryptoUtils;
 }
 

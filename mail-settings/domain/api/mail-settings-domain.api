@@ -100,6 +100,7 @@ public final class me/proton/core/mailsettings/domain/entity/MimeType : java/lan
 }
 
 public final class me/proton/core/mailsettings/domain/entity/MimeType$Companion {
+	public final fun enumFromContentType (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/MimeType;
 	public final fun enumOf (Ljava/lang/String;)Lme/proton/core/domain/type/StringEnum;
 	public final fun getMap ()Ljava/util/Map;
 }
@@ -132,6 +133,7 @@ public final class me/proton/core/mailsettings/domain/entity/PackageType : java/
 }
 
 public final class me/proton/core/mailsettings/domain/entity/PackageType$Companion {
+	public final fun enumFromScheme (Ljava/lang/String;ZZ)Lme/proton/core/mailsettings/domain/entity/PackageType;
 	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/domain/type/IntEnum;
 	public final fun getMap ()Ljava/util/Map;
 }

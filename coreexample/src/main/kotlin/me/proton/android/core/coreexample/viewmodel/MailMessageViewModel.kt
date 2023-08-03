@@ -39,7 +39,7 @@ import javax.inject.Inject
 class MailMessageViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val userManager: UserManager,
-    private val sendEmailDirect: SendEmailDirect
+    private val sendEmailDirect: SendEmailDirect,
 ) : ViewModel() {
 
     private val action = MutableSharedFlow<Action>()
@@ -66,6 +66,8 @@ class MailMessageViewModel @Inject constructor(
         val userId = accountManager.getPrimaryUserId().first()!!
         val userAddress = userManager.getAddresses(userId).first()
 
+        val recipientEmails = listOf("enter-recipients-here@protonmail.com")
+
         val array1 = "Plain Attachment text 1".toByteArray()
         val array2 = "Plain Attachment text 2".toByteArray()
         val attachments = listOf(
@@ -86,7 +88,7 @@ class MailMessageViewModel @Inject constructor(
             "Test email",
             "Test body of an email",
             "text/plain",
-            listOf(/*"adamtst@pm.me", "adamprotonmail@gmail.com"*/),
+            recipientEmails,
             attachments
         )
         when (val result = sendEmailDirect.invoke(userAddress, arguments)) {

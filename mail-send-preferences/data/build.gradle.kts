@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
+ * Copyright (c) 2021 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -15,16 +15,12 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    protonKotlinLibrary
-}
-
-protonCoverage {
-    minBranchCoveragePercentage.set(0)
-    minLineCoveragePercentage.set(4)
+    protonAndroidLibrary
+    kotlin("plugin.serialization")
 }
 
 protonBuild {
@@ -33,24 +29,22 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+android {
+    namespace = "me.proton.core.mailsendpreferences.data"
+}
+
 dependencies {
     api(
-        project(Module.cryptoCommon),
         project(Module.domain),
-        project(Module.eventManagerDomain),
-        project(Module.keyDomain),
-        `ez-vcard`,
-        `javax-inject`
+        project(Module.mailMessageDomain),
+        project(Module.networkData),
+        `javax-inject`,
+        retrofit,
+        `serialization-core`
     )
 
     implementation(
-        `coroutines-core`
-    )
-
-    testImplementation(
-        project(Module.kotlinTest),
-        junit,
-        `kotlin-test`,
-        mockk,
+        project(Module.kotlinUtil),
+        project(Module.networkDomain),
     )
 }

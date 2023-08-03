@@ -195,6 +195,12 @@ public object Module {
     public const val mailSettingsPresentation: String = "$mailSettings:mail-settings-presentation"
     public const val mailSettingsData: String = "$mailSettings:mail-settings-data"
 
+    // Mail Send Preferences
+    public const val mailSendPreferences: String = ":mail-send-preferences"
+    public const val mailSendPreferencesDagger: String = "$mailSendPreferences:mail-send-preferences-dagger"
+    public const val mailSendPreferencesDomain: String = "$mailSendPreferences:mail-send-preferences-domain"
+    public const val mailSendPreferencesData: String = "$mailSendPreferences:mail-send-preferences-data"
+
     // Plan
     public const val plan: String = ":plan"
     public const val planDagger: String = "$plan:plan-dagger"

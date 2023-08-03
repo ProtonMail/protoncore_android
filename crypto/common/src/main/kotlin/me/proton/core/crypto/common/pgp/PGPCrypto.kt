@@ -697,6 +697,16 @@ interface PGPCrypto {
     fun getFingerprint(key: Armored): String
 
     /**
+     * Checks if armored Key is expired.
+     */
+    fun isKeyExpired(key: Armored): Boolean
+
+    /**
+     * Checks if armored Key is revoked.
+     */
+    fun isKeyRevoked(key: Armored): Boolean
+
+    /**
      * Get JSON SHA256 fingerprints from [key] and corresponding sub-keys.
      *
      * @throws [CryptoException] if fingerprints cannot be extracted from [key].

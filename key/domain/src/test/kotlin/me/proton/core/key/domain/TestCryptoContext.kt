@@ -508,6 +508,10 @@ open class TestCryptoContext : CryptoContext {
 
         override fun getFingerprint(key: Armored): String = "fingerprint($key)"
 
+        override fun isKeyExpired(key: Armored): Boolean = false
+
+        override fun isKeyRevoked(key: Armored): Boolean = false
+
         override fun getJsonSHA256Fingerprints(key: Armored): String = "jsonSHA256Fingerprint($key)"
 
         override fun getBase64Encoded(array: ByteArray): String = array.toString()
