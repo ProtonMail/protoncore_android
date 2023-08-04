@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.domain
 
+import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.Plan
 
 /**
@@ -25,4 +26,6 @@ import me.proton.core.plan.domain.entity.Plan
  */
 interface ClientPlanFilter {
     fun filter(): (Plan) -> Boolean
+
+    fun filterDynamicPlan(): (DynamicPlan) -> Boolean
 }
