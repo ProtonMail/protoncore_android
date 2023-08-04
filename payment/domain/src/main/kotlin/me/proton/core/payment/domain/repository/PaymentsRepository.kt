@@ -91,9 +91,9 @@ public interface PaymentsRepository {
 
     /**
      * Authenticated.
-     * Returns current active dynamic subscription.
+     * Returns current active dynamic subscriptions.
      */
-    public suspend fun getDynamicSubscription(sessionUserId: SessionUserId): DynamicSubscription
+    public suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription>
 
     /**
      * Authenticated.

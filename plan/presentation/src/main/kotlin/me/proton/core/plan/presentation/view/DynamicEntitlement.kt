@@ -22,19 +22,19 @@ package me.proton.core.plan.presentation.view
 
 import android.content.Context
 import androidx.core.content.res.ResourcesCompat
-import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
+import me.proton.core.plan.domain.entity.DynamicEntitlement
 import me.proton.core.plan.presentation.R
 import me.proton.core.util.kotlin.takeIfNotBlank
 
-fun DynamicPlanEntitlement.toView(context: Context) = when (this) {
-    is DynamicPlanEntitlement.Description -> DynamicPlanEntitlementDescriptionView(context).apply {
-        icon = this@toView.iconBase64.takeIfNotBlank()?.toByteArray() ?: getFallbackIcon(context)
+fun DynamicEntitlement.toView(context: Context) = when (this) {
+    is DynamicEntitlement.Description -> DynamicEntitlementDescriptionView(context).apply {
+        icon = this@toView.iconUrl.takeIfNotBlank() ?: getFallbackIcon(context)
         text = this@toView.text
     }
 
-    is DynamicPlanEntitlement.Storage -> DynamicPlanEntitlementStorageView(context).apply {
-        text = formatUsedSpace(context, currentMBytes / 100, maxMBytes / 100)
-        progress = ((currentMBytes.toFloat() / maxMBytes.toFloat()) * 100).toInt()
+    is DynamicEntitlement.Storage -> DynamicEntitlementStorageView(context).apply {
+        text = formatUsedSpace(context, currentBytes, maxBytes)
+        progress = ((currentBytes.toFloat() / maxBytes.toFloat()) * 100).toInt()
     }
 }
 

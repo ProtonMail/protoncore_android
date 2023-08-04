@@ -19,21 +19,10 @@
 package me.proton.core.plan.domain.entity
 
 import me.proton.core.domain.type.IntEnum
-import java.util.Base64
 import java.util.Calendar
 import java.util.EnumSet
 
-private const val PLAN_ICON_SVG = """
-<svg width="204" height="204" xmlns="http://www.w3.org/2000/svg">
-    <g><ellipse stroke-width="4" stroke="#000" ry="100" rx="100" id="svg_1" cy="102" cx="102" fill="#fff"/></g>
-</svg>
-"""
-
-private val planIconBase64 =
-    Base64.getEncoder().encode(PLAN_ICON_SVG.toByteArray()).decodeToString()
-
 val freePlan = DynamicPlan(
-    id = "PRoqzg34",
     name = "free",
     order = 10,
     state = DynamicPlanState.Unavailable,
@@ -41,9 +30,8 @@ val freePlan = DynamicPlan(
     type = null,
     description = "The no-cost starter account designed to empower everyone with privacy by default.",
     entitlements = listOf(
-        DynamicPlanEntitlement.Description(
-            iconBase64 = planIconBase64,
-            iconName = "tick",
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
             text = "Up to 1 GB storage",
             hint = "Start with 500 MB and unlock more storage along the way."
         )
@@ -51,7 +39,6 @@ val freePlan = DynamicPlan(
 )
 
 val mailPlusPlan = DynamicPlan(
-    id = "l8vWAXHBQmv",
     name = "mail2022",
     order = 5,
     state = DynamicPlanState.Available,
@@ -62,25 +49,21 @@ val mailPlusPlan = DynamicPlan(
 )
 
 val unlimitedPlan = DynamicPlan(
-    id = "lY2ZCYkVNfl_osze70PRoqzg34MQI64mE3-pLc-yMp_6KXthkV1paUsyS276OdNwucz9zKoWKZL_TgtKxOPb0w==",
     name = "bundle2022",
     order = 0,
     state = DynamicPlanState.Available,
     title = "Proton Unlimited",
     type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
-
-    decorations = listOf(DynamicPlanDecoration.Star(planIconBase64)),
+    decorations = listOf(DynamicDecoration.Star("tick")),
     description = null,
     entitlements = listOf(
-        DynamicPlanEntitlement.Description(
-            iconBase64 = planIconBase64,
-            iconName = "tick",
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
             text = "500 GB storage",
             hint = "Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive."
         ),
-        DynamicPlanEntitlement.Description(
-            iconBase64 = planIconBase64,
-            iconName = "tick",
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
             text = "Unlimited folders, labels, and filters."
         )
     ),
@@ -88,7 +71,7 @@ val unlimitedPlan = DynamicPlan(
     instances = listOf(
         DynamicPlanInstance(
             id = "aJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
-            months = 1,
+            cycle = 1,
             description = "For 1 month",
             periodEnd = Calendar.getInstance().let {
                 it.add(Calendar.MONTH, 1)
@@ -100,9 +83,9 @@ val unlimitedPlan = DynamicPlan(
                     current = 499,
                     default = 499
                 )
-            )
+            ).associateBy { it.currency }
         )
-    ),
+    ).associateBy { it.cycle },
     offers = listOf(
         DynamicPlanOffer(
             name = "Next month's offer",

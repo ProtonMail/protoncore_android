@@ -134,11 +134,11 @@ class PaymentsApiTest {
         webServer.enqueueFromResourceFile("GET/payments/v4/dynamic-subscription.json", javaClass.classLoader)
 
         // When
-        val subscription = tested.getCurrentDynamicSubscription().subscription.toDynamicSubscription()
+        val subscription = tested.getDynamicSubscriptions().subscriptions.first().toDynamicSubscription("endpoint")
 
         // Then
         assertEquals(28788, subscription.amount)
-        assertEquals(SubscriptionManagement.PROTON_MANAGED, subscription.external)
+        assertEquals(false, subscription.external)
     }
 
     @Test

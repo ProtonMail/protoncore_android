@@ -49,6 +49,7 @@ import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
+import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.runTestWithResultContext
@@ -62,6 +63,9 @@ import kotlin.test.assertTrue
 class PaymentsRepositoryImplTest {
 
     // region mocks
+    private val endpointProvider = mockk<PlanIconsEndpointProvider> {
+        every { get() } returns "endpoint"
+    }
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<PaymentsApi>>(relaxed = true)
@@ -100,7 +104,7 @@ class PaymentsRepositoryImplTest {
                 interfaceClass = PaymentsApi::class
             )
         } returns apiManager
-        repository = PaymentsRepositoryImpl(apiProvider)
+        repository = PaymentsRepositoryImpl(apiProvider, endpointProvider)
     }
 
     @Test

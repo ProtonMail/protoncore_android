@@ -150,19 +150,22 @@ internal data class PlanVendorResponse(
     val plans: Map<Int, String>,
 
     @SerialName("CustomerID")
-    val customerId: String
+    val customerId: String? = null
 )
 
 internal fun Map<String, PlanVendorResponse>.toPlanVendorDataMap(): Map<AppStore, PlanVendorData> {
     return mapNotNull { entry ->
-        when (entry.key) {
-            PLAN_VENDOR_GOOGLE -> AppStore.GooglePlay
-            else -> null
-        }?.let { appStore ->
-            appStore to PlanVendorData(
-                customerId = entry.value.customerId,
-                names = entry.value.plans.mapKeys { PlanDuration(it.key) }
-            )
+        when (val customerId = entry.value.customerId) {
+            null -> null
+            else -> when (entry.key) {
+                PLAN_VENDOR_GOOGLE -> AppStore.GooglePlay
+                else -> null
+            }?.let { appStore ->
+                appStore to PlanVendorData(
+                    customerId = customerId,
+                    names = entry.value.plans.mapKeys { PlanDuration(it.key) }
+                )
+            }
         }
     }.toMap()
 }

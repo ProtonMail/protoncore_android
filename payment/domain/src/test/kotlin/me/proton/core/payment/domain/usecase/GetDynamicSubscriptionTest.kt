@@ -41,6 +41,7 @@ class GetDynamicSubscriptionTest {
     // region test data
     private val testUserId = UserId("test-user-id")
     private val testSubscription = dynamicSubscription
+    private val testSubscriptions = listOf(testSubscription)
     // endregion
 
     private lateinit var useCase: GetDynamicSubscription
@@ -53,20 +54,19 @@ class GetDynamicSubscriptionTest {
     @Test
     fun `get subscription returns success, enqueue getsubscription observability success`() = runTest {
         // GIVEN
-        coEvery { repository.getDynamicSubscription(testUserId) } returns testSubscription
+        coEvery { repository.getDynamicSubscriptions(testUserId) } returns testSubscriptions
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(testSubscription, result)
         assertNotNull(result)
-        assertNotNull(result)
-        assertEquals(0, result.amount)
+        assertEquals(0L, result.amount)
     }
 
     @Test
     fun `get subscription returns error`() = runTest {
         // GIVEN
-        coEvery { repository.getDynamicSubscription(testUserId) } throws ApiException(
+        coEvery { repository.getDynamicSubscriptions(testUserId) } throws ApiException(
             ApiResult.Error.Connection(
                 false,
                 RuntimeException("Test error")
@@ -84,7 +84,7 @@ class GetDynamicSubscriptionTest {
     @Test
     fun `get dynamic subscription returns no active subscription`() = runTest {
         // GIVEN
-        coEvery { repository.getDynamicSubscription(testUserId) } throws ApiException(
+        coEvery { repository.getDynamicSubscriptions(testUserId) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",

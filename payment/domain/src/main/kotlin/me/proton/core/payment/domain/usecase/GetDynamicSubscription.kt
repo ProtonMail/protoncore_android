@@ -32,6 +32,6 @@ public class GetDynamicSubscription @Inject constructor(
     private val plansRepository: PaymentsRepository
 ) {
     public suspend operator fun invoke(userId: UserId): DynamicSubscription {
-        return plansRepository.getDynamicSubscription(userId)
+        return plansRepository.getDynamicSubscriptions(userId).first()
     }
 }

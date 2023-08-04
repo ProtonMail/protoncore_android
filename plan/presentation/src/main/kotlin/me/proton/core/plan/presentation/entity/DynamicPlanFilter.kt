@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,18 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.entity
+package me.proton.core.plan.presentation.entity
 
-sealed class DynamicPlanEntitlement {
-    data class Description(
-        val text: String,
-        val iconBase64: String,
-        val iconName: String,
-        val hint: String? = null,
-    ) : DynamicPlanEntitlement()
+import me.proton.core.domain.entity.UserId
 
-    data class Storage(
-        val currentMBytes: Long,
-        val maxMBytes: Long
-    ) : DynamicPlanEntitlement()
-}
+data class DynamicPlanFilter(
+    val userId: UserId? = null,
+    val cycle: Int = 12,
+    val currency: String? = null,
+)

@@ -87,10 +87,10 @@ internal fun User?.calculateUsedSpacePercentage(): Double {
     return usedSpace.toDouble() / maxSpace.toDouble() * HUNDRED_PERCENT
 }
 
-internal fun formatUsedSpace(context: Context, usedSpace: Long, maxSpace: Long): String = String.format(
+internal fun formatUsedSpace(context: Context, usedBytes: Long, maxBytes: Long): String = String.format(
     context.getString(R.string.plans_used_space),
-    usedSpace.formatByteToHumanReadable(),
-    maxSpace.formatByteToHumanReadable()
+    usedBytes.formatByteToHumanReadable(),
+    maxBytes.formatByteToHumanReadable()
 )
 
 internal fun formatRenew(context: Context, renew: Boolean, periodEnd: Instant): Spanned {

@@ -24,7 +24,7 @@ import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.response.CheckSubscriptionResponse
 import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
-import me.proton.core.payment.data.api.response.DynamicSubscriptionResponse
+import me.proton.core.payment.data.api.response.DynamicSubscriptionsResponse
 import me.proton.core.payment.data.api.response.PaymentMethodsResponse
 import me.proton.core.payment.data.api.response.PaymentStatusResponse
 import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
@@ -59,7 +59,7 @@ internal interface PaymentsApi : BaseRetrofitApi {
     suspend fun getCurrentSubscription(): SubscriptionResponse
 
     @GET("payments/v5/subscription")
-    suspend fun getCurrentDynamicSubscription(): DynamicSubscriptionResponse
+    suspend fun getDynamicSubscriptions(): DynamicSubscriptionsResponse
 
     /**
      * Returns the status of payment processors.

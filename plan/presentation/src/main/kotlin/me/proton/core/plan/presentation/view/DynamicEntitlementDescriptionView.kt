@@ -12,12 +12,13 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import coil.ImageLoader
 import coil.decode.SvgDecoder
 import coil.load
-import me.proton.core.plan.presentation.databinding.DynamicPlanEntitlementDescriptionViewBinding.inflate
+import me.proton.core.plan.presentation.R
+import me.proton.core.plan.presentation.databinding.DynamicEntitlementDescriptionViewBinding.inflate
 import okhttp3.HttpUrl
 import java.io.File
 import java.nio.ByteBuffer
 
-class DynamicPlanEntitlementDescriptionView @JvmOverloads constructor(
+class DynamicEntitlementDescriptionView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,
@@ -45,7 +46,7 @@ class DynamicPlanEntitlementDescriptionView @JvmOverloads constructor(
      */
     var icon: Any? = null
         set(value) = with(binding) {
-            icon.load(value, imageLoader)
+            icon.load(value, imageLoader) { fallback(R.drawable.ic_proton_checkmark) }
         }
 
     var text: CharSequence?

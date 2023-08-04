@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,27 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.dagger
+package me.proton.core.plan.data
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.plan.data.PlanIconsEndpointProviderImpl
-import me.proton.core.plan.data.repository.PlansRepositoryImpl
+import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
-import me.proton.core.plan.domain.repository.PlansRepository
-import javax.inject.Singleton
+import okhttp3.HttpUrl
+import javax.inject.Inject
 
-@Module
-@InstallIn(SingletonComponent::class)
-public interface CorePlanModule {
+class PlanIconsEndpointProviderImpl @Inject constructor(
+    @BaseProtonApiUrl
+    private val baseProtonApiUrl: HttpUrl,
+    private val networkPrefs: NetworkPrefs,
+) : PlanIconsEndpointProvider {
 
-    @Binds
-    @Singleton
-    public fun providePlansRepository(impl: PlansRepositoryImpl): PlansRepository
-
-    @Binds
-    @Singleton
-    public fun provideIconsEndpoint(impl: PlanIconsEndpointProviderImpl): PlanIconsEndpointProvider
+    override fun get(): String = when (networkPrefs.activeAltBaseUrl) {
+        null -> "$baseProtonApiUrl/payments/v5/resources/icons/"
+        else -> "${networkPrefs.activeAltBaseUrl}/payments/v5/resources/icons/"
+    }
 }

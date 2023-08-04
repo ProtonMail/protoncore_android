@@ -28,8 +28,8 @@ internal data class DynamicPlanInstanceResource(
     @SerialName("ID")
     val id: String,
 
-    @SerialName("Months")
-    val months: Int,
+    @SerialName("Cycle")
+    val cycle: Int,
 
     @SerialName("Description")
     val description: String,
@@ -47,9 +47,9 @@ internal data class DynamicPlanInstanceResource(
 internal fun DynamicPlanInstanceResource.toDynamicPlanInstance(): DynamicPlanInstance =
     DynamicPlanInstance(
         id = id,
-        months = months,
+        cycle = cycle,
         description = description,
         periodEnd = Instant.ofEpochSecond(periodEnd),
-        price = price.map { it.toDynamicPlanPrice() },
+        price = price.associate { it.currency to it.toDynamicPlanPrice() },
         vendors = vendors.toPlanVendorDataMap(),
     )

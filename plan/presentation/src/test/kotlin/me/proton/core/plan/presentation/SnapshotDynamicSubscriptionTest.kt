@@ -20,8 +20,8 @@ package me.proton.core.plan.presentation
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
-import me.proton.core.plan.presentation.view.DynamicPlanEntitlementDescriptionView
-import me.proton.core.plan.presentation.view.DynamicPlanEntitlementStorageView
+import me.proton.core.plan.presentation.view.DynamicEntitlementDescriptionView
+import me.proton.core.plan.presentation.view.DynamicEntitlementStorageView
 import me.proton.core.plan.presentation.view.DynamicPlanView
 import org.junit.Rule
 import org.junit.Test
@@ -37,7 +37,7 @@ class SnapshotDynamicSubscriptionTest {
 
     @Test
     fun dynamicPlanEntitlementDescriptionView() {
-        val view = DynamicPlanEntitlementDescriptionView(paparazzi.context)
+        val view = DynamicEntitlementDescriptionView(paparazzi.context)
         view.text = "1 of 1 user"
         view.icon = R.drawable.ic_proton_checkmark
         paparazzi.snapshot(view)
@@ -45,7 +45,7 @@ class SnapshotDynamicSubscriptionTest {
 
     @Test
     fun dynamicPlanEntitlementStorageView() {
-        val view = DynamicPlanEntitlementStorageView(paparazzi.context)
+        val view = DynamicEntitlementStorageView(paparazzi.context)
         view.text = "50/100"
         view.progress = 50
         paparazzi.snapshot(view)
@@ -61,15 +61,14 @@ class SnapshotDynamicSubscriptionTest {
         view.pricePercentage = "-50%"
         view.promoPercentage = "-50%"
         view.promoTitle = "1 month super promo"
-        view.renewalTextIsVisible = true
         view.renewalText = "Your plan will automatically renew on 4 Jun 1982."
         view.isCollapsable = false
         view.starred = true
-        view.entitlements.addView(DynamicPlanEntitlementStorageView(paparazzi.context).apply {
+        view.entitlements.addView(DynamicEntitlementStorageView(paparazzi.context).apply {
             text = "50 MB on 100 MB"
             progress = 50
         })
-        view.entitlements.addView(DynamicPlanEntitlementDescriptionView(paparazzi.context).apply {
+        view.entitlements.addView(DynamicEntitlementDescriptionView(paparazzi.context).apply {
             text = "100MB of free Storage"
             icon = R.drawable.ic_proton_storage
         })

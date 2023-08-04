@@ -33,6 +33,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.plan.data.api.PlansApi
+import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
@@ -51,6 +52,9 @@ import kotlin.test.assertNull
 
 class PlansRepositoryImplTest {
     // region mocks
+    private val endpointProvider = mockk<PlanIconsEndpointProvider> {
+        every { get() } returns "endpoint"
+    }
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val apiFactory = mockk<ApiManagerFactory>(relaxed = true)
     private val apiManager = mockk<ApiManager<PlansApi>>(relaxed = true)
@@ -81,7 +85,7 @@ class PlansRepositoryImplTest {
                 interfaceClass = PlansApi::class
             )
         } returns apiManager
-        repository = PlansRepositoryImpl(apiProvider)
+        repository = PlansRepositoryImpl(apiProvider, endpointProvider)
     }
 
     @Test
@@ -296,7 +300,6 @@ class PlansRepositoryImplTest {
     fun `get dynamic plans`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val plan = DynamicPlan(
-            id = "id",
             name = "name",
             order = 0,
             state = DynamicPlanState.Available,

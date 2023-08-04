@@ -10,6 +10,7 @@ public final class me/proton/core/plan/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/plan/dagger/CorePlanModule {
+	public abstract fun provideIconsEndpoint (Lme/proton/core/plan/data/PlanIconsEndpointProviderImpl;)Lme/proton/core/plan/domain/PlanIconsEndpointProvider;
 	public abstract fun providePlansRepository (Lme/proton/core/plan/data/repository/PlansRepositoryImpl;)Lme/proton/core/plan/domain/repository/PlansRepository;
 }
 

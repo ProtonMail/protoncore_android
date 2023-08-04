@@ -44,11 +44,13 @@ import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.repository.PlanQuantity
+import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 public class PaymentsRepositoryImpl @Inject constructor(
-    private val provider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val endpointProvider: PlanIconsEndpointProvider
 ) : PaymentsRepository {
 
     override suspend fun createPaymentToken(
@@ -107,7 +109,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
                 paymentMethodId = paymentType.paymentMethodId
             )
         }
-        provider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
     }
@@ -116,14 +118,14 @@ public class PaymentsRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId?,
         paymentToken: ProtonPaymentToken
     ): PaymentTokenResult.PaymentTokenStatusResult =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             getPaymentTokenStatus(paymentToken.value).toPaymentTokenStatusResult()
         }.valueOrThrow
 
     override suspend fun getAvailablePaymentMethods(
         sessionUserId: SessionUserId
     ): List<PaymentMethod> = result("getAvailablePaymentMethods") {
-        provider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             getPaymentMethods().paymentMethods.map {
                 PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
@@ -137,7 +139,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus = result("validateSubscription") {
-        provider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             validateSubscription(
                 CheckSubscription(codes, plans, currency.name, cycle.value)
             ).toSubscriptionStatus()
@@ -145,13 +147,13 @@ public class PaymentsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             getCurrentSubscription().subscription.toSubscription()
         }.valueOrThrow
 
-    override suspend fun getDynamicSubscription(sessionUserId: SessionUserId): DynamicSubscription =
-        provider.get<PaymentsApi>(sessionUserId).invoke {
-            getCurrentDynamicSubscription().subscription.toDynamicSubscription()
+    override suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription> =
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
+            getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
         }.valueOrThrow
 
     override suspend fun createOrUpdateSubscription(
@@ -164,7 +166,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
         cycle: SubscriptionCycle,
         subscriptionManagement: SubscriptionManagement
     ): Subscription = result("createOrUpdateSubscription") {
-        provider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             createUpdateSubscription(
                 body = CreateSubscription(
                     amount = amount,
@@ -184,7 +186,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
             AppStore.FDroid -> "fdroid"
             AppStore.GooglePlay -> "google"
         }
-        return provider.get<PaymentsApi>(sessionUserId).invoke {
+        return apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             paymentStatus(appStoreCode).toPaymentStatus()
         }.valueOrThrow
     }

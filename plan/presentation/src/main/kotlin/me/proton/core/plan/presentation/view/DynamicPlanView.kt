@@ -88,12 +88,14 @@ class DynamicPlanView @JvmOverloads constructor(
         get() = binding.priceCycle.text
         set(value) {
             binding.priceCycle.text = value
+            binding.priceCycle.isVisible = !priceCycle.isNullOrBlank()
         }
 
     var pricePercentage: CharSequence?
         get() = binding.pricePercentage.text
         set(value) {
             binding.pricePercentage.text = value
+            binding.pricePercentage.isVisible = !pricePercentage.isNullOrBlank()
             binding.priceLayout.isVisible = !priceText.isNullOrBlank()
         }
 
@@ -121,17 +123,13 @@ class DynamicPlanView @JvmOverloads constructor(
                 }
             }
         }
-    var renewalTextIsVisible: Boolean
-        get() = binding.contentRenewal.isVisible
-        set(value) {
-            binding.contentRenewal.isVisible = value
-            binding.contentSeparator.isVisible = value
-        }
 
     var renewalText: CharSequence?
         get() = binding.contentRenewal.text
         set(value) {
             binding.contentRenewal.text = value
+            binding.contentRenewal.isVisible = !renewalText.isNullOrBlank()
+            binding.contentSeparator.isVisible = !renewalText.isNullOrBlank()
         }
 
     var buttonTextIsVisible: Boolean
@@ -145,6 +143,10 @@ class DynamicPlanView @JvmOverloads constructor(
         set(value) {
             binding.contentButton.text = value
         }
+
+    fun setOnButtonClickListener(listener: OnClickListener) {
+        binding.contentButton.setOnClickListener(listener)
+    }
 }
 
 private fun View.rotate(degrees: Float) {

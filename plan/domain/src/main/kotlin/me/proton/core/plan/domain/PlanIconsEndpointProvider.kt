@@ -16,27 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.dagger
+package me.proton.core.plan.domain
 
-import dagger.Binds
-import dagger.Module
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import me.proton.core.plan.data.PlanIconsEndpointProviderImpl
-import me.proton.core.plan.data.repository.PlansRepositoryImpl
-import me.proton.core.plan.domain.PlanIconsEndpointProvider
-import me.proton.core.plan.domain.repository.PlansRepository
-import javax.inject.Singleton
-
-@Module
-@InstallIn(SingletonComponent::class)
-public interface CorePlanModule {
-
-    @Binds
-    @Singleton
-    public fun providePlansRepository(impl: PlansRepositoryImpl): PlansRepository
-
-    @Binds
-    @Singleton
-    public fun provideIconsEndpoint(impl: PlanIconsEndpointProviderImpl): PlanIconsEndpointProvider
+fun interface PlanIconsEndpointProvider {
+    /**
+     * Provide the endpoint for fetching icon resources.
+     *
+     * Example: "https://api.{baseApiUrl}/payments/v5/resources/icons/"
+     */
+    fun get(): String
 }

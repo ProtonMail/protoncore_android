@@ -33,9 +33,6 @@ import java.util.EnumSet
 
 @Serializable
 internal data class DynamicPlanResource(
-    @SerialName("ID")
-    val id: String,
-
     @SerialName("Name")
     val name: String,
 
@@ -46,13 +43,13 @@ internal data class DynamicPlanResource(
     val title: String,
 
     @SerialName("Decorations")
-    val decorations: List<PlanDecorationResource> = emptyList(),
+    val decorations: List<DynamicDecorationResource> = emptyList(),
 
     @SerialName("Description")
     val description: String? = null,
 
     @SerialName("Entitlements")
-    val entitlements: List<EntitlementResource> = emptyList(),
+    val entitlements: List<DynamicEntitlementResource> = emptyList(),
 
     @SerialName("Features")
     val features: Int? = null,
@@ -76,8 +73,7 @@ internal data class DynamicPlanResource(
     val type: Int? = null
 )
 
-internal fun DynamicPlanResource.toDynamicPlan(order: Int): DynamicPlan = DynamicPlan(
-    id = id,
+internal fun DynamicPlanResource.toDynamicPlan(iconsEndpoint: String, order: Int): DynamicPlan = DynamicPlan(
     name = name,
     order = order,
     state = when {
@@ -85,13 +81,13 @@ internal fun DynamicPlanResource.toDynamicPlan(order: Int): DynamicPlan = Dynami
         else -> DynamicPlanState.Unavailable
     },
     title = title,
-    entitlements = entitlements.mapNotNull { it.toDynamicPlanEntitlement() },
+    entitlements = entitlements.mapNotNull { it.toDynamicPlanEntitlement(iconsEndpoint) },
     decorations = decorations.mapNotNull { it.toDynamicPlanDecoration() },
     description = description,
     features = features?.let { features ->
         EnumSet.copyOf(DynamicPlanFeature.values().filter { features.hasFlag(it.code) })
     } ?: EnumSet.noneOf(DynamicPlanFeature::class.java),
-    instances = instances.map { it.toDynamicPlanInstance() },
+    instances = instances.associate { it.cycle to it.toDynamicPlanInstance() },
     layout = layout?.let { layout ->
         StringEnum(layout, DynamicPlanLayout.values().firstOrNull { it.code == layout })
     } ?: StringEnum(DynamicPlanLayout.Default.code, DynamicPlanLayout.Default),

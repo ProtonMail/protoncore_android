@@ -18,64 +18,46 @@
 
 package me.proton.core.plan.data.api.response
 
-import android.util.Base64
-import io.mockk.every
-import io.mockk.mockkStatic
-import io.mockk.unmockkStatic
-import me.proton.core.plan.domain.entity.DynamicPlanDecoration
+import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.util.kotlin.deserialize
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class PlanDecorationResourceTest {
-    @BeforeTest
-    fun setUp() {
-        mockkStatic(Base64::class)
-        every { Base64.decode(any<String>(), any()) } answers {
-            firstArg<String>().toByteArray()
-        }
-    }
-
-    @AfterTest
-    fun tearDown() {
-        unmockkStatic(Base64::class)
-    }
+class DynamicDecorationResourceTest {
 
     @Test
     fun fromJsonToResource() {
         assertEquals(
-            PlanDecorationResource.Star(icon = "icon"),
+            DynamicDecorationResource.Star(iconName = "icon"),
             """
                 {
                 "Type": "Star",
-                "Icon": "icon"
+                "IconName": "icon"
                 }
-            """.trimIndent().deserialize<PlanDecorationResource>()
+            """.trimIndent().deserialize<DynamicDecorationResource>()
         )
 
         assertEquals(
-            PlanDecorationResource.Unknown(type = "custom"),
+            DynamicDecorationResource.Unknown(type = "custom"),
             """
                 {
                 "Type": "custom",
                 "Color": "red"
                 }
-            """.trimIndent().deserialize<PlanDecorationResource>()
+            """.trimIndent().deserialize<DynamicDecorationResource>()
         )
     }
 
     @Test
     fun fromResourceToDomain() {
         assertEquals(
-            DynamicPlanDecoration.Star(iconBase64 = "icon"),
-            PlanDecorationResource.Star(icon = "icon").toDynamicPlanDecoration()
+            DynamicDecoration.Star(iconName = "icon"),
+            DynamicDecorationResource.Star(iconName = "icon").toDynamicPlanDecoration()
         )
 
         assertNull(
-            PlanDecorationResource.Unknown(type = "custom").toDynamicPlanDecoration()
+            DynamicDecorationResource.Unknown(type = "custom").toDynamicPlanDecoration()
         )
     }
 }

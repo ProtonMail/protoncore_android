@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,8 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.entity
+package me.proton.core.payment.data.api.response
 
-sealed class DynamicPlanDecoration {
-    data class Star(val iconBase64: String) : DynamicPlanDecoration()
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+
+@Serializable
+internal data class DynamicSubscriptionsResponse(
+    @SerialName("Subscriptions")
+    val subscriptions: List<DynamicSubscriptionResponse>,
+    @SerialName("UpcomingSubscriptions")
+    val upcomingSubscriptions: List<DynamicSubscriptionResponse>? = null
+)

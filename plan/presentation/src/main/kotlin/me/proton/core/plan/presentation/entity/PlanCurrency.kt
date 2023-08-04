@@ -34,5 +34,6 @@ enum class PlanCurrency(val sign: String) {
 
     companion object {
         val map = values().associateBy { it.sign }
+        val mapName = values().associateBy { it.name }
     }
 }

@@ -24,26 +24,26 @@ import me.proton.core.domain.type.StringEnum
 import java.util.EnumSet
 
 data class DynamicPlan(
-    val id: String,
     val name: String, // code name
     val order: Int,
     val state: DynamicPlanState,
     val title: String,
     val type: IntEnum<DynamicPlanType>?,
 
-    val decorations: List<DynamicPlanDecoration> = emptyList(),
+    val decorations: List<DynamicDecoration> = emptyList(),
     val description: String? = null,
-    val entitlements: List<DynamicPlanEntitlement> = emptyList(),
+    val entitlements: List<DynamicEntitlement> = emptyList(),
     val features: EnumSet<DynamicPlanFeature> = EnumSet.noneOf(DynamicPlanFeature::class.java),
-    val instances: List<DynamicPlanInstance> = emptyList(),
-    val layout: StringEnum<DynamicPlanLayout> = StringEnum(
-        DynamicPlanLayout.Default.code,
-        DynamicPlanLayout.Default
-    ),
+    /** Map<Cycle, DynamicPlanInstance> */
+    val instances: Map<Int, DynamicPlanInstance> = emptyMap(),
+    val layout: StringEnum<DynamicPlanLayout> = StringEnum(DynamicPlanLayout.Default.code, DynamicPlanLayout.Default),
     val offers: List<DynamicPlanOffer> = emptyList(),
     val parentMetaPlanID: String? = null,
     val services: EnumSet<DynamicPlanService> = EnumSet.noneOf(DynamicPlanService::class.java)
 )
+
+fun List<DynamicPlan>.filterBy(cycle: Int, currency: String?) =
+    filter { it.instances[cycle]?.price?.containsKey(currency) ?: true }
 
 fun DynamicPlan.hasServiceFor(product: Product, exclusive: Boolean): Boolean {
     val service = when (product) {

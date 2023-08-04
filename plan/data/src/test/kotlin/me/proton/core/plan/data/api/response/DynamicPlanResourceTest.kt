@@ -36,7 +36,6 @@ class DynamicPlanResourceTest {
     fun fromJsonToResource() {
         assertEquals(
             DynamicPlanResource(
-                id = "123abc",
                 name = "name",
                 state = 1,
                 title = "title",
@@ -76,7 +75,6 @@ class DynamicPlanResourceTest {
     fun fromResourceToDomain() {
         assertEquals(
             DynamicPlan(
-                id = "123abc",
                 name = "name",
                 order = 5,
                 state = DynamicPlanState.Available,
@@ -85,7 +83,7 @@ class DynamicPlanResourceTest {
                 decorations = emptyList(),
                 description = "description",
                 features = EnumSet.of(DynamicPlanFeature.CatchAll),
-                instances = emptyList(),
+                instances = emptyMap(),
                 layout = StringEnum("default", DynamicPlanLayout.Default),
                 offers = emptyList(),
                 parentMetaPlanID = "parentId",
@@ -93,7 +91,6 @@ class DynamicPlanResourceTest {
                 type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
             ),
             DynamicPlanResource(
-                id = "123abc",
                 name = "name",
                 state = 1,
                 title = "title",
@@ -107,7 +104,7 @@ class DynamicPlanResourceTest {
                 parentMetaPlanID = "parentId",
                 services = 15,
                 type = 1
-            ).toDynamicPlan(5)
+            ).toDynamicPlan("endpoint", 5)
         )
     }
 }

@@ -26,24 +26,21 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
+import me.proton.core.plan.domain.entity.DynamicEntitlement
 
-@Serializable(EntitlementResourceSerializer::class)
-sealed class EntitlementResource {
+@Serializable(DynamicEntitlementResourceSerializer::class)
+sealed class DynamicEntitlementResource {
     @Serializable
     data class Description(
-        @SerialName("Icon")
-        val icon: String,
-
         @SerialName("IconName")
         val iconName: String,
 
         @SerialName("Text")
-        val text: String,
+        val text: String? = null, // TODO: Remove nullability.
 
         @SerialName("Hint")
         val hint: String? = null
-    ) : EntitlementResource()
+    ) : DynamicEntitlementResource()
 
     @Serializable
     data class Storage(
@@ -52,39 +49,38 @@ sealed class EntitlementResource {
 
         @SerialName("Max")
         val max: Long
-    ) : EntitlementResource()
+    ) : DynamicEntitlementResource()
 
     @Serializable
     data class Unknown(
         @SerialName("Type")
         val type: String
-    ) : EntitlementResource()
+    ) : DynamicEntitlementResource()
 }
 
-fun EntitlementResource.toDynamicPlanEntitlement(): DynamicPlanEntitlement? =
+fun DynamicEntitlementResource.toDynamicPlanEntitlement(iconsEndpoint: String): DynamicEntitlement? =
     when (this) {
-        is EntitlementResource.Description -> DynamicPlanEntitlement.Description(
+        is DynamicEntitlementResource.Description -> if (text == null) null else DynamicEntitlement.Description(
             text = text,
-            iconBase64 = icon,
-            iconName = iconName,
+            iconUrl = "$iconsEndpoint/$iconName",
             hint = hint
         )
 
-        is EntitlementResource.Storage -> DynamicPlanEntitlement.Storage(
-            currentMBytes = current,
-            maxMBytes = max
+        is DynamicEntitlementResource.Storage -> DynamicEntitlement.Storage(
+            currentBytes = current,
+            maxBytes = max
         )
 
-        is EntitlementResource.Unknown -> null
+        is DynamicEntitlementResource.Unknown -> null
     }
 
-class EntitlementResourceSerializer :
-    JsonContentPolymorphicSerializer<EntitlementResource>(EntitlementResource::class) {
-    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out EntitlementResource> {
+class DynamicEntitlementResourceSerializer :
+    JsonContentPolymorphicSerializer<DynamicEntitlementResource>(DynamicEntitlementResource::class) {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DynamicEntitlementResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {
-            "description" -> EntitlementResource.Description.serializer()
-            "storage" -> EntitlementResource.Storage.serializer()
-            else -> EntitlementResource.Unknown.serializer()
+            "description" -> DynamicEntitlementResource.Description.serializer()
+            "storage" -> DynamicEntitlementResource.Storage.serializer()
+            else -> DynamicEntitlementResource.Unknown.serializer()
         }
     }
 }

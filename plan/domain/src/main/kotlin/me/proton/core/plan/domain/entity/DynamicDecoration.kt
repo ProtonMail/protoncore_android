@@ -18,15 +18,6 @@
 
 package me.proton.core.plan.domain.entity
 
-import me.proton.core.domain.entity.AppStore
-import java.time.Instant
-
-data class DynamicPlanInstance(
-    val id: String,
-    val cycle: Int,
-    val description: String,
-    val periodEnd: Instant,
-    /** Map<Currency, DynamicPlanPrice> */
-    val price: Map<String, DynamicPlanPrice>,
-    val vendors: Map<AppStore, PlanVendorData> = emptyMap()
-)
+sealed class DynamicDecoration {
+    data class Star(val iconName: String) : DynamicDecoration()
+}

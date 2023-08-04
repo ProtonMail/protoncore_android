@@ -99,7 +99,9 @@
             android:layout_gravity="end"
             android:gravity="end"
             android:maxLines="1"
-            tools:text="per year" />
+            android:visibility="gone"
+            tools:text="per year"
+            tools:visibility="visible" />
 
         <TextView
             android:id="@+id/price_percentage"
@@ -110,6 +112,7 @@
             android:gravity="end"
             android:maxLines="1"
             android:textColor="?attr/brand_norm"
+            android:visibility="gone"
             tools:text="(-33%)"
             tools:visibility="visible" />
     </LinearLayout>
@@ -173,27 +176,28 @@
             android:id="@+id/content_entitlements"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_large"
             android:orientation="vertical">
 
-            <me.proton.core.plan.presentation.view.DynamicPlanEntitlementStorageView
+            <me.proton.core.plan.presentation.view.DynamicEntitlementStorageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <me.proton.core.plan.presentation.view.DynamicPlanEntitlementDescriptionView
+            <me.proton.core.plan.presentation.view.DynamicEntitlementDescriptionView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <me.proton.core.plan.presentation.view.DynamicPlanEntitlementDescriptionView
+            <me.proton.core.plan.presentation.view.DynamicEntitlementDescriptionView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-            <me.proton.core.plan.presentation.view.DynamicPlanEntitlementDescriptionView
+            <me.proton.core.plan.presentation.view.DynamicEntitlementDescriptionView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"

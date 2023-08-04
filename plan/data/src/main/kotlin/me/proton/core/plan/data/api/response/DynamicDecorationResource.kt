@@ -18,7 +18,6 @@
 
 package me.proton.core.plan.data.api.response
 
-import android.util.Base64
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -27,41 +26,35 @@ import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
-import me.proton.core.plan.domain.entity.DynamicPlanDecoration
+import me.proton.core.plan.domain.entity.DynamicDecoration
 
-@Serializable(PlanDecorationResourceSerializer::class)
-sealed class PlanDecorationResource {
+@Serializable(DynamicDecorationResourceSerializer::class)
+sealed class DynamicDecorationResource {
     @Serializable
     data class Star(
-        @SerialName("Icon")
-        val icon: String
-    ) : PlanDecorationResource()
+        @SerialName("IconName")
+        val iconName: String
+    ) : DynamicDecorationResource()
 
     @Serializable
     data class Unknown(
         @SerialName("Type")
         val type: String
-    ) : PlanDecorationResource()
+    ) : DynamicDecorationResource()
 }
 
-fun PlanDecorationResource.toDynamicPlanDecoration(): DynamicPlanDecoration? =
+fun DynamicDecorationResource.toDynamicPlanDecoration(): DynamicDecoration? =
     when (this) {
-        is PlanDecorationResource.Star -> DynamicPlanDecoration.Star(
-            Base64.decode(
-                icon,
-                Base64.DEFAULT
-            ).decodeToString()
-        )
-
-        is PlanDecorationResource.Unknown -> null
+        is DynamicDecorationResource.Star -> DynamicDecoration.Star(iconName)
+        is DynamicDecorationResource.Unknown -> null
     }
 
-class PlanDecorationResourceSerializer :
-    JsonContentPolymorphicSerializer<PlanDecorationResource>(PlanDecorationResource::class) {
-    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out PlanDecorationResource> {
+class DynamicDecorationResourceSerializer :
+    JsonContentPolymorphicSerializer<DynamicDecorationResource>(DynamicDecorationResource::class) {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DynamicDecorationResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {
-            "Star" -> PlanDecorationResource.Star.serializer()
-            else -> PlanDecorationResource.Unknown.serializer()
+            "Star" -> DynamicDecorationResource.Star.serializer()
+            else -> DynamicDecorationResource.Unknown.serializer()
         }
     }
 }

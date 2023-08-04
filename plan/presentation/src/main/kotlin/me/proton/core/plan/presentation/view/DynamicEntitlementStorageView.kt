@@ -7,9 +7,10 @@ import androidx.annotation.StyleRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import me.proton.core.plan.presentation.R
-import me.proton.core.plan.presentation.databinding.DynamicPlanEntitlementStorageViewBinding.inflate
+import me.proton.core.plan.presentation.databinding.DynamicEntitlementStorageViewBinding.inflate
 
-class DynamicPlanEntitlementStorageView @JvmOverloads constructor(
+@Suppress("MagicNumber")
+class DynamicEntitlementStorageView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0,

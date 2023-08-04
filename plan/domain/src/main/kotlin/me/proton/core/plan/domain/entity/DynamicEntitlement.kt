@@ -18,15 +18,15 @@
 
 package me.proton.core.plan.domain.entity
 
-import me.proton.core.domain.entity.AppStore
-import java.time.Instant
+sealed class DynamicEntitlement {
+    data class Description(
+        val text: String,
+        val iconUrl: String,
+        val hint: String? = null,
+    ) : DynamicEntitlement()
 
-data class DynamicPlanInstance(
-    val id: String,
-    val cycle: Int,
-    val description: String,
-    val periodEnd: Instant,
-    /** Map<Currency, DynamicPlanPrice> */
-    val price: Map<String, DynamicPlanPrice>,
-    val vendors: Map<AppStore, PlanVendorData> = emptyMap()
-)
+    data class Storage(
+        val currentBytes: Long,
+        val maxBytes: Long
+    ) : DynamicEntitlement()
+}

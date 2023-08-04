@@ -1,55 +1,53 @@
 {
   "Code": 1000,
-  "Subscription": {
-    "Name": "Name of primary plan (Type 1)",
-    "Description": "Current plan",
-    "ID": "6opBd5UdUtY_RtEz...YA==",
-    "ParentMetaPlanID": "hUcV0_EeNw...g==",
-    "Type": 1,
-    "Title": "Visionary",
-    "Cycle": 12,
-    "CycleDescription": "1 year",
-    "Currency": "USD",
-    "Amount": 28788,
-    "Offer": "default",
-
-    "PeriodStart": 1665402858,
-    "PeriodEnd": 1696938858,
-    "CreateTime": 1570708458,
-    "CouponCode": "PROTONTEAM",
-    "Discount": -28788,
-    "RenewDiscount": -28788,
-    "RenewAmount": 0,
-
-    "Renew": true,
-    "External": false,
-
-    "Entitlements": [
-      {
-        "Type": "progress",
-        "Text": "19.55 MB of 15 GB",
-        "Min": 0,
-        "Max": 16106127360,
-        "Current": 20503730,
-        "Icon": "tick",
-        "IconName": "tick"
-      },
-      {
-        "Type": "description",
-        "Text": "500 GB storage",
-        "Icon": "tick",
-        "IconName": "tick",
-        "Hint": "You win a lot of storage"
-      }
-    ],
-
-    "Decorations": [{
-      "Type": "Star",
-      "Icon": "base64"
-    }, {
-      "Type": "Border",
-      "Color": "#AABBCC"
-    }]
-  },
-  "UpcomingSubscription": null
+  "Subscriptions": [
+    {
+      "Name": "Name of primary plan (Type 1)",
+      "Title": "Visionary",
+      "Description": "Current plan",
+      "ParentMetaPlanID": "hUcV0_EeNw...g==",
+      "Type": 1,
+      "Cycle": 12,
+      "CycleDescription": "1 year",
+      "Currency": "USD",
+      "Amount": 28788,
+      "Offer": null,
+      "PeriodStart": 1665402858,
+      "PeriodEnd": 1696938858,
+      "CreateTime": 1570708458,
+      "CouponCode": "PROTONTEAM",
+      "Discount": -28788,
+      "RenewDiscount": -28788,
+      "RenewAmount": 0,
+      "Renew": true,
+      "External": false,
+      "Entitlements": [
+        {
+          "Type": "storage",
+          "Text": "19.55 MB of 15 GB",
+          "Min": 0,
+          "Max": 16106127360,
+          "Current": 20503730,
+          "IconName": "tick"
+        },
+        {
+          "Type": "description",
+          "Text": "500 GB storage",
+          "IconName": "tick",
+          "Hint": "You win a lot of storage"
+        }
+      ],
+      "Decorations": [
+        {
+          "Type": "Star",
+          "IconName": "base64"
+        },
+        {
+          "Type": "Border",
+          "Color": "#AABBCC"
+        }
+      ]
+    }
+  ],
+  "UpcomingSubscriptions": null
 }

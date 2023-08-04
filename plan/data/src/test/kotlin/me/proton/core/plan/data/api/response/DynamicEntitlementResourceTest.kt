@@ -22,7 +22,7 @@ import android.util.Base64
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
-import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
+import me.proton.core.plan.domain.entity.DynamicEntitlement
 import me.proton.core.util.kotlin.deserialize
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -30,7 +30,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
-class EntitlementResourceTest {
+class DynamicEntitlementResourceTest {
     @BeforeTest
     fun setUp() {
         mockkStatic(Base64::class)
@@ -47,8 +47,7 @@ class EntitlementResourceTest {
     @Test
     fun fromJsonToResource() {
         assertEquals(
-            EntitlementResource.Description(
-                icon = "icon",
+            DynamicEntitlementResource.Description(
                 iconName = "icon-name",
                 text = "text",
                 hint = "hint"
@@ -61,11 +60,11 @@ class EntitlementResourceTest {
                 "Type": "description",
                 "Hint": "hint"
                 }
-            """.trimIndent().deserialize<EntitlementResource>()
+            """.trimIndent().deserialize<DynamicEntitlementResource>()
         )
 
         assertEquals(
-            EntitlementResource.Storage(
+            DynamicEntitlementResource.Storage(
                 current = 128,
                 max = 1024
             ),
@@ -75,14 +74,14 @@ class EntitlementResourceTest {
                 "Max": 1024,
                 "Type": "storage"
                 }
-            """.trimIndent().deserialize<EntitlementResource>()
+            """.trimIndent().deserialize<DynamicEntitlementResource>()
         )
     }
 
     @Test
     fun unknownEntitlementType() {
         assertEquals(
-            EntitlementResource.Unknown(
+            DynamicEntitlementResource.Unknown(
                 type = "custom"
             ),
             """
@@ -92,40 +91,38 @@ class EntitlementResourceTest {
                 "Text": "text",
                 "Type": "custom"
                 }
-            """.trimIndent().deserialize<EntitlementResource>()
+            """.trimIndent().deserialize<DynamicEntitlementResource>()
         )
     }
 
     @Test
     fun fromResourceToDomain() {
         assertEquals(
-            DynamicPlanEntitlement.Description(
-                iconBase64 = "icon",
-                iconName = "tick",
+            DynamicEntitlement.Description(
+                iconUrl = "endpoint/tick",
                 text = "Entitlements text",
                 hint = "Entitlements hint"
             ),
-            EntitlementResource.Description(
-                icon = "icon",
+            DynamicEntitlementResource.Description(
                 iconName = "tick",
                 text = "Entitlements text",
                 hint = "Entitlements hint"
-            ).toDynamicPlanEntitlement()
+            ).toDynamicPlanEntitlement("endpoint")
         )
 
         assertEquals(
-            DynamicPlanEntitlement.Storage(
-                currentMBytes = 128,
-                maxMBytes = 1024
+            DynamicEntitlement.Storage(
+                currentBytes = 128,
+                maxBytes = 1024
             ),
-            EntitlementResource.Storage(
+            DynamicEntitlementResource.Storage(
                 current = 128,
                 max = 1024
-            ).toDynamicPlanEntitlement()
+            ).toDynamicPlanEntitlement("endpoint")
         )
 
         assertNull(
-            EntitlementResource.Unknown("custom").toDynamicPlanEntitlement()
+            DynamicEntitlementResource.Unknown("custom").toDynamicPlanEntitlement("endpoint")
         )
     }
 }

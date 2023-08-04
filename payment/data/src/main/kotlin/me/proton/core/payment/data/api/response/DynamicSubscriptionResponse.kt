@@ -20,11 +20,79 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.JsonObject
+import me.proton.core.payment.domain.entity.DynamicSubscription
+import me.proton.core.plan.data.api.response.DynamicEntitlementResource
+import me.proton.core.plan.data.api.response.DynamicDecorationResource
+import me.proton.core.plan.data.api.response.toDynamicPlanDecoration
+import me.proton.core.plan.data.api.response.toDynamicPlanEntitlement
+import java.time.Instant
 
 @Serializable
 internal data class DynamicSubscriptionResponse(
-    @SerialName("Subscription")
-    val subscription: DynamicSubscriptionItemResponse,
-    @SerialName("UpcomingSubscription")
-    val upcomingSubscription: DynamicSubscriptionItemResponse? = null
-)
+    @SerialName("Name")
+    val name: String,
+    @SerialName("Title")
+    val title: String,
+    @SerialName("Description")
+    val description: String,
+    @SerialName("ParentMetaPlanID")
+    val parentMetaPlanID: String? = null,
+    @SerialName("Type")
+    val type: Int? = null,
+    @SerialName("Cycle")
+    val cycle: Int? = null,
+    @SerialName("CycleDescription")
+    val cycleDescription: String? = null,
+    @SerialName("Currency")
+    val currency: String? = null,
+    @SerialName("Amount")
+    val amount: Long? = null,
+    @SerialName("Offer")
+    val offer: JsonObject? = null,
+    @SerialName("PeriodStart")
+    val periodStart: Long? = null,
+    @SerialName("PeriodEnd")
+    val periodEnd: Long? = null,
+    @SerialName("CreateTime")
+    val createTime: Long? = null,
+    @SerialName("CouponCode")
+    val couponCode: String? = null,
+    @SerialName("Discount")
+    val discount: Long? = null,
+    @SerialName("RenewDiscount")
+    val renewDiscount: Long? = null,
+    @SerialName("RenewAmount")
+    val renewAmount: Long? = null,
+    @SerialName("Renew")
+    val renew: Boolean? = null,
+    @SerialName("External")
+    val external: Boolean? = null,
+    @SerialName("Decorations")
+    val decorations: List<DynamicDecorationResource>? = null,
+    @SerialName("Entitlements")
+    val entitlements: List<DynamicEntitlementResource>? = null
+) {
+    fun toDynamicSubscription(iconsEndpoint: String): DynamicSubscription = DynamicSubscription(
+        name = name,
+        description = description,
+        parentPlanId = parentMetaPlanID,
+        type = type,
+        title = title,
+        cycleMonths = cycle,
+        cycleDescription = cycleDescription,
+        currency = currency,
+        amount = amount,
+        periodStart = periodStart?.let { Instant.ofEpochSecond(it) },
+        periodEnd = periodEnd?.let { Instant.ofEpochSecond(it) },
+        createTime = createTime?.let { Instant.ofEpochSecond(it) },
+        couponCode = couponCode,
+        discount = discount,
+        renewDiscount = renewDiscount,
+        renewAmount = renewAmount,
+        renew = renew,
+        external = external,
+        decorations = decorations?.mapNotNull { it.toDynamicPlanDecoration() } ?: emptyList(),
+        entitlements = entitlements?.mapNotNull { it.toDynamicPlanEntitlement(iconsEndpoint) } ?: emptyList()
+    )
+}

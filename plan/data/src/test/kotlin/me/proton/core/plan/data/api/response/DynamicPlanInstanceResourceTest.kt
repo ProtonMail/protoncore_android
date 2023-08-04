@@ -30,7 +30,7 @@ class DynamicPlanInstanceResourceTest {
         assertEquals(
             DynamicPlanInstanceResource(
                 id = "123abc",
-                months = 1,
+                cycle = 1,
                 description = "description",
                 periodEnd = 100,
                 price = emptyList(),
@@ -39,7 +39,7 @@ class DynamicPlanInstanceResourceTest {
             """
                 {
                 "ID": "123abc",
-                "Months": 1,
+                "Cycle": 1,
                 "Description": "description",
                 "PeriodEnd": 100,
                 "Price": [],
@@ -54,15 +54,15 @@ class DynamicPlanInstanceResourceTest {
         assertEquals(
             DynamicPlanInstance(
                 id = "123abc",
-                months = 1,
+                cycle = 1,
                 description = "description",
                 periodEnd = Instant.ofEpochSecond(100),
-                price = emptyList(),
+                price = emptyMap(),
                 vendors = emptyMap()
             ),
             DynamicPlanInstanceResource(
                 id = "123abc",
-                months = 1,
+                cycle = 1,
                 description = "description",
                 periodEnd = 100,
                 price = emptyList(),
