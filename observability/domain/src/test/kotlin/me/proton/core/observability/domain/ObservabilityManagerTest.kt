@@ -25,7 +25,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
-import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.ObservabilityManager.Companion.MAX_DELAY_MS
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
@@ -44,7 +44,6 @@ class ObservabilityManagerTest {
     private lateinit var observabilityRepository: ObservabilityRepository
     private lateinit var scopeProvider: CoroutineScopeProvider
     private lateinit var workerManager: ObservabilityWorkerManager
-    private lateinit var timeTracker: ObservabilityTimeTracker
     private lateinit var tested: ObservabilityManager
 
     @BeforeTest
@@ -54,14 +53,12 @@ class ObservabilityManagerTest {
         observabilityRepository = mockk(relaxUnitFun = true)
         scopeProvider =
             TestCoroutineScopeProvider(TestDispatcherProvider(UnconfinedTestDispatcher()))
-        timeTracker = ObservabilityTimeTracker { currentClockMillis }
         workerManager = mockk(relaxed = true)
 
         tested = ObservabilityManager(
             isObservabilityEnabled,
             observabilityRepository,
             scopeProvider,
-            timeTracker,
             workerManager
         )
     }
@@ -78,7 +75,7 @@ class ObservabilityManagerTest {
         coVerify(exactly = 0) { observabilityRepository.addEvent(any()) }
 
         coVerify(exactly = 1) { observabilityRepository.deleteAllEvents() }
-        verify(exactly = 0) { workerManager.schedule(any()) }
+        verify(exactly = 0) { workerManager.enqueueOrKeep(any()) }
     }
 
     @Test
@@ -94,7 +91,7 @@ class ObservabilityManagerTest {
         verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
     }
 
     @Test
@@ -110,15 +107,14 @@ class ObservabilityManagerTest {
         verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        verify(exactly = 1) { workerManager.schedule(ZERO) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
     }
 
     @Test
     fun durationSinceLastShipmentExceeded() = runTest {
         coEvery { isObservabilityEnabled.invoke() } returns true
         coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT / 2
-        timeTracker.setFirstEventNow()
-        currentClockMillis = ObservabilityManager.MAX_DELAY_MS
+        currentClockMillis = MAX_DELAY_MS
 
         // WHEN
         tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
@@ -128,14 +124,14 @@ class ObservabilityManagerTest {
         verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        verify(exactly = 1) { workerManager.schedule(ZERO) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
     }
 
     @Test
     fun durationSinceLastShipmentNotExceeded() = runTest {
         coEvery { isObservabilityEnabled.invoke() } returns true
         coEvery { observabilityRepository.getEventCount() } returns ObservabilityManager.MAX_EVENT_COUNT / 2
-        currentClockMillis = ObservabilityManager.MAX_DELAY_MS - 1
+        currentClockMillis = MAX_DELAY_MS - 1
 
         // WHEN
         tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
@@ -145,7 +141,7 @@ class ObservabilityManagerTest {
         verify(exactly = 0) { workerManager.cancel() }
 
         coVerify(exactly = 1) { observabilityRepository.addEvent(any()) }
-        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
     }
 
     @Test
@@ -154,14 +150,14 @@ class ObservabilityManagerTest {
         // GIVEN
         coEvery { isObservabilityEnabled.invoke() } returns true
         coEvery { observabilityRepository.getEventCount() } returns 1
-        currentClockMillis = ObservabilityManager.MAX_DELAY_MS
+        currentClockMillis = MAX_DELAY_MS
 
         // WHEN
         tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
 
         // THEN
         // The first event should be enqueued with max delay.
-        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
 
         // 2. =========================
         // GIVEN
@@ -174,13 +170,13 @@ class ObservabilityManagerTest {
 
         // THEN
         // Subsequent events should be also enqueued with max delay.
-        verify(exactly = 1) { workerManager.schedule(ObservabilityManager.MAX_DELAY_MS.milliseconds) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
 
         // 3. =========================
         // GIVEN
         clearMocks(workerManager)
         coEvery { observabilityRepository.getEventCount() } returns 3
-        currentClockMillis += ObservabilityManager.MAX_DELAY_MS
+        currentClockMillis += MAX_DELAY_MS
 
         // WHEN
         tested.enqueue(SignupFetchDomainsTotal(status = HttpApiStatus.http2xx))
@@ -188,6 +184,6 @@ class ObservabilityManagerTest {
         // THEN
         // Events enqueued after MAX_DELAY_MS since the first event,
         // should be enqueued with no delay.
-        verify(exactly = 1) { workerManager.schedule(ZERO) }
+        verify(exactly = 1) { workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds) }
     }
 }

@@ -26,7 +26,6 @@ import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import java.time.Instant
-import java.util.concurrent.CancellationException
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.ZERO
@@ -36,7 +35,6 @@ public class ObservabilityManager @Inject internal constructor(
     private val isObservabilityEnabled: IsObservabilityEnabled,
     private val repository: ObservabilityRepository,
     private val scopeProvider: CoroutineScopeProvider,
-    private val timeTracker: ObservabilityTimeTracker,
     private val workerManager: ObservabilityWorkerManager,
 ) {
     /** Enqueues an event with a given [data] and [timestamp] to be sent at some point in the future.
@@ -63,30 +61,10 @@ public class ObservabilityManager @Inject internal constructor(
         CoreLogger.d(LogTag.ENQUEUE, "$event")
         if (isObservabilityEnabled()) {
             repository.addEvent(event)
-            workerManager.schedule(getSendDelay())
-
-            if (timeTracker.getDurationSinceFirstEvent() == null) {
-                timeTracker.setFirstEventNow()
-            }
+            workerManager.enqueueOrKeep(MAX_DELAY_MS.milliseconds)
         } else {
             workerManager.cancel()
             repository.deleteAllEvents()
-            timeTracker.clear()
-        }
-    }
-
-    private suspend fun getSendDelay(): Duration {
-        suspend fun isMaxDurationExceeded(): Boolean {
-            val duration = timeTracker.getDurationSinceFirstEvent()
-            return if (duration != null) {
-                duration >= MAX_DELAY_MS.milliseconds
-            } else false
-        }
-
-        return when {
-            repository.getEventCount() >= MAX_EVENT_COUNT -> ZERO
-            isMaxDurationExceeded() -> ZERO
-            else -> MAX_DELAY_MS.milliseconds
         }
     }
 

@@ -27,8 +27,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
+import me.proton.core.observability.domain.LogTag.DEFAULT
 import me.proton.core.observability.domain.usecase.ProcessObservabilityEvents
 import me.proton.core.util.kotlin.CoreLogger
+import java.util.concurrent.CancellationException
 
 @HiltWorker
 internal class ObservabilityWorker @AssistedInject constructor(
@@ -44,8 +46,10 @@ internal class ObservabilityWorker @AssistedInject constructor(
             if (it is ApiException && it.isRetryable()) {
                 Result.retry()
             } else {
-                if (it !is ApiException) { // ApiExceptions are logged upstream already.
-                    CoreLogger.e("ObservabilityWorker", it, "Could not send observability events.")
+                if (it !is ApiException && it !is CancellationException) {
+                    CoreLogger.e(DEFAULT, it, "Could not send observability events.")
+                } else {
+                    CoreLogger.i(DEFAULT, it, "Could not send observability events.")
                 }
                 Result.failure(workDataOf("errorMessage" to it.message))
             }

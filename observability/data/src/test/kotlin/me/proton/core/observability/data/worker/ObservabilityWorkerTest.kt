@@ -35,7 +35,6 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.observability.domain.ObservabilityRepository
-import me.proton.core.observability.domain.ObservabilityTimeTracker
 import me.proton.core.observability.domain.ObservabilityWorkerManager
 import me.proton.core.observability.domain.entity.ObservabilityEvent
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
@@ -72,9 +71,6 @@ class ObservabilityWorkerTest {
     @BindValue
     internal lateinit var sendObservabilityEvents: SendObservabilityEvents
 
-    @BindValue
-    internal lateinit var timeTracker: ObservabilityTimeTracker
-
     private lateinit var context: Context
 
     @Before
@@ -85,7 +81,6 @@ class ObservabilityWorkerTest {
         observabilityWorkerManager = mockk(relaxUnitFun = true)
         repository = mockk(relaxUnitFun = true)
         sendObservabilityEvents = mockk(relaxUnitFun = true)
-        timeTracker = mockk(relaxUnitFun = true)
     }
 
 

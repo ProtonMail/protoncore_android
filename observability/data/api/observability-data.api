@@ -89,7 +89,7 @@ public final class me/proton/core/observability/data/usecase/SendObservabilityEv
 public final class me/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl : me/proton/core/observability/domain/ObservabilityWorkerManager {
 	public fun <init> (Landroidx/work/WorkManager;)V
 	public fun cancel ()V
-	public fun schedule-LRDsOJo (J)V
+	public fun enqueueOrKeep-LRDsOJo (J)V
 }
 
 public final class me/proton/core/observability/data/worker/ObservabilityWorkerManagerImpl_Factory : dagger/internal/Factory {

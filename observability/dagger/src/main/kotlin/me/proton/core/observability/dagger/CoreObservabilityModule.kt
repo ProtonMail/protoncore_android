@@ -29,7 +29,6 @@ import me.proton.core.observability.data.ObservabilityRepositoryImpl
 import me.proton.core.observability.data.usecase.SendObservabilityEventsImpl
 import me.proton.core.observability.data.worker.ObservabilityWorkerManagerImpl
 import me.proton.core.observability.domain.ObservabilityRepository
-import me.proton.core.observability.domain.ObservabilityTimeTracker
 import me.proton.core.observability.domain.ObservabilityWorkerManager
 import me.proton.core.observability.domain.usecase.IsObservabilityEnabled
 import me.proton.core.observability.domain.usecase.SendObservabilityEvents
@@ -49,11 +48,4 @@ public interface CoreObservabilityModule {
 
     @Binds
     public fun bindObservabilityWorkerManager(impl: ObservabilityWorkerManagerImpl): ObservabilityWorkerManager
-
-    public companion object {
-        @Provides
-        @Singleton
-        public fun provideObservabilityTimeTracker(): ObservabilityTimeTracker =
-            ObservabilityTimeTracker(clockMillis = { SystemClock.elapsedRealtime() })
-    }
 }

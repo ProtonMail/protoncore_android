@@ -30,5 +30,5 @@ public interface ObservabilityWorkerManager {
      * If a worker has been previously scheduled but hasn't yet executed,
      * the existing scheduled worker will be kept.
      */
-    public fun schedule(delay: Duration)
+    public fun enqueueOrKeep(delay: Duration)
 }

@@ -56,11 +56,11 @@ class ObservabilityWorkerManagerImplTest {
         every { workManager.cancelUniqueWork(any()) } returns mockk()
 
         // WHEN
-        tested.schedule(ZERO)
+        tested.enqueueOrKeep(ZERO)
 
         // THEN
         verify { workManager.enqueueUniqueWork(any(), any(), any<OneTimeWorkRequest>()) }
-        assertEquals(ExistingWorkPolicy.REPLACE, workPolicySlot.captured)
+        assertEquals(ExistingWorkPolicy.KEEP, workPolicySlot.captured)
         assertEquals(0, requestSlot.captured.workSpec.initialDelay)
 
         // WHEN
@@ -70,7 +70,7 @@ class ObservabilityWorkerManagerImplTest {
         verify { workManager.cancelUniqueWork(workNameSlot.captured) }
 
         // WHEN
-        tested.schedule(2.minutes)
+        tested.enqueueOrKeep(2.minutes)
 
         // THEN
         assertEquals(ExistingWorkPolicy.KEEP, workPolicySlot.captured)

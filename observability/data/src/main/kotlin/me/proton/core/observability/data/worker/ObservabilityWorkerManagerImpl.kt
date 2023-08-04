@@ -36,7 +36,7 @@ public class ObservabilityWorkerManagerImpl @Inject constructor(
         workManager.cancelUniqueWork(WORK_NAME)
     }
 
-    override fun schedule(delay: Duration) {
+    override fun enqueueOrKeep(delay: Duration) {
         val request = OneTimeWorkRequestBuilder<ObservabilityWorker>()
             .setConstraints(
                 Constraints.Builder()
@@ -45,14 +45,7 @@ public class ObservabilityWorkerManagerImpl @Inject constructor(
             )
             .setInitialDelay(delay.inWholeMilliseconds, TimeUnit.MILLISECONDS)
             .build()
-        val policy = when (delay) {
-            // If there is no delay, replace currently scheduled worker, so we can run immediately.
-            Duration.ZERO -> ExistingWorkPolicy.REPLACE
-
-            // If there is a delay, keep the currently scheduled worker, since it'll likely run earlier.
-            else -> ExistingWorkPolicy.KEEP
-        }
-        workManager.enqueueUniqueWork(WORK_NAME, policy, request)
+        workManager.enqueueUniqueWork(WORK_NAME, ExistingWorkPolicy.KEEP, request)
     }
 
     private companion object {

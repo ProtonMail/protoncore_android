@@ -21,4 +21,5 @@ package me.proton.core.observability.domain
 public object LogTag {
     /** An observability event has been enqueued. */
     public const val ENQUEUE: String = "core.observability.enqueue"
+    public const val DEFAULT: String = "core.observability"
 }
