@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain
+package me.proton.core.payment.data.api.response
 
-import me.proton.core.plan.domain.entity.Plan
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-/**
- * Implement this interface to provide a client specific plans filtering function.
- */
-interface ClientPlanFilter {
-    fun filter(): (Plan) -> Boolean
-}
+@Serializable
+internal data class DynamicSubscriptionResponse(
+    @SerialName("Subscription")
+    val subscription: DynamicSubscriptionItemResponse,
+    @SerialName("UpcomingSubscription")
+    val upcomingSubscription: DynamicSubscriptionItemResponse? = null
+)

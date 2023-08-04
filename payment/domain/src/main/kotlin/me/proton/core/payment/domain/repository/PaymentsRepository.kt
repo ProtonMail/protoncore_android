@@ -21,6 +21,7 @@ package me.proton.core.payment.domain.repository
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
@@ -87,6 +88,12 @@ public interface PaymentsRepository {
      * Returns current active subscription.
      */
     public suspend fun getSubscription(sessionUserId: SessionUserId): Subscription?
+
+    /**
+     * Authenticated.
+     * Returns current active dynamic subscription.
+     */
+    public suspend fun getDynamicSubscription(sessionUserId: SessionUserId): DynamicSubscription
 
     /**
      * Authenticated.

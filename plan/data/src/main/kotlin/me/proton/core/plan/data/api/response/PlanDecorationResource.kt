@@ -30,21 +30,21 @@ import kotlinx.serialization.json.jsonPrimitive
 import me.proton.core.plan.domain.entity.DynamicPlanDecoration
 
 @Serializable(PlanDecorationResourceSerializer::class)
-internal sealed class PlanDecorationResource {
+sealed class PlanDecorationResource {
     @Serializable
-    internal data class Star(
+    data class Star(
         @SerialName("Icon")
         val icon: String
     ) : PlanDecorationResource()
 
     @Serializable
-    internal data class Unknown(
+    data class Unknown(
         @SerialName("Type")
         val type: String
     ) : PlanDecorationResource()
 }
 
-internal fun PlanDecorationResource.toDynamicPlanDecoration(): DynamicPlanDecoration? =
+fun PlanDecorationResource.toDynamicPlanDecoration(): DynamicPlanDecoration? =
     when (this) {
         is PlanDecorationResource.Star -> DynamicPlanDecoration.Star(
             Base64.decode(
@@ -56,7 +56,7 @@ internal fun PlanDecorationResource.toDynamicPlanDecoration(): DynamicPlanDecora
         is PlanDecorationResource.Unknown -> null
     }
 
-internal class PlanDecorationResourceSerializer :
+class PlanDecorationResourceSerializer :
     JsonContentPolymorphicSerializer<PlanDecorationResource>(PlanDecorationResource::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out PlanDecorationResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {

@@ -29,9 +29,9 @@ import kotlinx.serialization.json.jsonPrimitive
 import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
 
 @Serializable(EntitlementResourceSerializer::class)
-internal sealed class EntitlementResource {
+sealed class EntitlementResource {
     @Serializable
-    internal data class Description(
+    data class Description(
         @SerialName("Icon")
         val icon: String,
 
@@ -46,7 +46,7 @@ internal sealed class EntitlementResource {
     ) : EntitlementResource()
 
     @Serializable
-    internal data class Storage(
+    data class Storage(
         @SerialName("Current")
         val current: Long,
 
@@ -55,13 +55,13 @@ internal sealed class EntitlementResource {
     ) : EntitlementResource()
 
     @Serializable
-    internal data class Unknown(
+    data class Unknown(
         @SerialName("Type")
         val type: String
     ) : EntitlementResource()
 }
 
-internal fun EntitlementResource.toDynamicPlanEntitlement(): DynamicPlanEntitlement? =
+fun EntitlementResource.toDynamicPlanEntitlement(): DynamicPlanEntitlement? =
     when (this) {
         is EntitlementResource.Description -> DynamicPlanEntitlement.Description(
             text = text,
@@ -78,7 +78,7 @@ internal fun EntitlementResource.toDynamicPlanEntitlement(): DynamicPlanEntitlem
         is EntitlementResource.Unknown -> null
     }
 
-internal class EntitlementResourceSerializer :
+class EntitlementResourceSerializer :
     JsonContentPolymorphicSerializer<EntitlementResource>(EntitlementResource::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out EntitlementResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {

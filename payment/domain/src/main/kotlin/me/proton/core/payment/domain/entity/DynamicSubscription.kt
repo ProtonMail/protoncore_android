@@ -18,26 +18,36 @@
 
 package me.proton.core.payment.domain.entity
 
-import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
 import me.proton.core.plan.domain.entity.DynamicPlanDecoration
+import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
 import java.time.Instant
 
 public data class DynamicSubscription(
+    val name: String? = null,
+    val description: String? = null,
     val id: String,
-    val amount: Int,
-    val createTime: Instant,
+    val parentPlanId: String? = null,
+    val type: Int,
+    val title: String,
+
+    val cycleMonths: Int? = null,
+    val cycleDescription: String? = null,
     val currency: String,
-    val cycleDescription: String,
-    val cycleMonths: Int,
-    val discount: Int,
-    val external: SubscriptionManagement,
+    val amount: Long,
+    val offer: String? = null,
+
     val periodStart: Instant,
     val periodEnd: Instant,
-    val renew: Int,
-    val renewDiscount: Int,
-    val renewAmount: Int,
+    val createTime: Instant,
 
     val couponCode: String? = null,
+    val discount: Long? = null,
+    val renewDiscount: Long? = null,
+    val renewAmount: Long? = null,
+
+    val renew: Boolean,
+    val external: SubscriptionManagement? = null,
+
     val decorations: List<DynamicPlanDecoration> = emptyList(),
     val entitlements: List<DynamicPlanEntitlement> = emptyList()
 )

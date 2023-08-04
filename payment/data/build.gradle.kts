@@ -42,6 +42,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkData),
         project(Module.paymentDomain),
+        project(Module.planData),
         `javax-inject`,
         `serialization-core`
     )
@@ -57,6 +58,8 @@ dependencies {
         project(Module.planDomain),
         retrofit,
         `room-ktx`,
+        serialization("core"),
+        `serialization-json`,
     )
 
     testImplementation(

@@ -18,8 +18,8 @@
 
 package me.proton.core.payment.domain.entity
 
-import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
 import me.proton.core.plan.domain.entity.DynamicPlanDecoration
+import me.proton.core.plan.domain.entity.DynamicPlanEntitlement
 import java.time.Instant
 import java.util.Base64
 
@@ -35,6 +35,8 @@ private val planIconBase64 =
 val dynamicSubscription = DynamicSubscription(
     id = "DgauUA2dU6_ufQculMB1b_wecb3D2PraQlfPbknlonENxSm88iiMOkMBPfa0gKEhtdbv_gu4t_CRN6PEu0DQuw==",
     amount = 0,
+    title = "Title",
+    type = 1,
     createTime = Instant.ofEpochSecond(1_570_708_458),
     currency = "CHF",
     cycleDescription = "1 year",
@@ -43,7 +45,7 @@ val dynamicSubscription = DynamicSubscription(
     external = SubscriptionManagement.PROTON_MANAGED,
     periodStart = Instant.ofEpochSecond(1_665_402_858),
     periodEnd = Instant.ofEpochSecond(1_696_938_858),
-    renew = 1,
+    renew = true,
     renewDiscount = -28_788,
     renewAmount = 0,
     couponCode = "COUPON123",
@@ -54,8 +56,8 @@ val dynamicSubscription = DynamicSubscription(
         DynamicPlanEntitlement.Description(
             iconBase64 = planIconBase64,
             iconName = "tick",
-            text = "500 GB storage",
-            hint = "Lots of storage."
+            text = "Up to 1 GB storage",
+            hint = "Start with 500 MB and unlock more storage along the way."
         )
     ),
 )

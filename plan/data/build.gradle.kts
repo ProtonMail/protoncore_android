@@ -48,6 +48,7 @@ dependencies {
         project(Module.networkData),
         `hilt-android`,
         `javax-inject`,
+        `serialization-core`
     )
 
     coreLibraryDesugaring(`desugar-jdk-libs`)

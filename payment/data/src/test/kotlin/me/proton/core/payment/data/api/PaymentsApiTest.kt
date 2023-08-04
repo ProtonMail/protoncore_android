@@ -18,6 +18,10 @@
 
 package me.proton.core.payment.data.api
 
+import android.util.Base64
+import io.mockk.every
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import me.proton.core.payment.data.api.request.CreatePaymentToken
@@ -43,11 +47,16 @@ class PaymentsApiTest {
     fun setUp() {
         webServer = MockWebServer()
         tested = BuildRetrofitApi(webServer.url("/"))
+        mockkStatic(Base64::class)
+        every { Base64.decode(any<String>(), any()) } answers {
+            firstArg<String>().toByteArray()
+        }
     }
 
     @AfterTest
     fun tearDown() {
         webServer.shutdown()
+        unmockkStatic(Base64::class)
     }
 
     @Test
@@ -117,6 +126,19 @@ class PaymentsApiTest {
         assertEquals("customer-1", subscription.customerId)
         assertEquals(SubscriptionManagement.GOOGLE_MANAGED, subscription.external)
         assertEquals(1, subscription.plans.size)
+    }
+
+    @Test
+    fun `get current dynamic subscription with customer ID`() = runTest {
+        // Given
+        webServer.enqueueFromResourceFile("GET/payments/v4/dynamic-subscription.json", javaClass.classLoader)
+
+        // When
+        val subscription = tested.getCurrentDynamicSubscription().subscription.toDynamicSubscription()
+
+        // Then
+        assertEquals(28788, subscription.amount)
+        assertEquals(SubscriptionManagement.PROTON_MANAGED, subscription.external)
     }
 
     @Test

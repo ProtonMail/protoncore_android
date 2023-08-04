@@ -30,6 +30,7 @@ import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentStatus
@@ -146,6 +147,11 @@ public class PaymentsRepositoryImpl @Inject constructor(
     override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
         provider.get<PaymentsApi>(sessionUserId).invoke {
             getCurrentSubscription().subscription.toSubscription()
+        }.valueOrThrow
+
+    override suspend fun getDynamicSubscription(sessionUserId: SessionUserId): DynamicSubscription =
+        provider.get<PaymentsApi>(sessionUserId).invoke {
+            getCurrentDynamicSubscription().subscription.toDynamicSubscription()
         }.valueOrThrow
 
     override suspend fun createOrUpdateSubscription(
