@@ -1,0 +1,1 @@
+-keeppackagenames me.proton.core.**

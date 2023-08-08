@@ -16,11 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation
+package me.proton.core.util.android.sentry
 
-import me.proton.core.util.kotlin.LoggerLogTag
+import android.content.Context
+import androidx.core.content.edit
+import dagger.hilt.android.qualifiers.ApplicationContext
+import me.proton.core.util.android.sharedpreferences.put
+import java.util.UUID
+import javax.inject.Inject
 
-object LogTag {
-    const val DEFAULT = "core.humanverification"
-    val HV_REQUEST_ERROR = LoggerLogTag("core.humanverification.presentation.request.error")
+public class GetInstallationId @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
+    public operator fun invoke(prefsName: String, key: String): String {
+        val prefs = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
+        return prefs.getString(key, null) ?: UUID.randomUUID().toString().also {
+            prefs.edit { put(key, it) }
+        }
+    }
 }

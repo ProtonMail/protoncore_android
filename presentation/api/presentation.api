@@ -9,6 +9,11 @@ public final class me/proton/core/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/presentation/LogTag {
+	public static final field INSTANCE Lme/proton/core/presentation/LogTag;
+	public static final field SCREEN_CONTENT_PROTECTOR Ljava/lang/String;
+}
+
 public final class me/proton/core/presentation/app/ActivityProvider : me/proton/core/presentation/utils/EmptyActivityLifecycleCallbacks {
 	public fun <init> (Landroid/content/Context;)V
 	public final fun getLastResumed ()Landroid/app/Activity;
@@ -868,7 +873,6 @@ public final class me/proton/core/presentation/utils/ProtonColorUtils {
 
 public final class me/proton/core/presentation/utils/ScreenContentProtector {
 	public static final field Companion Lme/proton/core/presentation/utils/ScreenContentProtector$Companion;
-	public static final field TAG Ljava/lang/String;
 	public fun <init> ()V
 	public fun <init> (Lme/proton/core/presentation/utils/ProtectScreenConfiguration;)V
 	public synthetic fun <init> (Lme/proton/core/presentation/utils/ProtectScreenConfiguration;ILkotlin/jvm/internal/DefaultConstructorMarker;)V

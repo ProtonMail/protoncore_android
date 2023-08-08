@@ -19,11 +19,11 @@
 package me.proton.core.test.android.mockuitests
 
 import dagger.hilt.android.testing.HiltAndroidRule
-import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell
 import me.proton.core.test.android.mocks.FakeApiClient
+import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestRule
@@ -70,6 +70,6 @@ class MockTestRule constructor(private val testInstance: BaseMockTest) : TestRul
 
     private fun initLogging() {
         Timber.plant(Timber.DebugTree())
-        CoreLogger.set(CoreExampleLogger())
+        CoreLogger.set(TimberLogger)
     }
 }

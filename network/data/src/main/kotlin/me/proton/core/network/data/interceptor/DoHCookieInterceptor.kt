@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 package me.proton.core.network.data.interceptor
 
 import me.proton.core.network.data.ProtonCookieStore
+import me.proton.core.network.domain.LogTag
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.Cookie
@@ -34,7 +35,7 @@ class DoHCookieInterceptor(
         // Won't be null if DoH is working
         val baseHttpUrl = networkPrefs.activeAltBaseUrl?.let { url ->
             runCatching { url.toHttpUrl() }
-                .onFailure { CoreLogger.e(TAG, it) }
+                .onFailure { CoreLogger.e(LogTag.INTERCEPTOR, it) }
                 .getOrNull()
         }
         val url = chain.request().url
@@ -61,9 +62,5 @@ class DoHCookieInterceptor(
         cookieStore.saveFromResponse(baseHttpUrl, responseCookies)
 
         return response
-    }
-
-    companion object {
-        const val TAG = "DoHCookieInterceptor"
     }
 }

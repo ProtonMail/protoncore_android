@@ -16,11 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.humanverification.presentation
-
-import me.proton.core.util.kotlin.LoggerLogTag
+package me.proton.core.presentation
 
 object LogTag {
-    const val DEFAULT = "core.humanverification"
-    val HV_REQUEST_ERROR = LoggerLogTag("core.humanverification.presentation.request.error")
+    const val SCREEN_CONTENT_PROTECTOR = "core.presentation.screen.content.protector"
 }

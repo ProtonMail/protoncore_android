@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import android.webkit.WebView
 import androidx.core.net.toUri
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
+import me.proton.core.humanverification.presentation.LogTag
 import me.proton.core.humanverification.presentation.LogTag.HV_REQUEST_ERROR
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -178,14 +179,12 @@ class HumanVerificationWebViewClient(
             response.contents
         )
     }.onFailure {
-        CoreLogger.e(TAG, it)
+        CoreLogger.e(LogTag.DEFAULT, it)
     }.getOrNull()
 
     private fun Uri.isLoadCaptchaUrl() = path?.endsWith("/core/v4/captcha") == true
 
     companion object {
-        const val TAG = "HumanVerificationWebViewClient"
-
         private const val CSP_HEADER = "content-security-policy"
 
         private val ipv4Regex = Regex("\\d+\\.\\d+\\.\\d+\\.\\d+")

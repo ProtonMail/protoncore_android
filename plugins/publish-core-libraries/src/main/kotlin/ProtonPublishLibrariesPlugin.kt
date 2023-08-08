@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+const val CORE_RELEASE_BRANCH_PREFIX = "release/libs/"
+
 /**
  * Setup Publishing for whole Project.
  *
@@ -28,11 +30,10 @@ abstract class ProtonPublishLibrariesPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         val groupName = "me.proton.core"
-        val branchPrefix = "release/libs/"
-        val versionName = target.computeVersionNameFromBranchName(branchPrefix)
+        val versionName = target.computeVersionNameFromBranchName(CORE_RELEASE_BRANCH_PREFIX)
         target.setupPublishingTasks(groupName, versionName)
         target.setupNotifyNewReleaseTask(versionName)
-        target.setupTagReleaseTask("$branchPrefix$versionName")
+        target.setupTagReleaseTask("$CORE_RELEASE_BRANCH_PREFIX$versionName")
         target.subprojects {
             setupSubProjectPublishing(groupName = groupName, versionName = versionName)
         }

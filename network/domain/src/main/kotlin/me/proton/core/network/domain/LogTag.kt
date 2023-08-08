@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@ import me.proton.core.util.kotlin.LoggerLogTag
 object LogTag {
     /** Default tag for this module. */
     const val DEFAULT: String = "core.network"
+
+    /** Tag for errors related to network interceptors. */
+    const val INTERCEPTOR: String = "core.network.interceptor"
 
     /** Tag for Network API requests.
      *  Only one line with this tag should be logged per request.

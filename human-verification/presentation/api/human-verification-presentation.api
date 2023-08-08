@@ -95,6 +95,7 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 }
 
 public final class me/proton/core/humanverification/presentation/LogTag {
+	public static final field DEFAULT Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/humanverification/presentation/LogTag;
 	public final fun getHV_REQUEST_ERROR-WnFgrgw ()Ljava/lang/String;
 }
@@ -344,7 +345,6 @@ public final class me/proton/core/humanverification/presentation/ui/common/Human
 
 public final class me/proton/core/humanverification/presentation/ui/common/HumanVerificationWebViewClient : me/proton/core/presentation/ui/webview/ProtonWebViewClient {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/common/HumanVerificationWebViewClient$Companion;
-	public static final field TAG Ljava/lang/String;
 	public fun <init> (Ljava/lang/String;Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;Lkotlin/jvm/functions/Function2;Ljava/lang/String;)V
 	public fun onReceivedError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceError;)V
 	public fun onReceivedHttpError (Landroid/webkit/WebView;Landroid/webkit/WebResourceRequest;Landroid/webkit/WebResourceResponse;)V

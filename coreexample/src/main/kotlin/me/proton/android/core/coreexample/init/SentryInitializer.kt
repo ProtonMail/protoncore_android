@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,17 +19,23 @@
 package me.proton.android.core.coreexample.init
 
 import android.content.Context
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import io.sentry.SentryLevel
+import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
+import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
 import me.proton.core.util.android.sentry.TimberLoggerIntegration
+import java.util.concurrent.atomic.AtomicBoolean
 
 class SentryInitializer : Initializer<Unit> {
 
@@ -39,28 +45,35 @@ class SentryInitializer : Initializer<Unit> {
             SentryInitializerEntryPoint::class.java
         )
 
-        entryPoint.deviceSettingsHandler()
-            .onDeviceSettingsChanged { settings ->
-                if (settings.isCrashReportEnabled) {
-                    if (BuildConfig.SENTRY_DSN.isNotBlank()) {
-                        SentryAndroid.init(context) { options ->
-                            options.dsn = BuildConfig.SENTRY_DSN
-                            if (!BuildConfig.DEBUG) {
-                                options.addIntegration(
-                                    TimberLoggerIntegration(
-                                        minEventLevel = SentryLevel.ERROR,
-                                        minBreadcrumbLevel = SentryLevel.INFO
-                                    )
-                                )
-                            }
-                        }
-                    }
-                } else {
-                    SentryAndroid.init(context) { options ->
-                        options.dsn = ""
-                    }
-                }
-            }
+        val isCrashReportEnabled = AtomicBoolean(true)
+        entryPoint.deviceSettingsHandler().onDeviceSettingsChanged { settings ->
+            isCrashReportEnabled.set(settings.isCrashReportEnabled)
+        }
+
+        val beforeSendCallback = SentryOptions.BeforeSendCallback { event, _ ->
+            if (isCrashReportEnabled.get()) event else null
+        }
+
+        SentryAndroid.init(context) { options ->
+            options.beforeSend = beforeSendCallback
+            options.dsn = BuildConfig.SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
+            options.environment = BuildConfig.FLAVOR
+            options.release = context.appPackageInfo().versionName ?: "unknown"
+
+            options.addIntegration(
+                TimberLoggerIntegration(
+                    minEventLevel = SentryLevel.ERROR,
+                    minBreadcrumbLevel = SentryLevel.INFO
+                )
+            )
+        }
+
+        // Account Sentry:
+        entryPoint.accountSentryHubBuilder().invoke(
+            sentryDsn = BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
+        ) { options ->
+            options.beforeSend = beforeSendCallback
+        }
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = emptyList()
@@ -68,6 +81,18 @@ class SentryInitializer : Initializer<Unit> {
     @EntryPoint
     @InstallIn(SingletonComponent::class)
     interface SentryInitializerEntryPoint {
+        fun accountSentryHubBuilder(): AccountSentryHubBuilder
         fun deviceSettingsHandler(): DeviceSettingsHandler
     }
 }
+
+private fun Context.appPackageInfo(): PackageInfo =
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        applicationContext.packageManager.getPackageInfo(
+            packageName,
+            PackageManager.PackageInfoFlags.of(0)
+        )
+    } else {
+        @Suppress("DEPRECATION")
+        applicationContext.packageManager.getPackageInfo(packageName, 0)
+    }

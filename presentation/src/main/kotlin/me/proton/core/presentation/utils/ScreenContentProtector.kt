@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import me.proton.core.presentation.BuildConfig
+import me.proton.core.presentation.LogTag
 import me.proton.core.util.kotlin.CoreLogger
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -71,7 +72,10 @@ class ScreenContentProtector(
         when {
             updatedCount > 0 -> protectionScreenCounts[id] = updatedCount
             updatedCount == 0 -> protectionScreenCounts.remove(id)
-            else -> CoreLogger.e(TAG, IllegalStateException("protectionCount < 0. This should never happen."))
+            else -> CoreLogger.e(
+                LogTag.SCREEN_CONTENT_PROTECTOR,
+                IllegalStateException("protectionCount < 0. This should never happen.")
+            )
         }
         return maxOf(updatedCount, 0)
     }
@@ -79,8 +83,6 @@ class ScreenContentProtector(
     companion object {
         /** Used to check if any still visible screen needs protection when `unprotect` is called */
         private var protectionScreenCounts = mutableMapOf<Int, Int>()
-
-        const val TAG = "ScreenContentProtector"
     }
 }
 

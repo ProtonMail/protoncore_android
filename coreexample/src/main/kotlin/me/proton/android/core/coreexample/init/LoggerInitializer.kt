@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ import android.content.Context
 import android.util.Log
 import androidx.startup.Initializer
 import me.proton.android.core.coreexample.BuildConfig
-import me.proton.android.core.coreexample.CoreExampleLogger
+import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import timber.log.Timber
 
@@ -34,7 +34,7 @@ class LoggerInitializer : Initializer<Unit> {
         } else {
             Timber.plant(CrashReportingTree())
         }
-        CoreLogger.set(CoreExampleLogger())
+        CoreLogger.set(TimberLogger)
     }
 
     override fun dependencies(): List<Class<out Initializer<*>>> = listOf(

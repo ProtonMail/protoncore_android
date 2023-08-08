@@ -97,6 +97,7 @@ dependencies {
         project(Module.notification),
         project(Module.observabilityDagger),
         project(Module.payment),
+        project(Module.sentryUtil),
         project(Module.paymentIap),
         project(Module.plan),
         project(Module.plan),

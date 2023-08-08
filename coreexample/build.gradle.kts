@@ -98,6 +98,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val CAN_USE_DOH = "USE_DOH"
             val KEY_TRANSPARENCY_ENV = "KEY_TRANSPARENCY_ENV"
             val SENTRY_DSN = "SENTRY_DSN"
+            val ACCOUNT_SENTRY_DSN = "ACCOUNT_SENTRY_DSN"
         }
         val flavorDimensions = object {
             val env = "env"
@@ -111,6 +112,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
         }
 
         productFlavors.register("dev") {
@@ -150,6 +152,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
             val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
             val sentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.SENTRY_DSN)
+            val accountSentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.ACCOUNT_SENTRY_DSN)
 
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, useDefaultPins.toBoolean().toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, proxyToken.toBuildConfigValue())
@@ -162,6 +165,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
                 keyTransparencyEnv.toBuildConfigValue()
             )
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, sentryDsn.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, accountSentryDsn.toBuildConfigValue())
         }
         productFlavors.register("mock") {
             buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.mock".toBuildConfigValue())

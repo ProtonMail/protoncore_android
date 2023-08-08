@@ -207,13 +207,8 @@ public final class me/proton/core/network/data/interceptor/CacheOverrideIntercep
 }
 
 public final class me/proton/core/network/data/interceptor/DoHCookieInterceptor : okhttp3/Interceptor {
-	public static final field Companion Lme/proton/core/network/data/interceptor/DoHCookieInterceptor$Companion;
-	public static final field TAG Ljava/lang/String;
 	public fun <init> (Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/network/data/ProtonCookieStore;)V
 	public fun intercept (Lokhttp3/Interceptor$Chain;)Lokhttp3/Response;
-}
-
-public final class me/proton/core/network/data/interceptor/DoHCookieInterceptor$Companion {
 }
 
 public final class me/proton/core/network/data/interceptor/ServerErrorInterceptor : okhttp3/Interceptor {

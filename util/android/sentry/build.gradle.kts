@@ -1,8 +1,5 @@
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
-
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,26 +16,51 @@ import studio.forface.easygradle.dsl.android.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
+
 plugins {
     protonAndroidLibrary
 }
 
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    minBranchCoveragePercentage.set(35)
+    minLineCoveragePercentage.set(37)
+}
+
 android {
     namespace = "me.proton.core.util.android.sentry"
+
+    defaultConfig {
+        buildConfigField(
+            "String",
+            "CORE_VERSION",
+            computeVersionNameFromBranchName(CORE_RELEASE_BRANCH_PREFIX).toBuildConfigValue()
+        )
+    }
 }
 
 dependencies {
     implementation(
         project(Module.kotlinUtil),
+        project(Module.networkData),
         project(Module.networkDomain),
         project(Module.eventManagerDomain),
         project(Module.accountManagerDomain),
-        `timber`,
+        `hilt-android`,
     )
 
     api(
-        `sentry`,
+        `javax-inject`,
+        sentry,
+        `sentry-android-core`,
+        timber
+    )
+
+    testImplementation(
+        `kotlin-test`,
+        mockk
     )
 }

@@ -25,7 +25,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
-import me.proton.android.core.coreexample.CoreExampleLogger
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
@@ -38,6 +37,7 @@ import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
+import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.HttpUrl
 import okhttp3.mockwebserver.MockWebServer
@@ -70,7 +70,7 @@ class SignupWithGoogleIapNoGIAPModuleTests {
     @BeforeTest
     fun setUp() {
         Timber.plant(Timber.DebugTree())
-        CoreLogger.set(CoreExampleLogger())
+        CoreLogger.set(TimberLogger)
 
         dispatcher = TestWebServerDispatcher()
         webServer = MockWebServer().apply {

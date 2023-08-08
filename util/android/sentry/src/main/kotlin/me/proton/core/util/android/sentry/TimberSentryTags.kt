@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -20,3 +20,6 @@ package me.proton.core.util.android.sentry
 
 public const val TIMBER_LOGGER_TAG: String = "TimberLoggerTag"
 public const val TIMBER_LOGGER: String = "TimberLogger"
+
+/** Tag for marking uncaught exceptions. */
+internal const val TAG_UNCAUGHT_EXCEPTION = "core.sentry.uncaught"
