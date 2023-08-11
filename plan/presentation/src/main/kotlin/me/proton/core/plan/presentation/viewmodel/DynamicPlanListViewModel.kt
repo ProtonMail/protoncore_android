@@ -45,6 +45,7 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 @HiltViewModel
 internal class DynamicPlanListViewModel @Inject constructor(
     override val manager: ObservabilityManager,
@@ -78,6 +79,8 @@ internal class DynamicPlanListViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(),
         initialValue = State.Loading
     )
+
+    fun getUserId(): UserId? = mutableUserId.value
 
     private fun observeUserDynamicPlans() = mutableLoadCount
         .flatMapLatest { observeUserId() }

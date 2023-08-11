@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/plans"
+        android:name="me.proton.core.plan.presentation.ui.DynamicPlanListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/Proton.Text.Caption.Weak"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_large_plus"
+        android:drawablePadding="@dimen/gap_medium"
+        android:maxLines="2"
+        android:text="@string/plans_autorenew_subscriptions"
+        app:drawableStartCompat="@drawable/ic_info_circle" />
+
+    <Spinner
+        android:id="@+id/currencySpinner"
+        style="@style/ProtonSpinnerStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/gap_large_plus"
+        android:spinnerMode="dropdown" />
+
+</LinearLayout>
