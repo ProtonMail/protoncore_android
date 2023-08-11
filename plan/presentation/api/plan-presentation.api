@@ -884,11 +884,11 @@ public final class me/proton/core/plan/presentation/ui/BasePlansFragment$Compani
 
 public final class me/proton/core/plan/presentation/ui/DynamicPlanListFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
-	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun getUser ()Lme/proton/core/plan/presentation/viewmodel/DynamicUser;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setCurrency (Ljava/lang/String;)V
 	public final fun setOnPlanSelected (Lkotlin/jvm/functions/Function1;)V
-	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicPlanListFragment_GeneratedInjector {
@@ -904,7 +904,7 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragm
 	public final fun setOnPlanBilled (Lkotlin/jvm/functions/Function2;)V
 	public final fun setOnPlanFree (Lkotlin/jvm/functions/Function1;)V
 	public final fun setPaymentsOrchestrator (Lme/proton/core/payment/presentation/PaymentsOrchestrator;)V
-	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragment_GeneratedInjector {
@@ -922,7 +922,7 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragm
 public final class me/proton/core/plan/presentation/ui/DynamicSubscriptionFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
-	public final fun setUserId (Lme/proton/core/domain/entity/UserId;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicSubscriptionFragment_GeneratedInjector {
@@ -1312,6 +1312,31 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptio
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/plan/presentation/viewmodel/DynamicUser {
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId : me/proton/core/plan/presentation/viewmodel/DynamicUser {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$None : me/proton/core/plan/presentation/viewmodel/DynamicUser {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/viewmodel/DynamicUser$None;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$Primary : me/proton/core/plan/presentation/viewmodel/DynamicUser {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/viewmodel/DynamicUser$Primary;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory : dagger/internal/Factory {

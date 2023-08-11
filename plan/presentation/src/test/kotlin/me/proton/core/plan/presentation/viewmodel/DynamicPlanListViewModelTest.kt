@@ -129,7 +129,7 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `get plans userId1 give CHF`() = coroutinesTest {
         // WHEN
-        tested.perform(Action.SetUserId(userId1))
+        tested.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
         tested.state.test {
             // THEN
             assertIs<State.Loading>(awaitItem())
@@ -142,7 +142,7 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `get plans userId2 give USD`() = coroutinesTest {
         // WHEN
-        tested.perform(Action.SetUserId(userId2))
+        tested.perform(Action.SetUser(DynamicUser.ByUserId(userId2)))
         tested.state.test {
             // THEN
             assertIs<State.Loading>(awaitItem())

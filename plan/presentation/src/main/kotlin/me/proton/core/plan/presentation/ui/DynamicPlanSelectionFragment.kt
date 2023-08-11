@@ -39,6 +39,7 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.State
+import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.plan.presentation.viewmodel.filterByCycle
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onItemSelected
@@ -62,8 +63,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
     private var onPlanFree: ((SelectedPlan) -> Unit)? = null
 
-    fun setUserId(userId: UserId) {
-        plans.setUserId(userId)
+    fun setUser(user: DynamicUser) {
+        plans.setUser(user)
     }
 
     fun setOnPlanBilled(onPlanBilled: (SelectedPlan, BillingResult) -> Unit) {
@@ -117,7 +118,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private fun onBilling(selectedPlan: SelectedPlan) {
         paymentsOrchestrator.startBillingWorkFlow(
-            userId = plans.getUserId(),
+            userId = plans.getUser().userId,
             selectedPlan = PlanShortDetails(
                 name = selectedPlan.planName,
                 displayName = selectedPlan.planDisplayName,

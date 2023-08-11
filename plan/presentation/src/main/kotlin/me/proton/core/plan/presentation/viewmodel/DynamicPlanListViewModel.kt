@@ -62,13 +62,13 @@ internal class DynamicPlanListViewModel @Inject constructor(
 
     sealed class Action {
         object Load : Action()
-        data class SetUserId(val userId: UserId) : Action()
+        data class SetUser(val user: DynamicUser) : Action()
         data class SetCycle(val cycle: Int) : Action()
         data class SetCurrency(val currency: String) : Action()
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableUserId = MutableStateFlow<UserId?>(null)
+    private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.None)
     private val mutablePlanFilter = MutableStateFlow(DynamicPlanFilter())
 
     private val cycleFilter = mutablePlanFilter.mapLatest { it.cycle }.distinctUntilChanged()
@@ -80,17 +80,18 @@ internal class DynamicPlanListViewModel @Inject constructor(
         initialValue = State.Loading
     )
 
-    fun getUserId(): UserId? = mutableUserId.value
+    fun getUser(): DynamicUser = mutableUser.value
 
     private fun observeUserDynamicPlans() = mutableLoadCount
         .flatMapLatest { observeUserId() }
         .flatMapLatest { observeFilter(it) }
         .flatMapLatest { loadDynamicPlans(it) }
 
-    private fun observeUserId(): Flow<UserId?> = mutableUserId.flatMapLatest { userId ->
-        when (userId) {
-            null -> accountManager.getPrimaryUserId()
-            else -> accountManager.getAccount(userId).mapLatest { it?.userId }
+    private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
+        when (user) {
+            is DynamicUser.None -> flowOf(null)
+            is DynamicUser.Primary -> accountManager.getPrimaryUserId()
+            is DynamicUser.ByUserId -> accountManager.getAccount(user.userId).mapLatest { it?.userId }
         }
     }
 
@@ -116,7 +117,7 @@ internal class DynamicPlanListViewModel @Inject constructor(
 
     fun perform(action: Action) = when (action) {
         is Action.Load -> onLoad()
-        is Action.SetUserId -> onSetUserId(action.userId)
+        is Action.SetUser -> onSetUser(action.user)
         is Action.SetCycle -> onSetCycle(action.cycle)
         is Action.SetCurrency -> onSetCurrency(action.currency)
     }
@@ -125,8 +126,8 @@ internal class DynamicPlanListViewModel @Inject constructor(
         mutableLoadCount.emit(mutableLoadCount.value + 1)
     }
 
-    private fun onSetUserId(userId: UserId?) = viewModelScope.launch {
-        mutableUserId.emit(userId)
+    private fun onSetUser(user: DynamicUser) = viewModelScope.launch {
+        mutableUser.emit(user)
     }
 
     private fun onSetCycle(cycle: Int) = viewModelScope.launch {

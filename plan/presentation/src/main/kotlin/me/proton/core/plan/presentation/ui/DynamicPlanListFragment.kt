@@ -25,7 +25,6 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.presentation.R
@@ -38,6 +37,7 @@ import me.proton.core.plan.presentation.view.toView
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
+import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.getUserMessage
@@ -54,14 +54,14 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
 
     private var onPlanSelected: ((SelectedPlan) -> Unit)? = null
 
-    fun getUserId(): UserId? = viewModel.getUserId()
+    fun getUser(): DynamicUser = viewModel.getUser()
 
     fun setOnPlanSelected(onPlanSelected: (SelectedPlan) -> Unit) {
         this.onPlanSelected = onPlanSelected
     }
 
-    fun setUserId(userId: UserId) {
-        viewModel.perform(Action.SetUserId(userId))
+    fun setUser(user: DynamicUser) {
+        viewModel.perform(Action.SetUser(user))
     }
 
     fun setCurrency(currency: String) {

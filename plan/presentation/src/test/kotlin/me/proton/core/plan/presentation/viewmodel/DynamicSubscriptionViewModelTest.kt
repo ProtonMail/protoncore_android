@@ -111,7 +111,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
             assertIs<DynamicSubscriptionViewModel.State.Loading>(awaitItem())
             assertIs<DynamicSubscriptionViewModel.State.UserNotExist>(awaitItem())
 
-            viewModel.perform(DynamicSubscriptionViewModel.Action.SetUserId(userId1))
+            viewModel.perform(DynamicSubscriptionViewModel.Action.SetUser(DynamicUser.ByUserId(userId1)))
             assertIs<DynamicSubscriptionViewModel.State.Loading>(awaitItem())
             assertIs<DynamicSubscriptionViewModel.State.Success>(awaitItem())
         }
@@ -127,7 +127,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
             assertIs<DynamicSubscriptionViewModel.State.Loading>(awaitItem())
             assertIs<DynamicSubscriptionViewModel.State.Success>(awaitItem())
 
-            viewModel.perform(DynamicSubscriptionViewModel.Action.SetUserId(userId2))
+            viewModel.perform(DynamicSubscriptionViewModel.Action.SetUser(DynamicUser.ByUserId(userId2)))
             assertIs<DynamicSubscriptionViewModel.State.Loading>(awaitItem())
             assertIs<DynamicSubscriptionViewModel.State.Success>(awaitItem())
         }
@@ -143,7 +143,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
             assertIs<DynamicSubscriptionViewModel.State.Loading>(awaitItem())
             assertIs<DynamicSubscriptionViewModel.State.Success>(awaitItem())
 
-            viewModel.perform(DynamicSubscriptionViewModel.Action.SetUserId(userIdAbsent))
+            viewModel.perform(DynamicSubscriptionViewModel.Action.SetUser(DynamicUser.ByUserId(userIdAbsent)))
             assertIs<DynamicSubscriptionViewModel.State.Loading>(awaitItem())
             assertIs<DynamicSubscriptionViewModel.State.UserNotExist>(awaitItem())
         }

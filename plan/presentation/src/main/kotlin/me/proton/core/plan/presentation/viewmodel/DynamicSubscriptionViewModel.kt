@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -55,11 +56,11 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
 
     sealed class Action {
         object Load : Action()
-        data class SetUserId(val userId: UserId?) : Action()
+        data class SetUser(val user: DynamicUser) : Action()
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableUserId = MutableStateFlow<UserId?>(null)
+    private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.Primary)
 
     val state: StateFlow<State> = observeUserSubscription().stateIn(
         scope = viewModelScope,
@@ -71,10 +72,11 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         .flatMapLatest { observeUserId() }
         .flatMapLatest { loadDynamicSubscription(it) }
 
-    private fun observeUserId(): Flow<UserId?> = mutableUserId.flatMapLatest { userId ->
-        when (userId) {
-            null -> accountManager.getPrimaryUserId()
-            else -> accountManager.getAccount(userId).mapLatest { it?.userId }
+    private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
+        when (user) {
+            is DynamicUser.None -> flowOf(null)
+            is DynamicUser.Primary -> accountManager.getPrimaryUserId()
+            is DynamicUser.ByUserId -> accountManager.getAccount(user.userId).mapLatest { it?.userId }
         }
     }
 
@@ -88,14 +90,14 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
 
     fun perform(action: Action) = when (action) {
         is Action.Load -> onLoad()
-        is Action.SetUserId -> onSetUserId(action.userId)
+        is Action.SetUser -> onSetUser(action.user)
     }
 
     private fun onLoad() = viewModelScope.launch {
         mutableLoadCount.emit(mutableLoadCount.value + 1)
     }
 
-    private fun onSetUserId(userId: UserId?) = viewModelScope.launch {
-        mutableUserId.emit(userId)
+    private fun onSetUser(user: DynamicUser) = viewModelScope.launch {
+        mutableUser.emit(user)
     }
 }

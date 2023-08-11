@@ -37,6 +37,7 @@ import me.proton.core.plan.presentation.view.toView
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel.State
+import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.getUserMessage
@@ -49,8 +50,8 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
     private val binding by viewBinding(FragmentDynamicSubscriptionBinding::bind)
     private val viewModel by viewModels<DynamicSubscriptionViewModel>()
 
-    fun setUserId(userId: UserId?) {
-        viewModel.perform(Action.SetUserId(userId))
+    fun setUser(user: DynamicUser) {
+        viewModel.perform(Action.SetUser(user))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
