@@ -19,7 +19,7 @@
 <resources>
   <string name="crypto_keystore_error_title">Krypteringsfejl</string>
   <string name="crypto_keystore_error_message">Denne enhed bruger en fejlbehæftet implementering af Android Keystore, som vi bruger til at beskytte dine data. Det betyder, at dine data kan blive kompromitteret, hvis en angriber får fysisk adgang til denne enhed. Hvad ønsker du at gøre?</string>
-  <string name="crypto_keystore_error_continue_action">Fortsætte</string>
+  <string name="crypto_keystore_error_continue_action">Fortsæt</string>
   <string name="crypto_keystore_error_more_info_action">Få flere oplysninger</string>
   <string name="crypto_keystore_error_logout_action">Logge ud</string>
   <string name="crypto_keystore_error_exit_action">Afslutte</string>

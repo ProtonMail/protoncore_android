@@ -80,7 +80,7 @@
     <item quantity="other">#proton_vpn# 台のデバイスで利用できる高速な VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="other">#proton_vpn# 高速 VPN 接続</item>
+    <item quantity="other">#proton_vpn# 件の高速 VPN 接続</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="other">#proton_users# ユーザー</item>

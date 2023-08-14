@@ -29,8 +29,8 @@
   <string name="plans_subscription">Langganan</string>
   <string name="plans_renewal_date">Paket Anda akan diperbarui secara otomatis pada &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Paket Anda akan berakhir pada &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_billed_yearly">*Ditagihkan per tahun seharga %s</string>
-  <string name="plans_billed_monthly">Ditagihkan per bulan</string>
+  <string name="plans_billed_yearly">*Ditagihkan secara tahunan pada harga %s</string>
+  <string name="plans_billed_monthly">Ditagihkan secara bulanan</string>
   <string name="plans_billing_monthly">Untuk 1 bulan</string>
   <string name="plans_billing_yearly">Untuk 1 tahun</string>
   <string name="plans_billing_two_years">Untuk 2 tahun</string>

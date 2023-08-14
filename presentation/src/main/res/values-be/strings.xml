@@ -26,7 +26,7 @@
   <string name="presentation_market_missing">Не знойдзена адпаведная праграма на вашай прыладзе. Усталюйце яе праз краму з праграмамі.</string>
   <string name="presentation_authenticate">Аўтэнтыфікацыя</string>
   <string name="presentation_signin_to_continue">Увайдзіце для працягу</string>
-  <string name="presentation_alert_title">Папярэджанне</string>
+  <string name="presentation_alert_title">Абвестка</string>
   <string name="presentation_alert_ok">Добра</string>
   <string name="presentation_alert_enter">Увесці</string>
   <string name="presentation_alert_cancel">Скасаваць</string>

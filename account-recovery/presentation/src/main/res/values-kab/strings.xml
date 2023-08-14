@@ -17,15 +17,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
-  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
-  <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
-  <string name="account_recovery_cancel">Cancel recovery</string>
+  <string name="account_recovery_grace_started_title">Tallit n usuref tebda</string>
+  <string name="account_recovery_grace_started_subtitle">Tallit n usuref n tririt n umiḍan-inek-inem tebda yerna tettkemmil.</string>
+  <string name="account_recovery_cancelled_title">Tiririt n umiḍan tettwasefsex</string>
+  <string name="account_recovery_cancelled_subtitle">Akala n tririt n umiḍan-inek-inem yettwasefsex.</string>
+  <string name="account_recovery_password_started_title">Tzemreḍ ad tbeddleḍ awal uffir n tririt n umiḍan</string>
+  <string name="account_recovery_password_started_subtitle">Tebda tallit n ubeddel n wawal uffir n tririt n umiḍan-ik-im. Tzemreḍ tura ad tbeddleḍ awal-ik-im uffir.</string>
+  <string name="account_recovery_window_ended_title">Tallit n tririt n umiḍan tfukk</string>
+  <string name="account_recovery_window_ended_subtitle">Tallit n tririt n umiḍan-inek-inem tfukk.</string>
+  <string name="account_recovery_cancel">Sefsex tiririt</string>
   <string name="account_recovery_password_label">Sekcem awal uffir i usefsex</string>
   <string name="account_recovery_password_placeholder">Awal uffir</string>
 </resources>

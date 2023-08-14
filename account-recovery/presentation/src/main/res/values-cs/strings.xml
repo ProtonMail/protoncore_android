@@ -17,14 +17,14 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
+  <string name="account_recovery_grace_started_title">Začala lhůta odkladu</string>
+  <string name="account_recovery_grace_started_subtitle">Odkladná lhůta pro obnovení účtu byla zahájena a stále trvá.</string>
   <string name="account_recovery_cancelled_title">Obnovení účtu zrušeno</string>
   <string name="account_recovery_cancelled_subtitle">Proces obnovení vašeho účtu byl zrušen.</string>
   <string name="account_recovery_password_started_title">Heslo pro obnovení účtu je možné změnit</string>
   <string name="account_recovery_password_started_subtitle">Bylo zahájeno období pro změnu hesla pro obnovení vašeho účtu. Nyní si můžete změnit heslo.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
-  <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
+  <string name="account_recovery_window_ended_title">Okno pro obnovu účtu skončilo</string>
+  <string name="account_recovery_window_ended_subtitle">Okno pro obnovení vašeho účtu skončilo.</string>
   <string name="account_recovery_cancel">Zrušit obnovení</string>
   <string name="account_recovery_password_label">Zadejte heslo pro zrušení</string>
   <string name="account_recovery_password_placeholder">Heslo</string>
