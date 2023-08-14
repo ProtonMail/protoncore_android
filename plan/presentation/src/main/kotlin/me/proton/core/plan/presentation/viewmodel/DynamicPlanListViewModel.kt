@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -42,14 +44,12 @@ import me.proton.core.plan.domain.entity.filterBy
 import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.entity.DynamicPlanFilter
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 @HiltViewModel
 internal class DynamicPlanListViewModel @Inject constructor(
     override val manager: ObservabilityManager,
-    private val userManager: UserManager,
     private val accountManager: AccountManager,
     private val getDynamicPlans: GetDynamicPlans
 ) : ProtonViewModel(), ObservabilityContext {
@@ -68,13 +68,13 @@ internal class DynamicPlanListViewModel @Inject constructor(
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.None)
+    private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.Unspecified)
     private val mutablePlanFilter = MutableStateFlow(DynamicPlanFilter())
 
     private val cycleFilter = mutablePlanFilter.mapLatest { it.cycle }.distinctUntilChanged()
     private val currencyFilter = mutablePlanFilter.mapLatest { it.currency }.distinctUntilChanged()
 
-    val state: StateFlow<State> = observeUserDynamicPlans().stateIn(
+    val state: StateFlow<State> = observeState().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = State.Loading
@@ -82,13 +82,14 @@ internal class DynamicPlanListViewModel @Inject constructor(
 
     fun getUser(): DynamicUser = mutableUser.value
 
-    private fun observeUserDynamicPlans() = mutableLoadCount
-        .flatMapLatest { observeUserId() }
-        .flatMapLatest { observeFilter(it) }
+    private fun observeState() = mutableLoadCount
+        .flatMapLatest { observeUserId().distinctUntilChanged() }
+        .flatMapLatest { observeFilter(it).distinctUntilChanged() }
         .flatMapLatest { loadDynamicPlans(it) }
 
     private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
         when (user) {
+            is DynamicUser.Unspecified -> emptyFlow()
             is DynamicUser.None -> flowOf(null)
             is DynamicUser.Primary -> accountManager.getPrimaryUserId()
             is DynamicUser.ByUserId -> accountManager.getAccount(user.userId).mapLatest { it?.userId }
@@ -96,17 +97,10 @@ internal class DynamicPlanListViewModel @Inject constructor(
     }
 
     private fun observeFilter(userId: UserId?) = combine(
-        cycleFilter,
-        observeCurrency(userId)
+        cycleFilter.filterNotNull(),
+        currencyFilter.filterNotNull()
     ) { cycle, currency ->
         DynamicPlanFilter(userId, cycle, currency)
-    }
-
-    private fun observeCurrency(userId: UserId?): Flow<String?> = currencyFilter.flatMapLatest { currency ->
-        when (currency) {
-            null -> userId?.let { userManager.observeUser(it).mapLatest { user -> user?.currency } } ?: flowOf(null)
-            else -> flowOf(currency)
-        }
     }
 
     private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = flow {

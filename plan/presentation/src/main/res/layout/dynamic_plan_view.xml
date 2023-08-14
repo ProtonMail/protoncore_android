@@ -179,7 +179,7 @@
             android:layout_marginTop="@dimen/gap_large"
             android:orientation="vertical">
 
-            <me.proton.core.plan.presentation.view.DynamicEntitlementStorageView
+            <me.proton.core.plan.presentation.view.DynamicEntitlementProgressView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"

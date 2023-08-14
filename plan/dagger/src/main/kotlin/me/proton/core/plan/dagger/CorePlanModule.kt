@@ -22,8 +22,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.plan.data.IsDynamicPlanEnabledImpl
 import me.proton.core.plan.data.PlanIconsEndpointProviderImpl
 import me.proton.core.plan.data.repository.PlansRepositoryImpl
+import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Singleton
@@ -39,4 +41,8 @@ public interface CorePlanModule {
     @Binds
     @Singleton
     public fun provideIconsEndpoint(impl: PlanIconsEndpointProviderImpl): PlanIconsEndpointProvider
+
+    @Binds
+    @Singleton
+    public fun provideIsDynamicPlanEnabled(impl: IsDynamicPlanEnabledImpl): IsDynamicPlanEnabled
 }

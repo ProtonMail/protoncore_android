@@ -32,9 +32,11 @@ fun DynamicEntitlement.toView(context: Context) = when (this) {
         text = this@toView.text
     }
 
-    is DynamicEntitlement.Storage -> DynamicEntitlementStorageView(context).apply {
-        text = formatUsedSpace(context, currentBytes, maxBytes)
-        progress = ((currentBytes.toFloat() / maxBytes.toFloat()) * 100).toInt()
+    is DynamicEntitlement.Progress -> DynamicEntitlementProgressView(context).apply {
+        text = this@toView.text
+        progressMin = this@toView.min.div(1000000).toInt()
+        progressMax = this@toView.max.div(1000000).toInt()
+        progress = this@toView.current.div(1000000).toInt()
     }
 }
 

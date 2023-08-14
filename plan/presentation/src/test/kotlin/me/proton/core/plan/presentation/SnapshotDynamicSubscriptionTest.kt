@@ -21,7 +21,7 @@ package me.proton.core.plan.presentation
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import me.proton.core.plan.presentation.view.DynamicEntitlementDescriptionView
-import me.proton.core.plan.presentation.view.DynamicEntitlementStorageView
+import me.proton.core.plan.presentation.view.DynamicEntitlementProgressView
 import me.proton.core.plan.presentation.view.DynamicPlanView
 import org.junit.Rule
 import org.junit.Test
@@ -45,7 +45,7 @@ class SnapshotDynamicSubscriptionTest {
 
     @Test
     fun dynamicPlanEntitlementStorageView() {
-        val view = DynamicEntitlementStorageView(paparazzi.context)
+        val view = DynamicEntitlementProgressView(paparazzi.context)
         view.text = "50/100"
         view.progress = 50
         paparazzi.snapshot(view)
@@ -64,7 +64,7 @@ class SnapshotDynamicSubscriptionTest {
         view.renewalText = "Your plan will automatically renew on 4 Jun 1982."
         view.isCollapsable = false
         view.starred = true
-        view.entitlements.addView(DynamicEntitlementStorageView(paparazzi.context).apply {
+        view.entitlements.addView(DynamicEntitlementProgressView(paparazzi.context).apply {
             text = "50 MB on 100 MB"
             progress = 50
         })

@@ -20,7 +20,7 @@
       "RenewDiscount": -28788,
       "RenewAmount": 0,
       "Renew": true,
-      "External": false,
+      "External": 0,
       "Entitlements": [
         {
           "Type": "storage",

@@ -20,6 +20,9 @@ package me.proton.core.presentation.ui
 
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.launchIn
 
 /**
  * Base Proton Fragment from which all project fragments should extend.
@@ -27,6 +30,14 @@ import androidx.fragment.app.Fragment
  * @author Dino Kadrikj.
  */
 abstract class ProtonFragment : Fragment {
-    constructor(): super()
-    constructor(@LayoutRes contentLayoutId: Int): super(contentLayoutId)
+    constructor() : super()
+    constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId)
+
+    /**
+     * It is a shorthand for `launchIn(viewLifecycleOwner.lifecycleScope)`.
+     *
+     * @see launchIn
+     * @see getViewLifecycleOwner
+     */
+    fun Flow<*>.launchInViewLifecycleScope() = launchIn(viewLifecycleOwner.lifecycleScope)
 }

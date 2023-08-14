@@ -45,7 +45,7 @@ public data class DynamicSubscription(
     val renewAmount: Long? = null,
 
     val renew: Boolean? = null,
-    val external: Boolean? = null,
+    val external: SubscriptionManagement? = null,
 
     val decorations: List<DynamicDecoration> = emptyList(),
     val entitlements: List<DynamicEntitlement> = emptyList()

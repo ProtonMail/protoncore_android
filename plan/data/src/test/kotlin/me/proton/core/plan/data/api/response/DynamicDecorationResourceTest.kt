@@ -32,7 +32,7 @@ class DynamicDecorationResourceTest {
             DynamicDecorationResource.Star(iconName = "icon"),
             """
                 {
-                "Type": "Star",
+                "Type": "star",
                 "IconName": "icon"
                 }
             """.trimIndent().deserialize<DynamicDecorationResource>()

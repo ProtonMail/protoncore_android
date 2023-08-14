@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.viewmodel
+package me.proton.core.plan.presentation.entity
 
-import me.proton.core.domain.entity.UserId
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
-sealed class DynamicUser(open val userId: UserId? = null) {
-    object Unspecified : DynamicUser()
-    object None : DynamicUser()
-    object Primary : DynamicUser()
-    data class ByUserId(override val userId: UserId) : DynamicUser(userId)
-}
+@Parcelize
+data class UnredeemedPurchaseResult(
+    val redeemed: Boolean
+) : Parcelable

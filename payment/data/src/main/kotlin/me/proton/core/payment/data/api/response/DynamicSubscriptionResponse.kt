@@ -20,10 +20,11 @@ package me.proton.core.payment.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.json.JsonElement
 import me.proton.core.payment.domain.entity.DynamicSubscription
-import me.proton.core.plan.data.api.response.DynamicEntitlementResource
+import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.plan.data.api.response.DynamicDecorationResource
+import me.proton.core.plan.data.api.response.DynamicEntitlementResource
 import me.proton.core.plan.data.api.response.toDynamicPlanDecoration
 import me.proton.core.plan.data.api.response.toDynamicPlanEntitlement
 import java.time.Instant
@@ -49,7 +50,7 @@ internal data class DynamicSubscriptionResponse(
     @SerialName("Amount")
     val amount: Long? = null,
     @SerialName("Offer")
-    val offer: JsonObject? = null,
+    val offer: JsonElement? = null,
     @SerialName("PeriodStart")
     val periodStart: Long? = null,
     @SerialName("PeriodEnd")
@@ -67,7 +68,7 @@ internal data class DynamicSubscriptionResponse(
     @SerialName("Renew")
     val renew: Boolean? = null,
     @SerialName("External")
-    val external: Boolean? = null,
+    val external: Int? = null,
     @SerialName("Decorations")
     val decorations: List<DynamicDecorationResource>? = null,
     @SerialName("Entitlements")
@@ -91,7 +92,7 @@ internal data class DynamicSubscriptionResponse(
         renewDiscount = renewDiscount,
         renewAmount = renewAmount,
         renew = renew,
-        external = external,
+        external = SubscriptionManagement.map[external],
         decorations = decorations?.mapNotNull { it.toDynamicPlanDecoration() } ?: emptyList(),
         entitlements = entitlements?.mapNotNull { it.toDynamicPlanEntitlement(iconsEndpoint) } ?: emptyList()
     )

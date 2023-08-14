@@ -26,7 +26,6 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.ActivityResultLauncher
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -46,6 +45,8 @@ import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.entity.UnredeemedPurchaseResult
+import me.proton.core.plan.presentation.entity.toStringRes
 import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
 import me.proton.core.plan.presentation.viewmodel.UpgradePlansViewModel
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -75,8 +76,8 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
 
     private lateinit var onUnredeemedPurchaseLauncher: ActivityResultLauncher<Unit>
 
-    private val onUnredeemedPurchaseResult = ActivityResultCallback<UnredeemedPurchaseActivity.Result?> {
-        if (it == UnredeemedPurchaseActivity.Result.PurchaseRedeemed) {
+    private val onUnredeemedPurchaseResult = ActivityResultCallback<UnredeemedPurchaseResult?> { result ->
+        if (result?.redeemed == true) {
             upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!, checkForUnredeemedPurchase = false)
         }
     }
@@ -86,7 +87,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         upgradePlanViewModel.register(this)
         activity?.addOnBackPressedCallback { setResult() }
         onUnredeemedPurchaseLauncher = registerForActivityResult(
-            UnredeemedPurchaseActivity.Start(),
+            StartUnredeemedPurchase(),
             onUnredeemedPurchaseResult
         )
     }
@@ -215,7 +216,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             else -> {
                 with(binding) {
                     manageSubscriptionText.apply {
-                        setText(subscriptionManagement.subscriptionManagementText())
+                        setText(subscriptionManagement.toStringRes())
                         movementMethod = LinkMovementMethod.getInstance()
                     }
                 }
@@ -223,15 +224,6 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             }
         }
     }
-
-    @StringRes
-    private fun SubscriptionManagement?.subscriptionManagementText(): Int =
-        when (this) {
-            null -> R.string.plans_manage_your_subscription_other
-            SubscriptionManagement.PROTON_MANAGED -> R.string.plans_manage_your_subscription_other
-            SubscriptionManagement.GOOGLE_MANAGED -> R.string.plans_manage_your_subscription_google
-        }
-
 
     private fun showLoading(loading: Boolean) = with(binding) {
         progressParent.visibility = if (loading) VISIBLE else GONE

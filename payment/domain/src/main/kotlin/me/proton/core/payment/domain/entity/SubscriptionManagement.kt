@@ -21,7 +21,9 @@ package me.proton.core.payment.domain.entity
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 
 public enum class SubscriptionManagement(public val value: Int) {
-    PROTON_MANAGED(0), GOOGLE_MANAGED(2);
+    PROTON_MANAGED(0),
+    APPLE_MANAGED(1),
+    GOOGLE_MANAGED(2);
 
     public companion object {
         public val map: Map<Int, SubscriptionManagement> = values().associateBy { it.value }
@@ -32,5 +34,6 @@ public fun SubscriptionManagement.toCheckoutBillingSubscribeManager(): CheckoutB
     return when (this) {
         SubscriptionManagement.PROTON_MANAGED -> CheckoutBillingSubscribeTotal.Manager.proton
         SubscriptionManagement.GOOGLE_MANAGED -> CheckoutBillingSubscribeTotal.Manager.google
+        SubscriptionManagement.APPLE_MANAGED -> error("Cannot checkout Apple subscription.")
     }
 }

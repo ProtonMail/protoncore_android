@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -26,7 +26,9 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.emptyFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -37,23 +39,28 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.payment.domain.entity.DynamicSubscription
-import me.proton.core.payment.domain.usecase.GetDynamicSubscription
+import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.plan.domain.SupportUpgradePaidPlans
+import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
+import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-internal class DynamicSubscriptionViewModel @Inject constructor(
+internal class DynamicUpgradePlanViewModel @Inject constructor(
     override val manager: ObservabilityManager,
     private val accountManager: AccountManager,
-    private val getDynamicSubscription: GetDynamicSubscription,
+    private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
+    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
+    @SupportUpgradePaidPlans private val supportPaidPlans: Boolean,
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
+        object Idle : State()
         object Loading : State()
-        object UserNotExist : State()
+        object UpgradeNotAvailable : State()
+        data class UnredeemedPurchase(val purchase: UnredeemedGooglePurchase) : State()
         data class Error(val error: Throwable) : State()
-        data class Success(val dynamicSubscription: DynamicSubscription) : State()
     }
 
     sealed class Action {
@@ -71,8 +78,8 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     )
 
     private fun observeState() = mutableLoadCount
-        .flatMapLatest { observeUserId().distinctUntilChanged() }
-        .flatMapLatest { loadDynamicSubscription(it) }
+        .flatMapLatest { observeUserId().filterNotNull().distinctUntilChanged() }
+        .flatMapLatest { loadPaymentProviders(it) }
 
     private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
         when (user) {
@@ -83,11 +90,20 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadDynamicSubscription(userId: UserId?) = flow {
+    private suspend fun loadPaymentProviders(userId: UserId) = flow {
         emit(State.Loading)
-        when (userId) {
-            null -> emit(State.UserNotExist)
-            else -> emit(State.Success(getDynamicSubscription(userId)))
+        when {
+            !supportPaidPlans -> emit(State.UpgradeNotAvailable)
+            getAvailablePaymentProviders.invoke(userId).isEmpty() -> emit(State.UpgradeNotAvailable)
+            else -> emitAll(loadUnredeemedPurchase(userId))
+        }
+    }.catch { emit(State.Error(it)) }
+
+    private suspend fun loadUnredeemedPurchase(userId: UserId) = flow {
+        emit(State.Loading)
+        when (val unredeemedPurchase = checkUnredeemedGooglePurchase.invoke(userId)) {
+            null -> emit(State.Idle)
+            else -> emit(State.UnredeemedPurchase(unredeemedPurchase))
         }
     }.catch { emit(State.Error(it)) }
 

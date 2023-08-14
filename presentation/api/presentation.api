@@ -179,6 +179,7 @@ public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : andr
 public abstract class me/proton/core/presentation/ui/ProtonFragment : androidx/fragment/app/Fragment {
 	public fun <init> ()V
 	public fun <init> (I)V
+	public final fun launchInViewLifecycleScope (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/Job;
 }
 
 public abstract class me/proton/core/presentation/ui/ProtonSecureActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {

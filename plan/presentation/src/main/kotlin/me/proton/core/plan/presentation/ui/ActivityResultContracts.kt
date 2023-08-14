@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.plan.presentation.entity.PlanInput
+import me.proton.core.plan.presentation.entity.UnredeemedPurchaseResult
 import me.proton.core.plan.presentation.entity.UpgradeResult
 
 class StartPlanChooser : ActivityResultContract<PlanInput, UpgradeResult?>() {
@@ -34,5 +35,27 @@ class StartPlanChooser : ActivityResultContract<PlanInput, UpgradeResult?>() {
     override fun parseResult(resultCode: Int, intent: Intent?): UpgradeResult? {
         if (resultCode != Activity.RESULT_OK) return null
         return intent?.getParcelableExtra(UpgradeActivity.ARG_RESULT)
+    }
+}
+
+class StartDynamicUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?>() {
+    override fun createIntent(context: Context, input: PlanInput): Intent =
+        Intent(context, DynamicUpgradePlanActivity::class.java).apply {
+            putExtra(UpgradeActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, intent: Intent?): UpgradeResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return intent?.getParcelableExtra(UpgradeActivity.ARG_RESULT)
+    }
+}
+
+class StartUnredeemedPurchase : ActivityResultContract<Unit, UnredeemedPurchaseResult?>() {
+    override fun createIntent(context: Context, input: Unit): Intent =
+        Intent(context, UnredeemedPurchaseActivity::class.java)
+
+    override fun parseResult(resultCode: Int, intent: Intent?): UnredeemedPurchaseResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return intent?.getParcelableExtra(UnredeemedPurchaseActivity.ARG_RESULT)
     }
 }

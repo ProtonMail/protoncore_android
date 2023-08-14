@@ -20,10 +20,9 @@ package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.domain.entity.DynamicPlan
@@ -76,7 +75,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
                 is State.Error -> onError(it.error)
                 is State.Success -> onSuccess(it)
             }
-        }.launchIn(lifecycleScope)
+        }.launchInViewLifecycleScope()
 
         binding.retry.onClick { viewModel.perform(Action.Load) }
     }
@@ -97,13 +96,13 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
-        progress.visibility = if (loading) View.VISIBLE else View.GONE
-        errorLayout.visibility = View.GONE
+        progress.isVisible = loading
+        errorLayout.isVisible = false
         binding.plans.removeAllViews()
     }
 
     private fun showError(message: String) = with(binding) {
-        errorLayout.visibility = View.VISIBLE
+        errorLayout.isVisible = true
         error.text = message
     }
 

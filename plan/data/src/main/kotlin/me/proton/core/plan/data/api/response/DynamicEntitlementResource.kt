@@ -35,17 +35,26 @@ sealed class DynamicEntitlementResource {
         @SerialName("IconName")
         val iconName: String,
 
+        @SerialName("Description")
+        val description: String? = null, // TODO: Remove.
+
         @SerialName("Text")
-        val text: String? = null, // TODO: Remove nullability.
+        val text: String? = null,
 
         @SerialName("Hint")
         val hint: String? = null
     ) : DynamicEntitlementResource()
 
     @Serializable
-    data class Storage(
+    data class Progress(
+        @SerialName("Text")
+        val text: String,
+
         @SerialName("Current")
         val current: Long,
+
+        @SerialName("Min")
+        val min: Long,
 
         @SerialName("Max")
         val max: Long
@@ -60,15 +69,17 @@ sealed class DynamicEntitlementResource {
 
 fun DynamicEntitlementResource.toDynamicPlanEntitlement(iconsEndpoint: String): DynamicEntitlement? =
     when (this) {
-        is DynamicEntitlementResource.Description -> if (text == null) null else DynamicEntitlement.Description(
-            text = text,
+        is DynamicEntitlementResource.Description -> DynamicEntitlement.Description(
+            text = text ?: requireNotNull(description),
             iconUrl = "$iconsEndpoint/$iconName",
             hint = hint
         )
 
-        is DynamicEntitlementResource.Storage -> DynamicEntitlement.Storage(
-            currentBytes = current,
-            maxBytes = max
+        is DynamicEntitlementResource.Progress -> DynamicEntitlement.Progress(
+            text = text,
+            current = current,
+            min = min,
+            max = max
         )
 
         is DynamicEntitlementResource.Unknown -> null
@@ -79,7 +90,7 @@ class DynamicEntitlementResourceSerializer :
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DynamicEntitlementResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {
             "description" -> DynamicEntitlementResource.Description.serializer()
-            "storage" -> DynamicEntitlementResource.Storage.serializer()
+            "progress" -> DynamicEntitlementResource.Progress.serializer()
             else -> DynamicEntitlementResource.Unknown.serializer()
         }
     }

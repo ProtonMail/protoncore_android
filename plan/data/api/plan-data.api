@@ -106,15 +106,17 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 
 public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Description : me/proton/core/plan/data/api/response/DynamicEntitlementResource {
 	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;
-	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;
+	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDescription ()Ljava/lang/String;
 	public final fun getHint ()Ljava/lang/String;
 	public final fun getIconName ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
@@ -138,34 +140,38 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage : me/proton/core/plan/data/api/response/DynamicEntitlementResource {
-	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage$Companion;
-	public synthetic fun <init> (IJJLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (JJ)V
-	public final fun component1 ()J
+public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress : me/proton/core/plan/data/api/response/DynamicEntitlementResource {
+	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress$Companion;
+	public synthetic fun <init> (ILjava/lang/String;JJJLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;JJJ)V
+	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()J
-	public final fun copy (JJ)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage;
-	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage;JJILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage;
+	public final fun component3 ()J
+	public final fun component4 ()J
+	public final fun copy (Ljava/lang/String;JJJ)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
+	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;Ljava/lang/String;JJJILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrent ()J
 	public final fun getMax ()J
+	public final fun getMin ()J
+	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage$$serializer;
+public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Storage$Companion {
+public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

@@ -53,7 +53,7 @@ class DynamicDecorationResourceSerializer :
     JsonContentPolymorphicSerializer<DynamicDecorationResource>(DynamicDecorationResource::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DynamicDecorationResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {
-            "Star" -> DynamicDecorationResource.Star.serializer()
+            "star" -> DynamicDecorationResource.Star.serializer()
             else -> DynamicDecorationResource.Unknown.serializer()
         }
     }

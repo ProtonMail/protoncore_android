@@ -138,7 +138,7 @@ class PaymentsApiTest {
 
         // Then
         assertEquals(28788, subscription.amount)
-        assertEquals(false, subscription.external)
+        assertEquals(SubscriptionManagement.PROTON_MANAGED, subscription.external)
     }
 
     @Test

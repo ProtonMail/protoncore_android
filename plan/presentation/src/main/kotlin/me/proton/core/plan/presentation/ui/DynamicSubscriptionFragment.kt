@@ -20,14 +20,10 @@ package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.presentation.R
@@ -54,6 +50,10 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         viewModel.perform(Action.SetUser(user))
     }
 
+    fun reload() {
+        viewModel.perform(Action.Load)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.state.onEach {
@@ -63,7 +63,7 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
                 is State.UserNotExist -> onNoPrimaryUser()
                 is State.Success -> onSuccess(it.dynamicSubscription)
             }
-        }.launchIn(lifecycleScope)
+        }.launchInViewLifecycleScope()
 
         binding.retry.onClick { viewModel.perform(Action.Load) }
     }
@@ -89,12 +89,12 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
-        progress.visibility = if (loading) VISIBLE else GONE
-        errorLayout.visibility = GONE
+        progress.isVisible = loading
+        errorLayout.isVisible = false
     }
 
     private fun showError(message: String) = with(binding) {
-        errorLayout.visibility = VISIBLE
+        errorLayout.isVisible = true
         error.text = message
     }
 
@@ -102,8 +102,8 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         title = subscription.title
         description = subscription.description
         starred = subscription.decorations.filterIsInstance<DynamicDecoration.Star>().isNotEmpty()
-        val price = subscription.renewAmount?.takeIf { it > 0 } ?: subscription.amount
-        priceText = price?.toDouble()?.formatCentsPriceDefaultLocale(requireNotNull(subscription.currency))
+        val price = subscription.amount?.toDouble()
+        priceText = price?.formatCentsPriceDefaultLocale(requireNotNull(subscription.currency))
         priceCycle = subscription.cycleDescription
         renewalText = when {
             subscription.renew == null -> null

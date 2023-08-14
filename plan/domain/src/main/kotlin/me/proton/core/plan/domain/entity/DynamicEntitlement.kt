@@ -25,8 +25,10 @@ sealed class DynamicEntitlement {
         val hint: String? = null,
     ) : DynamicEntitlement()
 
-    data class Storage(
-        val currentBytes: Long,
-        val maxBytes: Long
+    data class Progress(
+        val text: String,
+        val current: Long,
+        val min: Long,
+        val max: Long,
     ) : DynamicEntitlement()
 }

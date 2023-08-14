@@ -35,7 +35,6 @@ import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -57,26 +56,6 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
         coEvery { this@mockk.invoke(any()) } returns plans
     }
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    private val userManagerManager = mockk<UserManager>(relaxed = true) {
-        coEvery { this@mockk.observeUser(any()) } answers {
-            flowOf(
-                when (firstArg<UserId>()) {
-                    userId1 -> mockk {
-                        every { userId } returns userId1
-                        every { currency } returns "CHF"
-                    }
-
-                    userId2 -> mockk {
-                        every { userId } returns userId2
-                        every { currency } returns "USD"
-                    }
-
-                    userIdAbsent -> null
-                    else -> null
-                }
-            )
-        }
-    }
     private val accountManager = mockk<AccountManager>(relaxed = true) {
         coEvery { this@mockk.getPrimaryUserId() } returns mutablePrimaryUserIdFlow
         coEvery { this@mockk.getAccount(any()) } answers {
@@ -95,11 +74,14 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @BeforeTest
     fun setUp() {
-        tested = DynamicPlanListViewModel(observabilityManager, userManagerManager, accountManager, getDynamicPlans)
+        tested = DynamicPlanListViewModel(observabilityManager, accountManager, getDynamicPlans)
     }
 
     @Test
     fun `get plans happy path`() = coroutinesTest {
+        // GIVEN
+        tested.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
+        tested.perform(Action.SetCurrency("CHF"))
         // WHEN
         tested.state.test {
             // THEN
@@ -113,6 +95,9 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `get plans error`() = coroutinesTest {
         // GIVEN
+        tested.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
+        tested.perform(Action.SetCurrency("CHF"))
+
         val apiException = ApiException(ApiResult.Error.Http(500, "Server error"))
         coEvery { getDynamicPlans(any()) } throws apiException
 
@@ -127,9 +112,11 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun `get plans userId1 give CHF`() = coroutinesTest {
-        // WHEN
+    fun `get plans userId1 return CHF`() = coroutinesTest {
+        // GIVEN
         tested.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
+        tested.perform(Action.SetCurrency("CHF"))
+        // WHEN
         tested.state.test {
             // THEN
             assertIs<State.Loading>(awaitItem())
@@ -140,9 +127,26 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun `get plans userId2 give USD`() = coroutinesTest {
-        // WHEN
+    fun `get plans userId2 return USD`() = coroutinesTest {
+        // GIVEN
         tested.perform(Action.SetUser(DynamicUser.ByUserId(userId2)))
+        tested.perform(Action.SetCurrency("USD"))
+        // WHEN
+        tested.state.test {
+            // THEN
+            assertIs<State.Loading>(awaitItem())
+            val state = awaitItem()
+            assertIs<State.Success>(state)
+            assertEquals("USD", state.filter.currency)
+        }
+    }
+
+    @Test
+    fun `get plans userAbsent return success`() = coroutinesTest {
+        // GIVEN
+        tested.perform(Action.SetUser(DynamicUser.ByUserId(userIdAbsent)))
+        tested.perform(Action.SetCurrency("USD"))
+        // WHEN
         tested.state.test {
             // THEN
             assertIs<State.Loading>(awaitItem())

@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.plan.presentation.ui.UnredeemedPurchaseActivity
+import me.proton.core.plan.presentation.ui.StartUnredeemedPurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
@@ -70,7 +70,7 @@ class UnredeemedPurchaseInitializer : Initializer<Unit> {
 
         if (unredeemed != null && appLifecycleProvider.state.value == AppLifecycleProvider.State.Foreground) {
             withContext(dispatcherProvider.Main) {
-                val intent = UnredeemedPurchaseActivity.Start().createIntent(context, Unit)
+                val intent = StartUnredeemedPurchase().createIntent(context, Unit)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }

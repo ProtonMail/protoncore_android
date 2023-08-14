@@ -64,15 +64,19 @@ class DynamicEntitlementResourceTest {
         )
 
         assertEquals(
-            DynamicEntitlementResource.Storage(
+            DynamicEntitlementResource.Progress(
+                text = "128 MB on 1GB",
                 current = 128,
+                min = 0,
                 max = 1024
             ),
             """
                 {
+                "Text": "128 MB on 1GB",
                 "Current": 128,
+                "Min": 0,
                 "Max": 1024,
-                "Type": "storage"
+                "Type": "progress"
                 }
             """.trimIndent().deserialize<DynamicEntitlementResource>()
         )
@@ -111,12 +115,16 @@ class DynamicEntitlementResourceTest {
         )
 
         assertEquals(
-            DynamicEntitlement.Storage(
-                currentBytes = 128,
-                maxBytes = 1024
-            ),
-            DynamicEntitlementResource.Storage(
+            DynamicEntitlement.Progress(
+                text = "128 MB on 1GB",
                 current = 128,
+                min = 0,
+                max = 1024
+            ),
+            DynamicEntitlementResource.Progress(
+                text = "128 MB on 1GB",
+                current = 128,
+                min = 0,
                 max = 1024
             ).toDynamicPlanEntitlement("endpoint")
         )

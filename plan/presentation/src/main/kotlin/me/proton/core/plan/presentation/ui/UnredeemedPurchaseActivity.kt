@@ -18,12 +18,10 @@
 
 package me.proton.core.plan.presentation.ui
 
-import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -35,6 +33,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.ActivityUnredeemedPurchaseBinding
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
+import me.proton.core.plan.presentation.entity.UnredeemedPurchaseResult
 import me.proton.core.plan.presentation.viewmodel.UnredeemedPurchaseViewModel
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.errorToast
@@ -61,20 +60,24 @@ class UnredeemedPurchaseActivity :
             UnredeemedPurchaseViewModel.State.Loading -> {
                 binding.progress.isVisible = true
             }
+
             is UnredeemedPurchaseViewModel.State.UnredeemedPurchase -> {
                 binding.progress.isVisible = false
                 showAlertForUnredeemedGooglePurchase(state.unredeemedPurchase, state.userId)
             }
+
             is UnredeemedPurchaseViewModel.State.Error -> {
                 errorToast(getString(R.string.payments_giap_redeem_error))
                 cancelAndFinish()
             }
+
             UnredeemedPurchaseViewModel.State.NoUnredeemedPurchases -> {
-                successAndFinish(null)
+                setResultAndFinish(redeemed = false)
             }
+
             UnredeemedPurchaseViewModel.State.PurchaseRedeemed -> {
                 showToast(R.string.payments_giap_redeem_success)
-                successAndFinish(Result.PurchaseRedeemed)
+                setResultAndFinish(redeemed = true)
             }
         }.exhaustive
     }
@@ -109,36 +112,15 @@ class UnredeemedPurchaseActivity :
         finish()
     }
 
-    private fun successAndFinish(result: Result?) {
-        setResult(
-            RESULT_OK,
-            Intent().apply {
-                putExtra(RESULT_ARG, result?.ordinal)
-            }
-        )
+    private fun setResultAndFinish(redeemed: Boolean) {
+        val intent = Intent().apply {
+            putExtra(ARG_RESULT, UnredeemedPurchaseResult(redeemed))
+        }
+        setResult(RESULT_OK, intent)
         finish()
     }
 
-    enum class Result {
-        PurchaseRedeemed
-    }
-
-    class Start : ActivityResultContract<Unit, Result?>() {
-        override fun createIntent(context: Context, input: Unit): Intent =
-            Intent(context, UnredeemedPurchaseActivity::class.java)
-
-        override fun parseResult(resultCode: Int, intent: Intent?): Result? {
-            if (resultCode != RESULT_OK) return null
-            val ordinal = intent?.getIntExtra(RESULT_ARG, -1)
-            return if (ordinal != null && ordinal >= 0) {
-                Result.values()[ordinal]
-            } else {
-                null
-            }
-        }
-    }
-
     companion object {
-        private const val RESULT_ARG = "RESULT_ARG"
+        const val ARG_RESULT = "arg.unredeemedResult"
     }
 }

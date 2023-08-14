@@ -22,11 +22,8 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -56,7 +53,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     private val binding by viewBinding(FragmentDynamicPlanSelectionBinding::bind)
     private val viewModel by viewModels<DynamicPlanSelectionViewModel>()
 
-    private val plans by lazy { binding.plans.getFragment<DynamicPlanListFragment>() }
+    private val planList by lazy { binding.plans.getFragment<DynamicPlanListFragment>() }
     private val currencySpinner by lazy { binding.currencySpinner.apply { adapter = currencyAdapter } }
     private val currencyAdapter by lazy { ArrayAdapter<String>(requireContext(), R.layout.plan_spinner_item) }
 
@@ -64,7 +61,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     private var onPlanFree: ((SelectedPlan) -> Unit)? = null
 
     fun setUser(user: DynamicUser) {
-        plans.setUser(user)
+        planList.setUser(user)
+        viewModel.perform(Action.SetUser(user))
     }
 
     fun setOnPlanBilled(onPlanBilled: (SelectedPlan, BillingResult) -> Unit) {
@@ -82,21 +80,17 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        currencySpinner.onItemSelected { plans.setCurrency(requireNotNull(currencyAdapter.getItem(it))) }
-
         viewModel.state.onEach {
             when (it) {
+                is State.Loading -> Unit
                 is State.Idle -> onIdle(it.currencies)
                 is State.Free -> onFree(it.selectedPlan)
                 is State.Billing -> onBilling(it.selectedPlan)
                 is State.Billed -> onBilled(it.selectedPlan, it.billingResult)
             }
-        }.launchIn(lifecycleScope)
+        }.launchInViewLifecycleScope()
 
-        plans.setOnPlanSelected {
-            viewModel.perform(Action.SelectPlan(it))
-        }
+        planList.setOnPlanSelected { viewModel.perform(Action.SelectPlan(it)) }
 
         paymentsOrchestrator.onPaymentResult { result ->
             when (result) {
@@ -109,6 +103,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     private fun onIdle(currencies: List<String>) {
         if (currencyAdapter.isEmpty) {
             currencyAdapter.addAll(currencies)
+            currencySpinner.setSelection(0)
+            currencySpinner.onItemSelected { planList.setCurrency(requireNotNull(currencyAdapter.getItem(it))) }
         }
     }
 
@@ -118,7 +114,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private fun onBilling(selectedPlan: SelectedPlan) {
         paymentsOrchestrator.startBillingWorkFlow(
-            userId = plans.getUser().userId,
+            userId = planList.getUser().userId,
             selectedPlan = PlanShortDetails(
                 name = selectedPlan.planName,
                 displayName = selectedPlan.planDisplayName,
