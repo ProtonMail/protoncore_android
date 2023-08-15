@@ -11,6 +11,47 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [14.1.0] - 2023-08-15
+
+### Features
+
+- feature-flag:
+  - Added Unleash Toggles.
+- gopenpgp:
+  - Update to gopenpgp v2.7.2-proton.
+- mail-send-preferences:
+  - Add mail-send-preferences module and ObtainSendPreferences use case.
+- payment:
+  - Add DynamicSubscription.
+- plan:
+  - Added DynamicUser (None, Primary, ByUserId).
+  - Added Dynamic Plan Selection Fragment.
+  - Added Dynamic Plan List Fragment.
+  - Added Dynamic Subscription Fragment/ViewModel.
+  - Add DynamicSubscription.
+  - Add `GetDynamicPlans` use case and related data classes.
+  - Add view model for showing dynamic plans.
+  - Add `GetDynamicPlans` use case and related data classes.
+  - Added common Dynamic Plan Views.
+  - Add support for additional plans. Default current plan layout.
+  - Add domain classes for plans and payments v5.
+  - Added Dynamic Plan Feature Flag.
+
+### Bug Fixes
+
+- observability:
+  - Fix ObservabilityWorkerManagerImpl enqueue policy.
+
+### Internationalization
+
+- Upgrade translations from crowdin (3b6d57cf).
+- Upgrade translations from crowdin (9f2d1cda).
+
+### Refactoring
+
+- plan:
+  - Extract `PlanDuration` and `PlanVendorData` to separate files.
+
 ## [14.0.1] - 2023-07-25
 
 ### Refactoring
