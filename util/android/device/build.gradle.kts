@@ -25,43 +25,13 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
-protonCoverage {
-    minBranchCoveragePercentage.set(35)
-    minLineCoveragePercentage.set(37)
-}
-
 android {
-    namespace = "me.proton.core.util.android.sentry"
-
-    defaultConfig {
-        buildConfigField(
-            "String",
-            "CORE_VERSION",
-            computeVersionNameFromBranchName(CORE_RELEASE_BRANCH_PREFIX).toBuildConfigValue()
-        )
-    }
+    namespace = "me.proton.core.util.android.device"
 }
 
 dependencies {
     implementation(
-        project(Module.kotlinUtil),
-        project(Module.networkData),
-        project(Module.networkDomain),
-        project(Module.eventManagerDomain),
-        project(Module.accountManagerDomain),
-        project(Module.deviceUtil),
-        `hilt-android`,
-    )
-
-    api(
-        `javax-inject`,
-        sentry,
-        `sentry-android-core`,
-        timber
-    )
-
-    testImplementation(
-        `kotlin-test`,
-        mockk
+        `androidx-core`,
+        `coroutines-core`
     )
 }

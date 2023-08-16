@@ -30,6 +30,7 @@ public object Module {
     public const val gradleUtil: String = "$util:util-gradle"
     public const val strictModeUtil: String = "$androidUtil:util-android-strict-mode"
     public const val sentryUtil: String = "$androidUtil:util-android-sentry"
+    public const val deviceUtil: String = "$androidUtil:util-android-device"
 
     // Test
     private const val test = ":test"

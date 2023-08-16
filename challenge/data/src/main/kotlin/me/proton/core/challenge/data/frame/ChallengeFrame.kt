@@ -3,18 +3,18 @@ package me.proton.core.challenge.data.frame
 import android.content.Context
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.challenge.data.appLanguage
-import me.proton.core.challenge.data.deviceFontSize
-import me.proton.core.challenge.data.deviceInputMethods
-import me.proton.core.challenge.data.deviceModelName
-import me.proton.core.challenge.data.deviceRegion
-import me.proton.core.challenge.data.deviceStorage
-import me.proton.core.challenge.data.deviceTimezone
-import me.proton.core.challenge.data.deviceTimezoneOffset
-import me.proton.core.challenge.data.isDeviceRooted
-import me.proton.core.challenge.data.nightMode
 import me.proton.core.challenge.domain.CHALLENGE_VERSION
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
+import me.proton.core.util.android.device.appLanguage
+import me.proton.core.util.android.device.deviceFontSize
+import me.proton.core.util.android.device.deviceInputMethods
+import me.proton.core.util.android.device.deviceModelName
+import me.proton.core.util.android.device.deviceRegion
+import me.proton.core.util.android.device.deviceStorage
+import me.proton.core.util.android.device.deviceTimezone
+import me.proton.core.util.android.device.deviceTimezoneOffset
+import me.proton.core.util.android.device.isDeviceRooted
+import me.proton.core.util.android.device.nightMode
 
 @Serializable
 public sealed class ChallengeFrame {
@@ -64,7 +64,7 @@ public sealed class ChallengeFrame {
                 deviceName = deviceModelName(),
                 regionCode = context.deviceRegion(),
                 timezoneOffset = deviceTimezoneOffset(),
-                rooted = isDeviceRooted(),
+                rooted = isDeviceRooted(context),
                 fontSize = context.deviceFontSize().toString(),
                 storage = context.deviceStorage(),
                 darkMode = context.nightMode(),
@@ -120,7 +120,7 @@ public sealed class ChallengeFrame {
                     deviceName = deviceModelName(),
                     regionCode = context.deviceRegion(),
                     timezoneOffset = deviceTimezoneOffset(),
-                    rooted = isDeviceRooted(),
+                    rooted = isDeviceRooted(context),
                     fontSize = context.deviceFontSize().toString(),
                     storage = context.deviceStorage(),
                     darkMode = context.nightMode(),
@@ -183,7 +183,7 @@ public sealed class ChallengeFrame {
                     deviceName = deviceModelName(),
                     regionCode = context.deviceRegion(),
                     timezoneOffset = deviceTimezoneOffset(),
-                    rooted = isDeviceRooted(),
+                    rooted = isDeviceRooted(context),
                     fontSize = context.deviceFontSize().toString(),
                     storage = context.deviceStorage(),
                     darkMode = context.nightMode(),

@@ -18,10 +18,13 @@
 
 package me.proton.core.util.android.sentry
 
+import android.content.Context
 import io.sentry.SentryLevel
 import io.sentry.android.core.AppLifecycleIntegration
 import io.sentry.android.core.SentryAndroidOptions
 import io.sentry.protocol.User
+import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.NetworkPrefs
 import java.io.File
 import javax.inject.Inject
 
@@ -53,6 +56,9 @@ public class SentryHubBuilder @Inject constructor() {
      * @param additionalConfiguration Any additional configuration for [SentryAndroidOptions].
      */
     public operator fun invoke(
+        context: Context,
+        apiClient: ApiClient,
+        networkPrefs: NetworkPrefs,
         sentryDsn: String,
         allowedPackagePrefixes: Set<String> = setOf(""),
         allowedTagPrefixes: Set<String> = setOf(""),
@@ -87,7 +93,12 @@ public class SentryHubBuilder @Inject constructor() {
             else -> emptySet()
         }
         addEventProcessor(TimberTagEventFilter(allowedTagPrefixes = allowedTagPrefixes + uncaughtExceptionTag))
-
+        addEventProcessor(CustomSentryTagsProcessor(
+            context = context,
+            apiClient = apiClient,
+            deviceMetadata = DeviceMetadata(),
+            networkPrefs = networkPrefs
+        ))
         cacheDirPath = cacheDir?.absolutePath
         environment = envName
         isEnableUncaughtExceptionHandler = shouldReportUncaughtExceptions

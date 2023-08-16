@@ -22,6 +22,8 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.sentry.android.core.SentryAndroidOptions
 import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.sentry.BuildConfig
 import me.proton.core.util.android.sentry.GetInstallationId
 import me.proton.core.util.android.sentry.SentryHub
@@ -38,7 +40,9 @@ public class AccountSentryHubBuilder @Inject constructor(
     private val builder: SentryHubBuilder,
     @BaseProtonApiUrl private val apiUrl: HttpUrl,
     @ApplicationContext private val context: Context,
-    private val getInstallationId: GetInstallationId
+    private val getInstallationId: GetInstallationId,
+    private val apiClient: ApiClient,
+    private val networkPrefs: NetworkPrefs
 ) {
     private val allowedPackagePrefixes = setOf(
         "me.proton.core.account",
@@ -102,7 +106,10 @@ public class AccountSentryHubBuilder @Inject constructor(
         additionalConfiguration: ((SentryAndroidOptions) -> Unit)? = null
     ): SentryHub {
         return builder(
+            context = context,
+            apiClient = apiClient,
             sentryDsn = sentryDsn,
+            networkPrefs = networkPrefs,
             allowedPackagePrefixes = allowedPackagePrefixes,
             allowedTagPrefixes = allowedTagPrefixes,
             cacheDir = File(context.cacheDir, "sentry-account"),

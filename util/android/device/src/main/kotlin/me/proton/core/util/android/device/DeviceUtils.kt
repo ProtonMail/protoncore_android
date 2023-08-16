@@ -16,10 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.challenge.data
+package me.proton.core.util.android.device
 
 import android.app.usage.StorageStatsManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Environment
@@ -41,6 +42,72 @@ import kotlin.math.roundToInt
 
 private const val MILLIS_IN_MINUTE = 60_000
 private const val BYTES_GB = 1_000_000_000
+
+public fun isDeviceRooted(context: Context): Boolean =
+    checkRootMethod1() || checkRootMethod2() || checkRootMethod3() || checkRootMethod4(context)
+
+private fun checkRootMethod1(): Boolean {
+    val buildTags = Build.TAGS
+    return buildTags != null && buildTags.contains("test-keys")
+}
+
+private fun checkRootMethod2(): Boolean {
+    val paths = arrayOf(
+        "/system/app/Superuser.apk",
+        "/sbin/su",
+        "/system/bin/su",
+        "/system/xbin/su",
+        "/data/local/xbin/su",
+        "/data/local/bin/su",
+        "/system/sd/xbin/su",
+        "/system/bin/failsafe/su",
+        "/data/local/su",
+        "/su/bin/su",
+        "/su/bin",
+        "/system/xbin/daemonsu"
+    )
+    return paths.any { File(it).exists() }
+}
+
+private fun checkRootMethod3(): Boolean {
+    var process: Process? = null
+    return try {
+        process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
+        val stream = BufferedReader(InputStreamReader(process.inputStream))
+        stream.readLine() != null
+    } catch (t: Throwable) {
+        false
+    } finally {
+        process?.destroy()
+    }
+}
+
+private fun checkRootMethod4(context: Context): Boolean {
+    val pm: PackageManager = context.packageManager
+    val rootPackages = arrayOf(
+        "com.devadvance.rootcloak",
+        "com.devadvance.rootcloakplus",
+        "com.koushikdutta.superuser",
+        "com.thirdparty.superuser",
+        "eu.chainfire.supersu", // SuperSU
+        // SuperSU
+        "com.noshufou.android.su" // superuser
+        // superuser
+    )
+    for (pkg in rootPackages) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                pm.getPackageInfo(pkg, PackageManager.PackageInfoFlags.of(0))
+            } else {
+                pm.getPackageInfo(pkg, 0)
+            }
+            return true
+        } catch (ignored: PackageManager.NameNotFoundException) {
+            // fine, package doesn't exist.
+        }
+    }
+    return false
+}
 
 public fun deviceModelName(): Long =
     String.format(
@@ -68,8 +135,6 @@ public fun Context.deviceRegion(): String = if (Build.VERSION.SDK_INT >= Build.V
 } else {
     resources.configuration.locale.country
 }
-
-public suspend fun isDeviceRooted(): Boolean = checkRootMethod1() || checkRootMethod2() || checkRootMethod3()
 
 public fun Context.deviceFontSize(): Float = resources.configuration.fontScale
 
@@ -113,40 +178,6 @@ private fun Context.deviceVolumesStorage(): Long {
         }
     }
     return totalStorage
-}
-
-private fun checkRootMethod1(): Boolean {
-    val buildTags = Build.TAGS
-    return buildTags != null && buildTags.contains("test-keys")
-}
-
-private suspend fun checkRootMethod2(): Boolean = withContext(Dispatchers.IO) {
-    val paths = arrayOf(
-        "/system/app/Superuser.apk",
-        "/sbin/su",
-        "/system/bin/su",
-        "/system/xbin/su",
-        "/data/local/xbin/su",
-        "/data/local/bin/su",
-        "/system/sd/xbin/su",
-        "/system/bin/failsafe/su",
-        "/data/local/su",
-        "/su/bin/su"
-    )
-    paths.any { File(it).exists() }
-}
-
-private suspend fun checkRootMethod3(): Boolean = withContext(Dispatchers.IO) {
-    var process: Process? = null
-    try {
-        process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
-        val stream = BufferedReader(InputStreamReader(process.inputStream))
-        stream.readLine() != null
-    } catch (t: Throwable) {
-        false
-    } finally {
-        process?.destroy()
-    }
 }
 
 private fun Long.toDoubleRound(): Double = (this * 100.0).roundToInt() / 100.0

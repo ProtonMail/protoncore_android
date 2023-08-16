@@ -23,6 +23,8 @@ import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
+import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.sentry.GetInstallationId
 import me.proton.core.util.android.sentry.SentryHubBuilder
 import okhttp3.HttpUrl
@@ -38,6 +40,8 @@ class AccountSentryHubBuilderTest {
     private val apiUrl = mockk<HttpUrl>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
     private val getInstallationId = mockk<GetInstallationId>(relaxed = true)
+    private val apiClient = mockk<ApiClient>(relaxed = true)
+    private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
     // endregion
 
     // region test variables
@@ -108,7 +112,9 @@ class AccountSentryHubBuilderTest {
             builder = sentryHubBuilder,
             apiUrl = apiUrl,
             context = context,
-            getInstallationId = getInstallationId
+            getInstallationId = getInstallationId,
+            apiClient = apiClient,
+            networkPrefs = networkPrefs
         )
     }
 
@@ -125,6 +131,8 @@ class AccountSentryHubBuilderTest {
 
         assertNotNull(result)
         verify { sentryHubBuilder.invoke(
+            context = context,
+            apiClient = apiClient,
             sentryDsn = dsn,
             allowedPackagePrefixes = allowedPackagePrefixes,
             allowedTagPrefixes = allowedTagPrefixes,
@@ -133,7 +141,8 @@ class AccountSentryHubBuilderTest {
             inAppIncludes = listOf("me.proton.core"),
             installationId = "test-installation-id",
             releaseName = any(),
-            additionalConfiguration = null
+            additionalConfiguration = null,
+            networkPrefs = networkPrefs
         ) }
     }
 
@@ -147,6 +156,8 @@ class AccountSentryHubBuilderTest {
 
         assertNotNull(result)
         verify { sentryHubBuilder.invoke(
+            context = context,
+            apiClient = apiClient,
             sentryDsn = dsn,
             allowedPackagePrefixes = allowedPackagePrefixes,
             allowedTagPrefixes = allowedTagPrefixes,
@@ -155,7 +166,8 @@ class AccountSentryHubBuilderTest {
             inAppIncludes = listOf("me.proton.core"),
             installationId = installationId,
             releaseName = any(),
-            additionalConfiguration = null
+            additionalConfiguration = null,
+            networkPrefs = networkPrefs
         ) }
         verify(exactly = 0) { getInstallationId.invoke(any(), any()) }
     }

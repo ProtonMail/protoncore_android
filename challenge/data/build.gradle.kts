@@ -38,6 +38,7 @@ dependencies {
     api(
         project(Module.challengeDomain),
         project(Module.dataRoom),
+        project(Module.deviceUtil),
     )
 
     implementation(

@@ -26,8 +26,8 @@ public final class me/proton/core/util/android/sentry/SentryHub {
 
 public final class me/proton/core/util/android/sentry/SentryHubBuilder {
 	public fun <init> ()V
-	public final fun invoke (Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;Ljava/io/File;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lio/sentry/SentryLevel;Lio/sentry/SentryLevel;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lme/proton/core/util/android/sentry/SentryHub;
-	public static synthetic fun invoke$default (Lme/proton/core/util/android/sentry/SentryHubBuilder;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;Ljava/io/File;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lio/sentry/SentryLevel;Lio/sentry/SentryLevel;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/util/android/sentry/SentryHub;
+	public final fun invoke (Landroid/content/Context;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/NetworkPrefs;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;Ljava/io/File;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lio/sentry/SentryLevel;Lio/sentry/SentryLevel;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;)Lme/proton/core/util/android/sentry/SentryHub;
+	public static synthetic fun invoke$default (Lme/proton/core/util/android/sentry/SentryHubBuilder;Landroid/content/Context;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/NetworkPrefs;Ljava/lang/String;Ljava/util/Set;Ljava/util/Set;Ljava/io/File;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lio/sentry/SentryLevel;Lio/sentry/SentryLevel;Ljava/lang/String;ZLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/util/android/sentry/SentryHub;
 }
 
 public final class me/proton/core/util/android/sentry/TimberLogger : me/proton/core/util/kotlin/Logger {
@@ -89,7 +89,7 @@ public final class me/proton/core/util/android/sentry/TimberTagEventFilter : io/
 }
 
 public final class me/proton/core/util/android/sentry/project/AccountSentryHubBuilder {
-	public fun <init> (Lme/proton/core/util/android/sentry/SentryHubBuilder;Lokhttp3/HttpUrl;Landroid/content/Context;Lme/proton/core/util/android/sentry/GetInstallationId;)V
+	public fun <init> (Lme/proton/core/util/android/sentry/SentryHubBuilder;Lokhttp3/HttpUrl;Landroid/content/Context;Lme/proton/core/util/android/sentry/GetInstallationId;Lme/proton/core/network/domain/ApiClient;Lme/proton/core/network/domain/NetworkPrefs;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lme/proton/core/util/android/sentry/SentryHub;
 	public static synthetic fun invoke$default (Lme/proton/core/util/android/sentry/project/AccountSentryHubBuilder;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/util/android/sentry/SentryHub;
 }

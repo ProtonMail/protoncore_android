@@ -18,11 +18,14 @@
 
 package me.proton.core.util.android.sentry
 
+import android.content.Context
 import android.os.Looper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
+import me.proton.core.network.domain.ApiClient
+import me.proton.core.network.domain.NetworkPrefs
 import timber.log.Timber
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -31,6 +34,11 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class SentryHubBuilderTest {
+
+    private val context = mockk<Context>(relaxed = true)
+    private val apiClient = mockk<ApiClient>(relaxed = true)
+    private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
+
     private lateinit var tested: SentryHubBuilder
 
     @BeforeTest
@@ -50,7 +58,7 @@ class SentryHubBuilderTest {
     @Test
     fun `installs TimberLoggerSentryTree`() {
         // WHEN
-        tested(sentryDsn = "")
+        tested(context = context, apiClient = apiClient, sentryDsn = "", networkPrefs = networkPrefs)
 
         // THEN
         assertEquals(1, Timber.treeCount)
@@ -59,28 +67,46 @@ class SentryHubBuilderTest {
 
     @Test(expected = IllegalArgumentException::class)
     fun `cannot overwrite environment option`() {
-        tested(sentryDsn = "", envName = "test") {
+        tested(
+            context = context,
+            apiClient = apiClient,
+            sentryDsn = "",
+            envName = "test",
+            networkPrefs = networkPrefs
+        ) {
             it.environment = "changed"
         }
     }
 
     @Test
     fun `can set environment option`() {
-        tested(sentryDsn = "", envName = null) {
+        tested(context = context, apiClient = apiClient, sentryDsn = "", envName = null, networkPrefs = networkPrefs) {
             it.environment = "test"
         }
     }
 
     @Test(expected = IllegalArgumentException::class)
     fun `cannot overwrite release option`() {
-        tested(sentryDsn = "", releaseName = "test") {
+        tested(
+            context = context,
+            apiClient = apiClient,
+            sentryDsn = "",
+            releaseName = "test",
+            networkPrefs = networkPrefs
+        ) {
             it.release = "changed"
         }
     }
 
     @Test
     fun `can set release option`() {
-        tested(sentryDsn = "", releaseName = null) {
+        tested(
+            context = context,
+            apiClient = apiClient,
+            sentryDsn = "",
+            releaseName = null,
+            networkPrefs = networkPrefs
+        ) {
             it.release = "test"
         }
     }
