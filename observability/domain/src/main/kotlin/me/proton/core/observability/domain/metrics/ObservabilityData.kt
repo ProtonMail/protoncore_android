@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -41,7 +41,7 @@ public sealed class ObservabilityData {
     public companion object {
         private fun getSchemaIdUri(klass: Class<out ObservabilityData>): URI {
             val schemaId = requireNotNull(klass.getAnnotation(SchemaId::class.java)) {
-                "Missing ${SchemaId::class.simpleName} annotation for metric: ${this::class.simpleName}."
+                "Missing SchemaId annotation for metric: ${klass.name}."
             }
             return URI.create(schemaId.id)
         }
