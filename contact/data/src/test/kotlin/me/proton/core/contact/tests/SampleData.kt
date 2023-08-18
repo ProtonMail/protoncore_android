@@ -71,6 +71,7 @@ fun UserId.userEntity() = UserEntity(
     displayName = null,
     currency = "EUR",
     credit = 0,
+    createdAtUtc = 1000L,
     usedSpace = 0,
     maxSpace = 0,
     maxUpload = 0,

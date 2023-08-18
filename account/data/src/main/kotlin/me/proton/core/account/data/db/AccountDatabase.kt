@@ -136,5 +136,16 @@ interface AccountDatabase : Database {
                 )
             }
         }
+
+        /**
+         * - Added [User.createTimeMs], insert migration to populate the value from backend (see AccountMigrator).
+         */
+        val MIGRATION_6 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // If there are no migrations the value is NULL.
+                database.execSQL("UPDATE AccountMetadataEntity SET migrations = IFNULL(migrations || ';RefreshUser', 'RefreshUser')")
+                database.execSQL("UPDATE AccountEntity SET state = 'MigrationNeeded' WHERE state = 'Ready'")
+            }
+        }
     }
 }

@@ -46,5 +46,10 @@ interface AccountMigrator {
          * Migrate UserKey and UserAddressKey to properly persist passphrase/isUnlockable.
          */
         DecryptPassphrase,
+
+        /**
+         * Fetch user data from backend.
+         */
+        RefreshUser,
     }
 }

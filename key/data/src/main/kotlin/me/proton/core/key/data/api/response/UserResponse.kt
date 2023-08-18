@@ -39,6 +39,8 @@ data class UserResponse(
     val currency: String,
     @SerialName("Credit")
     val credit: Int,
+    @SerialName("CreateTime")
+    val createTimeSeconds: Long,
     @SerialName("MaxSpace")
     val maxSpace: Long,
     @SerialName("MaxUpload")

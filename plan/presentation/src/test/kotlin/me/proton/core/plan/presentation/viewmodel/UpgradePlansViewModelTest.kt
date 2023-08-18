@@ -201,6 +201,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         displayName = null,
         currency = "CHF",
         credit = 0,
+        createdAtUtc = 1000L,
         usedSpace = 0,
         maxSpace = 100,
         maxUpload = 100,

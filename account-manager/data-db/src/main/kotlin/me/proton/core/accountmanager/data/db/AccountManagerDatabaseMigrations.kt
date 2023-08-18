@@ -255,4 +255,11 @@ object AccountManagerDatabaseMigrations {
             EventMetadataDatabase.MIGRATION_1.migrate(database)
         }
     }
+
+    val MIGRATION_35_36 = object : Migration(35, 36) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            AccountDatabase.MIGRATION_6.migrate(database)
+            UserDatabase.MIGRATION_3.migrate(database)
+        }
+    }
 }

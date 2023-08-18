@@ -45,6 +45,8 @@ data class User(
     val currency: String,
     /** Monetary credits. This value is affected by [currency]. */
     val credit: Int,
+    /** Create time in milliseconds since the epoch. */
+    val createdAtUtc: Long,
     /** Used space size in Bytes. */
     val usedSpace: Long,
     /** Max space size in Bytes. */

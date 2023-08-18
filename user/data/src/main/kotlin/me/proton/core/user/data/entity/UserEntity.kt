@@ -48,6 +48,7 @@ data class UserEntity(
     val displayName: String?,
     val currency: String,
     val credit: Int,
+    val createdAtUtc: Long,
     val usedSpace: Long,
     val maxSpace: Long,
     val maxUpload: Long,

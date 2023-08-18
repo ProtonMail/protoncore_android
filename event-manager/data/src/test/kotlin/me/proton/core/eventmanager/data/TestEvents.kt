@@ -89,6 +89,7 @@ object TestEvents {
             "UsedSpace": 96691332,
             "Currency": "USD",
             "Credit": 0,
+            "CreateTime": 1000,
             "MaxSpace": 10737418240,
             "MaxUpload": 26214400,
             "Role": 2,

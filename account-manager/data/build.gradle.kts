@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
 }
 
 protonBuild {
@@ -29,6 +30,10 @@ protonBuild {
 protonCoverage {
     minBranchCoveragePercentage.set(16)
     minLineCoveragePercentage.set(50)
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -54,6 +59,7 @@ dependencies {
         project(Module.keyDomain),
         project(Module.notificationPresentation),
         project(Module.accountRecoveryPresentationCompose),
+        `android-work-runtime`,
         `coroutines-core`,
         `dagger`,
     )

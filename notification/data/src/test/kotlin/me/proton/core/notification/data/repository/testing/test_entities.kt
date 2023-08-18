@@ -35,6 +35,7 @@ internal fun testUserEntity(userId: UserId) = UserEntity(
     displayName = null,
     currency = "",
     credit = 0,
+    createdAtUtc = 1000L,
     usedSpace = 0,
     maxSpace = 0,
     maxUpload = 0,

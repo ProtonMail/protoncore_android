@@ -45,6 +45,7 @@ public final class me/proton/core/account/data/db/AccountDatabase$Companion {
 	public final fun getMIGRATION_3 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_4 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_5 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_6 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/account/data/db/AccountMetadataDao : me/proton/core/data/room/db/BaseDao {

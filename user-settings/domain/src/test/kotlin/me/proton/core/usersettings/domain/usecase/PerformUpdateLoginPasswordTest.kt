@@ -82,6 +82,7 @@ class PerformUpdateLoginPasswordTest {
         displayName = null,
         currency = "test-curr",
         credit = 0,
+        createdAtUtc = 1000L,
         usedSpace = 0,
         maxSpace = 100,
         maxUpload = 100,

@@ -81,5 +81,19 @@ interface UserDatabase : Database, UserKeyDatabase {
                 }
             }
         }
+
+        /**
+         * - Added UserEntity.createTimeMs
+         */
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    "UserEntity",
+                    column = "createdAtUtc",
+                    type = "INTEGER NOT NULL",
+                    defaultValue = "0"
+                )
+            }
+        }
     }
 }
