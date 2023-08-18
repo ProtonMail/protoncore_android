@@ -21,6 +21,7 @@ package me.proton.core.payment.data.repository
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.onParseErrorLog
 import me.proton.core.payment.data.api.PaymentsApi
 import me.proton.core.payment.data.api.request.CardDetailsBody
 import me.proton.core.payment.data.api.request.CheckSubscription
@@ -28,6 +29,7 @@ import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
+import me.proton.core.payment.domain.LogTag
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.DynamicSubscription
@@ -154,7 +156,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
     override suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription> =
         apiProvider.get<PaymentsApi>(sessionUserId).invoke {
             getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
-        }.valueOrThrow
+        }.onParseErrorLog(LogTag.DYN_SUB_PARSE).valueOrThrow
 
     override suspend fun createOrUpdateSubscription(
         sessionUserId: SessionUserId,

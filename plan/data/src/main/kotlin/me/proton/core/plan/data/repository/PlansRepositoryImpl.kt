@@ -21,8 +21,10 @@ package me.proton.core.plan.data.repository
 import io.github.reactivecircus.cache4k.Cache
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.onParseErrorLog
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.data.api.response.toDynamicPlan
+import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.Plan
@@ -50,7 +52,7 @@ class PlansRepositoryImpl @Inject constructor(
             getDynamicPlans().plans.mapIndexed { index, resource ->
                 resource.toDynamicPlan(endpointProvider.get(), index)
             }
-        }.valueOrThrow
+        }.onParseErrorLog(LogTag.DYN_PLANS_PARSE).valueOrThrow
     }
 
     /**

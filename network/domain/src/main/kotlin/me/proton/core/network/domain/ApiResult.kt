@@ -21,6 +21,7 @@ package me.proton.core.network.domain
 import me.proton.core.network.domain.deviceverification.DeviceVerificationMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.scopes.MissingScopes
+import me.proton.core.util.kotlin.CoreLogger
 import kotlin.time.Duration
 
 /**
@@ -248,6 +249,27 @@ inline fun <T> ApiResult<T>.onSuccess(
 ): ApiResult<T> {
     if (this is ApiResult.Success) action(value)
     return this
+}
+
+/**
+ * Performs the given [action] if this instance represents an [ApiResult.Error.Parse].
+ * Returns the original `Result` unchanged.
+ */
+inline fun <T> ApiResult<T>.onParseError(
+    action: (value: ApiResult.Error) -> Unit
+): ApiResult<T> = onError {
+    if (this is ApiResult.Error.Parse) action(it)
+    return this
+}
+
+/**
+ * Log the [ApiResult.Error.Parse.cause] if this instance represents an [ApiResult.Error.Parse].
+ * Returns the original `Result` unchanged.
+ */
+fun <T> ApiResult<T>.onParseErrorLog(
+    logTag: String
+): ApiResult<T> = onParseError {
+    if (it.cause != null) CoreLogger.e(logTag, it.cause)
 }
 
 /**
