@@ -26,6 +26,7 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.sentry.BuildConfig
 import me.proton.core.util.android.sentry.GetInstallationId
+import me.proton.core.util.android.sentry.IsAccountSentryLoggingEnabled
 import me.proton.core.util.android.sentry.SentryHub
 import me.proton.core.util.android.sentry.SentryHubBuilder
 import okhttp3.HttpUrl
@@ -42,7 +43,8 @@ public class AccountSentryHubBuilder @Inject constructor(
     @ApplicationContext private val context: Context,
     private val getInstallationId: GetInstallationId,
     private val apiClient: ApiClient,
-    private val networkPrefs: NetworkPrefs
+    private val networkPrefs: NetworkPrefs,
+    private val accountSentryEnabled: IsAccountSentryLoggingEnabled
 ) {
     private val allowedPackagePrefixes = setOf(
         "me.proton.core.account",
@@ -108,7 +110,7 @@ public class AccountSentryHubBuilder @Inject constructor(
         return builder(
             context = context,
             apiClient = apiClient,
-            sentryDsn = sentryDsn,
+            sentryDsn = sentryDsn.takeIf { accountSentryEnabled() }.orEmpty(),
             networkPrefs = networkPrefs,
             allowedPackagePrefixes = allowedPackagePrefixes,
             allowedTagPrefixes = allowedTagPrefixes,

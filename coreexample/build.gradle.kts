@@ -124,6 +124,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
@@ -133,6 +134,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "production".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, System.getenv("ACCOUNT_SENTRY_DSN").toBuildConfigValue())
         }
         productFlavors.register("localProperties") {
             dimension = flavorDimensions.env
@@ -174,6 +176,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
 
             dimension = flavorDimensions.env
             testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"

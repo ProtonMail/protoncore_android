@@ -26,6 +26,7 @@ import io.mockk.verify
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.sentry.GetInstallationId
+import me.proton.core.util.android.sentry.IsAccountSentryLoggingEnabled
 import me.proton.core.util.android.sentry.SentryHubBuilder
 import okhttp3.HttpUrl
 import org.junit.Before
@@ -42,6 +43,7 @@ class AccountSentryHubBuilderTest {
     private val getInstallationId = mockk<GetInstallationId>(relaxed = true)
     private val apiClient = mockk<ApiClient>(relaxed = true)
     private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
+    private val isAccountSentryLoggingEnabled = mockk<IsAccountSentryLoggingEnabled>(relaxed = true)
     // endregion
 
     // region test variables
@@ -108,13 +110,15 @@ class AccountSentryHubBuilderTest {
 
     @Before
     fun beforeEveryTest() {
+        every { isAccountSentryLoggingEnabled.invoke() } returns true
         accountSentryHubBuilder = AccountSentryHubBuilder(
             builder = sentryHubBuilder,
             apiUrl = apiUrl,
             context = context,
             getInstallationId = getInstallationId,
             apiClient = apiClient,
-            networkPrefs = networkPrefs
+            networkPrefs = networkPrefs,
+            accountSentryEnabled = isAccountSentryLoggingEnabled
         )
     }
 

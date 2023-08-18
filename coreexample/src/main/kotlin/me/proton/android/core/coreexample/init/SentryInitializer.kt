@@ -33,13 +33,15 @@ import io.sentry.android.core.SentryAndroid
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.usersettings.domain.DeviceSettingsHandler
 import me.proton.core.usersettings.domain.onDeviceSettingsChanged
-import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
+import me.proton.core.util.android.sentry.IsAccountSentryLoggingEnabled
 import me.proton.core.util.android.sentry.TimberLoggerIntegration
+import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SentryInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {
+        val isAccountSentryEnabled = IsAccountSentryLoggingEnabled(context).invoke()
         val entryPoint = EntryPointAccessors.fromApplication(
             context.applicationContext,
             SentryInitializerEntryPoint::class.java
@@ -70,7 +72,7 @@ class SentryInitializer : Initializer<Unit> {
 
         // Account Sentry:
         entryPoint.accountSentryHubBuilder().invoke(
-            sentryDsn = BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG }.orEmpty()
+            sentryDsn = BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG && isAccountSentryEnabled}.orEmpty()
         ) { options ->
             options.beforeSend = beforeSendCallback
         }
