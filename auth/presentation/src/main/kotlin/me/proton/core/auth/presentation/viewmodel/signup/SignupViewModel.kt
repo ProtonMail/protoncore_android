@@ -56,6 +56,7 @@ import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
 import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
@@ -77,6 +78,7 @@ internal class SignupViewModel @Inject constructor(
     private val challengeConfig: SignupChallengeConfig,
     override val manager: ObservabilityManager,
     private val canUpgradeToPaid: CanUpgradeToPaid,
+    private val isDynamicPlanEnabled: IsDynamicPlanEnabled,
     savedStateHandle: SavedStateHandle
 ) : ViewModel(), ObservabilityContext {
 
@@ -102,7 +104,13 @@ internal class SignupViewModel @Inject constructor(
         object Idle : State()
 
         @Parcelize
-        data class CreateUserInputReady(val paidOptionAvailable: Boolean) : State()
+        object PreloadingPlans: State()
+
+        @Parcelize
+        data class CreateUserInputReady(
+            val paidOptionAvailable: Boolean,
+            val isDynamicPlanEnabled: Boolean
+        ) : State()
 
         @Parcelize
         object CreateUserProcessing : State()
@@ -138,13 +146,21 @@ internal class SignupViewModel @Inject constructor(
 
     fun skipRecoveryMethod() = setRecoveryMethod(null)
 
-    fun setRecoveryMethod(recoveryMethod: RecoveryMethod?) {
-        viewModelScope.launch {
-            _recoveryMethod = recoveryMethod
-            setExternalRecoveryEmail(recoveryMethod)
-            _state.tryEmit(State.CreateUserInputReady(canUpgradeToPaid()))
-        }
-    }
+    fun setRecoveryMethod(recoveryMethod: RecoveryMethod?) = flow {
+        emit(State.PreloadingPlans)
+        _recoveryMethod = recoveryMethod
+        setExternalRecoveryEmail(recoveryMethod)
+        emit(
+            State.CreateUserInputReady(
+                paidOptionAvailable = canUpgradeToPaid(),
+                isDynamicPlanEnabled = isDynamicPlanEnabled(userId = null)
+            )
+        )
+    }.catch {
+        emit(State.Error.Message(it.message))
+    }.onEach {
+        _state.emit(it)
+    }.launchIn(viewModelScope)
 
     fun onCreateUserCancelled() {
         _state.tryEmit(State.Error.CreateUserCanceled)

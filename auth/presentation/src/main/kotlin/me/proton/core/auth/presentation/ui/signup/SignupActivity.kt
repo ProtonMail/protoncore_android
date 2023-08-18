@@ -106,7 +106,11 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
             .onEach {
                 when (it) {
                     is SignupViewModel.State.Idle -> Unit
-                    is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady(it.paidOptionAvailable)
+                    is SignupViewModel.State.PreloadingPlans -> Unit
+                    is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady(
+                        paidOptionAvailable = it.paidOptionAvailable,
+                        isDynamicPlanEnabled = it.isDynamicPlanEnabled
+                    )
                     is SignupViewModel.State.CreateUserProcessing -> onCreateUserProcessing()
                     is SignupViewModel.State.CreateUserSuccess -> onCreateUserSuccess(it)
                     is SignupViewModel.State.Error.CreateUserCanceled -> Unit
@@ -166,9 +170,9 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }.exhaustive
     }
 
-    private fun onCreateUserInputReady(paidOptionAvailable: Boolean) {
+    private fun onCreateUserInputReady(paidOptionAvailable: Boolean, isDynamicPlanEnabled: Boolean) {
         if (paidOptionAvailable && !supportFragmentManager.hasPlanSignupFragment()) {
-            supportFragmentManager.showPlansSignup(planInput = PlanInput())
+            supportFragmentManager.showPlansSignup(planInput = PlanInput(), isDynamicPlanEnabled = isDynamicPlanEnabled)
         } else if (!paidOptionAvailable) {
             val selectedPlan = SelectedPlan.free(resources)
             signUpViewModel.subscriptionDetails = SubscriptionDetails(

@@ -51,6 +51,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
 import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -105,6 +106,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @MockK(relaxed = true)
     private lateinit var srpCrypto: SrpCrypto
+
+    @MockK(relaxed = true)
+    private lateinit var isDynamicPlanEnabled: IsDynamicPlanEnabled
     // endregion
 
     private lateinit var performCreateUser: PerformCreateUser
@@ -191,6 +195,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             signupChallengeConfig,
             observabilityManager,
             canUpgradeToPaid,
+            isDynamicPlanEnabled,
             mockk(relaxed = true)
         )
         coEvery { clientIdProvider.getClientId(any()) } returns testClientId
@@ -265,6 +270,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
             viewModel.setRecoveryMethod(emailRecovery)
+            assertTrue(awaitItem() is SignupViewModel.State.PreloadingPlans)
             val createUserInputReady = awaitItem()
             assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
             assertTrue(createUserInputReady.paidOptionAvailable)
@@ -301,6 +307,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
             viewModel.setRecoveryMethod(emailRecovery)
+            assertTrue(awaitItem() is SignupViewModel.State.PreloadingPlans)
             val createUserInputReady = awaitItem()
             assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
             assertFalse(createUserInputReady.paidOptionAvailable)
@@ -374,6 +381,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             assertTrue(awaitItem() is SignupViewModel.State.Idle)
             // WHEN
             viewModel.setRecoveryMethod(emailRecovery)
+            assertTrue(awaitItem() is SignupViewModel.State.PreloadingPlans)
             val createUserInputReady = awaitItem()
             assertIs<SignupViewModel.State.CreateUserInputReady>(createUserInputReady)
             assertFalse(createUserInputReady.paidOptionAvailable)

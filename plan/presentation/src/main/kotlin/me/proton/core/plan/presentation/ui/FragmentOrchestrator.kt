@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,9 +27,13 @@ private const val TAG_PLANS_UPGRADE = "plans_upgrade_fragment"
 
 fun FragmentManager.showPlansSignup(
     containerId: Int = android.R.id.content,
-    planInput: PlanInput
+    planInput: PlanInput,
+    isDynamicPlanEnabled: Boolean = false
 ) = findFragmentByTag(TAG_PLANS) ?: run {
-    val plansFragment = SignupPlansFragment(planInput)
+    val plansFragment = when {
+        isDynamicPlanEnabled -> DynamicSelectPlanFragment()
+        else -> SignupPlansFragment(planInput)
+    }
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, plansFragment, TAG_PLANS)

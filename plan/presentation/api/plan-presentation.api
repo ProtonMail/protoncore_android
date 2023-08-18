@@ -10,6 +10,10 @@ public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_DynamicPl
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_DynamicSelectPlanFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_DynamicSubscriptionFragment_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -51,6 +55,14 @@ public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_Dy
 }
 
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_DynamicPlanSelectionViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_DynamicSelectPlanViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_viewmodel_DynamicSelectPlanViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -195,7 +207,7 @@ public final class me/proton/core/plan/presentation/databinding/DynamicPlanCardv
 }
 
 public final class me/proton/core/plan/presentation/databinding/DynamicPlanViewBinding : androidx/viewbinding/ViewBinding {
-	public final field collapse Landroid/widget/ImageButton;
+	public final field collapse Landroid/widget/ImageView;
 	public final field content Landroid/widget/LinearLayout;
 	public final field contentButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field contentEntitlements Landroid/widget/LinearLayout;
@@ -238,6 +250,28 @@ public final class me/proton/core/plan/presentation/databinding/FragmentDynamicP
 	public fun getRoot ()Landroid/widget/LinearLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/FragmentDynamicPlanSelectionBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/FragmentDynamicPlanSelectionBinding;
+}
+
+public final class me/proton/core/plan/presentation/databinding/FragmentDynamicSelectPlanBinding : androidx/viewbinding/ViewBinding {
+	public final field error Landroid/widget/TextView;
+	public final field errorLayout Landroid/widget/LinearLayout;
+	public final field icCalendar Landroid/widget/ImageView;
+	public final field icDrive Landroid/widget/ImageView;
+	public final field icMail Landroid/widget/ImageView;
+	public final field icVpn Landroid/widget/ImageView;
+	public final field planSelection Landroidx/fragment/app/FragmentContainerView;
+	public final field progress Landroid/widget/ProgressBar;
+	public final field protonServicesLayout Landroid/widget/LinearLayout;
+	public final field retry Landroid/widget/Button;
+	public final field scrollContent Landroidx/core/widget/NestedScrollView;
+	public final field subtitle Landroid/widget/TextView;
+	public final field title Landroid/widget/TextView;
+	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/FragmentDynamicSelectPlanBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/FragmentDynamicSelectPlanBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/FragmentDynamicSelectPlanBinding;
 }
 
 public final class me/proton/core/plan/presentation/databinding/FragmentDynamicSubscriptionBinding : androidx/viewbinding/ViewBinding {
@@ -994,6 +1028,16 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragm
 	public static fun injectPaymentsOrchestrator (Lme/proton/core/plan/presentation/ui/DynamicPlanSelectionFragment;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)V
 }
 
+public final class me/proton/core/plan/presentation/ui/DynamicSelectPlanFragment : me/proton/core/plan/presentation/ui/BasePlansFragment {
+	public fun <init> ()V
+	public fun onResume ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+}
+
+public abstract interface class me/proton/core/plan/presentation/ui/DynamicSelectPlanFragment_GeneratedInjector {
+	public abstract fun injectDynamicSelectPlanFragment (Lme/proton/core/plan/presentation/ui/DynamicSelectPlanFragment;)V
+}
+
 public final class me/proton/core/plan/presentation/ui/DynamicSubscriptionFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
@@ -1038,8 +1082,8 @@ public final class me/proton/core/plan/presentation/ui/FragmentOrchestratorKt {
 	public static final fun removePlansSignup (Landroidx/fragment/app/FragmentManager;)Lkotlin/Unit;
 	public static final fun showPlansForUpgrade (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;)Landroidx/fragment/app/Fragment;
 	public static synthetic fun showPlansForUpgrade$default (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;ILjava/lang/Object;)Landroidx/fragment/app/Fragment;
-	public static final fun showPlansSignup (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;)Landroidx/fragment/app/Fragment;
-	public static synthetic fun showPlansSignup$default (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;ILjava/lang/Object;)Landroidx/fragment/app/Fragment;
+	public static final fun showPlansSignup (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;Z)Landroidx/fragment/app/Fragment;
+	public static synthetic fun showPlansSignup$default (Landroidx/fragment/app/FragmentManager;ILme/proton/core/plan/presentation/entity/PlanInput;ZILjava/lang/Object;)Landroidx/fragment/app/Fragment;
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicPlanListFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1056,6 +1100,19 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicPlanListFr
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicPlanSelectionFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
+public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicSelectPlanFragment : me/proton/core/plan/presentation/ui/BasePlansFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
 	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
@@ -1414,6 +1471,33 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelecti
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;Z)Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

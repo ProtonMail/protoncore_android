@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -211,6 +211,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 is SignupViewModel.State.Idle,
                 is SignupViewModel.State.CreateUserInputReady -> Unit
                 is SignupViewModel.State.CreateUserSuccess,
+                is SignupViewModel.State.PreloadingPlans,
                 is SignupViewModel.State.CreateUserProcessing -> showLoading(true)
                 is SignupViewModel.State.Error.CreateUserCanceled,
                 is SignupViewModel.State.Error.PlanChooserCanceled,
