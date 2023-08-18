@@ -18,21 +18,26 @@
 
 package me.proton.core.plan.presentation.entity
 
+import android.content.res.Resources
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.presentation.viewmodel.toPlanVendorDetailsMap
 
 internal fun DynamicPlan.getSelectedPlan(
+    resources: Resources,
     cycle: Int,
     currency: String?
-): SelectedPlan = SelectedPlan(
-    planName = name,
-    planDisplayName = title,
-    free = isFree(),
-    cycle = PlanCycle.map[cycle] ?: PlanCycle.FREE,
-    currency = PlanCurrency.mapName[currency] ?: PlanCurrency.CHF,
-    amount = instances[cycle]?.price?.get(currency)?.current?.toDouble() ?: 0.0,
-    services = services.sumOf { it.code },
-    type = type?.value ?: 0,
-    vendorNames = instances[cycle]?.vendors?.toPlanVendorDetailsMap().orEmpty()
-)
+): SelectedPlan = when (val name = name) {
+    null -> SelectedPlan.free(resources)
+    else -> SelectedPlan(
+        planName = name,
+        planDisplayName = title,
+        free = isFree(),
+        cycle = PlanCycle.map[cycle] ?: PlanCycle.FREE,
+        currency = PlanCurrency.mapName[currency] ?: PlanCurrency.CHF,
+        amount = instances[cycle]?.price?.get(currency)?.current?.toDouble() ?: 0.0,
+        services = services.sumOf { it.code },
+        type = type?.value ?: 0,
+        vendorNames = instances[cycle]?.vendors?.toPlanVendorDetailsMap().orEmpty()
+    )
+}

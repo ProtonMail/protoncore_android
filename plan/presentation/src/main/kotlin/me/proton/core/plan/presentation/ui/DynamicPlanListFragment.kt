@@ -116,7 +116,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         binding.plans.removeAllViews()
         plans.forEach { plan ->
             val cardView = DynamicPlanCardView(requireContext())
-            val selectedPlan = plan.getSelectedPlan(cycle, currency)
+            val selectedPlan = plan.getSelectedPlan(resources, cycle, currency)
             cardView.planView.setPlan(plan, cycle, currency)
             cardView.planView.setOnButtonClickListener { onPlanSelected?.invoke(selectedPlan) }
             binding.plans.addView(cardView)

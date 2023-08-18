@@ -27,12 +27,13 @@ import me.proton.core.plan.data.api.response.DynamicDecorationResource
 import me.proton.core.plan.data.api.response.DynamicEntitlementResource
 import me.proton.core.plan.data.api.response.toDynamicPlanDecoration
 import me.proton.core.plan.data.api.response.toDynamicPlanEntitlement
+import me.proton.core.util.kotlin.toBooleanOrFalse
 import java.time.Instant
 
 @Serializable
 internal data class DynamicSubscriptionResponse(
     @SerialName("Name")
-    val name: String,
+    val name: String? = null,
     @SerialName("Title")
     val title: String,
     @SerialName("Description")
@@ -66,7 +67,7 @@ internal data class DynamicSubscriptionResponse(
     @SerialName("RenewAmount")
     val renewAmount: Long? = null,
     @SerialName("Renew")
-    val renew: Boolean? = null,
+    val renew: Int? = null,
     @SerialName("External")
     val external: Int? = null,
     @SerialName("Decorations")
@@ -91,7 +92,7 @@ internal data class DynamicSubscriptionResponse(
         discount = discount,
         renewDiscount = renewDiscount,
         renewAmount = renewAmount,
-        renew = renew,
+        renew = renew?.toBooleanOrFalse(),
         external = SubscriptionManagement.map[external],
         decorations = decorations?.mapNotNull { it.toDynamicPlanDecoration() } ?: emptyList(),
         entitlements = entitlements?.mapNotNull { it.toDynamicPlanEntitlement(iconsEndpoint) } ?: emptyList()

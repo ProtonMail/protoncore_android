@@ -201,7 +201,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             }
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup
-            setResult(SelectedPlan.free(getString(R.string.plans_free_name)))
+            setResult(SelectedPlan.free(resources))
         }
     }
 

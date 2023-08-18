@@ -23,7 +23,7 @@ import me.proton.core.plan.domain.entity.DynamicEntitlement
 import java.time.Instant
 
 public data class DynamicSubscription(
-    val name: String,
+    val name: String?,
     val title: String,
     val description: String,
 

@@ -19,7 +19,7 @@
       "Discount": -28788,
       "RenewDiscount": -28788,
       "RenewAmount": 0,
-      "Renew": true,
+      "Renew": 1,
       "External": 0,
       "Entitlements": [
         {

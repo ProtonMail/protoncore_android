@@ -34,7 +34,7 @@ import java.util.EnumSet
 @Serializable
 internal data class DynamicPlanResource(
     @SerialName("Name")
-    val name: String,
+    val name: String? = null,
 
     @SerialName("State")
     val state: Int,

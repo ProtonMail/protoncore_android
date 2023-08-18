@@ -24,7 +24,7 @@ import me.proton.core.domain.type.StringEnum
 import java.util.EnumSet
 
 data class DynamicPlan(
-    val name: String, // code name
+    val name: String?, // code name, if null the plan doesn't exist (e.g. Free).
     val order: Int,
     val state: DynamicPlanState,
     val title: String,

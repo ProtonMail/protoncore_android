@@ -170,7 +170,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         if (paidOptionAvailable && !supportFragmentManager.hasPlanSignupFragment()) {
             supportFragmentManager.showPlansSignup(planInput = PlanInput())
         } else if (!paidOptionAvailable) {
-            val selectedPlan = SelectedPlan.free(getString(R.string.plans_free_name))
+            val selectedPlan = SelectedPlan.free(resources)
             signUpViewModel.subscriptionDetails = SubscriptionDetails(
                 billingResult = null,
                 planName = selectedPlan.planName,
