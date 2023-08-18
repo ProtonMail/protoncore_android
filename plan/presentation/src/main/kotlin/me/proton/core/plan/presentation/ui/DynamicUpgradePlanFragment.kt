@@ -44,8 +44,8 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
     private val binding by viewBinding(FragmentDynamicUpgradePlanBinding::bind)
     private val viewModel by viewModels<DynamicUpgradePlanViewModel>()
 
-    private val subscription by lazy { binding.subscription.getFragment<DynamicSubscriptionFragment>() }
-    private val planSelection by lazy { binding.planSelection.getFragment<DynamicPlanSelectionFragment>() }
+    private val subscriptionFragment by lazy { binding.subscription.getFragment<DynamicSubscriptionFragment>() }
+    private val planSelectionFragment by lazy { binding.planSelection.getFragment<DynamicPlanSelectionFragment>() }
 
     private var onBackClicked: (() -> Unit)? = null
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
@@ -53,22 +53,22 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
     private val unredeemedPurchaseLauncher = registerForActivityResult(StartUnredeemedPurchase()) { result ->
         if (result?.redeemed == true) {
             viewModel.perform(Action.Load)
-            subscription.reload()
+            subscriptionFragment.reload()
         }
     }
 
     fun setUser(user: DynamicUser) {
-        planSelection.setUser(user)
-        subscription.setUser(user)
+        planSelectionFragment.setUser(user)
+        subscriptionFragment.setUser(user)
         viewModel.perform(Action.SetUser(user))
     }
 
     fun setShowSubscription(isVisible: Boolean) = with(binding) {
-        subscription.isVisible = isVisible
         toolbar.title = when (isVisible) {
             true -> getString(R.string.plans_subscription)
             false -> getString(R.string.plans_upgrade_your_plan)
         }
+        subscription.isVisible = isVisible
         title.isVisible = isVisible
     }
 
@@ -84,10 +84,10 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         super.onViewCreated(view, savedInstanceState)
         viewModel.state.onEach {
             when (it) {
-                is State.Idle -> onIdle()
                 is State.Loading -> onLoading()
                 is State.Error -> onError(it.error)
                 is State.UnredeemedPurchase -> onUnredeemedPurchase()
+                is State.UpgradeAvailable -> onUpgradeAvailable()
                 is State.UpgradeNotAvailable -> onUpgradeNotAvailable()
             }
         }.launchInViewLifecycleScope()
@@ -95,12 +95,8 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         binding.toolbar.setNavigationOnClickListener { onBackClicked?.invoke() }
         binding.retry.onClick { viewModel.perform(Action.Load) }
 
-        planSelection.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
-        planSelection.setOnPlanBilled { plan, result -> onPlanBilled?.invoke(plan, result) }
-    }
-
-    private fun onIdle() {
-        showLoading(false)
+        planSelectionFragment.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
+        planSelectionFragment.setOnPlanBilled { plan, result -> onPlanBilled?.invoke(plan, result) }
     }
 
     private fun onLoading() {
@@ -108,13 +104,16 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
     }
 
     private fun onUnredeemedPurchase() {
-        showLoading(false)
         unredeemedPurchaseLauncher.launch(Unit)
+        showLoading(false)
+    }
+
+    private fun onUpgradeAvailable() {
+        showLoading(false)
     }
 
     private fun onUpgradeNotAvailable() {
         showLoading(false)
-        binding.upgradeLayout.isVisible = false
     }
 
     private fun onError(error: Throwable?) = with(binding) {

@@ -56,8 +56,8 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
-        object Idle : State()
         object Loading : State()
+        object UpgradeAvailable : State()
         object UpgradeNotAvailable : State()
         data class UnredeemedPurchase(val purchase: UnredeemedGooglePurchase) : State()
         data class Error(val error: Throwable) : State()
@@ -102,7 +102,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     private suspend fun loadUnredeemedPurchase(userId: UserId) = flow {
         emit(State.Loading)
         when (val unredeemedPurchase = checkUnredeemedGooglePurchase.invoke(userId)) {
-            null -> emit(State.Idle)
+            null -> emit(State.UpgradeAvailable)
             else -> emit(State.UnredeemedPurchase(unredeemedPurchase))
         }
     }.catch { emit(State.Error(it)) }

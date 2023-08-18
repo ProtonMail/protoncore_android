@@ -230,6 +230,8 @@ public final class me/proton/core/plan/presentation/databinding/FragmentDynamicP
 
 public final class me/proton/core/plan/presentation/databinding/FragmentDynamicPlanSelectionBinding : androidx/viewbinding/ViewBinding {
 	public final field currencySpinner Landroid/widget/Spinner;
+	public final field listEmpty Landroid/widget/TextView;
+	public final field listInfo Landroid/widget/TextView;
 	public final field plans Landroidx/fragment/app/FragmentContainerView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/FragmentDynamicPlanSelectionBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
@@ -239,14 +241,16 @@ public final class me/proton/core/plan/presentation/databinding/FragmentDynamicP
 }
 
 public final class me/proton/core/plan/presentation/databinding/FragmentDynamicSubscriptionBinding : androidx/viewbinding/ViewBinding {
+	public final field cardView Lcom/google/android/material/card/MaterialCardView;
 	public final field dynamicPlan Lme/proton/core/plan/presentation/view/DynamicPlanView;
 	public final field error Landroid/widget/TextView;
 	public final field errorLayout Landroid/widget/LinearLayout;
+	public final field managementInfo Landroid/widget/TextView;
 	public final field progress Landroid/widget/ProgressBar;
 	public final field retry Landroid/widget/Button;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/FragmentDynamicSubscriptionBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public fun getRoot ()Landroid/widget/LinearLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/FragmentDynamicSubscriptionBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/FragmentDynamicSubscriptionBinding;
 }
@@ -957,6 +961,7 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanListFragment :
 	public final fun getUser ()Lme/proton/core/plan/presentation/viewmodel/DynamicUser;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setCurrency (Ljava/lang/String;)V
+	public final fun setOnPlanList (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnPlanSelected (Lkotlin/jvm/functions/Function1;)V
 	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
 }

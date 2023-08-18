@@ -54,11 +54,11 @@
             android:paddingBottom="@dimen/double_top_margin">
 
             <androidx.fragment.app.FragmentContainerView
-                    android:id="@+id/subscription"
-                    android:name="me.proton.core.plan.presentation.ui.DynamicSubscriptionFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/gap_large" />
+                android:id="@+id/subscription"
+                android:name="me.proton.core.plan.presentation.ui.DynamicSubscriptionFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gap_large" />
 
             <LinearLayout
                 android:id="@+id/upgrade_layout"
@@ -71,8 +71,8 @@
                     style="@style/ProtonTextView.Title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:layout_marginBottom="@dimen/gap_large"
+                    android:gravity="center"
                     android:maxLines="1"
                     android:text="@string/plans_upgrade_your_plan" />
 
@@ -80,9 +80,7 @@
                     android:id="@+id/plan_selection"
                     android:name="me.proton.core.plan.presentation.ui.DynamicPlanSelectionFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    tools:visibility="visible" />
+                    android:layout_height="wrap_content" />
 
                 <ProgressBar
                     android:id="@+id/progress"

@@ -21,6 +21,7 @@ package me.proton.core.plan.presentation.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
@@ -29,6 +30,7 @@ import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanSelectionBinding
 import me.proton.core.plan.presentation.entity.PlanCycle
@@ -90,6 +92,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
             }
         }.launchInViewLifecycleScope()
 
+        planList.setOnPlanList { onPlanList(it) }
         planList.setOnPlanSelected { viewModel.perform(Action.SelectPlan(it)) }
 
         paymentsOrchestrator.onPaymentResult { result ->
@@ -98,6 +101,13 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
                 else -> viewModel.perform(Action.SetBillingResult(result))
             }
         }
+    }
+
+    private fun onPlanList(plans: List<DynamicPlan>) {
+        val isEmpty = plans.isEmpty()
+        binding.listEmpty.isVisible = isEmpty
+        binding.listInfo.isVisible = !isEmpty
+        currencySpinner.isVisible = !isEmpty
     }
 
     private fun onIdle(currencies: List<String>) {

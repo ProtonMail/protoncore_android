@@ -122,14 +122,14 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun returnIdleWhenNotEmptyPaymentProviderAndNoUnredeemed() = runTest {
+    fun returnUpgradeAvailableWhenNotEmptyPaymentProviderAndNoUnredeemed() = runTest {
         // Given
         coEvery { getAvailablePaymentProviders.invoke(any()) } returns setOf(mockk())
         // When
         viewModel.state.test {
             // Then
             assertIs<State.Loading>(awaitItem())
-            assertIs<State.Idle>(awaitItem())
+            assertIs<State.UpgradeAvailable>(awaitItem())
         }
     }
 
@@ -161,7 +161,7 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun returnIdleForUser1() = runTest {
+    fun returnUpgradeAvailableForUser1() = runTest {
         // Given
         coEvery { getAvailablePaymentProviders.invoke(any()) } returns setOf(mockk())
         coEvery { checkUnredeemedGooglePurchase.invoke(userId2) } returns mockk()
@@ -170,7 +170,7 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         viewModel.state.test {
             // Then
             assertIs<State.Loading>(awaitItem())
-            assertIs<State.Idle>(awaitItem())
+            assertIs<State.UpgradeAvailable>(awaitItem())
         }
     }
 }

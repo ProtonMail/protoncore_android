@@ -52,11 +52,16 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
     private val viewModel by viewModels<DynamicPlanListViewModel>()
 
     private var onPlanSelected: ((SelectedPlan) -> Unit)? = null
+    private var onPlanList: ((List<DynamicPlan>) -> Unit)? = null
 
     fun getUser(): DynamicUser = viewModel.getUser()
 
     fun setOnPlanSelected(onPlanSelected: (SelectedPlan) -> Unit) {
         this.onPlanSelected = onPlanSelected
+    }
+
+    fun setOnPlanList(onPlanList: (List<DynamicPlan>) -> Unit) {
+        this.onPlanList = onPlanList
     }
 
     fun setUser(user: DynamicUser) {
@@ -91,6 +96,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
     }
 
     private fun onSuccess(result: State.Success) {
+        onPlanList?.invoke(result.plans)
         showLoading(false)
         showPlans(result.plans, result.filter.cycle, result.filter.currency)
     }

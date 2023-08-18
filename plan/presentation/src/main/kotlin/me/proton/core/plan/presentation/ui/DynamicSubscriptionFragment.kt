@@ -28,6 +28,7 @@ import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicSubscriptionBinding
+import me.proton.core.plan.presentation.entity.toStringRes
 import me.proton.core.plan.presentation.view.formatRenew
 import me.proton.core.plan.presentation.view.toView
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel
@@ -40,6 +41,7 @@ import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 
+@Suppress("TooManyFunctions")
 @AndroidEntryPoint
 class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_subscription) {
 
@@ -113,5 +115,8 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         isCollapsable = false
         entitlements.removeAllViews()
         subscription.entitlements.forEach { entitlements.addView(it.toView(context)) }
+    }.also {
+        binding.managementInfo.setText(subscription.external.toStringRes())
+        binding.managementInfo.isVisible = true
     }
 }
