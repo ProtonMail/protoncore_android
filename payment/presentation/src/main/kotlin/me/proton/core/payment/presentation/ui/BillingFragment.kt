@@ -29,16 +29,11 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.country.presentation.entity.CountryUIModel
 import me.proton.core.country.presentation.ui.CountryPickerFragment
 import me.proton.core.country.presentation.ui.showCountryPicker
-import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingCreatePaymentTokenTotal
-import me.proton.core.observability.domain.metrics.CheckoutCardBillingValidatePlanTotal
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.entity.toCheckoutBillingSubscribeManager
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.FragmentBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
@@ -110,7 +105,7 @@ internal class BillingFragment : ProtonFragment(R.layout.fragment_billing) {
         }
 
         launchOnScreenView {
-            viewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.cardBilling)
+            viewModel.onScreenView(CheckoutScreenViewTotal.ScreenId.cardBilling)
         }
     }
 

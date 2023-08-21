@@ -38,7 +38,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
@@ -197,7 +197,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             upgradePlanViewModel.getCurrentSubscribedPlans(input.user!!)
 
             launchOnScreenView {
-                upgradePlanViewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.planSelection)
+                upgradePlanViewModel.onScreenView(CheckoutScreenViewTotal.ScreenId.planSelection)
             }
         } else {
             // means clients does not support any paid plans, so we close this and proceed directly to free plan signup

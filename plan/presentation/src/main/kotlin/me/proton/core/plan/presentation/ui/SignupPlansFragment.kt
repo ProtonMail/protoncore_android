@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansBinding
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
@@ -92,7 +92,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
             signupPlansViewModel.getAllPlansForSignup()
 
             launchOnScreenView {
-                signupPlansViewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.planSelection)
+                signupPlansViewModel.onScreenView(CheckoutScreenViewTotal.ScreenId.planSelection)
             }
         } else {
             onFreeSelected()

@@ -30,7 +30,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -131,7 +131,7 @@ internal class PaymentOptionsActivity :
         viewModel.getAvailablePaymentMethods(user)
 
         launchOnScreenView {
-            viewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.paymentMethods)
+            viewModel.onScreenView(CheckoutScreenViewTotal.ScreenId.paymentMethods)
         }
     }
 

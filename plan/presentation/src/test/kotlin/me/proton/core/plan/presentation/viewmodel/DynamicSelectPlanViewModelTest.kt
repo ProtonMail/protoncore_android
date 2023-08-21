@@ -25,9 +25,14 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -50,6 +55,9 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var getDynamicPlans: GetDynamicPlans
+
+    @MockK(relaxUnitFun = true)
+    private lateinit var observabilityManager: ObservabilityManager
 
     @MockK(relaxed = true)
     private lateinit var resources: Resources
@@ -79,11 +87,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `no support for paid plans`() = coroutinesTest {
         // GIVEN
         coEvery { getDynamicPlans(any()) } returns listOf(testPlanFree)
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = false
-        )
+        tested = makeTested(supportPaidPlans = false)
 
         // WHEN
         tested.state.test {
@@ -101,11 +105,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         coEvery { getDynamicPlans(any()) } returns listOf(testPlanFree)
         coEvery { getAvailablePaymentProviders() } returns emptySet()
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = true
-        )
+        tested = makeTested(supportPaidPlans = true)
 
         // WHEN
         tested.state.test {
@@ -123,11 +123,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         coEvery { getDynamicPlans(any()) } returns listOf(testPlanPaid)
         coEvery { getAvailablePaymentProviders() } returns emptySet()
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = true
-        )
+        tested = makeTested(supportPaidPlans = true)
 
         // WHEN
         tested.state.test {
@@ -142,11 +138,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `happy path free plan`() = coroutinesTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns PaymentProvider.values().toSet()
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = true
-        )
+        tested = makeTested(supportPaidPlans = true)
 
         // WHEN
         tested.state.test {
@@ -171,11 +163,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         val billingResult = mockk<BillingResult>()
         coEvery { getAvailablePaymentProviders() } returns PaymentProvider.values().toSet()
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = true
-        )
+        tested = makeTested(supportPaidPlans = true)
 
         // WHEN
         tested.state.test {
@@ -208,11 +196,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         val throwable = ApiException(ApiResult.Error.Timeout(false))
         coEvery { getDynamicPlans(any()) } throws throwable
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = false
-        )
+        tested = makeTested(supportPaidPlans = false)
 
         // WHEN
         tested.state.test {
@@ -228,11 +212,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         val throwable = ApiException(ApiResult.Error.Timeout(false))
         coEvery { getAvailablePaymentProviders() } throws throwable
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = true
-        )
+        tested = makeTested(supportPaidPlans = true)
 
         // WHEN
         tested.state.test {
@@ -247,11 +227,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `perform load action`() = coroutinesTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns PaymentProvider.values().toSet()
-        tested = DynamicSelectPlanViewModel(
-            getAvailablePaymentProviders,
-            getDynamicPlans,
-            supportPaidPlans = true
-        )
+        tested = makeTested(supportPaidPlans = true)
 
         // WHEN
         tested.state.test {
@@ -267,4 +243,31 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
             assertEquals(DynamicSelectPlanViewModel.State.Idle, awaitItem())
         }
     }
+
+    @Test
+    fun `enqueues screen view`() {
+        // GIVEN
+        tested = makeTested()
+
+        // WHEN
+        tested.onScreenView()
+
+        // THEN
+        val dataSlot = slot<ObservabilityData>()
+        verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+        assertIs<CheckoutScreenViewTotal>(dataSlot.captured).let {
+            assertEquals(
+                CheckoutScreenViewTotal.ScreenId.dynamicPlanSelection,
+                it.Labels.screen_id
+            )
+        }
+    }
+
+    private fun makeTested(supportPaidPlans: Boolean = true): DynamicSelectPlanViewModel =
+        DynamicSelectPlanViewModel(
+            getAvailablePaymentProviders,
+            getDynamicPlans,
+            observabilityManager,
+            supportPaidPlans = supportPaidPlans
+        )
 }

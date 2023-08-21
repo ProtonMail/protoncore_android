@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -26,7 +26,7 @@ import me.proton.core.observability.domain.entity.SchemaId
 @Serializable
 @Schema(description = "Screen views during the checkout (payments).")
 @SchemaId("https://proton.me/android_core_checkout_screenView_total_v1.schema.json")
-public data class CheckoutScreenViewTotalV1(
+public data class CheckoutScreenViewTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : ObservabilityData() {
@@ -44,6 +44,7 @@ public data class CheckoutScreenViewTotalV1(
         cardBilling,
         giapBilling,
         paymentMethods,
+        dynamicPlanSelection,
         dynamicPlansUpgrade,
         dynamicPlansCurrentSubscription
     }

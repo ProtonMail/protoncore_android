@@ -29,6 +29,9 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -44,8 +47,9 @@ import javax.inject.Inject
 internal class DynamicSelectPlanViewModel @Inject constructor(
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getDynamicPlans: GetDynamicPlans,
+    override val manager: ObservabilityManager,
     @SupportSignupPaidPlans val supportPaidPlans: Boolean
-) : ProtonViewModel() {
+) : ProtonViewModel(), ObservabilityContext {
     sealed class State {
         object Idle : State()
         object Loading : State()
@@ -78,6 +82,10 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         Action.Load -> onLoad()
         is Action.SelectFreePlan -> onSelectFreePlan(action.plan)
         is Action.SelectPaidPlan -> onSelectPaidPlan(action.plan, action.result)
+    }
+
+    fun onScreenView() {
+        enqueue(CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlanSelection))
     }
 
     private fun onLoad() = viewModelScope.launch {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGetDynamicSubscriptionTotal
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.usecase.GetDynamicSubscription
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -103,7 +103,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
 
     fun onScreenView() {
         manager.enqueue(
-            CheckoutScreenViewTotalV1(CheckoutScreenViewTotalV1.ScreenId.dynamicPlansCurrentSubscription)
+            CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlansCurrentSubscription)
         )
     }
 

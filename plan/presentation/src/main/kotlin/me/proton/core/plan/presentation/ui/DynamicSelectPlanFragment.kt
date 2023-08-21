@@ -39,6 +39,7 @@ import me.proton.core.plan.presentation.viewmodel.DynamicSelectPlanViewModel.Sta
 import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 
@@ -65,6 +66,7 @@ class DynamicSelectPlanFragment : BasePlansFragment(R.layout.fragment_dynamic_se
         }
 
         viewModel.state.onEach(this::handleState).launchIn(viewLifecycleOwner.lifecycleScope)
+        launchOnScreenView { viewModel.onScreenView() }
     }
 
     override fun onResume() {

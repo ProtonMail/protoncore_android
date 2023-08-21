@@ -34,7 +34,7 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
@@ -138,8 +138,8 @@ public abstract class BillingCommonViewModel(
         }
     }
 
-    public fun onScreenView(screenId: CheckoutScreenViewTotalV1.ScreenId) {
-        observabilityManager.enqueue(CheckoutScreenViewTotalV1(screenId))
+    public fun onScreenView(screenId: CheckoutScreenViewTotal.ScreenId) {
+        observabilityManager.enqueue(CheckoutScreenViewTotal(screenId))
     }
 
     /**

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -39,7 +39,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
@@ -114,7 +114,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     }
 
     fun onScreenView() {
-        manager.enqueue(CheckoutScreenViewTotalV1(CheckoutScreenViewTotalV1.ScreenId.dynamicPlansUpgrade))
+        manager.enqueue(CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlansUpgrade))
     }
 
     private fun onLoad() = viewModelScope.launch {

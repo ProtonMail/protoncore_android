@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentType
@@ -142,7 +142,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
         }
 
         launchOnScreenView {
-            viewModel.onScreenView(CheckoutScreenViewTotalV1.ScreenId.giapBilling)
+            viewModel.onScreenView(CheckoutScreenViewTotal.ScreenId.giapBilling)
         }
     }
 

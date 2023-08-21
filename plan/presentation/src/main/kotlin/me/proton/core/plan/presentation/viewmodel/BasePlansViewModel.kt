@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionManagement
@@ -89,8 +89,8 @@ internal abstract class BasePlansViewModel(
         paymentsOrchestrator.register(context)
     }
 
-    fun onScreenView(screenId: CheckoutScreenViewTotalV1.ScreenId) {
-        observabilityManager.enqueue(CheckoutScreenViewTotalV1(screenId))
+    fun onScreenView(screenId: CheckoutScreenViewTotal.ScreenId) {
+        observabilityManager.enqueue(CheckoutScreenViewTotal(screenId))
     }
 
     protected fun createFreePlan(
