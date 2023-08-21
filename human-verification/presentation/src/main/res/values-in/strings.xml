@@ -22,7 +22,7 @@
   <string name="human_verification_title">Verifikasi Manusia</string>
   <string name="human_verification_main_subtitle">Untuk mencegah penyalahgunaan, mohon verifikasi bahwa Anda benar manusia melalui salah satu pilihan berikut</string>
   <string name="human_verification_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke $%s. Apabila Anda tidak menemukan email yang bersangkutan pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
+  <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke %s. Apabila Anda tidak menemukan email yang berisi kode ini pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Masukkan kode verifikasi yang telah Anda terima:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Email</string>

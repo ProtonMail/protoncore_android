@@ -45,7 +45,7 @@
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Ur izmir ara ad yeqqen ɣer uqeddac.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
-  <string name="presentation_connectivity_issues">Connectivity issues</string>
-  <string name="presentation_field_required">This field is required.</string>
+  <string name="presentation_connectivity_issues">Uguren n tuqqna</string>
+  <string name="presentation_field_required">Urti-a ilaq.</string>
   <string name="presentation_error_general">An error occurred.</string>
 </resources>
