@@ -114,6 +114,7 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
 
     private fun onUpgradeNotAvailable() {
         showLoading(false)
+        binding.upgradeLayout.isVisible = false
     }
 
     private fun onError(error: Throwable?) = with(binding) {
