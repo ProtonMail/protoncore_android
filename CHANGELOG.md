@@ -13,6 +13,15 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [15.0.0] - 2023-08-23
 
+### Breaking Changes
+
+**Features**
+
+- user:
+  - Added User creation time.
+
+    Migrations: UserDatabase.MIGRATION_3, AccountDatabase.MIGRATION_6.
+
 ### Chores
 
 - observability:
