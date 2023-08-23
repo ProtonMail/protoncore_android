@@ -11,6 +11,51 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [15.0.0] - 2023-08-23
+
+### Chores
+
+- observability:
+  - Enqueue observability data when showing the (dynamic) plan selection screen.
+  - Add proguard/r8 rule to keep the `SchemaId` annotation.
+- plan:
+  - Enqueue observability data when showing the (dynamic) plan selection screen.
+
+### Features
+
+- payment:
+  - Add initial observability metrics.
+  - Added Dynamic Plan/Subscription parsing error logs.
+- plan:
+  - Add initial observability metrics.
+  - Add fragment for displaying plans during signup.
+  - Added Dynamic Plan/Subscription parsing error logs.
+  - Added Dynamic Upgrade Plan Activity/Fragment/ViewModel.
+- util-android-device:
+  - Add Sentry local flag.
+  - Add Sentry events metadata.
+- util-android-sentry:
+  - Add Sentry local flag.
+  - Add Sentry events metadata.
+  - Sentry for Account team.
+
+### Bug Fixes
+
+- key-transparency:
+  - Normalize email domain for verification.
+- payment:
+  - Updated Dynamic Plan/Subscription according latest API.
+- plan:
+  - Hide Dynamic Upgrade when no Payment available.
+  - Updated Dynamic Plan/Subscription according latest API.
+  - Fixed Dynamic Fragments when no Plan available.
+- proguard-rules:
+  - Add newest proguard rules for retrofit.
+
+### Internationalization
+
+- Upgrade translations from crowdin (1285c829).
+
 ## [14.1.0] - 2023-08-15
 
 ### Features
