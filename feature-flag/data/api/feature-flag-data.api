@@ -36,6 +36,19 @@ public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factor
 	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;)Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;
 }
 
+public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter {
+	public fun <init> (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;
+}
+
 public abstract class me/proton/core/featureflag/data/db/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 }
