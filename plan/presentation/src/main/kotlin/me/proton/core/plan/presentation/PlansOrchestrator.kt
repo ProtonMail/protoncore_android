@@ -25,15 +25,18 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.UpgradeResult
+import me.proton.core.plan.presentation.ui.StartDynamicSelectPlan
 import me.proton.core.plan.presentation.ui.StartDynamicUpgradePlan
-import me.proton.core.plan.presentation.ui.StartPlanChooser
+import me.proton.core.plan.presentation.ui.StartStaticUpgradePlan
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class PlansOrchestrator @Inject constructor(
     private val isDynamicPlanEnabled: IsDynamicPlanEnabled
 ) {
 
     private var plansLauncher: ActivityResultLauncher<PlanInput>? = null
+    private var dynamicSelectPlanLauncher: ActivityResultLauncher<Unit>? = null
     private var dynamicUpgradePlanLauncher: ActivityResultLauncher<PlanInput>? = null
 
     private var onUpgradeResultListener: ((result: UpgradeResult?) -> Unit)? = {}
@@ -46,21 +49,35 @@ class PlansOrchestrator @Inject constructor(
         caller: ActivityResultCaller
     ): ActivityResultLauncher<PlanInput> =
         caller.registerForActivityResult(
-            StartPlanChooser()
+            StartStaticUpgradePlan
         ) {
             onUpgradeResultListener?.invoke(it)
         }
+
+    private fun registerDynamicSelectPlanResult(
+        caller: ActivityResultCaller
+    ): ActivityResultLauncher<Unit> =
+        caller.registerForActivityResult(
+            StartDynamicSelectPlan
+        ) { /* Unused */ }
 
     private fun registerDynamicUpgradePlanResult(
         caller: ActivityResultCaller
     ): ActivityResultLauncher<PlanInput> =
         caller.registerForActivityResult(
-            StartDynamicUpgradePlan()
+            StartDynamicUpgradePlan
         ) {
             onUpgradeResultListener?.invoke(it)
         }
 
-    fun launchUpgradeWorkflow(userId: UserId, showSubscription: Boolean) {
+    private fun launchSelectPlanWorkflow() {
+        when (isDynamicPlanEnabled(userId = null)) {
+            false -> checkRegistered(plansLauncher).launch(PlanInput())
+            true -> checkRegistered(dynamicSelectPlanLauncher).launch(Unit)
+        }
+    }
+
+    private fun launchUpgradeWorkflow(userId: UserId, showSubscription: Boolean) {
         val planInput = PlanInput(userId = userId.id, showSubscription = showSubscription)
         when (isDynamicPlanEnabled(userId)) {
             false -> checkRegistered(plansLauncher).launch(planInput)
@@ -75,6 +92,7 @@ class PlansOrchestrator @Inject constructor(
      */
     fun register(caller: ActivityResultCaller) {
         plansLauncher = registerPlanResult(caller)
+        dynamicSelectPlanLauncher = registerDynamicSelectPlanResult(caller)
         dynamicUpgradePlanLauncher = registerDynamicUpgradePlanResult(caller)
     }
 
@@ -84,6 +102,8 @@ class PlansOrchestrator @Inject constructor(
     fun unregister() {
         plansLauncher?.unregister()
         plansLauncher = null
+        dynamicSelectPlanLauncher?.unregister()
+        dynamicSelectPlanLauncher = null
         dynamicUpgradePlanLauncher?.unregister()
         dynamicUpgradePlanLauncher = null
     }
@@ -97,9 +117,7 @@ class PlansOrchestrator @Inject constructor(
      * @see [onUpgradeResult]
      */
     fun startSignUpPlanChooserWorkflow() {
-        checkRegistered(plansLauncher).launch(
-            PlanInput()
-        )
+        launchSelectPlanWorkflow()
     }
 
     /**

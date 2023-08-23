@@ -87,7 +87,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
         upgradePlanViewModel.register(this)
         activity?.addOnBackPressedCallback { setResult() }
         onUnredeemedPurchaseLauncher = registerForActivityResult(
-            StartUnredeemedPurchase(),
+            StartUnredeemedPurchase,
             onUnredeemedPurchaseResult
         )
     }

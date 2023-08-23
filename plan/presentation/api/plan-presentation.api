@@ -10,6 +10,10 @@ public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_DynamicPl
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_DynamicSelectPlanActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_ui_DynamicSelectPlanFragment_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -118,7 +122,6 @@ public abstract interface class me/proton/core/plan/presentation/HiltWrapper_Unr
 
 public final class me/proton/core/plan/presentation/PlansOrchestrator {
 	public fun <init> (Lme/proton/core/plan/domain/IsDynamicPlanEnabled;)V
-	public final fun launchUpgradeWorkflow (Lme/proton/core/domain/entity/UserId;Z)V
 	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnUpgradeResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun showCurrentPlanWorkflow (Lme/proton/core/domain/entity/UserId;)V
@@ -144,6 +147,15 @@ public final class me/proton/core/plan/presentation/UnredeemedPurchaseInitialize
 	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
 	public fun create (Landroid/content/Context;)V
 	public fun dependencies ()Ljava/util/List;
+}
+
+public final class me/proton/core/plan/presentation/databinding/ActivityDynamicSelectPlanBinding : androidx/viewbinding/ViewBinding {
+	public final field planSelect Landroidx/fragment/app/FragmentContainerView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/ActivityDynamicSelectPlanBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/FrameLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/ActivityDynamicSelectPlanBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/ActivityDynamicSelectPlanBinding;
 }
 
 public final class me/proton/core/plan/presentation/databinding/ActivityDynamicUpgradePlanBinding : androidx/viewbinding/ViewBinding {
@@ -1028,10 +1040,19 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragm
 	public static fun injectPaymentsOrchestrator (Lme/proton/core/plan/presentation/ui/DynamicPlanSelectionFragment;Lme/proton/core/payment/presentation/PaymentsOrchestrator;)V
 }
 
+public final class me/proton/core/plan/presentation/ui/DynamicSelectPlanActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/plan/presentation/ui/DynamicSelectPlanActivity_GeneratedInjector {
+	public abstract fun injectDynamicSelectPlanActivity (Lme/proton/core/plan/presentation/ui/DynamicSelectPlanActivity;)V
+}
+
 public final class me/proton/core/plan/presentation/ui/DynamicSelectPlanFragment : me/proton/core/plan/presentation/ui/BasePlansFragment {
 	public fun <init> ()V
 	public fun onResume ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	public final fun setOnBackClicked (Lkotlin/jvm/functions/Function0;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicSelectPlanFragment_GeneratedInjector {
@@ -1110,6 +1131,15 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicPlanSelect
 	public fun onAttach (Landroid/app/Activity;)V
 	public fun onAttach (Landroid/content/Context;)V
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
+public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicSelectPlanActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicSelectPlanFragment : me/proton/core/plan/presentation/ui/BasePlansFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1219,16 +1249,24 @@ public abstract interface class me/proton/core/plan/presentation/ui/SignupPlansF
 	public abstract fun injectSignupPlansFragment (Lme/proton/core/plan/presentation/ui/SignupPlansFragment;)V
 }
 
+public final class me/proton/core/plan/presentation/ui/StartDynamicSelectPlan : androidx/activity/result/contract/ActivityResultContract {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/ui/StartDynamicSelectPlan;
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lkotlin/Unit;)Landroid/content/Intent;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+	public fun parseResult (ILandroid/content/Intent;)Lkotlin/Unit;
+}
+
 public final class me/proton/core/plan/presentation/ui/StartDynamicUpgradePlan : androidx/activity/result/contract/ActivityResultContract {
-	public fun <init> ()V
+	public static final field INSTANCE Lme/proton/core/plan/presentation/ui/StartDynamicUpgradePlan;
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/plan/presentation/entity/PlanInput;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
 	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/plan/presentation/entity/UpgradeResult;
 }
 
-public final class me/proton/core/plan/presentation/ui/StartPlanChooser : androidx/activity/result/contract/ActivityResultContract {
-	public fun <init> ()V
+public final class me/proton/core/plan/presentation/ui/StartStaticUpgradePlan : androidx/activity/result/contract/ActivityResultContract {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/ui/StartStaticUpgradePlan;
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/plan/presentation/entity/PlanInput;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
@@ -1236,7 +1274,7 @@ public final class me/proton/core/plan/presentation/ui/StartPlanChooser : androi
 }
 
 public final class me/proton/core/plan/presentation/ui/StartUnredeemedPurchase : androidx/activity/result/contract/ActivityResultContract {
-	public fun <init> ()V
+	public static final field INSTANCE Lme/proton/core/plan/presentation/ui/StartUnredeemedPurchase;
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
 	public fun createIntent (Landroid/content/Context;Lkotlin/Unit;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;

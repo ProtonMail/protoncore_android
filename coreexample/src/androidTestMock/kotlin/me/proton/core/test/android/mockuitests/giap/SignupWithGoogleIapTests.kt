@@ -32,7 +32,7 @@ import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
 import me.proton.core.plan.presentation.entity.PlanInput
-import me.proton.core.plan.presentation.ui.StartPlanChooser
+import me.proton.core.plan.presentation.ui.StartStaticUpgradePlan
 import me.proton.core.plan.presentation.ui.UpgradeActivity
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
@@ -74,7 +74,7 @@ class SignupWithGoogleIapTests : BaseMockTest {
     fun googleBillingNotAvailable() {
         billingClient.mockStartConnection(BillingResponseCode.BILLING_UNAVAILABLE)
 
-        val intent = StartPlanChooser().createIntent(appContext, PlanInput())
+        val intent = StartStaticUpgradePlan.createIntent(appContext, PlanInput())
         ActivityScenario.launch<UpgradeActivity>(intent)
 
         SelectPlanRobot()
@@ -181,7 +181,7 @@ class SignupWithGoogleIapTests : BaseMockTest {
     fun switchPaymentOptions() {
         billingClient.mockBillingClientSuccess { billingClientFactory.listeners }
 
-        val intent = StartPlanChooser().createIntent(appContext, PlanInput())
+        val intent = StartStaticUpgradePlan.createIntent(appContext, PlanInput())
         ActivityScenario.launch<UpgradeActivity>(intent)
 
         SelectPlanRobot()

@@ -47,11 +47,20 @@ import me.proton.core.presentation.utils.viewBinding
  * Fragment for selecting a plan during signup, when no user is available.
  * The result from this fragment is exposed via [BasePlansFragment.setResult].
  */
+@Suppress("TooManyFunctions")
 @AndroidEntryPoint
 class DynamicSelectPlanFragment : BasePlansFragment(R.layout.fragment_dynamic_select_plan) {
+
     private val binding by viewBinding(FragmentDynamicSelectPlanBinding::bind)
-    private val planSelection by lazy { binding.planSelection.getFragment<DynamicPlanSelectionFragment>() }
     private val viewModel by viewModels<DynamicSelectPlanViewModel>()
+
+    private val planSelection by lazy { binding.planSelection.getFragment<DynamicPlanSelectionFragment>() }
+
+    private var onBackClicked: (() -> Unit)? = null
+
+    fun setOnBackClicked(onBackClicked: () -> Unit) {
+        this.onBackClicked = onBackClicked
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -84,6 +93,7 @@ class DynamicSelectPlanFragment : BasePlansFragment(R.layout.fragment_dynamic_se
     }
 
     private fun onBack() {
+        onBackClicked?.invoke()
         setResult()
     }
 

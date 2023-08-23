@@ -51,7 +51,7 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
     private var onBackClicked: (() -> Unit)? = null
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
 
-    private val unredeemedPurchaseLauncher = registerForActivityResult(StartUnredeemedPurchase()) { result ->
+    private val unredeemedPurchaseLauncher = registerForActivityResult(StartUnredeemedPurchase) { result ->
         if (result?.redeemed == true) {
             viewModel.perform(Action.Load)
             subscriptionFragment.reload()

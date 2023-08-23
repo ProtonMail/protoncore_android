@@ -26,7 +26,7 @@ import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.UnredeemedPurchaseResult
 import me.proton.core.plan.presentation.entity.UpgradeResult
 
-class StartPlanChooser : ActivityResultContract<PlanInput, UpgradeResult?>() {
+object StartStaticUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?>() {
     override fun createIntent(context: Context, input: PlanInput): Intent =
         Intent(context, UpgradeActivity::class.java).apply {
             putExtra(UpgradeActivity.ARG_INPUT, input)
@@ -38,7 +38,7 @@ class StartPlanChooser : ActivityResultContract<PlanInput, UpgradeResult?>() {
     }
 }
 
-class StartDynamicUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?>() {
+object StartDynamicUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?>() {
     override fun createIntent(context: Context, input: PlanInput): Intent =
         Intent(context, DynamicUpgradePlanActivity::class.java).apply {
             putExtra(UpgradeActivity.ARG_INPUT, input)
@@ -50,7 +50,12 @@ class StartDynamicUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?
     }
 }
 
-class StartUnredeemedPurchase : ActivityResultContract<Unit, UnredeemedPurchaseResult?>() {
+object StartDynamicSelectPlan : ActivityResultContract<Unit, Unit?>() {
+    override fun createIntent(context: Context, input: Unit) = Intent(context, DynamicSelectPlanActivity::class.java)
+    override fun parseResult(resultCode: Int, intent: Intent?): Unit? = null
+}
+
+object StartUnredeemedPurchase : ActivityResultContract<Unit, UnredeemedPurchaseResult?>() {
     override fun createIntent(context: Context, input: Unit): Intent =
         Intent(context, UnredeemedPurchaseActivity::class.java)
 

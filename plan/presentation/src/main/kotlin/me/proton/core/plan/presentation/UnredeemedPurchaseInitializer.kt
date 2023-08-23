@@ -70,7 +70,7 @@ class UnredeemedPurchaseInitializer : Initializer<Unit> {
 
         if (unredeemed != null && appLifecycleProvider.state.value == AppLifecycleProvider.State.Foreground) {
             withContext(dispatcherProvider.Main) {
-                val intent = StartUnredeemedPurchase().createIntent(context, Unit)
+                val intent = StartUnredeemedPurchase.createIntent(context, Unit)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 context.startActivity(intent)
             }
