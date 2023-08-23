@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -39,11 +38,13 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGetDynamicPlansTotal
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.filterBy
 import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.entity.DynamicPlanFilter
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.coroutine.withResultContextFlow
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
@@ -103,11 +104,14 @@ internal class DynamicPlanListViewModel @Inject constructor(
         DynamicPlanFilter(userId, cycle, currency)
     }
 
-    private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = flow {
+    private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = withResultContextFlow {
+        it.onResultEnqueue("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
         emit(State.Loading)
         val filteredPlans = getDynamicPlans(filter.userId).filterBy(filter.cycle, filter.currency)
         emit(State.Success(filteredPlans, filter))
-    }.catch { emit(State.Error(it)) }
+    }.catch {
+        emit(State.Error(it))
+    }
 
     fun perform(action: Action) = when (action) {
         is Action.Load -> onLoad()

@@ -43,6 +43,8 @@ public data class CheckoutScreenViewTotalV1(
         planSelection,
         cardBilling,
         giapBilling,
-        paymentMethods
+        paymentMethods,
+        dynamicPlansUpgrade,
+        dynamicPlansCurrentSubscription
     }
 }

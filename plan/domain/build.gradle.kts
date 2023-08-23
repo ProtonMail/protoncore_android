@@ -36,6 +36,8 @@ publishOption.shouldBePublishedAsLib = true
 dependencies {
     api(
         project(Module.domain),
+        project(Module.networkDomain),
+        project(Module.observabilityDomain),
         `javax-inject`
     )
 

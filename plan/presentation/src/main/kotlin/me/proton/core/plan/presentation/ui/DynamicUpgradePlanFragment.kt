@@ -34,6 +34,7 @@ import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.St
 import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 
@@ -97,6 +98,10 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
 
         planSelectionFragment.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
         planSelectionFragment.setOnPlanBilled { plan, result -> onPlanBilled?.invoke(plan, result) }
+
+        launchOnScreenView {
+            viewModel.onScreenView()
+        }
     }
 
     private fun onLoading() {

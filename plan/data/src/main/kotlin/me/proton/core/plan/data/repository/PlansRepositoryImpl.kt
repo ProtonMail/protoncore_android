@@ -29,6 +29,7 @@ import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.minutes
@@ -47,12 +48,14 @@ class PlansRepositoryImpl @Inject constructor(
 
     override suspend fun getDynamicPlans(
         sessionUserId: SessionUserId?
-    ): List<DynamicPlan> = dynamicPlansCache.get(sessionUserId?.id ?: "") {
-        apiProvider.get<PlansApi>(sessionUserId).invoke {
-            getDynamicPlans().plans.mapIndexed { index, resource ->
-                resource.toDynamicPlan(endpointProvider.get(), index)
-            }
-        }.onParseErrorLog(LogTag.DYN_PLANS_PARSE).valueOrThrow
+    ): List<DynamicPlan> = result("getDynamicPlans") {
+        dynamicPlansCache.get(sessionUserId?.id ?: "") {
+            apiProvider.get<PlansApi>(sessionUserId).invoke {
+                getDynamicPlans().plans.mapIndexed { index, resource ->
+                    resource.toDynamicPlan(endpointProvider.get(), index)
+                }
+            }.onParseErrorLog(LogTag.DYN_PLANS_PARSE).valueOrThrow
+        }
     }
 
     /**

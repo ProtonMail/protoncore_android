@@ -33,9 +33,11 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.data.api.PaymentsApi
+import me.proton.core.payment.data.entity.dynamicSubscription
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
+import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentMethodType
@@ -331,7 +333,7 @@ class PaymentsRepositoryImplTest {
             paymentType = PaymentType.GoogleIAP(
                 productId = "productId",
                 purchaseToken = GooglePurchaseToken("token"),
-                 orderId = "orderId",
+                orderId = "orderId",
                 packageName = "packageName",
                 customerId = "customerID"
             )
@@ -347,9 +349,9 @@ class PaymentsRepositoryImplTest {
     fun `create payment token giap error`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
-                ApiResult.Error.Http(
-                    httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
-                )
+            ApiResult.Error.Http(
+                httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+            )
         // WHEN
         assertFailsWith(ApiException::class) {
             repository.createPaymentToken(
@@ -376,7 +378,7 @@ class PaymentsRepositoryImplTest {
             PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
         )
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
-                ApiResult.Success(createTokenResult)
+            ApiResult.Success(createTokenResult)
         // WHEN
         val createPaymentTokenResult = repository.createPaymentToken(
             sessionUserId = SessionUserId(testUserId),
@@ -395,9 +397,9 @@ class PaymentsRepositoryImplTest {
     fun `create payment token paypal error`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
-                ApiResult.Error.Http(
-                    httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
-                )
+            ApiResult.Error.Http(
+                httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+            )
         // WHEN
         assertFailsWith(ApiException::class) {
             repository.createPaymentToken(
@@ -436,6 +438,20 @@ class PaymentsRepositoryImplTest {
         // THEN
         assertNotNull(validationResult)
         assertTrue(assertSingleResult("validateSubscription").isSuccess)
+    }
+
+    @Test
+    fun `get subscription returns success`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<List<DynamicSubscription>>(any()) } returns ApiResult.Success(
+            listOf(
+                dynamicSubscription
+            )
+        )
+        // WHEN
+        val result = repository.getDynamicSubscriptions(SessionUserId(testUserId))
+        assertNotNull(result)
+        assertTrue(assertSingleResult("getDynamicSubscription").isSuccess)
     }
 
     @Test

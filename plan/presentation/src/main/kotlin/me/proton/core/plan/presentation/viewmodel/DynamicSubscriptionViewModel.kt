@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
@@ -37,9 +36,12 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGetDynamicSubscriptionTotal
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.usecase.GetDynamicSubscription
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.coroutine.withResultContextFlow
 import javax.inject.Inject
 
 @HiltViewModel
@@ -83,17 +85,26 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadDynamicSubscription(userId: UserId?) = flow {
+    private suspend fun loadDynamicSubscription(userId: UserId?): Flow<State> = withResultContextFlow {
+        it.onResultEnqueue("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
         emit(State.Loading)
         when (userId) {
             null -> emit(State.UserNotExist)
             else -> emit(State.Success(getDynamicSubscription(userId)))
         }
-    }.catch { emit(State.Error(it)) }
+    }.catch {
+        emit(State.Error(it))
+    }
 
     fun perform(action: Action) = when (action) {
         is Action.Load -> onLoad()
         is Action.SetUser -> onSetUser(action.user)
+    }
+
+    fun onScreenView() {
+        manager.enqueue(
+            CheckoutScreenViewTotalV1(CheckoutScreenViewTotalV1.ScreenId.dynamicPlansCurrentSubscription)
+        )
     }
 
     private fun onLoad() = viewModelScope.launch {

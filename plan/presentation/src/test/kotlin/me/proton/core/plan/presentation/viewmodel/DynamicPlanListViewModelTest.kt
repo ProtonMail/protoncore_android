@@ -35,6 +35,7 @@ import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.runTestWithResultContext
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals

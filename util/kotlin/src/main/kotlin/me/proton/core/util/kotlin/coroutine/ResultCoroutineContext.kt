@@ -22,6 +22,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
@@ -188,3 +191,10 @@ fun <T> CoroutineScope.launchWithResultContext(
     start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend ResultCollector<*>.() -> T
 ): Job = launch(context, start) { withResultContext(block) }
+
+suspend fun <T> withResultContextFlow(
+    block: suspend FlowCollector<T>.(ResultCollector<*>) -> Unit
+): Flow<T> = withResultContext {
+    val resultCollector = this
+    flow { block(this, resultCollector) }
+}

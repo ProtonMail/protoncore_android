@@ -24,6 +24,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.presentation.R
@@ -38,6 +39,7 @@ import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 
@@ -68,6 +70,10 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         }.launchInViewLifecycleScope()
 
         binding.retry.onClick { viewModel.perform(Action.Load) }
+
+        launchOnScreenView {
+            viewModel.onScreenView()
+        }
     }
 
     private fun onLoading() {

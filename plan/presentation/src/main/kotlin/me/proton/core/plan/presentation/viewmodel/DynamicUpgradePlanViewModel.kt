@@ -39,6 +39,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotalV1
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
@@ -110,6 +111,10 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     fun perform(action: Action) = when (action) {
         is Action.Load -> onLoad()
         is Action.SetUser -> onSetUser(action.user)
+    }
+
+    fun onScreenView() {
+        manager.enqueue(CheckoutScreenViewTotalV1(CheckoutScreenViewTotalV1.ScreenId.dynamicPlansUpgrade))
     }
 
     private fun onLoad() = viewModelScope.launch {

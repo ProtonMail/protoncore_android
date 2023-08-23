@@ -154,9 +154,11 @@ public class PaymentsRepositoryImpl @Inject constructor(
         }.valueOrThrow
 
     override suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription> =
-        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
-            getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
-        }.onParseErrorLog(LogTag.DYN_SUB_PARSE).valueOrThrow
+        result("getDynamicSubscription") {
+            apiProvider.get<PaymentsApi>(sessionUserId).invoke {
+                getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
+            }.onParseErrorLog(LogTag.DYN_SUB_PARSE).valueOrThrow
+        }
 
     override suspend fun createOrUpdateSubscription(
         sessionUserId: SessionUserId,
