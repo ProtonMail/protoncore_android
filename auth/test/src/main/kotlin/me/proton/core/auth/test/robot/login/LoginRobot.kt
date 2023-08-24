@@ -20,6 +20,7 @@ package me.proton.core.auth.test.robot.login
 
 import me.proton.core.auth.presentation.R
 import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
+import me.proton.core.test.quark.data.User
 import me.proton.test.fusion.Fusion.view
 
 /** Corresponds to [me.proton.core.auth.presentation.ui.LoginActivity]. */
@@ -44,6 +45,12 @@ public object LoginRobot {
 
     public fun login() {
         signInButton.click()
+    }
+
+    public fun login(user: User) {
+        fillUsername(user.name)
+        fillPassword(user.password)
+        login()
     }
 
     public fun signInWithSSO() {

@@ -111,7 +111,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
 
     private fun onSuccess(plans: List<PlanDetailsItem>) {
         with(binding) {
-            plansView.selectPlanListener = { selectedPlan ->
+            planSelection.selectPlanListener = { selectedPlan ->
                 if (selectedPlan.free) {
                     // proceed with result return
                     setResult(selectedPlan)
@@ -124,7 +124,7 @@ class SignupPlansFragment : BasePlansFragment(R.layout.fragment_plans) {
                 }
             }
             if (plans.isNotEmpty()) {
-                plansView.plans = plans
+                planSelection.plans = plans
             } else {
                 onFreeSelected()
             }

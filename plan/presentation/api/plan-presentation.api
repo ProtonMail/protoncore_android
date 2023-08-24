@@ -325,9 +325,9 @@ public final class me/proton/core/plan/presentation/databinding/FragmentPlansBin
 	public final field icDrive Landroid/widget/ImageView;
 	public final field icMail Landroid/widget/ImageView;
 	public final field icVpn Landroid/widget/ImageView;
+	public final field planSelection Lme/proton/core/plan/presentation/view/PlansListView;
 	public final field plansSubtitle Landroid/widget/TextView;
 	public final field plansTitle Landroid/widget/TextView;
-	public final field plansView Lme/proton/core/plan/presentation/view/PlansListView;
 	public final field progressParent Landroid/widget/FrameLayout;
 	public final field protonServicesLayout Landroid/widget/LinearLayout;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
@@ -341,12 +341,12 @@ public final class me/proton/core/plan/presentation/databinding/FragmentPlansBin
 
 public final class me/proton/core/plan/presentation/databinding/FragmentPlansUpgradeBinding : androidx/viewbinding/ViewBinding {
 	public final field connectivityIssueView Landroidx/constraintlayout/widget/ConstraintLayout;
-	public final field currentPlan Lme/proton/core/plan/presentation/view/PlanItemView;
 	public final field manageSubscriptionText Landroid/widget/TextView;
+	public final field planSelection Lme/proton/core/plan/presentation/view/PlansListView;
 	public final field plansTitle Landroid/widget/TextView;
-	public final field plansView Lme/proton/core/plan/presentation/view/PlansListView;
 	public final field progressParent Landroid/widget/FrameLayout;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
+	public final field subscription Lme/proton/core/plan/presentation/view/PlanItemView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/FragmentPlansUpgradeBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
@@ -366,13 +366,13 @@ public final class me/proton/core/plan/presentation/databinding/PlanContentItemB
 }
 
 public final class me/proton/core/plan/presentation/databinding/PlanItemBinding : androidx/viewbinding/ViewBinding {
+	public final field cardView Landroidx/constraintlayout/widget/ConstraintLayout;
 	public final field collapse Landroid/widget/ImageButton;
 	public final field currentPlanGroup Landroidx/constraintlayout/widget/Group;
 	public final field planContents Landroid/widget/LinearLayout;
 	public final field planCycleText Landroid/widget/TextView;
 	public final field planDescriptionText Landroid/widget/TextView;
 	public final field planGroup Landroidx/constraintlayout/widget/ConstraintLayout;
-	public final field planItemParent Landroidx/constraintlayout/widget/ConstraintLayout;
 	public final field planNameText Landroid/widget/TextView;
 	public final field planPercentageText Landroid/widget/TextView;
 	public final field planPriceText Landroid/widget/TextView;

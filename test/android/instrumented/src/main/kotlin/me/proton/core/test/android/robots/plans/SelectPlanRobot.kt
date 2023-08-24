@@ -131,19 +131,19 @@ class SelectPlanRobot : CoreRobot() {
         }
 
         fun planDetailsNotDisplayed() {
-            view.withId(R.id.currentPlan).checkNotDisplayed()
+            view.withId(R.id.subscription).checkNotDisplayed()
         }
 
         fun currentPlanDetailsDisplayed() {
-            view.withId(R.id.currentPlan).checkDisplayed()
+            view.withId(R.id.subscription).checkDisplayed()
         }
 
         fun plansNotDisplayed() {
-            view.withId(R.id.plansView).checkNotDisplayed()
+            view.withId(R.id.plan_selection).checkNotDisplayed()
         }
 
         fun plansDisplayed() {
-            view.withId(R.id.plansView).checkDisplayed()
+            view.withId(R.id.plan_selection).checkDisplayed()
         }
 
         fun canSelectPlan(plan: Plan) {

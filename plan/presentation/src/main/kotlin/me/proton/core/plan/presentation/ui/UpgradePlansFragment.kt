@@ -127,7 +127,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         val currency =
                             (plan as? PlanDetailsItem.CurrentPlanDetailsItem)?.currency ?: it.subscribedPlan.currency
 
-                        currentPlan.apply {
+                        subscription.apply {
                             setBackgroundResource(R.drawable.background_current_plan)
                             visibility = if (input.showSubscription) VISIBLE else GONE
                             val result = setData(it.subscribedPlan.copy(currency = currency, collapsible = false))
@@ -161,7 +161,7 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
                         is BasePlansViewModel.PlanState.Success.Plans -> {
                             showLoading(false)
                             with(binding) {
-                                with(plansView) {
+                                with(planSelection) {
                                     selectPlanListener = { selectedPlan ->
                                         if (selectedPlan.free) {
                                             // proceed with result return

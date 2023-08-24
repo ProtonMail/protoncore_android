@@ -56,7 +56,7 @@
             android:paddingBottom="@dimen/double_top_margin">
 
             <me.proton.core.plan.presentation.view.PlanItemView
-                android:id="@+id/currentPlan"
+                android:id="@+id/subscription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/gap_huge"
@@ -83,7 +83,7 @@
                 tools:text="Upgrade your plan" />
 
             <me.proton.core.plan.presentation.view.PlansListView
-                android:id="@+id/plansView"
+                android:id="@+id/plan_selection"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="@dimen/gap_large_plus"

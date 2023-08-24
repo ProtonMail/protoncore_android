@@ -1,0 +1,51 @@
+public final class me/proton/core/plan/test/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/plan/test/MinimalSubscriptionTests {
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getUsers ()Lme/proton/core/test/quark/data/User$Users;
+	public abstract fun resetPaymentMethods ()V
+	public abstract fun setPaymentMethods ()V
+	public abstract fun startSubscription (Lme/proton/core/test/quark/data/User;)V
+	public abstract fun subscriptionScreenIsShownForFreeUser ()V
+	public abstract fun subscriptionScreenIsShownForPaidUser ()V
+	public abstract fun subscriptionScreenIsShownNoPaymentProvider ()V
+}
+
+public final class me/proton/core/plan/test/MinimalSubscriptionTests$DefaultImpls {
+	public static fun resetPaymentMethods (Lme/proton/core/plan/test/MinimalSubscriptionTests;)V
+	public static fun setPaymentMethods (Lme/proton/core/plan/test/MinimalSubscriptionTests;)V
+	public static fun subscriptionScreenIsShownForFreeUser (Lme/proton/core/plan/test/MinimalSubscriptionTests;)V
+	public static fun subscriptionScreenIsShownForPaidUser (Lme/proton/core/plan/test/MinimalSubscriptionTests;)V
+	public static fun subscriptionScreenIsShownNoPaymentProvider (Lme/proton/core/plan/test/MinimalSubscriptionTests;)V
+}
+
+public abstract interface class me/proton/core/plan/test/MinimalUpgradeTests {
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun resetPaymentMethods ()V
+	public abstract fun setPaymentMethods ()V
+	public abstract fun startUpgrade ()V
+	public abstract fun upgradeScreenIsShownForFreeUser ()V
+}
+
+public final class me/proton/core/plan/test/MinimalUpgradeTests$DefaultImpls {
+	public static fun resetPaymentMethods (Lme/proton/core/plan/test/MinimalUpgradeTests;)V
+	public static fun setPaymentMethods (Lme/proton/core/plan/test/MinimalUpgradeTests;)V
+	public static fun upgradeScreenIsShownForFreeUser (Lme/proton/core/plan/test/MinimalUpgradeTests;)V
+}
+
+public final class me/proton/core/plan/test/robot/SubscriptionRobot {
+	public static final field INSTANCE Lme/proton/core/plan/test/robot/SubscriptionRobot;
+	public final fun verifyAtLeastOnePlanIsShown ()V
+	public final fun verifyCannotUpgradeFromMobile ()V
+	public final fun verifyNoPaidPlansAreShown ()V
+	public final fun verifySubscriptionIsShown ()V
+	public final fun verifyUpgradeIsShown ()V
+	public final fun verifyUpgradeYourPlanTextIsDisplayed ()V
+	public final fun verifyUpgradeYourPlanTitleIsDisplayed ()V
+}
+

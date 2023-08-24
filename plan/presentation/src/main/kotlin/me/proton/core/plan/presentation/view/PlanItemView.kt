@@ -111,7 +111,7 @@ class PlanItemView @JvmOverloads constructor(
             visibility = if (collapsible) VISIBLE else GONE
             onClick { rotate() }
         }
-        planItemParent.onClick {
+        cardView.onClick {
             rotate()
         }
     }

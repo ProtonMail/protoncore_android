@@ -119,7 +119,7 @@
             </LinearLayout>
 
             <me.proton.core.plan.presentation.view.PlansListView
-                android:id="@+id/plansView"
+                android:id="@+id/plan_selection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
