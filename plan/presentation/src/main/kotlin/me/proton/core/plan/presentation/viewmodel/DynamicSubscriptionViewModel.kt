@@ -39,6 +39,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGetDynamicSubscriptionTotal
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.DynamicSubscription
+import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.payment.domain.usecase.GetDynamicSubscription
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.withResultContextFlow
@@ -49,13 +50,17 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     override val manager: ObservabilityManager,
     private val accountManager: AccountManager,
     private val getDynamicSubscription: GetDynamicSubscription,
+    private val canUpgradeFromMobile: CanUpgradeFromMobile,
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
         object Loading : State()
         object UserNotExist : State()
         data class Error(val error: Throwable) : State()
-        data class Success(val dynamicSubscription: DynamicSubscription) : State()
+        data class Success(
+            val dynamicSubscription: DynamicSubscription,
+            val canUpgradeFromMobile: Boolean,
+        ) : State()
     }
 
     sealed class Action {
@@ -81,16 +86,22 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
             is DynamicUser.Unspecified -> emptyFlow()
             is DynamicUser.None -> flowOf(null)
             is DynamicUser.Primary -> accountManager.getPrimaryUserId()
-            is DynamicUser.ByUserId -> accountManager.getAccount(user.userId).mapLatest { it?.userId }
+            is DynamicUser.ByUserId -> accountManager.getAccount(user.userId)
+                .mapLatest { it?.userId }
         }
     }
 
-    private suspend fun loadDynamicSubscription(userId: UserId?): Flow<State> = withResultContextFlow {
+    private suspend fun loadDynamicSubscription(userId: UserId?) = withResultContextFlow {
         it.onResultEnqueue("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
         emit(State.Loading)
         when (userId) {
             null -> emit(State.UserNotExist)
-            else -> emit(State.Success(getDynamicSubscription(userId)))
+            else -> emit(
+                State.Success(
+                    dynamicSubscription = getDynamicSubscription(userId),
+                    canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId)
+                )
+            )
         }
     }.catch {
         emit(State.Error(it))

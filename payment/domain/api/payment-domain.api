@@ -485,6 +485,13 @@ public abstract interface class me/proton/core/payment/domain/usecase/Acknowledg
 	public abstract fun invoke-vl4Hrws (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/domain/usecase/CanUpgradeFromMobile {
+	public fun <init> (ZLme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public final fun getSupportPaidPlans ()Z
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/CanUpgradeFromMobile;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/payment/domain/usecase/CanUpgradeToPaid {
 	public fun <init> (ZLme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
 	public final fun getSupportPaidPlans ()Z

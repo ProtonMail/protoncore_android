@@ -40,8 +40,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.plan.domain.SupportUpgradePaidPlans
+import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -52,8 +51,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     override val manager: ObservabilityManager,
     private val accountManager: AccountManager,
     private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
-    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
-    @SupportUpgradePaidPlans private val supportPaidPlans: Boolean,
+    private val canUpgradeFromMobile: CanUpgradeFromMobile,
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
@@ -80,7 +78,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
 
     private fun observeState() = mutableLoadCount
         .flatMapLatest { observeUserId().filterNotNull().distinctUntilChanged() }
-        .flatMapLatest { loadPaymentProviders(it) }
+        .flatMapLatest { canUpgradeFromMobile(it) }
 
     private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
         when (user) {
@@ -91,11 +89,10 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
         }
     }
 
-    private suspend fun loadPaymentProviders(userId: UserId) = flow {
+    private suspend fun canUpgradeFromMobile(userId: UserId) = flow {
         emit(State.Loading)
-        when {
-            !supportPaidPlans -> emit(State.UpgradeNotAvailable)
-            getAvailablePaymentProviders.invoke(userId).isEmpty() -> emit(State.UpgradeNotAvailable)
+        when (canUpgradeFromMobile.invoke(userId)) {
+            false -> emit(State.UpgradeNotAvailable)
             else -> emitAll(loadUnredeemedPurchase(userId))
         }
     }.catch { emit(State.Error(it)) }

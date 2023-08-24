@@ -215,8 +215,9 @@ class UpgradePlansFragment : BasePlansFragment(R.layout.fragment_plans_upgrade) 
             !subscribed -> GONE
             else -> {
                 with(binding) {
+                    val infoRes = subscriptionManagement.toStringRes(availablePlansForPurchase)
                     manageSubscriptionText.apply {
-                        setText(subscriptionManagement.toStringRes())
+                        setText(infoRes ?: R.string.plans_manage_your_subscription_other)
                         movementMethod = LinkMovementMethod.getInstance()
                     }
                 }

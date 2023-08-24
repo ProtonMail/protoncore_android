@@ -64,7 +64,7 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
                 is State.Loading -> onLoading()
                 is State.Error -> onError(it.error)
                 is State.UserNotExist -> onNoPrimaryUser()
-                is State.Success -> onSuccess(it.dynamicSubscription)
+                is State.Success -> onSuccess(it.dynamicSubscription, it.canUpgradeFromMobile)
             }
         }.launchInViewLifecycleScope()
 
@@ -90,9 +90,9 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         showError(getString(R.string.presentation_error_general))
     }
 
-    private fun onSuccess(dynamicSubscription: DynamicSubscription) {
+    private fun onSuccess(dynamicSubscription: DynamicSubscription, canUpgradeFromMobile: Boolean) {
         showLoading(false)
-        showSubscription(dynamicSubscription)
+        showSubscription(dynamicSubscription, canUpgradeFromMobile)
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
@@ -105,7 +105,10 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         error.text = message
     }
 
-    private fun showSubscription(subscription: DynamicSubscription) = with(binding.dynamicPlan) {
+    private fun showSubscription(
+        subscription: DynamicSubscription,
+        canUpgradeFromMobile: Boolean
+    ) = with(binding.dynamicPlan) {
         title = subscription.title
         description = subscription.description
         starred = subscription.decorations.filterIsInstance<DynamicDecoration.Star>().isNotEmpty()
@@ -121,7 +124,9 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         entitlements.removeAllViews()
         subscription.entitlements.forEach { entitlements.addView(it.toView(context)) }
     }.also {
-        binding.managementInfo.setText(subscription.external.toStringRes())
-        binding.managementInfo.isVisible = true
+        subscription.external.toStringRes(canUpgradeFromMobile)?.let {
+            binding.managementInfo.setText(it)
+            binding.managementInfo.isVisible = true
+        }
     }
 }

@@ -31,7 +31,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State
@@ -64,8 +64,8 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     private val checkUnredeemedGooglePurchase = mockk<CheckUnredeemedGooglePurchase> {
         coEvery { this@mockk.invoke(any()) } returns null
     }
-    private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders> {
-        coEvery { this@mockk.invoke(any()) } returns emptySet()
+    private val canUpgradeFromMobile = mockk<CanUpgradeFromMobile> {
+        coEvery { this@mockk.invoke(any()) } returns true
     }
 
     private lateinit var viewModel: DynamicUpgradePlanViewModel
@@ -76,15 +76,14 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
             observabilityManager,
             accountManager,
             checkUnredeemedGooglePurchase,
-            getAvailablePaymentProviders,
-            supportPaidPlans = true
+            canUpgradeFromMobile
         )
     }
 
     @Test
     fun returnError() = runTest {
         // Given
-        coEvery { getAvailablePaymentProviders.invoke(any()) } throws ApiException(ApiResult.Error.NoInternet())
+        coEvery { canUpgradeFromMobile.invoke(any()) } throws ApiException(ApiResult.Error.NoInternet())
         // When
         viewModel.state.test {
             // Then
@@ -96,14 +95,14 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun retryOnError() = runTest {
         // Given
-        coEvery { getAvailablePaymentProviders.invoke(any()) } throws ApiException(ApiResult.Error.NoInternet())
+        coEvery { canUpgradeFromMobile.invoke(any()) } throws ApiException(ApiResult.Error.NoInternet())
         // When
         viewModel.state.test {
             // Then
             assertIs<State.Loading>(awaitItem())
             assertIs<State.Error>(awaitItem())
             // Given
-            coEvery { getAvailablePaymentProviders.invoke(any()) } returns emptySet()
+            coEvery { canUpgradeFromMobile.invoke(any()) } returns false
             viewModel.perform(Action.Load)
             // Then
             assertIs<State.Loading>(awaitItem())
@@ -112,7 +111,9 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun returnUpgradeNotAvailableWhenEmptyPaymentProvider() = runTest {
+    fun returnUpgradeNotAvailableWhenCannotUpgradeFromMobile() = runTest {
+        // Given
+        coEvery { canUpgradeFromMobile.invoke(any()) } returns false
         // When
         viewModel.state.test {
             // Then
@@ -122,9 +123,7 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
-    fun returnUpgradeAvailableWhenNotEmptyPaymentProviderAndNoUnredeemed() = runTest {
-        // Given
-        coEvery { getAvailablePaymentProviders.invoke(any()) } returns setOf(mockk())
+    fun returnUpgradeAvailableWhenCanUpgradeFromMobileAndNoUnredeemed() = runTest {
         // When
         viewModel.state.test {
             // Then
@@ -136,7 +135,6 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun returnUnredeemed() = runTest {
         // Given
-        coEvery { getAvailablePaymentProviders.invoke(any()) } returns setOf(mockk())
         coEvery { checkUnredeemedGooglePurchase.invoke(any()) } returns mockk()
         // When
         viewModel.state.test {
@@ -149,7 +147,6 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun returnUnredeemedForUser2() = runTest {
         // Given
-        coEvery { getAvailablePaymentProviders.invoke(any()) } returns setOf(mockk())
         coEvery { checkUnredeemedGooglePurchase.invoke(userId2) } returns mockk()
         viewModel.perform(Action.SetUser(DynamicUser.ByUserId(userId2)))
         // When
@@ -163,7 +160,6 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun returnUpgradeAvailableForUser1() = runTest {
         // Given
-        coEvery { getAvailablePaymentProviders.invoke(any()) } returns setOf(mockk())
         coEvery { checkUnredeemedGooglePurchase.invoke(userId2) } returns mockk()
         viewModel.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
         // When

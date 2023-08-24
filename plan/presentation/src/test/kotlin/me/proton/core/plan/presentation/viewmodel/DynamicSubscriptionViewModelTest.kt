@@ -22,8 +22,6 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.slot
-import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -31,9 +29,8 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.entity.ObservabilityEvent
-import me.proton.core.observability.domain.metrics.CheckoutGetDynamicSubscriptionTotal
 import me.proton.core.payment.domain.entity.DynamicSubscription
+import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.payment.domain.usecase.GetDynamicSubscription
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -72,6 +69,9 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
             }
         }
     }
+    private val canUpgradeFromMobile = mockk<CanUpgradeFromMobile> {
+        coEvery { this@mockk.invoke(any()) } returns true
+    }
 
     private lateinit var viewModel: DynamicSubscriptionViewModel
 
@@ -80,7 +80,8 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
         viewModel = DynamicSubscriptionViewModel(
             observabilityManager,
             accountManager,
-            getDynamicSubscription
+            getDynamicSubscription,
+            canUpgradeFromMobile
         )
     }
 
