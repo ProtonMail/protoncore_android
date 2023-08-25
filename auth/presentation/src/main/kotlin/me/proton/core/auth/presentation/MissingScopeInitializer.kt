@@ -24,7 +24,9 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 class MissingScopeInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {

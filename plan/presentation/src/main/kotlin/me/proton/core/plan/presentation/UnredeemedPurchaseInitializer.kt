@@ -34,7 +34,9 @@ import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DispatcherProvider
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 class UnredeemedPurchaseInitializer : Initializer<Unit> {
     override fun create(context: Context) {
         val entryPoint = EntryPointAccessors.fromApplication(

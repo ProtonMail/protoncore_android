@@ -25,7 +25,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.keytransparency.data.SelfAuditStarter
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 public class KeyTransparencyInitializer : Initializer<Unit> {
 
     override fun create(context: Context) {

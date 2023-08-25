@@ -4,7 +4,7 @@ import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
 
 internal fun KoverReportFilters.androidRules() {
     excludes {
-        annotatedBy("androidx.compose.runtime.Composable")
+        annotatedBy("me.proton.core.util.kotlin.annotation.ExcludeFromCoverage")
         classes(
             "*Activity",
             "*Activity\$*",

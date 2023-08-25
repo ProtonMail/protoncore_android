@@ -25,7 +25,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.crypto.validator.presentation.CryptoValidator
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 public class CryptoValidatorInitializer : Initializer<CryptoValidator> {
 
     public override fun create(context: Context): CryptoValidator {

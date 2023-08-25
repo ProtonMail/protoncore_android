@@ -203,6 +203,9 @@ public final class me/proton/core/util/kotlin/WhenExensionsKt {
 	public static final fun getExhaustive (Ljava/lang/Object;)Ljava/lang/Object;
 }
 
+public abstract interface annotation class me/proton/core/util/kotlin/annotation/ExcludeFromCoverage : java/lang/annotation/Annotation {
+}
+
 public abstract interface class me/proton/core/util/kotlin/coroutine/ResultCollector {
 	public abstract fun key ()Ljava/lang/String;
 	public abstract fun onComplete (Lkotlin/jvm/functions/Function3;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

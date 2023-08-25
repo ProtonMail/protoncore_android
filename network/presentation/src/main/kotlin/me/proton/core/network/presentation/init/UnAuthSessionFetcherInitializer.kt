@@ -25,7 +25,9 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.network.presentation.UnAuthSessionFetcher
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 public class UnAuthSessionFetcherInitializer : Initializer<UnAuthSessionFetcher> {
 
     public override fun create(context: Context): UnAuthSessionFetcher {
