@@ -117,9 +117,14 @@ public final class me/proton/core/plan/domain/entity/DynamicPlan {
 
 public final class me/proton/core/plan/domain/entity/DynamicPlanFeature : java/lang/Enum {
 	public static final field CatchAll Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
+	public static final field Companion Lme/proton/core/plan/domain/entity/DynamicPlanFeature$Companion;
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanFeature$Companion {
+	public final fun enumSetOf (Ljava/lang/Integer;)Ljava/util/EnumSet;
 }
 
 public final class me/proton/core/plan/domain/entity/DynamicPlanInstance {
@@ -151,10 +156,17 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanKt {
 }
 
 public final class me/proton/core/plan/domain/entity/DynamicPlanLayout : java/lang/Enum {
+	public static final field Companion Lme/proton/core/plan/domain/entity/DynamicPlanLayout$Companion;
 	public static final field Default Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
 	public final fun getCode ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanLayout$Companion {
+	public final fun enumOf (Ljava/lang/String;)Lme/proton/core/domain/type/StringEnum;
+	public final fun enumOfOrDefault (Ljava/lang/String;)Lme/proton/core/domain/type/StringEnum;
+	public final fun getMap ()Ljava/util/Map;
 }
 
 public final class me/proton/core/plan/domain/entity/DynamicPlanOffer {
@@ -194,6 +206,7 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanPrice {
 
 public final class me/proton/core/plan/domain/entity/DynamicPlanService : java/lang/Enum {
 	public static final field Calendar Lme/proton/core/plan/domain/entity/DynamicPlanService;
+	public static final field Companion Lme/proton/core/plan/domain/entity/DynamicPlanService$Companion;
 	public static final field Drive Lme/proton/core/plan/domain/entity/DynamicPlanService;
 	public static final field Mail Lme/proton/core/plan/domain/entity/DynamicPlanService;
 	public static final field Pass Lme/proton/core/plan/domain/entity/DynamicPlanService;
@@ -201,6 +214,10 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanService : java/l
 	public final fun getCode ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanService;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanService;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicPlanService$Companion {
+	public final fun enumSetOf (Ljava/lang/Integer;)Ljava/util/EnumSet;
 }
 
 public final class me/proton/core/plan/domain/entity/DynamicPlanState : java/lang/Enum {

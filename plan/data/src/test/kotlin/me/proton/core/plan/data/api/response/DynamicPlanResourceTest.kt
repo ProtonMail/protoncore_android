@@ -107,4 +107,41 @@ class DynamicPlanResourceTest {
             ).toDynamicPlan("endpoint", 5)
         )
     }
+
+    @Test
+    fun fromResourceToDomainWithUnknownEnums() {
+        assertEquals(
+            DynamicPlan(
+                name = "name",
+                order = 5,
+                state = DynamicPlanState.Available,
+                title = "title",
+                entitlements = emptyList(),
+                decorations = emptyList(),
+                description = "description",
+                features = EnumSet.noneOf(DynamicPlanFeature::class.java),
+                instances = emptyMap(),
+                layout = StringEnum("unknown", null),
+                offers = emptyList(),
+                parentMetaPlanID = "parentId",
+                services = EnumSet.noneOf(DynamicPlanService::class.java),
+                type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
+            ),
+            DynamicPlanResource(
+                name = "name",
+                state = 1,
+                title = "title",
+                entitlements = emptyList(),
+                decorations = emptyList(),
+                description = "description",
+                features = 0,
+                instances = emptyList(),
+                layout = "unknown",
+                offers = emptyList(),
+                parentMetaPlanID = "parentId",
+                services = 0,
+                type = 1
+            ).toDynamicPlan("endpoint", 5)
+        )
+    }
 }

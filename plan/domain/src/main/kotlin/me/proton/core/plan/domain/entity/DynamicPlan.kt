@@ -21,6 +21,8 @@ package me.proton.core.plan.domain.entity
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.domain.type.StringEnum
+import me.proton.core.util.kotlin.hasFlag
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import java.util.EnumSet
 
 data class DynamicPlan(
@@ -62,11 +64,25 @@ fun DynamicPlan.hasServiceFor(product: Product, exclusive: Boolean): Boolean {
 fun DynamicPlan.isFree(): Boolean = type == null
 
 enum class DynamicPlanFeature(val code: Int) {
-    CatchAll(1)
+    CatchAll(1);
+
+    companion object {
+        fun enumSetOf(value: Int?): EnumSet<DynamicPlanFeature> = value
+            ?.let { DynamicPlanFeature.values().filter { value.hasFlag(it.code) } }
+            ?.takeIfNotEmpty()
+            ?.let { EnumSet.copyOf(it) }
+            ?: EnumSet.noneOf(DynamicPlanFeature::class.java)
+    }
 }
 
 enum class DynamicPlanLayout(val code: String) {
-    Default("default")
+    Default("default");
+
+    companion object {
+        val map = values().associateBy { it.code }
+        fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
+        fun enumOfOrDefault(value: String?) = enumOf(value) ?: StringEnum(Default.code, Default)
+    }
 }
 
 enum class DynamicPlanService(val code: Int) {
@@ -74,7 +90,15 @@ enum class DynamicPlanService(val code: Int) {
     Calendar(Mail.code),
     Drive(2),
     Vpn(4),
-    Pass(8),
+    Pass(8);
+
+    companion object {
+        fun enumSetOf(value: Int?): EnumSet<DynamicPlanService> = value
+            ?.let { DynamicPlanService.values().filter { value.hasFlag(it.code) } }
+            ?.takeIfNotEmpty()
+            ?.let { EnumSet.copyOf(it) }
+            ?: EnumSet.noneOf(DynamicPlanService::class.java)
+    }
 }
 
 enum class DynamicPlanState(val code: Int) {

@@ -21,7 +21,6 @@ package me.proton.core.plan.data.api.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.type.IntEnum
-import me.proton.core.domain.type.StringEnum
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanFeature
 import me.proton.core.plan.domain.entity.DynamicPlanLayout
@@ -29,7 +28,6 @@ import me.proton.core.plan.domain.entity.DynamicPlanService
 import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.util.kotlin.hasFlag
-import java.util.EnumSet
 
 @Serializable
 internal data class DynamicPlanResource(
@@ -73,7 +71,10 @@ internal data class DynamicPlanResource(
     val type: Int? = null
 )
 
-internal fun DynamicPlanResource.toDynamicPlan(iconsEndpoint: String, order: Int): DynamicPlan = DynamicPlan(
+internal fun DynamicPlanResource.toDynamicPlan(
+    iconsEndpoint: String,
+    order: Int
+): DynamicPlan = DynamicPlan(
     name = name,
     order = order,
     state = when {
@@ -84,17 +85,11 @@ internal fun DynamicPlanResource.toDynamicPlan(iconsEndpoint: String, order: Int
     entitlements = entitlements.mapNotNull { it.toDynamicPlanEntitlement(iconsEndpoint) },
     decorations = decorations.mapNotNull { it.toDynamicPlanDecoration() },
     description = description,
-    features = features?.let { features ->
-        EnumSet.copyOf(DynamicPlanFeature.values().filter { features.hasFlag(it.code) })
-    } ?: EnumSet.noneOf(DynamicPlanFeature::class.java),
+    features = DynamicPlanFeature.enumSetOf(features),
     instances = instances.associate { it.cycle to it.toDynamicPlanInstance() },
-    layout = layout?.let { layout ->
-        StringEnum(layout, DynamicPlanLayout.values().firstOrNull { it.code == layout })
-    } ?: StringEnum(DynamicPlanLayout.Default.code, DynamicPlanLayout.Default),
+    layout = DynamicPlanLayout.enumOfOrDefault(layout),
     offers = offers.map { it.toDynamicPlanOffer() },
     parentMetaPlanID = parentMetaPlanID,
-    services = services?.let { services ->
-        EnumSet.copyOf(DynamicPlanService.values().filter { services.hasFlag(it.code) })
-    } ?: EnumSet.noneOf(DynamicPlanService::class.java),
+    services = DynamicPlanService.enumSetOf(services),
     type = type?.let { IntEnum(it, DynamicPlanType.from(it)) }
 )
