@@ -20,7 +20,10 @@ package me.proton.core.plan.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.domain.entity.DynamicPlanInstance
+import me.proton.core.plan.domain.entity.DynamicPlanVendor
+import me.proton.core.plan.domain.entity.PLAN_VENDOR_GOOGLE
 import java.time.Instant
 
 @Serializable
@@ -41,7 +44,16 @@ internal data class DynamicPlanInstanceResource(
     val price: List<PriceResource>,
 
     @SerialName("Vendors")
-    val vendors: Map<String, PlanVendorResponse> = emptyMap()
+    val vendors: Map<String, DynamicPlanVendorResource> = emptyMap()
+)
+
+@Serializable
+internal data class DynamicPlanVendorResource(
+    @SerialName("ProductID")
+    val productId: String,
+
+    @SerialName("CustomerID")
+    val customerId: String? = null
 )
 
 internal fun DynamicPlanInstanceResource.toDynamicPlanInstance(): DynamicPlanInstance =
@@ -51,5 +63,22 @@ internal fun DynamicPlanInstanceResource.toDynamicPlanInstance(): DynamicPlanIns
         description = description,
         periodEnd = Instant.ofEpochSecond(periodEnd),
         price = price.associate { it.currency to it.toDynamicPlanPrice() },
-        vendors = vendors.toPlanVendorDataMap(),
+        vendors = vendors.toDynamicPlanVendorMap(),
     )
+
+private fun Map<String, DynamicPlanVendorResource>.toDynamicPlanVendorMap(): Map<AppStore, DynamicPlanVendor> {
+    return mapNotNull { entry ->
+        when (val customerId = entry.value.customerId) {
+            null -> null
+            else -> when (entry.key) {
+                PLAN_VENDOR_GOOGLE -> AppStore.GooglePlay
+                else -> null
+            }?.let { appStore ->
+                appStore to DynamicPlanVendor(
+                    productId = entry.value.productId,
+                    customerId = customerId
+                )
+            }
+        }
+    }.toMap()
+}

@@ -18,7 +18,9 @@
 
 package me.proton.core.plan.data.api.response
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.domain.entity.DynamicPlanInstance
+import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.util.kotlin.deserialize
 import java.time.Instant
 import kotlin.test.Test
@@ -34,7 +36,12 @@ class DynamicPlanInstanceResourceTest {
                 description = "description",
                 periodEnd = 100,
                 price = emptyList(),
-                vendors = emptyMap()
+                vendors = mapOf(
+                    "Google" to DynamicPlanVendorResource(
+                        productId = "googlemail_plus_12_renewing",
+                        customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+                    )
+                )
             ),
             """
                 {
@@ -43,7 +50,7 @@ class DynamicPlanInstanceResourceTest {
                 "Description": "description",
                 "PeriodEnd": 100,
                 "Price": [],
-                "Vendors": {}
+                "Vendors": { "Google": { "ProductID": "googlemail_plus_12_renewing", "CustomerID": "cus_google_fAx9TIdL63UmeYDmUo3l" } }
                 }
             """.trimIndent().deserialize()
         )
@@ -58,7 +65,12 @@ class DynamicPlanInstanceResourceTest {
                 description = "description",
                 periodEnd = Instant.ofEpochSecond(100),
                 price = emptyMap(),
-                vendors = emptyMap()
+                vendors = mapOf(
+                    AppStore.GooglePlay to DynamicPlanVendor(
+                        productId = "googlemail_plus_12_renewing",
+                        customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+                    )
+                )
             ),
             DynamicPlanInstanceResource(
                 id = "123abc",
@@ -66,7 +78,16 @@ class DynamicPlanInstanceResourceTest {
                 description = "description",
                 periodEnd = 100,
                 price = emptyList(),
-                vendors = emptyMap()
+                vendors = mapOf(
+                    "Google" to DynamicPlanVendorResource(
+                        productId = "googlemail_plus_12_renewing",
+                        customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+                    ),
+                    "Apple" to DynamicPlanVendorResource(
+                        productId = "applemail_plus_12_renewing",
+                        customerId = null
+                    )
+                )
             ).toDynamicPlanInstance()
         )
     }

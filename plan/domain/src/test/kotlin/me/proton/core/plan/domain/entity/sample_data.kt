@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.domain.entity
 
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.type.IntEnum
 import java.util.Calendar
 import java.util.EnumSet
@@ -83,7 +84,13 @@ val unlimitedPlan = DynamicPlan(
                     current = 499,
                     default = 499
                 )
-            ).associateBy { it.currency }
+            ).associateBy { it.currency },
+            vendors = mapOf(
+                AppStore.GooglePlay to DynamicPlanVendor(
+                    productId = "googlemail_plus_1_renewing",
+                    customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+                )
+            )
         )
     ).associateBy { it.cycle },
     offers = listOf(

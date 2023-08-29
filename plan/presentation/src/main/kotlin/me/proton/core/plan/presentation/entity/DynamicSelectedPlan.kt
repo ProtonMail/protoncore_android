@@ -38,6 +38,6 @@ internal fun DynamicPlan.getSelectedPlan(
         amount = instances[cycle]?.price?.get(currency)?.current?.toDouble() ?: 0.0,
         services = services.sumOf { it.code },
         type = type?.value ?: 0,
-        vendorNames = instances[cycle]?.vendors?.toPlanVendorDetailsMap().orEmpty()
+        vendorNames = instances[cycle]?.vendors?.toPlanVendorDetailsMap(cycle).orEmpty()
     )
 }

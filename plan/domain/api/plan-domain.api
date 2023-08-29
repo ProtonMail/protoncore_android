@@ -241,6 +241,19 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanType$Companion {
 	public final fun from (I)Lme/proton/core/plan/domain/entity/DynamicPlanType;
 }
 
+public final class me/proton/core/plan/domain/entity/DynamicPlanVendor {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanVendor;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlanVendor;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlanVendor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCustomerId ()Ljava/lang/String;
+	public final fun getProductId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/plan/domain/entity/Plan {
 	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V

@@ -37,6 +37,7 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.entity.MASK_ALL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanVendorData
@@ -44,8 +45,8 @@ import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCycle.Companion.toPlanCycle
 import me.proton.core.plan.presentation.entity.PlanDetailsItem
-import me.proton.core.plan.presentation.entity.PlanPromotionPercentage
 import me.proton.core.plan.presentation.entity.PlanPricing
+import me.proton.core.plan.presentation.entity.PlanPromotionPercentage
 import me.proton.core.plan.presentation.entity.PlanVendorDetails
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.view.calculateUsedSpacePercentage
@@ -235,6 +236,15 @@ internal fun Map<AppStore, PlanVendorData>.toPlanVendorDetailsMap(): Map<AppStor
             names = entry.value.names.mapNotNull { (planDuration, vendorPlanName) ->
                 PlanCycle.map[planDuration.months]?.let { it to vendorPlanName }
             }.toMap()
+        )
+    }
+}
+
+internal fun Map<AppStore, DynamicPlanVendor>.toPlanVendorDetailsMap(cycle: Int): Map<AppStore, PlanVendorDetails> {
+    return mapValues { entry ->
+        PlanVendorDetails(
+            customerId = entry.value.customerId,
+            names = mapOf(requireNotNull(PlanCycle.map[cycle]) to entry.value.productId)
         )
     }
 }

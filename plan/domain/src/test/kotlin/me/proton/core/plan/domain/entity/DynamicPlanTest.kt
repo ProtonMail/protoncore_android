@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.domain.entity
 
+import me.proton.core.domain.entity.AppStore
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -35,7 +36,12 @@ class DynamicPlanTest {
                 current = 100
             )
         }.associateBy { it.currency },
-        vendors = emptyMap()
+        vendors = mapOf(
+            AppStore.GooglePlay to DynamicPlanVendor(
+                productId = "googlemail_plus_${cycle}_renewing",
+                customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+            )
+        )
     )
 
     private val planEmpty = DynamicPlan(
