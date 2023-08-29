@@ -29,7 +29,10 @@ public fun Result<*>.toGiapStatus(): GiapStatus {
     return when (val throwable = exceptionOrNull()) {
         null -> GiapStatus.success
         is BillingClientError -> throwable.toGiapStatus()
-        else -> GiapStatus.unknown
+        else -> {
+            CoreLogger.e(LogTag.GIAP_ERROR, throwable, "Unknown BillingClientError.")
+            GiapStatus.unknown
+        }
     }
 }
 
