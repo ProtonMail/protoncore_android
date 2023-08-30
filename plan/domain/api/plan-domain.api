@@ -30,11 +30,11 @@ public abstract interface annotation class me/proton/core/plan/domain/SupportUpg
 public abstract class me/proton/core/plan/domain/entity/DynamicDecoration {
 }
 
-public final class me/proton/core/plan/domain/entity/DynamicDecoration$Star : me/proton/core/plan/domain/entity/DynamicDecoration {
+public final class me/proton/core/plan/domain/entity/DynamicDecoration$Starred : me/proton/core/plan/domain/entity/DynamicDecoration {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Star;
-	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicDecoration$Star;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Star;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Starred;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicDecoration$Starred;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Starred;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getIconName ()Ljava/lang/String;
 	public fun hashCode ()I

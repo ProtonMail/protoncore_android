@@ -111,7 +111,7 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
     ) = with(binding.dynamicPlan) {
         title = subscription.title
         description = subscription.description
-        starred = subscription.decorations.filterIsInstance<DynamicDecoration.Star>().isNotEmpty()
+        starred = subscription.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
         val price = subscription.amount?.toDouble()
         priceText = price?.formatCentsPriceDefaultLocale(requireNotNull(subscription.currency))
         priceCycle = subscription.cycleDescription

@@ -43,7 +43,7 @@ val dynamicSubscription = DynamicSubscription(
     renewAmount = 0,
     couponCode = "COUPON123",
     decorations = listOf(
-        DynamicDecoration.Star(iconName = "tick")
+        DynamicDecoration.Starred(iconName = "tick")
     ),
     entitlements = listOf(
         DynamicEntitlement.Description(

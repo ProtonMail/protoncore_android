@@ -29,10 +29,10 @@ class DynamicDecorationResourceTest {
     @Test
     fun fromJsonToResource() {
         assertEquals(
-            DynamicDecorationResource.Star(iconName = "icon"),
+            DynamicDecorationResource.Starred(iconName = "icon"),
             """
                 {
-                "Type": "star",
+                "Type": "starred",
                 "IconName": "icon"
                 }
             """.trimIndent().deserialize<DynamicDecorationResource>()
@@ -52,8 +52,8 @@ class DynamicDecorationResourceTest {
     @Test
     fun fromResourceToDomain() {
         assertEquals(
-            DynamicDecoration.Star(iconName = "icon"),
-            DynamicDecorationResource.Star(iconName = "icon").toDynamicPlanDecoration()
+            DynamicDecoration.Starred(iconName = "icon"),
+            DynamicDecorationResource.Starred(iconName = "icon").toDynamicPlanDecoration()
         )
 
         assertNull(

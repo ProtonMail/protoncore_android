@@ -19,5 +19,5 @@
 package me.proton.core.plan.domain.entity
 
 sealed class DynamicDecoration {
-    data class Star(val iconName: String) : DynamicDecoration()
+    data class Starred(val iconName: String) : DynamicDecoration()
 }

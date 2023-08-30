@@ -30,32 +30,32 @@ public final class me/proton/core/plan/data/api/response/DynamicDecorationResour
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Star : me/proton/core/plan/data/api/response/DynamicDecorationResource {
-	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star$Companion;
+public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Starred : me/proton/core/plan/data/api/response/DynamicDecorationResource {
+	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred$Companion;
 	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star;
-	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;
+	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getIconName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Star$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star$$serializer;
+public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Starred$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Star;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Star$Companion {
+public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Starred$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 

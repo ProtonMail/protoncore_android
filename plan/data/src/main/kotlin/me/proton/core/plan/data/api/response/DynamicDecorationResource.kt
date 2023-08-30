@@ -31,7 +31,7 @@ import me.proton.core.plan.domain.entity.DynamicDecoration
 @Serializable(DynamicDecorationResourceSerializer::class)
 sealed class DynamicDecorationResource {
     @Serializable
-    data class Star(
+    data class Starred(
         @SerialName("IconName")
         val iconName: String
     ) : DynamicDecorationResource()
@@ -45,7 +45,7 @@ sealed class DynamicDecorationResource {
 
 fun DynamicDecorationResource.toDynamicPlanDecoration(): DynamicDecoration? =
     when (this) {
-        is DynamicDecorationResource.Star -> DynamicDecoration.Star(iconName)
+        is DynamicDecorationResource.Starred -> DynamicDecoration.Starred(iconName)
         is DynamicDecorationResource.Unknown -> null
     }
 
@@ -53,7 +53,7 @@ class DynamicDecorationResourceSerializer :
     JsonContentPolymorphicSerializer<DynamicDecorationResource>(DynamicDecorationResource::class) {
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DynamicDecorationResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {
-            "star" -> DynamicDecorationResource.Star.serializer()
+            "starred" -> DynamicDecorationResource.Starred.serializer()
             else -> DynamicDecorationResource.Unknown.serializer()
         }
     }

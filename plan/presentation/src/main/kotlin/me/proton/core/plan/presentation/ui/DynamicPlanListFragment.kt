@@ -129,7 +129,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         id = abs(plan.name.hashCode())
         title = plan.title
         description = plan.description
-        starred = plan.decorations.filterIsInstance<DynamicDecoration.Star>().isNotEmpty()
+        starred = plan.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
         priceText = price?.current?.toDouble()?.formatCentsPriceDefaultLocale(price.currency)
         priceCycle = instance?.description
         isCollapsable = true

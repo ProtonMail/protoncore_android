@@ -55,7 +55,7 @@ val unlimitedPlan = DynamicPlan(
     state = DynamicPlanState.Available,
     title = "Proton Unlimited",
     type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
-    decorations = listOf(DynamicDecoration.Star("tick")),
+    decorations = listOf(DynamicDecoration.Starred("tick")),
     description = null,
     entitlements = listOf(
         DynamicEntitlement.Description(
