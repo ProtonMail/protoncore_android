@@ -27,6 +27,7 @@ import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
 import kotlinx.kover.gradle.plugin.dsl.KoverVerifyReportConfig
 import kotlinx.kover.gradle.plugin.dsl.MetricType
 import me.proton.core.gradle.plugins.coverage.rules.androidRules
+import me.proton.core.gradle.plugins.coverage.rules.commonRules
 import me.proton.core.gradle.plugins.coverage.rules.daggerRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinParcelizeRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinSerializationRules
@@ -110,6 +111,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
             ext.enableKotlinSerializationRules.convention(true)
             ext.enableRoomDbRules.convention(true)
         }
+        ext.enableCommonRules.convention(true)
 
         configureKoverExtension(ext)
         configureJacocoToCoberturaExtension()
@@ -189,6 +191,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         if (ext.enableKotlinParcelizeRules.orNull == true) kotlinParcelizeRules()
         if (ext.enableKotlinSerializationRules.orNull == true) kotlinSerializationRules()
         if (ext.enableRoomDbRules.orNull == true) roomDbRules()
+        if (ext.enableCommonRules.orNull == true) commonRules()
         ext.excludes.get().forEach {
             excludes(it)
         }

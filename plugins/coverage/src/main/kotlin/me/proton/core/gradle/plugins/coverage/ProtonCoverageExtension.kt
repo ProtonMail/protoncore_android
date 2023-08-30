@@ -66,6 +66,9 @@ public interface ProtonCoverageExtension {
      * Use only if you want to override a default value.
      */
     public val minLineCoveragePercentage: Property<Int>
+
+    /** Explicitly enable Common rules. By default, they are enabled. */
+    public val enableCommonRules: Property<Boolean>
 }
 
 internal fun ProtonCoverageExtension.applyConventionsFrom(project: Project) {
@@ -87,6 +90,7 @@ internal fun ProtonCoverageExtension.applyConventionsFrom(other: ProtonCoverageE
     other.excludes.orNull?.let { excludes.convention(it) }
     other.minBranchCoveragePercentage.orNull?.let { minBranchCoveragePercentage.convention(it) }
     other.minLineCoveragePercentage.orNull?.let { minLineCoveragePercentage.convention(it) }
+    other.enableCommonRules.orNull?.let { enableCommonRules.convention(it) }
 }
 
 internal fun ProtonCoverageExtension.applyGeneralConventions() {
