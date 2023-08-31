@@ -62,4 +62,16 @@ dependencies {
         `lifecycle-runtime`,
         material
     )
+
+    testImplementation(
+        project(Module.androidTest),
+        project(Module.kotlinTest),
+        `android-arch-testing`,
+        `coroutines-test`,
+        `kotlin-test`,
+        `kotlin-test-junit`,
+        junit,
+        mockk,
+        turbine
+    )
 }
