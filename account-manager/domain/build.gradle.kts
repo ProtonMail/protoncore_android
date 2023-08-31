@@ -26,6 +26,11 @@ protonBuild {
     apiModeDisabled()
 }
 
+protonCoverage {
+    minBranchCoveragePercentage.set(50)
+    minLineCoveragePercentage.set(50)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 dependencies {
@@ -34,5 +39,13 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         `coroutines-core`
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        junit,
+        `kotlin-test`,
+        mockk
     )
 }

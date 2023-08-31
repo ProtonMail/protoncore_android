@@ -19,6 +19,7 @@ package me.proton.core.accountmanager.data
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.verify
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.Account
@@ -147,5 +148,168 @@ class AccountManagerImplTest {
         val sessionStateLists = accountManager.onSessionStateChanged().toList()
         assertEquals(1, sessionStateLists.size)
         assertEquals(SessionState.SecondFactorFailed, sessionStateLists[0].sessionState)
+    }
+
+    @Test
+    fun `on handleCreateAddressNeeded`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleCreateAddressNeeded(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.CreateAddressNeeded, stateLists[0].state)
+    }
+
+    @Test
+    fun `on handleCreateAddressSuccess`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleCreateAddressSuccess(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.CreateAddressSuccess, stateLists[0].state)
+    }
+
+    @Test
+    fun `on handleCreateAddressFailed`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleCreateAddressFailed(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.CreateAddressFailed, stateLists[0].state)
+    }
+
+    @Test
+    fun `on handleUnlockFailed`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleUnlockFailed(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(2, stateLists.size)
+        assertEquals(AccountState.UnlockFailed, stateLists[0].state)
+        assertEquals(AccountState.Disabled, stateLists[1].state)
+    }
+
+    @Test
+    fun `on handleAccountReady`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleAccountReady(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Ready, stateLists[0].state)
+
+        coVerify(exactly = 1) { mocks.accountRepository.clearSessionDetails(any()) }
+    }
+
+    @Test
+    fun `on handleAccountNotReady`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleAccountNotReady(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.NotReady, stateLists[0].state)
+    }
+
+    @Test
+    fun `on handleAccountDisabled`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleAccountDisabled(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Disabled, stateLists[0].state)
+    }
+
+    @Test
+    fun `on handleTwoPassModeNeeded`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.handleTwoPassModeNeeded(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.TwoPassModeNeeded, stateLists[0].state)
+    }
+
+    @Test
+    fun `on setAsPrimary`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.setAsPrimary(account1.userId)
+
+        coVerify(exactly = 1) { mocks.accountRepository.setAsPrimary(account1.userId) }
+    }
+
+    @Test
+    fun `on getPreviousPrimaryUserId`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.getPreviousPrimaryUserId()
+
+        coVerify(exactly = 1) { mocks.accountRepository.getPreviousPrimaryUserId() }
+    }
+
+    @Test
+    fun `on getPrimaryUserId`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.getPrimaryUserId()
+
+        verify(exactly = 1) { mocks.accountRepository.getPrimaryUserId() }
+    }
+
+    @Test
+    fun `on getAccount`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.getAccount(account1.userId)
+
+        verify(exactly = 1) { mocks.accountRepository.getAccount(account1.userId) }
+    }
+
+    @Test
+    fun `on getAccounts`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.getAccounts()
+
+        verify(exactly = 1) { mocks.accountRepository.getAccounts() }
+    }
+
+    @Test
+    fun `on removeAccount`() = runTest {
+        mocks.setupAccountRepository()
+        mocks.setupAuthRepository()
+
+        accountManager.removeAccount(account1.userId)
+
+        val stateLists = accountManager.onAccountStateChanged().toList()
+        assertEquals(1, stateLists.size)
+        assertEquals(AccountState.Removed, stateLists[0].state)
+
+        coVerify(exactly = 1) { mocks.accountRepository.deleteAccount(account1.userId) }
     }
 }

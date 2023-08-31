@@ -24,7 +24,9 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 abstract class AccountManager(
     /**
      * Define which [Product] this instance is used by.
