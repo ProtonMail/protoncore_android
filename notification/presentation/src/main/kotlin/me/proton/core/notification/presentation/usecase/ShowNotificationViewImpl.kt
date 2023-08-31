@@ -62,8 +62,9 @@ public class ShowNotificationViewImpl @Inject internal constructor(
             .setSmallIcon(getSmallIcon())
             .setContentTitle(payload.title)
             .setSubText(payload.subtitle)
-            .setContentText(payload.body)
-            .setWhen(notification.time)
+            .setContentText(payload.body) // collapsed - truncated to single line
+            .setStyle(NotificationCompat.BigTextStyle().bigText(payload.body)) // expanded
+            .setWhen(notification.time * 1000L)
             .setShowWhen(true)
             .setContentIntent(makeContentIntent(notification))
             .setDeleteIntent(makeOnDeleteIntent(notification))
