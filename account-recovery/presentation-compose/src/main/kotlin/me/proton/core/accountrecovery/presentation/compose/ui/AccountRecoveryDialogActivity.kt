@@ -53,7 +53,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
                 ) {
                     addAccountRecoveryDialog(
                         userId = userId,
-                        onClosed = { setResultAndFinish() },
+                        onClosed = { close() },
                         onError = { showErrorAndFinish(it) }
                     )
                 }
@@ -64,12 +64,11 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
     private fun showErrorAndFinish(error: Throwable?) {
         val message = error?.getUserMessage(resources)
         errorToast(message ?: getString(R.string.presentation_error_general))
-        setResultAndFinish()
+        close()
     }
 
-    private fun setResultAndFinish() {
-        setResult(RESULT_OK, Intent())
-        finish()
+    private fun close() {
+        finishAndRemoveTask()
     }
 
     companion object {
@@ -81,6 +80,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
 
         fun getIntent(context: Context, input: AccountRecoveryDialogInput): Intent =
             Intent(context, AccountRecoveryDialogActivity::class.java).apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 putExtra(ARG_INPUT, input)
             }
     }
