@@ -1362,6 +1362,7 @@ public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase
 }
 
 public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView : androidx/constraintlayout/widget/ConstraintLayout {
+	public static final field Companion Lme/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView$Companion;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
@@ -1371,6 +1372,9 @@ public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescr
 	public final fun getText ()Ljava/lang/CharSequence;
 	public final fun setIcon (Ljava/lang/Object;)V
 	public final fun setText (Ljava/lang/CharSequence;)V
+}
+
+public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView$Companion {
 }
 
 public final class me/proton/core/plan/presentation/view/DynamicEntitlementKt {

@@ -27,10 +27,6 @@ class DynamicEntitlementDescriptionView @JvmOverloads constructor(
 
     private val binding by lazy { inflate(LayoutInflater.from(context), this) }
 
-    private val imageLoader = ImageLoader.Builder(context)
-        .components { add(SvgDecoder.Factory()) }
-        .build()
-
     /**
      * The default supported types are:
      *
@@ -46,7 +42,7 @@ class DynamicEntitlementDescriptionView @JvmOverloads constructor(
      */
     var icon: Any? = null
         set(value) = with(binding) {
-            icon.load(value, imageLoader) { fallback(R.drawable.ic_proton_checkmark) }
+            icon.load(value, getImageLoader(context)) { fallback(R.drawable.ic_proton_checkmark) }
         }
 
     var text: CharSequence?
@@ -54,4 +50,12 @@ class DynamicEntitlementDescriptionView @JvmOverloads constructor(
         set(value) {
             binding.text.text = value
         }
+
+    companion object {
+        private var imageLoader: ImageLoader? = null
+        private fun getImageLoader(context: Context) = imageLoader ?: ImageLoader.Builder(context)
+            .components { add(SvgDecoder.Factory()) }
+            .build()
+            .apply { imageLoader = this }
+    }
 }
