@@ -11,6 +11,37 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [15.1.0] - 2023-09-01
+
+### Chores
+
+- payment-iap:
+  - Add sentry log for unknown giap error/throwable status.
+
+### Features
+
+- coverage:
+  - Add commonRules.kt
+  - Update coverage rules and introduce new ExcludeFromCoverage annotation.
+
+    .
+- feature-flag:
+  - Added FeatureFlagRefreshStarter to use with FeatureFlagInitializer.
+- gopenpgp:
+  - Update to gopenpgp v2.7.3-proton and reset key transparency to v0.0.1.
+- plan:
+  - Added Dynamic Plan Minimal UI tests.
+  - Integrated Dynamic Activities into PlansOrchestrator Workflows.
+
+### Bug Fixes
+
+- plan:
+  - Fixed DynamicEntitlementDescriptionView ImageLoader.
+  - Fixed Dynamic Decoration Starred.
+  - Fixed DynamicPlanInstanceResource Vendor mapping.
+  - Fixed DynamicPlanResource enums mapping.
+  - Fixed Dynamic Subscription management info text.
+
 ## [15.0.0] - 2023-08-23
 
 ### Breaking Changes
