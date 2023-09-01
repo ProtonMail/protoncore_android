@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -31,7 +31,9 @@
         android:taskAffinity=""
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
-        <meta-data android:name="io.sentry.auto-init" android:value="false" />
+        <meta-data
+            android:name="io.sentry.auto-init"
+            android:value="false" />
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
@@ -43,11 +45,12 @@
                 tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.LoggerInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.Sentryinitializer"
                 android:value="androidx.startup"
-                tools:node="remove"/>
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.WorkManagerInitializer"
                 android:value="androidx.startup"

@@ -89,6 +89,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:account-recovery-data                 |
 | me.proton.core:account-recovery-domain               |
 | me.proton.core:account-recovery-presentation-compose |
+| me.proton.core:account-recovery-test                 |
 | me.proton.core:auth                                  |
 | me.proton.core:auth-dagger                           |
 | me.proton.core:auth-data                             |

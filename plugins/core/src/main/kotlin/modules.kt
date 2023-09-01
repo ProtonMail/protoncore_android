@@ -99,6 +99,7 @@ public object Module {
     public const val accountRecoveryData: String = "$accountRecovery:account-recovery-data"
     public const val accountRecoveryDomain: String = "$accountRecovery:account-recovery-domain"
     public const val accountRecoveryPresentationCompose: String = "$accountRecovery:account-recovery-presentation-compose"
+    public const val accountRecoveryTest: String = "$accountRecovery:account-recovery-test"
 
     // Crypto
     public const val crypto: String = ":crypto"

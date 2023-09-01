@@ -1,0 +1,33 @@
+public final class me/proton/core/accountrecovery/test/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/accountrecovery/test/MinimalAccountRecoveryNotificationTest {
+	public abstract fun getAccountStateHandler ()Lme/proton/core/accountmanager/data/AccountStateHandler;
+	public abstract fun getApiProvider ()Lme/proton/core/network/data/ApiProvider;
+	public abstract fun getEventManagerProvider ()Lme/proton/core/eventmanager/domain/EventManagerProvider;
+	public abstract fun getEventMetadataRepository ()Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
+	public abstract fun getNotificationRepository ()Lme/proton/core/notification/domain/repository/NotificationRepository;
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
+	public abstract fun getWaitForPrimaryAccount ()Lme/proton/core/auth/test/usecase/WaitForPrimaryAccount;
+	public abstract fun prepare ()V
+	public abstract fun receiveAccountRecoveryNotification ()V
+	public abstract fun resetDevice ()V
+	public abstract fun verifyAfterLogin ()V
+}
+
+public final class me/proton/core/accountrecovery/test/MinimalAccountRecoveryNotificationTest$DefaultImpls {
+	public static fun prepare (Lme/proton/core/accountrecovery/test/MinimalAccountRecoveryNotificationTest;)V
+	public static fun receiveAccountRecoveryNotification (Lme/proton/core/accountrecovery/test/MinimalAccountRecoveryNotificationTest;)V
+	public static fun resetDevice (Lme/proton/core/accountrecovery/test/MinimalAccountRecoveryNotificationTest;)V
+}
+
+public final class me/proton/core/accountrecovery/test/robot/AccountRecoveryGracePeriodRobot {
+	public fun <init> ()V
+	public final fun clickContinue ()V
+	public final fun uiElementsDisplayed ()V
+}
+

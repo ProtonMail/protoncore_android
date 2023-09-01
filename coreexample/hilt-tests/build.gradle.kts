@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -64,12 +64,14 @@ dependencies {
 
     implementation(
         `android-work-runtime`,
+        fusion,
         `hilt-android-testing`,
         `kotlin-test`,
         `kotlin-test-junit`,
         `mockk-android`,
         mockWebServer,
 
+        project(Module.accountRecoveryTest),
         project(Module.androidInstrumentedTest),
         project(Module.quark),
 
