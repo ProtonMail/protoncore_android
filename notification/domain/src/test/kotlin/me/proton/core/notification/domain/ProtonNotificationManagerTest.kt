@@ -30,6 +30,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.notification.domain.entity.NotificationPayload
+import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.ConfigureNotificationChannel
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
@@ -60,6 +61,9 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var isNotificationsEnabled: IsNotificationsEnabled
 
     @MockK
+    private lateinit var notificationRepository: NotificationRepository
+
+    @MockK
     private lateinit var pushRepository: PushRepository
 
     @MockK
@@ -78,6 +82,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
             configureNotificationChannel,
             getNotificationChannelId,
             isNotificationsEnabled,
+            notificationRepository,
             pushRepository,
             replaceNotificationViews,
             TestCoroutineScopeProvider(dispatchers),

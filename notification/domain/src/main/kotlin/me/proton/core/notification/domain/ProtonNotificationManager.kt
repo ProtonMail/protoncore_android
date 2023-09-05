@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationId
+import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.ConfigureNotificationChannel
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
@@ -39,6 +40,7 @@ public class ProtonNotificationManager @Inject constructor(
     private val configureNotificationChannel: ConfigureNotificationChannel,
     private val getNotificationsChannelId: GetNotificationChannelId,
     private val isNotificationsEnabled: IsNotificationsEnabled,
+    private val notificationRepository: NotificationRepository,
     private val pushRepository: PushRepository,
     private val replaceNotificationViews: ReplaceNotificationViews,
     private val scopeProvider: CoroutineScopeProvider,
@@ -70,6 +72,7 @@ public class ProtonNotificationManager @Inject constructor(
             pushRepository.getAllPushes(userId, PushObjectType.Notifications)
                 .filter { it.objectId == notificationId.id }
                 .forEach { pushRepository.deletePush(it.userId, it.pushId) }
+            notificationRepository.deleteNotificationById(userId, notificationId)
         }
 
     /** Shows the given [notifications] and dismisses everything else.
