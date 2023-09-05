@@ -132,6 +132,13 @@ public object Module {
     public const val labelData: String = "$label:label-data"
     public const val labelDagger: String = "$label:label-dagger"
 
+    // Configuration
+    public const val configuration: String = ":configuration"
+    public const val configurationDomain: String = "$configuration:configuration-domain"
+    public const val configurationProvider: String = "$configuration:configuration-provider"
+    public const val configurationDaggerStatic: String = "$configuration:configuration-dagger-staticdefaults"
+    public const val configurationDaggerContentResolver: String = "$configuration:configuration-dagger-content-resolver"
+
     // Contact
     public const val contact: String = ":contact"
     public const val contactDomain: String = "$contact:contact-domain"

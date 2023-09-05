@@ -1,0 +1,28 @@
+public final class me/proton/core/configuration/provider/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public class me/proton/core/configuration/provider/ContentResolverConfigProvider : me/proton/core/configuration/entity/ConfigFieldProvider {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/configuration/entity/ConfigFieldProvider;)V
+	public synthetic fun <init> (Landroid/content/Context;Lme/proton/core/configuration/entity/ConfigFieldProvider;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun booleanProvider (Ljava/lang/String;)Ljava/lang/Boolean;
+	public fun getConfigData ()Ljava/util/Map;
+	public fun stringProvider (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/provider/StaticConfigFieldProvider : me/proton/core/configuration/entity/ConfigFieldProvider {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun booleanProvider (Ljava/lang/String;)Ljava/lang/Boolean;
+	public fun getConfigData ()Ljava/util/Map;
+	public fun stringProvider (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/provider/StaticConfigProviderKt {
+	public static final field DEFAULTS_CLASS Ljava/lang/String;
+}
+
