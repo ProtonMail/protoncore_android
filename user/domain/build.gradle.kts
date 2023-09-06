@@ -28,6 +28,11 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    minBranchCoveragePercentage.set(78)
+    minLineCoveragePercentage.set(31)
+}
+
 dependencies {
     api(
         project(Module.accountDomain),
@@ -43,6 +48,10 @@ dependencies {
     )
 
     testImplementation(
-        project(Module.kotlinUtil),
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        `kotlin-test`,
+        junit,
+        mockk
     )
 }

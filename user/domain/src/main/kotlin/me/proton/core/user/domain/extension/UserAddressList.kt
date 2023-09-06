@@ -16,6 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:Suppress("TooManyFunctions")
+
 package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.AddressType

@@ -20,8 +20,8 @@ package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.User
 
-private const val MASK_MAIL = 1 // 0001
-private const val MASK_VPN = 4 // 0100
+internal const val MASK_MAIL = 1 // 0001
+internal const val MASK_VPN = 4 // 0100
 
 private fun User.hasServiceFor(mask: Int): Boolean = mask.and(services) == mask
 private fun User.hasSubscriptionFor(mask: Int): Boolean = mask.and(subscribed) == mask
