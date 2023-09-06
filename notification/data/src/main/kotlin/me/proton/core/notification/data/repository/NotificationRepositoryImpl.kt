@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -76,16 +76,20 @@ public class NotificationRepositoryImpl @Inject constructor(
 
     override suspend fun deleteAllNotificationsByUser(userId: UserId) {
         localDataSource.deleteAllNotificationsByUser(userId)
+        store.clear(userId)
     }
 
     override suspend fun deleteNotificationById(userId: UserId, notificationId: NotificationId) {
         localDataSource.getNotificationById(userId, notificationId)?.let {
             localDataSource.deleteNotificationsById(userId, notificationId)
+            store.clear(userId)
         }
     }
 
     override suspend fun upsertNotifications(vararg notifications: Notification) {
         localDataSource.upsertNotifications(*notifications)
+        notifications.map { it.userId }.toSet().forEach {
+            store.clear(it)
+        }
     }
 }
-

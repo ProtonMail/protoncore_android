@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -29,8 +29,8 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
-    minBranchCoveragePercentage.set(37)
-    minLineCoveragePercentage.set(82)
+    minBranchCoveragePercentage.set(61)
+    minLineCoveragePercentage.set(90)
 }
 
 android {

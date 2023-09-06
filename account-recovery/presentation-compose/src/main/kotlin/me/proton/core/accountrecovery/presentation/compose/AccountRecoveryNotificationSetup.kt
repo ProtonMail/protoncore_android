@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -37,7 +37,7 @@ class AccountRecoveryNotificationSetup @Inject internal constructor(
     }
 
     companion object {
-        const val type = "account.recovery.dialog"
+        const val type = "account_recovery"
         val deeplink = NotificationDeeplink.Open.Deeplink.replace("{type}", type)
     }
 }

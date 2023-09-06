@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -41,6 +41,7 @@ import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 @RunWith(RobolectricTestRunner::class)
 internal class NotificationRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest() {
@@ -115,7 +116,7 @@ internal class NotificationRepositoryImplTest : CoroutinesTest by UnconfinedCoro
     }
 
     @Test
-    fun `upsert notifications`() = runTest {
+    fun `observe and upsert notifications`() = runTest {
         localDataSource.upsertNotifications(testNotification1, testNotification2)
         tested.observeAllNotificationsByUser(testUserId).test {
             assertContentEquals(listOf(testNotification1, testNotification2), awaitItem())
@@ -123,5 +124,38 @@ internal class NotificationRepositoryImplTest : CoroutinesTest by UnconfinedCoro
             assertContentEquals(listOf(testNotification1, testNotification2, testNotification3), awaitItem())
             expectNoEvents()
         }
+    }
+
+    @Test
+    fun `upsert notification`() = runTest {
+        assertTrue(tested.getAllNotificationsByUser(testUserId).isEmpty())
+
+        // WHEN
+        tested.upsertNotifications(testNotification1)
+
+        // THEN
+        assertContentEquals(
+            listOf(testNotification1),
+            tested.getAllNotificationsByUser(testUserId)
+        )
+    }
+
+    @Test
+    fun `delete notification`() = runTest {
+        // GIVEN
+        localDataSource.upsertNotifications(testNotification1, testNotification2)
+        assertContentEquals(
+            listOf(testNotification1, testNotification2),
+            tested.getAllNotificationsByUser(testUserId)
+        )
+
+        // WHEN
+        tested.deleteNotificationById(testUserId, testNotification1.notificationId)
+
+        // THEN
+        assertContentEquals(
+            listOf(testNotification2),
+            tested.getAllNotificationsByUser(testUserId)
+        )
     }
 }

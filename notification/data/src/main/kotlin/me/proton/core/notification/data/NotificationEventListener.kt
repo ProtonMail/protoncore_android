@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@ import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.notification.data.local.db.NotificationDatabase
 import me.proton.core.notification.data.remote.response.NotificationResponse
 import me.proton.core.notification.data.remote.response.toNotification
+import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
@@ -36,17 +37,7 @@ import javax.inject.Singleton
 @Serializable
 public data class NotificationEvents(
     @SerialName("Notifications")
-    val notifications: List<NotificationEvent>? = null
-)
-
-@Serializable
-public data class NotificationEvent(
-    @SerialName("ID")
-    val id: String,
-    @SerialName("Action")
-    val action: Int,
-    @SerialName("Notification")
-    val notification: NotificationResponse? = null
+    val notifications: List<NotificationResponse>? = null
 )
 
 @Singleton
@@ -63,7 +54,7 @@ public open class NotificationEventListener @Inject constructor(
         response: EventsResponse
     ): List<Event<String, NotificationResponse>>? {
         return response.body.deserialize<NotificationEvents>().notifications?.map {
-            Event(requireNotNull(Action.map[it.action]), it.id, it.notification)
+            Event(requireNotNull(Action.Update), it.notificationId, it)
         }
     }
 
