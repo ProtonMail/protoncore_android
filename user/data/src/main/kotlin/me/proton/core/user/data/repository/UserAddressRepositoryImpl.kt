@@ -57,6 +57,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@Suppress("TooManyFunctions")
 class UserAddressRepositoryImpl @Inject constructor(
     private val db: AddressDatabase,
     private val apiProvider: ApiProvider,
@@ -164,11 +165,6 @@ class UserAddressRepositoryImpl @Inject constructor(
 
     override fun observeAddress(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean): Flow<UserAddress?> =
         observeAddresses(sessionUserId, refresh).map { list -> list.firstOrNull { it.addressId == addressId } }
-
-    override fun getAddressesFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<List<UserAddress>>> =
-        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
-            .map { it.toDataResult() }
-            .distinctUntilChanged()
 
     override suspend fun getAddresses(sessionUserId: SessionUserId, refresh: Boolean): List<UserAddress> =
         if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId)

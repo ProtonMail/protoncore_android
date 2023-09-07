@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -42,9 +41,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.data.repository.KeySaltRepositoryImpl
@@ -57,9 +54,6 @@ import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.key.domain.useKeys
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
-import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -236,9 +230,7 @@ class UserManagerImplTests {
         userManager.unlockWithPassphrase(TestUsers.User1.id, TestUsers.User1.Key1.passphrase)
 
         // WHEN
-        val user = userManager.getUserFlow(TestUsers.User1.id)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
+        val user = userManager.observeUser(TestUsers.User1.id)
             .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 
@@ -293,9 +285,7 @@ class UserManagerImplTests {
         }
 
         // WHEN
-        val user = userManager.getUserFlow(TestUsers.User1.id)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
+        val user = userManager.observeUser(TestUsers.User1.id)
             .filterNotNull()
             .firstOrNull()
 
@@ -345,10 +335,8 @@ class UserManagerImplTests {
 
         // WHEN
         val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
-        val addresses = userManager.getAddressesFlow(TestUsers.User1.id, refresh = true)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
-            .filter { it?.isNotEmpty() ?: false }
+        val addresses = userManager.observeAddresses(TestUsers.User1.id, refresh = true)
+            .filter { it.isNotEmpty() }
             .filterNotNull()
             .firstOrNull()
 
@@ -407,10 +395,8 @@ class UserManagerImplTests {
 
         // WHEN
         val user = userRepository.getUser(TestUsers.User1.id, refresh = true)
-        val addresses = userManager.getAddressesFlow(TestUsers.User1.id, refresh = true)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
-            .filter { it?.isNotEmpty() ?: false }
+        val addresses = userManager.observeAddresses(TestUsers.User1.id, refresh = true)
+            .filter { it.isNotEmpty() }
             .filterNotNull()
             .firstOrNull()
 
@@ -477,10 +463,8 @@ class UserManagerImplTests {
 
         // WHEN
         val user = userRepository.getUser(TestUsers.User2.id, refresh = true)
-        val addresses = userManager.getAddressesFlow(TestUsers.User2.id, refresh = true)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
-            .filter { it?.isNotEmpty() ?: false }
+        val addresses = userManager.observeAddresses(TestUsers.User2.id, refresh = true)
+            .filter { it.isNotEmpty() }
             .filterNotNull()
             .firstOrNull()
 

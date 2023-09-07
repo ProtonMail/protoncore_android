@@ -25,6 +25,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 
+@Suppress("TooManyFunctions")
 interface UserAddressRepository {
     /**
      * Add [UserAddress], locally.
@@ -86,20 +87,6 @@ interface UserAddressRepository {
         addressId: AddressId,
         refresh: Boolean = false
     ): Flow<UserAddress?>
-
-    /**
-     * Get all [UserAddress], using [sessionUserId].
-     *
-     * @return value emitted from cache/disk, then from fetcher if [refresh] is true.
-     */
-    @Deprecated(
-        "Use observeAddresses() instead, DataResult is not needed for this object.",
-        ReplaceWith("observeAddresses(sessionUserId, refresh)")
-    )
-    fun getAddressesFlow(
-        sessionUserId: SessionUserId,
-        refresh: Boolean = false
-    ): Flow<DataResult<List<UserAddress>>>
 
     /**
      * Get all [UserAddress], using [sessionUserId].

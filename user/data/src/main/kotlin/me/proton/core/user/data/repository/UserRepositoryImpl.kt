@@ -67,6 +67,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@Suppress("TooManyFunctions")
 class UserRepositoryImpl @Inject constructor(
     private val db: UserDatabase,
     private val provider: ApiProvider,
@@ -134,11 +135,6 @@ class UserRepositoryImpl @Inject constructor(
     override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
         store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
             .map { it.dataOrNull() }
-            .distinctUntilChanged()
-
-    override fun getUserFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<User>> =
-        store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
-            .map { it.toDataResult() }
             .distinctUntilChanged()
 
     override suspend fun getUser(sessionUserId: SessionUserId, refresh: Boolean): User =

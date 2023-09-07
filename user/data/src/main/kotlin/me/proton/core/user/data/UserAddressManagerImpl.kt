@@ -52,11 +52,6 @@ class UserAddressManagerImpl @Inject constructor(
         refresh: Boolean
     ): Flow<List<UserAddress>> = userAddressRepository.observeAddresses(sessionUserId, refresh = refresh)
 
-    override fun getAddressesFlow(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): Flow<DataResult<List<UserAddress>>> = userAddressRepository.getAddressesFlow(sessionUserId, refresh = refresh)
-
     override suspend fun getAddresses(
         sessionUserId: SessionUserId,
         refresh: Boolean

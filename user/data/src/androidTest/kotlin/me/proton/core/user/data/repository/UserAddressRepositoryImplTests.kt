@@ -41,7 +41,6 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.AddressesResponse
 import me.proton.core.key.data.api.response.UsersResponse
@@ -52,7 +51,6 @@ import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.verifyText
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -68,7 +66,6 @@ import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.db.dao.AddressWithKeysDao
 import me.proton.core.user.data.extension.toUserAddress
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl.Companion.isFetchedTag
-import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.user.domain.extension.primary
@@ -80,14 +77,12 @@ import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
-import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class UserAddressRepositoryImplTests {
 
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val sessionListener = mockk<SessionListener>(relaxed = true)
     private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
 
     private val userApi = mockk<UserApi>(relaxed = true)
@@ -194,14 +189,10 @@ class UserAddressRepositoryImplTests {
         userRepository.getUser(TestUsers.User1.id, refresh = true)
 
         // WHEN
-        userAddressRepository.getAddressesFlow(TestUsers.User1.id, refresh = true).test {
+        userAddressRepository.observeAddresses(TestUsers.User1.id, refresh = true).test {
             // THEN
-            val processing = awaitItem()
-            assertIs<DataResult.Processing>(processing)
-
-            val success = awaitItem()
-            assertIs<DataResult.Success<List<UserAddress>>>(success)
-            assertEquals(1, success.value.size)
+            assertEquals(0, awaitItem().size)
+            assertEquals(1, awaitItem().size)
 
             cancelAndIgnoreRemainingEvents()
         }

@@ -25,7 +25,6 @@ import io.mockk.mockk
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -44,7 +43,6 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.key.data.api.response.UsersResponse
 import me.proton.core.key.domain.extension.areAllInactive
@@ -172,9 +170,7 @@ class UserRepositoryImplTests {
         }
 
         // WHEN
-        val user = userRepository.getUserFlow(TestUsers.User1.id)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
+        val user = userRepository.observeUser(TestUsers.User1.id)
             .filterNotNull()
             .firstOrNull()
 
@@ -239,9 +235,7 @@ class UserRepositoryImplTests {
         userRepository.setPassphrase(userId, passphrase)
 
         // WHEN
-        val user = userRepository.getUserFlow(userId)
-            .mapLatest { it as? DataResult.Success }
-            .mapLatest { it?.value }
+        val user = userRepository.observeUser(userId)
             .filterNot { it?.keys?.areAllInactive() ?: true }
             .firstOrNull()
 

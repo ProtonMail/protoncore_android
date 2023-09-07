@@ -81,11 +81,6 @@ class UserManagerImpl @Inject constructor(
         refresh: Boolean
     ): Flow<User?> = userRepository.observeUser(sessionUserId, refresh = refresh)
 
-    override fun getUserFlow(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): Flow<DataResult<User?>> = userRepository.getUserFlow(sessionUserId, refresh = refresh)
-
     override suspend fun getUser(
         sessionUserId: SessionUserId,
         refresh: Boolean
@@ -95,11 +90,6 @@ class UserManagerImpl @Inject constructor(
         sessionUserId: SessionUserId,
         refresh: Boolean
     ): Flow<List<UserAddress>> = userAddressRepository.observeAddresses(sessionUserId, refresh = refresh)
-
-    override fun getAddressesFlow(
-        sessionUserId: SessionUserId,
-        refresh: Boolean
-    ): Flow<DataResult<List<UserAddress>>> = userAddressRepository.getAddressesFlow(sessionUserId, refresh = refresh)
 
     override suspend fun getAddresses(
         sessionUserId: SessionUserId,
