@@ -109,7 +109,8 @@ class UserSettingsRepositoryImplTest {
             dateFormat = 1,
             timeFormat = 2,
             weekStart = 7,
-            earlyAccess = 1
+            earlyAccess = 1,
+            telemetry = 1
         )
         // GIVEN
         coEvery { userSettingsApi.getUserSettings() } returns SingleUserSettingsResponse(settingsResponse)
@@ -178,7 +179,8 @@ class UserSettingsRepositoryImplTest {
             dateFormat = 1,
             timeFormat = 2,
             weekStart = 7,
-            earlyAccess = 1
+            earlyAccess = 1,
+            telemetry = 1
         )
         coEvery { userSettingsApi.updateRecoveryEmail(any()) } returns UpdateUserSettingsResponse(
             settings = settingsResponse,
@@ -243,7 +245,8 @@ class UserSettingsRepositoryImplTest {
             dateFormat = 1,
             timeFormat = 2,
             weekStart = 7,
-            earlyAccess = 1
+            earlyAccess = 1,
+            telemetry = 1
         )
         val testSalt = "test-salt"
         val testModulusId = "test-modulus-id"

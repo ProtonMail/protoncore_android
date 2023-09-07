@@ -255,6 +255,12 @@ public object Module {
     public const val observabilityDomain: String = "$observability:observability-domain"
     public const val observabilityData: String = "$observability:observability-data"
 
+    // Telemetry
+    public const val telemetry: String = ":telemetry"
+    public const val telemetryDagger: String = "$telemetry:telemetry-dagger"
+    public const val telemetryDomain: String = "$telemetry:telemetry-domain"
+    public const val telemetryData: String = "$telemetry:telemetry-data"
+
     // Proguard rules
     public const val proguardRules: String = ":proguard-rules"
 

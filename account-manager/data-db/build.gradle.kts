@@ -63,6 +63,7 @@ dependencies {
         project(Module.paymentData),
         project(Module.pushData),
         project(Module.pushDomain),
+        project(Module.telemetry),
         project(Module.userData),
         project(Module.userDomain),
         project(Module.userSettingsData),

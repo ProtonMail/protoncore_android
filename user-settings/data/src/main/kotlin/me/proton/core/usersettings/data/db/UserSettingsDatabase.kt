@@ -20,6 +20,7 @@ package me.proton.core.usersettings.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.extension.dropTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.usersettings.data.db.dao.UserSettingsDao
@@ -73,6 +74,17 @@ interface UserSettingsDatabase : Database {
                         "welcome",
                         "flags_welcomed"
                     )
+                )
+            }
+        }
+
+
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserSettingsEntity",
+                    column = "telemetry",
+                    type = "INTEGER"
                 )
             }
         }

@@ -105,6 +105,7 @@ dependencies {
         project(Module.plan),
         project(Module.push),
         project(Module.report),
+        project(Module.telemetry),
         project(Module.user),
         project(Module.userSettings),
         project(Module.keyTransparency)

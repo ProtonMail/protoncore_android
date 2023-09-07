@@ -46,7 +46,9 @@ data class UserSettingsResponse(
     @SerialName("TimeFormat")
     val timeFormat: Int,
     @SerialName("EarlyAccess")
-    val earlyAccess: Int
+    val earlyAccess: Int,
+    @SerialName("Telemetry")
+    val telemetry: Int,
 )
 
 @Serializable

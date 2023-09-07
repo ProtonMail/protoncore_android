@@ -70,6 +70,8 @@ import me.proton.core.payment.data.local.entity.GooglePurchaseEntity
 import me.proton.core.push.data.local.db.PushConverters
 import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.push.data.local.db.PushEntity
+import me.proton.core.telemetry.data.db.TelemetryDatabase
+import me.proton.core.telemetry.data.entity.TelemetryEventEntity
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserConverters
 import me.proton.core.user.data.db.UserDatabase
@@ -128,6 +130,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         GooglePurchaseEntity::class,
         // observability
         ObservabilityEventEntity::class,
+        // telemetry
+        TelemetryEventEntity::class,
         // key-transparency
         AddressChangeEntity::class,
         SelfAuditResultEntity::class,
@@ -170,12 +174,13 @@ abstract class AppDatabase :
     PushDatabase,
     PaymentDatabase,
     ObservabilityDatabase,
+    TelemetryDatabase,
     KeyTransparencyDatabase,
     NotificationDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 36
+        const val version = 37
 
         val migrations = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
@@ -213,6 +218,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_33_34,
             AppDatabaseMigrations.MIGRATION_34_35,
             AppDatabaseMigrations.MIGRATION_35_36,
+            AppDatabaseMigrations.MIGRATION_36_37,
         )
 
         fun buildDatabase(context: Context): AppDatabase =

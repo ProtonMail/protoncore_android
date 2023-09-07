@@ -78,7 +78,7 @@ public final class me/proton/core/account/data/db/SessionDetailsDao_Impl : me/pr
 	public fun update ([Lme/proton/core/account/data/entity/SessionDetailsEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/challenge/data/db/ChallengeDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/featureflag/data/db/FeatureFlagDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/keytransparency/data/local/KeyTransparencyDatabase, me/proton/core/label/data/local/LabelDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/notification/data/local/db/NotificationDatabase, me/proton/core/observability/data/db/ObservabilityDatabase, me/proton/core/payment/data/local/db/PaymentDatabase, me/proton/core/push/data/local/db/PushDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
+public abstract class me/proton/core/accountmanager/data/db/AccountManagerDatabase : me/proton/core/data/room/db/BaseDatabase, me/proton/core/account/data/db/AccountDatabase, me/proton/core/challenge/data/db/ChallengeDatabase, me/proton/core/contact/data/local/db/ContactDatabase, me/proton/core/eventmanager/data/db/EventMetadataDatabase, me/proton/core/featureflag/data/db/FeatureFlagDatabase, me/proton/core/humanverification/data/db/HumanVerificationDatabase, me/proton/core/key/data/db/KeySaltDatabase, me/proton/core/key/data/db/PublicAddressDatabase, me/proton/core/keytransparency/data/local/KeyTransparencyDatabase, me/proton/core/label/data/local/LabelDatabase, me/proton/core/mailsettings/data/db/MailSettingsDatabase, me/proton/core/notification/data/local/db/NotificationDatabase, me/proton/core/observability/data/db/ObservabilityDatabase, me/proton/core/payment/data/local/db/PaymentDatabase, me/proton/core/push/data/local/db/PushDatabase, me/proton/core/telemetry/data/db/TelemetryDatabase, me/proton/core/user/data/db/AddressDatabase, me/proton/core/user/data/db/UserDatabase, me/proton/core/usersettings/data/db/OrganizationDatabase, me/proton/core/usersettings/data/db/UserSettingsDatabase {
 	public static final field Companion Lme/proton/core/accountmanager/data/db/AccountManagerDatabase$Companion;
 	public static final field name Ljava/lang/String;
 	public static final field version I
@@ -121,6 +121,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_33_34 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_34_35 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_35_36 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_36_37 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_5_6 ()Landroidx/room/migration/Migration;
@@ -164,6 +165,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun selfAuditResultDao ()Lme/proton/core/keytransparency/data/local/SelfAuditResultDao;
 	public fun sessionDao ()Lme/proton/core/account/data/db/SessionDao;
 	public fun sessionDetailsDao ()Lme/proton/core/account/data/db/SessionDetailsDao;
+	public fun telemetryDao ()Lme/proton/core/telemetry/data/db/TelemetryDao;
 	public fun userDao ()Lme/proton/core/user/data/db/dao/UserDao;
 	public fun userKeyDao ()Lme/proton/core/user/data/db/dao/UserKeyDao;
 	public fun userSettingsDao ()Lme/proton/core/usersettings/data/db/dao/UserSettingsDao;
@@ -516,6 +518,23 @@ public final class me/proton/core/push/data/local/db/PushDao_Impl : me/proton/co
 	public fun observeAllPushes (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/push/data/local/db/PushEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/telemetry/data/db/TelemetryDao_Impl : me/proton/core/telemetry/data/db/TelemetryDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/telemetry/data/entity/TelemetryEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll$telemetry_data_release (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAllUnAuth$telemetry_data_release (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll$telemetry_data_release (Lme/proton/core/domain/entity/UserId;I)Ljava/util/List;
+	public fun getAllUnAuth$telemetry_data_release (I)Ljava/util/List;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/telemetry/data/entity/TelemetryEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/telemetry/data/entity/TelemetryEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/telemetry/data/entity/TelemetryEventEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/user/data/db/dao/AddressDao_Impl : me/proton/core/user/data/db/dao/AddressDao {

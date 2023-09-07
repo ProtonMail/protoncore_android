@@ -53,7 +53,8 @@ data class UserSettingsEntity(
     val weekStart: Int?,
     val dateFormat: Int?,
     val timeFormat: Int?,
-    val earlyAccess: Boolean?
+    val earlyAccess: Boolean?,
+    val telemetry: Boolean?,
 )
 
 data class RecoverySettingEntity(
