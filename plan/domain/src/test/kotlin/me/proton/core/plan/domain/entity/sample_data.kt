@@ -71,7 +71,6 @@ val unlimitedPlan = DynamicPlan(
     features = EnumSet.allOf(DynamicPlanFeature::class.java),
     instances = listOf(
         DynamicPlanInstance(
-            id = "aJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
             cycle = 1,
             description = "For 1 month",
             periodEnd = Calendar.getInstance().let {
@@ -80,6 +79,7 @@ val unlimitedPlan = DynamicPlan(
             },
             price = listOf(
                 DynamicPlanPrice(
+                    id = "aJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
                     currency = "CHF",
                     current = 499,
                     default = 499
@@ -107,6 +107,7 @@ val unlimitedPlan = DynamicPlan(
             months = 1,
             price = listOf(
                 DynamicPlanPrice(
+                    id = "aJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
                     currency = "CHF",
                     current = 1199
                 )

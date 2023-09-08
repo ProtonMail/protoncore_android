@@ -19,6 +19,7 @@
 package me.proton.core.plan.domain.entity
 
 data class DynamicPlanPrice(
+    val id: String,
     val currency: String,
     val current: Int, // cents
     val default: Int? = null // cents

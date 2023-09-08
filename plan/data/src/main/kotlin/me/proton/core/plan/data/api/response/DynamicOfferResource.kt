@@ -38,7 +38,7 @@ internal data class DynamicOfferResource(
     val months: Int,
 
     @SerialName("Price")
-    val price: List<PriceResource>
+    val price: List<DynamicPriceResource>
 )
 
 internal fun DynamicOfferResource.toDynamicPlanOffer(): DynamicPlanOffer =

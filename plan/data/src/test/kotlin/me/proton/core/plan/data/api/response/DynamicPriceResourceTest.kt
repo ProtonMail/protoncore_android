@@ -23,17 +23,19 @@ import me.proton.core.util.kotlin.deserialize
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class PriceResourceTest {
+class DynamicPriceResourceTest {
     @Test
     fun fromJsonToResource() {
         assertEquals(
-            PriceResource(
+            DynamicPriceResource(
+                id = "id",
                 currency = "CHF",
                 current = 499,
                 default = 999
             ),
             """
                 {
+                "ID": "id",
                 "Currency": "CHF",
                 "Current": 499,
                 "Default": 999
@@ -46,11 +48,13 @@ class PriceResourceTest {
     fun fromResourceToDomain() {
         assertEquals(
             DynamicPlanPrice(
+                id = "id",
                 currency = "CHF",
                 current = 499,
                 default = 999
             ),
-            PriceResource(
+            DynamicPriceResource(
+                id = "id",
                 currency = "CHF",
                 current = 499,
                 default = 999

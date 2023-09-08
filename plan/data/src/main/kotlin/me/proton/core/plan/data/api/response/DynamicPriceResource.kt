@@ -23,7 +23,10 @@ import kotlinx.serialization.Serializable
 import me.proton.core.plan.domain.entity.DynamicPlanPrice
 
 @Serializable
-internal data class PriceResource(
+internal data class DynamicPriceResource(
+    @SerialName("ID")
+    val id: String,
+
     @SerialName("Currency")
     val currency: String,
 
@@ -34,7 +37,8 @@ internal data class PriceResource(
     val default: Int? = null // cents
 )
 
-internal fun PriceResource.toDynamicPlanPrice(): DynamicPlanPrice = DynamicPlanPrice(
+internal fun DynamicPriceResource.toDynamicPlanPrice(): DynamicPlanPrice = DynamicPlanPrice(
+    id = id,
     currency = currency,
     current = current,
     default = default

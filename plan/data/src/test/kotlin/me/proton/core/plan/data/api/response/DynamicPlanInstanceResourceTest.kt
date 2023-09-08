@@ -31,7 +31,6 @@ class DynamicPlanInstanceResourceTest {
     fun fromJsonToResource() {
         assertEquals(
             DynamicPlanInstanceResource(
-                id = "123abc",
                 cycle = 1,
                 description = "description",
                 periodEnd = 100,
@@ -60,7 +59,6 @@ class DynamicPlanInstanceResourceTest {
     fun fromResourceToDomain() {
         assertEquals(
             DynamicPlanInstance(
-                id = "123abc",
                 cycle = 1,
                 description = "description",
                 periodEnd = Instant.ofEpochSecond(100),
@@ -73,7 +71,6 @@ class DynamicPlanInstanceResourceTest {
                 )
             ),
             DynamicPlanInstanceResource(
-                id = "123abc",
                 cycle = 1,
                 description = "description",
                 periodEnd = 100,

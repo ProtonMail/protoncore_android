@@ -28,9 +28,6 @@ import java.time.Instant
 
 @Serializable
 internal data class DynamicPlanInstanceResource(
-    @SerialName("ID")
-    val id: String,
-
     @SerialName("Cycle")
     val cycle: Int,
 
@@ -41,7 +38,7 @@ internal data class DynamicPlanInstanceResource(
     val periodEnd: Long,
 
     @SerialName("Price")
-    val price: List<PriceResource>,
+    val price: List<DynamicPriceResource>,
 
     @SerialName("Vendors")
     val vendors: Map<String, DynamicPlanVendorResource> = emptyMap()
@@ -58,7 +55,6 @@ internal data class DynamicPlanVendorResource(
 
 internal fun DynamicPlanInstanceResource.toDynamicPlanInstance(): DynamicPlanInstance =
     DynamicPlanInstance(
-        id = id,
         cycle = cycle,
         description = description,
         periodEnd = Instant.ofEpochSecond(periodEnd),

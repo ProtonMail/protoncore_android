@@ -26,12 +26,12 @@ import kotlin.test.assertEquals
 class DynamicPlanTest {
 
     private fun instanceFor(cycle: Int, vararg currency: String) = DynamicPlanInstance(
-        id = "id-$cycle-$currency",
         cycle = cycle,
         description = "description-$cycle-$currency",
         periodEnd = Instant.now(),
         price = currency.map {
             DynamicPlanPrice(
+                id = "id-$cycle-$currency",
                 currency = it,
                 current = 100
             )

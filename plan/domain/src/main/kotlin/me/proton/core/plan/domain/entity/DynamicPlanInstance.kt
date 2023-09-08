@@ -22,7 +22,6 @@ import me.proton.core.domain.entity.AppStore
 import java.time.Instant
 
 data class DynamicPlanInstance(
-    val id: String,
     val cycle: Int,
     val description: String,
     val periodEnd: Instant,
