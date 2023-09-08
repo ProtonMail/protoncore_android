@@ -72,7 +72,7 @@ class SessionManagerImpl @Inject constructor(
     private suspend fun internalRequestSession(): Boolean {
         // Don't request an Unauthenticated Session if it already exist.
         if (getSessionId(userId = null) != null) return true
-        CoreLogger.log(LogTag.SESSION_REQUEST, "Session request...")
+        CoreLogger.i(LogTag.SESSION_REQUEST, "Session request...")
         return authRepository.requestSession()
             .onSuccess {
                 lastRefreshMap[it.sessionId] = monoClock()
@@ -85,7 +85,7 @@ class SessionManagerImpl @Inject constructor(
         val refreshedRecently = monoClock() <= lastRefresh + refreshDebounceMs
         // Don't attempt if refreshed recently. Prevent race issues.
         if (refreshedRecently) return true
-        CoreLogger.log(LogTag.SESSION_REFRESH, "Session refreshing: ${session.toStringLog()}")
+        CoreLogger.i(LogTag.SESSION_REFRESH, "Session refreshing: ${session.toStringLog()}")
         return authRepository.refreshSession(session)
             .onSuccess { refreshed ->
                 lastRefreshMap[session.sessionId] = monoClock()

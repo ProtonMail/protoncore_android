@@ -25,11 +25,23 @@ import java.util.logging.LogManager
  * Abstract logger for Proton core. Should be used instead of directly logging to e.g. logcat.
  */
 interface Logger {
+    /** Log an error message. */
+    fun e(tag: String, @NonNls message: String)
+
     /** Log an error exception. */
     fun e(tag: String, e: Throwable)
 
     /** Log an error exception and a message. */
     fun e(tag: String, e: Throwable, @NonNls message: String)
+
+    /** Log a warning message. */
+    fun w(tag: String, message: String)
+
+    /** Log a warning exception. */
+    fun w(tag: String, e: Throwable)
+
+    /** Log a warning exception and a message. */
+    fun w(tag: String, e: Throwable, message: String)
 
     /** Log an info message. */
     fun i(tag: String, @NonNls message: String)
@@ -48,20 +60,7 @@ interface Logger {
 
     /** Log a verbose exception and a message. */
     fun v(tag: String, e: Throwable, @NonNls message: String)
-
-    /**
-     * Log a message that do not belong to any level.
-     *
-     * Implementation of this function have to filter on [LoggerLogTag], then map/forward it according their own logic.
-     *
-     * Note: Use this only if you know on which [LoggerLogTag] you have to filter.
-     */
-    fun log(tag: LoggerLogTag, @NonNls message: String)
 }
-
-/** Type for all tags used in conjunction with [Logger.log]. */
-@JvmInline
-value class LoggerLogTag(val name: String)
 
 /**
  * Main object/singleton any Core module is using to log.
@@ -80,12 +79,28 @@ object CoreLogger : Logger {
         }
     }
 
+    override fun e(tag: String, message: String) {
+        logger?.e(tag, message)
+    }
+
     override fun e(tag: String, e: Throwable) {
         logger?.e(tag, e)
     }
 
     override fun e(tag: String, e: Throwable, message: String) {
         logger?.e(tag, e, message)
+    }
+
+    override fun w(tag: String, message: String) {
+        logger?.w(tag, message)
+    }
+
+    override fun w(tag: String, e: Throwable) {
+        logger?.w(tag, e)
+    }
+
+    override fun w(tag: String, e: Throwable, message: String) {
+        logger?.w(tag, e, message)
     }
 
     override fun i(tag: String, message: String) {
@@ -110,9 +125,5 @@ object CoreLogger : Logger {
 
     override fun v(tag: String, e: Throwable, message: String) {
         logger?.v(tag, e, message)
-    }
-
-    override fun log(tag: LoggerLogTag, message: String) {
-        logger?.log(tag, message)
     }
 }

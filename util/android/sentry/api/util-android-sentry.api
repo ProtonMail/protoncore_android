@@ -39,13 +39,16 @@ public final class me/proton/core/util/android/sentry/TimberLogger : me/proton/c
 	public static final field INSTANCE Lme/proton/core/util/android/sentry/TimberLogger;
 	public fun d (Ljava/lang/String;Ljava/lang/String;)V
 	public fun d (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun e (Ljava/lang/String;Ljava/lang/String;)V
 	public fun e (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public fun e (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 	public fun i (Ljava/lang/String;Ljava/lang/String;)V
 	public fun i (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
-	public fun log-KlBapMQ (Ljava/lang/String;Ljava/lang/String;)V
 	public fun v (Ljava/lang/String;Ljava/lang/String;)V
 	public fun v (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun w (Ljava/lang/String;Ljava/lang/String;)V
+	public fun w (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public fun w (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 }
 
 public final class me/proton/core/util/android/sentry/TimberLoggerIntegration : io/sentry/Integration, java/io/Closeable {

@@ -18,8 +18,6 @@
 
 package me.proton.core.eventmanager.domain
 
-import me.proton.core.util.kotlin.LoggerLogTag
-
 object LogTag {
     /** Tag for Worker Errors. */
     const val WORKER_ERROR = "core.eventmanager.worker"
@@ -34,5 +32,5 @@ object LogTag {
     const val COLLECT_ERROR = "core.eventmanager.collect"
 
     /** Tag for Max Retry Reports. */
-    val REPORT_MAX_RETRY = LoggerLogTag("core.eventmanager.report.maxretry")
+    const val REPORT_MAX_RETRY = "core.eventmanager.report.maxretry"
 }

@@ -24,6 +24,7 @@ import me.proton.core.accountmanager.domain.LogTag.SESSION_REFRESH
 import me.proton.core.accountmanager.domain.LogTag.SESSION_SCOPES
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
@@ -48,20 +49,32 @@ open class SessionListenerImpl @Inject constructor(
     }
 
     override suspend fun onSessionTokenCreated(userId: UserId?, session: Session) {
-        CoreLogger.log(SESSION_CREATE, "Session created: ${session.toStringLog()}")
+        CoreLogger.i(SESSION_CREATE, "Session created: ${session.toStringLog()}")
     }
 
     override suspend fun onSessionTokenRefreshed(session: Session) {
-        CoreLogger.log(SESSION_REFRESH, "Session refreshed: ${session.toStringLog()}")
+        CoreLogger.i(SESSION_REFRESH, "Session refreshed: ${session.toStringLog()}")
     }
 
     override suspend fun onSessionScopesRefreshed(sessionId: SessionId, scopes: List<String>) {
         sessionManager.get().getSession(sessionId)?.let {
-            CoreLogger.log(SESSION_SCOPES, "Session scopes refreshed: ${it.toStringLog()}")
+            CoreLogger.i(SESSION_SCOPES, "Session scopes refreshed: ${it.toStringLog()}")
         }
     }
 
     override suspend fun onSessionForceLogout(session: Session, httpCode: Int) {
-        CoreLogger.log(SESSION_FORCE_LOGOUT, "Session force logout: ${session.toStringLog()}")
+        val isError = when {
+            // Unauthenticated Session should not be reported as error.
+            session is Session.Unauthenticated -> false
+            // Only 400 should be reported as error
+            httpCode == HttpResponseCodes.HTTP_BAD_REQUEST -> true
+            else -> false
+        }
+        val message = "Session force logout: ${session.toStringLog()}"
+        if (isError) {
+            CoreLogger.e(SESSION_FORCE_LOGOUT, message)
+        } else {
+            CoreLogger.i(SESSION_FORCE_LOGOUT, message)
+        }
     }
 }

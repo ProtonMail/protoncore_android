@@ -26,14 +26,17 @@ public final class me/proton/core/util/kotlin/CoreLogger : me/proton/core/util/k
 	public static final field INSTANCE Lme/proton/core/util/kotlin/CoreLogger;
 	public fun d (Ljava/lang/String;Ljava/lang/String;)V
 	public fun d (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun e (Ljava/lang/String;Ljava/lang/String;)V
 	public fun e (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public fun e (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 	public fun i (Ljava/lang/String;Ljava/lang/String;)V
 	public fun i (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
-	public fun log-KlBapMQ (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun set (Lme/proton/core/util/kotlin/Logger;)V
 	public fun v (Ljava/lang/String;Ljava/lang/String;)V
 	public fun v (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public fun w (Ljava/lang/String;Ljava/lang/String;)V
+	public fun w (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public fun w (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 }
 
 public abstract interface class me/proton/core/util/kotlin/CoroutineScopeProvider {
@@ -106,27 +109,16 @@ public final class me/proton/core/util/kotlin/KotlinUtilsKt {
 public abstract interface class me/proton/core/util/kotlin/Logger {
 	public abstract fun d (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun d (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
+	public abstract fun e (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun e (Ljava/lang/String;Ljava/lang/Throwable;)V
 	public abstract fun e (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 	public abstract fun i (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun i (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
-	public abstract fun log-KlBapMQ (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun v (Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun v (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
-}
-
-public final class me/proton/core/util/kotlin/LoggerLogTag {
-	public static final synthetic fun box-impl (Ljava/lang/String;)Lme/proton/core/util/kotlin/LoggerLogTag;
-	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
-	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
-	public final fun getName ()Ljava/lang/String;
-	public fun hashCode ()I
-	public static fun hashCode-impl (Ljava/lang/String;)I
-	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ljava/lang/String;
+	public abstract fun w (Ljava/lang/String;Ljava/lang/String;)V
+	public abstract fun w (Ljava/lang/String;Ljava/lang/Throwable;)V
+	public abstract fun w (Ljava/lang/String;Ljava/lang/Throwable;Ljava/lang/String;)V
 }
 
 public final class me/proton/core/util/kotlin/MapUtilsKt {

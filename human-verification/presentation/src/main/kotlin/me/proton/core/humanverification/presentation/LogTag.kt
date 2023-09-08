@@ -18,9 +18,7 @@
 
 package me.proton.core.humanverification.presentation
 
-import me.proton.core.util.kotlin.LoggerLogTag
-
 object LogTag {
     const val DEFAULT = "core.humanverification"
-    val HV_REQUEST_ERROR = LoggerLogTag("core.humanverification.presentation.request.error")
+    const val HV_REQUEST_ERROR = "core.humanverification.presentation.request.error"
 }

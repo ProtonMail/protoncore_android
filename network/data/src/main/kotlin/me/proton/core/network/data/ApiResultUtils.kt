@@ -35,7 +35,7 @@ import javax.net.ssl.SSLPeerUnverifiedException
 /**
  * Wrap the result with [ApiResult], catching expected Network related exceptions.
  */
-suspend fun <Api: BaseRetrofitApi, T> Api.safeCall(
+suspend fun <Api : BaseRetrofitApi, T> Api.safeCall(
     networkManager: NetworkManager,
     block: suspend Api.() -> T
 ): ApiResult<T> {
@@ -55,8 +55,13 @@ suspend fun <Api: BaseRetrofitApi, T> Api.safeCall(
             else -> throw e // Throw any other unexpected exception.
         }
     }
-    if (result is ApiResult.Error) {
-        CoreLogger.log(LogTag.API_ERROR, result.toString())
+    when (result) {
+        is ApiResult.Error.Connection -> when (val cause = result.cause) {
+            null -> CoreLogger.d(LogTag.API_ERROR, result.toString())
+            else -> CoreLogger.d(LogTag.API_ERROR, cause, result.toString())
+        }
+        is ApiResult.Error -> CoreLogger.i(LogTag.API_ERROR, result.toString())
+        else -> Unit
     }
     return result
 }

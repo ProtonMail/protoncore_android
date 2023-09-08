@@ -121,7 +121,7 @@ class EventManagerImpl @AssistedInject constructor(
 
     private suspend fun reportFailure(metadata: EventMetadata) {
         val list = eventMetadataRepository.get(config).map { it.copy(response = null) }
-        CoreLogger.log(LogTag.REPORT_MAX_RETRY, "Max Failure reached (current: ${metadata.eventId}): $list")
+        CoreLogger.e(LogTag.REPORT_MAX_RETRY, "Max Failure reached (current: ${metadata.eventId}): $list")
     }
 
     private suspend fun deleteAllMetadata() {

@@ -18,8 +18,6 @@
 
 package me.proton.core.network.domain
 
-import me.proton.core.util.kotlin.LoggerLogTag
-
 object LogTag {
     /** Default tag for this module. */
     const val DEFAULT: String = "core.network"
@@ -30,18 +28,18 @@ object LogTag {
     /** Tag for Network API requests.
      *  Only one line with this tag should be logged per request.
      */
-    val API_REQUEST = LoggerLogTag("core.network.api.request")
+    const val API_REQUEST = "core.network.api.request"
 
     /** Tag for Network API results.
      *  Only one line with this tag should be logged per request.
      */
-    val API_RESPONSE = LoggerLogTag("core.network.api.response")
+    const val API_RESPONSE = "core.network.api.response"
 
     /** Tag for Network API failures.
      *  Only one line with this tag should be logged per request.
      */
-    val API_ERROR = LoggerLogTag("core.network.api.error")
+    const val API_ERROR = "core.network.api.error"
 
     /** Tag for Server time parse error. */
-    val SERVER_TIME_PARSE_ERROR = LoggerLogTag("core.network.server.time.error")
+    const val SERVER_TIME_PARSE_ERROR = "core.network.server.time.error"
 }

@@ -18,38 +18,35 @@
 
 package me.proton.core.util.android.sentry
 
-import me.proton.core.accountmanager.domain.LogTag.SESSION_FORCE_LOGOUT
-import me.proton.core.eventmanager.domain.LogTag.REPORT_MAX_RETRY
-import me.proton.core.network.domain.LogTag.API_ERROR
-import me.proton.core.network.domain.LogTag.API_REQUEST
-import me.proton.core.network.domain.LogTag.API_RESPONSE
-import me.proton.core.network.domain.LogTag.SERVER_TIME_PARSE_ERROR
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.util.kotlin.Logger
-import me.proton.core.util.kotlin.LoggerLogTag
 import org.jetbrains.annotations.NonNls
 import timber.log.Timber
 
+@Suppress("TooManyFunctions")
 public object TimberLogger : Logger {
 
+    override fun e(tag: String, message: String) {
+        Timber.tag(tag).e(message)
+    }
+
     override fun e(tag: String, e: Throwable) {
-        logError(tag, e)
+        Timber.tag(tag).e(e)
     }
 
     override fun e(tag: String, e: Throwable, @NonNls message: String) {
-        logError(tag, e, message)
+        Timber.tag(tag).e(e, message)
     }
 
-    private fun logError(tag: String, e: Throwable, message: String? = null) {
-        when (e) {
-            is ApiException -> when (e.error) {
-                is ApiResult.Error.Connection -> Timber.tag(tag).w(e, message)
-                else -> Timber.tag(tag).e(e, message)
-            }
+    override fun w(tag: String, message: String) {
+        Timber.tag(tag).w(message)
+    }
 
-            else -> Timber.tag(tag).e(e, message)
-        }
+    override fun w(tag: String, e: Throwable) {
+        Timber.tag(tag).w(e)
+    }
+
+    override fun w(tag: String, e: Throwable, @NonNls message: String) {
+        Timber.tag(tag).w(e, message)
     }
 
     override fun i(tag: String, @NonNls message: String) {
@@ -74,14 +71,5 @@ public object TimberLogger : Logger {
 
     override fun v(tag: String, e: Throwable, message: String) {
         Timber.tag(tag).v(e, message)
-    }
-
-    override fun log(tag: LoggerLogTag, message: String) {
-        when (tag) {
-            API_REQUEST, API_RESPONSE -> Timber.tag(tag.name).i(message)
-            SERVER_TIME_PARSE_ERROR, REPORT_MAX_RETRY, SESSION_FORCE_LOGOUT -> Timber.tag(tag.name).e(message)
-            API_ERROR -> Timber.tag(tag.name).w(message)
-            else -> Timber.tag(tag.name).d(message)
-        }
     }
 }

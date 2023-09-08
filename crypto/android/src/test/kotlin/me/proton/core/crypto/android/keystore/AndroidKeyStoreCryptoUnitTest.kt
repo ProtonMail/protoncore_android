@@ -139,7 +139,7 @@ internal class AndroidKeyStoreCryptoUnitTest {
             // First try.
             keyStore.containsAlias(any())
             keyStore.getKey(any(), any())
-            logger.e(LogTag.KEYSTORE_INIT_RETRY, any())
+            logger.e(LogTag.KEYSTORE_INIT_RETRY, any<Throwable>())
             // Retry.
             keyStore.containsAlias(any())
             keyStore.getKey(any(), any())
@@ -169,7 +169,7 @@ internal class AndroidKeyStoreCryptoUnitTest {
             cipher.doFinal(any())
             // Encrypt try.
             cipher.doFinal(any())
-            logger.e(LogTag.KEYSTORE_ENCRYPT_RETRY, any())
+            logger.e(LogTag.KEYSTORE_ENCRYPT_RETRY, any<Throwable>())
             // Encrypt retry.
             cipher.doFinal(any())
         }
@@ -194,7 +194,7 @@ internal class AndroidKeyStoreCryptoUnitTest {
             cipher.doFinal(any())
             // Decrypt -> error.
             cipher.doFinal(any())
-            logger.e(LogTag.KEYSTORE_DECRYPT_RETRY, any())
+            logger.e(LogTag.KEYSTORE_DECRYPT_RETRY, any<Throwable>())
             // Decrypt retry.
             cipher.doFinal(any())
         }
@@ -222,7 +222,7 @@ internal class AndroidKeyStoreCryptoUnitTest {
             cipher.doFinal(any())
             // Decrypt -> error.
             cipher.doFinal(any())
-            logger.e(LogTag.KEYSTORE_DECRYPT_RETRY, any())
+            logger.e(LogTag.KEYSTORE_DECRYPT_RETRY, any<Throwable>())
             // Decrypt retry -> success.
             cipher.doFinal(any())
         }
@@ -241,11 +241,11 @@ internal class AndroidKeyStoreCryptoUnitTest {
         verify(Ordering.ORDERED) {
             // First try.
             cipher.doFinal(any())
-            logger.e(LogTag.KEYSTORE_ENCRYPT_RETRY, any())
+            logger.e(LogTag.KEYSTORE_ENCRYPT_RETRY, any<Throwable>())
 
             // Retry.
             cipher.doFinal(any())
-            logger.e(LogTag.KEYSTORE_INIT, any())
+            logger.e(LogTag.KEYSTORE_INIT, any<Throwable>())
         }
     }
 }

@@ -29,7 +29,7 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient): OkHttpClient.B
     addInterceptor { chain ->
         val request = chain.request()
         val auth = request.header("Authorization").formatToken(client)
-        CoreLogger.log(
+        CoreLogger.i(
             LogTag.API_REQUEST,
             with(request) { "$method $url (auth $auth)" },
         )
@@ -40,7 +40,7 @@ internal fun OkHttpClient.Builder.initLogging(client: ApiClient): OkHttpClient.B
 
         // Unsuccessful responses are handled by ServerErrorInterceptor and later reported as errors.
         if (response.isSuccessful) {
-            CoreLogger.log(
+            CoreLogger.i(
                 LogTag.API_RESPONSE,
                 with(response) { "$code $message ${request.method} ${request.url} (${durationMs}ms)" }
             )

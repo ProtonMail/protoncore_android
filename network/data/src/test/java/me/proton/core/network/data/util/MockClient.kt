@@ -27,7 +27,6 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.util.kotlin.Logger
-import me.proton.core.util.kotlin.LoggerLogTag
 
 object MockSession {
     fun getDefault() = Session.Authenticated(
@@ -100,12 +99,28 @@ class MockNetworkPrefs : NetworkPrefs {
 }
 
 class MockLogger : Logger {
+    override fun e(tag: String, message: String) {
+        Log.e(tag, message)
+    }
+
     override fun e(tag: String, e: Throwable) {
         Log.e(tag, "no message", e)
     }
 
     override fun e(tag: String, e: Throwable, message: String) {
         Log.e(tag, message, e)
+    }
+
+    override fun w(tag: String, message: String) {
+        Log.w(tag, message)
+    }
+
+    override fun w(tag: String, e: Throwable) {
+        Log.w(tag, e)
+    }
+
+    override fun w(tag: String, e: Throwable, message: String) {
+        Log.w(tag, message, e)
     }
 
     override fun i(tag: String, message: String) {
@@ -130,9 +145,5 @@ class MockLogger : Logger {
 
     override fun v(tag: String, e: Throwable, message: String) {
         Log.v(tag, message, e)
-    }
-
-    override fun log(tag: LoggerLogTag, message: String) {
-        Log.d(tag.name, message)
     }
 }

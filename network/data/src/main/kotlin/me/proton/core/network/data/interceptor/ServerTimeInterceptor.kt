@@ -35,7 +35,7 @@ class ServerTimeInterceptor(
         if (serverUtc != null) {
             serverTimeListener.onServerTimeUpdated(serverUtc.time / 1000)
         } else {
-            CoreLogger.log(LogTag.SERVER_TIME_PARSE_ERROR, "Could not parse 'date' from response headers")
+            CoreLogger.e(LogTag.SERVER_TIME_PARSE_ERROR, "Could not parse 'date' from response headers")
         }
 
         return response

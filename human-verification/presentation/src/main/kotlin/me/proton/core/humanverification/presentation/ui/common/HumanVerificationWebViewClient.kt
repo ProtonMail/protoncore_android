@@ -79,7 +79,7 @@ class HumanVerificationWebViewClient(
         super.onReceivedHttpError(view, request, errorResponse)
         val logMessage = "Request failed: ${request?.method} ${request?.url} with " +
             "status ${errorResponse?.statusCode} ${errorResponse?.reasonPhrase}"
-        CoreLogger.log(HV_REQUEST_ERROR, logMessage)
+        CoreLogger.e(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, errorResponse?.let { WebResponseError.Http(it) })
     }
 
@@ -91,7 +91,7 @@ class HumanVerificationWebViewClient(
         super.onReceivedError(view, request, error)
         val logMessage = "Request failed: ${request?.method} ${request?.url} with " +
                 "code ${error?.errorCode} ${error?.description}"
-        CoreLogger.log(HV_REQUEST_ERROR, logMessage)
+        CoreLogger.e(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, error?.let { WebResponseError.Resource(it) })
     }
 
@@ -148,7 +148,7 @@ class HumanVerificationWebViewClient(
         if (response.httpStatusCode !in 200 until 400) {
             val logMessage = "Request with override failed: $method $url with " +
                     "code ${response.httpStatusCode} ${response.reasonPhrase}"
-            CoreLogger.log(HV_REQUEST_ERROR, logMessage)
+            CoreLogger.e(HV_REQUEST_ERROR, logMessage)
         }
 
         // We need to remove the CSP header for DoH to work

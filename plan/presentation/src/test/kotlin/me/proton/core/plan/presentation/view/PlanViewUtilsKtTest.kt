@@ -67,7 +67,8 @@ internal class PlanViewUtilsKtTest {
         val result = context.getStringArrayByName(testResourceName)
         // THEN
         assertNotNull(result)
-        verify(exactly = 0) { CoreLogger.e(any(), any()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<Throwable>(), any<String>()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<String>()) }
     }
 
     @Test
@@ -79,7 +80,8 @@ internal class PlanViewUtilsKtTest {
         val result = context.getStringArrayByName(testResourceName)
         // THEN
         assertNotNull(result)
-        verify(exactly = 0) { CoreLogger.e(any(), any()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<Throwable>(), any<String>()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<String>()) }
     }
 
     @Test
@@ -91,7 +93,8 @@ internal class PlanViewUtilsKtTest {
         val result = context.getStringArrayByName(testResourceName)
         // THEN
         assertNotNull(result)
-        verify(exactly = 0) { CoreLogger.e(any(), any()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<Throwable>(), any<String>()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<String>()) }
     }
 
     @Test
@@ -121,7 +124,8 @@ internal class PlanViewUtilsKtTest {
 
         val result = context.getIntegerArrayByName(testResourceName)
         assertNotNull(result)
-        verify(exactly = 0) { CoreLogger.e(any(), any()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<Throwable>(), any<String>()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<String>()) }
     }
 
     @Test
@@ -132,7 +136,8 @@ internal class PlanViewUtilsKtTest {
 
         val result = context.getIntegerArrayByName(testResourceName)
         assertNotNull(result)
-        verify(exactly = 0) { CoreLogger.e(any(), any()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<Throwable>(), any<String>()) }
+        verify(exactly = 0) { CoreLogger.e(any(), any<String>()) }
     }
 
     @Test

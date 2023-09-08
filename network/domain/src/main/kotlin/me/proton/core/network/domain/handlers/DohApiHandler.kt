@@ -30,7 +30,6 @@ import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.util.kotlin.CoreLogger
-import me.proton.core.util.kotlin.LoggerLogTag
 
 /**
  * Responsible for making an API call according to DoH feature logic: when our API seems blocked
@@ -87,7 +86,7 @@ class DohApiHandler<Api>(
                     when {
                         !apiClient.shouldUseDoh -> error
                         altBackend != null -> {
-                            CoreLogger.log(LOG_TAG, "Alt backend already established")
+                            CoreLogger.i(LOG_TAG, "Alt backend already established")
                             altBackend.invoke(call)
                         }
                         shouldUseDoh() -> {
@@ -151,14 +150,14 @@ class DohApiHandler<Api>(
             prefs.lastPrimaryApiFail = wallClockMs()
         else staticMutex.withLock {
             if (failedBackend == activeAltBackend) {
-                CoreLogger.log(LOG_TAG, "Invalidating alt backend after failure")
+                CoreLogger.i(LOG_TAG, "Invalidating alt backend after failure")
                 activeAltBackend = null
             }
         }
     }
 
     companion object {
-        private val LOG_TAG = LoggerLogTag("core.network.api.doh")
+        private const val LOG_TAG = "core.network.api.doh"
         private val staticMutex: Mutex = Mutex()
     }
 }
