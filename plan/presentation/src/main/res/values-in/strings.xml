@@ -47,6 +47,7 @@
   <string name="plans_manage_your_subscription_other">Langganan Anda tidak dapat dikelola dari aplikasi seluler.</string>
   <string name="plans_autorenew_subscriptions">Hanya langganan tahunan yang terbarui secara otomatis yang dapat dibeli via aplikasi ini.</string>
   <string name="plans_can_not_upgrade_from_mobile">Anda tidak dapat meningkatkan akun dari aplikasi seluler.</string>
+  <string name="plans_no_upgrade_available">Tidak ada peningkatan yang tersedia untuk saat ini.</string>
   <string name="plans_limited_offer">Penawaran terbatas</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

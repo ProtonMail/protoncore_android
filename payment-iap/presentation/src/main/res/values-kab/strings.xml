@@ -19,9 +19,9 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Includes surcharge for additional provider fees and taxes.</string>
   <string name="payments_iap_terms_conditions">By tapping “Buy with Google Pay” you agree to Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
-  <string name="payments_iap_invalid_google_plan">Invalid plan name selected. Please restart the process.</string>
-  <string name="payments_iap_error_google_plan_price">Problem with Google product price. Please restart the process.</string>
-  <string name="payments_iap_error_fetching_google_plan">Problem fetching Google product. Please restart the process.</string>
+  <string name="payments_iap_invalid_google_plan">Isem n uɣawas i yettwafernen d arameɣtu. Ttxil-k ales tanekra n usesfer.</string>
+  <string name="payments_iap_error_google_plan_price">Ugur akked ssuma n ufaris n Google. Ttxil-k ales tanekra n usesfer.</string>
+  <string name="payments_iap_error_fetching_google_plan">Ugur deg usali n ufaris n Google. Ttxil-k ales tanekra n usesfer.</string>
   <string name="payments_iap_error_already_owned">You already own this product. Please select different one.</string>
   <string name="payments_iap_error_billing_client_unavailable">The Google billing client is currently unavailable or disconnected.</string>
   <string name="payments_iap_general_error">Teḍra-d tuccḍa. Ales akala ma ulac aɣilif.</string>

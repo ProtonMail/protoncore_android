@@ -19,21 +19,21 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Ylla-d neẓri.</string>
-  <string name="payments_no_connectivity">No connectivity to display 3DS confirmation page.</string>
-  <string name="payments_3ds_not_approved">3DS approval has been rejected.</string>
+  <string name="payments_no_connectivity">Ulac tuqqna i wakken ad yettwaskan usebter n usentem 3DS.</string>
+  <string name="payments_3ds_not_approved">Asentem n 3DS yettwagi.</string>
   <string name="payments_error_card_name">Isem n tkarḍa ilaq.</string>
   <string name="payments_error_card_number">Yir uṭṭun n tkarḍa.</string>
-  <string name="payments_error_cvc">Please enter valid security code.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_cvc">Ttxil-k sekcem tangalt n tɣellist tameɣtut.</string>
+  <string name="payments_error_session">Asulay n tiɣimit ameɣtu yettwasra lawan n umultaɣ n useqdac yeqqnen.</string>
   <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
-  <string name="payments_error_invalid_session">Invalid session.</string>
-  <string name="payments_no_payment_provider">No active payment provider found.</string>
+  <string name="payments_error_invalid_session">Yir tiɣimit.</string>
+  <string name="payments_no_payment_provider">Ulac asaǧǧăw n uxelleṣ urmid i yettwafen.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Choose your payment method</string>
+  <string name="payments_choose_payment_method">Fren tarrayt-ik n uxelleṣ</string>
   <string name="payments_add_credit_debit_card">Rnu takarḍa tamaynut n usmad/uxelleṣ</string>
-  <string name="payments_pay" comment="Example: Pay 5EUR">Pay %s</string>
-  <string name="payments_pay_with" comment="Example: Pay with debit card">Pay with</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Xelleṣ %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Xelleṣ s</string>
   <string name="payments_method_icon">Tignit n tarrayt n uxelleṣ.</string>
   <string name="payments_method_surcharge">*Purchases made with this payment method incur a surcharge.</string>
   <string name="payments_method_terms_conditions">Buying with Google Pay means you accept Google Pay’s terms and conditions and agree to set up a recurring payment with Google.</string>
@@ -51,20 +51,20 @@
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Tamurt</string>
-  <string name="payments_paying_in_process">Paying</string>
+  <string name="payments_paying_in_process">Axelleṣ</string>
   <string name="payments_choose_country">Fren tamurt</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (Ad ifut %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n/a</string>
   <string name="payments_billing_yearly">I 1 n useggas</string>
-  <string name="payment_use_google_pay_instead">Use Google Pay instead</string>
-  <string name="payment_use_credit_card_instead">Use credit/debit card instead</string>
+  <string name="payment_use_google_pay_instead">Seqdec Google Pay deg ubdil</string>
+  <string name="payment_use_credit_card_instead">Seqdec deg ubdil takarḍa n usmad/debit</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirm account upgrade</string>
+  <string name="payments_giap_unredeemed_title">Sentem asali n umiḍan</string>
   <string name="payments_giap_unredeemed_description">Your Google Pay payment was successfully processed, but the account upgrade process was interrupted. Apply the payment to upgrade your account now?</string>
-  <string name="payments_giap_unredeemed_confirm">Confirm upgrade</string>
-  <string name="payments_giap_redeem_success">Your account was successfully upgraded</string>
+  <string name="payments_giap_unredeemed_confirm">Sentem asali</string>
+  <string name="payments_giap_redeem_success">Amiḍan-ik yuli akken iwata</string>
   <string name="payments_giap_redeem_error">Unable to complete the upgrade. Please try again later.</string>
   <!-- endregion -->
 </resources>

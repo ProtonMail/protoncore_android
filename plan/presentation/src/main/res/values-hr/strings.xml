@@ -49,6 +49,7 @@
   <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
   <string name="plans_can_not_upgrade_from_mobile">You cannot upgrade from the mobile app.</string>
+  <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
   <string name="plans_limited_offer">Limited time offer</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

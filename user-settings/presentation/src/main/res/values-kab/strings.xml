@@ -19,17 +19,17 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">Imayl n tririt</string>
-  <string name="settings_recovery_email_current">Current recovery email address</string>
-  <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_current">Tansa imayl tamirant n tririt</string>
+  <string name="settings_recovery_email_new">Tansa n yimayl n tririt tamaynut</string>
+  <string name="settings_recovery_email_confirm">Sentem tansa n yimayl n tririt</string>
   <string name="settings_recovery_email_new_hint">Sekcem tansa n yimayl</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
+  <string name="settings_recovery_email_confirm_hint">Ɛawed sekcem tansa n yimayl</string>
   <string name="settings_save">Sekles</string>
   <string name="settings_password_required">Sekcem awal-ik uffir</string>
   <string name="settings_password_required_ok">IH</string>
   <string name="settings_not_set">Ur yettwaslugen</string>
-  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
-  <string name="settings_validation_email">Email is invalid.</string>
+  <string name="settings_recovery_email_error_no_match">Imaylen n tririt imaynuten ur mṣadan ara</string>
+  <string name="settings_validation_email">Imayl d arameɣtu.</string>
   <string name="settings_general_error">Ylla-d neẓri.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Snifel awal uffir</string>
@@ -40,14 +40,14 @@
   <string name="settings_login_password_hint_new_confirm">Sentem awal uffir amaynut</string>
   <string name="settings_mailbox_password_hint_new">Awal uffir n tnaka n yimayl amaynut</string>
   <string name="settings_mailbox_password_hint_new_confirm">Sentem awal uffir n tnaka n yimayl amaynut</string>
-  <string name="settings_change_password_error">A change password error has occurred.</string>
-  <string name="settings_recovery_email_success">Recovery email updated</string>
+  <string name="settings_change_password_error">Tella-d tuccḍa deg lawan n usenfel n wawal uffir.</string>
+  <string name="settings_recovery_email_success">Imayl n tririt yettwaleqqem</string>
   <string name="settings_password_management_success">Awal uffir yettwaleqqem</string>
-  <string name="settings_password_management_login_password_success">Login password updated</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_login_password_success">Awal uffir n unekcum yettwaleqqem</string>
+  <string name="settings_password_management_mailbox_password_success">Awal uffir n tenkult imayl yettwaleqqem</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Anonymous telemetry</string>
+  <string name="device_settings_telemetry_title">Isefka n useqdec d udrigen</string>
   <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>
-  <string name="device_settings_crashreport_title">Anonymous crash reports</string>
+  <string name="device_settings_crashreport_title">Ineqqisen uffiren udrigen</string>
   <string name="device_settings_crashreport_hint">If the app crashes, a report will be sent to our engineers with details of the cause. We\'ll only use these to improve the app.</string>
 </resources>

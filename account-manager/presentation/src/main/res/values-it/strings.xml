@@ -20,7 +20,7 @@
   <string name="account_switcher_section_switch_to">Passa a</string>
   <string name="account_switcher_action_add_account">Aggiungi account</string>
   <string name="account_switcher_action_sign_in">Accedi</string>
-  <string name="account_switcher_action_sign_out">Esci</string>
+  <string name="account_switcher_action_sign_out">Disconnetti</string>
   <string name="account_switcher_action_remove">Rimuovi</string>
   <string name="account_list_item_chevron_content_description">Apri il cambio account</string>
   <string name="account_view_three_dots_content_description">Opzioni</string>

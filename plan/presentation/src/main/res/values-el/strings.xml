@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Δεν είναι δυνατή η διαχείριση της συνδρομής σας εντός της εφαρμογής για κινητές συσκευές.</string>
   <string name="plans_autorenew_subscriptions">Μόνο οι ετήσιες συνδρομές αυτόματης ανανέωσης είναι διαθέσιμες μέσω αυτής της εφαρμογής.</string>
   <string name="plans_can_not_upgrade_from_mobile">Δεν γίνεται να αναβαθμίσετε από την εφαρμογή κινητού.</string>
+  <string name="plans_no_upgrade_available">Προς το παρόν δεν υπάρχει διαθέσιμη αναβάθμιση.</string>
   <string name="plans_limited_offer">Προσφορά για περιορισμένο διάστημα</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

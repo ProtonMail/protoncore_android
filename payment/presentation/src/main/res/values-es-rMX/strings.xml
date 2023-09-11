@@ -27,7 +27,7 @@
   <string name="payments_error_session">Se necesita un ID de sesión válido cuando se suscribe a un usuario que ha iniciado sesión.</string>
   <string name="payments_error_signup_paymentmethod">No se pudo registrar con el método de pago existente.</string>
   <string name="payments_error_invalid_session">Sesión inválida.</string>
-  <string name="payments_no_payment_provider">No se encontró ningún proveedor de pago activo.</string>
+  <string name="payments_no_payment_provider">No se encuentra ningún medio de pago.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Elija su método de pago</string>

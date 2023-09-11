@@ -20,17 +20,17 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Can not find browser to open the link.</string>
   <string name="presentation_force_update_title">Ilaq uleqqem</string>
-  <string name="presentation_force_update_message">This version of the app is no longer supported, please update to continue using it.</string>
+  <string name="presentation_force_update_message">Lqem-a n usnan dayen ur yettwasefrak ara, ttxil mucceḍ akken ad tkemmleḍ aseqdec-is.</string>
   <string name="presentation_force_update_learn_more">Issin ugar</string>
   <string name="presentation_force_update_update">Leqqem</string>
   <string name="presentation_market_missing">Can\'t find the application on your device. Please go to the app store to install it.</string>
   <string name="presentation_authenticate">Asesteb</string>
-  <string name="presentation_signin_to_continue">Sign in to continue</string>
+  <string name="presentation_signin_to_continue">Qqen i wakken ad tkemmleḍ</string>
   <string name="presentation_alert_title">Alɣu</string>
   <string name="presentation_alert_ok">IH</string>
   <string name="presentation_alert_enter">Sekcem</string>
   <string name="presentation_alert_cancel">Sefsex</string>
-  <string name="presentation_alert_continue">Continue</string>
+  <string name="presentation_alert_continue">Kemmel</string>
   <string name="presentation_alert_submit">Azen</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Azen aneqqis n wugur</string>
@@ -40,12 +40,12 @@
   <!-- Other -->
   <string name="presentation_back">Ɣer deffir</string>
   <string name="presentation_close">Mdel</string>
-  <string name="presentation_retry">Retry</string>
+  <string name="presentation_retry">Ɛreḍ tikkelt niḍen</string>
   <string name="presentation_skip">Zgel</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Ur izmir ara ad yeqqen ɣer uqeddac.</string>
-  <string name="presentation_check_your_connection">Check your connection</string>
+  <string name="presentation_check_your_connection">Senqed tuqqna-k</string>
   <string name="presentation_connectivity_issues">Uguren n tuqqna</string>
   <string name="presentation_field_required">Urti-a ilaq.</string>
-  <string name="presentation_error_general">An error occurred.</string>
+  <string name="presentation_error_general">Teḍra-d tuccḍa.</string>
 </resources>

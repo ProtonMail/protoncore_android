@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Dein Abonnement kann nicht in der mobilen App verwaltet werden.</string>
   <string name="plans_autorenew_subscriptions">Über diese App sind nur automatisch verlängerbare Jahresabonnements verfügbar.</string>
   <string name="plans_can_not_upgrade_from_mobile">Über die mobile App kann kein Upgrade durchgeführt werden.</string>
+  <string name="plans_no_upgrade_available">Derzeit ist kein Upgrade verfügbar.</string>
   <string name="plans_limited_offer">Zeitlich begrenztes Angebot</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

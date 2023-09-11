@@ -49,6 +49,7 @@
   <string name="plans_manage_your_subscription_other">Abonamentul nu poate fi gestionat din aplicația mobilă.</string>
   <string name="plans_autorenew_subscriptions">Numai abonamentele anuale cu autoreînnoire sunt disponibile prin intermediul acestei aplicații.</string>
   <string name="plans_can_not_upgrade_from_mobile">Nu puteți moderniza abonamentul din aplicația mobilă.</string>
+  <string name="plans_no_upgrade_available">În acest moment nu există planuri noi disponibile.</string>
   <string name="plans_limited_offer">Ofertă limitată</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

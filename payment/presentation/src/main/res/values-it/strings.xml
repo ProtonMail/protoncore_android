@@ -27,7 +27,7 @@
   <string name="payments_error_session">È necessario un ID di sessione valido quando si iscrive un utente che ha effettuato l\'accesso.</string>
   <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente.</string>
   <string name="payments_error_invalid_session">Sessione non valida.</string>
-  <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento attivo trovato.</string>
+  <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento trovato.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Scegli il tuo metodo di pagamento</string>
@@ -57,14 +57,14 @@
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">non disponibile</string>
   <string name="payments_billing_yearly">Per 1 anno</string>
-  <string name="payment_use_google_pay_instead">Utilizza invece Google Pay</string>
+  <string name="payment_use_google_pay_instead">Usa invece Google Pay</string>
   <string name="payment_use_credit_card_instead">Usa invece la carta di credito/debito</string>
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Conferma l\'upgrade dell\'account</string>
-  <string name="payments_giap_unredeemed_description">Il tuo pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi ripetere il pagamento per aggiornare il tuo account adesso?</string>
+  <string name="payments_giap_unredeemed_description">Il tuo pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi ripetere il pagamento per effettuare l’upgrade del tuo account adesso?</string>
   <string name="payments_giap_unredeemed_confirm">Conferma upgrade</string>
-  <string name="payments_giap_redeem_success">Il tuo account è stato aggiornato correttamente</string>
-  <string name="payments_giap_redeem_error">Impossibile completare l\'upgrade. Per favore riprova più tardi.</string>
+  <string name="payments_giap_redeem_success">L\'upgrade del tuo account è stato effettuato correttamente</string>
+  <string name="payments_giap_redeem_error">Impossibile completare l\'upgrade. Riprova più tardi.</string>
   <!-- endregion -->
 </resources>

@@ -27,7 +27,7 @@
   <string name="payments_error_session">É necessário um ID de sessão válido para subscrever um utilizador com sessão iniciada.</string>
   <string name="payments_error_signup_paymentmethod">Não foi possível criar uma conta com o método de pagamento existente.</string>
   <string name="payments_error_invalid_session">A sessão não é válida.</string>
-  <string name="payments_no_payment_provider">Nenhum provedor de pagamento ativo foi encontrado.</string>
+  <string name="payments_no_payment_provider">Não encontramos nenhum meio de pagamento.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Escolha o seu método de pagamento</string>

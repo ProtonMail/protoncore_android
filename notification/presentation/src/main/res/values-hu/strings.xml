@@ -17,6 +17,6 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_notification_account_channel_name">Account</string>
-  <string name="core_notification_rationale">Enable notifications to let us help in the recovery of your account.</string>
+  <string name="core_notification_account_channel_name">Fiók</string>
+  <string name="core_notification_rationale">Engedélyezze az értesítéseket, hogy segíthessünk a fiókja helyreállításában.</string>
 </resources>

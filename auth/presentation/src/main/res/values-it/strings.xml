@@ -23,13 +23,13 @@
   <string name="welcome_subtitle_mail_alt">Privacy. Sicurezza. Convenienza. Email crittografata che ti dà il pieno controllo dei tuoi dati personali.</string>
   <string name="welcome_subtitle_drive">La comodità del cloud storage e la sicurezza della tecnologia di crittografia. Finalmente una soluzione di archiviazione cloud di cui ti puoi fidare.</string>
   <string name="welcome_subtitle_drive_alt">Il modo più sicuro per archiviare i tuoi file. Carica, sincronizza e condividi con la crittografia più potente disponibile.</string>
-  <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene i tuoi eventi della vita privati, protetti e protetti.</string>
+  <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene i tuoi eventi della vita privati, sicuri e protetti.</string>
   <string name="welcome_subtitle_calendar_alt">Il nostro calendario crittografato end-to-end ti aiuta a rimanere organizzato, in pista e sotto controllo.</string>
-  <string name="welcome_subtitle_vpn">Una VPN svizzera ad Alta Velocità che protegge la vostra privacy criptando la vostra connessione a Internet.</string>
+  <string name="welcome_subtitle_vpn">Una VPN svizzera ad alta velocità che tutela la tua privacy crittografando la connessione a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN svizzera ad alta velocità che protegge la tua privacy. Massima sicurezza, oltre 1.600 server e nessuna restrizione.</string>
   <string name="welcome_subtitle_pass">Tutte le tue password. Al sicuro in un unico posto e protette dal nome più attendibile nella privacy.</string>
   <string name="welcome_subtitle_pass_alt">Tutte le tue password. Al sicuro in un unico posto e protette dal nome più attendibile nella privacy.</string>
-  <string name="welcome_privacy_by_default">Privacy per default</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Password</string>
   <string name="auth_password_help">La password deve contenere almeno 8 caratteri</string>
   <string name="auth_current_login_password">Password d\'accesso attuale</string>
@@ -102,7 +102,7 @@
   <string name="auth_one_account_all_services">Un account per tutti i servizi Proton.</string>
   <string name="auth_create_account">Crea un account</string>
   <string name="auth_long_signup">Attendere prego…</string>
-  <string name="auth_long_login">Accesso, attendere…</string>
+  <string name="auth_long_login">Accedendo, attendere…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crea il tuo Account Proton</string>
   <string name="auth_signup_current_email">Usa invece la tua email attuale</string>

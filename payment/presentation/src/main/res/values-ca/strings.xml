@@ -27,7 +27,7 @@
   <string name="payments_error_session">Es necessita una ID de sessió vàlida per subscriure a un usuari connectat.</string>
   <string name="payments_error_signup_paymentmethod">No es pot procedir al registre amb el mètode de pagament existent.</string>
   <string name="payments_error_invalid_session">Sessió invàlida.</string>
-  <string name="payments_no_payment_provider">No s\'ha trobat cap proveïdor de pagament actiu.</string>
+  <string name="payments_no_payment_provider">No s\'ha trobat cap mitjà de pagament.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Trieu la vostra forma de pagament</string>

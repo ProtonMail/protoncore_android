@@ -93,7 +93,7 @@
   <string name="auth_mailbox_login_error_primary_key_error">Помилка основного ключа.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Хибна парольна фраза.</string>
   <string name="auth_password_chooser_title">Змініть пароль</string>
-  <string name="auth_password_chooser_description">Щоб користуватися застосунком Proton як учасник організації, спершу потрібно змінити пароль, увійшовши до Proton через браузер.</string>
+  <string name="auth_password_chooser_description">Щоб користуватися програмою Proton як учасник організації, спершу потрібно змінити пароль, увійшовши до Proton через браузер.</string>
   <string name="auth_password_chooser_change">Змінити пароль</string>
   <string name="auth_user_check_one_free_error">Дозволено лише один безплатний обліковий запис Proton.</string>
   <string name="auth_user_check_delinquent_error">Ваш обліковий запис наразі призупинено через несплату рахунку.</string>

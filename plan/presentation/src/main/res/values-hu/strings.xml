@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Az előfizetését nem lehet a mobile alkalmazásban kezelni.</string>
   <string name="plans_autorenew_subscriptions">Az alkalmazásból csak éves, automatikusan megújuló előfizetés érhető el.</string>
   <string name="plans_can_not_upgrade_from_mobile">A mobil alkalmazásból a csomag nem változtatható.</string>
+  <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
   <string name="plans_limited_offer">Korlátozott idejű ajánlat</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -144,7 +145,7 @@
   <string name="multiple_vaults">Több tároló</string>
   <string name="unlimited_email_alias">Korlátlan számú Hide My Email álnév</string>
   <string name="custom_email_alias_domains">Saját domain név használata e-mail álnevekhez</string>
-  <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
+  <string name="multiple_forwarding_mailboxes">Több továbbító e-mail cím</string>
   <string name="priority_support">Elsőbbségi támogatás</string>
   <string name="one_vault">1 tároló</string>
   <string name="ten_hide_my_email_aliases">10 Hide My Email álnév</string>

@@ -21,9 +21,9 @@
   <string name="presentation_browser_missing">Impossibile trovare il browser per aprire il collegamento.</string>
   <string name="presentation_force_update_title">Aggiornamento richiesto</string>
   <string name="presentation_force_update_message">Questa versione dell\'app non è più supportata, aggiornala per continuare a usarla.</string>
-  <string name="presentation_force_update_learn_more">Per saperne di più</string>
+  <string name="presentation_force_update_learn_more">Scopri di più</string>
   <string name="presentation_force_update_update">Aggiorna</string>
-  <string name="presentation_market_missing">Impossibile trovare l\'applicazione market installata sul dispositivo. Vai al negozio e aggiorna l\'applicazione.</string>
+  <string name="presentation_market_missing">Impossibile trovare l\'applicazione sul tuo dispositivo. Vai nell\'app store per installarla.</string>
   <string name="presentation_authenticate">Autentica</string>
   <string name="presentation_signin_to_continue">Accedi per continuare</string>
   <string name="presentation_alert_title">Avviso</string>
@@ -36,7 +36,7 @@
   <string name="presentation_menu_item_title_report_a_bug">Segnala un problema</string>
   <string name="presentation_menu_item_title_settings">Impostazioni</string>
   <string name="presentation_menu_item_title_subscription">Abbonamento</string>
-  <string name="presentation_menu_item_title_sign_out">Disconnettiti</string>
+  <string name="presentation_menu_item_title_sign_out">Disconnetti</string>
   <!-- Other -->
   <string name="presentation_back">Indietro</string>
   <string name="presentation_close">Chiudi</string>

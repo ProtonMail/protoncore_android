@@ -50,6 +50,7 @@
   <string name="plans_manage_your_subscription_other">Вы не можете управлять подпиской из мобильного приложения.</string>
   <string name="plans_autorenew_subscriptions">Через это приложение доступны только автопродлеваемые годовые подписки.</string>
   <string name="plans_can_not_upgrade_from_mobile">Обновление через мобильное приложение невозможно.</string>
+  <string name="plans_no_upgrade_available">Обновлений на данный момент нет.</string>
   <string name="plans_limited_offer">Ограниченное предложение</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

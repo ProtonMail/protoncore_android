@@ -47,6 +47,7 @@
   <string name="plans_manage_your_subscription_other">モバイルアプリではサブスクリプションを管理できません。</string>
   <string name="plans_autorenew_subscriptions">このアプリは自動更新の年間サブスクリプションのみご利用いただけます。</string>
   <string name="plans_can_not_upgrade_from_mobile">モバイルアプリからアップグレードできません。</string>
+  <string name="plans_no_upgrade_available">現在利用可能なアップグレードはありません。</string>
   <string name="plans_limited_offer">期間限定キャンペーン</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

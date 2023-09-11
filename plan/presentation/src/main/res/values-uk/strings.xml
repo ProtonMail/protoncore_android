@@ -47,9 +47,10 @@
   <string name="plans_used_space">%s з %s</string>
   <string name="plans_payments_info_not_available">н/д</string>
   <string name="plans_manage_your_subscription_google">Вашою передплатою керує Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Вашою передплатою не можна керувати в мобільному застосунку.</string>
-  <string name="plans_autorenew_subscriptions">У цьому застосунку доступні лише річні передплати з автопоновленням.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Неможливо змінити план у мобільному застосунку.</string>
+  <string name="plans_manage_your_subscription_other">Вашою передплатою не можна керувати в програмі для мобільних пристроїв.</string>
+  <string name="plans_autorenew_subscriptions">У цій програмі доступні лише річні передплати з автопоновленням.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Неможливо змінити план у програмі для мобільних пристроїв.</string>
+  <string name="plans_no_upgrade_available">Наразі покращення недоступне.</string>
   <string name="plans_limited_offer">Обмежена пропозиція</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -138,7 +139,7 @@
   <string name="plan_id_vpnbasic_countries">63 країни</string>
   <string name="plan_id_vpnbasic_high_speed">Висока швидкість</string>
   <string name="plan_id_vpnplus_adblock">Блокувальник реклами (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">Підтримка стримінгових сервісів</string>
+  <string name="plan_id_vpnplus_streaming">Підтримка сервісів потокової трансляції</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 країни</string>
   <string name="plan_id_vpnplus_highest_speed">Найвища швидкість</string>
@@ -162,7 +163,7 @@
   <string name="highest_vpn_speed" comment="new_plans">Найвища швидкість VPN</string>
   <string name="servers_in_countries" comment="new_plans">Більш як 1500 серверів у понад 63 країнах</string>
   <string name="ad_blocker" comment="new_plans">Вбудований блокувальник реклами (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Доступ до стримінгових сервісів по всьому світу</string>
+  <string name="streaming_services_access" comment="new_plans">Доступ до світових сервісів потокової трансляції</string>
   <string name="secure_core" comment="new_plans">Сервери Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>

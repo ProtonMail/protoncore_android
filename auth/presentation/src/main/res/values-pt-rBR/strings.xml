@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">As credenciais não deveriam estar vazias.</string>
   <string name="auth_mailbox_empty_credentials">As credenciais não deveriam estar vazias.</string>
   <string name="auth_create_address_title">Endereço da Proton obrigatório</string>
-  <string name="auth_create_address_subtitle">Você precisa de um endereço de e-mail Proton para usar o Proton Mail e o Proton Calendar. Você ainda poderá usar %1$s para fazer login e recuperar sua conta.</string>
+  <string name="auth_create_address_subtitle">Você precisa de um endereço de e-mail da Proton para usar o Proton Mail e o Proton Calendar. Você ainda poderá usar %1$s para iniciar sessão e recuperar sua conta.</string>
   <string name="auth_username">Nome de usuário</string>
   <string name="auth_username_next_action">Continuar</string>
   <string name="auth_create_address_result_title">%s está disponível</string>

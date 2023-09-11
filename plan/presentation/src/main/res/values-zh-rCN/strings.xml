@@ -47,6 +47,7 @@
   <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>
   <string name="plans_autorenew_subscriptions">此应用仅提供自动续订年度订阅。</string>
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
+  <string name="plans_no_upgrade_available">当前无可用升级。</string>
   <string name="plans_limited_offer">限时优惠</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

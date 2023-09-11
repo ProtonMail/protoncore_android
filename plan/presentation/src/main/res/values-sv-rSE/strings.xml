@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Din prenumeration kan inte hanteras i mobilappen.</string>
   <string name="plans_autorenew_subscriptions">Endast automatisk förnyelse av årliga prenumerationer är tillgängliga via denna app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Du kan inte uppgradera från mobilappen.</string>
+  <string name="plans_no_upgrade_available">Det finns för närvarande ingen uppdatering tillgänglig.</string>
   <string name="plans_limited_offer">Tidsbegränsat erbjudande</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

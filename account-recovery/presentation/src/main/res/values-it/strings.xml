@@ -17,8 +17,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Periodo di grazia iniziato</string>
-  <string name="account_recovery_grace_started_subtitle">Il tuo periodo di grazia per il recupero dell\'account è iniziato ed è in corso.</string>
+  <string name="account_recovery_grace_started_title">Proroga iniziata</string>
+  <string name="account_recovery_grace_started_subtitle">La proroga per il recupero del tuo account è stata iniziata ed è in corso.</string>
   <string name="account_recovery_cancelled_title">Recupero dell\'account annullato</string>
   <string name="account_recovery_cancelled_subtitle">La tua operazione di recupero dell\'account è stata annullata.</string>
   <string name="account_recovery_password_started_title">La password di recupero dell\'account può essere modificata</string>

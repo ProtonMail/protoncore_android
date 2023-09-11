@@ -48,19 +48,20 @@
   <string name="plans_manage_your_subscription_other">Il tuo abbonamento non può essere gestito all\'interno dell\'app mobile.</string>
   <string name="plans_autorenew_subscriptions">Solo gli abbonamenti annuali con rinnovo automatico sono disponibili tramite questa app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Non è possibile eseguire l\'aggiornamento dall\'app mobile.</string>
+  <string name="plans_no_upgrade_available">Al momento non è disponibile alcun upgrade.</string>
   <string name="plans_limited_offer">Offerta a tempo limitato</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# archiviazione</item>
-    <item quantity="other">#proton_storage# archiviazione</item>
+    <item quantity="one">#proton_storage# di archiviazione</item>
+    <item quantity="other">#proton_storage# di archiviazione</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Fino a #proton_storage# di archiviazione</item>
     <item quantity="other">Fino a #proton_storage# di archiviazione</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# archiviazione /utente</item>
-    <item quantity="other">#proton_storage# archiviazione /utente</item>
+    <item quantity="one">#proton_storage# di archiviazione / utente</item>
+    <item quantity="other">#proton_storage# di archiviazione / utente</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# indirizzo email</item>
@@ -105,7 +106,7 @@
   <!-- endregion -->
   <!-- region plans headers -->
   <string name="plan_id_free_header">La base per le comunicazioni private e sicure.</string>
-  <string name="plan_id_plus_header">Cassetta email completa con protezione avanzata.</string>
+  <string name="plan_id_plus_header">Casella di posta completa con protezione avanzata.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 paesi</string>
   <string name="plan_id_vpnbasic_high_speed">Alta velocità</string>
@@ -142,7 +143,7 @@
   <string name="unlimited_devices">Dispositivi illimitati</string>
   <string name="integrated_2fa_authenticator">Autenticazione 2FA integrata</string>
   <string name="multiple_vaults">Molteplici casseforti</string>
-  <string name="unlimited_email_alias">Numero illimitato di alias Hide-my-email</string>
+  <string name="unlimited_email_alias">Alias Hide-My-Email illimitati</string>
   <string name="custom_email_alias_domains">Domini personalizzati per alias email</string>
   <string name="multiple_forwarding_mailboxes">Molteplici caselle email d\'inoltro</string>
   <string name="priority_support">Assistenza prioritaria</string>

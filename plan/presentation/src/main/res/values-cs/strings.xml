@@ -50,6 +50,7 @@
   <string name="plans_manage_your_subscription_other">Vaše předplatné nelze spravovat v mobilní aplikaci.</string>
   <string name="plans_autorenew_subscriptions">Prostřednictvím této aplikace je k dispozici pouze automaticky obnovované roční předplatné.</string>
   <string name="plans_can_not_upgrade_from_mobile">Není možné navýšit tarif pomocí mobilní aplikace.</string>
+  <string name="plans_no_upgrade_available">V současnosti není k dispozici žádné navýšení.</string>
   <string name="plans_limited_offer">Časově omezená nabídka</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

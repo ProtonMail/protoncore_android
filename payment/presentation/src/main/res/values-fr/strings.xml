@@ -27,7 +27,7 @@
   <string name="payments_error_session">Un identifiant de session valide est nécessaire lors de l\'abonnement d’un utilisateur connecté.</string>
   <string name="payments_error_signup_paymentmethod">Impossible de s\'inscrire avec le moyen de paiement utilisé</string>
   <string name="payments_error_invalid_session">La session n\'est pas valide.</string>
-  <string name="payments_no_payment_provider">Aucun fournisseur de service de paiement actif n\'a été trouvé.</string>
+  <string name="payments_no_payment_provider">Nous ne trouvons aucun moyen de paiement.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choisissez votre moyen de paiement.</string>

@@ -17,15 +17,15 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Grace period started</string>
-  <string name="account_recovery_grace_started_subtitle">Your account recovery grace period has been started and ongoing.</string>
-  <string name="account_recovery_cancelled_title">Account recovery cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">Your account recovery process has been cancelled.</string>
-  <string name="account_recovery_password_started_title">Account recovery password can be changed</string>
-  <string name="account_recovery_password_started_subtitle">Your account recovery password change period has been started. You can now change your password.</string>
-  <string name="account_recovery_window_ended_title">Account recovery window ended</string>
-  <string name="account_recovery_window_ended_subtitle">Your account recovery window has ended.</string>
-  <string name="account_recovery_cancel">Cancel recovery</string>
-  <string name="account_recovery_password_label">Enter password to cancel</string>
+  <string name="account_recovery_grace_started_title">A türelmi időszak elkezdődött</string>
+  <string name="account_recovery_grace_started_subtitle">A fiók-helyreállítás türelmi időszaka elkezdődött és folyamatban van.</string>
+  <string name="account_recovery_cancelled_title">Fiók- helyreállítás törölve</string>
+  <string name="account_recovery_cancelled_subtitle">Fiók-helyreállítási folyamat megszakítva.</string>
+  <string name="account_recovery_password_started_title">A fiók-helyreállítási jelszó módosítható</string>
+  <string name="account_recovery_password_started_subtitle">A fiók-helyreállítási jelszava megváltoztatásának az időszaka megkezdődött. Most már megváltoztathatja jelszavát.</string>
+  <string name="account_recovery_window_ended_title">A fiók-helyreállítási időszak véget ért</string>
+  <string name="account_recovery_window_ended_subtitle">A fiók-helyreállítási időszak véget ért.</string>
+  <string name="account_recovery_cancel">Helyreállítás visszavonása</string>
+  <string name="account_recovery_password_label">Adja meg a jelszót a visszavonáshoz</string>
   <string name="account_recovery_password_placeholder">Jelszó</string>
 </resources>

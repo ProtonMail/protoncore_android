@@ -50,6 +50,7 @@
   <string name="plans_manage_your_subscription_other">Вашай падпіска нельга кіраваць унутры мабільнай праграмы.</string>
   <string name="plans_autorenew_subscriptions">Праз гэту праграму даступны толькі гадавыя падпіскі з аўтаматычным падаўжэннем.</string>
   <string name="plans_can_not_upgrade_from_mobile">Вы не можаце змяніць тарыфны план праз мабільную праграму.</string>
+  <string name="plans_no_upgrade_available">У цяперашні час паляпшэнні недаступны.</string>
   <string name="plans_limited_offer">Прапанова абмежавана па часе</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

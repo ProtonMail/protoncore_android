@@ -48,6 +48,7 @@
   <string name="plans_manage_your_subscription_other">Aboneliğiniz mobil uygulama içinden yönetilemez.</string>
   <string name="plans_autorenew_subscriptions">Bu uygulamada yalnızca otomatik yenilenen yıllık abonelikler kullanılabilir.</string>
   <string name="plans_can_not_upgrade_from_mobile">Mobil uygulamadan yükseltme yapamazsınız.</string>
+  <string name="plans_no_upgrade_available">Şu anda yayınlanmış bir güncelleme yok.</string>
   <string name="plans_limited_offer">Sınırlı süreli teklif</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -130,7 +131,7 @@
     <item>CHF</item>
   </string-array>
   <!-- region plans hardcoded texts -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Sınırsız klasör, etiket, süzgeç</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Sınırsız sayıda klasör, etiket, süzgeç</string>
   <string name="highest_vpn_speed" comment="new_plans">En yüksek VPN hızı</string>
   <string name="servers_in_countries" comment="new_plans">63 ülkede 1500 üzerinde sunucu</string>
   <string name="ad_blocker" comment="new_plans">Yerleşik reklam engelleyici (NetShield)</string>
@@ -142,7 +143,7 @@
   <string name="unlimited_devices">Sınırsız sayıda aygıt</string>
   <string name="integrated_2fa_authenticator">Bütünleşik iki adımlı kimlik doğrulayıcı</string>
   <string name="multiple_vaults">Birden çok kasa</string>
-  <string name="unlimited_email_alias">Sınırsız Hide My Email takma adı</string>
+  <string name="unlimited_email_alias">Sınırsız sayıda Hide My Email takma adı</string>
   <string name="custom_email_alias_domains">E-posta takma adları için özel etki alanları</string>
   <string name="multiple_forwarding_mailboxes">Çok sayıda iletme e-posta kutusu</string>
   <string name="priority_support">Öncelikli destek</string>

@@ -20,10 +20,10 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">Не вдається знайти браузер, щоб відкрити посилання.</string>
   <string name="presentation_force_update_title">Необхідне оновлення</string>
-  <string name="presentation_force_update_message">Ця версія застосунку більше не підтримується. Оновіть його, щоб продовжити користуватися.</string>
+  <string name="presentation_force_update_message">Ця версія програми більше не підтримується. Оновіть, щоб і надалі користуватися.</string>
   <string name="presentation_force_update_learn_more">Докладніше</string>
   <string name="presentation_force_update_update">Оновити</string>
-  <string name="presentation_market_missing">Не вдалося знайти застосунок на пристрої. Перейдіть у магазин та встановіть застосунок.</string>
+  <string name="presentation_market_missing">Не вдалося знайти програму на пристрої. Перейдіть у магазин і встановіть її.</string>
   <string name="presentation_authenticate">Автентифікація</string>
   <string name="presentation_signin_to_continue">Увійдіть для продовження</string>
   <string name="presentation_alert_title">Попередження</string>

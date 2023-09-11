@@ -43,7 +43,7 @@
   <string name="settings_change_password_error">Terdapat kesalahan dalam proses perubahan kata sandi.</string>
   <string name="settings_recovery_email_success">Email pemulihan telah diperbarui</string>
   <string name="settings_password_management_success">Kata sandi diperbarui</string>
-  <string name="settings_password_management_login_password_success">Kata sandi masuk sudah diperbarui</string>
+  <string name="settings_password_management_login_password_success">Kata sandi masuk diperbarui</string>
   <string name="settings_password_management_mailbox_password_success">Kata sandi kotak surat diperbarui</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetri anonim</string>

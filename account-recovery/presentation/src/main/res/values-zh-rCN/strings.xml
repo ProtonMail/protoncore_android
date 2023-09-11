@@ -18,13 +18,13 @@
   -->
 <resources>
   <string name="account_recovery_grace_started_title">宽限期开始</string>
-  <string name="account_recovery_grace_started_subtitle">您的账户恢复宽限期已开始并持续进行。</string>
+  <string name="account_recovery_grace_started_subtitle">您的账户已进入恢复宽限期。</string>
   <string name="account_recovery_cancelled_title">账户恢复已取消</string>
   <string name="account_recovery_cancelled_subtitle">您的账户恢复过程已被取消。</string>
   <string name="account_recovery_password_started_title">账户恢复密码可以更改</string>
   <string name="account_recovery_password_started_subtitle">您的账户恢复密码更改期已开始。您现在可以更改密码。</string>
-  <string name="account_recovery_window_ended_title">账户恢复窗口已结束</string>
-  <string name="account_recovery_window_ended_subtitle">您的账户恢复窗口已结束。</string>
+  <string name="account_recovery_window_ended_title">账户恢复窗口已关闭</string>
+  <string name="account_recovery_window_ended_subtitle">您的账户恢复窗口已关闭。</string>
   <string name="account_recovery_cancel">取消恢复</string>
   <string name="account_recovery_password_label">输入密码以取消</string>
   <string name="account_recovery_password_placeholder">密码</string>

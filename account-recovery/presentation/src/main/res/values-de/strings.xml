@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="account_recovery_grace_started_title">Die Karenzzeit hat begonnen</string>
-  <string name="account_recovery_grace_started_subtitle">Die Karenzfrist deiner Kontowiederherstellung hat begonnen und läuft gerade.</string>
+  <string name="account_recovery_grace_started_subtitle">Die Schonfrist für die Wiederherstellung deines Kontos hat bereits begonnen und dauert noch an.</string>
   <string name="account_recovery_cancelled_title">Kontowiederherstellung abgebrochen</string>
   <string name="account_recovery_cancelled_subtitle">Der Prozess zur Kontowiederherstellung wurde abgebrochen.</string>
   <string name="account_recovery_password_started_title">Passwort zur Kontowiederherstellung kann geändert werden</string>

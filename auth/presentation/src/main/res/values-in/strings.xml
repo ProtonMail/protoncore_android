@@ -27,8 +27,8 @@
   <string name="welcome_subtitle_calendar_alt">Kalender kami yang terenkripsi secara end-to-end membantu Anda agar tetap teratur, terjadwal, dan terkendali.</string>
   <string name="welcome_subtitle_vpn">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda dengan mengenkripsi koneksi internet Anda.</string>
   <string name="welcome_subtitle_vpn_alt">VPN Swiss berkecepatan tinggi yang melindungi privasi Anda. Keamanan maksimum, 1.600+ server, dan tanpa batasan.</string>
-  <string name="welcome_subtitle_pass">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindungi oleh nama yang paling terpercaya dalam dunia privasi.</string>
-  <string name="welcome_subtitle_pass_alt">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindungi oleh nama yang paling terpercaya dalam dunia privasi.</string>
+  <string name="welcome_subtitle_pass">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindung oleh nama yang paling terpercaya di ranah privasi.</string>
+  <string name="welcome_subtitle_pass_alt">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindung oleh nama yang paling terpercaya di ranah privasi.</string>
   <string name="welcome_privacy_by_default">Privasi sebagai hal yang baku</string>
   <string name="auth_password_label">Kata Sandi</string>
   <string name="auth_password_help">Kata sandi harus mengandung minimal 8 karakter</string>
