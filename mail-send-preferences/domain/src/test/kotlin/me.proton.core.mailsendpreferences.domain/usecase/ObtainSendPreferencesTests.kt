@@ -280,7 +280,9 @@ class ObtainSendPreferencesTests {
 
         val emailWithPinnedKeys = "calendar@proton.black"
 
-        every { pgpCryptoMock.getFingerprintOrNull(any()) } returns "key fingerprint"
+        every { pgpCryptoMock.getArmored(any(), any()) } returns "armored public key"
+        every { pgpCryptoMock.getFingerprintOrNull("armored public key") } returns "key fingerprint"
+        every { pgpCryptoMock.getFingerprintOrNull("armored key from public repository") } returns "key fingerprint"
         every { pgpCryptoMock.isKeyExpired(any()) } returns false
         every { pgpCryptoMock.isKeyRevoked(any()) } returns false
 
@@ -309,7 +311,9 @@ class ObtainSendPreferencesTests {
 
         val emailWithPinnedKeys = "calendar@proton.black"
 
-        every { pgpCryptoMock.getFingerprintOrNull(any()) } returns "key fingerprint"
+        every { pgpCryptoMock.getArmored(any(), any()) } returns "armored public key"
+        every { pgpCryptoMock.getFingerprintOrNull("armored public key") } returns "key fingerprint"
+        every { pgpCryptoMock.getFingerprintOrNull("armored key from public repository") } returns "key fingerprint"
         every { pgpCryptoMock.isKeyExpired(any()) } returns false
         every { pgpCryptoMock.isKeyRevoked(any()) } returns false
 

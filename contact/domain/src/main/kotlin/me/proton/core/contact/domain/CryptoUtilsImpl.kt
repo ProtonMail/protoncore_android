@@ -23,6 +23,7 @@ import me.proton.core.contact.domain.CryptoUtils.PinnedKeysOrError
 import me.proton.core.contact.domain.CryptoUtils.PinnedKeysPurpose
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.getFingerprintOrNull
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
@@ -52,7 +53,7 @@ class CryptoUtilsImpl @Inject constructor() : CryptoUtils {
         val vCardPublicKeys = vCard.getKeysForGroup(propertyGroup)
 
         val pinnedPublicKeys = vCardPublicKeys.mapNotNull { pinnedPublicKeyBytes ->
-            val armoredPinnedPublicKey = pinnedPublicKeyBytes.toString(Charsets.UTF_8) as Armored
+            val armoredPinnedPublicKey = cryptoContext.pgpCrypto.getArmored(pinnedPublicKeyBytes, PGPHeader.PublicKey)
             extractPinnedPublicKey(
                 cryptoContext,
                 armoredPinnedPublicKey,

@@ -147,6 +147,9 @@ class CryptoUtilsTests {
         every { pgpCryptoMock.isKeyExpired(any()) } returns false
         every { pgpCryptoMock.isKeyRevoked(any()) } returns false
 
+        every { pgpCryptoMock.getArmored(vCard.keys[0].data, any()) } returns "armored public key pref 2"
+        every { pgpCryptoMock.getArmored(vCard.keys[1].data, any()) } returns "armored public key pref 1"
+
         val result = sut.extractPinnedPublicKeys(
             CryptoUtils.PinnedKeysPurpose.Encrypting,
             vCardEmail,
@@ -155,11 +158,9 @@ class CryptoUtilsTests {
             cryptoContextMock
         )
 
-        val vCardKeyPref1 = vCard.keys[1]
-
         with(result as CryptoUtils.PinnedKeysOrError.Success) {
             assertTrue(result.pinnedPublicKeys.size == 1)
-            assertTrue(result.pinnedPublicKeys[0].key.contentEquals(String(vCardKeyPref1.data)))
+            assertTrue(result.pinnedPublicKeys[0].key.contentEquals("armored public key pref 1"))
         }
 
     }
@@ -171,6 +172,7 @@ class CryptoUtilsTests {
 
         every { pgpCryptoMock.isKeyExpired(any()) } returns false
         every { pgpCryptoMock.isKeyRevoked(any()) } returns false
+        every { pgpCryptoMock.getArmored(any(), any()) } returns "armored public key"
 
         val result = sut.extractPinnedPublicKeys(
             CryptoUtils.PinnedKeysPurpose.VerifyingSignature,
