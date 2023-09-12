@@ -64,7 +64,7 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
                 is State.Loading -> onLoading()
                 is State.Error -> onError(it.error)
                 is State.UserNotExist -> onNoPrimaryUser()
-                is State.Success -> onSuccess(it.dynamicSubscription, it.canUpgradeFromMobile)
+                is State.Success -> onSuccess(it)
             }
         }.launchInViewLifecycleScope()
 
@@ -90,9 +90,9 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         showError(getString(R.string.presentation_error_general))
     }
 
-    private fun onSuccess(dynamicSubscription: DynamicSubscription, canUpgradeFromMobile: Boolean) {
+    private fun onSuccess(state: State.Success) {
         showLoading(false)
-        showSubscription(dynamicSubscription, canUpgradeFromMobile)
+        showSubscription(state.dynamicSubscription, state.canUpgradeFromMobile, state.userCurrency)
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
@@ -107,13 +107,15 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
 
     private fun showSubscription(
         subscription: DynamicSubscription,
-        canUpgradeFromMobile: Boolean
+        canUpgradeFromMobile: Boolean,
+        userCurrency: String
     ) = with(binding.dynamicPlan) {
         title = subscription.title
         description = subscription.description
         starred = subscription.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
-        val price = subscription.amount?.toDouble()
-        priceText = price?.formatCentsPriceDefaultLocale(requireNotNull(subscription.currency))
+        val price = subscription.amount?.toDouble() ?: 0.0
+        val currency = subscription.currency ?: userCurrency
+        priceText = price.formatCentsPriceDefaultLocale(currency)
         priceCycle = subscription.cycleDescription
         renewalText = when {
             subscription.renew == null -> null

@@ -46,4 +46,6 @@ class ObserveUserId @Inject constructor(
     suspend fun setUser(user: DynamicUser) {
         mutableUser.emit(user)
     }
+
+    fun getUser(): DynamicUser = mutableUser.value
 }

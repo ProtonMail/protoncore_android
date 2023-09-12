@@ -23,9 +23,6 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -33,6 +30,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.entity.DynamicUser
+import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -47,35 +45,26 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     private val userId1 = UserId("userId")
     private val userId2 = UserId("another")
     private val userIdAbsent = UserId("absent")
-    private val mutablePrimaryUserIdFlow = MutableStateFlow<UserId?>(userId1)
 
     private val dynamicPlan = mockk<DynamicPlan> {
         every { instances } returns emptyMap()
     }
     private val plans = listOf(dynamicPlan)
+
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     private val getDynamicPlans = mockk<GetDynamicPlans> {
         coEvery { this@mockk.invoke(any()) } returns plans
     }
-    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    private val accountManager = mockk<AccountManager>(relaxed = true) {
-        coEvery { this@mockk.getPrimaryUserId() } returns mutablePrimaryUserIdFlow
-        coEvery { this@mockk.getAccount(any()) } answers {
-            flowOf(
-                when (firstArg<UserId>()) {
-                    userId1 -> mockk<Account> { every { userId } returns userId1 }
-                    userId2 -> mockk<Account> { every { userId } returns userId2 }
-                    userIdAbsent -> null
-                    else -> null
-                }
-            )
-        }
+    private val mutableUserIdFlow = MutableStateFlow<UserId?>(userId1)
+    private val observeUserId = mockk<ObserveUserId>(relaxed = true) {
+        coEvery { this@mockk.invoke() } returns mutableUserIdFlow
     }
 
     private lateinit var tested: DynamicPlanListViewModel
 
     @BeforeTest
     fun setUp() {
-        tested = DynamicPlanListViewModel(observabilityManager, accountManager, getDynamicPlans)
+        tested = DynamicPlanListViewModel(observabilityManager, observeUserId, getDynamicPlans)
     }
 
     @Test

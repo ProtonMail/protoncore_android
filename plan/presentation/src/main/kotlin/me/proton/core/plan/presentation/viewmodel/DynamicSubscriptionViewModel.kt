@@ -20,19 +20,15 @@ package me.proton.core.plan.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
@@ -42,6 +38,8 @@ import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.payment.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.presentation.entity.DynamicUser
+import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
+import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.withResultContextFlow
 import javax.inject.Inject
@@ -49,7 +47,8 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DynamicSubscriptionViewModel @Inject constructor(
     override val manager: ObservabilityManager,
-    private val accountManager: AccountManager,
+    private val observeUserId: ObserveUserId,
+    private val observeUserCurrency: ObserveUserCurrency,
     private val getDynamicSubscription: GetDynamicSubscription,
     private val canUpgradeFromMobile: CanUpgradeFromMobile,
 ) : ProtonViewModel(), ObservabilityContext {
@@ -61,6 +60,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         data class Success(
             val dynamicSubscription: DynamicSubscription,
             val canUpgradeFromMobile: Boolean,
+            val userCurrency: String,
         ) : State()
     }
 
@@ -70,7 +70,6 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.Primary)
 
     val state: StateFlow<State> = observeState().stateIn(
         scope = viewModelScope,
@@ -80,19 +79,10 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
 
     private fun observeState() = mutableLoadCount
         .flatMapLatest { observeUserId().distinctUntilChanged() }
-        .flatMapLatest { loadDynamicSubscription(it) }
+        .flatMapLatest { userId -> observeUserCurrency(userId).distinctUntilChanged().map { userId to it } }
+        .flatMapLatest { (userId, currency) -> loadDynamicSubscription(userId, currency) }
 
-    private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
-        when (user) {
-            is DynamicUser.Unspecified -> emptyFlow()
-            is DynamicUser.None -> flowOf(null)
-            is DynamicUser.Primary -> accountManager.getPrimaryUserId()
-            is DynamicUser.ByUserId -> accountManager.getAccount(user.userId)
-                .mapLatest { it?.userId }
-        }
-    }
-
-    private suspend fun loadDynamicSubscription(userId: UserId?) = withResultContextFlow {
+    private suspend fun loadDynamicSubscription(userId: UserId?, currency: String) = withResultContextFlow {
         it.onResultEnqueue("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
         emit(State.Loading)
         when (userId) {
@@ -100,7 +90,8 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
             else -> emit(
                 State.Success(
                     dynamicSubscription = getDynamicSubscription(userId),
-                    canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId)
+                    canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId),
+                    userCurrency = currency
                 )
             )
         }
@@ -124,6 +115,6 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     }
 
     private fun onSetUser(user: DynamicUser) = viewModelScope.launch {
-        mutableUser.emit(user)
+        observeUserId.setUser(user)
     }
 }

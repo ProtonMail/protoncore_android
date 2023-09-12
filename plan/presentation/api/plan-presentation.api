@@ -1387,6 +1387,7 @@ public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGoogl
 
 public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency {
 	public static final field Companion Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency$Companion;
+	public static final field fallbackCurrency Ljava/lang/String;
 	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
 	public final fun getCurrencies (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
@@ -1406,6 +1407,7 @@ public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency_
 
 public final class me/proton/core/plan/presentation/usecase/ObserveUserId {
 	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
+	public final fun getUser ()Lme/proton/core/plan/presentation/entity/DynamicUser;
 	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
 	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -1534,7 +1536,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanListVie
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel_HiltModules {
@@ -1611,11 +1613,11 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanV
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/payment/domain/usecase/GetDynamicSubscription;Lme/proton/core/payment/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/payment/domain/usecase/GetDynamicSubscription;Lme/proton/core/payment/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_HiltModules {

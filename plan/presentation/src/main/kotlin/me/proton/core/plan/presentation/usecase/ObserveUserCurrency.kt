@@ -50,7 +50,7 @@ class ObserveUserCurrency @Inject constructor(
 
     companion object {
         // ISO 4217 3-letter codes.
-        private const val fallbackCurrency = "USD"
+        const val fallbackCurrency = "USD"
         val availableCurrencies = listOf("CHF", "EUR", fallbackCurrency)
     }
 }

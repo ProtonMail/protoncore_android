@@ -113,7 +113,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         error.text = message
     }
 
-    private fun showPlans(plans: List<DynamicPlan>, cycle: Int, currency: String?) {
+    private fun showPlans(plans: List<DynamicPlan>, cycle: Int, currency: String) {
         binding.plans.removeAllViews()
         plans.forEach { plan ->
             val cardView = DynamicPlanCardView(requireContext())
@@ -124,14 +124,16 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         }
     }
 
-    private fun DynamicPlanView.setPlan(plan: DynamicPlan, cycle: Int, currency: String?) {
+    private fun DynamicPlanView.setPlan(plan: DynamicPlan, cycle: Int, currency: String) {
         val instance = plan.instances[cycle]
         val price = instance?.price?.get(currency)
+        val priceCurrent = price?.current ?: 0.0
+        val priceCurrency = price?.currency ?: currency
         id = abs(plan.name.hashCode())
         title = plan.title
         description = plan.description
         starred = plan.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
-        priceText = price?.current?.toDouble()?.formatCentsPriceDefaultLocale(price.currency)
+        priceText = priceCurrent.toDouble().formatCentsPriceDefaultLocale(priceCurrency)
         priceCycle = instance?.description
         isCollapsable = true
         entitlements.removeAllViews()

@@ -19,9 +19,10 @@
 package me.proton.core.plan.presentation.entity
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
 
 data class DynamicPlanFilter(
     val userId: UserId? = null,
     val cycle: Int = 12,
-    val currency: String? = null,
+    val currency: String = ObserveUserCurrency.fallbackCurrency,
 )
