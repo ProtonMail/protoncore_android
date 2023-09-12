@@ -36,7 +36,7 @@ import me.proton.core.plan.presentation.view.toView
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
-import me.proton.core.plan.presentation.viewmodel.DynamicUser
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
 import me.proton.core.presentation.utils.getUserMessage

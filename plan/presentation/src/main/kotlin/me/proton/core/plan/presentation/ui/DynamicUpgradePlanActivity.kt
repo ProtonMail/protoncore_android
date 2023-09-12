@@ -26,7 +26,7 @@ import me.proton.core.plan.presentation.databinding.ActivityDynamicUpgradePlanBi
 import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.UpgradeResult
-import me.proton.core.plan.presentation.viewmodel.DynamicUser
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 
 @AndroidEntryPoint

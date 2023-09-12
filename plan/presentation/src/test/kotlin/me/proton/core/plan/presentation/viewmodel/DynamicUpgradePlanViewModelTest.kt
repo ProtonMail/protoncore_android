@@ -32,6 +32,7 @@ import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State

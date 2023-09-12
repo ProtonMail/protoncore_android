@@ -43,6 +43,7 @@ import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.filterBy
 import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.entity.DynamicPlanFilter
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.withResultContextFlow
 import javax.inject.Inject

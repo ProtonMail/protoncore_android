@@ -33,12 +33,12 @@ import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanSelectionBinding
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.State
-import me.proton.core.plan.presentation.viewmodel.DynamicUser
 import me.proton.core.plan.presentation.viewmodel.filterByCycle
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onItemSelected
@@ -61,6 +61,10 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
     private var onPlanFree: ((SelectedPlan) -> Unit)? = null
+
+    private fun setCurrency(index: Int) {
+        planList.setCurrency(requireNotNull(currencyAdapter.getItem(index)))
+    }
 
     fun setUser(user: DynamicUser) {
         planList.setUser(user)
@@ -114,7 +118,12 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
         if (currencyAdapter.isEmpty) {
             currencyAdapter.addAll(currencies)
             currencySpinner.setSelection(0)
-            currencySpinner.onItemSelected { planList.setCurrency(requireNotNull(currencyAdapter.getItem(it))) }
+            currencySpinner.onItemSelected { setCurrency(it) }
+        } else {
+            currencyAdapter.clear()
+            currencyAdapter.addAll(currencies)
+            currencySpinner.setSelection(0)
+            setCurrency(0)
         }
     }
 

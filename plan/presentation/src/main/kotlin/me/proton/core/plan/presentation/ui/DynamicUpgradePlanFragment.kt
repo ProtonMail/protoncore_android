@@ -31,7 +31,7 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State
-import me.proton.core.plan.presentation.viewmodel.DynamicUser
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView

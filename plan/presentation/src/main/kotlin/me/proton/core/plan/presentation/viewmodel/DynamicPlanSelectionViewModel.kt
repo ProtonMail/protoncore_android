@@ -20,36 +20,29 @@ package me.proton.core.plan.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
+import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.UserManager
-import org.jetbrains.annotations.VisibleForTesting
-import java.util.Currency
-import java.util.Locale
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
 @HiltViewModel
 internal class DynamicPlanSelectionViewModel @Inject constructor(
     override val manager: ObservabilityManager,
-    private val userManager: UserManager,
-    private val accountManager: AccountManager,
+    private val observeUserId: ObserveUserId,
+    private val observeUserCurrency: ObserveUserCurrency
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
@@ -68,14 +61,7 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         object SetBillingCanceled : Action()
     }
 
-    @VisibleForTesting
-    internal val localCurrency = Currency.getInstance(Locale.getDefault()).currencyCode
-
-    @VisibleForTesting
-    internal val defaultCurrency = availableCurrencies.firstOrNull { it == localCurrency } ?: fallbackCurrency
-
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.Unspecified)
     private val mutableSelectedPlan = MutableStateFlow<SelectedPlan?>(null)
     private val mutablePaymentResult = MutableStateFlow<BillingResult?>(null)
 
@@ -88,26 +74,8 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
     private fun observeCurrencies() = mutableLoadCount
         .flatMapLatest { observeUserId().distinctUntilChanged() }
         .flatMapLatest { observeUserCurrency(it).distinctUntilChanged() }
-        .flatMapLatest { getCurrencies(it) }
+        .flatMapLatest { observeUserCurrency.getCurrencies(it) }
         .flatMapLatest { observeState(it) }
-
-    private fun observeUserId(): Flow<UserId?> = mutableUser.flatMapLatest { user ->
-        when (user) {
-            is DynamicUser.Unspecified -> emptyFlow()
-            is DynamicUser.None -> flowOf(null)
-            is DynamicUser.Primary -> accountManager.getPrimaryUserId()
-            is DynamicUser.ByUserId -> accountManager.getAccount(user.userId).mapLatest { it?.userId }
-        }
-    }
-
-    private fun observeUserCurrency(userId: UserId?): Flow<String> = when (userId) {
-        null -> flowOf(defaultCurrency)
-        else -> userManager.observeUser(userId).mapLatest { user -> user?.currency ?: defaultCurrency }
-    }
-
-    private fun getCurrencies(userCurrency: String) = flowOf(
-        listOf(userCurrency) + (availableCurrencies - userCurrency)
-    )
 
     private fun observeState(currencies: List<String>) = combine(
         mutableSelectedPlan,
@@ -138,7 +106,7 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
     }
 
     private fun onSetUser(user: DynamicUser) = viewModelScope.launch {
-        mutableUser.emit(user)
+        observeUserId.setUser(user)
     }
 
     private fun onSelectPlan(selectedPlan: SelectedPlan) = viewModelScope.launch {
@@ -152,11 +120,5 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
     private fun onSetBillingCanceled() = viewModelScope.launch {
         mutableSelectedPlan.emit(null)
         mutablePaymentResult.emit(null)
-    }
-
-    companion object {
-        // ISO 4217 3-letter codes.
-        private const val fallbackCurrency = "USD"
-        val availableCurrencies = listOf("CHF", "EUR", fallbackCurrency)
     }
 }

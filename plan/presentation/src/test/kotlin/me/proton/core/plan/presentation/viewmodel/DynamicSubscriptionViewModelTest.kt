@@ -32,6 +32,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.payment.domain.usecase.GetDynamicSubscription
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
