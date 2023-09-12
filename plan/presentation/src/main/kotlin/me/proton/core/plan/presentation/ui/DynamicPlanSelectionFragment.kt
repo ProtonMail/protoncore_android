@@ -61,10 +61,13 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
     private var onPlanFree: ((SelectedPlan) -> Unit)? = null
+    private var onPlanList: ((List<DynamicPlan>) -> Unit)? = null
 
     private fun setCurrency(index: Int) {
         planList.setCurrency(requireNotNull(currencyAdapter.getItem(index)))
     }
+
+    fun getPlanList(): List<DynamicPlan> = planList.getPlanList()
 
     fun setUser(user: DynamicUser) {
         planList.setUser(user)
@@ -77,6 +80,10 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     fun setOnPlanFree(onPlanFree: (SelectedPlan) -> Unit) {
         this.onPlanFree = onPlanFree
+    }
+
+    fun setOnPlanList(onPlanList: (List<DynamicPlan>) -> Unit) {
+        this.onPlanList = onPlanList
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,6 +115,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     }
 
     private fun onPlanList(plans: List<DynamicPlan>) {
+        onPlanList?.invoke(plans)
         val isEmpty = plans.isEmpty()
         binding.listEmpty.isVisible = isEmpty
         binding.listInfo.isVisible = !isEmpty

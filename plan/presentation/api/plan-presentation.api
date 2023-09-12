@@ -438,6 +438,35 @@ public final class me/proton/core/plan/presentation/entity/DynamicPlanFilter {
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract class me/proton/core/plan/presentation/entity/DynamicUser {
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+}
+
+public final class me/proton/core/plan/presentation/entity/DynamicUser$ByUserId : me/proton/core/plan/presentation/entity/DynamicUser {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/plan/presentation/entity/DynamicUser$ByUserId;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/DynamicUser$ByUserId;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/DynamicUser$ByUserId;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/entity/DynamicUser$None : me/proton/core/plan/presentation/entity/DynamicUser {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/entity/DynamicUser$None;
+}
+
+public final class me/proton/core/plan/presentation/entity/DynamicUser$Primary : me/proton/core/plan/presentation/entity/DynamicUser {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/entity/DynamicUser$Primary;
+}
+
+public final class me/proton/core/plan/presentation/entity/DynamicUser$Unspecified : me/proton/core/plan/presentation/entity/DynamicUser {
+	public static final field INSTANCE Lme/proton/core/plan/presentation/entity/DynamicUser$Unspecified;
+}
+
 public final class me/proton/core/plan/presentation/entity/PlanCurrency : java/lang/Enum {
 	public static final field CHF Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public static final field Companion Lme/proton/core/plan/presentation/entity/PlanCurrency$Companion;
@@ -1004,12 +1033,13 @@ public final class me/proton/core/plan/presentation/ui/BasePlansFragment$Compani
 
 public final class me/proton/core/plan/presentation/ui/DynamicPlanListFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
-	public final fun getUser ()Lme/proton/core/plan/presentation/viewmodel/DynamicUser;
+	public final fun getPlanList ()Ljava/util/List;
+	public final fun getUser ()Lme/proton/core/plan/presentation/entity/DynamicUser;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setCurrency (Ljava/lang/String;)V
 	public final fun setOnPlanList (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnPlanSelected (Lkotlin/jvm/functions/Function1;)V
-	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicPlanListFragment_GeneratedInjector {
@@ -1020,12 +1050,14 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragm
 	public field paymentsOrchestrator Lme/proton/core/payment/presentation/PaymentsOrchestrator;
 	public fun <init> ()V
 	public final fun getPaymentsOrchestrator ()Lme/proton/core/payment/presentation/PaymentsOrchestrator;
+	public final fun getPlanList ()Ljava/util/List;
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setOnPlanBilled (Lkotlin/jvm/functions/Function2;)V
 	public final fun setOnPlanFree (Lkotlin/jvm/functions/Function1;)V
+	public final fun setOnPlanList (Lkotlin/jvm/functions/Function1;)V
 	public final fun setPaymentsOrchestrator (Lme/proton/core/payment/presentation/PaymentsOrchestrator;)V
-	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragment_GeneratedInjector {
@@ -1063,7 +1095,7 @@ public final class me/proton/core/plan/presentation/ui/DynamicSubscriptionFragme
 	public fun <init> ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun reload ()V
-	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicSubscriptionFragment_GeneratedInjector {
@@ -1090,7 +1122,7 @@ public final class me/proton/core/plan/presentation/ui/DynamicUpgradePlanFragmen
 	public final fun setOnBackClicked (Lkotlin/jvm/functions/Function0;)V
 	public final fun setOnPlanBilled (Lkotlin/jvm/functions/Function2;)V
 	public final fun setShowSubscription (Z)V
-	public final fun setUser (Lme/proton/core/plan/presentation/viewmodel/DynamicUser;)V
+	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicUpgradePlanFragment_GeneratedInjector {
@@ -1353,6 +1385,39 @@ public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGoogl
 	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
 }
 
+public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency {
+	public static final field Companion Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency$Companion;
+	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
+	public final fun getCurrencies (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency$Companion {
+	public final fun getAvailableCurrencies ()Ljava/util/List;
+}
+
+public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;
+	public static fun newInstance (Lme/proton/core/user/domain/UserManager;)Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;
+}
+
+public final class me/proton/core/plan/presentation/usecase/ObserveUserId {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
+	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
+	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/presentation/usecase/ObserveUserId_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/ObserveUserId_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/usecase/ObserveUserId;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;)Lme/proton/core/plan/presentation/usecase/ObserveUserId;
+}
+
 public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory;
@@ -1496,7 +1561,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelecti
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/AccountManager;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_HiltModules {
@@ -1597,35 +1662,6 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicUpgradePlan
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;
-}
-
-public abstract class me/proton/core/plan/presentation/viewmodel/DynamicUser {
-	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
-}
-
-public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId : me/proton/core/plan/presentation/viewmodel/DynamicUser {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
-	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/plan/presentation/viewmodel/DynamicUser$ByUserId;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$None : me/proton/core/plan/presentation/viewmodel/DynamicUser {
-	public static final field INSTANCE Lme/proton/core/plan/presentation/viewmodel/DynamicUser$None;
-}
-
-public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$Primary : me/proton/core/plan/presentation/viewmodel/DynamicUser {
-	public static final field INSTANCE Lme/proton/core/plan/presentation/viewmodel/DynamicUser$Primary;
-}
-
-public final class me/proton/core/plan/presentation/viewmodel/DynamicUser$Unspecified : me/proton/core/plan/presentation/viewmodel/DynamicUser {
-	public static final field INSTANCE Lme/proton/core/plan/presentation/viewmodel/DynamicUser$Unspecified;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/SignupPlansViewModel_Factory : dagger/internal/Factory {

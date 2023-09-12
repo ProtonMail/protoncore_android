@@ -83,6 +83,7 @@ internal class DynamicPlanListViewModel @Inject constructor(
     )
 
     fun getUser(): DynamicUser = mutableUser.value
+    fun getPlanList(): List<DynamicPlan> = (state.value as? State.Success)?.plans ?: emptyList()
 
     private fun observeState() = mutableLoadCount
         .flatMapLatest { observeUserId().distinctUntilChanged() }

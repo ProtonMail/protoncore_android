@@ -20,6 +20,8 @@ package me.proton.core.plan.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,11 +29,11 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicUpgradePlanBinding
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State
-import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView
@@ -71,6 +73,7 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         }
         subscription.isVisible = isVisible
         title.isVisible = isVisible
+        if (!isVisible) { upgradeLayout.isVisible = true }
     }
 
     fun setOnPlanBilled(onPlanBilled: (SelectedPlan, BillingResult) -> Unit) {
@@ -96,6 +99,7 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         binding.toolbar.setNavigationOnClickListener { onBackClicked?.invoke() }
         binding.retry.onClick { viewModel.perform(Action.Load) }
 
+        planSelectionFragment.setOnPlanList { onUpgradeAvailable() }
         planSelectionFragment.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
         planSelectionFragment.setOnPlanBilled { plan, result -> onPlanBilled?.invoke(plan, result) }
 
@@ -113,13 +117,21 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         showLoading(false)
     }
 
-    private fun onUpgradeAvailable() {
+    private fun onUpgradeAvailable() = with(binding) {
         showLoading(false)
+        with (upgradeLayout) {
+            when {
+                isGone -> Unit // See onUpgradeNotAvailable.
+                isVisible -> Unit // See isInvisible case.
+                isInvisible -> isInvisible = planSelectionFragment.getPlanList().isEmpty()
+                else -> Unit
+            }
+        }
     }
 
-    private fun onUpgradeNotAvailable() {
+    private fun onUpgradeNotAvailable() = with(binding) {
         showLoading(false)
-        binding.upgradeLayout.isVisible = false
+        upgradeLayout.isGone = true
     }
 
     private fun onError(error: Throwable?) = with(binding) {
