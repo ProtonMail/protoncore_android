@@ -19,18 +19,24 @@
 package me.proton.core.plan.domain.entity
 
 import me.proton.core.domain.type.StringEnum
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-sealed class DynamicDecoration {
-    data class Starred(val iconName: String) : DynamicDecoration()
-    data class Badge(val text: String, val anchor: StringEnum<DynamicDecorationAnchor>?) : DynamicDecoration()
-}
+class DynamicDecorationEnumMappingTest {
 
-enum class DynamicDecorationAnchor(val anchor: String) {
-    Title("title"),
-    Subtitle("subtitle");
-
-    companion object {
-        val map = values().associateBy { it.anchor }
-        fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
+    @Test
+    fun dynamicDecorationAnchorEnumOf() {
+        assertEquals(
+            actual = DynamicDecorationAnchor.enumOf("title"),
+            expected = StringEnum("title", DynamicDecorationAnchor.Title)
+        )
+        assertEquals(
+            actual = DynamicDecorationAnchor.enumOf("subtitle"),
+            expected = StringEnum("subtitle", DynamicDecorationAnchor.Subtitle)
+        )
+        assertEquals(
+            actual = DynamicDecorationAnchor.enumOf("unknown"),
+            expected = StringEnum<DynamicDecorationAnchor>("unknown", null)
+        )
     }
 }

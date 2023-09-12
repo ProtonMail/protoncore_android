@@ -18,7 +18,9 @@
 
 package me.proton.core.plan.data.api.response
 
+import me.proton.core.domain.type.StringEnum
 import me.proton.core.plan.domain.entity.DynamicDecoration
+import me.proton.core.plan.domain.entity.DynamicDecorationAnchor
 import me.proton.core.util.kotlin.deserialize
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -39,6 +41,17 @@ class DynamicDecorationResourceTest {
         )
 
         assertEquals(
+            DynamicDecorationResource.Badge(text = "text", anchor = "title"),
+            """
+                {
+                "Type": "badge",
+                "Text": "text",
+                "Anchor": "title"
+                }
+            """.trimIndent().deserialize<DynamicDecorationResource>()
+        )
+
+        assertEquals(
             DynamicDecorationResource.Unknown(type = "custom"),
             """
                 {
@@ -54,6 +67,11 @@ class DynamicDecorationResourceTest {
         assertEquals(
             DynamicDecoration.Starred(iconName = "icon"),
             DynamicDecorationResource.Starred(iconName = "icon").toDynamicPlanDecoration()
+        )
+
+        assertEquals(
+            DynamicDecoration.Badge(text = "text", anchor = StringEnum("title", DynamicDecorationAnchor.Title)),
+            DynamicDecorationResource.Badge(text = "text", anchor = "title").toDynamicPlanDecoration()
         )
 
         assertNull(

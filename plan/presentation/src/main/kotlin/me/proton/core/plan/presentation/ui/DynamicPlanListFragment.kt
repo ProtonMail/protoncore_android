@@ -25,6 +25,7 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.plan.domain.entity.DynamicDecoration
+import me.proton.core.plan.domain.entity.DynamicDecorationAnchor
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanListBinding
@@ -129,10 +130,16 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         val price = instance?.price?.get(currency)
         val priceCurrent = price?.current ?: 0.0
         val priceCurrency = price?.currency ?: currency
+        val badges = plan.decorations.filterIsInstance<DynamicDecoration.Badge>()
+        val promoTitleBadge = badges.firstOrNull { it.anchor?.enum == DynamicDecorationAnchor.Title }
+        val promoSubtitleBadge = badges.firstOrNull { it.anchor?.enum == DynamicDecorationAnchor.Subtitle }
+        val stars = plan.decorations.filterIsInstance<DynamicDecoration.Starred>()
         id = abs(plan.name.hashCode())
         title = plan.title
         description = plan.description
-        starred = plan.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
+        starred = stars.isNotEmpty()
+        promoPercentage = promoTitleBadge?.text
+        promoTitle = promoSubtitleBadge?.text
         priceText = priceCurrent.toDouble().formatCentsPriceDefaultLocale(priceCurrency)
         priceCycle = instance?.description
         isCollapsable = true

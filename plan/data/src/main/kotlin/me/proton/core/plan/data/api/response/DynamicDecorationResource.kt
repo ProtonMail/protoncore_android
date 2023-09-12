@@ -27,6 +27,7 @@ import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 import me.proton.core.plan.domain.entity.DynamicDecoration
+import me.proton.core.plan.domain.entity.DynamicDecorationAnchor
 
 @Serializable(DynamicDecorationResourceSerializer::class)
 sealed class DynamicDecorationResource {
@@ -37,15 +38,26 @@ sealed class DynamicDecorationResource {
     ) : DynamicDecorationResource()
 
     @Serializable
+    data class Badge(
+        @SerialName("Text")
+        val text: String,
+        @SerialName("Anchor")
+        val anchor: String,
+    ) : DynamicDecorationResource()
+
+    @Serializable
     data class Unknown(
         @SerialName("Type")
         val type: String
     ) : DynamicDecorationResource()
 }
 
+private fun String.toDynamicDecorationAnchor() = DynamicDecorationAnchor.enumOf(this)
+
 fun DynamicDecorationResource.toDynamicPlanDecoration(): DynamicDecoration? =
     when (this) {
         is DynamicDecorationResource.Starred -> DynamicDecoration.Starred(iconName)
+        is DynamicDecorationResource.Badge -> DynamicDecoration.Badge(text, anchor.toDynamicDecorationAnchor())
         is DynamicDecorationResource.Unknown -> null
     }
 
@@ -54,6 +66,7 @@ class DynamicDecorationResourceSerializer :
     override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DynamicDecorationResource> {
         return when (element.jsonObject["Type"]?.jsonPrimitive?.contentOrNull) {
             "starred" -> DynamicDecorationResource.Starred.serializer()
+            "badge" -> DynamicDecorationResource.Badge.serializer()
             else -> DynamicDecorationResource.Unknown.serializer()
         }
     }

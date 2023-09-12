@@ -30,6 +30,19 @@ public abstract interface annotation class me/proton/core/plan/domain/SupportUpg
 public abstract class me/proton/core/plan/domain/entity/DynamicDecoration {
 }
 
+public final class me/proton/core/plan/domain/entity/DynamicDecoration$Badge : me/proton/core/plan/domain/entity/DynamicDecoration {
+	public fun <init> (Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lme/proton/core/domain/type/StringEnum;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnchor ()Lme/proton/core/domain/type/StringEnum;
+	public final fun getText ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/plan/domain/entity/DynamicDecoration$Starred : me/proton/core/plan/domain/entity/DynamicDecoration {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -39,6 +52,20 @@ public final class me/proton/core/plan/domain/entity/DynamicDecoration$Starred :
 	public final fun getIconName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicDecorationAnchor : java/lang/Enum {
+	public static final field Companion Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor$Companion;
+	public static final field Subtitle Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
+	public static final field Title Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
+	public final fun getAnchor ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicDecorationAnchor$Companion {
+	public final fun enumOf (Ljava/lang/String;)Lme/proton/core/domain/type/StringEnum;
+	public final fun getMap ()Ljava/util/Map;
 }
 
 public abstract class me/proton/core/plan/domain/entity/DynamicEntitlement {
