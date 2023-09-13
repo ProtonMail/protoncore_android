@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,6 +22,10 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import me.proton.core.presentation.utils.EmptyActivityLifecycleCallbacks
 import java.lang.ref.WeakReference
 import javax.inject.Inject
@@ -33,8 +37,10 @@ class ActivityProvider @Inject constructor(
     private val context: Context
 ) : EmptyActivityLifecycleCallbacks() {
 
+    private val _activityFlow = MutableStateFlow<WeakReference<Activity>?>(null)
     private var weakRef: WeakReference<Activity>? = null
 
+    val activityFlow: StateFlow<WeakReference<Activity>?> = _activityFlow.asStateFlow()
     val lastResumed: Activity? get() = weakRef?.get()
 
     init {
@@ -44,5 +50,6 @@ class ActivityProvider @Inject constructor(
 
     override fun onActivityResumed(activity: Activity) {
         weakRef = WeakReference(activity)
+        _activityFlow.update { weakRef }
     }
 }

@@ -16,6 +16,7 @@ public final class me/proton/core/presentation/LogTag {
 
 public final class me/proton/core/presentation/app/ActivityProvider : me/proton/core/presentation/utils/EmptyActivityLifecycleCallbacks {
 	public fun <init> (Landroid/content/Context;)V
+	public final fun getActivityFlow ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getLastResumed ()Landroid/app/Activity;
 	public fun onActivityResumed (Landroid/app/Activity;)V
 }
