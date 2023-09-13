@@ -435,8 +435,7 @@ public abstract interface class me/proton/core/plan/domain/repository/PlansRepos
 }
 
 public final class me/proton/core/plan/domain/usecase/GetDynamicPlans {
-	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/Product;Z)V
-	public final fun getProductExclusivePlans ()Z
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

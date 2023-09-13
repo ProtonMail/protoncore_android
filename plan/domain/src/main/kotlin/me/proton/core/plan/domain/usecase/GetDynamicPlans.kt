@@ -18,22 +18,15 @@
 
 package me.proton.core.plan.domain.usecase
 
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.domain.ProductOnlyPaidPlans
 import me.proton.core.plan.domain.entity.DynamicPlan
-import me.proton.core.plan.domain.entity.hasServiceFor
-import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Inject
 
 class GetDynamicPlans @Inject constructor(
-    private val plansRepository: PlansRepository,
-    private val product: Product,
-    @ProductOnlyPaidPlans val productExclusivePlans: Boolean
+    private val plansRepository: PlansRepository
 ) {
     suspend operator fun invoke(userId: UserId?): List<DynamicPlan> = plansRepository
         .getDynamicPlans(userId)
-        .filter { it.hasServiceFor(product, exclusive = productExclusivePlans) || it.isFree() }
         .sortedBy { plan -> plan.order }
 }

@@ -22,7 +22,6 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.Product
 import me.proton.core.plan.domain.entity.freePlan
 import me.proton.core.plan.domain.entity.mailPlusPlan
 import me.proton.core.plan.domain.entity.unlimitedPlan
@@ -51,11 +50,7 @@ class GetDynamicPlansTest {
             mailPlusPlan
         )
 
-        tested = GetDynamicPlans(
-            plansRepository,
-            Product.Calendar,
-            productExclusivePlans = false
-        )
+        tested = GetDynamicPlans(plansRepository)
 
         // WHEN
         val plans = tested(userId = null)
@@ -68,30 +63,6 @@ class GetDynamicPlansTest {
     }
 
     @Test
-    fun `exclusive mail plans`() = runTest {
-        // GIVEN
-        coEvery { plansRepository.getDynamicPlans(any()) } returns listOf(
-            freePlan,
-            unlimitedPlan,
-            mailPlusPlan
-        )
-
-        tested = GetDynamicPlans(
-            plansRepository,
-            Product.Mail,
-            productExclusivePlans = true
-        )
-
-        // WHEN
-        val plans = tested(userId = null)
-
-        // THEN
-        assertEquals(2, plans.size)
-        assertEquals(mailPlusPlan, plans[0])
-        assertEquals(freePlan, plans[1])
-    }
-
-    @Test
     fun `all pass plans`() = runTest {
         // GIVEN
         coEvery { plansRepository.getDynamicPlans(any()) } returns listOf(
@@ -100,18 +71,15 @@ class GetDynamicPlansTest {
             mailPlusPlan
         )
 
-        tested = GetDynamicPlans(
-            plansRepository,
-            Product.Pass,
-            productExclusivePlans = false
-        )
+        tested = GetDynamicPlans(plansRepository)
 
         // WHEN
         val plans = tested(userId = null)
 
         // THEN
-        assertEquals(2, plans.size)
+        assertEquals(3, plans.size)
         assertEquals(unlimitedPlan, plans[0])
-        assertEquals(freePlan, plans[1])
+        assertEquals(mailPlusPlan, plans[1])
+        assertEquals(freePlan, plans[2])
     }
 }
