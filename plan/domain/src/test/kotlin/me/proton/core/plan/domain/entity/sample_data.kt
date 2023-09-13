@@ -93,6 +93,7 @@ val unlimitedPlan = DynamicPlan(
             )
         )
     ).associateBy { it.cycle },
+    /*
     offers = listOf(
         DynamicPlanOffer(
             name = "Next month's offer",
@@ -113,6 +114,6 @@ val unlimitedPlan = DynamicPlan(
                 )
             )
         )
-    ),
+    ),*/
     services = EnumSet.allOf(DynamicPlanService::class.java)
 )

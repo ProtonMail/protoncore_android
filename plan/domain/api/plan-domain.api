@@ -105,14 +105,13 @@ public final class me/proton/core/plan/domain/entity/DynamicEntitlement$Progress
 }
 
 public final class me/proton/core/plan/domain/entity/DynamicPlan {
-	public fun <init> (Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;)V
-	public synthetic fun <init> (Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;Ljava/util/EnumSet;)V
+	public synthetic fun <init> (Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;Ljava/util/EnumSet;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component10 ()Ljava/util/Map;
 	public final fun component11 ()Lme/proton/core/domain/type/StringEnum;
-	public final fun component12 ()Ljava/util/List;
-	public final fun component13 ()Ljava/lang/String;
-	public final fun component14 ()Ljava/util/EnumSet;
+	public final fun component12 ()Ljava/lang/String;
+	public final fun component13 ()Ljava/util/EnumSet;
 	public final fun component2 ()I
 	public final fun component3 ()Lme/proton/core/plan/domain/entity/DynamicPlanState;
 	public final fun component4 ()Ljava/lang/String;
@@ -121,8 +120,8 @@ public final class me/proton/core/plan/domain/entity/DynamicPlan {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/util/List;
 	public final fun component9 ()Ljava/util/EnumSet;
-	public final fun copy (Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;)Lme/proton/core/plan/domain/entity/DynamicPlan;
-	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlan;Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/EnumSet;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlan;
+	public final fun copy (Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;Ljava/util/EnumSet;)Lme/proton/core/plan/domain/entity/DynamicPlan;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlan;Ljava/lang/String;ILme/proton/core/plan/domain/entity/DynamicPlanState;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/util/EnumSet;Ljava/util/Map;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;Ljava/util/EnumSet;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDecorations ()Ljava/util/List;
 	public final fun getDescription ()Ljava/lang/String;
@@ -131,7 +130,6 @@ public final class me/proton/core/plan/domain/entity/DynamicPlan {
 	public final fun getInstances ()Ljava/util/Map;
 	public final fun getLayout ()Lme/proton/core/domain/type/StringEnum;
 	public final fun getName ()Ljava/lang/String;
-	public final fun getOffers ()Ljava/util/List;
 	public final fun getOrder ()I
 	public final fun getParentMetaPlanID ()Ljava/lang/String;
 	public final fun getServices ()Ljava/util/EnumSet;

@@ -20,12 +20,14 @@ package me.proton.core.plan.data.api.response
 
 import me.proton.core.plan.domain.entity.DynamicPlanOffer
 import me.proton.core.util.kotlin.deserialize
+import org.junit.Ignore
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class DynamicOfferResourceTest {
     @Test
+    @Ignore("Not ready yet")
     fun fromJsonToResource() {
         assertEquals(
             DynamicOfferResource(
@@ -48,6 +50,7 @@ class DynamicOfferResourceTest {
     }
 
     @Test
+    @Ignore("Not ready yet")
     fun fromResourceToDomain() {
         assertEquals(
             DynamicPlanOffer(

@@ -58,8 +58,8 @@ internal data class DynamicPlanResource(
     @SerialName("Layout")
     val layout: String? = null,
 
-    @SerialName("Offers")
-    val offers: List<DynamicOfferResource> = emptyList(),
+    //@SerialName("Offers")
+    //val offers: List<DynamicOfferResource> = emptyList(),
 
     @SerialName("ParentMetaPlanID")
     val parentMetaPlanID: String? = null,
@@ -88,7 +88,7 @@ internal fun DynamicPlanResource.toDynamicPlan(
     features = DynamicPlanFeature.enumSetOf(features),
     instances = instances.associate { it.cycle to it.toDynamicPlanInstance() },
     layout = DynamicPlanLayout.enumOfOrDefault(layout),
-    offers = offers.map { it.toDynamicPlanOffer() },
+    //offers = offers.map { it.toDynamicPlanOffer() },
     parentMetaPlanID = parentMetaPlanID,
     services = DynamicPlanService.enumSetOf(services),
     type = type?.let { IntEnum(it, DynamicPlanType.from(it)) }

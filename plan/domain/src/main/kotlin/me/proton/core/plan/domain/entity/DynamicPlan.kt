@@ -39,7 +39,7 @@ data class DynamicPlan(
     /** Map<Cycle, DynamicPlanInstance> */
     val instances: Map<Int, DynamicPlanInstance> = emptyMap(),
     val layout: StringEnum<DynamicPlanLayout> = StringEnum(DynamicPlanLayout.Default.code, DynamicPlanLayout.Default),
-    val offers: List<DynamicPlanOffer> = emptyList(),
+    //val offers: List<DynamicPlanOffer> = emptyList(),
     val parentMetaPlanID: String? = null,
     val services: EnumSet<DynamicPlanService> = EnumSet.noneOf(DynamicPlanService::class.java)
 )

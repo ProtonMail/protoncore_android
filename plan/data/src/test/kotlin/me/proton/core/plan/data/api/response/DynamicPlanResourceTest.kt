@@ -45,7 +45,7 @@ class DynamicPlanResourceTest {
                 features = 1,
                 instances = emptyList(),
                 layout = "default",
-                offers = emptyList(),
+                //offers = emptyList(),
                 parentMetaPlanID = "parentId",
                 services = 15,
                 type = 1,
@@ -85,7 +85,7 @@ class DynamicPlanResourceTest {
                 features = EnumSet.of(DynamicPlanFeature.CatchAll),
                 instances = emptyMap(),
                 layout = StringEnum("default", DynamicPlanLayout.Default),
-                offers = emptyList(),
+                //offers = emptyList(),
                 parentMetaPlanID = "parentId",
                 services = EnumSet.allOf(DynamicPlanService::class.java),
                 type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
@@ -100,7 +100,7 @@ class DynamicPlanResourceTest {
                 features = 1,
                 instances = emptyList(),
                 layout = "default",
-                offers = emptyList(),
+                //offers = emptyList(),
                 parentMetaPlanID = "parentId",
                 services = 15,
                 type = 1
@@ -122,7 +122,7 @@ class DynamicPlanResourceTest {
                 features = EnumSet.noneOf(DynamicPlanFeature::class.java),
                 instances = emptyMap(),
                 layout = StringEnum("unknown", null),
-                offers = emptyList(),
+                //offers = emptyList(),
                 parentMetaPlanID = "parentId",
                 services = EnumSet.noneOf(DynamicPlanService::class.java),
                 type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
@@ -137,7 +137,7 @@ class DynamicPlanResourceTest {
                 features = 0,
                 instances = emptyList(),
                 layout = "unknown",
-                offers = emptyList(),
+                //offers = emptyList(),
                 parentMetaPlanID = "parentId",
                 services = 0,
                 type = 1
