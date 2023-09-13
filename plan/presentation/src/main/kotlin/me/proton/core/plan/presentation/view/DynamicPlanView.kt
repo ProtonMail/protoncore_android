@@ -65,7 +65,7 @@ class DynamicPlanView @JvmOverloads constructor(
         }
 
     var promoPercentage: CharSequence?
-        get() = binding.pricePercentage.text
+        get() = binding.promoPercentage.text
         set(value) {
             binding.promoPercentage.text = value
             binding.promoPercentage.isVisible = !promoPercentage.isNullOrBlank()
