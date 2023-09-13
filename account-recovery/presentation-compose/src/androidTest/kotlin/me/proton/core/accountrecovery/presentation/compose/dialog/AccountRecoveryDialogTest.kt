@@ -62,14 +62,17 @@ class AccountRecoveryDialogTest {
     @Test
     fun gracePeriodUIDisplaysAllElements() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.account_recovery_dismiss
         val idCancelRecovery = R.string.account_recovery_cancel
-        val idTitle = R.string.account_recovery_grace_started_title
+        val idTitle = R.string.account_recovery_grace_period_info_title
         var btnOk = ""
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(false)
+        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(
+                email = "user@email.test",
+                remainingHours = 24
+            )
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
         every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
@@ -101,7 +104,7 @@ class AccountRecoveryDialogTest {
         // GIVEN
         val idOk = R.string.presentation_alert_ok
         val idCancelRecovery = R.string.account_recovery_cancel
-        val idTitle = R.string.account_recovery_grace_started_title
+        val idTitle = R.string.account_recovery_grace_period_info_title
         var btnOk = ""
         var btnCancelRecovery = ""
         var txtTitle = ""
@@ -134,7 +137,7 @@ class AccountRecoveryDialogTest {
         // GIVEN
         val idOk = R.string.presentation_alert_ok
         val idCancelRecovery = R.string.account_recovery_cancel
-        val idTitle = R.string.account_recovery_grace_started_title
+        val idTitle = R.string.account_recovery_grace_period_info_title
         var btnOk = ""
         var btnCancelRecovery = ""
         var txtTitle = ""
@@ -166,10 +169,13 @@ class AccountRecoveryDialogTest {
     @Test
     fun gracePeriodOkWorksProperly() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.account_recovery_dismiss
         var btnOk = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(
+            email = "user@email.test",
+            remainingHours = 24
+        )
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
         every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
@@ -192,9 +198,11 @@ class AccountRecoveryDialogTest {
     @Test
     fun gracePeriodCancelWorksProperly() {
         // GIVEN
-        val idCancelRecovery = R.string.account_recovery_cancel
+        val idCancelRecovery = R.string.account_recovery_cancel_now
         var btnCancelRecovery = ""
-        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+        val state = AccountRecoveryViewModel.State.Opened.CancelPasswordReset(
+            onCancelPasswordRequest = { viewModel.startAccountRecoveryCancel(it) }
+        )
 
         every { viewModel.startAccountRecoveryCancel("password") } returns mockk()
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
@@ -222,14 +230,16 @@ class AccountRecoveryDialogTest {
     @Test
     fun gracePeriodInvalidPassword() {
         // GIVEN
-        val idCancelRecovery = R.string.account_recovery_cancel
+        val idCancelRecovery = R.string.account_recovery_cancel_now
         var btnCancelRecovery = ""
-        val state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+        val state = AccountRecoveryViewModel.State.Opened.CancelPasswordReset(
+            onCancelPasswordRequest = { viewModel.startAccountRecoveryCancel(it) }
+        )
         val stateFlow = MutableStateFlow(state)
 
         every { viewModel.startAccountRecoveryCancel(any()) } coAnswers {
             stateFlow.value =
-                AccountRecoveryViewModel.State.Opened.GracePeriodStarted(
+                AccountRecoveryViewModel.State.Opened.CancelPasswordReset(
                     passwordError = StringBox("Password cannot be empty")
                 )
             mockk()
@@ -259,7 +269,7 @@ class AccountRecoveryDialogTest {
     @Test
     fun cancellationHappenedUI() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.presentation_close
         val idCancelRecovery = R.string.account_recovery_cancel
         val idTitle = R.string.account_recovery_cancelled_title
         var btnOk = ""
@@ -296,7 +306,7 @@ class AccountRecoveryDialogTest {
     @Test
     fun cancellationHappenedOkWorksProperly() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.presentation_close
         var btnOk = ""
 
         val state = AccountRecoveryViewModel.State.Opened.CancellationHappened
@@ -322,20 +332,22 @@ class AccountRecoveryDialogTest {
     @Test
     fun passwordPeriodStartedDialogUI() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val gotIt = R.string.account_recovery_dismiss
         val idCancelRecovery = R.string.account_recovery_cancel
         val idTitle = R.string.account_recovery_password_started_title
-        var btnOk = ""
+        var btnGotIt = ""
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
+        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+            endDate = "16 Aug"
+        )
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
         every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
         // WHEN
         composeTestRule.setContent {
-            btnOk = stringResource(id = idOk)
+            btnGotIt = stringResource(id = gotIt)
             btnCancelRecovery = stringResource(id = idCancelRecovery)
             txtTitle = stringResource(id = idTitle)
             ProtonTheme {
@@ -347,8 +359,8 @@ class AccountRecoveryDialogTest {
         }
 
         // THEN
-        composeTestRule.onNodeWithText(btnOk).assertExists()
-        composeTestRule.onNodeWithText(btnCancelRecovery).assertDoesNotExist()
+        composeTestRule.onNodeWithText(btnGotIt).assertExists()
+        composeTestRule.onNodeWithText(btnCancelRecovery).assertExists()
         composeTestRule.onNodeWithText(txtTitle).assertExists()
 
         verify {
@@ -359,10 +371,13 @@ class AccountRecoveryDialogTest {
     @Test
     fun passwordPeriodStartedDialogOkWorksProperly() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.account_recovery_cancel
         var btnOk = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
+        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+            endDate = "16 Aug",
+            onShowCancellationForm = { viewModel.showCancellationForm() }
+        )
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
         every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
@@ -379,20 +394,20 @@ class AccountRecoveryDialogTest {
 
         // THEN
         composeTestRule.onNodeWithText(btnOk).performClick()
-        verify { viewModel.userAcknowledged() }
+        verify { viewModel.showCancellationForm() }
     }
 
     @Test
     fun recoveryWindowEndedDialogUI() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.account_recovery_dismiss
         val idCancelRecovery = R.string.account_recovery_cancel
         val idTitle = R.string.account_recovery_window_ended_title
         var btnOk = ""
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.RecoveryEnded
+        val state = AccountRecoveryViewModel.State.Opened.RecoveryEnded(email = "user@email.test")
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
         every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 
@@ -422,10 +437,10 @@ class AccountRecoveryDialogTest {
     @Test
     fun recoveryWindowDialogEndedDialogButtonOkWorksProperly() {
         // GIVEN
-        val idOk = R.string.presentation_alert_ok
+        val idOk = R.string.account_recovery_dismiss
         var btnOk = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.RecoveryEnded
+        val state = AccountRecoveryViewModel.State.Opened.RecoveryEnded(email = "user@email.test")
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
         every { viewModel.screenId } returns MutableStateFlow(state.toScreenId())
 

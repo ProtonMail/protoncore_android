@@ -22,7 +22,6 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
@@ -72,13 +71,13 @@ class ObserveUserRecoveryStateTest {
     @Before
     fun beforeEveryTest() {
         prepareMocks(testUserNullRecovery)
-        useCase = ObserveUserRecoveryState(userManager)
+        useCase = ObserveUserRecoveryState(ObserveUserRecovery(userManager))
     }
 
     @Test
     fun `null user returns state none`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, true).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
@@ -93,7 +92,7 @@ class ObserveUserRecoveryStateTest {
     @Test
     fun `null user recovery returns state none`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, true).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
         }
@@ -102,7 +101,7 @@ class ObserveUserRecoveryStateTest {
     @Test
     fun `non null user updated after null`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, true).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
@@ -115,7 +114,7 @@ class ObserveUserRecoveryStateTest {
     @Test
     fun `non null user update after null becomes null again`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, true).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
@@ -131,7 +130,7 @@ class ObserveUserRecoveryStateTest {
     @Test
     fun `non null user update after null becomes null again no refresh`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, false).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
@@ -147,7 +146,7 @@ class ObserveUserRecoveryStateTest {
     @Test
     fun `non null user update after null becomes null again ResetPassword state`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, false).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 
@@ -171,7 +170,7 @@ class ObserveUserRecoveryStateTest {
     @Test
     fun `non null user update after null becomes null again Cancelled state`() = runTest {
         // WHEN
-        useCase.invoke(testUserId, false).test {
+        useCase.invoke(testUserId).test {
             // THEN
             assertEquals(UserRecovery.State.None, awaitItem())
 

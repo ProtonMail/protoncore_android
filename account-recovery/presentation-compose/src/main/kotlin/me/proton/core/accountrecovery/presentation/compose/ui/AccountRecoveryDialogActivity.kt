@@ -32,6 +32,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.presentation.utils.showToast
 
 @AndroidEntryPoint
 class AccountRecoveryDialogActivity : ProtonActivity() {
@@ -53,7 +54,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
                 ) {
                     addAccountRecoveryDialog(
                         userId = userId,
-                        onClosed = { close() },
+                        onClosed = { close(it) },
                         onError = { showErrorAndFinish(it) }
                     )
                 }
@@ -67,8 +68,11 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
         close()
     }
 
-    private fun close() {
-        finishAndRemoveTask()
+    private fun close(hasCancelledSuccessfully: Boolean = false) {
+        if (hasCancelledSuccessfully) {
+            showToast(R.string.account_recovery_cancelled_title)
+        }
+        finish()
     }
 
     companion object {

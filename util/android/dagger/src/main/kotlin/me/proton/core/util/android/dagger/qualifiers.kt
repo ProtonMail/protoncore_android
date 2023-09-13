@@ -16,26 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.implementation
+package me.proton.core.util.android.dagger
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import javax.inject.Qualifier
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.util.android.dagger"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
-}
-
-dependencies {
-    coreLibraryDesugaring(`desugar-jdk-libs`)
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.presentation),
-    )
-}
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+public annotation class UtcClock

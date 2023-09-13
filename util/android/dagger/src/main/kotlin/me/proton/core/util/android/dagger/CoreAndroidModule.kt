@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -20,6 +20,7 @@ package me.proton.core.util.android.dagger
 
 import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.presentation.app.AppLifecycleObserver
@@ -28,6 +29,7 @@ import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DefaultCoroutineScopeProvider
 import me.proton.core.util.kotlin.DefaultDispatcherProvider
 import me.proton.core.util.kotlin.DispatcherProvider
+import java.time.Clock
 import javax.inject.Singleton
 
 @Module
@@ -44,4 +46,10 @@ public abstract class CoreAndroidModule {
     @Binds
     @Singleton
     internal abstract fun bindDispatcherProvider(impl: DefaultDispatcherProvider): DispatcherProvider
+
+    public companion object {
+        @Provides
+        @UtcClock
+        internal fun provideClock(): Clock = Clock.systemUTC()
+    }
 }

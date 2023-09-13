@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTag
@@ -43,6 +44,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Closed
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Error
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Loading
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Opened
 import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogButton
@@ -62,7 +67,7 @@ internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
     viewModel: AccountRecoveryViewModel = hiltViewModel(),
-    onClosed: () -> Unit,
+    onClosed: (Boolean) -> Unit,
     onError: (Throwable?) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -78,17 +83,16 @@ fun AccountRecoveryDialog(
 
     LaunchedEffect(state) {
         when (val current = state) {
-            is AccountRecoveryViewModel.State.Loading -> Unit
-            is AccountRecoveryViewModel.State.Closed -> onClosed()
-            is AccountRecoveryViewModel.State.Error -> onError(current.throwable)
-            is AccountRecoveryViewModel.State.Opened -> Unit
+            is Loading -> Unit
+            is Closed -> onClosed(current.hasCancelledSuccessfully)
+            is Error -> onError(current.throwable)
+            is Opened -> Unit
         }
     }
 
     AccountRecoveryDialog(
         modifier = modifier,
         state = state,
-        onGracePeriodCancel = { viewModel.startAccountRecoveryCancel(it) },
         onDismiss = { viewModel.userAcknowledged() }
     )
 }
@@ -97,14 +101,13 @@ fun AccountRecoveryDialog(
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
     state: AccountRecoveryViewModel.State,
-    onGracePeriodCancel: (String) -> Unit = { },
-    onDismiss: () -> Unit = { }
+    onDismiss: () -> Unit = {},
 ) {
     when (state) {
-        is AccountRecoveryViewModel.State.Error,
-        is AccountRecoveryViewModel.State.Closed -> Unit
+        is Error,
+        is Closed -> Unit
 
-        is AccountRecoveryViewModel.State.Loading -> {
+        is Loading -> {
             AccountRecoveryDialog(
                 modifier = modifier,
                 onDismiss = onDismiss,
@@ -112,33 +115,44 @@ fun AccountRecoveryDialog(
             )
         }
 
-        is AccountRecoveryViewModel.State.Opened.GracePeriodStarted -> {
-            val password = remember { mutableStateOf("") }
+        is Opened.GracePeriodStarted -> {
             AccountRecoveryGracePeriodDialog(
                 modifier = modifier,
-                isActionButtonLoading = state.processing,
-                onGracePeriodCancel = { onGracePeriodCancel(password.value) },
-                onDismiss = onDismiss,
-                password = password,
-                passwordError = state.passwordError
+                email = state.email,
+                remainingHours = state.remainingHours,
+                onShowCancellationForm = state.onShowCancellationForm,
+                onDismiss = onDismiss
             )
         }
 
-        is AccountRecoveryViewModel.State.Opened.CancellationHappened ->
+        is Opened.CancellationHappened ->
             AccountRecoveryCancelledDialog(
                 modifier,
                 onDismiss = onDismiss
             )
 
-        is AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted ->
+        is Opened.PasswordChangePeriodStarted ->
             AccountRecoveryPasswordPeriodStartedDialog(
                 modifier = modifier,
+                endDate = state.endDate,
+                onShowCancellationForm = state.onShowCancellationForm,
                 onDismiss = onDismiss
             )
 
-        is AccountRecoveryViewModel.State.Opened.RecoveryEnded ->
+        is Opened.CancelPasswordReset -> {
+            AccountRecoveryCancellationForm(
+                modifier = modifier,
+                isProcessing = state.processing,
+                passwordError = state.passwordError,
+                onCancelPasswordRequest = state.onCancelPasswordRequest,
+                onBack = state.onBack
+            )
+        }
+
+        is Opened.RecoveryEnded ->
             AccountRecoveryWindowEndedDialog(
                 modifier = modifier,
+                email = state.email,
                 onDismiss = onDismiss
             )
     }.exhaustive
@@ -148,21 +162,46 @@ fun AccountRecoveryDialog(
 @Composable
 internal fun AccountRecoveryGracePeriodDialog(
     modifier: Modifier = Modifier,
-    isActionButtonLoading: Boolean = false,
-    onGracePeriodCancel: () -> Unit,
-    onDismiss: () -> Unit,
-    password: MutableState<String>,
-    passwordError: StringBox?
+    email: String,
+    remainingHours: Int,
+    onShowCancellationForm: () -> Unit = {},
+    onDismiss: () -> Unit = {}
 ) {
     AccountRecoveryDialog(
         modifier = modifier,
-        title = stringResource(id = R.string.account_recovery_grace_started_title),
-        isActionButtonLoading = isActionButtonLoading,
-        subtitle = stringResource(id = R.string.account_recovery_grace_started_subtitle),
+        title = stringResource(id = R.string.account_recovery_grace_period_info_title),
+        subtitle = pluralStringResource(
+            id = R.plurals.account_recovery_grace_period_info_subtitle,
+            remainingHours,
+            email,
+            remainingHours
+        ),
         actionText = stringResource(id = R.string.account_recovery_cancel),
-        dismissText = stringResource(id = R.string.presentation_alert_ok),
-        onAction = onGracePeriodCancel,
-        onDismiss = onDismiss,
+        dismissText = stringResource(id = R.string.account_recovery_dismiss),
+        onAction = onShowCancellationForm,
+        onDismiss = onDismiss
+    )
+}
+
+@Composable
+internal fun AccountRecoveryCancellationForm(
+    modifier: Modifier = Modifier,
+    isProcessing: Boolean = false,
+    passwordError: StringBox? = null,
+    onCancelPasswordRequest: (String) -> Unit = {},
+    onBack: () -> Unit = {}
+) {
+    val password = remember { mutableStateOf("") }
+
+    AccountRecoveryDialog(
+        modifier = modifier,
+        title = stringResource(id = R.string.account_recovery_cancel_title),
+        isActionButtonLoading = isProcessing,
+        subtitle = stringResource(id = R.string.account_recovery_cancel_subtitle),
+        actionText = stringResource(id = R.string.account_recovery_cancel_now),
+        dismissText = stringResource(id = R.string.account_recovery_cancel_back),
+        onAction = { onCancelPasswordRequest(password.value) },
+        onDismiss = onBack,
         password = password,
         passwordError = passwordError
     )
@@ -177,7 +216,7 @@ internal fun AccountRecoveryCancelledDialog(
         modifier = modifier,
         title = stringResource(id = R.string.account_recovery_cancelled_title),
         subtitle = stringResource(id = R.string.account_recovery_cancelled_subtitle),
-        dismissText = stringResource(id = R.string.presentation_alert_ok),
+        dismissText = stringResource(id = R.string.presentation_close),
         onDismiss = onDismiss
     )
 }
@@ -185,27 +224,38 @@ internal fun AccountRecoveryCancelledDialog(
 @Composable
 internal fun AccountRecoveryPasswordPeriodStartedDialog(
     modifier: Modifier = Modifier,
-    onDismiss: () -> Unit
+    endDate: String,
+    onShowCancellationForm: () -> Unit = {},
+    onDismiss: () -> Unit = {}
 ) {
     AccountRecoveryDialog(
         modifier = modifier,
         title = stringResource(id = R.string.account_recovery_password_started_title),
-        subtitle = stringResource(id = R.string.account_recovery_password_started_subtitle),
-        dismissText = stringResource(id = R.string.presentation_alert_ok),
-        onDismiss = onDismiss
+        subtitle = stringResource(
+            id = R.string.account_recovery_password_started_subtitle,
+            endDate
+        ),
+        actionText = stringResource(id = R.string.account_recovery_cancel),
+        onAction = onShowCancellationForm,
+        dismissText = stringResource(id = R.string.account_recovery_dismiss),
+        onDismiss = onDismiss,
     )
 }
 
 @Composable
 internal fun AccountRecoveryWindowEndedDialog(
     modifier: Modifier = Modifier,
+    email: String,
     onDismiss: () -> Unit
 ) {
     AccountRecoveryDialog(
         modifier = modifier,
         title = stringResource(id = R.string.account_recovery_window_ended_title),
-        subtitle = stringResource(id = R.string.account_recovery_window_ended_subtitle),
-        dismissText = stringResource(id = R.string.presentation_alert_ok),
+        subtitle = stringResource(
+            id = R.string.account_recovery_window_ended_subtitle,
+            email
+        ),
+        dismissText = stringResource(id = R.string.account_recovery_dismiss),
         onDismiss = onDismiss
     )
 }
@@ -225,13 +275,10 @@ private fun AccountRecoveryDialog(
     password: MutableState<String>? = null,
     passwordError: StringBox? = null
 ) {
-    val show = remember { mutableStateOf(true) }
-
     ProtonAlertDialog(
         modifier = modifier,
         onDismissRequest = {
             onDismiss()
-            show.value = false
         },
         title = title,
         text = {
@@ -294,11 +341,11 @@ private fun PasswordField(
             keyboardType = KeyboardType.Password
         ),
         label = {
-            Text(text = stringResource(id = R.string.account_recovery_password_label))
+            Text(text = stringResource(id = R.string.account_recovery_cancel_password_label))
         },
         maxLines = 1,
         placeholder = {
-            Text(text = stringResource(id = R.string.account_recovery_password_placeholder))
+            Text(text = stringResource(id = R.string.account_recovery_cancel_password_placeholder))
         },
         singleLine = true,
         visualTransformation = PasswordVisualTransformation(),
@@ -315,8 +362,7 @@ private fun PasswordField(
 fun AccountRecoveryAlertDialogGracePeriodPreview() {
     ProtonTheme {
         AccountRecoveryDialog(
-            state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(),
-            onGracePeriodCancel = { },
+            state = Opened.GracePeriodStarted(email = "user@email.test", remainingHours = 24),
             onDismiss = { }
         )
     }
@@ -328,8 +374,7 @@ fun AccountRecoveryAlertDialogGracePeriodPreview() {
 fun AccountRecoveryAlertDialogGracePeriodProcessingPreview() {
     ProtonTheme {
         AccountRecoveryDialog(
-            state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(processing = true),
-            onGracePeriodCancel = { },
+            state = Opened.CancelPasswordReset(processing = true),
             onDismiss = { }
         )
     }
@@ -341,8 +386,7 @@ fun AccountRecoveryAlertDialogGracePeriodProcessingPreview() {
 fun AccountRecoveryAlertDialogChangePasswordPreview() {
     ProtonTheme {
         AccountRecoveryDialog(
-            state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted,
-            onGracePeriodCancel = { },
+            state = Opened.PasswordChangePeriodStarted(endDate = "16 Aug"),
             onDismiss = { }
         )
     }
@@ -354,8 +398,31 @@ fun AccountRecoveryAlertDialogChangePasswordPreview() {
 fun AccountRecoveryAlertDialogLoadingPreview() {
     ProtonTheme {
         AccountRecoveryDialog(
-            state = AccountRecoveryViewModel.State.Loading,
-            onGracePeriodCancel = { },
+            state = Loading,
+            onDismiss = { }
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun AccountRecoveryAlertDialogCancellationHappenedPreview() {
+    ProtonTheme {
+        AccountRecoveryDialog(
+            state = Opened.CancellationHappened,
+            onDismiss = { }
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun AccountRecoveryAlertDialogRecoveryEndedPreview() {
+    ProtonTheme {
+        AccountRecoveryDialog(
+            state = Opened.RecoveryEnded("user@email.test"),
             onDismiss = { }
         )
     }

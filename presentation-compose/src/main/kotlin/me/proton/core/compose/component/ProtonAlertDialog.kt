@@ -167,7 +167,7 @@ fun ProtonDialogTitle(
         text = title,
         style = ProtonTheme.typography.headline,
         color = ProtonTheme.colors.textNorm,
-        maxLines = 1,
+        maxLines = 2,
         overflow = TextOverflow.Ellipsis,
         modifier = modifier,
     )

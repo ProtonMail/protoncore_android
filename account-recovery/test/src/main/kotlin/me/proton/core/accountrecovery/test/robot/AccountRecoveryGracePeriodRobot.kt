@@ -24,8 +24,8 @@ import me.proton.test.fusion.ui.compose.ComposeWaiter.waitFor
 
 public class AccountRecoveryGracePeriodRobot {
     private val cancelRecoveryButton = node.withText(R.string.account_recovery_cancel)
-    private val continueButton = node.withText(R.string.presentation_alert_ok)
-    private val dialogTitle = node.withText(R.string.account_recovery_grace_started_title)
+    private val continueButton = node.withText(R.string.account_recovery_dismiss)
+    private val dialogTitle = node.withText(R.string.account_recovery_grace_period_info_title)
 
     public fun clickContinue() {
         continueButton.click()

@@ -11,9 +11,13 @@ public final class me/proton/core/accountrecovery/domain/usecase/CancelRecovery 
 	public final fun invoke (Ljava/lang/String;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserRecoveryState {
+public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
-	public static synthetic fun invoke$default (Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecoveryState;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserRecoveryState {
+	public fun <init> (Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }
 

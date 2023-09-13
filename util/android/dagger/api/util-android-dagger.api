@@ -10,6 +10,21 @@ public final class me/proton/core/util/android/dagger/BuildConfig {
 }
 
 public abstract class me/proton/core/util/android/dagger/CoreAndroidModule {
+	public static final field Companion Lme/proton/core/util/android/dagger/CoreAndroidModule$Companion;
 	public fun <init> ()V
+}
+
+public final class me/proton/core/util/android/dagger/CoreAndroidModule$Companion {
+}
+
+public final class me/proton/core/util/android/dagger/CoreAndroidModule_Companion_ProvideClock$util_android_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/util/android/dagger/CoreAndroidModule_Companion_ProvideClock$util_android_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/time/Clock;
+	public static fun provideClock$util_android_dagger_release ()Ljava/time/Clock;
+}
+
+public abstract interface annotation class me/proton/core/util/android/dagger/UtcClock : java/lang/annotation/Annotation {
 }
 

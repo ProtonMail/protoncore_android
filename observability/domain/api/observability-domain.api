@@ -211,6 +211,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoverySc
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId : java/lang/Enum {
+	public static final field cancelResetPassword Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
 	public static final field gracePeriodInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
 	public static final field passwordChangeInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
 	public static final field recoveryCancelledInfo Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;

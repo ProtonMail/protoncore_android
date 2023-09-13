@@ -24,6 +24,7 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -31,7 +32,7 @@ import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
-import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoveryState
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
@@ -39,20 +40,31 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.user.domain.usecase.GetUser
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import java.time.Clock
+import java.time.Instant
 
 class AccountRecoveryDialogSnapshotMockTest {
+    private val testUserEmail = "user@email.test"
     private val testUserId = UserId("test-user-id")
+
+    private lateinit var clockValue: Instant
+
+    private lateinit var clock: Clock
 
     private lateinit var savedStateHandle: SavedStateHandle
 
     @MockK(relaxed = true)
-    private lateinit var observeUserRecoveryState: ObserveUserRecoveryState
+    private lateinit var observeUserRecovery: ObserveUserRecovery
 
     @MockK(relaxed = true)
     private lateinit var cancelRecovery: CancelRecovery
+
+    @MockK
+    private lateinit var getUser: GetUser
 
     @MockK
     private lateinit var keyStoreCrypto: KeyStoreCrypto
@@ -70,17 +82,29 @@ class AccountRecoveryDialogSnapshotMockTest {
 
     @Before
     fun beforeEveryTest() {
+        clockValue = Instant.now()
+        clock = mockk {
+            every { instant() } returns clockValue
+        }
         savedStateHandle = mockk {
             every { this@mockk.get<String>(Arg.UserId) } returns testUserId.id
         }
         MockKAnnotations.init(this)
+
+        coEvery { getUser.invoke(any(), any()) } returns mockk {
+            every { userId } returns testUserId
+            every { email } returns testUserEmail
+        }
+
         viewModel = spyk(
             AccountRecoveryViewModel(
                 savedStateHandle = savedStateHandle,
-                observeUserRecoveryState = observeUserRecoveryState,
+                clock = clock,
+                observeUserRecovery = observeUserRecovery,
                 cancelRecovery = cancelRecovery,
                 keyStoreCrypto = keyStoreCrypto,
-                manager = observabilityManager
+                manager = observabilityManager,
+                getUser = getUser
             )
         )
     }
@@ -100,7 +124,10 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryDialogGracePeriodTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+            AccountRecoveryViewModel.State.Opened.GracePeriodStarted(
+                email = "user@email.test",
+                remainingHours = 24
+            )
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
@@ -128,7 +155,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryDialogRecoveryEndedTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.RecoveryEnded
+            AccountRecoveryViewModel.State.Opened.RecoveryEnded(email = "user@email.test")
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
@@ -142,7 +169,9 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryDialogRecoveryWindowTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
+            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+                endDate = "16 Aug"
+            )
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
@@ -156,7 +185,9 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryDialogPasswordChangeWindowTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
+            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+                endDate = "16 Aug"
+            )
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
@@ -170,7 +201,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryStateClosedTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Closed
+            AccountRecoveryViewModel.State.Closed()
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(
@@ -198,7 +229,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryOnCancellationProgressTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.GracePeriodStarted(processing = true)
+            AccountRecoveryViewModel.State.Opened.CancelPasswordReset(processing = true)
         ).asStateFlow()
         paparazzi.snapshot {
             AccountRecoveryDialog(

@@ -20,16 +20,22 @@ package me.proton.core.accountrecovery.domain.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserRecovery
 import javax.inject.Inject
 
-public class ObserveUserRecoveryState @Inject constructor(
-    private val observeUserRecovery: ObserveUserRecovery
+public class ObserveUserRecovery @Inject constructor(
+    private val userManager: UserManager
 ) {
-    public operator fun invoke(userId: UserId): Flow<UserRecovery.State> =
-        observeUserRecovery(userId).map { userRecovery ->
-            userRecovery?.state?.enum ?: UserRecovery.State.None
+    public operator fun invoke(userId: UserId): Flow<UserRecovery?> =
+        flow {
+            emit(userManager.getUser(sessionUserId = userId))
+            emitAll(userManager.observeUser(sessionUserId = userId)) // Do not throw any exception.
+        }.map { user ->
+            user?.recovery
         }.distinctUntilChanged()
 }

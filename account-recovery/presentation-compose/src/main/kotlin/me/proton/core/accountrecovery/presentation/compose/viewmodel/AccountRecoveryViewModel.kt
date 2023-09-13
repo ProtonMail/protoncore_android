@@ -18,6 +18,7 @@
 
 package me.proton.core.accountrecovery.presentation.compose.viewmodel
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,10 +34,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
-import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoveryState
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.presentation.compose.LogTag
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -47,21 +49,33 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.AccountRecoveryCancellationTotal
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
+import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal.ScreenId
 import me.proton.core.presentation.utils.StringBox
+import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.user.domain.entity.UserRecovery.State.Cancelled
 import me.proton.core.user.domain.entity.UserRecovery.State.Expired
 import me.proton.core.user.domain.entity.UserRecovery.State.Grace
 import me.proton.core.user.domain.entity.UserRecovery.State.Insecure
 import me.proton.core.user.domain.entity.UserRecovery.State.None
+import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.util.android.dagger.UtcClock
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
+import java.text.DateFormat
+import java.time.Clock
+import java.time.Duration
+import java.time.Instant
+import java.util.Date
 import javax.inject.Inject
+import kotlin.math.ceil
 
 @HiltViewModel
 class AccountRecoveryViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val observeUserRecoveryState: ObserveUserRecoveryState,
+    @UtcClock private val clock: Clock,
+    private val observeUserRecovery: ObserveUserRecovery,
     private val cancelRecovery: CancelRecovery,
+    private val getUser: GetUser,
     private val keyStoreCrypto: KeyStoreCrypto,
     override val manager: ObservabilityManager
 ) : ViewModel(), ObservabilityContext {
@@ -70,31 +84,12 @@ class AccountRecoveryViewModel @Inject constructor(
 
     private val ackFlow = MutableStateFlow(false)
     private val cancellationFlow = MutableStateFlow(CancellationState())
+    private val shouldShowCancellationForm = MutableStateFlow(false)
 
     val initialState = State.Loading
 
-    sealed class State {
-
-        sealed class Opened : State() {
-            data class GracePeriodStarted(
-                val processing: Boolean = false,
-                val passwordError: StringBox? = null
-            ) : Opened()
-
-            object PasswordChangePeriodStarted : Opened()
-            object CancellationHappened : Opened()
-
-            object RecoveryEnded : Opened()
-        }
-
-        object Closed : State()
-        object Loading : State()
-
-        data class Error(val throwable: Throwable?) : State()
-    }
-
     val state: StateFlow<State> = ackFlow.flatMapLatest { ack ->
-        if (ack) flowOf(State.Closed) else observeState()
+        if (ack) flowOf(State.Closed()) else observeState()
     }.catch {
         CoreLogger.e(LogTag.ERROR_OBSERVING_STATE, it)
         emit(State.Error(it))
@@ -104,58 +99,136 @@ class AccountRecoveryViewModel @Inject constructor(
         initialValue = initialState
     )
 
-    val screenId: StateFlow<AccountRecoveryScreenViewTotal.ScreenId?> =
+    val screenId: StateFlow<ScreenId?> =
         state.map(State::toScreenId).stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
             initialValue = null
         )
 
-    internal fun onScreenView(screenId: AccountRecoveryScreenViewTotal.ScreenId) {
+    internal fun onScreenView(screenId: ScreenId) {
         manager.enqueue(AccountRecoveryScreenViewTotal(screenId))
     }
 
-    private fun observeState() = combine(
-        observeUserRecoveryState(userId),
-        cancellationFlow
-    ) { userRecoveryState, cancellationState ->
-        when (userRecoveryState) {
-            None -> State.Closed
-            Grace -> when {
-                cancellationState.error?.hasProtonErrorCode(PASSWORD_WRONG) == true ->
-                    State.Opened.GracePeriodStarted(passwordError = cancellationState.error.message?.let {
-                        StringBox(it)
-                    } ?: StringBox(R.string.presentation_error_general))
+    internal fun userAcknowledged() {
+        ackFlow.update { true }
+    }
 
-                cancellationState.error != null -> State.Error(cancellationState.error)
-                cancellationState.success == true -> State.Closed
-                else -> State.Opened.GracePeriodStarted(
-                    processing = cancellationState.processing,
-                    passwordError = cancellationState.passwordError
+    private fun observeState() = combine(
+        observeUserRecovery(userId),
+        cancellationFlow,
+        shouldShowCancellationForm
+    ) { userRecovery, cancellationState, showCancellationForm ->
+        when (userRecovery?.state?.enum) {
+            null, None -> State.Closed()
+            Grace -> onGracePeriod(cancellationState, showCancellationForm, userRecovery)
+            Cancelled -> State.Opened.CancellationHappened
+            Insecure -> onInsecurePeriod(cancellationState, showCancellationForm, userRecovery)
+            Expired -> State.Opened.RecoveryEnded(email = getUserEmail())
+        }
+    }
+
+    private suspend fun onGracePeriod(
+        cancellationState: CancellationState,
+        showCancellationForm: Boolean,
+        userRecovery: UserRecovery
+    ): State = when (showCancellationForm) {
+        true -> cancellationState.toViewModelState(
+            onCancelPasswordRequest = { startAccountRecoveryCancel(it) },
+            onBack = { hideCancellationForm() }
+        )
+
+        false -> State.Opened.GracePeriodStarted(
+            email = getUserEmail(),
+            remainingHours = Duration.between(
+                clock.instant(),
+                Instant.ofEpochSecond(userRecovery.endTime)
+            ).coerceAtLeast(Duration.ZERO).toHoursCeil().toInt(),
+            onShowCancellationForm = { showCancellationForm() }
+        )
+    }
+
+    private fun onInsecurePeriod(
+        cancellationState: CancellationState,
+        showCancellationForm: Boolean,
+        userRecovery: UserRecovery
+    ): State = when (showCancellationForm) {
+        true -> cancellationState.toViewModelState(
+            onCancelPasswordRequest = { startAccountRecoveryCancel(it) },
+            onBack = { hideCancellationForm() }
+        )
+
+        false -> State.Opened.PasswordChangePeriodStarted(
+            endDate = DateFormat.getDateInstance()
+                .format(Date.from(Instant.ofEpochSecond(userRecovery.endTime))),
+            onShowCancellationForm = { showCancellationForm() }
+        )
+    }
+
+    private suspend fun getUserEmail(): String {
+        val user = getUser(userId, refresh = false)
+        return user.email ?: user.name ?: user.displayName ?: ""
+    }
+
+    @VisibleForTesting
+    internal fun showCancellationForm() {
+        shouldShowCancellationForm.update { true }
+    }
+
+    private fun hideCancellationForm() {
+        shouldShowCancellationForm.update { false }
+    }
+
+    @VisibleForTesting
+    internal fun startAccountRecoveryCancel(password: String) =
+        viewModelScope.launchWithResultContext {
+            onResultEnqueue("account_recovery.cancellation") { AccountRecoveryCancellationTotal(this) }
+
+            cancellationFlow.update { CancellationState(processing = true) }
+            cancellationFlow.value = when {
+                password.isEmpty() -> CancellationState(passwordError = StringBox(R.string.presentation_field_required))
+                else -> runCatching {
+                    cancelRecovery(
+                        password.encrypt(keyStoreCrypto),
+                        userId
+                    )
+                }.fold(
+                    onSuccess = { CancellationState(success = true) },
+                    onFailure = { error -> CancellationState(success = false, error = error) }
                 )
             }
-
-            Cancelled -> State.Opened.CancellationHappened
-            Insecure -> State.Opened.PasswordChangePeriodStarted
-            Expired -> State.Opened.RecoveryEnded
         }
-    }
 
-    fun startAccountRecoveryCancel(password: String) = viewModelScope.launchWithResultContext {
-        onResultEnqueue("account_recovery.cancellation") { AccountRecoveryCancellationTotal(this) }
+    sealed class State {
 
-        cancellationFlow.update { CancellationState(processing = true) }
-        cancellationFlow.value = when {
-            password.isEmpty() -> CancellationState(passwordError = StringBox(R.string.presentation_field_required))
-            else -> runCatching { cancelRecovery(password.encrypt(keyStoreCrypto), userId) }.fold(
-                onSuccess = { CancellationState(success = true) },
-                onFailure = { error -> CancellationState(success = false, error = error) }
-            )
+        sealed class Opened : State() {
+            data class GracePeriodStarted(
+                val email: String,
+                val remainingHours: Int,
+                val onShowCancellationForm: () -> Unit = {}
+            ) : Opened()
+
+            data class PasswordChangePeriodStarted(
+                val endDate: String, // formatted day, e.g. "16 Aug"
+                val onShowCancellationForm: () -> Unit = {}
+            ) : Opened()
+
+            data class CancelPasswordReset(
+                val processing: Boolean = false,
+                val passwordError: StringBox? = null,
+                val onCancelPasswordRequest: (String) -> Unit = {},
+                val onBack: () -> Unit = {}
+            ) : Opened()
+
+            object CancellationHappened : Opened()
+
+            data class RecoveryEnded(val email: String) : Opened()
         }
-    }
 
-    fun userAcknowledged() {
-        ackFlow.update { true }
+        data class Closed(val hasCancelledSuccessfully: Boolean = false) : State()
+        object Loading : State()
+
+        data class Error(val throwable: Throwable?) : State()
     }
 }
 
@@ -164,15 +237,44 @@ private data class CancellationState(
     val success: Boolean? = null,
     val error: Throwable? = null,
     val passwordError: StringBox? = null
-)
+) {
+    fun toViewModelState(
+        onCancelPasswordRequest: (String) -> Unit,
+        onBack: () -> Unit
+    ): State = when {
+        error?.hasProtonErrorCode(PASSWORD_WRONG) == true -> State.Opened.CancelPasswordReset(
+            passwordError = error.message?.let {
+                StringBox(it)
+            } ?: StringBox(R.string.presentation_error_general),
+            onCancelPasswordRequest = onCancelPasswordRequest,
+            onBack = onBack
+        )
 
-internal fun AccountRecoveryViewModel.State.toScreenId(): AccountRecoveryScreenViewTotal.ScreenId? =
-    when (this) {
-        AccountRecoveryViewModel.State.Closed -> null
-        is AccountRecoveryViewModel.State.Error -> null
-        AccountRecoveryViewModel.State.Loading -> null
-        AccountRecoveryViewModel.State.Opened.CancellationHappened -> AccountRecoveryScreenViewTotal.ScreenId.recoveryCancelledInfo
-        is AccountRecoveryViewModel.State.Opened.GracePeriodStarted -> AccountRecoveryScreenViewTotal.ScreenId.gracePeriodInfo
-        AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted -> AccountRecoveryScreenViewTotal.ScreenId.passwordChangeInfo
-        AccountRecoveryViewModel.State.Opened.RecoveryEnded -> AccountRecoveryScreenViewTotal.ScreenId.recoveryExpiredInfo
+        error != null -> State.Error(error)
+        success == true -> State.Closed(hasCancelledSuccessfully = true)
+        else -> State.Opened.CancelPasswordReset(
+            processing = processing,
+            passwordError = passwordError,
+            onCancelPasswordRequest = onCancelPasswordRequest,
+            onBack = onBack
+        )
     }
+}
+
+internal fun State.toScreenId(): ScreenId? =
+    when (this) {
+        is State.Closed -> null
+        is State.Error -> null
+        is State.Loading -> null
+        is State.Opened.CancellationHappened -> ScreenId.recoveryCancelledInfo
+        is State.Opened.GracePeriodStarted -> ScreenId.gracePeriodInfo
+        is State.Opened.CancelPasswordReset -> ScreenId.cancelResetPassword
+        is State.Opened.PasswordChangePeriodStarted -> ScreenId.passwordChangeInfo
+        is State.Opened.RecoveryEnded -> ScreenId.recoveryExpiredInfo
+    }
+
+private fun Duration.toHoursCeil(): Long {
+    val millisPerHour = Duration.ofHours(1).toMillis().toDouble()
+    val hours = toMillis() / millisPerHour
+    return ceil(hours).toLong()
+}

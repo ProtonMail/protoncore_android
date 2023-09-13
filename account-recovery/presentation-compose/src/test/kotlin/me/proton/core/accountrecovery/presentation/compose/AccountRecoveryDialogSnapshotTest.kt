@@ -18,10 +18,9 @@
 
 package me.proton.core.accountrecovery.presentation.compose
 
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryCancellationForm
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryCancelledDialog
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryGracePeriodDialog
@@ -44,10 +43,8 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryGracePeriodTest() {
         paparazzi.snapshot {
             AccountRecoveryGracePeriodDialog(
-                onGracePeriodCancel = {},
-                onDismiss = { },
-                password = remember { mutableStateOf("") },
-                passwordError = null,
+                email = "user@email.test",
+                remainingHours = 24
             )
         }
     }
@@ -55,11 +52,8 @@ class AccountRecoveryDialogSnapshotTest {
     @Test
     fun accountRecoveryInvalidPasswordTest() {
         paparazzi.snapshot {
-            AccountRecoveryGracePeriodDialog(
-                onGracePeriodCancel = {},
-                onDismiss = { },
-                password = remember { mutableStateOf("invalid") },
-                passwordError = StringBox("Invalid password"),
+            AccountRecoveryCancellationForm(
+                passwordError = StringBox("Invalid password")
             )
         }
     }
@@ -74,14 +68,16 @@ class AccountRecoveryDialogSnapshotTest {
     @Test
     fun accountRecoveryPasswordPeriodTest() {
         paparazzi.snapshot {
-            AccountRecoveryPasswordPeriodStartedDialog { }
+            AccountRecoveryPasswordPeriodStartedDialog(
+                endDate = "16 Aug"
+            )
         }
     }
 
     @Test
     fun accountRecoveryWindowEndingTest() {
         paparazzi.snapshot {
-            AccountRecoveryWindowEndedDialog { }
+            AccountRecoveryWindowEndedDialog(email = "user@email.test") { }
         }
     }
 
@@ -107,7 +103,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateClosedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Closed
+                state = AccountRecoveryViewModel.State.Closed()
             )
         }
     }
@@ -116,7 +112,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedRecoveryEndedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Opened.RecoveryEnded
+                state = AccountRecoveryViewModel.State.Opened.RecoveryEnded(email = "user@email.test")
             )
         }
     }
@@ -134,16 +130,9 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedPasswordChangeStartedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted
-            )
-        }
-    }
-
-    @Test
-    fun accountRecoveryStateOpenedGracePeriodStartedNoProcessingTest() {
-        paparazzi.snapshot {
-            AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted()
+                state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+                    endDate = "16 Aug"
+                )
             )
         }
     }
@@ -152,7 +141,9 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedGracePeriodStartedProcessingTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Opened.GracePeriodStarted(processing = true)
+                state = AccountRecoveryViewModel.State.Opened.CancelPasswordReset(
+                    processing = true
+                )
             )
         }
     }

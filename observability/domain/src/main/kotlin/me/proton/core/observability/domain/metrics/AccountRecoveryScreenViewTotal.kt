@@ -41,6 +41,7 @@ public data class AccountRecoveryScreenViewTotal(
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ScreenId {
         gracePeriodInfo,
+        cancelResetPassword,
         passwordChangeInfo,
         recoveryCancelledInfo,
         recoveryExpiredInfo
