@@ -11,6 +11,73 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [16.0.0] - 2023-09-14
+
+### Breaking Changes
+
+**Features**
+
+- telemetry:
+  - Added Telemetry modules.
+
+    Migrations: TelemetryDatabase.MIGRATION_0 and UserSettingsDatabase.MIGRATION_3.
+
+**Refactoring**
+
+- Removed `Logger.log` function.
+- user:
+  - Removed deprecated User API.
+
+### Chores
+
+- Added environment config gradle plugin
+- notification:
+  - Update API responses.
+
+### Features
+
+- Added configuration module.
+- account-recovery:
+  - Update the UI of account recovery dialogs.
+- notification:
+  - Handler for deeplinks for apps where there are multiple activities involved during startup.
+  - Improvements for notification views.
+
+    - Enable multi-line body text in notifications.
+    - Correct notification time - `notification.time` is in seconds, and `setWhen` method expects ms.
+- plan:
+  - Added Dynamic Badge Decoration.
+
+### Bug Fixes
+
+- account-recovery:
+  - Launch `AccountRecoveryDialogActivity` in a separate task.
+
+    When this activity finishes, remove the task so it's no longer visible
+    in the "Recent Apps" screen.
+- mail-send-preferences:
+  - Fix extractPinnedPublicKeys() in CryptoUtilsImpl.
+
+    Data was passed incorrectly as raw bytes, instead of Armored.
+- notification:
+  - Delete a notification once it's been consumed.
+- plan:
+  - Fixed Dynamic Plan Promo Percentage.
+  - Removed Dynamic Plan Offer.
+  - Removed Dynamic Plan filtering (hasServiceFor).
+  - Show Currency for Free Dynamic Plan or Subscription.
+  - Improved Dynamic Upgrade Plan Layout visibility.
+  - Fixed Dynamic Instance/Price ID.
+
+### Internationalization
+
+- Upgrade translations from crowdin (f1cf3a63).
+
+### Refactoring
+
+- plan:
+  - Extracted ObserveUserId/ObserveUserCurrency from DynamicPlanSelectionViewModel.
+
 ## [15.1.0] - 2023-09-01
 
 ### Chores
