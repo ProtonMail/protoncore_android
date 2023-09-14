@@ -25,7 +25,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -174,6 +173,6 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
     }
 
     companion object {
-        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     }
 }

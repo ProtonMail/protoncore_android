@@ -23,7 +23,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -91,6 +90,6 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
     }
 
     companion object {
-        val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+        val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     }
 }

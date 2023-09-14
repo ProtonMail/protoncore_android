@@ -5,7 +5,6 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.runBlocking
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -33,8 +32,7 @@ import kotlin.time.Duration.Companion.seconds
 @UninstallModules(ApplicationModule::class)
 class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccountTests,
     ProtonTest(MainActivity::class.java) {
-    override val quark: Quark =
-        Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+    override val quark: Quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     override lateinit var testUser: User
     override lateinit var testUsername: String
 

@@ -87,7 +87,7 @@ coverage report:
         - ./build/reports/cobertura-coverage.xml
 ```
 
-It also allows for further customization. See the [plugin's README](./jacoco/README.md) for more info.
+It also allows for further customization. See the [plugin's README](jacoco/README.md) for more info.
 
 ## Include Core Build plugin
 - Plugin id: `me.proton.core.gradle-plugins.include-core-build`
@@ -128,29 +128,92 @@ includeCoreBuild {
 ```
 
 Override include with local:
-```kotlin
+```
 gradle.properties
 
 local.git.proton-libs=../proton-libs
 ```
 
-**Note: This plugin in based on [IncludeGit Gradle Plugin](https://melix.github.io/includegit-gradle-plugin).**
+**Note: This plugin in based
+on [IncludeGit Gradle Plugin](https://melix.github.io/includegit-gradle-plugin).**
 
 ## Publish-core-libraries plugin
+
 - Plugin id: `publish-core-libraries`
 - Not published on MavenCentral.
 
 Use internally in core project to orchestrate [core libraries publication](../README.md#release).
 
+## Environment configuration plugin
+
+- Plugin id: `me.proton.core.gradle-plugins.environment-config`
+- Published on MavenCentral.
+
+This plugin should be applied to either build flavor or application build type android extension
+in `build.gradle.kts` file.
+
+*
+
+Generates `build/generated/source/envConfig/{flavor}/{buildType}/EnvironmentConfigurationDefaults.java`
+similarly to `BuildConfig.java`.
+Generated class is then added to source directories and can be accessed at runtime
+
+* Automatically obtains and sets proxy token if `useProxy` is set to `true`
+* By default (if no configuration provided in build.gradle.kts) generates a default production
+  config (`api.proton.me`)
+
+```kotlin
+build.gradle.kts
+
+plugins {
+    id("me.proton.core.gradle-plugins.environment-config")
+}
+
+android {
+    buildTypes {
+        debug {
+            environmentConfig {
+                useProxy = true // use proxy on all debug builds. Defaults to 'false'
+            }
+        }
+    }
+
+    defaultConfig {
+        environmentConfig {
+            apiPrefix = "mail-api" // will result in base url https://mail-api.proton.me
+        }
+    }
+
+    productFlavors.register("dev") {
+        environmentConfig {
+            host = "proton.black" // will result in base url https://mail-api.proton.black
+        }
+    }
+
+    productFlavors.register("atlas") {
+        environmentConfig {
+            apiPrefix = "test"
+            baseUrl = "https://special.url" // will result in base url https://test.special.url
+        }
+    }
+}
+```
+
 ## Tests
+
 - Plugin id: `me.proton.core.gradle-plugins.tests`
 - Published on MavenCentral.
 
-This plugin should be applied to the root `build.gradle` file. It adds an `allTest` task which run all unit tests in jvm and Android subprojects.
+This plugin should be applied to the root `build.gradle` file. It adds an `allTest` task which run
+all unit tests in jvm and Android subprojects.
 
 # Release
-Release process is based on [trunk branch for release process](https://trunkbaseddevelopment.com/branch-for-release/).
-Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch named `release/gradle-plugins/X.Y.Z`.
-When the release is successfully done, a tag `release/gradle-plugins/X.Y.Z` is created from the commit used to do the release.
 
-Release implementation is orchestrated by project [publish-core-plugins](./publish-core-plugins).
+Release process is based
+on [trunk branch for release process](https://trunkbaseddevelopment.com/branch-for-release/).
+Release is done by the CI. To trigger a release for version `X.Y.Z`, just push a branch
+named `release/gradle-plugins/X.Y.Z`.
+When the release is successfully done, a tag `release/gradle-plugins/X.Y.Z` is created from the
+commit used to do the release.
+
+Release implementation is orchestrated by project [publish-core-plugins](publish-core-plugins).

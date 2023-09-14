@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,33 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-rootProject.name = "CoreGradlePlugins"
+package configuration
 
-includeBuild("publish-core-plugins")
-
-include(
-    "core",
-    "coverage",
-    "detekt",
-    "jacoco",
-    "tests",
-    "include-core-build",
-    "publish-core-libraries",
-    "environment-configuration"
+@SuppressWarnings("LongParameterList")
+open class EnvironmentConfig(
+    open val host: String? = null,
+    open val proxyToken: String? = null,
+    open val apiPrefix: String? = null,
+    open val baseUrl: String? = null,
+    open val apiHost: String? = null,
+    open val hv3Host: String? = null,
+    open val hv3Url: String? = null,
+    open val useDefaultPins: Boolean? = host == "proton.me"
 )
-
-pluginManagement {
-    repositories {
-        mavenCentral()
-        gradlePluginPortal()
-        maven("https://plugins.gradle.org/m2/")
-    }
-}
-
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../gradle/libs.versions.toml"))
-        }
-    }
-}

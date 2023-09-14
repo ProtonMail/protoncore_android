@@ -23,9 +23,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
+import me.proton.core.configuration.EnvironmentConfigurationDefaults
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.BaseProtonApiUrl
@@ -46,7 +46,7 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
-        BuildConfig.PROXY_TOKEN?.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
+        Constants.PROXY_TOKEN.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
     }
 }
 
@@ -63,7 +63,7 @@ class NetworkConstantsModule {
 
     @CertificatePins
     @Provides
-    fun provideCertificatePins() = if (BuildConfig.USE_DEFAULT_PINS) {
+    fun provideCertificatePins() = if (EnvironmentConfigurationDefaults.useDefaultPins) {
         NetWorkDataConstants.DEFAULT_SPKI_PINS
     } else {
         emptyArray()
@@ -71,7 +71,7 @@ class NetworkConstantsModule {
 
     @AlternativeApiPins
     @Provides
-    fun provideAlternativeApiPins() = if (BuildConfig.USE_DEFAULT_PINS) {
+    fun provideAlternativeApiPins() = if (EnvironmentConfigurationDefaults.useDefaultPins) {
         NetWorkDataConstants.ALTERNATIVE_API_SPKI_PINS
     } else {
         emptyList()

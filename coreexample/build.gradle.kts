@@ -17,6 +17,7 @@
  */
 
 import com.android.build.gradle.TestedExtension
+import configuration.extensions.protonEnvironment
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 import java.io.FileNotFoundException
@@ -25,6 +26,7 @@ import java.util.Properties
 plugins {
     protonAndroidApp
     protonDagger
+    id("me.proton.core.gradle-plugins.environment-config")
     kotlin("plugin.serialization")
 }
 
@@ -90,11 +92,6 @@ android {
 fun setupFlavors(testedExtension: TestedExtension) {
     testedExtension.apply {
         val buildConfigFieldKeys = object {
-            val PROXY_TOKEN = "PROXY_TOKEN"
-            val API_HOST = "API_HOST"
-            val HV3_HOST = "HV3_HOST"
-            val QUARK_HOST = "QUARK_HOST"
-            val USE_DEFAULT_PINS = "USE_DEFAULT_PINS"
             val CAN_USE_DOH = "USE_DOH"
             val KEY_TRANSPARENCY_ENV = "KEY_TRANSPARENCY_ENV"
             val SENTRY_DSN = "SENTRY_DSN"
@@ -107,8 +104,6 @@ fun setupFlavors(testedExtension: TestedExtension) {
         flavorDimensions(flavorDimensions.env)
 
         defaultConfig {
-            buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, null.toBuildConfigValue())
-            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, true.toBuildConfigValue())
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
@@ -118,19 +113,22 @@ fun setupFlavors(testedExtension: TestedExtension) {
         productFlavors.register("dev") {
             dimension = flavorDimensions.env
             applicationIdSuffix = ".dev"
-            buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.proton.black".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.proton.black".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "proton.black".toBuildConfigValue())
-            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
+
+            protonEnvironment {
+                host = "proton.black"
+            }
+
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
-            buildConfigField("String", buildConfigFieldKeys.API_HOST, "mail-api.proton.me".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.proton.me".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "".toBuildConfigValue())
+
+            protonEnvironment {
+                apiPrefix = "mail-api"
+            }
+
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "production".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
@@ -146,21 +144,17 @@ fun setupFlavors(testedExtension: TestedExtension) {
                     logger.warn("No local.properties found")
                 }
             }
-            val proxyToken: String? = localProperties.getProperty(buildConfigFieldKeys.PROXY_TOKEN)
-            val host: String = localProperties.getProperty("HOST") ?: "proton.me"
-            val apiHost = localProperties.getProperty(buildConfigFieldKeys.API_HOST) ?: "mail-api.$host"
-            val hv3Host = localProperties.getProperty(buildConfigFieldKeys.HV3_HOST) ?: "verify.$host"
-            val quarkHost = localProperties.getProperty(buildConfigFieldKeys.QUARK_HOST) ?: host
-            val useDefaultPins: String = localProperties.getProperty(buildConfigFieldKeys.USE_DEFAULT_PINS) ?: "false"
+
+            val atlasHost: String = localProperties.getProperty("HOST") ?: "proton.me"
             val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
             val sentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.SENTRY_DSN)
             val accountSentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.ACCOUNT_SENTRY_DSN)
 
-            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, useDefaultPins.toBoolean().toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.PROXY_TOKEN, proxyToken.toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.API_HOST, apiHost.toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, hv3Host.toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, quarkHost.toBuildConfigValue())
+            protonEnvironment {
+                useProxy = true
+                host = atlasHost
+            }
+
             buildConfigField(
                 "String",
                 buildConfigFieldKeys.KEY_TRANSPARENCY_ENV,
@@ -170,10 +164,10 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, accountSentryDsn.toBuildConfigValue())
         }
         productFlavors.register("mock") {
-            buildConfigField("String", buildConfigFieldKeys.API_HOST, "api.mock".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.HV3_HOST, "verify.mock".toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.QUARK_HOST, "quark.mock".toBuildConfigValue())
-            buildConfigField("Boolean", buildConfigFieldKeys.USE_DEFAULT_PINS, false.toBuildConfigValue())
+            protonEnvironment {
+                host = "mock"
+            }
+
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())

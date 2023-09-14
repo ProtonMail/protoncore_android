@@ -24,7 +24,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
@@ -92,7 +91,8 @@ open class ExternalAccountChooseUsernameTest {
 
 
     private companion object {
-        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
+
         private fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
             ActivityScenario.launch(
                 StartSignup().createIntent(

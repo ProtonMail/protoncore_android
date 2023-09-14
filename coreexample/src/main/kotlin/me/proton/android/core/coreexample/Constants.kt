@@ -18,11 +18,13 @@
 
 package me.proton.android.core.coreexample
 
+import me.proton.core.configuration.EnvironmentConfigurationDefaults
+
 object Constants {
-    const val API_HOST = BuildConfig.API_HOST
-    const val HV3_HOST = BuildConfig.HV3_HOST
-    const val BASE_URL = "https://$API_HOST"
-    const val QUARK_HOST = BuildConfig.QUARK_HOST
+    const val HV3_HOST = EnvironmentConfigurationDefaults.hv3Host
+    const val BASE_URL = EnvironmentConfigurationDefaults.baseUrl
+    const val QUARK_HOST = EnvironmentConfigurationDefaults.host
+    const val PROXY_TOKEN = EnvironmentConfigurationDefaults.proxyToken
 }
 
 const val PLAN_PLUS_ID =

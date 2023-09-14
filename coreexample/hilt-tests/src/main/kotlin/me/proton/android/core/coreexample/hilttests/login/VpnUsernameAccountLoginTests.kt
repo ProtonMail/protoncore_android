@@ -22,7 +22,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
@@ -43,7 +42,7 @@ import kotlin.test.BeforeTest
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
 class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(MainActivity::class.java) {
-    override val quark: Quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+    override val quark: Quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     override val internalUsers: User.Users = User.Users.fromDefaultResources()
     override val vpnUsers: User.Users = User.Users.fromJavaResources(
         User::class.java.classLoader!!,

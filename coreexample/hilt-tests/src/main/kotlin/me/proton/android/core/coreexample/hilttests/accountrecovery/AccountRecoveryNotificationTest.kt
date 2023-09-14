@@ -25,7 +25,6 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.rule.GrantPermissionRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.accountmanager.data.AccountStateHandler
@@ -76,7 +75,7 @@ class AccountRecoveryNotificationTest : MinimalAccountRecoveryNotificationTest {
     @Inject
     override lateinit var waitForPrimaryAccount: WaitForPrimaryAccount
 
-    override val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, BuildConfig.PROXY_TOKEN)
+    override val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
 
     @BeforeTest
     override fun prepare() {
