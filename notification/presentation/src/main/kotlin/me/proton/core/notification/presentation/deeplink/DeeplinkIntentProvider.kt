@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -89,7 +89,9 @@ public class DeeplinkIntentProviderImpl @Inject constructor(
         // Returns a "good" intent to launch a front-door activity in a package.
         // The current implementation looks first for a main activity.
         val intent = requireNotNull(packageManager.getLaunchIntentForPackage(packageName))
-        return intent.setPath(path)
+        return intent
+            .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            .setPath(path)
     }
 
     override fun getBroadcastIntent(
