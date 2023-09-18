@@ -329,7 +329,7 @@ class NetworkTests {
         @Provides
         @Singleton
         internal fun provideServerTimeListener() = object : ServerTimeListener {
-            override fun onServerTimeUpdated(epochSeconds: Long) {}
+            override fun onServerTimeMillisUpdated(epochMillis: Long) {}
         }
     }
 

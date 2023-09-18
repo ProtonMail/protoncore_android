@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,18 @@
 
 package me.proton.core.network.domain.server
 
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import java.time.Clock
 
-interface ServerTimeListener {
-    /**
-     * Called when Server time is updated (usually from a network response).
-     */
-    fun onServerTimeMillisUpdated(epochMillis: Long)
+class ServerTimeManager(private val callback: (Long) -> Unit) : ServerTimeListener {
+    private val _offsetMilliseconds = MutableStateFlow<Long>(0)
+
+    val offsetMilliseconds: StateFlow<Long> = _offsetMilliseconds
+
+    override fun onServerTimeMillisUpdated(epochMillis: Long) {
+        callback.invoke(epochMillis)
+        val currentTime = Clock.systemUTC().millis()
+        _offsetMilliseconds.value = epochMillis - currentTime
+    }
 }

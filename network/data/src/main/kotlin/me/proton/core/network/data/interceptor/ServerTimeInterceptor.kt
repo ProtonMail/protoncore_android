@@ -33,7 +33,7 @@ class ServerTimeInterceptor(
         val response = chain.proceed(request)
         val serverUtc = response.headers.getDate("date")
         if (serverUtc != null) {
-            serverTimeListener.onServerTimeUpdated(serverUtc.time / 1000)
+            serverTimeListener.onServerTimeMillisUpdated(serverUtc.time)
         } else {
             CoreLogger.e(LogTag.SERVER_TIME_PARSE_ERROR, "Could not parse 'date' from response headers")
         }

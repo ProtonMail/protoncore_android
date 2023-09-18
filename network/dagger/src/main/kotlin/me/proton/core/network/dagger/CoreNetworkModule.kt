@@ -53,7 +53,9 @@ import me.proton.core.network.domain.deviceverification.DeviceVerificationProvid
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
+import me.proton.core.network.domain.server.ServerClock
 import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.domain.server.ServerTimeManager
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.network.domain.session.SessionProvider
@@ -152,6 +154,9 @@ public interface CoreNetworkBindsModule {
 
     @Binds
     public fun provideClientVersionValidator(impl: ClientVersionValidatorImpl): ClientVersionValidator
+
+    @Binds
+    public fun bindServerTimeListener(manager: ServerTimeManager): ServerTimeListener
 }
 
 @Module
@@ -172,9 +177,15 @@ public class CoreBaseNetworkModule {
 public class CoreNetworkCryptoModule {
     @Provides
     @Singleton
-    internal fun provideServerTimeListener(context: CryptoContext) = object : ServerTimeListener {
-        override fun onServerTimeUpdated(epochSeconds: Long) {
-            context.pgpCrypto.updateTime(epochSeconds)
+    internal fun provideServerTimeOffsetManager(context: CryptoContext): ServerTimeManager {
+        return ServerTimeManager() {
+            context.pgpCrypto.updateTime(it / 1000)
         }
+    }
+
+    @Provides
+    @Singleton
+    public fun provideServerClock(serverTimeManager: ServerTimeManager): ServerClock {
+        return ServerClock(serverTimeManager)
     }
 }

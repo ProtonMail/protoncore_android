@@ -42,20 +42,30 @@ public final class me/proton/core/network/dagger/CoreBaseNetworkModule_ProvideOk
 }
 
 public abstract interface class me/proton/core/network/dagger/CoreNetworkBindsModule {
+	public abstract fun bindServerTimeListener (Lme/proton/core/network/domain/server/ServerTimeManager;)Lme/proton/core/network/domain/server/ServerTimeListener;
 	public abstract fun provideClientIdProvider (Lme/proton/core/network/data/client/ClientIdProviderImpl;)Lme/proton/core/network/domain/client/ClientIdProvider;
 	public abstract fun provideClientVersionValidator (Lme/proton/core/network/data/client/ClientVersionValidatorImpl;)Lme/proton/core/network/domain/client/ClientVersionValidator;
 }
 
 public final class me/proton/core/network/dagger/CoreNetworkCryptoModule {
 	public fun <init> ()V
+	public final fun provideServerClock (Lme/proton/core/network/domain/server/ServerTimeManager;)Lme/proton/core/network/domain/server/ServerClock;
 }
 
-public final class me/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerTimeListener$network_dagger_releaseFactory : dagger/internal/Factory {
+public final class me/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerClockFactory : dagger/internal/Factory {
 	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)V
-	public static fun create (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerTimeListener$network_dagger_releaseFactory;
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerClockFactory;
 	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/network/domain/server/ServerTimeListener;
-	public static fun provideServerTimeListener$network_dagger_release (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/network/domain/server/ServerTimeListener;
+	public fun get ()Lme/proton/core/network/domain/server/ServerClock;
+	public static fun provideServerClock (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Lme/proton/core/network/domain/server/ServerTimeManager;)Lme/proton/core/network/domain/server/ServerClock;
+}
+
+public final class me/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerTimeOffsetManager$network_dagger_releaseFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Ljavax/inject/Provider;)Lme/proton/core/network/dagger/CoreNetworkCryptoModule_ProvideServerTimeOffsetManager$network_dagger_releaseFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/network/domain/server/ServerTimeManager;
+	public static fun provideServerTimeOffsetManager$network_dagger_release (Lme/proton/core/network/dagger/CoreNetworkCryptoModule;Lme/proton/core/crypto/common/context/CryptoContext;)Lme/proton/core/network/domain/server/ServerTimeManager;
 }
 
 public final class me/proton/core/network/dagger/CoreNetworkModule {

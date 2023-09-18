@@ -642,8 +642,22 @@ public final class me/proton/core/network/domain/scopes/Scope$Companion {
 	public final fun getMap ()Ljava/util/Map;
 }
 
+public final class me/proton/core/network/domain/server/ServerClock {
+	public fun <init> (Lme/proton/core/network/domain/server/ServerTimeManager;)V
+	public final fun getCurrentTime ()Ljava/time/Instant;
+	public final fun getCurrentTimeUTC ()Ljava/time/Instant;
+	public final fun getTimeFlow ()Lkotlinx/coroutines/flow/Flow;
+	public final fun getUtcTimeFlow ()Lkotlinx/coroutines/flow/Flow;
+}
+
 public abstract interface class me/proton/core/network/domain/server/ServerTimeListener {
-	public abstract fun onServerTimeUpdated (J)V
+	public abstract fun onServerTimeMillisUpdated (J)V
+}
+
+public final class me/proton/core/network/domain/server/ServerTimeManager : me/proton/core/network/domain/server/ServerTimeListener {
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun getOffsetMilliseconds ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun onServerTimeMillisUpdated (J)V
 }
 
 public abstract interface class me/proton/core/network/domain/serverconnection/DohAlternativesListener {
