@@ -17,15 +17,31 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Začala lhůta odkladu</string>
-  <string name="account_recovery_grace_started_subtitle">Odkladná lhůta pro obnovení účtu byla zahájena a stále trvá.</string>
-  <string name="account_recovery_cancelled_title">Obnovení účtu zrušeno</string>
-  <string name="account_recovery_cancelled_subtitle">Proces obnovení vašeho účtu byl zrušen.</string>
-  <string name="account_recovery_password_started_title">Heslo pro obnovení účtu je možné změnit</string>
-  <string name="account_recovery_password_started_subtitle">Bylo zahájeno období pro změnu hesla pro obnovení vašeho účtu. Nyní si můžete změnit heslo.</string>
-  <string name="account_recovery_window_ended_title">Okno pro obnovu účtu skončilo</string>
-  <string name="account_recovery_window_ended_subtitle">Okno pro obnovení vašeho účtu skončilo.</string>
-  <string name="account_recovery_cancel">Zrušit obnovení</string>
-  <string name="account_recovery_password_label">Zadejte heslo pro zrušení</string>
-  <string name="account_recovery_password_placeholder">Heslo</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Resetování hesla vyžádáno</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Pro <b>%1$s</b> bylo vyžádáno resetování hesla. Heslo si můžete změnit za %2$d hodinu.\n\nPokud jste o změnu nepožádali, zrušte resetování nyní.</item>
+    <item quantity="few">Pro <b>%1$s</b> bylo vyžádáno resetování hesla. Heslo si můžete změnit za %2$d hodiny.\n\nPokud jste o změnu nepožádali, zrušte resetování nyní.</item>
+    <item quantity="many">Pro <b>%1$s</b> bylo vyžádáno resetování hesla. Heslo si můžete změnit za %2$d hodin.\n\nPokud jste o změnu nepožádali, zrušte resetování nyní.</item>
+    <item quantity="other">Pro <b>%1$s</b> bylo vyžádáno resetování hesla. Heslo si můžete změnit za %2$d hodin.\n\nPokud jste o změnu nepožádali, zrušte resetování nyní.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Zrušit resetování hesla?</string>
+  <string name="account_recovery_cancel_subtitle">Zadejte své heslo pro zrušení.</string>
+  <string name="account_recovery_cancel_password_label">Aktuální heslo</string>
+  <string name="account_recovery_cancel_password_placeholder">Heslo</string>
+  <string name="account_recovery_cancel_now">Zrušit resetování hesla</string>
+  <string name="account_recovery_cancel_back">Zpět</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Resetování hesla zrušeno</string>
+  <string name="account_recovery_cancelled_subtitle">Pokud jste o změnu hesla nikdy nepožádali, může být váš účet ohrožen.\n\nZabezpečte si svůj účet změnou hesla.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Resetování hesla je k dispozici</string>
+  <string name="account_recovery_password_started_subtitle">Chcete-li resetovat své heslo, jděte zpět do zařízení a prohlížeče, ze kterého jste zadali požadavek na resetování hesla.\n\nToto je třeba provést před %s.\n\nPokud jste o resetování hesla nepožádali, zrušte resetování nyní.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Resetování hesla vypršelo</string>
+  <string name="account_recovery_window_ended_subtitle">Budete muset požádat o resetování nového hesla pro %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Zrušit žádost</string>
+  <string name="account_recovery_dismiss">Rozumím</string>
 </resources>

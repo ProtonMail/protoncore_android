@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">A türelmi időszak elkezdődött</string>
-  <string name="account_recovery_grace_started_subtitle">A fiók-helyreállítás türelmi időszaka elkezdődött és folyamatban van.</string>
-  <string name="account_recovery_cancelled_title">Fiók- helyreállítás törölve</string>
-  <string name="account_recovery_cancelled_subtitle">Fiók-helyreállítási folyamat megszakítva.</string>
-  <string name="account_recovery_password_started_title">A fiók-helyreállítási jelszó módosítható</string>
-  <string name="account_recovery_password_started_subtitle">A fiók-helyreállítási jelszava megváltoztatásának az időszaka megkezdődött. Most már megváltoztathatja jelszavát.</string>
-  <string name="account_recovery_window_ended_title">A fiók-helyreállítási időszak véget ért</string>
-  <string name="account_recovery_window_ended_subtitle">A fiók-helyreállítási időszak véget ért.</string>
-  <string name="account_recovery_cancel">Helyreállítás visszavonása</string>
-  <string name="account_recovery_password_label">Adja meg a jelszót a visszavonáshoz</string>
-  <string name="account_recovery_password_placeholder">Jelszó</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Jelszó visszaállítási kérelem történt</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">A jelszó visszaállítását kérelmezte a(z) <b>%1$s</b> címhez. A jelszót %2$d órán belül megváltoztathatja.\n\nHa nem ön kérte a visszaállítást, szakítsa meg.</item>
+    <item quantity="other">A jelszó visszaállítását kérelmezte a(z) <b>%1$s</b> címhez. A jelszót %2$d órán belül megváltoztathatja.\n\nHa nem ön kérte a visszaállítást, szakítsa meg.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Jelszó visszaállítás megszakítása?</string>
+  <string name="account_recovery_cancel_subtitle">A megszakításhoz adja meg a jelszavát.</string>
+  <string name="account_recovery_cancel_password_label">Jelenlegi jelszó</string>
+  <string name="account_recovery_cancel_password_placeholder">Jelszó</string>
+  <string name="account_recovery_cancel_now">Jelszó visszaállítás megszakítása</string>
+  <string name="account_recovery_cancel_back">Vissza</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Jelszó visszaállítás megszakítva</string>
+  <string name="account_recovery_cancelled_subtitle">Ha nem kérte a jelszó visszaállítását, a fiókja veszélyben lehet.\n\nHelyezze biztonságba a fiókját a jelszavának megváltoztatásával.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Jelszó visszaállítás elérhető</string>
+  <string name="account_recovery_password_started_subtitle">A jelszó visszaállításhoz menjen vissza arra az eszközre és böngészőre, ahol kezdeményezte a visszaállítást.\n\nEzt ennyi időn belül kell megtennie: %s.\n\nHa nem kért jelszó visszaállítást, szakítsa meg most.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Jelszó visszaállítási kérelem lejárt</string>
+  <string name="account_recovery_window_ended_subtitle">Újra kell kérelmeznie a jelszó visszaállítást ehhez: %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Kérelem törlése</string>
+  <string name="account_recovery_dismiss">Rendben</string>
 </resources>

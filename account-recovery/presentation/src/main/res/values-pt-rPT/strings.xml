@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Início do período de carência</string>
-  <string name="account_recovery_grace_started_subtitle">Iniciou o período de carência para a recuperação da sua conta.</string>
-  <string name="account_recovery_cancelled_title">A recuperação de conta foi cancelada.</string>
-  <string name="account_recovery_cancelled_subtitle">O processo de recuperação da sua conta foi cancelado.</string>
-  <string name="account_recovery_password_started_title">É possível alterar a palavra-passe de recuperação da conta.</string>
-  <string name="account_recovery_password_started_subtitle">O período de alteração da palavra-passe de recuperação da sua conta foi iniciado. Pode agora alterar a sua palavra-passe.</string>
-  <string name="account_recovery_window_ended_title">A período de recuperação de conta terminou.</string>
-  <string name="account_recovery_window_ended_subtitle">O período de recuperação da sua conta expirou.</string>
-  <string name="account_recovery_cancel">Cancelar a recuperação</string>
-  <string name="account_recovery_password_label">Insira a palavra-passe para cancelar.</string>
-  <string name="account_recovery_password_placeholder">Palavra-passe</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Pedido de reposição da palavra-passe</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Um pedido de reposição da palavra-passe foi feito por <b>%1$s</b>. Pode mudar a sua palavra-passe em %2$d hora.\n\nSe não fez este pedido, cancele agora.</item>
+    <item quantity="other">Um pedido de reposição da palavra-passe foi feito por <b>%1$s</b>. Pode mudar a sua palavra-passe em %2$d horas.\n\n Se não fez este pedido, cancele agora.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Cancelar a reposição da palavra-passe?</string>
+  <string name="account_recovery_cancel_subtitle">Introduza a sua palavra-passe para cancelar.</string>
+  <string name="account_recovery_cancel_password_label">Palavra-passe atual</string>
+  <string name="account_recovery_cancel_password_placeholder">Palavra-passe</string>
+  <string name="account_recovery_cancel_now">Cancelar a reposição da palavra-passe</string>
+  <string name="account_recovery_cancel_back">Voltar</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Reposição da palavra-passe cancelada</string>
+  <string name="account_recovery_cancelled_subtitle">Se nunca mudou a sua palavra-passe, a sua conta pode estar em risco.\n\n Aumente a segurança da sua conta ao mudar a sua palavra-passe.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Reposição de palavra-passe disponível</string>
+  <string name="account_recovery_password_started_subtitle">Para repor a sua palavra-passe, volte ao dispositivo e navegador em que fez o seu pedido de reposição de palavra-passe. \n\nTerá que fazer isto antes de %s.\n\n Se não pediu para repor a sua palavra-passe, cancele a reposição agora.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Reposição de palavra-passe expirado</string>
+  <string name="account_recovery_window_ended_subtitle">Terá de pedir uma nova reposição de palavra-passe para %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Cancelar pedido</string>
+  <string name="account_recovery_dismiss">Entendi</string>
 </resources>

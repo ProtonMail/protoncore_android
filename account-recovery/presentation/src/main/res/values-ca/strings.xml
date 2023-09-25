@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Període de gràcia iniciat</string>
-  <string name="account_recovery_grace_started_subtitle">El període de gràcia de recuperació del compte ha començat i avança.</string>
-  <string name="account_recovery_cancelled_title">Recuperació del compte cancel·lat</string>
-  <string name="account_recovery_cancelled_subtitle">El procés de recuperació del compte s\'ha cancel·lat.</string>
-  <string name="account_recovery_password_started_title">La contrasenya de recuperació del compte es pot canviar</string>
-  <string name="account_recovery_password_started_subtitle">S\'ha iniciat el període de canvi de contrasenya de recuperació del compte. Ara podeu canviar la vostra contrasenya.</string>
-  <string name="account_recovery_window_ended_title">Finestra de recuperació del compte finalitzada</string>
-  <string name="account_recovery_window_ended_subtitle">La finestra de recuperació del compte ha finalitzat.</string>
-  <string name="account_recovery_cancel">Cancel·la la recuperació</string>
-  <string name="account_recovery_password_label">Introduïu la contrasenya per a cancel·lar</string>
-  <string name="account_recovery_password_placeholder">Contrasenya</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Password reset requested</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Cancel password reset?</string>
+  <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
+  <string name="account_recovery_cancel_password_label">Contrasenya actual</string>
+  <string name="account_recovery_cancel_password_placeholder">Contrasenya</string>
+  <string name="account_recovery_cancel_now">Cancel password reset</string>
+  <string name="account_recovery_cancel_back">Torna</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Password reset cancelled</string>
+  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Password reset available</string>
+  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Password reset expired</string>
+  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Cancel request</string>
+  <string name="account_recovery_dismiss">Entesos</string>
 </resources>

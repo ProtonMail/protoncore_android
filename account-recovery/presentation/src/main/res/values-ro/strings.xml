@@ -17,15 +17,30 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Perioada de grație a început</string>
-  <string name="account_recovery_grace_started_subtitle">Perioada de grație de recuperare a contului a început și e în derulare.</string>
-  <string name="account_recovery_cancelled_title">Recuperarea contului a fost anulată</string>
-  <string name="account_recovery_cancelled_subtitle">Procesul de recuperare al contului a fost anulat.</string>
-  <string name="account_recovery_password_started_title">Parola de recuperare a contului poate fi schimbată</string>
-  <string name="account_recovery_password_started_subtitle">Perioada de schimbare a parolei de recuperare a contului a început. Acum puteți schimba parola.</string>
-  <string name="account_recovery_window_ended_title">Perioada de recuperare a contului s-a încheiat</string>
-  <string name="account_recovery_window_ended_subtitle">Perioada de recuperare a contului s-a încheiat.</string>
-  <string name="account_recovery_cancel">Anulare recuperare</string>
-  <string name="account_recovery_password_label">Introduceți parola pentru anulare</string>
-  <string name="account_recovery_password_placeholder">Parola</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Solicitare resetare parolă</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">A fost solicitată o resetare a parolei pentru <b>%1$s</b>. Vă puteți schimba parola timp de %2$d oră.\n\nDacă nu ați făcut această solicitare, anulați-o acum.</item>
+    <item quantity="few">A fost solicitată o resetare a parolei pentru <b>%1$s</b>. Vă puteți schimba parola timp de %2$d ore.\n\nDacă nu ați făcut această solicitare, anulați-o acum.</item>
+    <item quantity="other">A fost solicitată o resetare a parolei pentru <b>%1$s</b>. Vă puteți schimba parola timp de %2$d de ore.\n\nDacă nu ați făcut această solicitare, anulați-o acum.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Anulați resetarea parolei?</string>
+  <string name="account_recovery_cancel_subtitle">Introduceți parola pentru a anula.</string>
+  <string name="account_recovery_cancel_password_label">Parola actuală</string>
+  <string name="account_recovery_cancel_password_placeholder">Parola</string>
+  <string name="account_recovery_cancel_now">Anulare resetare parolă</string>
+  <string name="account_recovery_cancel_back">Înapoi</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Resetarea parolei a fost anulată</string>
+  <string name="account_recovery_cancelled_subtitle">Dacă nu ați cerut niciodată să vă schimbați parola, contul v-ar putea fi în pericol.\n\nSecurizați-vă contul schimbându-vă parola.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Resetare parolă disponibilă</string>
+  <string name="account_recovery_password_started_subtitle">Pentru a vă reseta parola, reveniți la dispozitivul și navigatorul web de pe care ați făcut cererea de resetare a parolei.\n\nVa trebui să faceți acest lucru înainte de %s.\n\nDacă nu ați cerut să vă resetați parola, anulați resetarea acum.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Resetarea parolei a expirat</string>
+  <string name="account_recovery_window_ended_subtitle">Va trebui să solicitați o nouă resetare a parolei pentru %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Anulare solicitare</string>
+  <string name="account_recovery_dismiss">Am înțeles</string>
 </resources>

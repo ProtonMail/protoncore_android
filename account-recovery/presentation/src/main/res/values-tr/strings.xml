@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Uzatma süresi başlatıldı</string>
-  <string name="account_recovery_grace_started_subtitle">Hesabınızı kurtarmak için uzatma süreniz başladı ve sürüyor.</string>
-  <string name="account_recovery_cancelled_title">Hesap kurtarma işlemi iptal edildi</string>
-  <string name="account_recovery_cancelled_subtitle">Hesap kurtarma işleminiz iptal edildi.</string>
-  <string name="account_recovery_password_started_title">Hesap kurtarma parolanız değiştirilebilir</string>
-  <string name="account_recovery_password_started_subtitle">Hesap kurtarma parola değiştirme süreniz başladı. Şimdi parolanızı değiştirebilirsiniz.</string>
-  <string name="account_recovery_window_ended_title">Hesap kurtarma süresi sona erdi</string>
-  <string name="account_recovery_window_ended_subtitle">Hesap kurtarma süreniz sona erdi.</string>
-  <string name="account_recovery_cancel">Kurtarma işlemini iptal et</string>
-  <string name="account_recovery_password_label">İptal etmek için parolayı yazın</string>
-  <string name="account_recovery_password_placeholder">Parola</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Parola sıfırlama isteği yapıldı</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one"><b>%1$s</b> için bir parola sıfırlama isteği yapıldı. Parolanızı %2$d saat içinde değiştirebilirsiniz.\n\nBu isteği siz yapmadıysanız şimdi iptal edin.</item>
+    <item quantity="other"><b>%1$s</b> için bir parola sıfırlama isteği yapıldı. Parolanızı %2$d saat içinde değiştirebilirsiniz.\n\nBu isteği siz yapmadıysanız şimdi iptal edin.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Parola sıfırlama işlemi iptal edilsin mi?</string>
+  <string name="account_recovery_cancel_subtitle">İptal etmek için parolanızı yazın.</string>
+  <string name="account_recovery_cancel_password_label">Geçerli parola</string>
+  <string name="account_recovery_cancel_password_placeholder">Parola</string>
+  <string name="account_recovery_cancel_now">Parola sıfırlama işlemini iptal et</string>
+  <string name="account_recovery_cancel_back">Geri</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Parola sıfırlama işlemi iptal edildi</string>
+  <string name="account_recovery_cancelled_subtitle">Parolanızı değiştirmek için herhangi bir istek yapmadıysanız, hesabınızın tehlike altında olabilir.\n\nHesabınızın güvenliğini sağlamak için parolanızı değiştirin.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Parola sıfırlama işlemi başlatılmış</string>
+  <string name="account_recovery_password_started_subtitle">Parolanızı sıfırlamak için, parola sıfırlama isteğini yaptığınız aygıt ve tarayıcıya dönün.\n\nBunu %s öncesinde yapmanız gerekir.\n\nParola sıfırlama isteği yapmadıysanız, sıfırlamayı işlemini şimdi iptal edin.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Parola sıfırlama süresi dolmuş</string>
+  <string name="account_recovery_window_ended_subtitle">%s için yeni bir parola sıfırlama isteği yapmalısınız.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">İsteği iptal et</string>
+  <string name="account_recovery_dismiss">Anladım</string>
 </resources>

@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Respitperioden startade</string>
-  <string name="account_recovery_grace_started_subtitle">Din respitperiod för kontoåterställning har påbörjats och pågår.</string>
-  <string name="account_recovery_cancelled_title">Kontoåterställning avbröts</string>
-  <string name="account_recovery_cancelled_subtitle">Din kontoåterställningsprocess har avbrutits.</string>
-  <string name="account_recovery_password_started_title">Lösenord för kontoåterställning kan ändras</string>
-  <string name="account_recovery_password_started_subtitle">Perioden för att byta lösenord för kontoåterställning har påbörjats. Du kan nu ändra ditt lösenord.</string>
-  <string name="account_recovery_window_ended_title">Perioden för kontoåterställning har avslutats</string>
-  <string name="account_recovery_window_ended_subtitle">Din kontoåterställningsperiod har avslutats.</string>
-  <string name="account_recovery_cancel">Avbryt återställning</string>
-  <string name="account_recovery_password_label">Ange lösenord för att avbryta</string>
-  <string name="account_recovery_password_placeholder">Lösenord</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Lösenordsåterställning begärd</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">En lösenordsåterställning begärdes för <b>%1$s</b>. Du kan ändra ditt lösenord inom %2$d timme.\n\nOm du inte gjorde denna begäran, avbryt den nu.</item>
+    <item quantity="other">En lösenordsåterställning begärdes för <b>%1$s</b>. Du kan ändra ditt lösenord inom %2$d timmar.\n\nOm du inte gjorde denna begäran, avbryt den nu.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Avbryt lösenordsåterställning?</string>
+  <string name="account_recovery_cancel_subtitle">Ange ditt lösenord för att avbryta.</string>
+  <string name="account_recovery_cancel_password_label">Nuvarande lösenord</string>
+  <string name="account_recovery_cancel_password_placeholder">Lösenord</string>
+  <string name="account_recovery_cancel_now">Avbryt lösenordsåterställning</string>
+  <string name="account_recovery_cancel_back">Tillbaka</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Lösenordsåterställning avbruten</string>
+  <string name="account_recovery_cancelled_subtitle">Om du aldrig bett om att ändra ditt lösenord kan ditt konto vara i fara.\n\nSkydda ditt konto genom att ändra ditt lösenord.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Lösenordsåterställning tillgänglig</string>
+  <string name="account_recovery_password_started_subtitle">För att återställa ditt lösenord, gå tillbaka till enheten och webbläsaren som du gjorde din begäran om lösenordsåterställning från.\n\nDu måste göra detta innan %s.\n\nOm du inte bad om att få återställa ditt lösenord, avbryt återställningen nu.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Lösenordsåterställning löpt ut</string>
+  <string name="account_recovery_window_ended_subtitle">Du måste begära en ny lösenordsåterställning för %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Avbryt begäran</string>
+  <string name="account_recovery_dismiss">Jag förstår</string>
 </resources>

@@ -17,15 +17,31 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Odzyskaj konto teraz</string>
-  <string name="account_recovery_grace_started_subtitle">Możesz teraz odzyskać konto.</string>
-  <string name="account_recovery_cancelled_title">Proces odzyskiwania konta został anulowany</string>
-  <string name="account_recovery_cancelled_subtitle">Proces odzyskiwania konta został anulowany.</string>
-  <string name="account_recovery_password_started_title">Hasło odzyskiwania konta może zostać zmienione</string>
-  <string name="account_recovery_password_started_subtitle">Możesz teraz zmienić hasło odzyskiwania konta.</string>
-  <string name="account_recovery_window_ended_title">Czas na odzyskanie konta się zakończył</string>
-  <string name="account_recovery_window_ended_subtitle">Czas na odzyskanie konta się zakończył.</string>
-  <string name="account_recovery_cancel">Anuluj odzyskiwanie</string>
-  <string name="account_recovery_password_label">Wpisz hasło, aby anulować</string>
-  <string name="account_recovery_password_placeholder">Hasło</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Żądanie zresetowania hasła zostało wysłane</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Żądanie zresetowania hasła dla konta <b>%1$s</b> zostało wysłane. Możesz zmienić hasło w ciągu %2$d godziny.\n\nJeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie, anuluj je.</item>
+    <item quantity="few">Żądanie zresetowania hasła dla konta <b>%1$s</b> zostało wysłane. Możesz zmienić hasło w ciągu %2$d godzin.\n\nJeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie, anuluj je.</item>
+    <item quantity="many">Żądanie zresetowania hasła dla konta <b>%1$s</b> zostało wysłane. Możesz zmienić hasło w ciągu %2$d godzin.\n\nJeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie, anuluj je.</item>
+    <item quantity="other">Żądanie zresetowania hasła dla konta <b>%1$s</b> zostało wysłane. Możesz zmienić hasło w ciągu %2$d godzin.\n\nJeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie, anuluj je.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Anulować resetowanie hasła?</string>
+  <string name="account_recovery_cancel_subtitle">Wpisz hasło, aby anulować</string>
+  <string name="account_recovery_cancel_password_label">Obecne hasło</string>
+  <string name="account_recovery_cancel_password_placeholder">Hasło</string>
+  <string name="account_recovery_cancel_now">Anuluj resetowanie hasła</string>
+  <string name="account_recovery_cancel_back">Wstecz</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Resetowanie hasła zostało anulowane</string>
+  <string name="account_recovery_cancelled_subtitle">Konto może być zagrożone, jeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie.\n\nZmień hasło, aby zabezpieczyć konto.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Resetowanie hasła jest dostępne</string>
+  <string name="account_recovery_password_started_subtitle">Aby zresetować hasło, wróć do urządzenia i przeglądarki, z której o to poprosiłeś.\n\nMusisz to zrobić przed %s.\n\nJeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie, anuluj je.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Resetowanie hasła wygasło</string>
+  <string name="account_recovery_window_ended_subtitle">Musisz ponownie zresetować hasło konta %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Anuluj żądanie</string>
+  <string name="account_recovery_dismiss">Ok</string>
 </resources>

@@ -17,15 +17,28 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Masa tenggang dimulai</string>
-  <string name="account_recovery_grace_started_subtitle">Masa tenggang pemulihan akun Anda telah dimulai dan sedang berjalan.</string>
-  <string name="account_recovery_cancelled_title">Pemulihan akun dibatalkan</string>
-  <string name="account_recovery_cancelled_subtitle">Proses pemulihan akun Anda telah dibatalkan.</string>
-  <string name="account_recovery_password_started_title">Kata sandi pemulihan akun dapat diubah</string>
-  <string name="account_recovery_password_started_subtitle">Masa tenggang perubahan kata sandi untuk akun Anda telah dimulai. Anda kini dapat mengubah kata sandi Anda.</string>
-  <string name="account_recovery_window_ended_title">Rentang waktu pemulihan akun telah berakhir</string>
-  <string name="account_recovery_window_ended_subtitle">Rentang waktu pemulihan akun Anda telah berakhir.</string>
-  <string name="account_recovery_cancel">Batalkan pemulihan</string>
-  <string name="account_recovery_password_label">Masukkan kata sandi untuk membatalkan</string>
-  <string name="account_recovery_password_placeholder">Kata sandi</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Pengaturan ulang kata sandi diminta</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="other">Pengaturan ulang kata sandi telah diminta untuk <b>%1$s</b>. Anda dapat mengubah kata sandi Anda dalam %2$d jam.\n\nApabila Anda tidak merasa meminta hal ini, batalkan permintaan ini sekarang juga.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Batalkan pengaturan ulang kata sandi?</string>
+  <string name="account_recovery_cancel_subtitle">Masukkan kata sandi Anda untuk membatalkan.</string>
+  <string name="account_recovery_cancel_password_label">Kata sandi saat ini</string>
+  <string name="account_recovery_cancel_password_placeholder">Kata sandi</string>
+  <string name="account_recovery_cancel_now">Batalkan pengaturan ulang kata sandi</string>
+  <string name="account_recovery_cancel_back">Kembali</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Pengaturan ulang kata sandi dibatalkan</string>
+  <string name="account_recovery_cancelled_subtitle">Apabila Anda tidak pernah meminta untuk mengatur ulang kata sandi, akun Anda mungkin berada dalam bahaya.\n\nAmankan akun Anda dengan mengubah kata sandi Anda.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Pengaturan ulang kata sandi tersedia</string>
+  <string name="account_recovery_password_started_subtitle">Untuk mengatur ulang kata sandi, Anda perlu untuk kembali ke perangkat dan browser tempat Anda meminta pengaturan ulang kata sandi.\n\nAnda harus melakukan hal ini sebelum %s.\n\nApabila Anda tidak meminta untuk mengatur ulang kata sandi, batalkan permintaan ini sekarang juga.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Pengaturan ulang kata sandi telah kedaluwarsa</string>
+  <string name="account_recovery_window_ended_subtitle">Anda akan perlu untuk meminta pengaturan ulang kata sandi baru untuk %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Batalkan permintaan</string>
+  <string name="account_recovery_dismiss">Mengerti</string>
 </resources>

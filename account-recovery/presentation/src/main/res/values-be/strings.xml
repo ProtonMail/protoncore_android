@@ -17,15 +17,31 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Пачаты перыяд адтэрміноўкі</string>
-  <string name="account_recovery_grace_started_subtitle">Ваш перыяд адтэрміноўкі ўліковага запісу аднаўлення быў пачаты і пакуль працэс не завершаны.</string>
-  <string name="account_recovery_cancelled_title">Аднаўленне ўліковага запісу скасавана</string>
-  <string name="account_recovery_cancelled_subtitle">Працэс аднаўлення вашага ўліковага запісу быў скасаваны.</string>
-  <string name="account_recovery_password_started_title">Пароль аднаўлення ўліковага запісу можна змяніць</string>
-  <string name="account_recovery_password_started_subtitle">Быў пачаты перыяд аднаўлення змены пароля ўліковага запісу. Цяпер вы можаце змяніць свой пароль.</string>
-  <string name="account_recovery_window_ended_title">Тэрмін аднаўлення ўліковага запісу завершаны</string>
-  <string name="account_recovery_window_ended_subtitle">Тэрмін аднаўлення вашага ўліковага запісу завершаны.</string>
-  <string name="account_recovery_cancel">Скасаваць аднаўленне</string>
-  <string name="account_recovery_password_label">Увядзіце пароль, каб скасаваць</string>
-  <string name="account_recovery_password_placeholder">Пароль</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Запыт на скіданне пароля</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Скіданне пароля было запытана для <b>%1$s</b>. Вы можаце змяніць свой пароль на працягу %2$d гадзіны.\n\nКалі вы не рабілі гэты запыт, скасуйце яго.</item>
+    <item quantity="few">Скіданне пароля было запытана для <b>%1$s</b>. Вы можаце змяніць свой пароль на працягу %2$d гадзін.\n\nКалі вы не рабілі гэты запыт, скасуйце яго.</item>
+    <item quantity="many">Скіданне пароля было запытана для <b>%1$s</b>. Вы можаце змяніць свой пароль на працягу %2$d гадзін.\n\nКалі вы не рабілі гэты запыт, скасуйце яго.</item>
+    <item quantity="other">Скіданне пароля было запытана для <b>%1$s</b>. Вы можаце змяніць свой пароль на працягу %2$d гадзін.\n\nКалі вы не рабілі гэты запыт, скасуйце яго.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Скасаваць скіданне пароля?</string>
+  <string name="account_recovery_cancel_subtitle">Увядзіце пароль для скасавання.</string>
+  <string name="account_recovery_cancel_password_label">Бягучы пароль</string>
+  <string name="account_recovery_cancel_password_placeholder">Пароль</string>
+  <string name="account_recovery_cancel_now">Скасаваць скіданне пароля</string>
+  <string name="account_recovery_cancel_back">Назад</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Скіданне пароля скасавана</string>
+  <string name="account_recovery_cancelled_subtitle">Калі вы ніколі не запытвалі змену пароля, ваш уліковы запіс можа быць у небяспецы.\n\nАбараніце свой уліковы запіс змяніўшы пароль у ім.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Даступна скіданне пароля</string>
+  <string name="account_recovery_password_started_subtitle">Каб скінуць свой пароль, вярніцеся да прылады і браўзера з якіх вы рабілі адпаведны запыт.\n\nВам неабходна будзе зрабіць гэта да таго, як %s.\n\nКалі вы не запытвалі скіданне пароля, скасуйце дадзеную аперацыю.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Скід пароля пратэрмінаваны</string>
+  <string name="account_recovery_window_ended_subtitle">Вам неабходна запытаць новы скід пароля для %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Скасаваць запыт</string>
+  <string name="account_recovery_dismiss">Зразумела</string>
 </resources>

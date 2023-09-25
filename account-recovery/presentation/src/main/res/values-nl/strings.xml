@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">De respijtperiode is begonnen</string>
-  <string name="account_recovery_grace_started_subtitle">De respijtperiode voor accountherstel is gestart en loopt nog.</string>
-  <string name="account_recovery_cancelled_title">Accountherstel geannuleerd</string>
-  <string name="account_recovery_cancelled_subtitle">Uw accountherstelproces is geannuleerd.</string>
-  <string name="account_recovery_password_started_title">Het wachtwoord voor accountherstel kan worden gewijzigd</string>
-  <string name="account_recovery_password_started_subtitle">De periode voor het wijzigen van uw accountherstelwachtwoord is gestart. U kunt nu uw wachtwoord wijzigen.</string>
-  <string name="account_recovery_window_ended_title">Het tijdsvenster voor uw accountherstel is ten einde</string>
-  <string name="account_recovery_window_ended_subtitle">Het tijdsvenster voor uw accountherstel is ten einde.</string>
-  <string name="account_recovery_cancel">Herstel annuleren</string>
-  <string name="account_recovery_password_label">Voer uw wachtwoord in om te annuleren</string>
-  <string name="account_recovery_password_placeholder">Wachtwoord</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Password reset requested</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Cancel password reset?</string>
+  <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
+  <string name="account_recovery_cancel_password_label">Current password</string>
+  <string name="account_recovery_cancel_password_placeholder">Wachtwoord</string>
+  <string name="account_recovery_cancel_now">Cancel password reset</string>
+  <string name="account_recovery_cancel_back">Back</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Password reset cancelled</string>
+  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Password reset available</string>
+  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Password reset expired</string>
+  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Cancel request</string>
+  <string name="account_recovery_dismiss">Got it</string>
 </resources>

@@ -35,7 +35,7 @@
   <string name="settings_password_management_change_login_password">Cambia password</string>
   <string name="settings_password_management_change_mailbox_password">Cambia la password della casella di posta</string>
   <string name="settings_password_management_header">Gestione password</string>
-  <string name="settings_login_password_hint_current">Password d\'accesso attuale</string>
+  <string name="settings_login_password_hint_current">Password di accesso attuale</string>
   <string name="settings_login_password_hint_new">Nuova password di accesso</string>
   <string name="settings_login_password_hint_new_confirm">Conferma la password di accesso</string>
   <string name="settings_mailbox_password_hint_new">Nuova password della casella di posta</string>
@@ -49,5 +49,5 @@
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
   <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo anonimi.</string>
   <string name="device_settings_crashreport_title">Rapporti anonimi sugli arresti anomali</string>
-  <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviato un rapporto ai nostri tecnici con i dettagli della causa. Li useremo solo per migliorare l\'app.</string>
+  <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviato una segnalazione ai nostri tecnici con i dettagli della causa. Li useremo solo per migliorare l\'app.</string>
 </resources>

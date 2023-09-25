@@ -17,15 +17,28 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">猶予期間の開始</string>
-  <string name="account_recovery_grace_started_subtitle">アカウント回復の措置猶予期間が開始され、継続中です。</string>
-  <string name="account_recovery_cancelled_title">アカウント回復はキャンセルされました</string>
-  <string name="account_recovery_cancelled_subtitle">アカウント回復プロセスはキャンセルされました。</string>
-  <string name="account_recovery_password_started_title">アカウント回復パスワードの変更が可能</string>
-  <string name="account_recovery_password_started_subtitle">アカウント回復パスワード変更期間が始まりました。パスワードを変更することができます。</string>
-  <string name="account_recovery_window_ended_title">アカウント回復ウィンドウが終了</string>
-  <string name="account_recovery_window_ended_subtitle">アカウント回復ウィンドウが終了しました。</string>
-  <string name="account_recovery_cancel">回復をキャンセル</string>
-  <string name="account_recovery_password_label">キャンセルするにはパスワードを入力します</string>
-  <string name="account_recovery_password_placeholder">パスワード</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">パスワードの再設定を要求</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="other"><b>%1$s</b> のパスワードのリセットが要求されました。 %2$d 時間以内にパスワードを変更できます。\n\nこのリクエストを行っていない場合は、今すぐキャンセルしてください。</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">パスワードのリセットをキャンセルしますか？</string>
+  <string name="account_recovery_cancel_subtitle">パスワードを入力してキャンセルしてください。</string>
+  <string name="account_recovery_cancel_password_label">現在のパスワード</string>
+  <string name="account_recovery_cancel_password_placeholder">パスワード</string>
+  <string name="account_recovery_cancel_now">パスワードリセットのキャンセル</string>
+  <string name="account_recovery_cancel_back">戻る</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">パスワードのリセットがキャンセルされた</string>
+  <string name="account_recovery_cancelled_subtitle">パスワードの変更を要求しなかった場合、アカウントが危険にさらされる可能性があります。\n\nパスワードを変更してアカウントを保護してください。</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">パスワードのリセットが可能</string>
+  <string name="account_recovery_password_started_subtitle">パスワードをリセットするには、パスワードのリセット リクエストを行ったデバイスとブラウザに戻ります。\n\n%s よりも前にこれを行う必要があります。\n\nパスワードのリセットを要求しなかった場合は、キャンセルしてください。 今リセット。</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">パスワードリセットの期限切れ</string>
+  <string name="account_recovery_window_ended_subtitle">%s の新しいパスワードのリセットをリクエストする必要があります。</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">リクエストのキャンセル</string>
+  <string name="account_recovery_dismiss">了解</string>
 </resources>

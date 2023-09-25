@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">La période de grâce a commencé.</string>
-  <string name="account_recovery_grace_started_subtitle">La période de grâce pour la récupération de votre compte a commencé et se poursuit.</string>
-  <string name="account_recovery_cancelled_title">Annulation de la récupération du compte</string>
-  <string name="account_recovery_cancelled_subtitle">Le processus de récupération de votre compte a été annulé.</string>
-  <string name="account_recovery_password_started_title">Le mot de passe de récupération du compte peut être modifié.</string>
-  <string name="account_recovery_password_started_subtitle">La période de modification du mot de passe de récupération de votre compte a commencé. Vous pouvez modifier votre mot de passe.</string>
-  <string name="account_recovery_window_ended_title">Fin de la période de récupération du compte</string>
-  <string name="account_recovery_window_ended_subtitle">La période de récupération de votre compte est arrivée à expiration.</string>
-  <string name="account_recovery_cancel">Annuler la récupération</string>
-  <string name="account_recovery_password_label">Entrez votre mot de passe pour annuler</string>
-  <string name="account_recovery_password_placeholder">Mot de passe</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Réinitialisation du mot de passe nécessaire</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Une réinitialisation du mot de passe a été demandée pour <b>%1$s</b>. Vous pourrez modifier votre mot de passe dans %2$d heure.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez-la maintenant.</item>
+    <item quantity="other">Une réinitialisation du mot de passe a été demandée pour <b>%1$s</b>. Vous pourrez modifier votre mot de passe dans %2$d heures.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez-la maintenant.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Annuler la réinitialisation du mot de passe ?</string>
+  <string name="account_recovery_cancel_subtitle">Saisissez votre mot de passe pour annuler.</string>
+  <string name="account_recovery_cancel_password_label">Mot de passe actuel</string>
+  <string name="account_recovery_cancel_password_placeholder">Mot de passe</string>
+  <string name="account_recovery_cancel_now">Annuler la réinitialisation du mot de passe </string>
+  <string name="account_recovery_cancel_back">Précédent</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">La réinitialisation du mot de passe a été annulée.</string>
+  <string name="account_recovery_cancelled_subtitle">Si vous n\'avez jamais demandé la modification de votre mot de passe, votre compte pourrait être menacé.\n\nSécurisez votre compte en changeant votre mot de passe.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">La réinitialisation du mot de passe est disponible.</string>
+  <string name="account_recovery_password_started_subtitle">Pour réinitialiser votre mot de passe, retournez sur l\'appareil et le navigateur à partir desquels vous avez demandé la réinitialisation de votre mot de passe.\n\nVous devrez le faire d\'ici %s.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez maintenant la réinitialisation.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">La réinitialisation du mot de passe a expiré.</string>
+  <string name="account_recovery_window_ended_subtitle">Vous devrez demander une nouvelle réinitialisation du mot de passe pour %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Annuler la demande</string>
+  <string name="account_recovery_dismiss">J\'ai compris</string>
 </resources>

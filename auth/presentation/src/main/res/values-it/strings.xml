@@ -22,7 +22,7 @@
   <string name="welcome_subtitle_mail">Email crittografata che mantiene private le tue conversazioni. La tua casella di posta ti appartiene davvero.</string>
   <string name="welcome_subtitle_mail_alt">Privacy. Sicurezza. Convenienza. Email crittografata che ti dà il pieno controllo dei tuoi dati personali.</string>
   <string name="welcome_subtitle_drive">La comodità del cloud storage e la sicurezza della tecnologia di crittografia. Finalmente una soluzione di archiviazione cloud di cui ti puoi fidare.</string>
-  <string name="welcome_subtitle_drive_alt">Il modo più sicuro per archiviare i tuoi file. Carica, sincronizza e condividi con la crittografia più potente disponibile.</string>
+  <string name="welcome_subtitle_drive_alt">Il modo più sicuro per archiviare i tuoi file. Carica, sincronizza e condividi con la crittografia più sicura disponibile.</string>
   <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene i tuoi eventi della vita privati, sicuri e protetti.</string>
   <string name="welcome_subtitle_calendar_alt">Il nostro calendario crittografato end-to-end ti aiuta a rimanere organizzato, in pista e sotto controllo.</string>
   <string name="welcome_subtitle_vpn">Una VPN svizzera ad alta velocità che tutela la tua privacy crittografando la connessione a Internet.</string>
@@ -32,7 +32,7 @@
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Password</string>
   <string name="auth_password_help">La password deve contenere almeno 8 caratteri</string>
-  <string name="auth_current_login_password">Password d\'accesso attuale</string>
+  <string name="auth_current_login_password">Password di accesso attuale</string>
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice a due fattori</string>
   <string name="auth_email">Email</string>
@@ -69,7 +69,7 @@
   <string name="auth_login_general_error">Si è verificato un errore.</string>
   <string name="auth_login_external_account_unsupported_title">Indirizzo Proton richiesto</string>
   <string name="auth_login_external_account_unsupported_message">Ottieni un indirizzo di posta Proton collegato a questo account nelle impostazioni web di Proton.</string>
-  <string name="auth_login_external_account_unsupported_help_action">Per saperne di più</string>
+  <string name="auth_login_external_account_unsupported_help_action">Scopri di più</string>
   <string name="auth_login_empty_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_mailbox_empty_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_create_address_title">Indirizzo Proton richiesto</string>

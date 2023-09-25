@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Período de carência iniciado</string>
-  <string name="account_recovery_grace_started_subtitle">O período de carência para recuperação da sua conta foi iniciado e está em andamento.</string>
-  <string name="account_recovery_cancelled_title">Recuperação de conta cancelada.</string>
-  <string name="account_recovery_cancelled_subtitle">O processo de recuperação de sua conta foi cancelado.</string>
-  <string name="account_recovery_password_started_title">A senha de recuperação de conta foi alterada</string>
-  <string name="account_recovery_password_started_subtitle">O período de alteração da senha de recuperação da sua conta foi iniciado. Pode agora alterar a sua senha.</string>
-  <string name="account_recovery_window_ended_title">A janela de recuperação de conta terminou</string>
-  <string name="account_recovery_window_ended_subtitle">O período de recuperação da sua conta expirou.</string>
-  <string name="account_recovery_cancel">Cancelar recuperação</string>
-  <string name="account_recovery_password_label">Digite a senha para cancelar.</string>
-  <string name="account_recovery_password_placeholder">Senha</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">A redefinição de senha foi solicitada</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Uma solicitação redefinição de senha foi feita por <b>%1$s</b>. Pode mudar a sua senha em %2$d hora.\n\nSe não fez este pedido, cancele agora.</item>
+    <item quantity="other">Uma solicitação de redefinição de senha foi feita por <b>%1$s</b>. Pode mudar a sua senha em %2$d horas.\n\n Se não fez este pedido, cancele agora.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Cancelar redefinição de senha?</string>
+  <string name="account_recovery_cancel_subtitle">Digite sua senha para cancelar.</string>
+  <string name="account_recovery_cancel_password_label">Senha atual</string>
+  <string name="account_recovery_cancel_password_placeholder">Senha</string>
+  <string name="account_recovery_cancel_now">Cancelar redefinição de senha</string>
+  <string name="account_recovery_cancel_back">Voltar</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">A redefinição de senha foi cancelada</string>
+  <string name="account_recovery_cancelled_subtitle">Se você nunca solicitou a alteração da sua senha, sua conta pode estar em risco.\n\nProteja sua conta alterando sua senha.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">A redefinição de senha está disponível</string>
+  <string name="account_recovery_password_started_subtitle">Para redefinir a sua senha, volte ao dispositivo e navegador em que fez a sua solicitação de redefinição de senha. \n\nTerá que fazer isto antes de %s.\n\n Se não pediu para redefinir a sua senha, cancele a redefinição agora.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Redefinição de senha expirada</string>
+  <string name="account_recovery_window_ended_subtitle">Você precisará solicitar uma nova redefinição de senha para %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Cancelar solicitação</string>
+  <string name="account_recovery_dismiss">Entendi</string>
 </resources>

@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Ξεκίνησε η περίοδος χάριτος</string>
-  <string name="account_recovery_grace_started_subtitle">Η περίοδος χάριτος για ανάκτηση του λογαριασμού σας ξεκίνησε να μετράει αντίστροφα.</string>
-  <string name="account_recovery_cancelled_title">Η ανάκτηση λογαριασμού ακυρώθηκε</string>
-  <string name="account_recovery_cancelled_subtitle">Η διαδικασία ανάκτησης του λογαριασμού σας ακυρώθηκε.</string>
-  <string name="account_recovery_password_started_title">Ο κωδικός ανάκτησης λογαριασμού μπορεί να αλλάξει</string>
-  <string name="account_recovery_password_started_subtitle">Η περίοδος αλλαγής κωδικού πρόσβασης ανάκτησης λογαριασμού έχει ξεκινήσει. Τώρα μπορείτε να αλλάξετε τον κωδικό πρόσβασής σας.</string>
-  <string name="account_recovery_window_ended_title">Λήξη περιόδου ανάκτησης λογαριασμού</string>
-  <string name="account_recovery_window_ended_subtitle">Το περιθώριο ανάκτησης του λογαριασμού σας έχει εκπνεύσει.</string>
-  <string name="account_recovery_cancel">Ακύρωση ανάκτησης</string>
-  <string name="account_recovery_password_label">Εισαγάγετε τον κωδικό πρόσβασης για ακύρωση</string>
-  <string name="account_recovery_password_placeholder">Κωδικός πρόσβασης</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Ζητήθηκε επαναφορά κωδικού πρόσβασης</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Ζητήθηκε επαναφορά κωδικού πρόσβασης για <b>%1$s</b>. Μπορείτε να αλλάξετε τον κωδικό πρόσβασής σας σε %2$d ώρα.\n\nΕάν δεν υποβάλατε εσείς αυτό το αίτημα, ακυρώστε το τώρα.</item>
+    <item quantity="other">Ζητήθηκε επαναφορά κωδικού πρόσβασης για <b>%1$s</b>. Μπορείτε να αλλάξετε τον κωδικό πρόσβασής σας σε %2$d ώρες.\n\nΕάν δεν υποβάλατε εσείς αυτό το αίτημα, ακυρώστε το τώρα.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Ακύρωση επαναφοράς κωδικού πρόσβασης;</string>
+  <string name="account_recovery_cancel_subtitle">Εισαγάγετε τον κωδικό πρόσβασης σας για ακύρωση.</string>
+  <string name="account_recovery_cancel_password_label">Τρέχων κωδικός πρόσβασης</string>
+  <string name="account_recovery_cancel_password_placeholder">Κωδικός πρόσβασης</string>
+  <string name="account_recovery_cancel_now">Ακύρωση επαναφοράς κωδικού πρόσβασης</string>
+  <string name="account_recovery_cancel_back">Πίσω</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Η επαναφορά κωδικού πρόσβασης ακυρώθηκε</string>
+  <string name="account_recovery_cancelled_subtitle">Εάν δε ζητήσατε ποτέ να αλλάξετε τον κωδικό πρόσβασής σας, ο λογαριασμός σας μπορεί να κινδυνεύει.\n\nΑσφαλίστε τον λογαριασμό σας αλλάζοντας τον κωδικό πρόσβασής σας.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Η επαναφορά κωδικού πρόσβασης είναι διαθέσιμη</string>
+  <string name="account_recovery_password_started_subtitle">Για να επαναφέρετε τον κωδικό πρόσβασής σας, επιστρέψτε στη συσκευή και το πρόγραμμα περιήγησης από τα οποία υποβάλατε το αίτημα επαναφοράς κωδικού πρόσβασης.\n\nΘα πρέπει να το κάνετε αυτό πριν από το %s.\n\nΕάν δεν ζητήσατε να επαναφέρετε τον κωδικό πρόσβασής σας, ακυρώστε την επαναφορά τώρα.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Επαναφορά του κωδικού πρόσβασης έληξε</string>
+  <string name="account_recovery_window_ended_subtitle">Θα χρειαστεί να ζητήσετε επαναφορά νέου κωδικού πρόσβασης για το %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Ακύρωση αιτήματος</string>
+  <string name="account_recovery_dismiss">Το κατάλαβα</string>
 </resources>

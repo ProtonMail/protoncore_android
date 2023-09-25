@@ -46,7 +46,7 @@
   <string name="auth_sign_in_with_sso">Masuk dengan SSO</string>
   <string name="auth_help_label">Bantuan</string>
   <string name="auth_login_assistive_text">Masukkan email atau nama pengguna Proton Anda.</string>
-  <string name="auth_login_sso_assistive_text">Silakan masukkan surel Anda.</string>
+  <string name="auth_login_sso_assistive_text">Silakan masukkan email Anda.</string>
   <string name="auth_help_title">Bagaimana kami dapat membantu Anda?</string>
   <string name="auth_help_option_forgot_username">Lupa nama pengguna</string>
   <string name="auth_help_option_forgot_password">Lupa kata sandi</string>

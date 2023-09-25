@@ -17,15 +17,29 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_recovery_grace_started_title">Die Karenzzeit hat begonnen</string>
-  <string name="account_recovery_grace_started_subtitle">Die Schonfrist für die Wiederherstellung deines Kontos hat bereits begonnen und dauert noch an.</string>
-  <string name="account_recovery_cancelled_title">Kontowiederherstellung abgebrochen</string>
-  <string name="account_recovery_cancelled_subtitle">Der Prozess zur Kontowiederherstellung wurde abgebrochen.</string>
-  <string name="account_recovery_password_started_title">Passwort zur Kontowiederherstellung kann geändert werden</string>
-  <string name="account_recovery_password_started_subtitle">Der Zeitraum zur Änderung des Passworts für die Wiederherstellung deines Kontos wurde gestartet. Du kannst dein Passwort jetzt ändern.</string>
-  <string name="account_recovery_window_ended_title">Das Zeitfenster zur Kontowiederherstellung ist abgelaufen.</string>
-  <string name="account_recovery_window_ended_subtitle">Das Zeitfenster zur Wiederherstellung deines Kontos ist abgelaufen.</string>
-  <string name="account_recovery_cancel">Wiederherstellung abbrechen</string>
-  <string name="account_recovery_password_label">Passwort eingeben, um abzubrechen</string>
-  <string name="account_recovery_password_placeholder">Passwort</string>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Passwortzurücksetzung angefordert</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Eine Passwortrücksetzung für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunde(n) ändern.\n\nStoppe die Anfrage wenn sie nicht von dir ist.</item>
+    <item quantity="other">Eine Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunden ändern.\n\n Sollte die Anfrage nicht von dir sein, brich diese ab.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Passwortzurücksetzung abbrechen?</string>
+  <string name="account_recovery_cancel_subtitle">Bitte gib zum Abbrechen dein Passwort ein.</string>
+  <string name="account_recovery_cancel_password_label">Aktuelles Passwort</string>
+  <string name="account_recovery_cancel_password_placeholder">Passwort</string>
+  <string name="account_recovery_cancel_now">Passwortzurücksetzung abbrechen</string>
+  <string name="account_recovery_cancel_back">Zurück</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Passwortzurücksetzung abgebrochen</string>
+  <string name="account_recovery_cancelled_subtitle">Falls du nie eine Passwort-Änderung beauftragt hast könnte dein Account gefährdet sein. \n\nSichere deinen Account, indem du dein Passwort änderst.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Passwortzurücksetzung verfügbar</string>
+  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Passwortzurücksetzung abgelaufen</string>
+  <string name="account_recovery_window_ended_subtitle">Du musst ein neues Passwort für %s anfragen.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Anfrage abbrechen</string>
+  <string name="account_recovery_dismiss">Verstanden</string>
 </resources>
