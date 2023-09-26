@@ -32,12 +32,13 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginEnd="@dimen/default_margin"
             android:gravity="center|start"
-            android:maxLines="1"
+            android:maxLines="2"
+            android:ellipsize="end"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/icon"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="1 of 6 users" />
+            tools:text="1 of 6 users. For this item, the max lines must be 2 with ellipsize end." />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
