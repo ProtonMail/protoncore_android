@@ -17,8 +17,9 @@
         android:id="@+id/plans"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
         android:orientation="vertical"
+        android:divider="@drawable/divider_horizontal_dynamic_plans"
+        android:showDividers="middle"
         tools:visibility="visible">
 
         <me.proton.core.plan.presentation.view.DynamicPlanCardView

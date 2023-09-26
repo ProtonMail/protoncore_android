@@ -96,7 +96,7 @@ internal class DynamicPlanListViewModel @Inject constructor(
     private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = withResultContextFlow {
         it.onResultEnqueue("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
         emit(State.Loading)
-        val filteredPlans = getDynamicPlans(filter.userId).filterBy(filter.cycle, filter.currency)
+        val filteredPlans = getDynamicPlans(filter.userId).plans.filterBy(filter.cycle, filter.currency)
         emit(State.Success(filteredPlans, filter))
     }.catch {
         emit(State.Error(it))

@@ -11,11 +11,11 @@
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
+        app:cardBackgroundColor="@color/cardview_checkable_background_color"
         app:cardCornerRadius="@dimen/default_corner_radius"
         app:cardElevation="0dp"
-        app:cardBackgroundColor="@color/cardview_checkable_background_color"
         app:cardForegroundColor="@null"
-        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true"
         app:checkedIcon="@null"
         app:strokeColor="@color/cardview_checkable_stroke_color"
         app:strokeWidth="1dp">

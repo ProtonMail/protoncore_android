@@ -16,32 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.entity
+package me.proton.core.plan.presentation.entity
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.type.IntEnum
+import me.proton.core.plan.domain.entity.DynamicDecoration
+import me.proton.core.plan.domain.entity.DynamicEntitlement
+import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlanFeature
+import me.proton.core.plan.domain.entity.DynamicPlanInstance
+import me.proton.core.plan.domain.entity.DynamicPlanPrice
+import me.proton.core.plan.domain.entity.DynamicPlanService
+import me.proton.core.plan.domain.entity.DynamicPlanState
+import me.proton.core.plan.domain.entity.DynamicPlanType
+import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import java.util.Calendar
 import java.util.EnumSet
 
-val freePlan = DynamicPlan(
-    name = "free",
-    order = 0,
-    state = DynamicPlanState.Unavailable,
-    title = "Free",
-    type = null,
-    description = "The no-cost starter account designed to empower everyone with privacy by default.",
-    entitlements = listOf(
-        DynamicEntitlement.Description(
-            iconUrl = "tick",
-            text = "Up to 1 GB storage",
-            hint = "Start with 500 MB and unlock more storage along the way."
-        )
-    ),
-)
-
 val mailPlusPlan = DynamicPlan(
     name = "mail2022",
-    order = 1,
+    order = 5,
     state = DynamicPlanState.Available,
     title = "Mail Plus",
     type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
@@ -49,9 +43,9 @@ val mailPlusPlan = DynamicPlan(
     services = EnumSet.of(DynamicPlanService.Mail, DynamicPlanService.Calendar)
 )
 
-val unlimitedPlan = DynamicPlan(
+val bundlePlan = DynamicPlan(
     name = "bundle2022",
-    order = 2,
+    order = 0,
     state = DynamicPlanState.Available,
     title = "Proton Unlimited",
     type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
@@ -83,6 +77,51 @@ val unlimitedPlan = DynamicPlan(
                     currency = "CHF",
                     current = 499,
                     default = 499
+                ),
+                DynamicPlanPrice(
+                    id = "bJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
+                    currency = "EUR",
+                    current = 499,
+                    default = 499
+                ),
+                DynamicPlanPrice(
+                    id = "cJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
+                    currency = "USD",
+                    current = 499,
+                    default = 499
+                )
+            ).associateBy { it.currency },
+            vendors = mapOf(
+                AppStore.GooglePlay to DynamicPlanVendor(
+                    productId = "googlemail_plus_1_renewing",
+                    customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+                )
+            )
+        ), DynamicPlanInstance(
+            cycle = 12,
+            description = "For 12 months",
+            periodEnd = Calendar.getInstance().let {
+                it.add(Calendar.MONTH, 12)
+                it.toInstant()
+            },
+            price = listOf(
+                DynamicPlanPrice(
+                    id = "dJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
+                    currency = "CHF",
+                    current = 4990,
+                    default = 4990
+                ),
+                DynamicPlanPrice(
+                    id = "eJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
+                    currency = "EUR",
+                    current = 4990,
+                    default = 4990
+                ),
+                DynamicPlanPrice(
+                    id = "fJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
+                    currency = "USD",
+                    current = 4990,
+                    default = 4990
                 )
             ).associateBy { it.currency },
             vendors = mapOf(
@@ -93,27 +132,5 @@ val unlimitedPlan = DynamicPlan(
             )
         )
     ).associateBy { it.cycle },
-    /*
-    offers = listOf(
-        DynamicPlanOffer(
-            name = "Next month's offer",
-            startTime = Calendar.getInstance().let {
-                it.roll(Calendar.MONTH, 1)
-                it.toInstant()
-            },
-            endTime = Calendar.getInstance().let {
-                it.roll(Calendar.MONTH, 2)
-                it.toInstant()
-            },
-            months = 1,
-            price = listOf(
-                DynamicPlanPrice(
-                    id = "aJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
-                    currency = "CHF",
-                    current = 1199
-                )
-            )
-        )
-    ),*/
     services = EnumSet.allOf(DynamicPlanService::class.java)
 )

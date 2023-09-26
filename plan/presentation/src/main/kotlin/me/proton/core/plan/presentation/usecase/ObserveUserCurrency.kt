@@ -42,10 +42,6 @@ class ObserveUserCurrency @Inject constructor(
         else -> userManager.observeUser(userId).mapLatest { user -> user?.currency.validate() ?: defaultCurrency }
     }
 
-    fun getCurrencies(userCurrency: String): Flow<List<String>> = flowOf(
-        listOf(userCurrency) + (availableCurrencies - userCurrency)
-    )
-
     private fun String?.validate(): String? = takeIf { it in availableCurrencies }
 
     companion object {

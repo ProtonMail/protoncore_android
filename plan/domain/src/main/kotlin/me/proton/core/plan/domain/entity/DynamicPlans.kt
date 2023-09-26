@@ -16,17 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.usecase
+package me.proton.core.plan.domain.entity
 
-import me.proton.core.domain.entity.AppStore
-import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.repository.PlansRepository
-import javax.inject.Inject
-
-class GetDynamicPlans @Inject constructor(
-    private val plansRepository: PlansRepository,
-    private val appStore: AppStore
-) {
-    suspend operator fun invoke(userId: UserId?): DynamicPlans = plansRepository.getDynamicPlans(userId, appStore)
-}
+data class DynamicPlans(
+    val defaultCycle: Int?,
+    val plans: List<DynamicPlan>
+)

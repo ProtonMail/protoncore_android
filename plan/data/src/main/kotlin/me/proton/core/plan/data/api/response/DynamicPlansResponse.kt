@@ -26,6 +26,9 @@ internal data class DynamicPlansResponse(
     @SerialName("Code")
     val code: Int,
 
+    @SerialName("DefaultCycle")
+    val defaultCycle: Int? = null,
+
     @SerialName("Plans")
     val plans: List<DynamicPlanResource>
 )

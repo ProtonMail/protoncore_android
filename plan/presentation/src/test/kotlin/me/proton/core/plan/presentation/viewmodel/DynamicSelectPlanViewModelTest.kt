@@ -38,6 +38,7 @@ import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanType
+import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.presentation.entity.PlanCycle
@@ -86,7 +87,10 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `no support for paid plans`() = coroutinesTest {
         // GIVEN
-        coEvery { getDynamicPlans(any()) } returns listOf(testPlanFree)
+        coEvery { getDynamicPlans(any()) } returns DynamicPlans(
+            defaultCycle = null,
+            plans = listOf(testPlanFree)
+        )
         tested = makeTested(supportPaidPlans = false)
 
         // WHEN
@@ -103,7 +107,10 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `no payment providers`() = coroutinesTest {
         // GIVEN
-        coEvery { getDynamicPlans(any()) } returns listOf(testPlanFree)
+        coEvery { getDynamicPlans(any()) } returns DynamicPlans(
+            defaultCycle = null,
+            plans = listOf(testPlanFree)
+        )
         coEvery { getAvailablePaymentProviders() } returns emptySet()
         tested = makeTested(supportPaidPlans = true)
 
@@ -121,7 +128,10 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `no payment providers and free plan not returned`() = coroutinesTest {
         // GIVEN
-        coEvery { getDynamicPlans(any()) } returns listOf(testPlanPaid)
+        coEvery { getDynamicPlans(any()) } returns DynamicPlans(
+            defaultCycle = null,
+            plans = listOf(testPlanPaid)
+        )
         coEvery { getAvailablePaymentProviders() } returns emptySet()
         tested = makeTested(supportPaidPlans = true)
 

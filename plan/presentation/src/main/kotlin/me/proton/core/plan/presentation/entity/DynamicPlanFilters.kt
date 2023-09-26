@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,17 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain.usecase
+package me.proton.core.plan.presentation.entity
 
-import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.repository.PlansRepository
-import javax.inject.Inject
 
-class GetDynamicPlans @Inject constructor(
-    private val plansRepository: PlansRepository,
-    private val appStore: AppStore
-) {
-    suspend operator fun invoke(userId: UserId?): DynamicPlans = plansRepository.getDynamicPlans(userId, appStore)
-}
+data class DynamicPlanFilters(
+    val userId: UserId? = null,
+    val defaultCycle: Int? = 12,
+    val cycles: List<Int> = emptyList(),
+    val currencies: List<String> = emptyList(),
+)

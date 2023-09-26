@@ -124,7 +124,7 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         }
 
     private suspend fun getFreePlan(): DynamicPlan =
-        requireNotNull(getDynamicPlans(userId = null).firstOrNull { it.isFree() }) {
+        requireNotNull(getDynamicPlans(userId = null).plans.firstOrNull { it.isFree() }) {
             "Could not find a free plan."
         }
 }

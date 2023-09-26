@@ -288,6 +288,19 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanVendor {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/plan/domain/entity/DynamicPlans {
+	public fun <init> (Ljava/lang/Integer;Ljava/util/List;)V
+	public final fun component1 ()Ljava/lang/Integer;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/Integer;Ljava/util/List;)Lme/proton/core/plan/domain/entity/DynamicPlans;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicPlans;Ljava/lang/Integer;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicPlans;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDefaultCycle ()Ljava/lang/Integer;
+	public final fun getPlans ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/plan/domain/entity/Plan {
 	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -436,13 +449,13 @@ public final class me/proton/core/plan/domain/entity/PlanVendorData {
 }
 
 public abstract interface class me/proton/core/plan/domain/repository/PlansRepository {
-	public abstract fun getDynamicPlans (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getDynamicPlans (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPlans (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPlansDefault (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/plan/domain/usecase/GetDynamicPlans {
-	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;)V
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/AppStore;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

@@ -19,6 +19,7 @@
 package me.proton.core.plan.data.repository
 
 import io.github.reactivecircus.cache4k.Cache
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.onParseErrorLog
@@ -26,7 +27,7 @@ import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.data.api.response.toDynamicPlan
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
-import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.util.kotlin.coroutine.result
@@ -41,19 +42,24 @@ class PlansRepositoryImpl @Inject constructor(
 ) : PlansRepository {
 
     private val dynamicPlansCache =
-        Cache.Builder().expireAfterWrite(1.minutes).build<String, List<DynamicPlan>>()
+        Cache.Builder().expireAfterWrite(1.minutes).build<String, DynamicPlans>()
 
     private val plansCache =
         Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
 
     override suspend fun getDynamicPlans(
-        sessionUserId: SessionUserId?
-    ): List<DynamicPlan> = result("getDynamicPlans") {
+        sessionUserId: SessionUserId?,
+        appStore: AppStore,
+    ): DynamicPlans = result("getDynamicPlans") {
         dynamicPlansCache.get(sessionUserId?.id ?: "") {
             apiProvider.get<PlansApi>(sessionUserId).invoke {
-                getDynamicPlans().plans.mapIndexed { index, resource ->
-                    resource.toDynamicPlan(endpointProvider.get(), index)
-                }
+                val response = getDynamicPlans(appStore.value)
+                DynamicPlans(
+                    defaultCycle = response.defaultCycle,
+                    plans = response.plans.mapIndexed { index, resource ->
+                        resource.toDynamicPlan(endpointProvider.get(), index)
+                    }.sortedBy { plan -> plan.order }
+                )
             }.onParseErrorLog(LogTag.DYN_PLANS_PARSE).valueOrThrow
         }
     }

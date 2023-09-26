@@ -22,6 +22,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
@@ -37,6 +38,7 @@ import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
+import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanOffer
 import me.proton.core.plan.domain.entity.PlanOfferPricing
@@ -307,10 +309,10 @@ class PlansRepositoryImplTest {
             type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary)
         )
         val plans = listOf(plan)
-        coEvery { apiManager.invoke<List<DynamicPlan>>(any()) } returns ApiResult.Success(plans)
+        coEvery { apiManager.invoke<DynamicPlans>(any()) } returns ApiResult.Success(DynamicPlans(null, plans))
 
         // WHEN
-        val result = repository.getDynamicPlans(sessionUserId = null)
+        val result = repository.getDynamicPlans(sessionUserId = null, AppStore.GooglePlay).plans
 
         // THEN
         assertContentEquals(plans, result)

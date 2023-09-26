@@ -71,6 +71,10 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         viewModel.perform(Action.SetUser(user))
     }
 
+    fun setCycle(cycle: Int) {
+        viewModel.perform(Action.SetCycle(cycle))
+    }
+
     fun setCurrency(currency: String) {
         viewModel.perform(Action.SetCurrency(currency))
     }

@@ -47,7 +47,9 @@ internal class PlanShortDetailsView @JvmOverloads constructor(
             val notAvailable = context.getString(R.string.payments_info_not_available)
             planNameText.text = value?.displayName ?: notAvailable
             billingPeriodText.text = when (value?.subscriptionCycle) {
+                SubscriptionCycle.MONTHLY -> context.getString(R.string.payments_billing_monthly)
                 SubscriptionCycle.YEARLY -> context.getString(R.string.payments_billing_yearly)
+                SubscriptionCycle.TWO_YEARS -> context.getString(R.string.payments_billing_two_years)
                 else -> notAvailable
             }
             value?.amount?.let {

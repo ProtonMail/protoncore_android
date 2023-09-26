@@ -25,11 +25,15 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.presentation.entity.DynamicPlanFilters
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
@@ -42,12 +46,13 @@ import javax.inject.Inject
 internal class DynamicPlanSelectionViewModel @Inject constructor(
     override val manager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
-    private val observeUserCurrency: ObserveUserCurrency
+    private val observeUserCurrency: ObserveUserCurrency,
+    private val getDynamicPlans: GetDynamicPlans
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
         object Loading : State()
-        data class Idle(val currencies: List<String>) : State()
+        data class Idle(val planFilters: DynamicPlanFilters) : State()
         data class Free(val selectedPlan: SelectedPlan) : State()
         data class Billing(val selectedPlan: SelectedPlan) : State()
         data class Billed(val selectedPlan: SelectedPlan, val billingResult: BillingResult) : State()
@@ -73,19 +78,30 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
 
     private fun observeCurrencies() = mutableLoadCount
         .flatMapLatest { observeUserId().distinctUntilChanged() }
-        .flatMapLatest { observeUserCurrency(it).distinctUntilChanged() }
-        .flatMapLatest { observeUserCurrency.getCurrencies(it) }
+        .flatMapLatest { observeFilters(it).distinctUntilChanged() }
         .flatMapLatest { observeState(it) }
 
-    private fun observeState(currencies: List<String>) = combine(
+    private fun observeFilters(userId: UserId?) = observeUserCurrency(userId).mapLatest { userCurrency ->
+        val dynamicPlans = getDynamicPlans(userId)
+        val instances = dynamicPlans.plans.flatMap { it.instances.values }
+        val instancesCycles = instances.map { it.cycle }.toSortedSet().toList()
+        val instanceCurrencies = instances.flatMap { it.price.keys }.toSet().toList()
+        val currencies = when {
+            instanceCurrencies.contains(userCurrency) -> listOf(userCurrency) + (instanceCurrencies - userCurrency)
+            else -> instanceCurrencies
+        }
+        DynamicPlanFilters(userId, dynamicPlans.defaultCycle, instancesCycles, currencies)
+    }
+
+    private fun observeState(filters: DynamicPlanFilters) = combine(
         mutableSelectedPlan,
         mutablePaymentResult,
     ) { plan, result ->
         when {
-            plan == null -> State.Idle(currencies)
+            plan == null -> State.Idle(filters)
             result != null -> when {
                 result.paySuccess -> State.Billed(plan, result)
-                else -> State.Idle(currencies)
+                else -> State.Idle(filters)
             }
 
             plan.free -> State.Free(plan)

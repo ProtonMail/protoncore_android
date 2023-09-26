@@ -24,17 +24,18 @@ import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanSelectionBinding
+import me.proton.core.plan.presentation.entity.DynamicPlanFilters
 import me.proton.core.plan.presentation.entity.DynamicUser
-import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.Action
@@ -44,6 +45,7 @@ import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onItemSelected
 import me.proton.core.presentation.utils.viewBinding
 import javax.inject.Inject
+import kotlin.math.max
 
 @Suppress("TooManyFunctions")
 @AndroidEntryPoint
@@ -56,12 +58,33 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     private val viewModel by viewModels<DynamicPlanSelectionViewModel>()
 
     private val planList by lazy { binding.plans.getFragment<DynamicPlanListFragment>() }
+    private val cycleSpinner by lazy { binding.cycleSpinner.apply { adapter = cycleAdapter } }
+    private val cycleAdapter by lazy { CycleAdapter(requireContext(), R.layout.plan_spinner_item) }
     private val currencySpinner by lazy { binding.currencySpinner.apply { adapter = currencyAdapter } }
     private val currencyAdapter by lazy { ArrayAdapter<String>(requireContext(), R.layout.plan_spinner_item) }
 
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
     private var onPlanFree: ((SelectedPlan) -> Unit)? = null
     private var onPlanList: ((List<DynamicPlan>) -> Unit)? = null
+
+    private var planFilters = MutableStateFlow(DynamicPlanFilters())
+    private var plans = MutableStateFlow<List<DynamicPlan>?>(null)
+
+    private val allFree: Boolean
+        get() = plans.value?.all { it.isFree() } ?: false
+
+    private val hasPlans: Boolean?
+        get() = plans.value?.isNotEmpty()
+
+    private val hasPlanFiltersCycles: Boolean
+        get() = planFilters.value.cycles.count() > 1
+
+    private val hasPlanFiltersCurrencies: Boolean
+        get() = planFilters.value.currencies.count() > 1
+
+    private fun setCycle(index: Int) {
+        planList.setCycle(requireNotNull(cycleAdapter.getCycle(index)))
+    }
 
     private fun setCurrency(index: Int) {
         planList.setCurrency(requireNotNull(currencyAdapter.getItem(index)))
@@ -96,14 +119,17 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
         viewModel.state.onEach {
             when (it) {
                 is State.Loading -> Unit
-                is State.Idle -> onIdle(it.currencies)
+                is State.Idle -> onIdle(it.planFilters)
                 is State.Free -> onFree(it.selectedPlan)
                 is State.Billing -> onBilling(it.selectedPlan)
                 is State.Billed -> onBilled(it.selectedPlan, it.billingResult)
             }
         }.launchInViewLifecycleScope()
 
-        planList.setOnPlanList { onPlanList(it) }
+        planFilters.onEach { onPlanFilters() }.launchInViewLifecycleScope()
+        plans.onEach { onPlanList() }.launchInViewLifecycleScope()
+
+        planList.setOnPlanList { onPlanList?.invoke(it); plans.value = it }
         planList.setOnPlanSelected { viewModel.perform(Action.SelectPlan(it)) }
 
         paymentsOrchestrator.onPaymentResult { result ->
@@ -114,25 +140,52 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
         }
     }
 
-    private fun onPlanList(plans: List<DynamicPlan>) {
-        onPlanList?.invoke(plans)
-        val isEmpty = plans.isEmpty()
-        binding.listEmpty.isVisible = isEmpty
-        binding.listInfo.isVisible = !isEmpty
-        currencySpinner.isVisible = !isEmpty
+    private fun onIdle(planFilters: DynamicPlanFilters) {
+        this.planFilters.value = planFilters
     }
 
-    private fun onIdle(currencies: List<String>) {
-        if (currencyAdapter.isEmpty) {
-            currencyAdapter.addAll(currencies)
-            currencySpinner.setSelection(0)
-            currencySpinner.onItemSelected { setCurrency(it) }
-        } else {
-            currencyAdapter.clear()
-            currencyAdapter.addAll(currencies)
+    private fun onPlanList() {
+        binding.listEmpty.isVisible = hasPlans?.not() ?: false
+        setupCycleSpinnerVisibility()
+        setupCurrencySpinnerVisibility()
+    }
+
+    private fun onPlanFilters() {
+        setupCycleSpinner()
+        setupCurrencySpinner()
+    }
+
+    private fun setupCycleSpinner() {
+        val filters = planFilters.value
+        cycleAdapter.clear()
+        cycleAdapter.addAll(filters.cycles)
+        if (filters.cycles.isNotEmpty()) {
+            val indexOfCycle = max(0, filters.cycles.indexOf(filters.defaultCycle))
+            cycleSpinner.setSelection(indexOfCycle)
+            setCycle(indexOfCycle)
+        }
+        cycleSpinner.onItemSelected { setCycle(it) }
+        setupCycleSpinnerVisibility()
+    }
+
+    private fun setupCycleSpinnerVisibility() {
+        cycleSpinner.isVisible = hasPlans ?: false && hasPlanFiltersCycles && !allFree
+    }
+
+    private fun setupCurrencySpinner() {
+        val filters = planFilters.value
+        currencyAdapter.clear()
+        currencyAdapter.addAll(filters.currencies)
+        if (filters.currencies.isNotEmpty()) {
             currencySpinner.setSelection(0)
             setCurrency(0)
         }
+        currencySpinner.onItemSelected { setCurrency(it) }
+        setupCurrencySpinnerVisibility()
+    }
+
+    private fun setupCurrencySpinnerVisibility() {
+        currencySpinner.isVisible = hasPlans ?: false && hasPlanFiltersCurrencies && !allFree
     }
 
     private fun onFree(selectedPlan: SelectedPlan) {
@@ -145,11 +198,11 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
             selectedPlan = PlanShortDetails(
                 name = selectedPlan.planName,
                 displayName = selectedPlan.planDisplayName,
-                subscriptionCycle = SubscriptionCycle.YEARLY, // Only support 12 months.
+                subscriptionCycle = selectedPlan.cycle.toSubscriptionCycle(),
                 currency = selectedPlan.currency.toSubscriptionCurrency(),
                 services = selectedPlan.services,
                 type = selectedPlan.type,
-                vendors = selectedPlan.vendorNames.filterByCycle(PlanCycle.YEARLY)
+                vendors = selectedPlan.vendorNames.filterByCycle(selectedPlan.cycle)
             ),
             codes = null
         )

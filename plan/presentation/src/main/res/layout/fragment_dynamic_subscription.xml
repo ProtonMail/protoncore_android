@@ -11,7 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/default_corner_radius"
-        app:cardUseCompatPadding="true">
+        app:cardElevation="0dp"
+        app:cardPreventCornerOverlap="true"
+        app:checkedIcon="@null"
+        app:strokeColor="@color/cardview_checkable_stroke_color"
+        app:strokeWidth="1dp">
 
         <FrameLayout
             android:layout_width="match_parent"

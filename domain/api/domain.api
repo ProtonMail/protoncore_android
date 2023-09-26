@@ -97,6 +97,7 @@ public final class me/proton/core/domain/arch/extension/EntityListFlowUtilsKt {
 public final class me/proton/core/domain/entity/AppStore : java/lang/Enum {
 	public static final field FDroid Lme/proton/core/domain/entity/AppStore;
 	public static final field GooglePlay Lme/proton/core/domain/entity/AppStore;
+	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/domain/entity/AppStore;
 	public static fun values ()[Lme/proton/core/domain/entity/AppStore;
 }

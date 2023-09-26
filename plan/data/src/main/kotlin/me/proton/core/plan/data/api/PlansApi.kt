@@ -28,13 +28,11 @@ import retrofit2.http.Query
 internal interface PlansApi : BaseRetrofitApi {
     /**
      * Returns a list of dynamic plans available at the moment.
-     * Plans can be filtered by [state] and/or [vendorName].
+     *
+     * @param appVendor The app vendor for the app (e.g. "google" or "fdroid").
      */
     @GET("payments/v5/plans")
-    suspend fun getDynamicPlans(
-        @Query("state") state: Int? = null,
-        @Query("vendorName") vendorName: String? = null
-    ): DynamicPlansResponse
+    suspend fun getDynamicPlans(@Query("Vendor") appVendor: String): DynamicPlansResponse
 
     /**
      * Returns from the API all plans available for the user in the moment.

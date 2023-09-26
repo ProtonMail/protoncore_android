@@ -186,12 +186,8 @@ public class PaymentsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPaymentStatus(sessionUserId: SessionUserId?, appStore: AppStore): PaymentStatus {
-        val appStoreCode = when (appStore) {
-            AppStore.FDroid -> "fdroid"
-            AppStore.GooglePlay -> "google"
-        }
         return apiProvider.get<PaymentsApi>(sessionUserId).invoke {
-            paymentStatus(appStoreCode).toPaymentStatus()
+            paymentStatus(appStore.value).toPaymentStatus()
         }.valueOrThrow
     }
 }

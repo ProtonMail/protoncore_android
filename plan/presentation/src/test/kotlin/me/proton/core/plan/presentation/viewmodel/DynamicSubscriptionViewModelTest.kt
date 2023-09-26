@@ -54,7 +54,6 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
     }
     private val observeUserCurrency = mockk<ObserveUserCurrency>(relaxed = true) {
         coEvery { this@mockk.invoke(any()) } returns mutableUserCurrencyFlow
-        coEvery { this@mockk.getCurrencies(any()) } answers { flowOf(listOf("CHF", "EUR", "USD")) }
     }
     private val getDynamicSubscription = mockk<GetDynamicSubscription> {
         coEvery { this@mockk.invoke(any()) } coAnswers {

@@ -18,7 +18,9 @@
 
 package me.proton.core.domain.entity
 
-enum class AppStore {
-    FDroid,
-    GooglePlay
+enum class AppStore(val value: String) {
+    FDroid("fdroid"),
+    GooglePlay("google");
+    //Web("web"),
+    //Apple("apple");
 }
