@@ -50,6 +50,7 @@ dependencies {
         project(Module.accountRecoveryPresentationCompose),
         project(Module.sentryUtil),
         `androidx-test-monitor`,
+        `compose-ui-test-junit`,
         `coroutines-core`,
         fusion,
         `kotlin-test`,

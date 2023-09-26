@@ -18,6 +18,9 @@
 
 package me.proton.core.accountrecovery.test
 
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
+import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
@@ -37,6 +40,7 @@ import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.test.quark.Quark
+import me.proton.test.fusion.FusionConfig
 import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -54,6 +58,11 @@ public interface MinimalAccountRecoveryNotificationTest {
     public val notificationRepository: NotificationRepository
     public val quark: Quark
     public val waitForPrimaryAccount: WaitForPrimaryAccount
+
+    /** Optionally, call this in constructor to initialize the Fusion testing library. */
+    public fun initFusion(composeTestRule: ComposeTestRule) {
+        FusionConfig.Compose.testRule.set(CustomComposeContentTestRule(composeTestRule))
+    }
 
     /** When called, should verify the app is on the home screen for the logged in user. */
     public fun verifyAfterLogin()
@@ -147,5 +156,13 @@ public interface MinimalAccountRecoveryNotificationTest {
 
             delay(100)
         }
+    }
+}
+
+// Temporary work-around, until Fusion supports `ComposeTestRule`.
+private class CustomComposeContentTestRule(composeTestRule: ComposeTestRule) :
+    ComposeContentTestRule, ComposeTestRule by composeTestRule {
+    override fun setContent(composable: @Composable () -> Unit) {
+        // no-op
     }
 }
