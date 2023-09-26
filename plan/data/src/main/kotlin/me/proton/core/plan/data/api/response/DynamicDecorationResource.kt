@@ -43,6 +43,8 @@ sealed class DynamicDecorationResource {
         val text: String,
         @SerialName("Anchor")
         val anchor: String,
+        @SerialName("PlanID")
+        val planId: String? = null,
     ) : DynamicDecorationResource()
 
     @Serializable
@@ -56,8 +58,15 @@ private fun String.toDynamicDecorationAnchor() = DynamicDecorationAnchor.enumOf(
 
 fun DynamicDecorationResource.toDynamicPlanDecoration(): DynamicDecoration? =
     when (this) {
-        is DynamicDecorationResource.Starred -> DynamicDecoration.Starred(iconName)
-        is DynamicDecorationResource.Badge -> DynamicDecoration.Badge(text, anchor.toDynamicDecorationAnchor())
+        is DynamicDecorationResource.Starred -> DynamicDecoration.Starred(
+            iconName = iconName
+        )
+        is DynamicDecorationResource.Badge -> DynamicDecoration.Badge(
+            text = text,
+            anchor = anchor.toDynamicDecorationAnchor(),
+            planId = planId
+        )
+
         is DynamicDecorationResource.Unknown -> null
     }
 

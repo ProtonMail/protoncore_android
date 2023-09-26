@@ -25,8 +25,9 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.plan.domain.entity.DynamicDecoration
-import me.proton.core.plan.domain.entity.DynamicDecorationAnchor
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.firstSubtitleOrNull
+import me.proton.core.plan.domain.entity.firstTitleOrNull
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanListBinding
 import me.proton.core.plan.presentation.entity.SelectedPlan
@@ -131,8 +132,8 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         val priceCurrent = price?.current ?: 0.0
         val priceCurrency = price?.currency ?: currency
         val badges = plan.decorations.filterIsInstance<DynamicDecoration.Badge>()
-        val promoTitleBadge = badges.firstOrNull { it.anchor?.enum == DynamicDecorationAnchor.Title }
-        val promoSubtitleBadge = badges.firstOrNull { it.anchor?.enum == DynamicDecorationAnchor.Subtitle }
+        val promoTitleBadge = badges.firstTitleOrNull(instance?.price?.get(currency)?.id)
+        val promoSubtitleBadge = badges.firstSubtitleOrNull(instance?.price?.get(currency)?.id)
         val stars = plan.decorations.filterIsInstance<DynamicDecoration.Starred>()
         id = abs(plan.name.hashCode())
         title = plan.title

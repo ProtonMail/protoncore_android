@@ -28,14 +28,17 @@ public abstract class me/proton/core/plan/data/api/response/DynamicDecorationRes
 
 public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Badge : me/proton/core/plan/data/api/response/DynamicDecorationResource {
 	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;
-	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;
+	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAnchor ()Ljava/lang/String;
+	public final fun getPlanId ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

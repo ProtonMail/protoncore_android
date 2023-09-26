@@ -70,8 +70,16 @@ class DynamicDecorationResourceTest {
         )
 
         assertEquals(
-            DynamicDecoration.Badge(text = "text", anchor = StringEnum("title", DynamicDecorationAnchor.Title)),
-            DynamicDecorationResource.Badge(text = "text", anchor = "title").toDynamicPlanDecoration()
+            DynamicDecoration.Badge(
+                text = "text",
+                anchor = StringEnum("title", DynamicDecorationAnchor.Title),
+                planId = "planId"
+            ),
+            DynamicDecorationResource.Badge(
+                text = "text",
+                anchor = "title",
+                planId = "planId"
+            ).toDynamicPlanDecoration()
         )
 
         assertNull(

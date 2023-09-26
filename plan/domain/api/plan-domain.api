@@ -31,13 +31,15 @@ public abstract class me/proton/core/plan/domain/entity/DynamicDecoration {
 }
 
 public final class me/proton/core/plan/domain/entity/DynamicDecoration$Badge : me/proton/core/plan/domain/entity/DynamicDecoration {
-	public fun <init> (Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;)V
+	public fun <init> (Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lme/proton/core/domain/type/StringEnum;
-	public final fun copy (Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
-	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;Ljava/lang/String;Lme/proton/core/domain/type/StringEnum;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAnchor ()Lme/proton/core/domain/type/StringEnum;
+	public final fun getPlanId ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -66,6 +68,13 @@ public final class me/proton/core/plan/domain/entity/DynamicDecorationAnchor : j
 public final class me/proton/core/plan/domain/entity/DynamicDecorationAnchor$Companion {
 	public final fun enumOf (Ljava/lang/String;)Lme/proton/core/domain/type/StringEnum;
 	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/plan/domain/entity/DynamicDecorationKt {
+	public static final fun firstSubtitleOrNull (Ljava/util/List;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public static synthetic fun firstSubtitleOrNull$default (Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public static final fun firstTitleOrNull (Ljava/util/List;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
+	public static synthetic fun firstTitleOrNull$default (Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicDecoration$Badge;
 }
 
 public abstract class me/proton/core/plan/domain/entity/DynamicEntitlement {

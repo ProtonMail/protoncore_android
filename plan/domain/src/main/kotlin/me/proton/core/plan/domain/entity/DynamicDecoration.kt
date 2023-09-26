@@ -22,7 +22,11 @@ import me.proton.core.domain.type.StringEnum
 
 sealed class DynamicDecoration {
     data class Starred(val iconName: String) : DynamicDecoration()
-    data class Badge(val text: String, val anchor: StringEnum<DynamicDecorationAnchor>?) : DynamicDecoration()
+    data class Badge(
+        val text: String,
+        val anchor: StringEnum<DynamicDecorationAnchor>?,
+        val planId: String?
+    ) : DynamicDecoration()
 }
 
 enum class DynamicDecorationAnchor(val anchor: String) {
@@ -34,3 +38,16 @@ enum class DynamicDecorationAnchor(val anchor: String) {
         fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
     }
 }
+
+private fun List<DynamicDecoration.Badge>.firstOrNull(
+    anchor: DynamicDecorationAnchor,
+    planId: String? = null
+) = firstOrNull { it.anchor?.enum == anchor && it.planId == planId }
+
+fun List<DynamicDecoration.Badge>.firstTitleOrNull(
+    planId: String? = null
+) = firstOrNull(DynamicDecorationAnchor.Title, planId)
+
+fun List<DynamicDecoration.Badge>.firstSubtitleOrNull(
+    planId: String? = null
+) = firstOrNull(DynamicDecorationAnchor.Subtitle, planId)
