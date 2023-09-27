@@ -23,7 +23,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
@@ -34,8 +33,10 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.command.CreateAddress
+import me.proton.core.test.quark.v2.command.userCreate
 import org.junit.Rule
 import javax.inject.Inject
 import kotlin.test.BeforeTest
@@ -49,6 +50,9 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
 
     @Inject
     lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    lateinit var quark: QuarkCommand
 
     @BindValue
     val apiClient: CoreExampleApiClient = MailApiClient
@@ -77,7 +81,7 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
 
     @Test
     fun cannotLoginWithExternalAccountOnOldApps() {
-        quark.userCreate(user, Quark.CreateAddress.NoKey)
+        quark.userCreate(user, CreateAddress.NoKey)
 
         AddAccountRobot()
             .signIn()
@@ -87,9 +91,5 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
             .apply { verify { unsupportedExternalAccountAlertDisplayed() } }
             .learnMoreAboutExternalAccountLinking()
             .verify { unsupportedExternalAccountBrowserLinkOpened() }
-    }
-
-    companion object {
-        val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     }
 }

@@ -100,9 +100,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:contact-data                          |
 | me.proton.core:contact-domain                        |
 | me.proton.core:contact-dagger                        |
-| me.proton.core:configuration                         |
-| me.proton.core:configuration-domain                  |
-| me.proton.core:configuration-provider                |
+| me.proton.core:configuration-data                    |
 | me.proton.core:configuration-dagger-staticdefaults   |
 | me.proton.core:configuration-dagger-content-resolver |
 | me.proton.core:core-platform                         |

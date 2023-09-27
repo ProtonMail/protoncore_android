@@ -22,7 +22,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
@@ -42,8 +41,6 @@ import kotlin.test.BeforeTest
 @UninstallModules(ApplicationModule::class)
 class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests {
     override lateinit var testUser: User
-
-    override val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
@@ -65,6 +62,9 @@ class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests {
 
     @BindValue
     val accountType: AccountType = AccountType.External
+
+    @Inject
+    override lateinit var quark: Quark
 
     @BeforeTest
     override fun setUp() {

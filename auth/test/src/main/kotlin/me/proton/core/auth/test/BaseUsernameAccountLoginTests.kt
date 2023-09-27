@@ -27,7 +27,6 @@ import kotlin.test.Test
 
 public interface BaseUsernameAccountLoginTests {
     public val quark: Quark
-    public val internalUsers: User.Users
     public val vpnUsers: User.Users
 
     public fun verifySuccessfulLogin()
@@ -39,7 +38,7 @@ public interface BaseUsernameAccountLoginTests {
 
     @Test
     public fun loginWithFreeInternalAccount() {
-        val user = internalUsers.getUser { !it.isPaid }
+        val user = quark.userCreate().first
         AddAccountRobot()
             .signIn()
             .loginUser<CoreRobot>(user)

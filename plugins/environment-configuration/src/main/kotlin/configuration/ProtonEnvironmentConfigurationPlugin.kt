@@ -32,7 +32,7 @@ import org.gradle.configurationcache.extensions.capitalized
 class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
-        target.logger.info("Applying Proton environment configurations")
+        target.logger.info("Applying Proton environment configurations for ${target.name}")
 
         target.afterEvaluate {
             handleConfigurations(target)
@@ -49,27 +49,68 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
      */
     private fun handleConfigurations(project: Project) {
         project.extensions.getByType(AppExtension::class.java).apply {
-            productFlavors.all { flavor ->
-                buildTypes.all { buildType ->
-                    val mergedConfig = mergeConfigurations(defaultConfig, buildType, flavor)
-                    val variantName = flavor.name + buildType.name.capitalized()
-
-                    project.logger.debug("environment configuration :$variantName")
-                    project.printEnvironmentConfigDetails(mergedConfig)
-
-                    project.createJavaFileInDir(flavor, buildType, mergedConfig.sourceClassContent())
+            buildTypes.all { buildType ->
+                productFlavors.takeIf { it.isNotEmpty() }?.all { flavor ->
+                    project.handleFlavorAndBuildType(defaultConfig, flavor, buildType)
                     true
+                } ?: run {
+                    project.handleBuildTypeOnly(defaultConfig, buildType)
                 }
+                true
             }
         }
     }
 
+    private fun Project.handleFlavorAndBuildType(
+        defaultConfig: DefaultConfig,
+        flavor: ProductFlavor,
+        buildType: ApplicationBuildType
+    ) {
+        val mergedConfig = mergeConfigurations(
+            defaultConfig.environmentConfiguration,
+            buildType.environmentConfiguration,
+            flavor.environmentConfiguration
+        )
+        val variantName = "${flavor.name}${buildType.name.capitalized()}"
+        createJavaFileForVariant(
+            variantName = variantName,
+            variantLocation = "${flavor.name}/${buildType.name}",
+            config = mergedConfig
+        )
+    }
+
+    private fun Project.handleBuildTypeOnly(defaultConfig: DefaultConfig, buildType: ApplicationBuildType) {
+        val mergedConfig = mergeConfigurations(
+            defaultConfig.environmentConfiguration,
+            buildType.environmentConfiguration
+        )
+        createJavaFileForVariant(
+            variantName = buildType.name,
+            variantLocation = buildType.name,
+            config = mergedConfig
+        )
+    }
+
+    private fun Project.createJavaFileForVariant(
+        variantName: String,
+        variantLocation: String,
+        config: EnvironmentConfig
+    ) {
+        project.logger.debug("environment configuration :$variantName")
+        project.printEnvironmentConfigDetails(config)
+        project.createJavaFileInDir(
+            variantName = variantName,
+            variantLocation = variantLocation,
+            sourceClassContent = config.sourceClassContent()
+        )
+    }
+
     /**
-     * Creates a [javaClassName].java file in [generatedSourceLocation]/[flavor].name/[buildType].name/[packagePath]
+     * Creates a [javaClassName].java file in [generatedSourceLocation]/[variantLocation]/[packagePath]
      * adds flavor directories to source sets
      *
-     * @param flavor The product flavor.
-     * @param buildType The build type.
+     * @param variantLocation Location relative to [generatedSourceLocation].
+     * @param variantName Name of the variant.
      * @param sourceClassContent The content to be written to the source class file.
      * @param generatedSourceLocation Generated files dir
      * @param javaClassName Java class name to be generated
@@ -77,17 +118,16 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
      */
     @Suppress("LongParameterList")
     private fun Project.createJavaFileInDir(
-        flavor: ProductFlavor,
-        buildType: ApplicationBuildType,
+        variantLocation: String,
+        variantName: String,
         sourceClassContent: String,
         generatedSourceLocation: String = ENV_CONFIG_LOCATION,
         javaClassName: String = DEFAULTS_CLASS_NAME,
-        packagePath: String = PACKAGE_NAME.replace(".", "/")
+        packagePath: String = PACKAGE_NAME.replace(".", "/"),
     ) {
-        val variantLocation = "$generatedSourceLocation/${flavor.name}/${buildType.name}"
-        val variantName = flavor.name + buildType.name.capitalized()
-        val configDirectory = project.buildDir.resolve("$variantLocation/$packagePath")
-        val variantDirectory = project.buildDir.resolve(variantLocation)
+        val location = "$generatedSourceLocation/$variantLocation"
+        val variantDirectory = project.buildDir.resolve(location)
+        val configDirectory = project.buildDir.resolve("$location/$packagePath")
 
         configDirectory.mkdirs()
 
@@ -108,13 +148,8 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
             }
     }
 
-    private fun mergeConfigurations(
-        defaultConfig: DefaultConfig,
-        buildType: ApplicationBuildType,
-        flavor: ProductFlavor
-    ): EnvironmentConfig = defaultConfig.environmentConfiguration
-        .mergeWith(buildType.environmentConfiguration)
-        .mergeWith(flavor.environmentConfiguration)
+    private fun mergeConfigurations(vararg configs: EnvironmentConfig): EnvironmentConfig =
+        configs.reduce { first, other -> first.mergeWith(other) }
 
     companion object {
         const val ENV_CONFIG_LOCATION: String = "generated/source/envConfig"

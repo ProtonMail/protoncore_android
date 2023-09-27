@@ -23,13 +23,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
-import me.proton.core.configuration.EnvironmentConfigurationDefaults
+import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.network.data.client.ExtraHeaderProviderImpl
 import me.proton.core.network.data.di.AlternativeApiPins
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.data.di.CertificatePins
+import me.proton.core.network.data.di.Constants
 import me.proton.core.network.data.di.DohProviderUrls
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -45,9 +45,10 @@ import me.proton.core.network.data.di.Constants as NetWorkDataConstants
 class NetworkModule {
     @Provides
     @Singleton
-    fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl().apply {
-        Constants.PROXY_TOKEN.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
-    }
+    fun provideExtraHeaderProvider(envConfig: EnvironmentConfiguration): ExtraHeaderProvider =
+        ExtraHeaderProviderImpl().apply {
+            envConfig.proxyToken.takeIfNotBlank()?.let { addHeaders("X-atlas-secret" to it) }
+        }
 }
 
 @Module
@@ -55,7 +56,7 @@ class NetworkModule {
 class NetworkConstantsModule {
     @Provides
     @BaseProtonApiUrl
-    fun provideProtonApiUrl(): HttpUrl = Constants.BASE_URL.toHttpUrl()
+    fun provideProtonApiUrl(envConfig: EnvironmentConfiguration): HttpUrl = envConfig.baseUrl.toHttpUrl()
 
     @DohProviderUrls
     @Provides
@@ -63,19 +64,13 @@ class NetworkConstantsModule {
 
     @CertificatePins
     @Provides
-    fun provideCertificatePins() = if (EnvironmentConfigurationDefaults.useDefaultPins) {
-        NetWorkDataConstants.DEFAULT_SPKI_PINS
-    } else {
-        emptyArray()
-    }
+    fun provideCertificatePins(envConfig: EnvironmentConfiguration) =
+        if (envConfig.useDefaultPins) Constants.DEFAULT_SPKI_PINS else emptyArray()
 
     @AlternativeApiPins
     @Provides
-    fun provideAlternativeApiPins() = if (EnvironmentConfigurationDefaults.useDefaultPins) {
-        NetWorkDataConstants.ALTERNATIVE_API_SPKI_PINS
-    } else {
-        emptyList()
-    }
+    fun provideAlternativeApiPins(envConfig: EnvironmentConfiguration) =
+        if (envConfig.useDefaultPins) Constants.ALTERNATIVE_API_SPKI_PINS else emptyList()
 }
 
 @Module

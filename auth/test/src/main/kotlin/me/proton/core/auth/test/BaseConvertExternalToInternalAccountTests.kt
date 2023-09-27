@@ -20,8 +20,8 @@ package me.proton.core.auth.test
 
 import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
-import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
 import me.proton.core.auth.test.robot.login.TwoPassRobot
+import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
 import me.proton.core.util.kotlin.random

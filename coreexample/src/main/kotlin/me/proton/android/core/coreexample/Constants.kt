@@ -21,8 +21,6 @@ package me.proton.android.core.coreexample
 import me.proton.core.configuration.EnvironmentConfigurationDefaults
 
 object Constants {
-    const val HV3_HOST = EnvironmentConfigurationDefaults.hv3Host
-    const val BASE_URL = EnvironmentConfigurationDefaults.baseUrl
     const val QUARK_HOST = EnvironmentConfigurationDefaults.host
     const val PROXY_TOKEN = EnvironmentConfigurationDefaults.proxyToken
 }

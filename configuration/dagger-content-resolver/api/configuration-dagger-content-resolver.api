@@ -1,0 +1,33 @@
+public class hilt_aggregated_deps/_me_proton_core_configuration_dagger_ContentResolverEnvironmentConfigModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule {
+	public fun <init> ()V
+	public final fun provideContentResolverConfigManager (Landroid/content/Context;)Lme/proton/core/configuration/ContentResolverConfigManager;
+	public final fun provideEnvironmentConfig (Lme/proton/core/configuration/ContentResolverConfigManager;)Lme/proton/core/configuration/EnvironmentConfiguration;
+}
+
+public final class me/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule_ProvideContentResolverConfigManagerFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule;Ljavax/inject/Provider;)Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule_ProvideContentResolverConfigManagerFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/configuration/ContentResolverConfigManager;
+	public static fun provideContentResolverConfigManager (Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule;Landroid/content/Context;)Lme/proton/core/configuration/ContentResolverConfigManager;
+}
+
+public final class me/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule_ProvideEnvironmentConfigFactory : dagger/internal/Factory {
+	public fun <init> (Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule;Ljavax/inject/Provider;)V
+	public static fun create (Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule;Ljavax/inject/Provider;)Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule_ProvideEnvironmentConfigFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/configuration/EnvironmentConfiguration;
+	public static fun provideEnvironmentConfig (Lme/proton/core/configuration/dagger/ContentResolverEnvironmentConfigModule;Lme/proton/core/configuration/ContentResolverConfigManager;)Lme/proton/core/configuration/EnvironmentConfiguration;
+}
+
+public final class me/proton/core/configuration/dagger/contentresolver/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+

@@ -22,7 +22,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
@@ -30,6 +29,7 @@ import me.proton.android.core.coreexample.hilttests.di.VpnApiClient
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.BaseUsernameAccountLoginTests
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
+import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.test.android.instrumented.ProtonTest
@@ -42,8 +42,6 @@ import kotlin.test.BeforeTest
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
 class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(MainActivity::class.java) {
-    override val quark: Quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
-    override val internalUsers: User.Users = User.Users.fromDefaultResources()
     override val vpnUsers: User.Users = User.Users.fromJavaResources(
         User::class.java.classLoader!!,
         "sensitive/users-vpn-username.json"
@@ -65,7 +63,13 @@ class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(M
     val accountType: AccountType = AccountType.Username
 
     @Inject
+    lateinit var environmentConfig: EnvironmentConfiguration
+
+    @Inject
     lateinit var waitForPrimaryAccount: WaitForPrimaryAccount
+
+    @Inject
+    override lateinit var quark: Quark
 
     @BeforeTest
     override fun prepare() {

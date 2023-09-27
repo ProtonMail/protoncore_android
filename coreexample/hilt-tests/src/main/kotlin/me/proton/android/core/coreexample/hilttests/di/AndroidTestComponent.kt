@@ -25,7 +25,13 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import io.mockk.mockk
 import me.proton.android.core.coreexample.di.WorkManagerModule
+import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.v2.QuarkCommand
+import okhttp3.OkHttpClient
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toJavaDuration
 
 @Module
 @TestInstallIn(
@@ -33,11 +39,31 @@ import javax.inject.Singleton
     replaces = [WorkManagerModule::class]
 )
 object AndroidTestComponent {
-    // region WorkManagerModule
+
     @Provides
     @Singleton
-    fun provideWorkManager(): WorkManager {
-        return mockk(relaxed = true)
+    fun provideWorkManager(): WorkManager = mockk(relaxed = true)
+
+    @Provides
+    @Singleton
+    fun provideEnvironmentConfig(): EnvironmentConfiguration =
+        EnvironmentConfiguration.fromClass()
+
+    @Provides
+    @Singleton
+    fun provideQuarkCommand(envConfig: EnvironmentConfiguration): QuarkCommand {
+        val timeout = 45.seconds.toJavaDuration()
+        val quarkClient = OkHttpClient
+            .Builder()
+            .callTimeout(timeout)
+            .readTimeout(timeout)
+            .writeTimeout(timeout)
+            .build()
+        return QuarkCommand(quarkClient).baseUrl("https://${envConfig.host}/api/internal")
     }
-    // endregion
+
+    @Provides
+    @Singleton
+    fun provideQuark(envConfig: EnvironmentConfiguration): Quark =
+        Quark.fromDefaultResources(envConfig.host, envConfig.proxyToken)
 }

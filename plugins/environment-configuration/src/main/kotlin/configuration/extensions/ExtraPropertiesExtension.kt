@@ -26,7 +26,7 @@ private const val PROP_SUFFIX = "ProtonEnvironmentConfig"
 
 fun ExtraPropertiesExtension.getEnvironmentConfigurationByName(
     name: String,
-    fallbackSettings: EnvironmentConfigSettings = EnvironmentConfigSettings()
+    fallbackSettings: EnvironmentConfig = EnvironmentConfig()
 ): EnvironmentConfig =
     if (properties.contains(name + PROP_SUFFIX))
         this[name + PROP_SUFFIX] as? EnvironmentConfigSettings ?: fallbackSettings

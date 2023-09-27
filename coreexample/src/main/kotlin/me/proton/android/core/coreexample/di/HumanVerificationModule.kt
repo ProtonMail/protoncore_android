@@ -22,7 +22,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.android.core.coreexample.Constants
+import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 
@@ -35,5 +35,6 @@ object HumanVerificationModule {
 
     @Provides
     @HumanVerificationApiHost
-    fun provideHumanVerificationApiHost(): String = "https://${Constants.HV3_HOST}"
+    fun provideHumanVerificationApiHost(envConfig: EnvironmentConfiguration): String =
+        envConfig.hv3Url
 }

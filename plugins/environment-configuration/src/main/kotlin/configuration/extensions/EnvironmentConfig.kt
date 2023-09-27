@@ -30,7 +30,7 @@ fun EnvironmentConfig.mergeWith(other: EnvironmentConfig) = EnvironmentConfig(
     apiHost = other.apiHost ?: apiHost,
     hv3Host = other.hv3Host ?: hv3Host,
     hv3Url = other.hv3Url ?: hv3Url,
-    proxyToken = other.proxyToken.takeIf { it?.isNotEmpty()!! } ?: proxyToken,
+    proxyToken = other.proxyToken ?: proxyToken,
 )
 
 fun EnvironmentConfig.sourceClassContent(

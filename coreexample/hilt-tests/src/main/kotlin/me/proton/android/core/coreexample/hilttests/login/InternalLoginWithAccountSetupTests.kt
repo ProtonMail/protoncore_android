@@ -25,7 +25,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
@@ -40,6 +39,10 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.command.CreateAddress
+import me.proton.core.test.quark.v2.command.userCreate
+import me.proton.core.test.quark.v2.command.userCreateAddress
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
@@ -82,6 +85,9 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
     @Inject
     lateinit var userManager: UserManager
 
+    @Inject
+    lateinit var quark: QuarkCommand
+
     @BeforeTest
     fun prepare() {
         hiltRule.inject()
@@ -89,18 +95,18 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
 
     @Test
     fun userWithNoKeys() {
-        val (testUser, response) = quark.userCreate(createAddress = null)
-        performUiLogin(testUser.name, testUser.password)
+        val testUser = quark.userCreate(createAddress = null)
+        performUiLogin(testUser.name!!, testUser.password)
 
         verifyAccountSetup(expectedAddressCount = 1)
-        verifyUnlockUser(testUser.password, response.userId, UserManager.UnlockResult.Success)
+        verifyUnlockUser(testUser.password, testUser.userId, UserManager.UnlockResult.Success)
     }
 
     @Test
     fun userWithPassphraseAndKeys() {
         val mailboxPass = "test-passphrase"
         val testUser = TestUser(passphrase = mailboxPass)
-        val (_, response) = quark.userCreate(testUser, Quark.CreateAddress.WithKey())
+        val response = quark.userCreate(testUser, CreateAddress.WithKey())
 
         performUiLogin(testUser.name, testUser.password, mailboxPass = mailboxPass)
 
@@ -113,9 +119,9 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
     fun userWithPassphraseAndMissingAddressKey() {
         val mailboxPass = "test-passphrase"
         val testUser = TestUser(passphrase = mailboxPass)
-        val (_, response) = quark.userCreate(
+        val response = quark.userCreate(
             testUser,
-            Quark.CreateAddress.WithKey()
+            CreateAddress.WithKey()
         )
         val domains = runBlocking { domainRepository.getAvailableDomains(null) }
         val email = "${response.name}_2@${domains.first()}"
@@ -170,9 +176,5 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
                 userManager.unlockWithPassword(UserId(userId), PlainByteArray(pass.toByteArray()))
             }
         )
-    }
-
-    companion object {
-        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     }
 }

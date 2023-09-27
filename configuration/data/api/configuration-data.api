@@ -1,0 +1,53 @@
+public class me/proton/core/configuration/ContentResolverConfigManager {
+	public fun <init> (Landroid/content/Context;)V
+	public final fun fetchConfigDataFromContentResolver ()Ljava/util/Map;
+	public final fun insertConfiguration (Lme/proton/core/configuration/EnvironmentConfiguration;)Landroid/net/Uri;
+}
+
+public final class me/proton/core/configuration/EnvironmentConfiguration : me/proton/core/configuration/entity/ConfigContract {
+	public static final field Companion Lme/proton/core/configuration/EnvironmentConfiguration$Companion;
+	public fun <init> (Lkotlin/reflect/KFunction;)V
+	public final fun copy (Lkotlin/reflect/KFunction;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public static synthetic fun copy$default (Lme/proton/core/configuration/EnvironmentConfiguration;Lkotlin/reflect/KFunction;ILjava/lang/Object;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getApiHost ()Ljava/lang/String;
+	public fun getApiPrefix ()Ljava/lang/String;
+	public fun getBaseUrl ()Ljava/lang/String;
+	public fun getHost ()Ljava/lang/String;
+	public fun getHv3Host ()Ljava/lang/String;
+	public fun getHv3Url ()Ljava/lang/String;
+	public fun getProxyToken ()Ljava/lang/String;
+	public final fun getUseDefaultPins ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/EnvironmentConfiguration$Companion {
+	public final fun fromClass (Ljava/lang/String;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public static synthetic fun fromClass$default (Lme/proton/core/configuration/EnvironmentConfiguration$Companion;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public final fun fromMap (Ljava/util/Map;)Lme/proton/core/configuration/EnvironmentConfiguration;
+}
+
+public final class me/proton/core/configuration/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/configuration/entity/ConfigContract {
+	public abstract fun getApiHost ()Ljava/lang/String;
+	public abstract fun getApiPrefix ()Ljava/lang/String;
+	public abstract fun getBaseUrl ()Ljava/lang/String;
+	public abstract fun getHost ()Ljava/lang/String;
+	public abstract fun getHv3Host ()Ljava/lang/String;
+	public abstract fun getHv3Url ()Ljava/lang/String;
+	public abstract fun getProxyToken ()Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/extension/EnvironmentConfigurationKt {
+	public static final fun getConfigContractFields (Lme/proton/core/configuration/EnvironmentConfiguration;)Ljava/util/Map;
+	public static final fun getConfigContractFieldsMap (Lme/proton/core/configuration/EnvironmentConfiguration;)Ljava/util/Map;
+	public static final fun getContentValues (Lme/proton/core/configuration/EnvironmentConfiguration;)Landroid/content/ContentValues;
+}
+

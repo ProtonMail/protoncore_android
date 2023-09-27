@@ -45,7 +45,6 @@ public final class me/proton/core/auth/test/BaseExternalAccountSignupTests$Defau
 }
 
 public abstract interface class me/proton/core/auth/test/BaseUsernameAccountLoginTests {
-	public abstract fun getInternalUsers ()Lme/proton/core/test/quark/data/User$Users;
 	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
 	public abstract fun getVpnUsers ()Lme/proton/core/test/quark/data/User$Users;
 	public abstract fun loginWithFreeInternalAccount ()V

@@ -31,8 +31,7 @@ android {
 
 dependencies {
     api(
-        project(Module.configurationProvider),
-        project(Module.configurationDomain),
+        project(Module.configurationData),
     )
 }
 

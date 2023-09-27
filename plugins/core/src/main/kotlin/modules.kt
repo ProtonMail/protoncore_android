@@ -135,8 +135,7 @@ public object Module {
 
     // Configuration
     public const val configuration: String = ":configuration"
-    public const val configurationDomain: String = "$configuration:configuration-domain"
-    public const val configurationProvider: String = "$configuration:configuration-provider"
+    public const val configurationData: String = "$configuration:configuration-data"
     public const val configurationDaggerStatic: String = "$configuration:configuration-dagger-staticdefaults"
     public const val configurationDaggerContentResolver: String = "$configuration:configuration-dagger-content-resolver"
 

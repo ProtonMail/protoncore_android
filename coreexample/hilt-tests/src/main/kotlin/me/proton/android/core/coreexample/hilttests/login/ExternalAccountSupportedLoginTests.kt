@@ -24,7 +24,6 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
@@ -39,6 +38,10 @@ import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.command.CreateAddress
+import me.proton.core.test.quark.v2.command.userCreate
+import me.proton.core.test.quark.v2.command.userCreateAddress
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.AddressType
 import me.proton.core.user.domain.entity.User
@@ -82,6 +85,9 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
     @Inject
     lateinit var performUiLogin: PerformUiLogin
 
+    @Inject
+    lateinit var quark: QuarkCommand
+
     @BeforeTest
     fun prepare() {
         hiltRule.inject()
@@ -95,7 +101,7 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             email = "${TestUser.randomUsername()}@externaldomain.test",
             isExternal = true
         )
-        quark.userCreate(testUser, Quark.CreateAddress.NoKey)
+        quark.userCreate(testUser, CreateAddress.NoKey)
 
         performUiLogin(testUser.email, testUser.password)
 
@@ -117,9 +123,9 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             passphrase = mailboxPass
         )
         val email = "${testUser.name}@externaldomain.test"
-        val (_, createUserResponse) = quark.userCreate(
+        val createUserResponse = quark.userCreate(
             testUser,
-            createAddress = Quark.CreateAddress.WithKey()
+            createAddress = CreateAddress.WithKey()
         )
 
         quark.userCreateAddress(
@@ -151,9 +157,9 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             name = username,
             isExternal = false
         )
-        val (_, createUserResponse) = quark.userCreate(
+        val createUserResponse = quark.userCreate(
             testUser,
-            createAddress = Quark.CreateAddress.WithKey()
+            createAddress = CreateAddress.WithKey()
         )
 
         quark.userCreateAddress(
@@ -188,9 +194,9 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             name = TestUser.randomUsername(),
             isExternal = false
         )
-        val (_, createUserResponse) = quark.userCreate(
+        val createUserResponse = quark.userCreate(
             testUser,
-            createAddress = Quark.CreateAddress.WithKey()
+            createAddress = CreateAddress.WithKey()
         )
 
         quark.userCreateAddress(
@@ -229,9 +235,9 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             name = username,
             isExternal = false
         )
-        val (_, createUserResponse) = quark.userCreate(
+        val createUserResponse = quark.userCreate(
             testUser,
-            createAddress = Quark.CreateAddress.WithKey()
+            createAddress = CreateAddress.WithKey()
         )
 
         quark.userCreateAddress(
@@ -266,9 +272,5 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             addressKeys.all { it.flags and (KeyFlags.EmailNoEncrypt or KeyFlags.EmailNoSign) != 0 },
             "Some address keys have incorrect flags (address=$address)."
         )
-    }
-
-    companion object {
-        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
     }
 }

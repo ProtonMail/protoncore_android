@@ -108,6 +108,7 @@ dependencies {
         project(Module.telemetry),
         project(Module.user),
         project(Module.userSettings),
-        project(Module.keyTransparency)
+        project(Module.keyTransparency),
+        project(Module.configurationData)
     )
 }

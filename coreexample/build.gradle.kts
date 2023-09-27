@@ -113,7 +113,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
         productFlavors.register("dev") {
             dimension = flavorDimensions.env
             applicationIdSuffix = ".dev"
-
+            
             protonEnvironment {
                 host = "proton.black"
             }
@@ -237,6 +237,7 @@ dependencies {
         project(Module.strictModeUtil),
         project(Module.keyTransparency),
         project(Module.sentryUtil),
+        project(Module.configurationData),
 
         // Android
         activity,
@@ -264,6 +265,15 @@ dependencies {
         timber,
         `sentry-android-core`,
         `ez-vcard`
+    )
+
+    // Configuration
+    debugImplementation(
+        project(Module.configurationDaggerContentResolver),
+    )
+
+    releaseImplementation(
+        project(Module.configurationDaggerStatic),
     )
 
     kapt(

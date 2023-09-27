@@ -24,7 +24,6 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
-import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
@@ -35,8 +34,10 @@ import me.proton.core.auth.presentation.ui.signup.SignupActivity
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
-import me.proton.core.test.quark.Quark
+import me.proton.core.test.quark.v2.QuarkCommand
+import me.proton.core.test.quark.v2.command.jailUnban
 import org.junit.Rule
+import javax.inject.Inject
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import me.proton.core.test.quark.data.User as TestUser
@@ -62,6 +63,9 @@ open class ExternalAccountChooseUsernameTest {
 
     @BindValue
     val accountType: AccountType = AccountType.External
+
+    @Inject
+    lateinit var quark: QuarkCommand
 
     @BeforeTest
     fun prepare() {
@@ -91,7 +95,6 @@ open class ExternalAccountChooseUsernameTest {
 
 
     private companion object {
-        private val quark = Quark.fromDefaultResources(Constants.QUARK_HOST, Constants.PROXY_TOKEN)
 
         private fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
             ActivityScenario.launch(
