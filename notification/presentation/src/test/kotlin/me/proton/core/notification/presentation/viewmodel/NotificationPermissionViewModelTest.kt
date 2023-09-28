@@ -29,12 +29,16 @@ import io.mockk.justRun
 import io.mockk.mockk
 import io.mockk.verify
 import me.proton.core.notification.domain.ProtonNotificationManager
+import me.proton.core.notification.domain.usecase.IsNotificationsPermissionRequestEnabled
 import me.proton.core.notification.presentation.internal.GetAndroidSdkLevel
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class NotificationPermissionViewModelTest {
+    @MockK
+    private lateinit var permissionRequestEnabled: IsNotificationsPermissionRequestEnabled
+
     @MockK
     private lateinit var getAndroidSdkLevel: GetAndroidSdkLevel
 
@@ -47,12 +51,33 @@ class NotificationPermissionViewModelTest {
     fun setUp() {
         MockKAnnotations.init(this)
         justRun { notificationManager.setupNotificationChannel() }
-        tested = NotificationPermissionViewModel(getAndroidSdkLevel, notificationManager)
+        tested = NotificationPermissionViewModel(permissionRequestEnabled, getAndroidSdkLevel, notificationManager)
+    }
+
+    @Test
+    fun setupWithDisabledPermissionRequest() {
+        // GIVEN
+        mockPermissionRequestEnabled(false)
+        mockSdkInt(Build.VERSION_CODES.TIRAMISU)
+        val activity = mockk<Activity> {
+            every { shouldShowRequestPermissionRationale(any()) } returns true
+            mockTargetSdk(Build.VERSION_CODES.TIRAMISU)
+        }
+
+        // WHEN
+        tested.setup(activity)
+
+        // THEN
+        assertEquals(
+            NotificationPermissionViewModel.State.Finish,
+            tested.state.value
+        )
     }
 
     @Test
     fun setupWithSdkBeforeTiramisu() {
         // GIVEN
+        mockPermissionRequestEnabled(true)
         mockSdkInt(Build.VERSION_CODES.S)
 
         // THEN (initial state)
@@ -74,6 +99,7 @@ class NotificationPermissionViewModelTest {
     @Test
     fun setupWithTargetSdkBeforeTiramisu() {
         // GIVEN
+        mockPermissionRequestEnabled(true)
         mockSdkInt(Build.VERSION_CODES.TIRAMISU)
         val activity = mockk<Activity> {
             mockTargetSdk(Build.VERSION_CODES.S)
@@ -93,6 +119,7 @@ class NotificationPermissionViewModelTest {
     @Test
     fun setupOnTiramisuWithRationale() {
         // GIVEN
+        mockPermissionRequestEnabled(true)
         mockSdkInt(Build.VERSION_CODES.TIRAMISU)
         val activity = mockk<Activity> {
             every { shouldShowRequestPermissionRationale(any()) } returns true
@@ -112,6 +139,7 @@ class NotificationPermissionViewModelTest {
     @Test
     fun setupOnTiramisuWithoutRationale() {
         // GIVEN
+        mockPermissionRequestEnabled(true)
         mockSdkInt(Build.VERSION_CODES.TIRAMISU)
         val activity = mockk<Activity> {
             every { shouldShowRequestPermissionRationale(any()) } returns false
@@ -130,6 +158,9 @@ class NotificationPermissionViewModelTest {
 
     @Test
     fun onPermissionGranted() {
+        // GIVEN
+        mockPermissionRequestEnabled(true)
+
         // WHEN
         tested.onNotificationPermissionRequestResult(true)
 
@@ -143,6 +174,9 @@ class NotificationPermissionViewModelTest {
 
     @Test
     fun onPermissionDenied() {
+        // GIVEN
+        mockPermissionRequestEnabled(true)
+
         // WHEN
         tested.onNotificationPermissionRequestResult(false)
 
@@ -153,6 +187,7 @@ class NotificationPermissionViewModelTest {
         )
     }
 
+    private fun mockPermissionRequestEnabled(enabled: Boolean) = every { permissionRequestEnabled() } returns enabled
     private fun mockSdkInt(version: Int) = every { getAndroidSdkLevel() } returns version
 
     private fun Activity.mockTargetSdk(version: Int) {

@@ -136,6 +136,10 @@ public abstract interface class me/proton/core/notification/domain/usecase/IsNot
 	public abstract fun invoke ()Z
 }
 
+public abstract interface class me/proton/core/notification/domain/usecase/IsNotificationsPermissionRequestEnabled {
+	public abstract fun invoke ()Z
+}
+
 public abstract interface class me/proton/core/notification/domain/usecase/ObservePushNotifications {
 	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)V
 }

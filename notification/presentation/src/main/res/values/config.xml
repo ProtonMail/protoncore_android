@@ -18,5 +18,6 @@
 
 <resources>
     <bool name="core_feature_notifications_enabled">false</bool>
+    <bool name="core_feature_notifications_permission_request_enabled">true</bool>
     <string name="core_feature_default_notification_channel_id" translatable="false">me.proton.core.notification.default</string>
 </resources>

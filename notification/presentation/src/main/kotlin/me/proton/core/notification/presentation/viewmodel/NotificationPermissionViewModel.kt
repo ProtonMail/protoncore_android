@@ -27,11 +27,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.notification.domain.ProtonNotificationManager
+import me.proton.core.notification.domain.usecase.IsNotificationsPermissionRequestEnabled
 import me.proton.core.notification.presentation.internal.GetAndroidSdkLevel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class NotificationPermissionViewModel @Inject constructor(
+    private val permissionRequestEnabled: IsNotificationsPermissionRequestEnabled,
     private val getAndroidSdkLevel: GetAndroidSdkLevel,
     private val notificationManager: ProtonNotificationManager
 ) : ViewModel() {
@@ -39,6 +41,11 @@ internal class NotificationPermissionViewModel @Inject constructor(
     val state: StateFlow<State> = _state.asStateFlow()
 
     fun setup(activity: Activity) = when {
+        !permissionRequestEnabled() -> {
+            // Permission request handling is disabled.
+            _state.value = State.Finish
+        }
+
         getAndroidSdkLevel() < Build.VERSION_CODES.TIRAMISU -> {
             // On Android SDK level lower than 33,
             // notification permission is not needed.

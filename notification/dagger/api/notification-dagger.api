@@ -22,6 +22,7 @@ public abstract interface class me/proton/core/notification/dagger/CoreNotificat
 	public abstract fun bindConfigureNotificationChannel (Lme/proton/core/notification/presentation/usecase/ConfigureNotificationChannelImpl;)Lme/proton/core/notification/domain/usecase/ConfigureNotificationChannel;
 	public abstract fun bindGetNotificationChannelId (Lme/proton/core/notification/presentation/usecase/GetNotificationChannelIdImpl;)Lme/proton/core/notification/domain/usecase/GetNotificationChannelId;
 	public abstract fun bindIsNotificationsEnabled (Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl;)Lme/proton/core/notification/domain/usecase/IsNotificationsEnabled;
+	public abstract fun bindIsNotificationsPermissionRequestEnabled (Lme/proton/core/notification/presentation/usecase/IsNotificationsPermissionRequestEnabledImpl;)Lme/proton/core/notification/domain/usecase/IsNotificationsPermissionRequestEnabled;
 	public abstract fun bindNotificationLocalDataSource (Lme/proton/core/notification/data/local/NotificationLocalDataSourceImpl;)Lme/proton/core/notification/domain/repository/NotificationLocalDataSource;
 	public abstract fun bindNotificationRemoteDataSource (Lme/proton/core/notification/data/remote/NotificationRemoteDataSourceImpl;)Lme/proton/core/notification/domain/repository/NotificationRemoteDataSource;
 	public abstract fun bindNotificationRepository (Lme/proton/core/notification/data/repository/NotificationRepositoryImpl;)Lme/proton/core/notification/domain/repository/NotificationRepository;
