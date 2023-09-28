@@ -57,7 +57,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
     private var onPlanList: ((List<DynamicPlan>) -> Unit)? = null
 
     fun getUser(): DynamicUser = viewModel.getUser()
-    fun getPlanList(): List<DynamicPlan> = viewModel.getPlanList()
+    fun getPlanList(): List<DynamicPlan>? = viewModel.getPlanList()
 
     fun setOnPlanSelected(onPlanSelected: (SelectedPlan) -> Unit) {
         this.onPlanSelected = onPlanSelected

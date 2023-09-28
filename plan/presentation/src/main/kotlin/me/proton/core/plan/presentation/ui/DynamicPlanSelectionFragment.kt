@@ -68,13 +68,12 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
     private var onPlanList: ((List<DynamicPlan>) -> Unit)? = null
 
     private var planFilters = MutableStateFlow(DynamicPlanFilters())
-    private var plans = MutableStateFlow<List<DynamicPlan>?>(null)
 
     private val allFree: Boolean
-        get() = plans.value?.all { it.isFree() } ?: false
+        get() = planList.getPlanList()?.all { it.isFree() } ?: false
 
     private val hasPlans: Boolean?
-        get() = plans.value?.isNotEmpty()
+        get() = planList.getPlanList()?.isNotEmpty()
 
     private val hasPlanFiltersCycles: Boolean
         get() = planFilters.value.cycles.count() > 1
@@ -90,7 +89,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
         planList.setCurrency(requireNotNull(currencyAdapter.getItem(index)))
     }
 
-    fun getPlanList(): List<DynamicPlan> = planList.getPlanList()
+    fun getPlanList(): List<DynamicPlan>? = planList.getPlanList()
 
     fun setUser(user: DynamicUser) {
         planList.setUser(user)
@@ -127,9 +126,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
         }.launchInViewLifecycleScope()
 
         planFilters.onEach { onPlanFilters() }.launchInViewLifecycleScope()
-        plans.onEach { onPlanList() }.launchInViewLifecycleScope()
 
-        planList.setOnPlanList { onPlanList?.invoke(it); plans.value = it }
+        planList.setOnPlanList { onPlanList(it) }
         planList.setOnPlanSelected { viewModel.perform(Action.SelectPlan(it)) }
 
         paymentsOrchestrator.onPaymentResult { result ->
@@ -144,7 +142,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
         this.planFilters.value = planFilters
     }
 
-    private fun onPlanList() {
+    private fun onPlanList(plans: List<DynamicPlan>) {
+        onPlanList?.invoke(plans)
         binding.listEmpty.isVisible = hasPlans?.not() ?: false
         setupCycleSpinnerVisibility()
         setupCurrencySpinnerVisibility()
