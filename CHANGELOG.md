@@ -11,6 +11,32 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [16.1.0] - 2023-09-28
+
+### Features
+
+- Configuration module improvements.
+- notification:
+  - Added Notification Permission Request Enabled config.
+- plan:
+  - Enabled Dynamic Plan local Feature Flag.
+  - Added Dynamic Cycle/Currency selection, Vendor Query param and DefaultCycle.
+
+### Bug Fixes
+
+- notification:
+  - Add `FLAG_ACTIVITY_SINGLE_TOP` flag when launching the app from a notification.
+- plan:
+  - Keep Dynamic Upgrade Layout invisible until all constraints are known.
+  - Increased Dynamic Decoration Storage Bar thickness.
+  - Changed Dynamic Entitlement to 2-lines & ellipsize end.
+  - Added Dynamic Decoration Badge PlanId handling.
+  - Changed Dynamic Decoration Badge Background.
+
+### Internationalization
+
+- Upgrade translations from crowdin (441bf239).
+
 ## [16.0.0] - 2023-09-14
 
 ### Breaking Changes
