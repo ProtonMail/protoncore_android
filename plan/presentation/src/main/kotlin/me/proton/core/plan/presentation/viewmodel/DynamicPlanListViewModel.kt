@@ -42,7 +42,7 @@ import me.proton.core.plan.presentation.entity.DynamicPlanFilter
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.util.kotlin.coroutine.withResultContextFlow
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
@@ -93,11 +93,11 @@ internal class DynamicPlanListViewModel @Inject constructor(
         DynamicPlanFilter(userId, cycle, currency)
     }
 
-    private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = withResultContextFlow {
+    private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = flowWithResultContext {
         it.onResultEnqueue("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
-        emit(State.Loading)
+        send(State.Loading)
         val filteredPlans = getDynamicPlans(filter.userId).plans.filterBy(filter.cycle, filter.currency)
-        emit(State.Success(filteredPlans, filter))
+        send(State.Success(filteredPlans, filter))
     }.catch {
         emit(State.Error(it))
     }

@@ -27,6 +27,7 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.observability.domain.metrics.common.isHttpError
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
+@Serializable
 @Schema(description = "Querying for a current dynamic subscription.")
 @SchemaId("https://proton.me/android_core_checkout_dynamicPlans_getDynamicPlans_total_v1.schema.json")
 public data class CheckoutGetDynamicPlansTotal(

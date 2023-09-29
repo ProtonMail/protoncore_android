@@ -451,7 +451,7 @@ class PaymentsRepositoryImplTest {
         // WHEN
         val result = repository.getDynamicSubscriptions(SessionUserId(testUserId))
         assertNotNull(result)
-        assertTrue(assertSingleResult("getDynamicSubscription").isSuccess)
+        assertTrue(assertSingleResult("getDynamicSubscriptions").isSuccess)
     }
 
     @Test

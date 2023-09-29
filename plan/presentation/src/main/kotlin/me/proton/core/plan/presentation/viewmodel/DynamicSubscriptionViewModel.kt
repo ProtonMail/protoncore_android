@@ -41,7 +41,7 @@ import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.util.kotlin.coroutine.withResultContextFlow
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -80,14 +80,14 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     private fun observeState() = mutableLoadCount
         .flatMapLatest { observeUserId().distinctUntilChanged() }
         .flatMapLatest { userId -> observeUserCurrency(userId).distinctUntilChanged().map { userId to it } }
-        .flatMapLatest { (userId, currency) -> loadDynamicSubscription(userId, currency) }
+        .flatMapLatest { (userId, currency) -> loadSubscription(userId, currency) }
 
-    private suspend fun loadDynamicSubscription(userId: UserId?, currency: String) = withResultContextFlow {
+    private suspend fun loadSubscription(userId: UserId?, currency: String) = flowWithResultContext {
         it.onResultEnqueue("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
-        emit(State.Loading)
+        send(State.Loading)
         when (userId) {
-            null -> emit(State.UserNotExist)
-            else -> emit(
+            null -> send(State.UserNotExist)
+            else -> send(
                 State.Success(
                     dynamicSubscription = getDynamicSubscription(userId),
                     canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId),

@@ -47,21 +47,26 @@ class PlansRepositoryImpl @Inject constructor(
     private val plansCache =
         Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
 
-    override suspend fun getDynamicPlans(
+    private suspend fun getRemoteDynamicPlans(
         sessionUserId: SessionUserId?,
         appStore: AppStore,
     ): DynamicPlans = result("getDynamicPlans") {
-        dynamicPlansCache.get(sessionUserId?.id ?: "") {
-            apiProvider.get<PlansApi>(sessionUserId).invoke {
-                val response = getDynamicPlans(appStore.value)
-                DynamicPlans(
-                    defaultCycle = response.defaultCycle,
-                    plans = response.plans.mapIndexed { index, resource ->
-                        resource.toDynamicPlan(endpointProvider.get(), index)
-                    }.sortedBy { plan -> plan.order }
-                )
-            }.onParseErrorLog(LogTag.DYN_PLANS_PARSE).valueOrThrow
-        }
+        apiProvider.get<PlansApi>(sessionUserId).invoke {
+            val response = getDynamicPlans(appStore.value)
+            DynamicPlans(
+                defaultCycle = response.defaultCycle,
+                plans = response.plans.mapIndexed { index, resource ->
+                    resource.toDynamicPlan(endpointProvider.get(), index)
+                }.sortedBy { plan -> plan.order }
+            )
+        }.onParseErrorLog(LogTag.DYN_PLANS_PARSE).valueOrThrow
+    }
+
+    override suspend fun getDynamicPlans(
+        sessionUserId: SessionUserId?,
+        appStore: AppStore,
+    ): DynamicPlans = dynamicPlansCache.get(sessionUserId?.id ?: "") {
+        getRemoteDynamicPlans(sessionUserId, appStore)
     }
 
     /**

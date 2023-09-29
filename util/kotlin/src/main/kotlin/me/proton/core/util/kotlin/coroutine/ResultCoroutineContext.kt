@@ -22,9 +22,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.CoroutineStart
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
@@ -192,9 +192,18 @@ fun <T> CoroutineScope.launchWithResultContext(
     block: suspend ResultCollector<*>.() -> T
 ): Job = launch(context, start) { withResultContext(block) }
 
-suspend fun <T> withResultContextFlow(
-    block: suspend FlowCollector<T>.(ResultCollector<*>) -> Unit
-): Flow<T> = withResultContext {
-    val resultCollector = this
-    flow { block(this, resultCollector) }
+/**
+ * Creates an instance of a cold Flow with elements that are sent to a SendChannel provided
+ * to the builder's block of code via ProducerScope. It allows elements to be produced by code that
+ * is running in a different context or concurrently.
+ *
+ * The coroutine context is wrapped with a [ResultCoroutineContextElement] using [withResultContext].
+ *
+ * @see channelFlow
+ */
+suspend fun <T> flowWithResultContext(
+    block: suspend ProducerScope<T>.(ResultCollector<*>) -> Unit
+): Flow<T> = channelFlow {
+    val producerScope = this
+    withResultContext { block(producerScope, this) }
 }
