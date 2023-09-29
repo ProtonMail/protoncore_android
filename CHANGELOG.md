@@ -11,6 +11,20 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.0.0] - 2023-09-29
+
+### Breaking Changes
+
+**Features**
+
+- network:
+  - Add AppClock implementation which uses time synchronized with API.
+
+### Bug Fixes
+
+- plan:
+  - Fixed Dynamic Plan metrics.
+
 ## [16.1.0] - 2023-09-28
 
 ### Features
