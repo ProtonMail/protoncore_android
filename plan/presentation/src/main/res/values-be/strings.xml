@@ -29,6 +29,10 @@
   <string name="plans_subscription">Падпіска</string>
   <string name="plans_renewal_date">Ваш тарыфны план аўтаматычна падоўжыцца &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Ваш тарыфны план міне &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Штомесячная аплата</string>
+  <string name="plans_pay_annually">Штогадовая аплата</string>
+  <string name="plans_pay_biennially">Аплата кожныя 2 гады</string>
+  <string name="plans_pay_other">Аплата (месяцаў): %d</string>
   <string name="plans_billed_yearly">*Аплачваецца штогод %s</string>
   <string name="plans_billed_monthly">Аплачваецца штомесяц</string>
   <string name="plans_billing_monthly">За 1 месяц</string>

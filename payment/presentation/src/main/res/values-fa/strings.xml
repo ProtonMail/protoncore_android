@@ -56,7 +56,9 @@
   <string name="payment_cc_list_item">%1$s - %2$s (مثال %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">در دسترس/ نیست</string>
+  <string name="payments_billing_monthly">For 1 month</string>
   <string name="payments_billing_yearly">برای ۱ سال</string>
+  <string name="payments_billing_two_years">For 2 years</string>
   <string name="payment_use_google_pay_instead">به جای آن از Google Play استفاده کنید</string>
   <string name="payment_use_credit_card_instead">به جای آن از کارت اعتباری/نقدی اسفاده کنید</string>
   <!-- endregion -->

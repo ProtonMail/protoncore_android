@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">პაროლის შეცვლა მოთხოვნილია</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one"><b>%1$s</b>-სთვის გამოთხოვილია პაროლის შეცვლა. პაროლი %2$d საათში შეგეძლებათ, შეცვალოთ.\n\nთუ ეს მოთხოვნა თქვენ არ გამოგიგზავნიათ, გააუქმეთ ის.</item>
+    <item quantity="other"><b>%1$s</b>-სთვის გამოთხოვილია პაროლის შეცვლა. პაროლი %2$d საათში შეგეძლებათ, შეცვალოთ.\n\nთუ ეს მოთხოვნა თქვენ არ გამოგიგზავნიათ, გააუქმეთ ის.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">გავაუქმო პაროლის შეცვლა?</string>
+  <string name="account_recovery_cancel_subtitle">გასაუქმებლად შეიყვანეთ თქვენი პაროლი.</string>
+  <string name="account_recovery_cancel_password_label">მიმდინარე პაროლი</string>
+  <string name="account_recovery_cancel_password_placeholder">პაროლი</string>
+  <string name="account_recovery_cancel_now">პაროლის შეცვლის გაუქმება</string>
+  <string name="account_recovery_cancel_back">უკან</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">პაროლის შეცვლა გაუქმდა</string>
+  <string name="account_recovery_cancelled_subtitle">თუ პაროლის შეცვლა არასოდეს გამოგითხოვიათ, შეიძლება, თქვენი ანგარიში რისკის ქვეშაა.\n\nდაიცავით თქვენი ანგარიში, შეცვალეთ მისი პაროლი.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">პაროლის შეცვლა ხელმისაწვდომია</string>
+  <string name="account_recovery_password_started_subtitle">პაროლის შესაცვლელად დაბრუნდით თქვენს მოწყობილობაზე და ბრაუზერში, საიდანაც პაროლის შეცვლის მოთხოვნა გამოაგზავნეთ.\n\nამის გაკეთება %s-მდე უნდა მოასროთ.\n\nთუ პაროლის შეცვლის მოთხოვნა თქვენი გამოგზავნილი არაა, გააუქმეთ ის.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">პაროლის შეცვლის ვადა ამოიწურა</string>
+  <string name="account_recovery_window_ended_subtitle">დაგჭირდებათ, %s-სთვის პაროლის შეცვლა თავიდან მოითხოვოთ.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">მოთხოვნის გაუქმება</string>
+  <string name="account_recovery_dismiss">გავიგე</string>
+</resources>

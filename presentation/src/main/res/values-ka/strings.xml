@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">ბმულის გასახსნელად ბრაუზერის პოვნის შეცდომა.</string>
+  <string name="presentation_force_update_title">აუცილებელია განახლება</string>
+  <string name="presentation_force_update_message">აპის ეს ვერსია უკვე მხარდაჭერილი აღარაა. იმისათვის, რომ გამოიყენოთ, განაახლეთ ის.</string>
+  <string name="presentation_force_update_learn_more">გაიგეთ მეტი</string>
+  <string name="presentation_force_update_update">განახლება</string>
+  <string name="presentation_market_missing">ამ მოწყობილობაზე მაღაზიიდან დაყენებული აპლიკაცია ვერ ვიპოვე. გადადით მაღაზიაში და განაახლეთ აპლიკაცია.</string>
+  <string name="presentation_authenticate">ავთენტიკაცია</string>
+  <string name="presentation_signin_to_continue">გასაგრძელებლად შესვლაა საჭირო</string>
+  <string name="presentation_alert_title">გაფრთხილება</string>
+  <string name="presentation_alert_ok">დიახ</string>
+  <string name="presentation_alert_enter">შეიყვანეთ</string>
+  <string name="presentation_alert_cancel">გაუქმება</string>
+  <string name="presentation_alert_continue">გაგრძელება</string>
+  <string name="presentation_alert_submit">გადაცემა</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">პრობლემის შესახებ შეტყობინება</string>
+  <string name="presentation_menu_item_title_settings">მორგება</string>
+  <string name="presentation_menu_item_title_subscription">გამოწერა</string>
+  <string name="presentation_menu_item_title_sign_out">გასვლა</string>
+  <!-- Other -->
+  <string name="presentation_back">უკან</string>
+  <string name="presentation_close">დახურვა</string>
+  <string name="presentation_retry">თავიდან</string>
+  <string name="presentation_skip">გამოტოვება</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">სერვერთან მიერთების პრობლემა.</string>
+  <string name="presentation_check_your_connection">შეამოწმეთ თქვენი შეერთება</string>
+  <string name="presentation_connectivity_issues">კავშირების პრობლემები</string>
+  <string name="presentation_field_required">ეს ველი აუცილებელია.</string>
+  <string name="presentation_error_general">ნაპოვნია შეცდომა.</string>
+</resources>

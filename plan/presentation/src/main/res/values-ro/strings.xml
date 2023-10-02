@@ -29,6 +29,10 @@
   <string name="plans_subscription">Abonament</string>
   <string name="plans_renewal_date">Abonamentul se va reînnoi automat la &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Abonamentul va expira la &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Plată lunară</string>
+  <string name="plans_pay_annually">Plată anuală</string>
+  <string name="plans_pay_biennially">Plată la fiecare doi ani</string>
+  <string name="plans_pay_other">Plată pentru %d luni</string>
   <string name="plans_billed_yearly">*Facturat anual cu %s</string>
   <string name="plans_billed_monthly">Facturat lunar</string>
   <string name="plans_billing_monthly">Pentru o lună</string>

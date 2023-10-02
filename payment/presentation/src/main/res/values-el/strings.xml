@@ -56,7 +56,9 @@
   <string name="payment_cc_list_item">%1$s - %2$s (Λήξη %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">δ/υ</string>
+  <string name="payments_billing_monthly">Για 1 μήνα</string>
   <string name="payments_billing_yearly">Για 1 χρόνο</string>
+  <string name="payments_billing_two_years">Για 2 χρόνια</string>
   <string name="payment_use_google_pay_instead">Χρησιμοποιήστε Google Pay</string>
   <string name="payment_use_credit_card_instead">Χρησιμοποιήστε πιστωτική/χρεωστική κάρτα</string>
   <!-- endregion -->

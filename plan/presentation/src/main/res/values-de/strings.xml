@@ -29,6 +29,10 @@
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Dein Abonnement wird am &lt;b&gt;%s&lt;/b&gt; automatisch verlängert</string>
   <string name="plans_expiration_date">Dein Abonnement läuft am &lt;b&gt;%s&lt;/b&gt; ab</string>
+  <string name="plans_pay_monthly">Monatlich zahlen</string>
+  <string name="plans_pay_annually">Jährlich zahlen</string>
+  <string name="plans_pay_biennially">Alle zwei Jahre zahlen</string>
+  <string name="plans_pay_other">Bezahle für %d Monate</string>
   <string name="plans_billed_yearly">*Jährlich abgerechnet mit %s</string>
   <string name="plans_billed_monthly">Monatlich abgerechnet</string>
   <string name="plans_billing_monthly">Für einen Monat</string>

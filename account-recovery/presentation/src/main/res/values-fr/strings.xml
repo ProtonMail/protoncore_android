@@ -35,7 +35,7 @@
   <string name="account_recovery_cancelled_subtitle">Si vous n\'avez jamais demandé la modification de votre mot de passe, votre compte pourrait être menacé.\n\nSécurisez votre compte en changeant votre mot de passe.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">La réinitialisation du mot de passe est disponible.</string>
-  <string name="account_recovery_password_started_subtitle">Pour réinitialiser votre mot de passe, retournez sur l\'appareil et le navigateur à partir desquels vous avez demandé la réinitialisation de votre mot de passe.\n\nVous devrez le faire d\'ici %s.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez maintenant la réinitialisation.</string>
+  <string name="account_recovery_password_started_subtitle">Pour réinitialiser votre mot de passe, retournez sur l\'appareil et le navigateur à partir desquels vous avez demandé la réinitialisation de votre mot de passe.\n\nVous devrez le faire avant le %s.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez maintenant la réinitialisation.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">La réinitialisation du mot de passe a expiré.</string>
   <string name="account_recovery_window_ended_subtitle">Vous devrez demander une nouvelle réinitialisation du mot de passe pour %s.</string>

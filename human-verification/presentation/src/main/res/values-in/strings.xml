@@ -22,11 +22,11 @@
   <string name="human_verification_title">Verifikasi Manusia</string>
   <string name="human_verification_main_subtitle">Untuk mencegah penyalahgunaan, mohon verifikasi bahwa Anda benar manusia melalui salah satu pilihan berikut</string>
   <string name="human_verification_enter_code_subtitle">Masukkan kode verifikasi yang dikirim ke $%s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke %s. Apabila Anda tidak menemukan email yang berisi kode ini pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
+  <string name="human_verification_enter_code_subtitle_email">Masukkan kode verifikasi yang dikirim ke %s. Apabila Anda tidak menemukan surel yang berisi kode ini pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Masukkan kode verifikasi yang telah Anda terima:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Email</string>
-  <string name="human_verification_option_email_subtitle">Alamat email Anda hanya akan digunakan untuk proses verifikasi kali ini. Apabila Anda tidak menemukan email yang dimaksud pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
+  <string name="human_verification_option_email">Surel</string>
+  <string name="human_verification_option_email_subtitle">Alamat surel Anda hanya akan digunakan untuk proses verifikasi kali ini. Apabila Anda tidak menemukan surel yang dimaksud pada kotak masuk Anda, mohon periksa folder spam Anda.</string>
   <string name="human_verification_option_sms">Nomor telepon</string>
   <string name="human_verification_option_sms_subtitle">Nomor telepon Anda hanya akan digunakan untuk proses verifikasi kali ini.</string>
   <string name="human_verification_get_verification_code">Dapatkan kode verifikasi</string>
@@ -39,8 +39,8 @@
   <string name="human_verification_code_request_new_code_title">Minta kode baru?</string>
   <string name="human_verification_code_request_new_code_action">Minta kode baru</string>
   <string name="human_verification_code_request_new_code">Dapatkan kode pengganti yang akan dikirim ke %s.</string>
-  <string name="email">Email</string>
-  <string name="email_hint">alamatemail@contoh.com</string>
+  <string name="email">Surel</string>
+  <string name="email_hint">alamatsurel@contoh.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
   <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->

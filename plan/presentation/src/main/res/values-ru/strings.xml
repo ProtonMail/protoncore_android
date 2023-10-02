@@ -29,6 +29,10 @@
   <string name="plans_subscription">Подписка</string>
   <string name="plans_renewal_date">Ваш тариф будет автоматически продлен &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Срок действия вашего тарифа истекает &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Pay monthly</string>
+  <string name="plans_pay_annually">Pay annually</string>
+  <string name="plans_pay_biennially">Pay every 2 years</string>
+  <string name="plans_pay_other">Pay for %d months</string>
   <string name="plans_billed_yearly">*Ежегодная оплата %s</string>
   <string name="plans_billed_monthly">Ежемесячная оплата</string>
   <string name="plans_billing_monthly">За 1 месяц</string>

@@ -29,6 +29,10 @@
   <string name="plans_subscription">Langganan</string>
   <string name="plans_renewal_date">Paket Anda akan diperbarui secara otomatis pada &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Paket Anda akan berakhir pada &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Bayar bulanan</string>
+  <string name="plans_pay_annually">Bayar tahunan</string>
+  <string name="plans_pay_biennially">Bayar setiap 2 tahun</string>
+  <string name="plans_pay_other">Bayar untuk %d bulan</string>
   <string name="plans_billed_yearly">*Ditagihkan secara tahunan pada harga %s</string>
   <string name="plans_billed_monthly">Ditagihkan secara bulanan</string>
   <string name="plans_billing_monthly">Untuk 1 bulan</string>
@@ -60,7 +64,7 @@
     <item quantity="other">Kuota penyimpanan #proton_storage# / pengguna</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# alamat email</item>
+    <item quantity="other">#proton_addresses# alamat surel</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# alamat / pengguna</item>
@@ -69,7 +73,7 @@
     <item quantity="other">%d dari #proton_addresses# alamat</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Dukungan #proton_domains# domain email khusus</item>
+    <item quantity="other">Dukungan #proton_domains# domain surel khusus</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# kalender personal</item>
@@ -105,7 +109,7 @@
   <string name="plan_id_professional_multiuser">Dukungan multi-pengguna</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Surel aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Layanan penyimpanan cloud aman yang memudahkan Anda untuk menyimpan, menyinkronkan, dan membagikan berkas secara aman.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
@@ -129,11 +133,11 @@
   <string name="unlimited_devices">Tanpa batasan jumlah perangkat</string>
   <string name="integrated_2fa_authenticator">Autentikator 2FA terintegrasi</string>
   <string name="multiple_vaults">Brankas berganda</string>
-  <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide My Email</string>
-  <string name="custom_email_alias_domains">Domain khusus untuk alias email</string>
+  <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide My Surel</string>
+  <string name="custom_email_alias_domains">Domain khusus untuk alias surel</string>
   <string name="multiple_forwarding_mailboxes">Kotak surat penerusan berganda</string>
   <string name="priority_support">Dukungan prioritas</string>
   <string name="one_vault">1 brankas</string>
-  <string name="ten_hide_my_email_aliases">10 alias Hide My Email</string>
+  <string name="ten_hide_my_email_aliases">10 alias Hide My Surel</string>
   <!-- endregion -->
 </resources>

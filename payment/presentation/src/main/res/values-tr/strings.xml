@@ -56,7 +56,9 @@
   <string name="payment_cc_list_item">%1$s - %2$s (Geç. sonu %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">kullanılamıyor</string>
+  <string name="payments_billing_monthly">1 aylık</string>
   <string name="payments_billing_yearly">1 yıllık</string>
+  <string name="payments_billing_two_years">2 yıllık</string>
   <string name="payment_use_google_pay_instead">Yerine Google Pay kullan</string>
   <string name="payment_use_credit_card_instead">Yerine kredi ya da banka kartı kullan</string>
   <!-- endregion -->

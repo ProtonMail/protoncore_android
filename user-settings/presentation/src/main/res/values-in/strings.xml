@@ -18,18 +18,18 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Alamat email pemulihan</string>
-  <string name="settings_recovery_email_current">Alamat email pemulihan saat ini</string>
-  <string name="settings_recovery_email_new">Alamat email pemulihan baru</string>
-  <string name="settings_recovery_email_confirm">Konfirmasi alamat email pemulihan</string>
-  <string name="settings_recovery_email_new_hint">Masukkan alamat email</string>
-  <string name="settings_recovery_email_confirm_hint">Masukkan ulang alamat email</string>
+  <string name="settings_recovery_email_header">Alamat surel pemulihan</string>
+  <string name="settings_recovery_email_current">Alamat surel pemulihan saat ini</string>
+  <string name="settings_recovery_email_new">Alamat surel pemulihan baru</string>
+  <string name="settings_recovery_email_confirm">Konfirmasi alamat surel pemulihan</string>
+  <string name="settings_recovery_email_new_hint">Masukkan alamat surel</string>
+  <string name="settings_recovery_email_confirm_hint">Masukkan ulang alamat surel</string>
   <string name="settings_save">Simpan</string>
   <string name="settings_password_required">Masukkan kata sandi login Anda</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Belum ditentukan</string>
-  <string name="settings_recovery_email_error_no_match">Email pemulihan baru tidak sesuai</string>
-  <string name="settings_validation_email">Email tidak valid.</string>
+  <string name="settings_recovery_email_error_no_match">Surel pemulihan baru tidak sesuai</string>
+  <string name="settings_validation_email">Surel tidak valid.</string>
   <string name="settings_general_error">Terdapat suatu kesalahan.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Ubah kata sandi</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Kata sandi kotak surat baru</string>
   <string name="settings_mailbox_password_hint_new_confirm">Konfirmasi kata sandi kotak surat baru</string>
   <string name="settings_change_password_error">Terdapat kesalahan dalam proses perubahan kata sandi.</string>
-  <string name="settings_recovery_email_success">Email pemulihan telah diperbarui</string>
+  <string name="settings_recovery_email_success">Surel pemulihan telah diperbarui</string>
   <string name="settings_password_management_success">Kata sandi diperbarui</string>
   <string name="settings_password_management_login_password_success">Kata sandi masuk diperbarui</string>
   <string name="settings_password_management_mailbox_password_success">Kata sandi kotak surat diperbarui</string>

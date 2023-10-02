@@ -29,6 +29,10 @@
   <string name="plans_subscription">Abbonamento</string>
   <string name="plans_renewal_date">Il tuo piano si rinnoverà automaticamente il &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Il tuo piano scadrà il &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Paga mensilmente</string>
+  <string name="plans_pay_annually">Paga annualmente</string>
+  <string name="plans_pay_biennially">Paga ogni 2 anni</string>
+  <string name="plans_pay_other">Paga per %d mesi</string>
   <string name="plans_billed_yearly">*Fatturato annualmente il %s</string>
   <string name="plans_billed_monthly">Fatturato mensilmente</string>
   <string name="plans_billing_monthly">Per 1 mese</string>
@@ -134,7 +138,7 @@
   <string name="unlimited_folders_labels_filters" comment="new_plans">Cartelle, etichette e filtri illimitati</string>
   <string name="highest_vpn_speed" comment="new_plans">Massima velocità VPN</string>
   <string name="servers_in_countries" comment="new_plans">1500+ server in 63 paesi</string>
-  <string name="ad_blocker" comment="new_plans">Ad blocker Integrato (NetShield)</string>
+  <string name="ad_blocker" comment="new_plans">Ad-blocker Integrato (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Accedi ai servizi di streaming in tutto il mondo</string>
   <string name="secure_core" comment="new_plans">Server Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor su VPN</string>
@@ -143,7 +147,7 @@
   <string name="unlimited_devices">Dispositivi illimitati</string>
   <string name="integrated_2fa_authenticator">Autenticazione 2FA integrata</string>
   <string name="multiple_vaults">Molteplici casseforti</string>
-  <string name="unlimited_email_alias">Alias Hide-My-Email illimitati</string>
+  <string name="unlimited_email_alias">Alias Hide-my-email illimitati</string>
   <string name="custom_email_alias_domains">Domini personalizzati per alias email</string>
   <string name="multiple_forwarding_mailboxes">Molteplici caselle email d\'inoltro</string>
   <string name="priority_support">Assistenza prioritaria</string>

@@ -29,6 +29,10 @@
   <string name="plans_subscription">サブスクリプション</string>
   <string name="plans_renewal_date">プランは &lt;b&gt;%s&lt;/b&gt; に自動的に更新されます</string>
   <string name="plans_expiration_date">プランは &lt;b&gt;%s&lt;/b&gt; に期限切れになります</string>
+  <string name="plans_pay_monthly">月払い</string>
+  <string name="plans_pay_annually">年払い</string>
+  <string name="plans_pay_biennially">2年ごとに支払う</string>
+  <string name="plans_pay_other">%d ヶ月分の支払い</string>
   <string name="plans_billed_yearly">* 1 年毎に %s が請求されます</string>
   <string name="plans_billed_monthly">毎月請求されます</string>
   <string name="plans_billing_monthly">1 か月間</string>

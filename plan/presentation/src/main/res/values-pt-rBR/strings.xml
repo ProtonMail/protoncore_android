@@ -29,6 +29,10 @@
   <string name="plans_subscription">Assinatura</string>
   <string name="plans_renewal_date">Seu plano será automaticamente renovado em &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Seu plano expira em &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Pagar mensalmente</string>
+  <string name="plans_pay_annually">Pagar anualmente</string>
+  <string name="plans_pay_biennially">Pagar a cada 2 anos</string>
+  <string name="plans_pay_other">Pagar por %d meses</string>
   <string name="plans_billed_yearly">*Cobrado anualmente em %s</string>
   <string name="plans_billed_monthly">Cobrado mensalmente</string>
   <string name="plans_billing_monthly">Por 1 mês</string>

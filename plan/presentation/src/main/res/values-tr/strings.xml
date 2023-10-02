@@ -29,6 +29,10 @@
   <string name="plans_subscription">Abonelik</string>
   <string name="plans_renewal_date">Tarifeniz &lt;b&gt;%s&lt;/b&gt; tarihinde otomatik olarak yenilenecek</string>
   <string name="plans_expiration_date">Tarifeniz &lt;b&gt;%s&lt;/b&gt; tarihinde bitecek</string>
+  <string name="plans_pay_monthly">Aylık ödeme</string>
+  <string name="plans_pay_annually">Yıllık ödeme</string>
+  <string name="plans_pay_biennially">2 yılda bir ödeme</string>
+  <string name="plans_pay_other">%d aylık ödeme</string>
   <string name="plans_billed_yearly">*%s tutarında yıllık faturalanır</string>
   <string name="plans_billed_monthly">Aylık faturalanır</string>
   <string name="plans_billing_monthly">Bir aylık</string>

@@ -56,7 +56,9 @@
   <string name="payment_cc_list_item">%1$s - %2$s (validade %4$s/%3$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n/a</string>
+  <string name="payments_billing_monthly">Por 1 mês</string>
   <string name="payments_billing_yearly">Por 1 ano</string>
+  <string name="payments_billing_two_years">Por 2 anos</string>
   <string name="payment_use_google_pay_instead">Usar o Google Pay em vez disso</string>
   <string name="payment_use_credit_card_instead">Em vez disso, use um cartão de crédito/débito</string>
   <!-- endregion -->

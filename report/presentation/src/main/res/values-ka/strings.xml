@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">პრობლემის შესახებ შეტყობინება</string>
+  <string name="core_report_bug_close">დახურვა</string>
+  <string name="core_report_bug_subject_field_hint">საგანი</string>
+  <string name="core_report_bug_subject_field_required">შეიყვანეთ თემა</string>
+  <string name="core_report_bug_description_field_hint">რამე არასწორადაა? მინიმუმ 10 სიმბოლო</string>
+  <string name="core_report_bug_description_field_placeholder">აღწერეთ პრობლემა, რაც შეიძლება დაწვრილებით. თუ რამე შეცდომა ამოგიგდოთ, მოგვწერეთ, რა ეწერა.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">სულ ცოტა %d სიმბოლო</item>
+    <item quantity="other">სულ ცოტა %d სიმბოლო</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">დავხურო შეცდომის ანგარიში?</string>
+  <string name="core_report_bug_discard_changes_description">თუ ამ გვერდიდან გახვალთ, თქვენი ანგარიში არ შეინახება.</string>
+  <string name="core_report_bug_discard_changes_cancel">წერის გაგრძელება</string>
+  <string name="core_report_bug_discard_changes_confirm">შენახვის გარეშე დახურვა</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">მაქსიმუმ %d სიმბოლო</item>
+    <item quantity="other">მაქსიმუმ %d სიმბოლო</item>
+  </plurals>
+  <string name="core_report_bug_general_error">რაღაც არასწორად წავიდა. კიდევ სცადეთ.</string>
+  <string name="core_report_bug_send">ანგარიშის გაგზავნა</string>
+  <string name="core_report_bug_success">მადლობა ანგარიშისთვის</string>
+</resources>

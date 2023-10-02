@@ -29,6 +29,10 @@
   <string name="plans_subscription">Συνδρομή</string>
   <string name="plans_renewal_date">Το πρόγραμμά σας θα ανανεωθεί αυτόματα στις &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Το πρόγραμμά σας θα λήξει στις &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Μηνιαία πληρωμή</string>
+  <string name="plans_pay_annually">Ετήσια πληρωμή</string>
+  <string name="plans_pay_biennially">Πληρωμή κάθε 2 χρόνια</string>
+  <string name="plans_pay_other">Πληρωμή για %d μήνες</string>
   <string name="plans_billed_yearly">*Ετήσια χρέωση την %s</string>
   <string name="plans_billed_monthly">Μηνιαία χρέωση</string>
   <string name="plans_billing_monthly">Για 1 μήνα</string>

@@ -29,6 +29,10 @@
   <string name="plans_subscription">Передплата</string>
   <string name="plans_renewal_date">Ваш тарифний план автоматично поновиться &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Ваш тарифний план чинний до &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Pay monthly</string>
+  <string name="plans_pay_annually">Pay annually</string>
+  <string name="plans_pay_biennially">Pay every 2 years</string>
+  <string name="plans_pay_other">Pay for %d months</string>
   <string name="plans_billed_yearly">*Сплачується щороку %s</string>
   <string name="plans_billed_monthly">Сплачується щомісяця</string>
   <string name="plans_billing_monthly">На 1 місяць</string>

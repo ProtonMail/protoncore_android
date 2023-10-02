@@ -29,6 +29,10 @@
   <string name="plans_subscription">اشتراک</string>
   <string name="plans_renewal_date">طرح سرویس شما به صورت اتومات در &lt;b&gt;%s&lt;/b&gt; تمدید خواهد شد</string>
   <string name="plans_expiration_date">طرح سرویس شما در &lt;b&gt;%s&lt;/b&gt; منقضی خواهد شد</string>
+  <string name="plans_pay_monthly">Pay monthly</string>
+  <string name="plans_pay_annually">Pay annually</string>
+  <string name="plans_pay_biennially">Pay every 2 years</string>
+  <string name="plans_pay_other">Pay for %d months</string>
   <string name="plans_billed_yearly">صورتحساب سالانه به مقدار %s</string>
   <string name="plans_billed_monthly">صورتحساب ماهانه</string>
   <string name="plans_billing_monthly">برای ۱ ماه</string>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">დაიცავით კონფიდენციალობა Proton -ით</string>
+  <string name="welcome_subtitle">დაშიფვრა თქვენს მონაცემებს საიდუმლოდ ინახავს. თქვენი მონაცემები, მართლა, თქვენ გეკუთვნით.</string>
+  <string name="welcome_subtitle_mail">დაშიფრული ელფოსტა, რომელიც თქვენს საუბარს კონფიდენციალურად შეინახავს. თქვენი საფოსტო ყუთი, მხოლოდ, თქვენ გეკუთვნით.</string>
+  <string name="welcome_subtitle_mail_alt">კონფიდენციალობა. უსაფრთხოება. მოსახერხებლობა. დაშიფრული ელფოსტა, რომელიც თქვენს პირადი მონაცემების მართვის სრულ უფლებას გაძლევთ.</string>
+  <string name="welcome_subtitle_drive">ღრუბლოვანი საცავის მოხერხებულობა და დაშიფვრის ტექნოლოგიის უსაფრთხოება. ბოლოს და ბოლოს, ღრუბლოვანი საცავი, რომელსაც შეგიძლიათ, ენდოთ.</string>
+  <string name="welcome_subtitle_drive_alt">თქვენი ფაილების შენახვის ყველაზე უსაფრთხო გზა. ატვირთეთ, დასინქეთ და გააზიარეთ ფაილები ყველაზე ძლიერი შიფრაციით.</string>
+  <string name="welcome_subtitle_calendar">დაშიფრული კალენდარი, რომელიც თქვენს მოვლენებს პირადად და უსაფრთხოდ ინახავს.</string>
+  <string name="welcome_subtitle_calendar_alt">ჩვენი გამჭოლი შიფრაციით დაშიფრული კალენდარი საშუალებას გაძლევთ, დარჩეთ ორგანიზებული, ნაბიჯი აუწყოთ დროს და აკონტროლოთ სიტუაცია.</string>
+  <string name="welcome_subtitle_vpn">ჩქაროსნული შვეიცარიული VPN-ი, რომელიც იცავს თქვენს კონფიდენციალობას თქვენი ინტერნეტთან შეერთების დაშიფვრის საშუალებით.</string>
+  <string name="welcome_subtitle_vpn_alt">ჩქაროსნული შვეიცარიული VPN-ი, რომელიც იცავს თქვენს კონფიდენციალობას. მაქსიმალური დაცვა, 1600+ სერვერი, შეზღუდვების გარეშე.</string>
+  <string name="welcome_subtitle_pass">ყველა თქვენი პაროლი, ერთ ადგილას. დაცული ყველაზე სანდო სახელის მიერ.</string>
+  <string name="welcome_subtitle_pass_alt">ყველა თქვენი პაროლი, ერთ ადგილას. დაცული ყველაზე სანდო სახელის მიერ.</string>
+  <string name="welcome_privacy_by_default">ნაგულისხმები კონფიდენციალურობა</string>
+  <string name="auth_password_label">პაროლი</string>
+  <string name="auth_password_help">პაროლი 8 სიმბოლოს მაინც უნდა შეიცავდეს</string>
+  <string name="auth_current_login_password">შესვლის მიმდინარე პაროლი</string>
+  <string name="auth_enter_six_digit_code">შეიყვანეთ 6-ციფრიანი კოდი</string>
+  <string name="auth_second_factor_code">2FA კოდი</string>
+  <string name="auth_email">ელფოსტა</string>
+  <string name="auth_email_username">მომხმარებლის სახელი ან ელფოსტა</string>
+  <string name="auth_account_details">შეიყვანეთ თქვენი Proton-ის ანგარიშის დეტალები.</string>
+  <string name="auth_sign_in">შესვლა</string>
+  <string name="auth_sign_in_action">შესვლა</string>
+  <string name="auth_sign_in_sso">შედით თქვენს ორგანიზაციაში</string>
+  <string name="auth_sign_in_with_password">პაროლით შესვლა</string>
+  <string name="auth_continue_to_proton_vpn">Proton VPN-ზე გასაგრძელებლად</string>
+  <string name="auth_sign_in_with_sso">SSO-ით შესვლა</string>
+  <string name="auth_help_label">დახმარება</string>
+  <string name="auth_login_assistive_text">შეიყვანეთ Proton-ის ანგარიშის თქვენი ელფოსტის ან მომხმარებლის სახელი.</string>
+  <string name="auth_login_sso_assistive_text">შეიყვანეთ თქვენი ელფოსტა.</string>
+  <string name="auth_help_title">როგორ შეგვიძლია, დაგეხმაროთ?</string>
+  <string name="auth_help_option_forgot_username">დაგავიწყდათ თქვენი მომხმარებლის სახელი</string>
+  <string name="auth_help_option_forgot_password">დაგავიწყდათ პაროლი</string>
+  <string name="auth_help_option_other">შესვლის სხვა პრობლემები</string>
+  <string name="auth_help_other">ჯერ კიდევ გჭირდებათ დახმარება? პირდაპირ დაგვიკავშირდით.</string>
+  <string name="auth_help_option_customer_support">მხარდაჭერის გუნდი</string>
+  <string name="auth_2fa_title">2FA</string>
+  <string name="auth_2fa_label">2FA კოდი</string>
+  <string name="auth_2fa_recovery_code_label">აღდგენის კოდი</string>
+  <string name="auth_2fa_assistive_text">შეიყვანეთ 6-ციფრიანი კოდი.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">შეიყვანეთ აღდგენის 8-სიმბოლოიანი კოდი.</string>
+  <string name="auth_2fa_action">ავთენტიკაცია</string>
+  <string name="auth_2fa_use_recovery_code">აღდგენის კოდის გამოყენება</string>
+  <string name="auth_2fa_use_2fa_code">2FA კოდის გამოყენება</string>
+  <string name="auth_2fa_error_empty_code">შეიყვანეთ 6-ციფრიანი კოდი.</string>
+  <string name="auth_mailbox_title">განბლოკეთ თქვენი საფოსტო ყუთი</string>
+  <string name="auth_mailbox_password_label">საფოსტო ყუთის პაროლი</string>
+  <string name="auth_mailbox_unlock_action">განბლოკვა</string>
+  <string name="auth_forgot_password">დაგავიწყდათ პაროლი</string>
+  <string name="auth_login_general_error">ნაპოვნია შეცდომა.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-ის მისამართი აუცილებელია</string>
+  <string name="auth_login_external_account_unsupported_message">მიიღეთ Proton Mail-ის მისამართი, მიბმული ამ ანგარიშთან, Proton-ის ვებ-პარამეტრებში.</string>
+  <string name="auth_login_external_account_unsupported_help_action">გაიგეთ მეტი</string>
+  <string name="auth_login_empty_credentials">მომხმარებელი და პაროლი ცარიელი ვერ იქნება.</string>
+  <string name="auth_mailbox_empty_credentials">მომხმარებელი და პაროლი ცარიელი არ უნდა იყოს.</string>
+  <string name="auth_create_address_title">Proton-ის მისამართი აუცილებელია</string>
+  <string name="auth_create_address_subtitle">Proton Mail-ის და Proton Calendar-ის გამოსაყენებლად Proton-ის ელფოსტის მისამართი გჭირდებათ.%1$s-ის გამოყენება შესასვლელად და პაროლის აღსადგენად მაინც შეგიძლიათ.</string>
+  <string name="auth_username">მომხმარებლის სახელი</string>
+  <string name="auth_username_next_action">გაგრძელება</string>
+  <string name="auth_create_address_result_title">%s ხელმისაწვდომია</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s Proton Mail-ის თქვენი ახალი მისამართი იქნება.</string>
+  <string name="auth_create_address_result_subtitle">ეს მისამართი Proton-ის ყველა სერვისში შესასვლელად შეგიძლიათ, გამოიყენოთ.</string>
+  <string name="auth_create_address_result_recovery_title">თქვენი აღდგენის ელფოსტის მისამართია:</string>
+  <string name="auth_create_address_create">მისამართის შექმნა</string>
+  <string name="auth_create_address_creating">მისამართის შექმნა</string>
+  <string name="auth_create_address_terms">მისამართის შექმნაზე დაწკაპუნებით თქვენ Proton-ის <a href="https://proton.me/legal/terms">წესებსა და პირობებს</a> ეთანხმებით.</string>
+  <string name="auth_create_address_error_credentials">მომხმარებელი და პაროლი ცარიელი არ უნდა იყოს.</string>
+  <string name="auth_create_address_error_no_available_domain">ხელმისაწვდომი დომენის გარეშე.</string>
+  <string name="auth_create_address_error_private_key">პირადი გასაღების გენერაციის შეცდომა.</string>
+  <string name="auth_create_address_error_signed_key_list">გასაღებების სიის შედგენის შეცდომა.</string>
+  <string name="auth_create_address_error_setusername">მომხმარებლის სახელთან მიბმის შეცდომა.</string>
+  <string name="auth_create_address_error_username_unavailable">მომხმარებლის არჩეული სახელი ხელმიუწვდომელია.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">ძირითადი გასაღების გარეშე.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">ძირითადი გასაღების შეცდომა.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">არასწორი საკვანძო ფრაზა.</string>
+  <string name="auth_password_chooser_title">შეცვალეთ თქვენი პაროლი</string>
+  <string name="auth_password_chooser_description">Proton-ის აპის ორგანიზაციის წევრად გამოყენებისთვის ჯერ პაროლის შეცვლაა საჭირო. ამის გაკეთება Proton-ში ბრაუზერიდან შესვლით შეგიძლიათ.</string>
+  <string name="auth_password_chooser_change">პაროლის შეცვლა</string>
+  <string name="auth_user_check_one_free_error">დაშვებულია Proton-ის, მხოლოდ, ერთი ანგარიში.</string>
+  <string name="auth_user_check_delinquent_error">თქვენი ანგარიში შეჩერებულია გადაცილებული ინვოისის გამო.</string>
+  <string name="auth_user_check_delinquent_action">ინვოისის გადახდა</string>
+  <string name="auth_account_not_found_error">ანგარიშის შეცდომა</string>
+  <string name="auth_one_account_all_services">ერთი ანგარიში Proton-ის ყველა სერვისისთვის.</string>
+  <string name="auth_create_account">ანგარიშის შექმნა</string>
+  <string name="auth_long_signup">გთხოვთ, მოიცადოთ…</string>
+  <string name="auth_long_login">მიმდინარეობს შესვლა. გთხოვთ, მოითმინეთ…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Proton-ის თქვენი ანგარიშის შექმნა</string>
+  <string name="auth_signup_current_email">გამოიყენეთ თქვენი მიმდინარე ელ-ფოსტის მისამართი</string>
+  <string name="auth_signup_external_footnote">Proton-ის მისამართით Proton-ის ყველა სერვისის გამოყენება შეგიძლიათ</string>
+  <string name="auth_signup_internal_footnote">Proton Mail-ის და Proton Calendar-ის გამოსაყენებლად Proton-ის მისამართი დაგჭირდებათ</string>
+  <string name="auth_signup_create_secure_proton_address">მიიღეთ ახალი დაშიფრული ელფოსტის მისამართი</string>
+  <string name="auth_signup_username">მომხმარებლის სახელი</string>
+  <string name="auth_signup_domain">დომენი</string>
+  <string name="auth_signup_email">ელფოსტა</string>
+  <string name="auth_signup_next">შემდეგი</string>
+  <string name="auth_signup_choose_password">შექმენით თქვენი პაროლი</string>
+  <string name="auth_signup_repeat_password">გაიმეორეთ პაროლი</string>
+  <string name="auth_signup_recovery_method_title">აღდგენის მეთოდის დაყენება (არასავალდებულო)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">აღდგენის მეთოდის დაყენება</string>
+  <string name="auth_signup_recovery_method_subtitle">თუ ეს ანგარიში დაგებლოკებათ, აღდგენის ინსტრუქციები ამ ელფოსტაზე ან ტელეფონის ნომერზე იქნება გაგზავნილი.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">თუ ეს ანგარიში დაგებლოკებათ, აღდგენის ინსტრუქციები ამ ელფოსტაზე იქნება გაგზავნილი.</string>
+  <string name="auth_signup_recovery_method_email">ელფოსტა</string>
+  <string name="auth_signup_recovery_method_phone">ტელეფონი</string>
+  <string name="auth_signup_recovery_method_email_hint">აღდგენის ელფოსტა</string>
+  <string name="auth_signup_recovery_method_phone_hint">აღდგენის ტელეფონის ნომერი</string>
+  <string name="auth_signup_terms_conditions">პირობები და წესები</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">შემდეგ-ზე დაწკაპუნებით თქვენ Proton-ის<annotation link="terms">წესებს და პირობებს</annotation> ეთანხმებით.</string>
+  <string name="auth_signup_skip_recovery_title">გამოვტოვო აღდგენის მეთოდი?</string>
+  <string name="auth_signup_skip_recovery_description">აღდგენის მეთოდი, რომელიც დაგეხმარებათ თქვენს ანგარიშთან წვდომაში, თუ პაროლი დაგავიწყდათ ან ანგარიშის დაგებლოკათ.</string>
+  <string name="auth_signup_skip_recovery">გამოტოვება</string>
+  <string name="auth_signup_set_recovery">აღდგენის მეთოდის დაყენება</string>
+  <string name="auth_signup_no_connectivity">წესებისა და პირობების საჩვენებლად შეერთება არ არსებობს.</string>
+  <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>
+  <string name="auth_signup_error_passwords_do_not_match">პაროლები არ ემთხვევა.</string>
+  <string name="auth_signup_validation_password_length">პაროლი 8 სიმბოლო მაინც უნდა იყოს.</string>
+  <string name="auth_signup_validation_password">პაროლი ცარიელი არ შეიძლება, იყოს.</string>
+  <string name="auth_signup_your_account_is_being_setup">მიმდინარეობს თქვენი ანგარიშის შექმნა…</string>
+  <string name="auth_signup_please_wait">ჩვეულებრივ წუთზე მეტი არ სჭირდება ხოლმე.</string>
+  <string name="auth_signup_replacement_code">კოდი არ მიგიღიათ?</string>
+  <string name="auth_signup_verify">გადამოწმება</string>
+  <string name="auth_signup_verification_code">შემოწმების კოდი</string>
+  <string name="auth_signup_enter_code_subtitle">შეიყვანეთ %s-ზე გამოგზავნილი შემოწმების კოდი:</string>
+  <string name="auth_signup_error_human_verification_failed">თქვენი ადამიანად ყოფნის ფაქტის შემოწმების შეცდომა.</string>
+  <string name="auth_signup_congratulations_subtitle">Proton-ის თქვენი ანგარიში წარმატებით შეიქმნა.\nისიამოვნეთ კონფიდენციალური სამყაროთი.</string>
+  <string name="auth_signup_congratulations">გილოცავთ!</string>
+  <string name="auth_signup_start_using_proton">Proton -ის გამოყენების დაწყება</string>
+  <string name="auth_signup_start_using_calendar">Proton Calendar-ის გამოყენების დაწყება</string>
+  <string name="auth_signup_start_using_mail">Proton Mail-ის გამოყენების დაწყება</string>
+  <string name="auth_signup_start_using_drive">Proton Drive-ის გამოყენების დაწყება</string>
+  <string name="auth_signup_start_using_vpn">Proton VPN-ის გამოყენების დაწყება</string>
+  <string name="auth_signup_start_using_pass">Proton Pass-ის გამოყენების დაწყება</string>
+  <string name="auth_signup_error_validation_recovery_destination">აღდგენის დანიშნულება არასწორია.</string>
+</resources>

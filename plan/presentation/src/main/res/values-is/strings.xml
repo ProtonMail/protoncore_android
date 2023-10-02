@@ -29,6 +29,10 @@
   <string name="plans_subscription">Áskrift</string>
   <string name="plans_renewal_date">Áskriftin þín mun endurnýjast sjálfkrafa þann &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Your plan will expire on &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Pay monthly</string>
+  <string name="plans_pay_annually">Pay annually</string>
+  <string name="plans_pay_biennially">Pay every 2 years</string>
+  <string name="plans_pay_other">Pay for %d months</string>
   <string name="plans_billed_yearly">*Billed annually at %s</string>
   <string name="plans_billed_monthly">Billed monthly</string>
   <string name="plans_billing_monthly">Í 1 mánuð</string>

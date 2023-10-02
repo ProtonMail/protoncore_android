@@ -29,6 +29,10 @@
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Votre abonnement sera automatiquement renouvelé le &lt;b&gt;%s&lt;/b&gt;.</string>
   <string name="plans_expiration_date">Votre abonnement arrivera à expiration le &lt;b&gt;%s&lt;/b&gt;.</string>
+  <string name="plans_pay_monthly">Paiement mensuel</string>
+  <string name="plans_pay_annually">Paiement annuel</string>
+  <string name="plans_pay_biennially">Paiement tous les 2 ans</string>
+  <string name="plans_pay_other">Paiement tous les %d mois</string>
   <string name="plans_billed_yearly">*Facturé annuellement : %s</string>
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>
@@ -131,7 +135,7 @@
     <item>CHF</item>
   </string-array>
   <!-- region plans hardcoded texts -->
-  <string name="unlimited_folders_labels_filters" comment="new_plans">Dossiers, labels et filtres illimités</string>
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Nombre illimité de dossiers, de labels et de filtres</string>
   <string name="highest_vpn_speed" comment="new_plans">Vitesse VPN maximale</string>
   <string name="servers_in_countries" comment="new_plans">Plus de 1 500 serveurs dans 63 pays</string>
   <string name="ad_blocker" comment="new_plans">Bloqueur de publicités intégré (NetShield)</string>

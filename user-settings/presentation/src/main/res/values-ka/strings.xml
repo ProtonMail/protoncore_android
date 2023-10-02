@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">აღდგენის ელფოსტა</string>
+  <string name="settings_recovery_email_current">მიმდინარე აღდგენის ელფოსტის მისამართი</string>
+  <string name="settings_recovery_email_new">ახალი აღდგენის ელფოსტის მისამართი</string>
+  <string name="settings_recovery_email_confirm">დაადასტურეთ აღდგენის ელფოსტის მისამართი</string>
+  <string name="settings_recovery_email_new_hint">შეიყვანეთ ელფოსტის მისამართი</string>
+  <string name="settings_recovery_email_confirm_hint">თავიდან შეიყვანეთ ელფოსტის მისამართი</string>
+  <string name="settings_save">შენახვა</string>
+  <string name="settings_password_required">შეიყვანეთ თქვენი პაროლი</string>
+  <string name="settings_password_required_ok">დიახ</string>
+  <string name="settings_not_set">დაყენებული არაა</string>
+  <string name="settings_recovery_email_error_no_match">ახალი აღდგენის ელფოსტები ერთმანეთს არ ემთხვევა</string>
+  <string name="settings_validation_email">ელფოსტა არასწორია.</string>
+  <string name="settings_general_error">ნაპოვნია შეცდომა.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">პაროლის შეცვლა</string>
+  <string name="settings_password_management_change_mailbox_password">საფოსტო ყუთის პაროლის შეცვლა</string>
+  <string name="settings_password_management_header">პაროლების მართვა</string>
+  <string name="settings_login_password_hint_current">მიმდინარე შესვლის პაროლი</string>
+  <string name="settings_login_password_hint_new">ახალი პაროლი</string>
+  <string name="settings_login_password_hint_new_confirm">დაადასტურეთ შესვლის ახალი პაროლი</string>
+  <string name="settings_mailbox_password_hint_new">საფოსტო ყუთის ახალი პაროლი</string>
+  <string name="settings_mailbox_password_hint_new_confirm">დაადასტურეთ საფოსტო ყუთის ახალი პაროლი</string>
+  <string name="settings_change_password_error">შეცდომა პაროლის შეცვლისას.</string>
+  <string name="settings_recovery_email_success">აღდგენის ელფოსტა განახლდა</string>
+  <string name="settings_password_management_success">პაროლი განახლებულია</string>
+  <string name="settings_password_management_login_password_success">შესასვლელი პაროლი განახლდა</string>
+  <string name="settings_password_management_mailbox_password_success">საფოსტო ყუთის პაროლი განახლდა</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">ანონიმური ტელემეტრია</string>
+  <string name="device_settings_telemetry_hint">სერვისების გასაუმჯობესებლად ჩვენ ხანდახან გამოყენების მონაცემებს ანონიმურად ვაგროვებთ.</string>
+  <string name="device_settings_crashreport_title">აპლიკაციის ავარიის ანონიმური ანგარიშები</string>
+  <string name="device_settings_crashreport_hint">თუ აპი გაითიშება, ჩვენს ინჟინრებს მიუვათ ანგარიშის დეტალები, რატომ მოხდა ეს. ჩვენ ამ მონაცემებს, მხოლოდ, აპის გაუმჯობესებისთვის ვიყენებთ.</string>
+</resources>
