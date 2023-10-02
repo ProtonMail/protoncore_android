@@ -27,8 +27,7 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(21)
-    minLineCoveragePercentage.set(41)
+    minBranchCoveragePercentage.set(64)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -56,6 +55,7 @@ dependencies {
     testImplementation(
         `coroutines-test`,
         junit,
-        mockk
+        mockk,
+        turbine
     )
 }
