@@ -15,41 +15,27 @@
  * You should have received a copy of the GNU General Public License
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
 
-plugins {
-    protonAndroidLibrary
-}
+package me.proton.core.data.asset
 
-protonBuild {
-    apiModeDisabled()
-}
+import android.content.Context
+import android.content.res.AssetManager
+import io.mockk.every
+import io.mockk.mockk
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.data"
-}
-
-dependencies {
-    api(
-        project(Module.domain),
-        project(Module.networkDomain),
-        `coroutines-core`,
-        store4
-    )
-
-    implementation(
-        project(Module.kotlinUtil),
-        cache4k
-    )
-
-    testImplementation(
-        project(Module.kotlinTest),
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk
-    )
+class AssetReaderKtTest {
+    @Test
+    fun readsFromAssets() {
+        val assetName = "asset-name"
+        val text = "body"
+        val assetManager = mockk<AssetManager> {
+            every { open(assetName) } returns text.byteInputStream()
+        }
+        val context = mockk<Context> {
+            every { assets } returns assetManager
+        }
+        assertEquals(text, context.readFromAssets(assetName))
+    }
 }

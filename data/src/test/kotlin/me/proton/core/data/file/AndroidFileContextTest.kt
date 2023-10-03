@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -155,5 +155,14 @@ class AndroidFileContextTest {
         assertEquals(expected = null, actual = tested.readText(user1, item2))
         assertEquals(expected = null, actual = tested.readText(user2, item1))
         assertEquals(expected = null, actual = tested.readText(user2, item2))
+    }
+
+    @Test
+    fun overwriteFile() = runTest {
+        assertNotNull(tested.writeText(user1, item1, "data11"))
+        assertEquals(expected = "data11", actual = tested.readText(user1, item1))
+
+        assertNotNull(tested.writeText(user1, item1, "new-data11"))
+        assertEquals(expected = "new-data11", actual = tested.readText(user1, item1))
     }
 }
