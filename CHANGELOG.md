@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.0.1] - 2023-10-03
+
+### Bug Fixes
+
+- plan: On GetDynamicPlans error, fallback to empty Dynamic Plan Selection cycles and currencies.
+
 ## [17.0.0] - 2023-09-29
 
 ### Breaking Changes
