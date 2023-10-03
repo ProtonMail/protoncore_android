@@ -19,15 +19,22 @@
 package me.proton.core.key.data.repository
 
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.data.TestKeys
 import me.proton.core.key.data.api.KeyApi
+import me.proton.core.key.data.api.response.CreateAddressKeyResponse
+import me.proton.core.key.domain.entity.key.PrivateAddressKey
+import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.ApiManager
@@ -100,6 +107,106 @@ class PrivateKeyRepositoryImplTest {
                 organizationKey = "test-org-key"
             )
         }
+    }
+
+    @Test
+    fun `createAddressKey old`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { keyApi.createAddressKey(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        coEvery { keyApi.createAddressKeyOld(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        // WHEN & THEN
+        repository.createAddressKey(
+            sessionUserId = UserId(testUserId),
+            key = PrivateAddressKey(
+                "test-address-id",
+                PrivateKey(
+                    TestKeys.Key1.privateKey,
+                    isPrimary = true,
+                    passphrase = EncryptedByteArray(TestKeys.Key1.passphrase)
+                ),
+                token = null,
+                signature = "test-signature",
+                signedKeyList = mockk(relaxed = true)
+            )
+        )
+        coVerify(exactly = 1) { keyApi.createAddressKeyOld(any()) }
+        coVerify(exactly = 0) { keyApi.createAddressKey(any()) }
+    }
+
+    @Test
+    fun `createAddressKey old signature null`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { keyApi.createAddressKey(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        coEvery { keyApi.createAddressKeyOld(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        // WHEN & THEN
+        repository.createAddressKey(
+            sessionUserId = UserId(testUserId),
+            key = PrivateAddressKey(
+                "test-address-id",
+                PrivateKey(
+                    TestKeys.Key1.privateKey,
+                    isPrimary = true,
+                    passphrase = EncryptedByteArray(TestKeys.Key1.passphrase)
+                ),
+                token = "test-token",
+                signature = null,
+                signedKeyList = mockk(relaxed = true)
+            )
+        )
+        coVerify(exactly = 1) { keyApi.createAddressKeyOld(any()) }
+        coVerify(exactly = 0) { keyApi.createAddressKey(any()) }
+    }
+
+    @Test
+    fun `createAddressKey new`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { keyApi.createAddressKey(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        coEvery { keyApi.createAddressKeyOld(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        // WHEN & THEN
+        repository.createAddressKey(
+            sessionUserId = UserId(testUserId),
+            key = PrivateAddressKey(
+                "test-address-id",
+                PrivateKey(
+                    TestKeys.Key1.privateKey,
+                    isPrimary = true,
+                    passphrase = EncryptedByteArray(TestKeys.Key1.passphrase)
+                ),
+                token = "test-token",
+                signature = "test-signature",
+                signedKeyList = mockk(relaxed = true)
+            )
+        )
+        coVerify(exactly = 0) { keyApi.createAddressKeyOld(any()) }
+        coVerify(exactly = 1) { keyApi.createAddressKey(any()) }
+    }
+
+    @Test
+    fun `setup initial keys`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { keyApi.createAddressKey(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        coEvery { keyApi.createAddressKeyOld(any()) } returns CreateAddressKeyResponse(mockk(relaxed = true))
+        // WHEN & THEN
+        repository.setupInitialKeys(
+            sessionUserId = UserId(testUserId),
+            primaryKey = "test-primary-key",
+            primaryKeySalt = "test-primary-key-salt",
+            addressKeys = listOf(
+                PrivateAddressKey(
+                    "test-address-id",
+                    PrivateKey(
+                        TestKeys.Key1.privateKey,
+                        isPrimary = true,
+                        passphrase = EncryptedByteArray(TestKeys.Key1.passphrase)
+                    ),
+                    token = "test-token",
+                    signature = "test-signature",
+                    signedKeyList = mockk(relaxed = true)
+                )
+            ),
+            auth = Auth(1, "test-modulus", "test-salt", "test-verifier")
+        )
+        coVerify(exactly = 1) { keyApi.setupInitialKeys(any()) }
     }
 
 }

@@ -163,4 +163,45 @@ class PublicAddressRepositoryImplTest {
             publicAddressKeyDao.insertOrUpdate(*varargAll { it.publicKey in listOf("key2", "key3") })
         }
     }
+
+    @Test
+    fun `clear all`() = runTest {
+        val testEmail = "email"
+        coEvery { publicAddressDao.deleteAll() } returns Unit
+        coEvery {
+            keyApi.getPublicAddressKeys(testEmail, any())
+        } returns mockk {
+            every { toPublicAddress(testEmail) } returns mockk(relaxed = true) {
+                every { email } returns testEmail
+                every { keys } returns listOf(
+                    mockk(relaxed = true) {
+                        every { email } returns testEmail
+                        every { publicKey.key } returns "key2"
+                    },
+                    mockk(relaxed = true) {
+                        every { email } returns testEmail
+                        every { publicKey.key } returns "key3"
+                    }
+                )
+            }
+        }
+        repositoryImpl.clearAll()
+        coVerify(exactly = 1) { publicAddressDao.deleteAll() }
+    }
+
+    @Test
+    fun `get skl at epoch`() = runTest {
+        val testEmail = "email"
+        coEvery { keyApi.getSKLAtEpoch(testEmail, 1) } returns mockk(relaxed = true)
+        repositoryImpl.getSKLAtEpoch(testUserId, 1, testEmail)
+        coVerify { keyApi.getSKLAtEpoch(testEmail, 1) }
+    }
+
+    @Test
+    fun `get skl after epoch`() = runTest {
+        val testEmail = "email"
+        coEvery { keyApi.getSKLsAfterEpoch(testEmail, 1) } returns mockk(relaxed = true)
+        repositoryImpl.getSKLsAfterEpoch(testUserId, 1, testEmail)
+        coVerify { keyApi.getSKLsAfterEpoch(testEmail, 1) }
+    }
 }
