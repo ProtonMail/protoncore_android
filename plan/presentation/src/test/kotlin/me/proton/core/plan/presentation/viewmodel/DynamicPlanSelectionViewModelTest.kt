@@ -88,6 +88,37 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
+    fun stateReturnCorrectCycleAndCurrencies() = runTest {
+        // Given
+        mutableUserIdFlow.emit(userId1)
+        // When
+        tested.state.test {
+            // Then
+            assertIs<State.Loading>(awaitItem())
+            val state = awaitItem()
+            assertIs<State.Idle>(state)
+            assertEquals(expected = listOf("CHF", "EUR", "USD"), actual = state.planFilters.currencies)
+            assertEquals(expected = listOf(1, 12), actual = state.planFilters.cycles)
+        }
+    }
+
+    @Test
+    fun onGetDynamicPlansErrorReturnEmptyCycleAndCurrencies() = runTest {
+        // Given
+        coEvery { getDynamicPlans.invoke(any()) } throws Throwable()
+        mutableUserIdFlow.emit(userId1)
+        // When
+        tested.state.test {
+            // Then
+            assertIs<State.Loading>(awaitItem())
+            val state = awaitItem()
+            assertIs<State.Idle>(state)
+            assertEquals(expected = emptyList(), actual = state.planFilters.currencies)
+            assertEquals(expected = emptyList(), actual = state.planFilters.cycles)
+        }
+    }
+
+    @Test
     fun stateReturnCurrenciesForUser1() = runTest {
         // Given
         mutableUserIdFlow.emit(userId1)

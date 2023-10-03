@@ -82,15 +82,15 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         .flatMapLatest { observeState(it) }
 
     private fun observeFilters(userId: UserId?) = observeUserCurrency(userId).mapLatest { userCurrency ->
-        val dynamicPlans = getDynamicPlans(userId)
-        val instances = dynamicPlans.plans.flatMap { it.instances.values }
+        val dynamicPlans = runCatching { getDynamicPlans(userId) }.getOrNull()
+        val instances = dynamicPlans?.plans?.flatMap { it.instances.values }.orEmpty()
         val instancesCycles = instances.map { it.cycle }.toSortedSet().toList()
         val instanceCurrencies = instances.flatMap { it.price.keys }.toSet().toList()
         val currencies = when {
             instanceCurrencies.contains(userCurrency) -> listOf(userCurrency) + (instanceCurrencies - userCurrency)
             else -> instanceCurrencies
         }
-        DynamicPlanFilters(userId, dynamicPlans.defaultCycle, instancesCycles, currencies)
+        DynamicPlanFilters(userId, dynamicPlans?.defaultCycle ?: 0, instancesCycles, currencies)
     }
 
     private fun observeState(filters: DynamicPlanFilters) = combine(
