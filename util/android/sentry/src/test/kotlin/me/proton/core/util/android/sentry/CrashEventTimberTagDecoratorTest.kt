@@ -22,6 +22,8 @@ import io.sentry.Hint
 import io.sentry.SentryEvent
 import io.sentry.protocol.Mechanism
 import io.sentry.protocol.SentryException
+import io.sentry.protocol.SentryStackFrame
+import io.sentry.protocol.SentryStackTrace
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -36,7 +38,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             TAG_UNCAUGHT_EXCEPTION,
             tested.process(
-                event(exceptionModules = listOf("module1", "module2")),
+                event(exceptionStacktraceModules = listOf("module1", "module2")),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -44,7 +46,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             TAG_UNCAUGHT_EXCEPTION,
             tested.process(
-                event(exceptionModules = listOf(null, "module2")),
+                event(exceptionStacktraceModules = listOf(null, "module2")),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -57,7 +59,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             TAG_UNCAUGHT_EXCEPTION,
             tested.process(
-                event(exceptionModules = listOf("module1", "allowed")),
+                event(exceptionStacktraceModules = listOf("module1", "allowed")),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -65,7 +67,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             null,
             tested.process(
-                event(exceptionModules = listOf("module1", null, "module2")),
+                event(exceptionStacktraceModules = listOf("module1", null, "module2")),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -73,7 +75,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             TAG_UNCAUGHT_EXCEPTION,
             tested.process(
-                event(exceptionModules = listOf(null, "allowed")),
+                event(exceptionStacktraceModules = listOf(null, "allowed")),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -85,7 +87,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             null,
             tested.process(
-                event(isHandledException = true, exceptionModules = listOf("module1")),
+                event(isHandledException = true, exceptionStacktraceModules = listOf("module1")),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -99,7 +101,7 @@ class CrashEventTimberTagDecoratorTest {
             tested.process(
                 event(
                     originalTimberTag = "original",
-                    exceptionModules = listOf("module1")
+                    exceptionStacktraceModules = listOf("module1")
                 ), emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -111,7 +113,7 @@ class CrashEventTimberTagDecoratorTest {
         assertEquals(
             null,
             tested.process(
-                event(exceptionModules = null),
+                event(exceptionStacktraceModules = null),
                 emptyHint
             ).getTag(TIMBER_LOGGER_TAG)
         )
@@ -120,15 +122,17 @@ class CrashEventTimberTagDecoratorTest {
     private fun event(
         isHandledException: Boolean = false,
         originalTimberTag: String? = null,
-        exceptionModules: List<String?>?
+        exceptionStacktraceModules: List<String?>?
     ): SentryEvent =
         SentryEvent().apply {
-            exceptions = exceptionModules?.map { moduleName ->
-                SentryException().apply {
+            exceptions = if (exceptionStacktraceModules != null) {
+                listOf(SentryException().apply {
                     mechanism = Mechanism().apply { isHandled = isHandledException }
-                    module = moduleName
-                }
-            }
+                    stacktrace = SentryStackTrace(exceptionStacktraceModules.map {
+                        SentryStackFrame().apply { module = it }
+                    })
+                })
+            } else null
             originalTimberTag?.let { setTag(TIMBER_LOGGER_TAG, it) }
         }
 }

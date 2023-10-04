@@ -39,8 +39,8 @@ public class CrashEventTimberTagDecorator(
             return event
         }
 
-        (event.exceptions ?: emptyList()).mapNotNull {
-            it.module
+        event.exceptions.orEmpty().flatMap {
+            it.stacktrace?.frames.orEmpty().mapNotNull { frame -> frame.module }
         }.firstOrNull { module ->
             allowedModulePrefixes.any { prefix -> module.startsWith(prefix) }
         }?.let {
