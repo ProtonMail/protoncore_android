@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.0.2] - 2023-10-04
+
+### Bug Fixes
+
+- Fixed Dynamic Upgrade Plan Fragment (orientation changed).
+- Fixed Dynamic Entitlement Icon Url with double slash.
+
 ## [17.0.1] - 2023-10-03
 
 ### Bug Fixes
