@@ -24,6 +24,8 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onEach
@@ -99,7 +101,11 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
             }
         }.launchInViewLifecycleScope()
 
-        upgradeAvailable.onEach { onUpgradeAvailableChanged() }.launchInViewLifecycleScope()
+        upgradeAvailable
+            // Wait RESUMED state to access binding fragments.
+            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
+            .onEach { onUpgradeAvailableChanged() }
+            .launchInViewLifecycleScope()
 
         binding.toolbar.setNavigationOnClickListener { onBackClicked?.invoke() }
         binding.retry.onClick { viewModel.perform(Action.Load) }
