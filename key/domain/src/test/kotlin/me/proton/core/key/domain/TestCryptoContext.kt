@@ -545,7 +545,8 @@ open class TestCryptoContext : CryptoContext {
         override suspend fun getCurrentTime(): Long = 0
 
         override fun isPublicKey(key: Armored): Boolean = key.contains("privateKey")
-        override fun isPrivateKey(key: Armored): Boolean = key.contains("privateKey")
+        override fun isPrivateKey(key: Armored): Boolean =
+            key.contains("privateKey")
         override fun isValidKey(key: Armored): Boolean = key.contains("privateKey")
     }
 

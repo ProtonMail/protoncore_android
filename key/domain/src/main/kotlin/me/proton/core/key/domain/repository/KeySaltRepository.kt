@@ -21,7 +21,9 @@ package me.proton.core.key.domain.repository
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PrivateKeySalt
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage // excluded because of the default value in getKeySalts. we do not test interfaces.
 interface KeySaltRepository {
     /**
      * Get [PrivateKeySalt] list, using [sessionUserId].

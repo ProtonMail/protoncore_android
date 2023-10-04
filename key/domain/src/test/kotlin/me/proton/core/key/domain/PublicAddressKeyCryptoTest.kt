@@ -18,6 +18,7 @@
 
 package me.proton.core.key.domain
 
+import me.proton.core.crypto.common.pgp.SessionKey
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.key.domain.entity.key.PublicAddress
@@ -111,5 +112,42 @@ class PublicAddressKeyCryptoTest {
         val signature = context.pgpCrypto.signText(message, unlockedKey.value)
         val verified = publicAddress2.verifyText(context, message, signature)
         assertFalse(verified)
+    }
+
+    @Test
+    fun publicKey_verifyData_default() {
+        val signature = context.pgpCrypto.signText(message, unlockedKey.value)
+        val verified = publicAddress1.verifyData(context, "message".toByteArray(), signature)
+        assertTrue(verified)
+    }
+
+    @Test
+    fun publicAddress_encryptData() {
+        val testData = "message".toByteArray()
+        val result = publicAddress1.encryptData(context, testData)
+        assertNotNull(result)
+    }
+
+    @Test
+    fun publicAddress_encryptSessionKey() {
+        val sessionKey = SessionKey("key".toByteArray())
+        val result = publicAddress1.encryptSessionKey(context, sessionKey)
+        assertNotNull(result)
+    }
+
+    @Test
+    fun publicAddress_getVerifiedTimestampOfText() {
+        val testData = "message"
+        val signature = context.pgpCrypto.signText(message, unlockedKey.value)
+        val result = publicAddress1.getVerifiedTimestampOfText(context, testData, signature)
+        assertNotNull(result)
+    }
+
+    @Test
+    fun publicAddress_getVerifiedTimestampOfData() {
+        val testData = "message".toByteArray()
+        val signature = context.pgpCrypto.signText(message, unlockedKey.value)
+        val result = publicAddress1.getVerifiedTimestampOfData(context, testData, signature)
+        assertNotNull(result)
     }
 }

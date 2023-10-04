@@ -22,7 +22,9 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage // excluded because of the default value in getPublicAddress. we do not test interfaces.
 interface PublicAddressRepository {
     /**
      * Get [PublicAddress], by [email], using [sessionUserId].

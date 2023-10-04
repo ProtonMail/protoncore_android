@@ -29,8 +29,8 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(25)
-    minLineCoveragePercentage.set(52)
+    minBranchCoveragePercentage.set(58)
+    minLineCoveragePercentage.set(90)
 }
 
 android {

@@ -27,25 +27,15 @@ import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKeySalt
 import me.proton.core.test.kotlin.assertIs
 import org.junit.After
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 
 class KeySaltMapperKtTest {
 
     // region test data
     private val testUserId = UserId("test-user-id")
     // endregion
-
-    @Before
-    fun beforeEveryTest() {
-        mockkStatic("me.proton.core.key.data.extension.KeySaltMapperKt")
-    }
-
-    @After
-    fun afterEveryTest() {
-        unmockkStatic("me.proton.core.key.data.extension.KeySaltMapperKt")
-    }
 
     @Test
     fun `keySaltEntity to PrivateKeySalt`() {
@@ -58,6 +48,7 @@ class KeySaltMapperKtTest {
 
     @Test
     fun `keySaltEntity list to PrivateKeySalt`() {
+        mockkStatic("me.proton.core.key.data.extension.KeySaltMapperKt")
         val keySaltEntity = KeySaltEntity(testUserId, KeyId("test-key-id"), "test-key-salt")
         val keySaltEntityList = listOf(keySaltEntity)
         val result = keySaltEntityList.toPrivateKeySaltList()
@@ -67,6 +58,7 @@ class KeySaltMapperKtTest {
         val privateKeySaltResult = result[0]
         assertEquals(privateKeySaltResult.keySalt, "test-key-salt")
         assertEquals(privateKeySaltResult.keyId, KeyId("test-key-id"))
+        unmockkStatic("me.proton.core.key.data.extension.KeySaltMapperKt")
     }
 
     @Test
