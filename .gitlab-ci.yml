@@ -23,6 +23,10 @@ include:
     ref: main
     file: '/scenarios/pipeline-env.yml'
 
+default:
+  tags:
+    - shared-small
+
 workflow:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
@@ -58,7 +62,7 @@ variables:
 ## pre stage #######################################################################################
 prepare-environment:
   tags:
-    - small
+    - shared-small
   extends: .script-job
   stage: prepare
   when: always
@@ -272,7 +276,7 @@ pass-integration-tests:
     EXTRA_OPTIONS: ""
     FLAKY_TEST_RERUN: "0"
   tags:
-    - medium
+    - shared-medium
   allow_failure: false
   script:
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
@@ -409,7 +413,7 @@ trigger-new-libs-release:
   when: manual
   resource_group: release/libs
   tags:
-    - small
+    - shared-small
   variables:
     NEXT_VERSION: '' # If empty, the version will be automatically calculated.
   before_script:
@@ -423,7 +427,7 @@ trigger-new-libs-release:
 release-publish-github:
   stage: publish
   tags:
-    - small
+    - shared-small
   variables:
     RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
     RELEASE_SYNC_TO_BRANCH: 'main'
@@ -487,7 +491,7 @@ tag-gradle-plugins-release:
 ## review stage ######################################################################################
 danger-review:
   tags:
-    - medium
+    - shared-medium
   extends: .ruby-job
   stage: review
   when: always

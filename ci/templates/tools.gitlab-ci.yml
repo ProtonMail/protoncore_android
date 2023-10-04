@@ -7,7 +7,7 @@ deploy-build-tools:
   dependencies: [ ]
   allow_failure: true
   tags:
-    - medium
+    - shared-medium
   script:
     - cd $CI_PROJECT_DIR/tools && ./gradlew --no-daemon build shadowJar
     - 'curl --header "JOB-TOKEN: $CI_JOB_TOKEN" --upload-file "$CI_PROJECT_DIR/tools/conventional-commits/build/libs/conventional-commits-all.jar" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/packages/generic/conventional-commits/0.0.1/conventional-commits.jar"'
