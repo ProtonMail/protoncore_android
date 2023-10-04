@@ -33,5 +33,5 @@ class PlanIconsEndpointProviderImpl @Inject constructor(
     override fun get(): String = when (networkPrefs.activeAltBaseUrl) {
         null -> "$baseProtonApiUrl/payments/v5/resources/icons/"
         else -> "${networkPrefs.activeAltBaseUrl}/payments/v5/resources/icons/"
-    }
+    }.replace("//", "/")
 }

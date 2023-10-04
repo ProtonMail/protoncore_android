@@ -71,7 +71,7 @@ fun DynamicEntitlementResource.toDynamicPlanEntitlement(iconsEndpoint: String): 
     when (this) {
         is DynamicEntitlementResource.Description -> DynamicEntitlement.Description(
             text = text ?: requireNotNull(description),
-            iconUrl = "$iconsEndpoint/$iconName",
+            iconUrl = "$iconsEndpoint/$iconName".replace("//", "/"),
             hint = hint
         )
 
