@@ -1,7 +1,6 @@
 .gradle-job:
   before_script:
     - source /load-env.sh
-  image: ${CI_REGISTRY}/android/shared/docker-android/ndk:v1.2.0
   tags:
     - xlarge-k8s
   cache:
@@ -11,7 +10,6 @@
       - .gradle/configuration-cache
 
 .ruby-job:
-  image: ${CI_REGISTRY}/android/shared/docker-android/ndk:v1.2.0
   variables:
     BUNDLE_GEM_PATH: 'vendor/ruby'
   cache:
@@ -28,5 +26,4 @@
     - bundle install
 
 .script-job:
-  image: ${CI_REGISTRY}/android/shared/docker-android/ndk:v1.2.0
   cache: []
