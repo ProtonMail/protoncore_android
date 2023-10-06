@@ -43,7 +43,6 @@ dependencies {
         project(Module.cryptoCommon),
         project(Module.domain),
         project(Module.networkDomain),
-        project(Module.observabilityDomain),
         project(Module.paymentDomain),
         project(Module.userDomain),
         `javax-inject`,
@@ -54,7 +53,6 @@ dependencies {
     implementation(
         project(Module.keyDomain),
         project(Module.kotlinUtil),
-        project(Module.observabilityDomain),
         `coroutines-core`,
     )
 

@@ -24,9 +24,6 @@ import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.payment.domain.entity.Subscription
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User

@@ -20,6 +20,10 @@ package me.proton.core.observability.domain.metrics.common
 
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.hasProtonErrorCode
+
+internal fun Result<*>.hasProtonErrorCode(code: Int): Boolean =
+    exceptionOrNull()?.hasProtonErrorCode(code) == true
 
 internal fun Result<*>.isHttpError(httpCode: Int): Boolean =
     ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)?.httpCode == httpCode

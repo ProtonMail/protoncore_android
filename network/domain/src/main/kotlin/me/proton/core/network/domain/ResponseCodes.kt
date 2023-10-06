@@ -28,6 +28,7 @@ object ResponseCodes {
     const val VALUE_OUT_OF_BOUNDS = 2003
     const val NOT_SAME_AS_FIELD = 2010
     const val NOT_ALLOWED = 2011
+    const val BANNED = 2028
     const val CURRENCY_FORMAT = 2053
     const val NOT_EXISTS = 2501
     const val APP_VERSION_BAD = 5003
@@ -39,6 +40,9 @@ object ResponseCodes {
     const val AUTH_SWITCH_TO_SRP = 8101
     const val HUMAN_VERIFICATION_REQUIRED = 9001
     const val DEVICE_VERIFICATION_REQUIRED = 9002 // new error code for device verification
+    const val ACCOUNT_FAILED_GENERIC = 10_001
+    const val ACCOUNT_DELETED = 10_002
+    const val ACCOUNT_DISABLED = 10_003
     const val USER_CREATE_NAME_INVALID = 12_081
     const val USER_CREATE_TOKEN_INVALID = 12_087
     const val USER_EXISTS_USERNAME_ALREADY_USED = 12_106

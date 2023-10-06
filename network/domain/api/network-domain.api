@@ -268,11 +268,15 @@ public final class me/proton/core/network/domain/NetworkStatus : java/lang/Enum 
 }
 
 public final class me/proton/core/network/domain/ResponseCodes {
+	public static final field ACCOUNT_DELETED I
+	public static final field ACCOUNT_DISABLED I
+	public static final field ACCOUNT_FAILED_GENERIC I
 	public static final field API_VERSION_INVALID I
 	public static final field APP_VERSION_BAD I
 	public static final field APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS I
 	public static final field AUTH_SWITCH_TO_SRP I
 	public static final field AUTH_SWITCH_TO_SSO I
+	public static final field BANNED I
 	public static final field BODY_PARSE_FAILURE I
 	public static final field CURRENCY_FORMAT I
 	public static final field DEVICE_VERIFICATION_REQUIRED I

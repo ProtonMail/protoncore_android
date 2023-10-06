@@ -26,15 +26,10 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.just
 import io.mockk.mockk
 import io.mockk.runs
-import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.SignupUsernameAvailabilityTotal
-import me.proton.core.observability.domain.metrics.common.HttpApiStatus
-import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import kotlin.test.BeforeTest
