@@ -127,12 +127,661 @@
             "type": "timeseries"
         },
         {
-            "collapsed": false,
             "gridPos": {
                 "h": 1,
                 "w": 24,
                 "x": 0,
                 "y": 8
+            },
+            "id": 63,
+            "title": "Dynamic Plan/Subscription",
+            "type": "row"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 25,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 9
+            },
+            "id": 64,
+            "interval": "15m",
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_checkout_dynamicPlans_getDynamicPlans_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "Successes",
+                    "range": true,
+                    "refId": "S"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_checkout_dynamicPlans_getDynamicPlans_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "Failures",
+                    "range": true,
+                    "refId": "F"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$sf_availability",
+                    "hide": false,
+                    "refId": "Availability",
+                    "type": "math"
+                }
+            ],
+            "title": "Get Dynamic Plans - availability/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 9
+            },
+            "id": 65,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(status) (increase(client_android_core_checkout_dynamicPlans_getDynamicPlans_total{status=\"http2xx\"}[$increase_interval]))",
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Get Dynamic Plans - successes/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 9
+            },
+            "id": 66,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(status) (increase(client_android_core_checkout_dynamicPlans_getDynamicPlans_total{status!=\"http2xx\"}[$increase_interval]))",
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Get Dynamic Plans - failures/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "description": "",
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 25,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineStyle": {
+                            "fill": "solid"
+                        },
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": true,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "normal"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 0,
+                "y": 17
+            },
+            "id": 67,
+            "interval": "15m",
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "multi",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_checkout_dynamicPlans_getDynamicSubscription_total{status=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "Successes",
+                    "range": true,
+                    "refId": "S"
+                },
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "code",
+                    "expr": "sum(increase(client_android_core_checkout_dynamicPlans_getDynamicSubscription_total{status!=\"http2xx\"}[$increase_interval])) or vector(0)",
+                    "hide": true,
+                    "interval": "$increase_interval",
+                    "legendFormat": "Failures",
+                    "range": true,
+                    "refId": "F"
+                },
+                {
+                    "datasource": {
+                        "type": "__expr__",
+                        "uid": "__expr__"
+                    },
+                    "expression": "$sf_availability",
+                    "hide": false,
+                    "refId": "Availability",
+                    "type": "math"
+                }
+            ],
+            "title": "Get Dynamic Subscription - availability/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 8,
+                "y": 17
+            },
+            "id": 68,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(status) (increase(client_android_core_checkout_dynamicPlans_getDynamicSubscription_total{status=\"http2xx\"}[$increase_interval]))",
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Get Dynamic Subscription - successes/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "datasource": {
+                "type": "prometheus",
+                "uid": "prometheus"
+            },
+            "fieldConfig": {
+                "defaults": {
+                    "color": {
+                        "mode": "palette-classic"
+                    },
+                    "custom": {
+                        "axisCenteredZero": false,
+                        "axisColorMode": "text",
+                        "axisLabel": "",
+                        "axisPlacement": "auto",
+                        "barAlignment": 0,
+                        "drawStyle": "line",
+                        "fillOpacity": 0,
+                        "gradientMode": "none",
+                        "hideFrom": {
+                            "legend": false,
+                            "tooltip": false,
+                            "viz": false
+                        },
+                        "lineInterpolation": "linear",
+                        "lineWidth": 1,
+                        "pointSize": 5,
+                        "scaleDistribution": {
+                            "type": "linear"
+                        },
+                        "showPoints": "auto",
+                        "spanNulls": false,
+                        "stacking": {
+                            "group": "A",
+                            "mode": "none"
+                        },
+                        "thresholdsStyle": {
+                            "mode": "off"
+                        }
+                    },
+                    "mappings": [
+                    ],
+                    "thresholds": {
+                        "mode": "absolute",
+                        "steps": [
+                            {
+                                "color": "green",
+                                "value": null
+                            },
+                            {
+                                "color": "red",
+                                "value": 80
+                            }
+                        ]
+                    }
+                },
+                "overrides": [
+                ]
+            },
+            "gridPos": {
+                "h": 8,
+                "w": 8,
+                "x": 16,
+                "y": 17
+            },
+            "id": 69,
+            "options": {
+                "legend": {
+                    "calcs": [
+                    ],
+                    "displayMode": "list",
+                    "placement": "bottom",
+                    "showLegend": true
+                },
+                "tooltip": {
+                    "mode": "single",
+                    "sort": "none"
+                }
+            },
+            "targets": [
+                {
+                    "datasource": {
+                        "type": "prometheus",
+                        "uid": "prometheus"
+                    },
+                    "editorMode": "builder",
+                    "expr": "sum by(status) (increase(client_android_core_checkout_dynamicPlans_getDynamicSubscription_total{status!=\"http2xx\"}[$increase_interval]))",
+                    "interval": "$increase_interval",
+                    "legendFormat": "__auto",
+                    "range": true,
+                    "refId": "A"
+                }
+            ],
+            "title": "Get Dynamic Subscription - failures/$increase_interval",
+            "type": "timeseries"
+        },
+        {
+            "collapsed": false,
+            "gridPos": {
+                "h": 1,
+                "w": 24,
+                "x": 0,
+                "y": 25
             },
             "id": 23,
             "panels": [
@@ -209,7 +858,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 9
+                "y": 26
             },
             "id": 24,
             "interval": "15m",
@@ -330,7 +979,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 9
+                "y": 26
             },
             "id": 25,
             "options": {
@@ -426,7 +1075,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 9
+                "y": 26
             },
             "id": 26,
             "options": {
@@ -525,7 +1174,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 17
+                "y": 34
             },
             "id": 27,
             "options": {
@@ -645,7 +1294,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 17
+                "y": 34
             },
             "id": 28,
             "options": {
@@ -741,7 +1390,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 17
+                "y": 34
             },
             "id": 29,
             "options": {
@@ -780,7 +1429,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 25
+                "y": 42
             },
             "id": 31,
             "panels": [
@@ -833,8 +1482,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -953,8 +1601,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -1049,8 +1696,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -1148,8 +1794,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -1268,8 +1913,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -1364,8 +2008,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -1424,7 +2067,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 26
+                "y": 43
             },
             "id": 39,
             "panels": [
@@ -1498,7 +2141,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 27
+                "y": 44
             },
             "id": 48,
             "options": {
@@ -1618,7 +2261,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 27
+                "y": 44
             },
             "id": 47,
             "options": {
@@ -1714,7 +2357,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 27
+                "y": 44
             },
             "id": 46,
             "options": {
@@ -1813,7 +2456,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 35
+                "y": 52
             },
             "id": 49,
             "options": {
@@ -1935,7 +2578,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 35
+                "y": 52
             },
             "id": 50,
             "options": {
@@ -2031,7 +2674,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 35
+                "y": 52
             },
             "id": 51,
             "options": {
@@ -2129,7 +2772,7 @@
                 "h": 6,
                 "w": 24,
                 "x": 0,
-                "y": 43
+                "y": 60
             },
             "id": 61,
             "options": {
@@ -2213,8 +2856,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2231,7 +2873,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 49
+                "y": 66
             },
             "id": 52,
             "options": {
@@ -2345,8 +2987,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2363,7 +3004,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 49
+                "y": 66
             },
             "id": 53,
             "options": {
@@ -2442,8 +3083,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2459,7 +3099,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 49
+                "y": 66
             },
             "id": 54,
             "options": {
@@ -2541,8 +3181,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2558,7 +3197,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 57
+                "y": 74
             },
             "id": 55,
             "options": {
@@ -2841,8 +3480,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2859,7 +3497,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 57
+                "y": 74
             },
             "id": 56,
             "options": {
@@ -2938,8 +3576,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -2955,7 +3592,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 57
+                "y": 74
             },
             "id": 57,
             "options": {
@@ -3037,8 +3674,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3054,7 +3690,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 65
+                "y": 82
             },
             "id": 40,
             "options": {
@@ -3157,8 +3793,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3174,7 +3809,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 65
+                "y": 82
             },
             "id": 41,
             "options": {
@@ -3253,8 +3888,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3270,7 +3904,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 65
+                "y": 82
             },
             "id": 42,
             "options": {
@@ -3352,8 +3986,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3369,7 +4002,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 73
+                "y": 90
             },
             "id": 43,
             "interval": "15m",
@@ -3473,8 +4106,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3490,7 +4122,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 73
+                "y": 90
             },
             "id": 44,
             "options": {
@@ -3583,8 +4215,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3600,7 +4231,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 73
+                "y": 90
             },
             "id": 45,
             "options": {
@@ -3696,8 +4327,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3713,7 +4343,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 0,
-                "y": 81
+                "y": 98
             },
             "id": 58,
             "interval": "15m",
@@ -3818,8 +4448,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3836,7 +4465,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 8,
-                "y": 81
+                "y": 98
             },
             "id": 59,
             "options": {
@@ -3915,8 +4544,7 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green",
-                                "value": null
+                                "color": "green"
                             },
                             {
                                 "color": "red",
@@ -3932,7 +4560,7 @@
                 "h": 8,
                 "w": 8,
                 "x": 16,
-                "y": 81
+                "y": 98
             },
             "id": 60,
             "options": {
@@ -3971,7 +4599,7 @@
                 "h": 1,
                 "w": 24,
                 "x": 0,
-                "y": 89
+                "y": 106
             },
             "id": 2,
             "panels": [
@@ -4024,8 +4652,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4144,8 +4771,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4240,8 +4866,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4339,8 +4964,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4458,8 +5082,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4554,8 +5177,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4653,8 +5275,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4772,8 +5393,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4868,8 +5488,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -4967,8 +5586,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -5086,8 +5704,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -5182,8 +5799,7 @@
                                 "mode": "absolute",
                                 "steps": [
                                     {
-                                        "color": "green",
-                                        "value": null
+                                        "color": "green"
                                     },
                                     {
                                         "color": "red",
@@ -5238,7 +5854,7 @@
         }
     ],
     "refresh": "1m",
-    "schemaVersion": 38,
+    "schemaVersion": 37,
     "style": "dark",
     "tags": [
     ],
@@ -5327,13 +5943,6 @@
                 "description": "$S - successes\n$F - failures\n\nThe formula for availability percentage (S / (S+F)), but in case both $S and $F are `0`, the availability is set to 100%.",
                 "hide": 2,
                 "name": "sf_availability",
-                "options": [
-                    {
-                        "selected": false,
-                        "text": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
-                        "value": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100"
-                    }
-                ],
                 "query": "($S + !($S || $F)) / (($S + $F) + !($S || $F)) * 100",
                 "skipUrlSync": false,
                 "type": "constant"
@@ -5349,6 +5958,6 @@
     "timezone": "",
     "title": "Android / Checkout",
     "uid": "gnNWal14k",
-    "version": 7,
+    "version": 8,
     "weekStart": ""
 }
