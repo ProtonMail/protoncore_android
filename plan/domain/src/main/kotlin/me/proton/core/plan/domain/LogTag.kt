@@ -24,4 +24,7 @@ object LogTag {
 
     /** Tag for dynamic plans parsing error. */
     const val DYN_PLANS_PARSE: String = "core.plan.dynamic.parse"
+
+    /** Tag for GIAP errors. */
+    const val GIAP_ERROR: String = "core.paymentiap.giap"
 }

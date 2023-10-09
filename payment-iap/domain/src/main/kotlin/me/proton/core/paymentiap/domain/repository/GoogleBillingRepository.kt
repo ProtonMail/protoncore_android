@@ -75,4 +75,4 @@ public data class BillingClientError(
     @BillingClient.BillingResponseCode
     public val responseCode: Int?,
     public val debugMessage: String?
-) : Throwable()
+) : Throwable("responseCode: $responseCode message: $debugMessage")

@@ -51,12 +51,14 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.presentation.savedstate.state
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
@@ -160,6 +162,7 @@ internal class BillingIAPViewModel @Inject constructor(
         }.catch { throwable ->
             val error = when (throwable) {
                 is BillingClientError -> {
+                    CoreLogger.e(LogTag.GIAP_ERROR, throwable.message ?: throwable.toString())
                     when (throwable.responseCode) {
                         null,
                         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> State.Error.BillingClientUnavailable
@@ -206,6 +209,9 @@ internal class BillingIAPViewModel @Inject constructor(
                     launchBillingFlow(activity, input.googleCustomerId)
                 }
             }.catch { error ->
+                if (error is BillingClientError) {
+                    CoreLogger.e(LogTag.GIAP_ERROR, error.message ?: error.toString())
+                }
                 _billingIAPState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
             }.onEach { subscriptionState ->
                 _billingIAPState.tryEmit(subscriptionState)

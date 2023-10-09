@@ -28,10 +28,12 @@ import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
+import me.proton.core.util.kotlin.CoreLogger
 import java.util.Optional
 import javax.inject.Inject
 
@@ -48,7 +50,8 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
     suspend operator fun invoke(userId: UserId): UnredeemedGooglePurchase? {
         return try {
             perform(userId)
-        } catch (_: ApiException) {
+        } catch (error: Throwable) { // we need to catch BillingClientError from PaymentIAP module, but we do not a reference to IAP lib here
+            CoreLogger.e(LogTag.GIAP_ERROR, error.message ?: error.toString())
             null
         }
     }
