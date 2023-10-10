@@ -43,7 +43,7 @@ public abstract interface class me/proton/core/eventmanager/domain/EventManager 
 	public abstract fun suspend (Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract class me/proton/core/eventmanager/domain/EventManagerConfig {
+public abstract class me/proton/core/eventmanager/domain/EventManagerConfig : me/proton/core/domain/entity/UniqueId {
 	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Companion;
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public abstract fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
@@ -53,7 +53,7 @@ public abstract class me/proton/core/eventmanager/domain/EventManagerConfig {
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Calendar : me/proton/core/eventmanager/domain/EventManagerConfig {
 	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Calendar$Companion;
-	public synthetic fun <init> (ILme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (ILme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
@@ -64,6 +64,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Calenda
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getApiVersion ()Ljava/lang/String;
 	public final fun getCalendarId ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
 	public fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
@@ -92,12 +93,13 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Compani
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Core : me/proton/core/eventmanager/domain/EventManagerConfig {
 	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Core$Companion;
-	public synthetic fun <init> (ILme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (ILme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Core;
 	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/EventManagerConfig$Core;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Core;
 	public fun equals (Ljava/lang/Object;)Z
+	public fun getId ()Ljava/lang/String;
 	public fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
@@ -134,7 +136,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$C
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share : me/proton/core/eventmanager/domain/EventManagerConfig$Drive {
 	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share$Companion;
-	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Ljava/lang/String;
@@ -142,6 +144,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$S
 	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getEndpoint ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
 	public final fun getShareId ()Ljava/lang/String;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
@@ -166,7 +169,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$S
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume : me/proton/core/eventmanager/domain/EventManagerConfig$Drive {
 	public static final field Companion Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume$Companion;
-	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Ljava/lang/String;
@@ -174,6 +177,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$V
 	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun getEndpoint ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getVolumeId ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -253,13 +257,13 @@ public final class me/proton/core/eventmanager/domain/entity/Event {
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/eventmanager/domain/entity/EventId {
+public final class me/proton/core/eventmanager/domain/entity/EventId : me/proton/core/domain/entity/UniqueId {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/domain/entity/EventId;
 	public static synthetic fun copy$default (Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/eventmanager/domain/entity/EventId;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getId ()Ljava/lang/String;
+	public fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

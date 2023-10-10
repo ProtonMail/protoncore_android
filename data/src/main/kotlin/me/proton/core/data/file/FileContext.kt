@@ -1,5 +1,6 @@
 package me.proton.core.data.file
 
+import me.proton.core.domain.entity.UniqueId
 import java.io.File
 
 @RequiresOptIn(message = "This API is experimental. It may be changed in the future without notice.")
@@ -8,7 +9,7 @@ import java.io.File
 annotation class ExperimentalProtonFileContext
 
 @ExperimentalProtonFileContext
-interface FileContext<Directory, Filename> {
+interface FileContext<Directory: UniqueId, Filename: UniqueId> {
 
     val baseDir: String
 

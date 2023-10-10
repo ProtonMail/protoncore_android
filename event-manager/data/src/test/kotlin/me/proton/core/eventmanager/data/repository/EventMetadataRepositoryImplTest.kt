@@ -62,9 +62,12 @@ class EventMetadataRepositoryImplTest {
 
     private fun newMetadata(
         config: EventManagerConfig,
-        eventId: EventId,
-        response: EventsResponse? = EventsResponse(config.toString())
-    ) = EventMetadata.newFrom(config, eventId).copy(response = response)
+        eventId: EventId
+    ) = EventMetadata.newFrom(config, eventId)
+
+    private fun newEventsResponse(
+        config: EventManagerConfig
+    ) = EventsResponse(config.toString())
 
     @BeforeTest
     fun before() {
@@ -79,75 +82,75 @@ class EventMetadataRepositoryImplTest {
     @Test
     fun multipleConcurrentConfigWrite() = runTest {
         // WHEN
-        tested.writeText(user1CoreConfig, eventId.id, "user1CoreConfig")
-        tested.writeText(user2CoreConfig, eventId.id, "user2CoreConfig")
-        tested.writeText(user1Cal1Config, eventId.id, "user1Calendar1Config")
-        tested.writeText(user1Cal2Config, eventId.id, "user1Calendar2Config")
-        tested.writeText(user2Cal1Config, eventId.id, "user2Calendar1Config")
+        tested.writeText(user1CoreConfig, eventId, "user1CoreConfig")
+        tested.writeText(user2CoreConfig, eventId, "user2CoreConfig")
+        tested.writeText(user1Cal1Config, eventId, "user1Calendar1Config")
+        tested.writeText(user1Cal2Config, eventId, "user1Calendar2Config")
+        tested.writeText(user2Cal1Config, eventId, "user2Calendar1Config")
 
         // THEN
-        assertEquals(expected = "user1CoreConfig", actual = tested.readText(user1CoreConfig, eventId.id))
-        assertEquals(expected = "user2CoreConfig", actual = tested.readText(user2CoreConfig, eventId.id))
-        assertEquals(expected = "user1Calendar1Config", actual = tested.readText(user1Cal1Config, eventId.id))
-        assertEquals(expected = "user1Calendar2Config", actual = tested.readText(user1Cal2Config, eventId.id))
-        assertEquals(expected = "user2Calendar1Config", actual = tested.readText(user2Cal1Config, eventId.id))
+        assertEquals(expected = "user1CoreConfig", actual = tested.readText(user1CoreConfig, eventId))
+        assertEquals(expected = "user2CoreConfig", actual = tested.readText(user2CoreConfig, eventId))
+        assertEquals(expected = "user1Calendar1Config", actual = tested.readText(user1Cal1Config, eventId))
+        assertEquals(expected = "user1Calendar2Config", actual = tested.readText(user1Cal2Config, eventId))
+        assertEquals(expected = "user2Calendar1Config", actual = tested.readText(user2Cal1Config, eventId))
     }
 
     @Test
     fun multipleConcurrentConfigDelete() = runTest {
         // WHEN
-        tested.writeText(user1CoreConfig, eventId.id, "user1CoreConfig")
-        tested.writeText(user2CoreConfig, eventId.id, "user2CoreConfig")
-        tested.writeText(user1Cal1Config, eventId.id, "user1Cal1Config")
-        tested.writeText(user1Cal2Config, eventId.id, "user1Cal2Config")
-        tested.writeText(user2Cal1Config, eventId.id, "user2Cal1Config")
+        tested.writeText(user1CoreConfig, eventId, "user1CoreConfig")
+        tested.writeText(user2CoreConfig, eventId, "user2CoreConfig")
+        tested.writeText(user1Cal1Config, eventId, "user1Cal1Config")
+        tested.writeText(user1Cal2Config, eventId, "user1Cal2Config")
+        tested.writeText(user2Cal1Config, eventId, "user2Cal1Config")
 
         tested.deleteDir(user1CoreConfig)
         tested.deleteDir(user2Cal1Config)
 
         // THEN
-        assertEquals(expected = null, actual = tested.readText(user1CoreConfig, eventId.id))
-        assertEquals(expected = "user2CoreConfig", actual = tested.readText(user2CoreConfig, eventId.id))
-        assertEquals(expected = "user1Cal1Config", actual = tested.readText(user1Cal1Config, eventId.id))
-        assertEquals(expected = "user1Cal2Config", actual = tested.readText(user1Cal2Config, eventId.id))
-        assertEquals(expected = null, actual = tested.readText(user2Cal1Config, eventId.id))
+        assertEquals(expected = null, actual = tested.readText(user1CoreConfig, eventId))
+        assertEquals(expected = "user2CoreConfig", actual = tested.readText(user2CoreConfig, eventId))
+        assertEquals(expected = "user1Cal1Config", actual = tested.readText(user1Cal1Config, eventId))
+        assertEquals(expected = "user1Cal2Config", actual = tested.readText(user1Cal2Config, eventId))
+        assertEquals(expected = null, actual = tested.readText(user2Cal1Config, eventId))
     }
 
     @Test
     fun multipleConcurrentConfigUpdate() = runTest {
         // WHEN
-        tested.updateMetadata(newMetadata(user1CoreConfig, eventId))
-        tested.updateMetadata(newMetadata(user2CoreConfig, eventId))
-        tested.updateMetadata(newMetadata(user1Cal1Config, eventId))
-        tested.updateMetadata(newMetadata(user1Cal2Config, eventId))
-        tested.updateMetadata(newMetadata(user2Cal1Config, eventId))
+        tested.update(newMetadata(user1CoreConfig, eventId), newEventsResponse(user1CoreConfig))
+        tested.update(newMetadata(user2CoreConfig, eventId), newEventsResponse(user2CoreConfig))
+        tested.update(newMetadata(user1Cal1Config, eventId), newEventsResponse(user1Cal1Config))
+        tested.update(newMetadata(user1Cal2Config, eventId), newEventsResponse(user1Cal2Config))
+        tested.update(newMetadata(user2Cal1Config, eventId), newEventsResponse(user2Cal1Config))
 
         // THEN
-        assertEquals(expected = user1CoreConfig.toString(), actual = tested.readText(user1CoreConfig, eventId.id))
-        assertEquals(expected = user2CoreConfig.toString(), actual = tested.readText(user2CoreConfig, eventId.id))
-        assertEquals(expected = user1Cal1Config.toString(), actual = tested.readText(user1Cal1Config, eventId.id))
-        assertEquals(expected = user1Cal2Config.toString(), actual = tested.readText(user1Cal2Config, eventId.id))
-        assertEquals(expected = user2Cal1Config.toString(), actual = tested.readText(user2Cal1Config, eventId.id))
+        assertEquals(expected = user1CoreConfig.toString(), actual = tested.readText(user1CoreConfig, eventId))
+        assertEquals(expected = user2CoreConfig.toString(), actual = tested.readText(user2CoreConfig, eventId))
+        assertEquals(expected = user1Cal1Config.toString(), actual = tested.readText(user1Cal1Config, eventId))
+        assertEquals(expected = user1Cal2Config.toString(), actual = tested.readText(user1Cal2Config, eventId))
+        assertEquals(expected = user2Cal1Config.toString(), actual = tested.readText(user2Cal1Config, eventId))
     }
 
     @Test
     fun multipleConcurrentConfigUpdateAndDelete() = runTest {
         // WHEN
-        tested.updateMetadata(newMetadata(user1CoreConfig, eventId))
-        tested.updateMetadata(newMetadata(user2CoreConfig, eventId))
-        tested.updateMetadata(newMetadata(user1Cal1Config, eventId))
-        tested.updateMetadata(newMetadata(user1Cal2Config, eventId))
-        tested.updateMetadata(newMetadata(user2Cal1Config, eventId))
+        tested.update(newMetadata(user1CoreConfig, eventId), newEventsResponse(user1CoreConfig))
+        tested.update(newMetadata(user2CoreConfig, eventId), newEventsResponse(user2CoreConfig))
+        tested.update(newMetadata(user1Cal1Config, eventId), newEventsResponse(user1Cal1Config))
+        tested.update(newMetadata(user1Cal2Config, eventId), newEventsResponse(user1Cal2Config))
+        tested.update(newMetadata(user2Cal1Config, eventId), newEventsResponse(user2Cal1Config))
 
-        tested.updateMetadata(newMetadata(user1CoreConfig, eventId, response = null))
-        tested.updateMetadata(newMetadata(user2Cal1Config, eventId, response = null))
+        tested.deleteDir(user1CoreConfig)
+        tested.deleteDir(user2Cal1Config)
 
         // THEN
-        assertEquals(expected = null, actual = tested.readText(user1CoreConfig, eventId.id))
-        assertEquals(expected = user2CoreConfig.toString(), actual = tested.readText(user2CoreConfig, eventId.id))
-        assertEquals(expected = user1Cal1Config.toString(), actual = tested.readText(user1Cal1Config, eventId.id))
-        assertEquals(expected = user1Cal2Config.toString(), actual = tested.readText(user1Cal2Config, eventId.id))
-        assertEquals(expected = null, actual = tested.readText(user2Cal1Config, eventId.id))
+        assertEquals(expected = null, actual = tested.readText(user1CoreConfig, eventId))
+        assertEquals(expected = user2CoreConfig.toString(), actual = tested.readText(user2CoreConfig, eventId))
+        assertEquals(expected = user1Cal1Config.toString(), actual = tested.readText(user1Cal1Config, eventId))
+        assertEquals(expected = user1Cal2Config.toString(), actual = tested.readText(user1Cal2Config, eventId))
+        assertEquals(expected = null, actual = tested.readText(user2Cal1Config, eventId))
     }
 
     @Test
@@ -156,7 +159,7 @@ class EventMetadataRepositoryImplTest {
         tested.delete(user1CoreConfig, eventId)
 
         // THEN
-        coVerify { tested.deleteText(user1CoreConfig, eventId.id) }
+        coVerify { tested.deleteText(user1CoreConfig, eventId) }
     }
 
     @Test
@@ -171,10 +174,10 @@ class EventMetadataRepositoryImplTest {
     @Test
     fun updateCallDeleteDirWriteText() = runTest {
         // WHEN
-        tested.updateMetadata(newMetadata(user1CoreConfig, eventId))
+        tested.update(newMetadata(user1CoreConfig, eventId), newEventsResponse(user1CoreConfig))
 
         // THEN
         coVerify { tested.deleteDir(user1CoreConfig) }
-        coVerify { tested.writeText(user1CoreConfig, eventId.id, any()) }
+        coVerify { tested.writeText(user1CoreConfig, eventId, any()) }
     }
 }

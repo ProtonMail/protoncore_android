@@ -167,6 +167,10 @@ class EventManagerImplTest {
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } returns
             EventsResponse(TestEvents.coreFullEventsResponse)
 
+        coEvery { eventMetadataRepository.getEvents(any(), any()) } returns
+            EventsResponse(TestEvents.coreFullEventsResponse)
+
+        coEvery { eventMetadataRepository.update(any(), any()) } returns Unit
         coEvery { eventMetadataRepository.updateMetadata(any()) } returns Unit
         coEvery { eventMetadataRepository.updateState(any(), any(), any()) } returns Unit
 
@@ -275,8 +279,7 @@ class EventManagerImplTest {
             EventMetadata(
                 user1.userId, EventId(eventId), user1Config,
                 createdAt = 1,
-                state = State.Success,
-                response = EventsResponse(TestEvents.coreFullEventsResponse)
+                state = State.Success
             )
         )
         // WHEN
@@ -318,7 +321,6 @@ class EventManagerImplTest {
                 user1.userId, EventId(eventId), user1Config,
                 createdAt = 1,
                 state = State.NotifyPrepare,
-                response = EventsResponse(TestEvents.coreFullEventsResponse),
                 retry = EventManagerImpl.retriesBeforeNotifyFailure + 1
             )
         )
@@ -490,6 +492,8 @@ class EventManagerImplTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } returns
             EventsResponse(TestEvents.calendarFullEventsResponse)
+        coEvery { eventMetadataRepository.getEvents(any(), any()) } returns
+            EventsResponse(TestEvents.calendarFullEventsResponse)
         // WHEN
         calendarManager.process()
         // THEN
@@ -566,13 +570,9 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun getNextActionUpdateThrowExceptionThenNoEnqueue() = runTest {
+    fun getNextActionUpdateMetadataThrowExceptionThenNoEnqueue() = runTest {
         // GIVEN
-        // Second eventMetadataRepository.update call, during getNextAction, will throw Exception.
-        var call = 0
-        coEvery { eventMetadataRepository.updateMetadata(any()) } answers {
-            if (call++ == 0) Unit else throw SQLException("Error")
-        }
+        coEvery { eventMetadataRepository.updateMetadata(any()) } throws SQLException("Error")
         // WHEN
         user1Manager.process()
         // THEN

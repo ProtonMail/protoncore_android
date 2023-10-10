@@ -4,38 +4,36 @@ import android.content.Context
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.proton.core.domain.entity.UniqueId
 import java.io.File
 import kotlin.time.Duration.Companion.minutes
 
 /**
- * Android [File] generator based on [Directory] and [Filename] hashCode.
+ * Android [File] generator based on [Directory] and [Filename].
  */
 @ExperimentalProtonFileContext
 @Suppress("TooManyFunctions")
-class AndroidFileContext<Directory, Filename>(
+class AndroidFileContext<Directory: UniqueId, Filename: UniqueId>(
     override val baseDir: String,
     val context: Context
 ) : FileContext<Directory, Filename> {
 
     private val cache = Cache.Builder().expireAfterWrite(1.minutes).build<String, String>()
 
-    private fun getDirectory(directory: Directory) = "${directory.hashCode()}"
-    private fun getFilename(filename: Filename) = "${filename.hashCode()}"
-    private fun getKey(directory: Directory, filename: Filename) =
-        "${getDirectory(directory)}-${getFilename(filename)}"
+    private fun getKey(directory: Directory, filename: Filename) = "${directory.id}/${filename.id}"
 
     private suspend fun getDir() = withContext(Dispatchers.IO) {
         context.getDir(baseDir, Context.MODE_PRIVATE)
     }
 
     private suspend fun getDir(directory: Directory) = withContext(Dispatchers.IO) {
-        File(getDir(), "${directory.hashCode()}").also { if (!it.exists()) it.mkdirs() }
+        File(getDir(), directory.id).also { if (!it.exists()) it.mkdirs() }
     }
 
     override suspend fun getFile(
         directory: Directory,
         filename: Filename
-    ): File = File(getDir(directory), getFilename(filename))
+    ): File = File(getDir(directory), filename.id)
 
     override suspend fun deleteFile(
         directory: Directory,

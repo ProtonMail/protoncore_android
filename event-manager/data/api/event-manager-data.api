@@ -375,23 +375,23 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun delete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun deleteDir (Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun deleteDir (Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteDir (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun deleteFile (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun deleteFile (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun deleteText (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun deleteText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun deleteFile (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteFile (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun deleteText (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getBaseDir ()Ljava/lang/String;
 	public fun getEvents (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun getFile (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun getFile (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun getFile (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getFile (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLatestEventId (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun readText (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun readText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun readText (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun readText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateMetadata (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -399,8 +399,8 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun updateRetry (Lme/proton/core/eventmanager/domain/EventManagerConfig;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun writeText (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun writeText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun writeText (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun writeText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl_Factory : dagger/internal/Factory {

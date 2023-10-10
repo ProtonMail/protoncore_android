@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -40,7 +40,7 @@ class EventWorkerManagerImpl @Inject constructor(
     private val appLifecycleProvider: AppLifecycleProvider
 ) : EventWorkerManager {
 
-    private fun getUniqueWorkName(config: EventManagerConfig) = "$config"
+    private fun getUniqueWorkName(config: EventManagerConfig) = config.id
 
     override fun enqueue(config: EventManagerConfig, immediately: Boolean) {
         val uniqueWorkName = getUniqueWorkName(config)

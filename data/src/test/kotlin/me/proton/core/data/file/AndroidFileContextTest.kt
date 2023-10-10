@@ -23,6 +23,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UniqueId
 import me.proton.core.domain.entity.UserId
 import java.nio.file.Files
 import kotlin.test.AfterTest
@@ -46,7 +47,7 @@ class AndroidFileContextTest {
         every { getDir(any(), any()) } returns Files.createTempDirectory("AndroidFileContextTest-").toFile()
     }
 
-    data class Item(val itemId: String)
+    data class Item(override val id: String): UniqueId
 
     private lateinit var tested: AndroidFileContext<UserId, Item>
 

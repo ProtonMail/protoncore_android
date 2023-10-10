@@ -19,10 +19,11 @@
 package me.proton.core.eventmanager.domain
 
 import kotlinx.serialization.Serializable
+import me.proton.core.domain.entity.UniqueId
 import me.proton.core.domain.entity.UserId
 
 @Serializable
-sealed class EventManagerConfig {
+sealed class EventManagerConfig : UniqueId {
 
     abstract val listenerType: EventListener.Type
     abstract val userId: UserId
@@ -31,6 +32,7 @@ sealed class EventManagerConfig {
     data class Core(
         override val userId: UserId,
     ) : EventManagerConfig() {
+        override val id = "user/${userId.id}/core"
         override val listenerType = EventListener.Type.Core
     }
 
@@ -40,6 +42,7 @@ sealed class EventManagerConfig {
         val calendarId: String,
         val apiVersion: String = "v1",
     ) : EventManagerConfig() {
+        override val id = "user/${userId.id}/calendar/$calendarId/$apiVersion"
         override val listenerType = EventListener.Type.Calendar
     }
 
@@ -53,6 +56,7 @@ sealed class EventManagerConfig {
             override val userId: UserId,
             val shareId: String,
         ) : Drive() {
+            override val id = "user/${userId.id}/drive/shares/$shareId"
             override val endpoint = "drive/shares/${shareId}/events"
         }
 
@@ -61,6 +65,7 @@ sealed class EventManagerConfig {
             override val userId: UserId,
             val volumeId: String,
         ) : Drive() {
+            override val id = "user/${userId.id}/drive/volumes/$volumeId"
             override val endpoint = "drive/volumes/${volumeId}/events"
         }
     }

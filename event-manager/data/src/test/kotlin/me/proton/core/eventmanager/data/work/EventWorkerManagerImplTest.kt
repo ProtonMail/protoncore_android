@@ -58,7 +58,7 @@ internal class EventWorkerManagerImplTest {
     fun `given empty work infos when isRunning then returns false`() = runTest {
         val config = EventManagerConfig.Core(UserId("user-id"))
         val future = SettableFuture.create<MutableList<WorkInfo>>()
-        every { workManager.getWorkInfosForUniqueWork(config.toString()) } returns future
+        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
 
         future.set(mutableListOf())
 
@@ -69,7 +69,7 @@ internal class EventWorkerManagerImplTest {
     fun `given work infos with first running when isRunning then returns true`() = runTest {
         val config = EventManagerConfig.Core(UserId("user-id"))
         val future = SettableFuture.create<MutableList<WorkInfo>>()
-        every { workManager.getWorkInfosForUniqueWork(config.toString()) } returns future
+        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
 
         future.set(
             mutableListOf(
@@ -85,7 +85,7 @@ internal class EventWorkerManagerImplTest {
     fun `given work infos with first not running when isRunning then returns false`() = runTest {
         val config = EventManagerConfig.Core(UserId("user-id"))
         val future = SettableFuture.create<MutableList<WorkInfo>>()
-        every { workManager.getWorkInfosForUniqueWork(config.toString()) } returns future
+        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
 
         future.set(
             mutableListOf(

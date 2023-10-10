@@ -18,4 +18,6 @@
 
 package me.proton.core.eventmanager.domain.entity
 
-data class EventId(val id: String)
+import me.proton.core.domain.entity.UniqueId
+
+data class EventId(override val id: String): UniqueId

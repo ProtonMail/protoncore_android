@@ -21,7 +21,7 @@ package me.proton.core.domain.entity
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class UserId(val id: String)
+data class UserId(override val id: String): UniqueId
 
 /**
  * Specify which User Session to use for an Api network request, expressed as userId.
