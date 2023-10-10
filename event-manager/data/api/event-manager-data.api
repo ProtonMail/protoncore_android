@@ -366,7 +366,7 @@ public final class me/proton/core/eventmanager/data/extension/EventListenerKt {
 }
 
 public final class me/proton/core/eventmanager/data/extension/EventMetadataKt {
-	public static final fun fromEntity (Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lme/proton/core/eventmanager/domain/entity/EventsResponse;)Lme/proton/core/eventmanager/domain/entity/EventMetadata;
+	public static final fun fromEntity (Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;)Lme/proton/core/eventmanager/domain/entity/EventMetadata;
 	public static final fun toEntity (Lme/proton/core/eventmanager/domain/entity/EventMetadata;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
 }
 
@@ -386,13 +386,15 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getBaseDir ()Ljava/lang/String;
 	public fun getEvents (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun getFile (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFile (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getLatestEventId (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun readText (Ljava/lang/Object;Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun readText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateMetadata (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateNextEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateRetry (Lme/proton/core/eventmanager/domain/EventManagerConfig;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateState (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/State;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

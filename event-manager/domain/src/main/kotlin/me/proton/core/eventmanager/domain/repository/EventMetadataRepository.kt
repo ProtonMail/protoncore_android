@@ -31,7 +31,8 @@ interface EventMetadataRepository {
     suspend fun deleteAll(config: EventManagerConfig)
     suspend fun delete(config: EventManagerConfig, eventId: EventId)
 
-    suspend fun update(metadata: EventMetadata)
+    suspend fun update(metadata: EventMetadata, response: EventsResponse)
+    suspend fun updateMetadata(metadata: EventMetadata)
     suspend fun updateEventId(config: EventManagerConfig, oldEventId: EventId?, newEventId: EventId)
     suspend fun updateNextEventId(config: EventManagerConfig, eventId: EventId?, nextEventId: EventId)
     suspend fun updateState(config: EventManagerConfig, state: State)
@@ -41,6 +42,7 @@ interface EventMetadataRepository {
     suspend fun getAll(userId: UserId): List<EventMetadata>
     suspend fun get(config: EventManagerConfig): List<EventMetadata>
     suspend fun get(config: EventManagerConfig, eventId: EventId): EventMetadata?
+    suspend fun getEvents(config: EventManagerConfig, eventId: EventId): EventsResponse?
 
     suspend fun getLatestEventId(userId: UserId, endpoint: String): EventIdResponse
     suspend fun getEvents(userId: UserId, eventId: EventId, endpoint: String): EventsResponse

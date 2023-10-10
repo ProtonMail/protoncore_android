@@ -21,7 +21,6 @@ package me.proton.core.eventmanager.data.extension
 import me.proton.core.eventmanager.data.entity.EventMetadataEntity
 import me.proton.core.eventmanager.domain.entity.EventId
 import me.proton.core.eventmanager.domain.entity.EventMetadata
-import me.proton.core.eventmanager.domain.entity.EventsResponse
 
 fun EventMetadata.toEntity() = EventMetadataEntity(
     userId = userId,
@@ -36,14 +35,13 @@ fun EventMetadata.toEntity() = EventMetadataEntity(
     updatedAt = updatedAt ?: System.currentTimeMillis()
 )
 
-fun EventMetadataEntity.fromEntity(response: EventsResponse?) = EventMetadata(
+fun EventMetadataEntity.fromEntity() = EventMetadata(
     userId = userId,
     config = config,
     eventId = eventId?.let { EventId(it) },
     nextEventId = nextEventId?.let { EventId(it) },
     refresh = refresh,
     more = more,
-    response = response,
     retry = retry,
     state = state,
     createdAt = createdAt,

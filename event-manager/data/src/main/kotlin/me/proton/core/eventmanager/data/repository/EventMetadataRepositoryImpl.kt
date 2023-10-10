@@ -46,25 +46,25 @@ open class EventMetadataRepositoryImpl @Inject constructor(
     private val db: EventMetadataDatabase,
     private val apiProvider: ApiProvider
 ) : EventMetadataRepository,
-    FileContext<EventManagerConfig, String> by AndroidFileContext("events", context) {
+    FileContext<EventManagerConfig, EventId> by AndroidFileContext("events", context) {
 
     private val eventMetadataDao = db.eventMetadataDao()
 
     private suspend fun readResponse(
         config: EventManagerConfig,
-        eventId: String?
+        eventId: EventId?
     ) = eventId?.let { readText(config, it)?.let { text -> EventsResponse(text) } }
 
     private suspend fun writeResponse(
         config: EventManagerConfig,
         eventId: EventId?,
         response: EventsResponse?
-    ) = eventId?.id?.let { id -> response?.body?.let { data -> writeText(config, id, data) } }
+    ) = eventId?.let { id -> response?.body?.let { data -> writeText(config, id, data) } }
 
     private suspend fun deleteResponse(
         config: EventManagerConfig,
         eventId: EventId?
-    ) = eventId?.id?.let { deleteText(config, it) }
+    ) = eventId?.let { deleteText(config, it) }
 
     private suspend fun insertOrUpdate(entity: EventMetadataEntity) =
         eventMetadataDao.insertOrUpdate(entity)
@@ -79,9 +79,13 @@ open class EventMetadataRepositoryImpl @Inject constructor(
         eventMetadataDao.deleteAll(config.userId, config)
     }
 
-    override suspend fun update(metadata: EventMetadata) {
+    override suspend fun update(metadata: EventMetadata, response: EventsResponse) {
         deleteDir(metadata.config)
-        writeResponse(metadata.config, metadata.eventId, metadata.response)
+        writeResponse(metadata.config, metadata.eventId, response)
+        insertOrUpdate(metadata.toEntity().copy(updatedAt = System.currentTimeMillis()))
+    }
+
+    override suspend fun updateMetadata(metadata: EventMetadata) {
         insertOrUpdate(metadata.toEntity().copy(updatedAt = System.currentTimeMillis()))
     }
 
@@ -115,19 +119,21 @@ open class EventMetadataRepositoryImpl @Inject constructor(
 
     override suspend fun getAll(
         userId: UserId
-    ): List<EventMetadata> = eventMetadataDao.getAll(userId)
-        .map { it.fromEntity(readResponse(it.config, it.eventId)) }
+    ): List<EventMetadata> = eventMetadataDao.getAll(userId).map { it.fromEntity() }
 
     override suspend fun get(
         config: EventManagerConfig
-    ): List<EventMetadata> = eventMetadataDao.get(config.userId, config)
-        .map { it.fromEntity(readResponse(it.config, it.eventId)) }
+    ): List<EventMetadata> = eventMetadataDao.get(config.userId, config).map { it.fromEntity() }
 
     override suspend fun get(
         config: EventManagerConfig,
         eventId: EventId
-    ): EventMetadata? = eventMetadataDao.get(config.userId, config, eventId.id)
-        ?.let { it.fromEntity(readResponse(it.config, it.eventId)) }
+    ): EventMetadata? = eventMetadataDao.get(config.userId, config, eventId.id)?.fromEntity()
+
+    override suspend fun getEvents(
+        config: EventManagerConfig,
+        eventId: EventId
+    ): EventsResponse? = readResponse(config, eventId)
 
     override suspend fun getLatestEventId(
         userId: UserId,

@@ -167,7 +167,7 @@ class EventManagerImplTest {
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } returns
             EventsResponse(TestEvents.coreFullEventsResponse)
 
-        coEvery { eventMetadataRepository.update(any()) } returns Unit
+        coEvery { eventMetadataRepository.updateMetadata(any()) } returns Unit
         coEvery { eventMetadataRepository.updateState(any(), any(), any()) } returns Unit
 
         // GIVEN
@@ -385,7 +385,7 @@ class EventManagerImplTest {
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare) }
         coVerify(atLeast = 1) { eventMetadataRepository.updateState(any(), any(), State.NotifyEvents) }
         coVerify(exactly = 0) { eventMetadataRepository.updateState(any(), any(), State.Success) }
-        coVerify(atLeast = 1) { eventMetadataRepository.update(any()) }
+        coVerify(atLeast = 1) { eventMetadataRepository.updateMetadata(any()) }
         coVerify(atLeast = 1) { eventWorkerManager.enqueue(any(), true) }
     }
 
@@ -570,7 +570,7 @@ class EventManagerImplTest {
         // GIVEN
         // Second eventMetadataRepository.update call, during getNextAction, will throw Exception.
         var call = 0
-        coEvery { eventMetadataRepository.update(any()) } answers {
+        coEvery { eventMetadataRepository.updateMetadata(any()) } answers {
             if (call++ == 0) Unit else throw SQLException("Error")
         }
         // WHEN

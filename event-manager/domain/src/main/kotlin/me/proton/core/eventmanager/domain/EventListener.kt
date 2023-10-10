@@ -72,13 +72,13 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      */
     abstract val order: Int
 
-    private suspend fun setMetadata(config: EventManagerConfig, metadata: EventMetadata) {
-        val events = metadata.response?.let { deserializeEvents(config, it) }.orEmpty()
+    private suspend fun setMaps(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse?) {
+        val events = response?.let { deserializeEvents(config, it) }.orEmpty()
         actionMapByConfig[config] = events.groupByAction()
         eventMetadataByConfig[config] = metadata
     }
 
-    private fun clearMetadata(config: EventManagerConfig) {
+    private fun clearMaps(config: EventManagerConfig) {
         actionMapByConfig.remove(config)
         eventMetadataByConfig.remove(config)
     }
@@ -104,9 +104,8 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyPrepare(config: EventManagerConfig, metadata: EventMetadata) {
-        requireNotNull(metadata.response)
-        setMetadata(config, metadata)
+    suspend fun notifyPrepare(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse) {
+        setMaps(config, metadata, response)
         val actions = getActionMap(config)
         val entities = actions[Action.Create].orEmpty() + actions[Action.Update].orEmpty()
         entities.takeIfNotEmpty()?.let { list -> onPrepare(config, list.mapNotNull { it.entity }) }
@@ -117,9 +116,8 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: A transaction wraps this function.
      */
-    suspend fun notifyEvents(config: EventManagerConfig, metadata: EventMetadata) {
-        requireNotNull(metadata.response)
-        setMetadata(config, metadata)
+    suspend fun notifyEvents(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse) {
+        setMaps(config, metadata, response)
         val actions = getActionMap(config)
         actions[Action.Create]?.takeIfNotEmpty()?.let { list -> onCreate(config, list.mapNotNull { it.entity }) }
         actions[Action.Update]?.takeIfNotEmpty()?.let { list -> onUpdate(config, list.mapNotNull { it.entity }) }
@@ -132,8 +130,8 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyResetAll(config: EventManagerConfig, metadata: EventMetadata) {
-        setMetadata(config, metadata)
+    suspend fun notifyResetAll(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse?) {
+        setMaps(config, metadata, response)
         onResetAll(config)
     }
 
@@ -142,9 +140,8 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifySuccess(config: EventManagerConfig, metadata: EventMetadata) {
-        requireNotNull(metadata.response)
-        setMetadata(config, metadata)
+    suspend fun notifySuccess(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse) {
+        setMaps(config, metadata, response)
         onSuccess(config)
     }
 
@@ -153,8 +150,8 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyFailure(config: EventManagerConfig, metadata: EventMetadata) {
-        setMetadata(config, metadata)
+    suspend fun notifyFailure(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse?) {
+        setMaps(config, metadata, response)
         onFailure(config)
     }
 
@@ -163,10 +160,10 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      *
      * Note: No transaction wraps this function.
      */
-    suspend fun notifyComplete(config: EventManagerConfig, metadata: EventMetadata) {
-        setMetadata(config, metadata)
+    suspend fun notifyComplete(config: EventManagerConfig, metadata: EventMetadata, response: EventsResponse?) {
+        setMaps(config, metadata, response)
         onComplete(config)
-        clearMetadata(config)
+        clearMaps(config)
     }
 
     /**

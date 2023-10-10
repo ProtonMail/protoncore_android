@@ -116,11 +116,11 @@ class EventMetadataRepositoryImplTest {
     @Test
     fun multipleConcurrentConfigUpdate() = runTest {
         // WHEN
-        tested.update(newMetadata(user1CoreConfig, eventId))
-        tested.update(newMetadata(user2CoreConfig, eventId))
-        tested.update(newMetadata(user1Cal1Config, eventId))
-        tested.update(newMetadata(user1Cal2Config, eventId))
-        tested.update(newMetadata(user2Cal1Config, eventId))
+        tested.updateMetadata(newMetadata(user1CoreConfig, eventId))
+        tested.updateMetadata(newMetadata(user2CoreConfig, eventId))
+        tested.updateMetadata(newMetadata(user1Cal1Config, eventId))
+        tested.updateMetadata(newMetadata(user1Cal2Config, eventId))
+        tested.updateMetadata(newMetadata(user2Cal1Config, eventId))
 
         // THEN
         assertEquals(expected = user1CoreConfig.toString(), actual = tested.readText(user1CoreConfig, eventId.id))
@@ -133,14 +133,14 @@ class EventMetadataRepositoryImplTest {
     @Test
     fun multipleConcurrentConfigUpdateAndDelete() = runTest {
         // WHEN
-        tested.update(newMetadata(user1CoreConfig, eventId))
-        tested.update(newMetadata(user2CoreConfig, eventId))
-        tested.update(newMetadata(user1Cal1Config, eventId))
-        tested.update(newMetadata(user1Cal2Config, eventId))
-        tested.update(newMetadata(user2Cal1Config, eventId))
+        tested.updateMetadata(newMetadata(user1CoreConfig, eventId))
+        tested.updateMetadata(newMetadata(user2CoreConfig, eventId))
+        tested.updateMetadata(newMetadata(user1Cal1Config, eventId))
+        tested.updateMetadata(newMetadata(user1Cal2Config, eventId))
+        tested.updateMetadata(newMetadata(user2Cal1Config, eventId))
 
-        tested.update(newMetadata(user1CoreConfig, eventId, response = null))
-        tested.update(newMetadata(user2Cal1Config, eventId, response = null))
+        tested.updateMetadata(newMetadata(user1CoreConfig, eventId, response = null))
+        tested.updateMetadata(newMetadata(user2Cal1Config, eventId, response = null))
 
         // THEN
         assertEquals(expected = null, actual = tested.readText(user1CoreConfig, eventId.id))
@@ -171,7 +171,7 @@ class EventMetadataRepositoryImplTest {
     @Test
     fun updateCallDeleteDirWriteText() = runTest {
         // WHEN
-        tested.update(newMetadata(user1CoreConfig, eventId))
+        tested.updateMetadata(newMetadata(user1CoreConfig, eventId))
 
         // THEN
         coVerify { tested.deleteDir(user1CoreConfig) }

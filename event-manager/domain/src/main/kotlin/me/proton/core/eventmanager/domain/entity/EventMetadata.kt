@@ -28,7 +28,6 @@ data class EventMetadata(
     val nextEventId: EventId? = null,
     val refresh: RefreshType? = null,
     val more: Boolean? = null,
-    val response: EventsResponse? = null,
     val retry: Int = 0,
     val state: State = State.Enqueued,
     val createdAt: Long,

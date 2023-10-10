@@ -120,7 +120,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun reportFailure(metadata: EventMetadata) {
-        val list = eventMetadataRepository.get(config).map { it.copy(response = null) }
+        val list = eventMetadataRepository.get(config)
         CoreLogger.e(LogTag.REPORT_MAX_RETRY, "Max Failure reached (current: ${metadata.eventId}): $list")
     }
 
@@ -141,7 +141,7 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             val response = getEventResponse(eventId)
             val deserializedMetadata = deserializeEventMetadata(eventId, response)
-            eventMetadataRepository.update(deserializedMetadata.copy(state = State.Persisted))
+            eventMetadataRepository.update(deserializedMetadata.copy(state = State.Persisted), response)
             deserializedMetadata
         }.onFailure {
             when {
@@ -173,19 +173,21 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyResetAll(metadata: EventMetadata) {
+        val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
-            eventId = requireNotNull(metadata.eventId),
+            eventId = eventId,
             processingState = State.NotifyResetAll,
             successState = State.NotifyComplete,
             failureState = State.NotifyResetAll
         ) {
             // If needed, get latest remote eventId, before notifyResetAll, so we don't miss any changes.
             val nextEventId = metadata.nextEventId ?: getLatestEventId()
-            eventMetadataRepository.updateNextEventId(config, metadata.eventId, nextEventId)
+            eventMetadataRepository.updateNextEventId(config, eventId, nextEventId)
+            val response = eventMetadataRepository.getEvents(config, eventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach {
-                it.notifyResetAll(config, metadata)
+                it.notifyResetAll(config, metadata, response)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -196,16 +198,18 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyPrepare(metadata: EventMetadata) {
+        val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
-            eventId = requireNotNull(metadata.eventId),
+            eventId = eventId,
             processingState = State.NotifyPrepare,
             successState = State.NotifyEvents,
             failureState = State.NotifyPrepare
         ) {
+            val response = eventMetadataRepository.getEvents(config, eventId)
             // Notify prepare for all listeners.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyPrepare(config, metadata)
+                eventListener.notifyPrepare(config, metadata, requireNotNull(response))
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -216,16 +220,18 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyEvents(metadata: EventMetadata) {
+        val eventId = requireNotNull(metadata.eventId)
         runInTransaction(
             config = config,
-            eventId = requireNotNull(metadata.eventId),
+            eventId = eventId,
             processingState = State.NotifyEvents,
             successState = State.Success,
             failureState = State.NotifyPrepare
         ) {
+            val response = eventMetadataRepository.getEvents(config, eventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyEvents(config, metadata)
+                eventListener.notifyEvents(config, metadata, requireNotNull(response))
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -236,16 +242,18 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifySuccess(metadata: EventMetadata) {
+        val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
-            eventId = requireNotNull(metadata.eventId),
+            eventId = eventId,
             processingState = State.NotifySuccess,
             successState = State.NotifyComplete,
             failureState = State.Success
         ) {
+            val response = eventMetadataRepository.getEvents(config, eventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifySuccess(config, metadata)
+                eventListener.notifySuccess(config, metadata, requireNotNull(response))
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -256,16 +264,18 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyFailure(metadata: EventMetadata) {
+        val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
-            eventId = requireNotNull(metadata.eventId),
+            eventId = eventId,
             processingState = State.NotifyFailure,
             successState = State.NotifyResetAll,
             failureState = State.Failure
         ) {
+            val response = eventMetadataRepository.getEvents(config, eventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyFailure(config, metadata)
+                eventListener.notifyFailure(config, metadata, response)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -276,16 +286,18 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyComplete(metadata: EventMetadata) {
+        val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
-            eventId = requireNotNull(metadata.eventId),
+            eventId = eventId,
             processingState = State.NotifyComplete,
             successState = State.Completed,
             failureState = State.Completed,
         ) {
+            val response = eventMetadataRepository.getEvents(config, eventId)
             // Fully sequential and ordered.
             eventListenersByOrder.values.flatten().forEach { eventListener ->
-                eventListener.notifyComplete(config, metadata)
+                eventListener.notifyComplete(config, metadata, response)
             }
         }.onFailure {
             CoreLogger.e(LogTag.NOTIFY_ERROR, it)
@@ -324,7 +336,7 @@ class EventManagerImpl @AssistedInject constructor(
                     }
                     when (update) {
                         null -> Action.None
-                        else -> runCatching { eventMetadataRepository.update(update) }.fold(
+                        else -> runCatching { eventMetadataRepository.updateMetadata(update) }.fold(
                             onSuccess = { Action.Enqueue },
                             onFailure = { Action.None }
                         )
