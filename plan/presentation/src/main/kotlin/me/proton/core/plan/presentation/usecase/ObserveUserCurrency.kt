@@ -32,7 +32,9 @@ class ObserveUserCurrency @Inject constructor(
     private val userManager: UserManager
 ) {
     @VisibleForTesting
-    internal val localCurrency = Currency.getInstance(Locale.getDefault()).currencyCode
+    internal val localCurrency = Locale.getDefault().takeIf { it.country.isNotEmpty() }?.let {
+        Currency.getInstance(it).currencyCode
+    }
 
     @VisibleForTesting
     internal val defaultCurrency = availableCurrencies.firstOrNull { it == localCurrency } ?: fallbackCurrency
