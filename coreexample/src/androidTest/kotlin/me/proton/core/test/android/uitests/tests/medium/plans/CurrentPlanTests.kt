@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,21 +30,25 @@ import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.After
+import org.junit.Before
 import org.junit.Test
 import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
 
 class CurrentPlanTests : BaseTest() {
-
-    val user = quark.userCreate().first
-
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
         login(user)
 
         return CoreexampleRobot()
             .plansCurrent()
+    }
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        quark.jailUnban()
     }
 
     @After
@@ -54,6 +58,7 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithFreePlan() {
+        val user = quark.userCreate().first
         navigateUserToCurrentPlans(user)
             .scrollToPlan(Plan.Dev)
             .toggleExpandPlan(Plan.Dev)
@@ -65,7 +70,8 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlan() {
-        val paidUser = users.getUser { it.isPaid }
+        val paidUser = User(plan = Plan.Unlimited)
+        quark.seedNewSubscriberWithCycle(paidUser, PlanCycle.YEARLY.cycleDurationMonths)
         navigateUserToCurrentPlans(paidUser)
             .verify {
                 planDetailsDisplayed(paidUser.plan)
@@ -74,7 +80,6 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlanCardAndIAPPayment1month() {
-        quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
         val paidUserCycle1 = User(plan = Plan.MailPlus)
         val cycle1 = PlanCycle.OTHER.apply {
@@ -103,7 +108,6 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlanCardAndIAPPayment12months() {
-        quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
         val paidUserCycle12 = User(plan = Plan.MailPlus)
         val cycle12 = PlanCycle.OTHER.apply {
@@ -127,7 +131,6 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlanCardAndIAPPayment15months() {
-        quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
         val paidUserCycle15 = User(plan = Plan.VpnPlus)
         val cycle15 = PlanCycle.OTHER.apply {
@@ -156,7 +159,6 @@ class CurrentPlanTests : BaseTest() {
 
     @Test
     fun userWithPaidPlanCardAndIAPPayment30months() {
-        quark.jailUnban()
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
         val paidUserCycle30 = User(plan = Plan.VpnPlus)
         val cycle30 = PlanCycle.OTHER.apply {
