@@ -45,7 +45,7 @@ data class DynamicPlan(
 )
 
 fun List<DynamicPlan>.filterBy(cycle: Int, currency: String?) =
-    filter { it.instances[cycle]?.price?.containsKey(currency) ?: true }
+    filter { it.isFree() || it.instances[cycle]?.price?.containsKey(currency) ?: false }
 
 fun DynamicPlan.hasServiceFor(product: Product, exclusive: Boolean): Boolean {
     val service = when (product) {

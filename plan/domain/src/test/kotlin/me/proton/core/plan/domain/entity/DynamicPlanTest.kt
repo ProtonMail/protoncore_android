@@ -19,6 +19,7 @@
 package me.proton.core.plan.domain.entity
 
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.domain.type.IntEnum
 import java.time.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -44,11 +45,11 @@ class DynamicPlanTest {
         )
     )
 
-    private val planEmpty = DynamicPlan(
-        name = "empty",
+    private val planFree = DynamicPlan(
+        name = "free",
         order = 0,
         state = DynamicPlanState.Available,
-        title = "title",
+        title = "Free",
         type = null,
         instances = emptyMap(), // No instances.
     )
@@ -58,7 +59,7 @@ class DynamicPlanTest {
         order = 0,
         state = DynamicPlanState.Available,
         title = "title",
-        type = null,
+        type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
         instances = mapOf(
             12 to instanceFor(12, "CHF", "USD", "EUR"),
             24 to instanceFor(24, "CHF")
@@ -70,7 +71,7 @@ class DynamicPlanTest {
         order = 0,
         state = DynamicPlanState.Available,
         title = "title2",
-        type = null,
+        type = IntEnum(DynamicPlanType.Secondary.code, DynamicPlanType.Secondary),
         instances = mapOf(
             12 to instanceFor(12, "CHF"),
             24 to instanceFor(24, "CHF", "USD", "EUR")
@@ -78,9 +79,9 @@ class DynamicPlanTest {
     )
 
     @Test
-    fun filterByAlwaysReturnPlanEmpty() {
+    fun filterByAlwaysReturnPlanFree() {
         // Given
-        val plans = listOf(planEmpty, plan1, plan2)
+        val plans = listOf(planFree, plan1, plan2)
 
         // When
         val filteredPlans = plans.filterBy(12, "CHF")
@@ -90,40 +91,42 @@ class DynamicPlanTest {
     }
 
     @Test
-    fun filterBy12CycleAndCHFCurrency() {
+    fun filterBy24CycleAndCHFCurrency() {
         // Given
-        val plans = listOf(plan1, plan2)
+        val plans = listOf(planFree, plan1, plan2)
 
         // When
-        val filteredPlans = plans.filterBy(12, "CHF")
+        val filteredPlans = plans.filterBy(24, "CHF")
 
         // Then
-        assertEquals(2, filteredPlans.size)
+        assertEquals(3, filteredPlans.size)
     }
 
     @Test
     fun filterBy12CycleAndEURCurrency() {
         // Given
-        val plans = listOf(plan1, plan2)
+        val plans = listOf(planFree, plan1, plan2)
 
         // When
         val filteredPlans = plans.filterBy(12, "EUR")
 
         // Then
-        assertEquals(1, filteredPlans.size)
-        assertEquals("test1", filteredPlans[0].name)
+        assertEquals(2, filteredPlans.size)
+        assertEquals("free", filteredPlans[0].name)
+        assertEquals("test1", filteredPlans[1].name)
     }
 
     @Test
     fun filterBy24CycleAndUSDCurrency() {
         // Given
-        val plans = listOf(plan1, plan2)
+        val plans = listOf(planFree, plan1, plan2)
 
         // When
         val filteredPlans = plans.filterBy(24, "USD")
 
         // Then
-        assertEquals(1, filteredPlans.size)
-        assertEquals("test2", filteredPlans[0].name)
+        assertEquals(2, filteredPlans.size)
+        assertEquals("free", filteredPlans[0].name)
+        assertEquals("test2", filteredPlans[1].name)
     }
 }

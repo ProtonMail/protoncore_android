@@ -49,6 +49,7 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     private val dynamicPlan = mockk<DynamicPlan> {
         every { instances } returns emptyMap()
+        every { type } returns null
     }
     private val plans = listOf(dynamicPlan)
 
