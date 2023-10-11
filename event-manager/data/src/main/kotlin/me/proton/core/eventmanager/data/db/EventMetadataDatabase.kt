@@ -61,5 +61,15 @@ interface EventMetadataDatabase : Database {
                 database.execSQL("UPDATE `EventMetadataEntity` SET state = 'Enqueued' WHERE state != 'Cancelled' ")
             }
         }
+
+        /**
+         * - Changed EventManager EventsResponse File location.
+         */
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // Change state to Enqueued -> Force fetch again.
+                database.execSQL("UPDATE `EventMetadataEntity` SET state = 'Enqueued' WHERE state != 'Cancelled' ")
+            }
+        }
     }
 }
