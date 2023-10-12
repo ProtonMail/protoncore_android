@@ -11,6 +11,27 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.0.3] - 2023-10-12
+
+### Chores
+
+- Update runners to k8 runners.
+- observability:
+  - Additional status labels for the "login after sigup" metric.
+
+### Bug Fixes
+
+- plan:
+  - Fixed Dynamic Plan List filtering (free OR [matching cycle + matching cycle]).
+- util-android-sentry:
+  - Properly decorate the crash events with a custom tag.
+
+### Internationalization
+
+- Upgrade translations from crowdin (9ee29f10).
+- plan:
+  - Add numbered parameters for `plans_used_space`.
+
 ## [17.0.2] - 2023-10-04
 
 ### Bug Fixes
