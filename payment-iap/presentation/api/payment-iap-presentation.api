@@ -87,6 +87,17 @@ public final class me/proton/core/paymentiap/presentation/entity/GooglePlanShort
 	public final fun newArray (I)[Lme/proton/core/paymentiap/presentation/entity/GooglePlanShortDetails;
 }
 
+public abstract class me/proton/core/paymentiap/presentation/ui/BaseBillingIAPFragment : me/proton/core/presentation/ui/ProtonFragment {
+	public fun <init> (I)V
+	protected abstract fun onError (I)V
+	protected abstract fun onPriceAvailable (JLjava/lang/String;Ljava/lang/String;)V
+	protected abstract fun onPurchaseSuccess-Gy0Xlnw (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/presentation/entity/BillingInput;)V
+	protected abstract fun onUserCanceled ()V
+	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
+	protected final fun pay (Lme/proton/core/payment/presentation/entity/BillingInput;)V
+	protected final fun queryGooglePlan (Ljava/lang/String;)V
+}
+
 public final class me/proton/core/paymentiap/presentation/ui/BillingIAPFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V

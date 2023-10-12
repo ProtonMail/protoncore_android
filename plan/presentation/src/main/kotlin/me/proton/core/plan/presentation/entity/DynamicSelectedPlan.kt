@@ -23,7 +23,7 @@ import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.presentation.viewmodel.toPlanVendorDetailsMap
 
-internal fun DynamicPlan.getSelectedPlan(
+fun DynamicPlan.getSelectedPlan(
     resources: Resources,
     cycle: Int,
     currency: String?

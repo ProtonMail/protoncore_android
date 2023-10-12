@@ -218,7 +218,7 @@ internal abstract class BasePlansViewModel(
 }
 
 @VisibleForTesting
-internal fun Map<AppStore, PlanVendorDetails>.filterByCycle(
+fun Map<AppStore, PlanVendorDetails>.filterByCycle(
     planCycle: PlanCycle
 ): Map<AppStore, PaymentVendorDetails> {
     return mapNotNull { (appVendor, details: PlanVendorDetails) ->

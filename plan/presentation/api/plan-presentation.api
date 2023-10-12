@@ -457,6 +457,10 @@ public final class me/proton/core/plan/presentation/entity/DynamicPlanFilters {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/plan/presentation/entity/DynamicSelectedPlanKt {
+	public static final fun getSelectedPlan (Lme/proton/core/plan/domain/entity/DynamicPlan;Landroid/content/res/Resources;ILjava/lang/String;)Lme/proton/core/plan/presentation/entity/SelectedPlan;
+}
+
 public abstract class me/proton/core/plan/presentation/entity/DynamicUser {
 	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -1556,6 +1560,10 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 
 public final class me/proton/core/plan/presentation/view/PlanViewUtilsKt {
 	public static final field HUNDRED_PERCENT I
+}
+
+public final class me/proton/core/plan/presentation/viewmodel/BasePlansViewModelKt {
+	public static final fun filterByCycle (Ljava/util/Map;Lme/proton/core/plan/presentation/entity/PlanCycle;)Ljava/util/Map;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel_Factory : dagger/internal/Factory {
