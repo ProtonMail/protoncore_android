@@ -34,11 +34,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 import me.proton.core.payment.presentation.R
+import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 
-@Ignore("Replaced with DynamicExistingPaymentMethodTests")
 @RunWith(Parameterized::class)
-class ExistingPaymentMethodTests(
+class DynamicExistingPaymentMethodTests(
     private val appStore: AppStore,
     private val card: Boolean,
     private val paypal: Boolean,
@@ -60,26 +60,26 @@ class ExistingPaymentMethodTests(
     fun existingPaypalMethodDisplayed() {
         login(userWithPaypal)
 
-        CoreexampleRobot()
-            .plansUpgrade()
-            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
-            .verify { paymentMethodDisplayed("PayPal", userWithPaypal.paypal) }
+        CoreexampleRobot().plansUpgrade()
+        SubscriptionRobot.selectPlan(Plan.Dev)
+        ExistingPaymentMethodsRobot().verify {
+            paymentMethodDisplayed("PayPal", userWithPaypal.paypal)
+        }
     }
 
     @Test
     fun existingCreditCardMethodDisplayed() {
         login(userWithCard)
 
-        CoreexampleRobot()
-            .plansUpgrade()
-            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
-            .verify {
-                paymentMethodDisplayed(Card.default.details(), Card.default.name)
-                if (inApp) {
-                    val context = ApplicationProvider.getApplicationContext<Context>()
-                    googlePaymentMethodDisplayed("${context.getString(R.string.payments_method_google)}*")
-                }
+        CoreexampleRobot().plansUpgrade()
+        SubscriptionRobot.selectPlan(Plan.Dev)
+        ExistingPaymentMethodsRobot().verify {
+            paymentMethodDisplayed(Card.default.details(), Card.default.name)
+            if (inApp) {
+                val context = ApplicationProvider.getApplicationContext<Context>()
+                googlePaymentMethodDisplayed("${context.getString(R.string.payments_method_google)}*")
             }
+        }
     }
 
     @Test
@@ -90,13 +90,12 @@ class ExistingPaymentMethodTests(
 
         login(user)
 
-        CoreexampleRobot()
-            .plansUpgrade()
-            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
-            .verify {
-                paymentMethodDisplayed(card.details(), card.name)
-                paymentMethodDisplayed("PayPal", user.paypal)
-            }
+        CoreexampleRobot().plansUpgrade()
+        SubscriptionRobot.selectPlan(Plan.Dev)
+        ExistingPaymentMethodsRobot().verify {
+            paymentMethodDisplayed(card.details(), card.name)
+            paymentMethodDisplayed("PayPal", user.paypal)
+        }
     }
 
     @Test
@@ -104,13 +103,12 @@ class ExistingPaymentMethodTests(
     fun switchPaymentMethod() {
         val user = users.getUser { it.paypal.isNotEmpty() && it.cards.isNotEmpty() && !it.isPaid }
 
-        CoreexampleRobot()
-            .plansUpgrade()
-            .upgradeToPlan<ExistingPaymentMethodsRobot>(Plan.Dev)
-            .verify {
-                paymentMethod(user.paypal).checkIsNotChecked()
-                paymentMethod(user.cards[0].details()).checkIsChecked()
-            }
+        CoreexampleRobot().plansUpgrade()
+        SubscriptionRobot.selectPlan(Plan.Dev)
+        ExistingPaymentMethodsRobot().verify {
+            paymentMethod(user.paypal).checkIsNotChecked()
+            paymentMethod(user.cards[0].details()).checkIsChecked()
+        }
 
         ExistingPaymentMethodsRobot()
             .selectPaymentMethod(user.paypal)

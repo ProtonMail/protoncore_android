@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
@@ -54,7 +55,8 @@ open class BaseTest(
     fun login(user: User) {
         Log.d(testTag, "Login user: ${user.name}")
         AddAccountRobot().back<CoreexampleRobot>().verify { accountSwitcherDisplayed() }
-        authHelper.login(user.name, user.password)
+        val sessionInfo = authHelper.login(user.name, user.password)
+        fetchUnleashFeatureFlags(sessionInfo.userId)
         Log.d(testTag, "Login done.")
     }
 
@@ -79,6 +81,7 @@ open class BaseTest(
         fun prepare() {
             setupDeviceForAutomation(true)
             authHelper.logoutAll()
+            fetchUnleashFeatureFlags(userId = null)
             Plan.Dev.text = Plan.MailPlus.text
             Plan.Dev.planName = Plan.MailPlus.planName
         }
@@ -95,5 +98,9 @@ open class BaseTest(
             availablePaymentProviders().filter {
                 it != PaymentProvider.PayPal
             }.toSet()
+
+        private fun fetchUnleashFeatureFlags(userId: UserId? = null) = runBlocking {
+            protonTestEntryPoint.featureFlagRepository.getAll(userId)
+        }
     }
 }

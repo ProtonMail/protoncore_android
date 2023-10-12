@@ -1310,6 +1310,7 @@ public final class me/proton/core/auth/presentation/entity/signup/SubscriptionDe
 }
 
 public abstract interface class me/proton/core/auth/presentation/testing/ProtonTestEntryPoint {
+	public abstract fun getFeatureFlagRepository ()Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;
 	public abstract fun getGetAvailablePaymentProviders ()Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;
 	public abstract fun getLoginTestHelper ()Lme/proton/core/auth/domain/testing/LoginTestHelper;
 }

@@ -20,18 +20,16 @@ package me.proton.core.test.android.uitests.tests.medium.payments
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.quark.data.User
+import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import org.junit.After
-import org.junit.Ignore
 import org.junit.Test
 
-@Ignore("Replaced by DynamicNewCreditCardTests")
-class NewCreditCardTests : BaseTest() {
+class DynamicNewCreditCardTests : BaseTest() {
 
     private val newCreditCardRobot = AddCreditCardRobot()
 
@@ -45,17 +43,15 @@ class NewCreditCardTests : BaseTest() {
 
         login(userWithoutCard)
 
-        CoreexampleRobot()
-            .plansCurrent()
-            .upgradeToPlan<AddCreditCardRobot>(Plan.Dev)
+        CoreexampleRobot().plansCurrent()
+        SubscriptionRobot.selectPlan(Plan.Dev)
     }
 
     @Test
     fun backToPlanSelection() {
         goToPlanUpgrade()
-        newCreditCardRobot
-            .close<SelectPlanRobot>()
-            .verify { planDetailsDisplayedInsideRecyclerView(Plan.Dev) }
+        newCreditCardRobot.close<CoreexampleRobot>()
+        SubscriptionRobot.verifyAtLeastOnePlanIsShown()
     }
 
     @Test

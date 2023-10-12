@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -31,7 +31,7 @@ public enum class Plan(public var planName: String, public var text: String) {
     @Deprecated("This plan is no longer enabled.")
     Plus("plus", "ProtonMail Plus"),
 
-    Free("free", "Proton Free"),
+    Free("free", "Free"),
     MailPlus("mail2022", "Mail Plus"),
     Unlimited("bundle2022", "Proton Unlimited"),
     VpnPlus("vpn2022", "VPN Plus"),

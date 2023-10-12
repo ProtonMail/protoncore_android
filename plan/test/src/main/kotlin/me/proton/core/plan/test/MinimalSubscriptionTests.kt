@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 package me.proton.core.plan.test
 
 import me.proton.core.plan.test.robot.SubscriptionRobot.verifyAtLeastOnePlanIsShown
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyCannotUpgradeFromMobile
+import me.proton.core.plan.test.robot.SubscriptionRobot.verifyCannotManagePlansFromMobile
 import me.proton.core.plan.test.robot.SubscriptionRobot.verifyNoPaidPlansAreShown
 import me.proton.core.plan.test.robot.SubscriptionRobot.verifySubscriptionIsShown
 import me.proton.core.plan.test.robot.SubscriptionRobot.verifyUpgradeYourPlanTextIsDisplayed
@@ -69,6 +69,6 @@ public interface MinimalSubscriptionTests {
         quark.setPaymentMethods(card = false, paypal = false, inApp = false)
         startSubscription(users.getUser { it.isPaid })
         verifySubscriptionIsShown()
-        verifyCannotUpgradeFromMobile()
+        verifyCannotManagePlansFromMobile()
     }
 }

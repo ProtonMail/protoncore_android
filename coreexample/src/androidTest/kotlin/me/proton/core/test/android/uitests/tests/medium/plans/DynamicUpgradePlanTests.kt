@@ -20,21 +20,17 @@ package me.proton.core.test.android.uitests.tests.medium.plans
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.entity.PlanCycle
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.quark.data.User
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
+import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
-@Ignore("Replaced with DynamicUpgradePlanTests")
-class UpgradePlanTests : BaseTest() {
-
-    private val selectPlanRobot = SelectPlanRobot()
+class DynamicUpgradePlanTests : BaseTest() {
     private val coreExampleRobot = CoreexampleRobot()
 
     @Before
@@ -55,18 +51,14 @@ class UpgradePlanTests : BaseTest() {
         val freeUser = quark.userCreate().first
         login(freeUser)
 
-        coreExampleRobot
-            .plansUpgrade()
-            .scrollToPlan(Plan.Dev)
-            .toggleExpandPlan(Plan.Dev)
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Plan.Dev)
-                canUpgradeToPlan(Plan.Dev)
-            }
+        coreExampleRobot.plansUpgrade()
+        SubscriptionRobot.apply {
+            togglePlan(Plan.Dev)
+            verifyCanGetPlan(Plan.Dev)
+            close()
+        }
 
-        selectPlanRobot
-            .close<CoreexampleRobot>()
-            .verify { accountSwitcherDisplayed() }
+        coreExampleRobot.verify { accountSwitcherDisplayed() }
     }
 
     @Test
@@ -76,9 +68,8 @@ class UpgradePlanTests : BaseTest() {
         quark.seedNewSubscriberWithCycle(paidUser, PlanCycle.YEARLY.cycleDurationMonths)
         login(paidUser)
 
-        coreExampleRobot
-            .plansUpgrade()
-            .verify { planDetailsNotDisplayed() }
+        coreExampleRobot.plansUpgrade()
+        SubscriptionRobot.verifyNoUpgradeAvailable()
     }
 
     @Test
@@ -91,9 +82,11 @@ class UpgradePlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle1, cycle1.cycleDurationMonths)
         login(user)
 
-        coreExampleRobot
-            .plansUpgrade()
-            .verify { planDetailsNotDisplayed() }
+        coreExampleRobot.plansUpgrade()
+        SubscriptionRobot.apply {
+            verifyNoPaidPlansAreShown()
+            verifyNoUpgradeAvailable()
+        }
     }
 
     @Test
@@ -106,9 +99,11 @@ class UpgradePlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle12, cycle12.cycleDurationMonths)
         login(user)
 
-        coreExampleRobot
-            .plansUpgrade()
-            .verify { planDetailsNotDisplayed() }
+        coreExampleRobot.plansUpgrade()
+        SubscriptionRobot.apply {
+            verifyNoPaidPlansAreShown()
+            verifyNoUpgradeAvailable()
+        }
     }
 
     @Test
@@ -121,9 +116,11 @@ class UpgradePlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15.cycleDurationMonths)
         login(user)
 
-        coreExampleRobot
-            .plansUpgrade()
-            .verify { planDetailsNotDisplayed() }
+        coreExampleRobot.plansUpgrade()
+        SubscriptionRobot.apply {
+            verifyNoPaidPlansAreShown()
+            verifyNoUpgradeAvailable()
+        }
     }
 
     @Test
@@ -136,8 +133,10 @@ class UpgradePlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15.cycleDurationMonths)
         login(user)
 
-        coreExampleRobot
-            .plansUpgrade()
-            .verify { planDetailsNotDisplayed() }
+        coreExampleRobot.plansUpgrade()
+        SubscriptionRobot.apply {
+            verifyNoPaidPlansAreShown()
+            verifyNoUpgradeAvailable()
+        }
     }
 }

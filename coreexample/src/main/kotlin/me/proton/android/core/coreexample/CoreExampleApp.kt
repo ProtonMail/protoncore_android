@@ -23,6 +23,7 @@ import androidx.startup.AppInitializer
 import dagger.hilt.android.HiltAndroidApp
 import me.proton.android.core.coreexample.init.AccountStateHandlerInitializer
 import me.proton.android.core.coreexample.init.EventManagerInitializer
+import me.proton.android.core.coreexample.init.FeatureFlagInitializer
 import me.proton.android.core.coreexample.init.LoggerInitializer
 import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
 import me.proton.android.core.coreexample.init.WorkManagerInitializer
@@ -47,6 +48,7 @@ class CoreExampleApp : Application() {
             initializeComponent(UnAuthSessionFetcherInitializer::class.java)
             initializeComponent(KeyTransparencyInitializer::class.java)
             initializeComponent(LoggerInitializer::class.java)
+            initializeComponent(FeatureFlagInitializer::class.java)
         }
     }
 }

@@ -24,27 +24,24 @@ import androidx.test.core.app.ApplicationProvider
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCycle
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.quark.data.User
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
+import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import org.junit.After
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
 
-@Ignore("Replaced by CurrentDynamicPlanTests")
-class CurrentPlanTests : BaseTest() {
-    private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
+class DynamicCurrentPlanTests : BaseTest() {
+    private fun navigateUserToCurrentPlans(user: User) {
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)
         login(user)
 
-        return CoreexampleRobot()
-            .plansCurrent()
+        CoreexampleRobot().plansCurrent()
     }
 
     @Before
@@ -62,12 +59,11 @@ class CurrentPlanTests : BaseTest() {
     fun userWithFreePlan() {
         val user = quark.userCreate().first
         navigateUserToCurrentPlans(user)
-            .scrollToPlan(Plan.Dev)
-            .toggleExpandPlan(Plan.Dev)
-            .verify {
-                planDetailsDisplayedInsideRecyclerView(Plan.Dev)
-                canUpgradeToPlan(Plan.Dev)
-            }
+        SubscriptionRobot.apply {
+            verifySubscriptionIsShown()
+            verifyUpgradeYourPlanTextIsDisplayed()
+            verifyAtLeastOnePlanIsShown()
+        }
     }
 
     @Test
@@ -75,9 +71,11 @@ class CurrentPlanTests : BaseTest() {
         val paidUser = User(plan = Plan.Unlimited)
         quark.seedNewSubscriberWithCycle(paidUser, PlanCycle.YEARLY.cycleDurationMonths)
         navigateUserToCurrentPlans(paidUser)
-            .verify {
-                planDetailsDisplayed(paidUser.plan)
-            }
+        SubscriptionRobot.apply {
+            verifySubscriptionIsShown()
+            verifyCannotManagePlansFromMobile()
+            verifyNoPaidPlansAreShown()
+        }
     }
 
     @Test
@@ -90,22 +88,21 @@ class CurrentPlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle1, cycle1.cycleDurationMonths)
         login(user)
 
-        CoreexampleRobot()
-            .plansCurrent()
-            .verify {
-                val context = ApplicationProvider.getApplicationContext<Context>()
-                val cycleText = context.resources.getQuantityString(
-                    R.plurals.plans_billing_other_period,
-                    cycle1.cycleDurationMonths,
-                    cycle1.cycleDurationMonths
-                )
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = System.currentTimeMillis()
-                calendar.add(Calendar.MONTH, 1)
+        CoreexampleRobot().plansCurrent()
+        SubscriptionRobot.apply {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val cycleText = context.resources.getQuantityString(
+                R.plurals.plans_billing_other_period,
+                cycle1.cycleDurationMonths,
+                cycle1.cycleDurationMonths
+            )
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.add(Calendar.MONTH, 1)
 
-                planRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
-                planCycleDisplayed(cycleText)
-            }
+            verifyPlanRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
+            verifyPlanCycleDisplayed(cycleText)
+        }
     }
 
     @Test
@@ -118,17 +115,16 @@ class CurrentPlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle12, cycle12.cycleDurationMonths)
         login(user)
 
-        CoreexampleRobot()
-            .plansCurrent()
-            .verify {
-                val context = ApplicationProvider.getApplicationContext<Context>()
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = System.currentTimeMillis()
-                calendar.add(Calendar.YEAR, 1)
+        CoreexampleRobot().plansCurrent()
+        SubscriptionRobot.apply {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.add(Calendar.YEAR, 1)
 
-                planRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
-                planCycleDisplayed(context.getString(R.string.plans_billing_yearly))
-            }
+            verifyPlanRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
+            verifyPlanCycleDisplayed(context.getString(R.string.plans_billing_yearly))
+        }
     }
 
     @Test
@@ -141,22 +137,21 @@ class CurrentPlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle15, cycle15.cycleDurationMonths)
         login(user)
 
-        CoreexampleRobot()
-            .plansCurrent()
-            .verify {
-                val context = ApplicationProvider.getApplicationContext<Context>()
-                val cycleText = context.resources.getQuantityString(
-                    R.plurals.plans_billing_other_period,
-                    cycle15.cycleDurationMonths,
-                    cycle15.cycleDurationMonths
-                )
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = System.currentTimeMillis()
-                calendar.add(Calendar.MONTH, 15)
+        CoreexampleRobot().plansCurrent()
+        SubscriptionRobot.apply {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val cycleText = context.resources.getQuantityString(
+                R.plurals.plans_billing_other_period,
+                cycle15.cycleDurationMonths,
+                cycle15.cycleDurationMonths
+            )
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.add(Calendar.MONTH, 15)
 
-                planRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
-                planCycleDisplayed(cycleText)
-            }
+            verifyPlanRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
+            verifyPlanCycleDisplayed(cycleText)
+        }
     }
 
     @Test
@@ -169,22 +164,21 @@ class CurrentPlanTests : BaseTest() {
         val user = quark.seedNewSubscriberWithCycle(paidUserCycle30, cycle30.cycleDurationMonths)
         login(user)
 
-        CoreexampleRobot()
-            .plansCurrent()
-            .verify {
-                val context = ApplicationProvider.getApplicationContext<Context>()
-                val cycleText = context.resources.getQuantityString(
-                    R.plurals.plans_billing_other_period,
-                    cycle30.cycleDurationMonths,
-                    cycle30.cycleDurationMonths
-                )
-                val calendar = Calendar.getInstance()
-                calendar.timeInMillis = System.currentTimeMillis()
-                calendar.add(Calendar.MONTH, 30)
+        CoreexampleRobot().plansCurrent()
+        SubscriptionRobot.apply {
+            val context = ApplicationProvider.getApplicationContext<Context>()
+            val cycleText = context.resources.getQuantityString(
+                R.plurals.plans_billing_other_period,
+                cycle30.cycleDurationMonths,
+                cycle30.cycleDurationMonths
+            )
+            val calendar = Calendar.getInstance()
+            calendar.timeInMillis = System.currentTimeMillis()
+            calendar.add(Calendar.MONTH, 30)
 
-                planRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
-                planCycleDisplayed(cycleText)
-            }
+            verifyPlanRenewalDisplayed(context.calendarToDateFormat(calendar.time).toString())
+            verifyPlanCycleDisplayed(cycleText)
+        }
     }
 
     private fun Context.calendarToDateFormat(date: Date) = HtmlCompat.fromHtml(

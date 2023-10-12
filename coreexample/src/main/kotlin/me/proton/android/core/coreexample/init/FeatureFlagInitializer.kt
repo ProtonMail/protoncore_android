@@ -16,21 +16,31 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.testing
+package me.proton.android.core.coreexample.init
 
-import androidx.annotation.RestrictTo
+import android.content.Context
+import androidx.startup.Initializer
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.auth.domain.testing.LoginTestHelper
-import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
-import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.featureflag.data.FeatureFlagRefreshStarter
 
-@EntryPoint
-@InstallIn(SingletonComponent::class)
-@RestrictTo(RestrictTo.Scope.TESTS)
-interface ProtonTestEntryPoint {
-    val featureFlagRepository: FeatureFlagRepository
-    val getAvailablePaymentProviders: GetAvailablePaymentProviders
-    val loginTestHelper: LoginTestHelper
+class FeatureFlagInitializer: Initializer<Unit> {
+    override fun create(context: Context) {
+        EntryPointAccessors.fromApplication(
+            context.applicationContext,
+            FeatureFlagInitializerEntryPoint::class.java
+        ).featureFlagRefreshStarter().start()
+    }
+
+    override fun dependencies(): List<Class<out Initializer<*>?>> = listOf(
+        WorkManagerInitializer::class.java
+    )
+
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface FeatureFlagInitializerEntryPoint {
+        fun featureFlagRefreshStarter(): FeatureFlagRefreshStarter
+    }
 }
