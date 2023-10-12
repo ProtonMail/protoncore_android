@@ -50,8 +50,7 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
     suspend operator fun invoke(userId: UserId): UnredeemedGooglePurchase? {
         return try {
             perform(userId)
-        } catch (error: Throwable) { // we need to catch BillingClientError from PaymentIAP module, but we do not a reference to IAP lib here
-            CoreLogger.e(LogTag.GIAP_ERROR, error.message ?: error.toString())
+        } catch (_: Throwable) {
             null
         }
     }

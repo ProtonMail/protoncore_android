@@ -28,7 +28,7 @@ public fun Result<*>.toGiapStatus(): GiapStatus {
     if (isSuccess && getOrNull() == null) return GiapStatus.notFound
     return when (val throwable = exceptionOrNull()) {
         null -> GiapStatus.success
-        is BillingClientError -> throwable.toGiapStatus()
+        is BillingClientError -> throwable.responseCode.toGiapStatus()
         else -> {
             CoreLogger.e(LogTag.GIAP_ERROR, throwable, "Unknown BillingClientError.")
             GiapStatus.unknown
@@ -36,21 +36,7 @@ public fun Result<*>.toGiapStatus(): GiapStatus {
     }
 }
 
-public fun BillingClientError.toGiapStatus(): GiapStatus = responseCode.toGiapStatus().also {
-    if (it == GiapStatus.unknown) {
-        CoreLogger.e(LogTag.GIAP_ERROR, this, "Unknown BillingClientError.")
-    }
-}
-
-public fun BillingResult.toGiapStatus(): GiapStatus = responseCode.toGiapStatus().also {
-    if (it == GiapStatus.unknown) {
-        CoreLogger.e(
-            LogTag.GIAP_ERROR,
-            IllegalStateException(this.toString()),
-            "Unknown BillingResult error."
-        )
-    }
-}
+public fun BillingResult.toGiapStatus(): GiapStatus = responseCode.toGiapStatus()
 
 private fun Int?.toGiapStatus(): GiapStatus =
     when (this) {

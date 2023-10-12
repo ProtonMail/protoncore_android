@@ -162,11 +162,9 @@ internal class BillingIAPViewModel @Inject constructor(
         }.catch { throwable ->
             val error = when (throwable) {
                 is BillingClientError -> {
-                    CoreLogger.e(LogTag.GIAP_ERROR, throwable.message ?: throwable.toString())
                     when (throwable.responseCode) {
                         null,
                         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> State.Error.BillingClientUnavailable
-
                         BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> State.Error.BillingClientDisconnected
                         else -> State.Error.ProductDetailsError.ResponseCode
                     }
@@ -209,9 +207,6 @@ internal class BillingIAPViewModel @Inject constructor(
                     launchBillingFlow(activity, input.googleCustomerId)
                 }
             }.catch { error ->
-                if (error is BillingClientError) {
-                    CoreLogger.e(LogTag.GIAP_ERROR, error.message ?: error.toString())
-                }
                 _billingIAPState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
             }.onEach { subscriptionState ->
                 _billingIAPState.tryEmit(subscriptionState)

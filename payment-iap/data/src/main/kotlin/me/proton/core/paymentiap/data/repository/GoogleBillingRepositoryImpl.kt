@@ -21,6 +21,7 @@ package me.proton.core.paymentiap.data.repository
 import android.app.Activity
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
@@ -45,6 +46,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.paymentiap.data.listOfKnownBillingCodes
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.repository.BillingClientError
@@ -121,8 +123,16 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
     }
 
     private fun BillingResult.checkOk() {
-        if (responseCode != BillingClient.BillingResponseCode.OK) {
-            throw BillingClientError(responseCode, debugMessage)
+        if (responseCode != BillingResponseCode.OK) {
+            throw BillingClientError(responseCode, debugMessage).also {
+                if (it.responseCode !in listOfKnownBillingCodes) {
+                    CoreLogger.e(
+                        LogTag.GIAP_ERROR,
+                        it,
+                        "Billing response code: $responseCode, billing debug message: $debugMessage"
+                    )
+                }
+            }
         }
     }
 }
@@ -181,7 +191,15 @@ internal class ConnectedBillingClient @AssistedInject constructor(
         connectionState
             .onEach {
                 if (it is BillingClientConnectionState.Error) {
-                    throw BillingClientError(it.responseCode, it.debugMessage)
+                    throw BillingClientError(it.responseCode, it.debugMessage).also { error ->
+                        if (error.responseCode !in listOfKnownBillingCodes) {
+                            CoreLogger.e(
+                                LogTag.GIAP_ERROR,
+                                error,
+                                "Billing response code: ${error.responseCode}, billing debug message: ${error.debugMessage}"
+                            )
+                        }
+                    }
                 }
             }
             .first { it == BillingClientConnectionState.Connected }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton  AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,12 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.domain
+package me.proton.core.paymentiap.data
 
-object LogTag {
-    /** Default tag for this module. */
-    const val DEFAULT: String = "core.plan"
+import com.android.billingclient.api.BillingClient
 
-    /** Tag for dynamic plans parsing error. */
-    const val DYN_PLANS_PARSE: String = "core.plan.dynamic.parse"
-}
+internal val listOfKnownBillingCodes = listOf(
+    BillingClient.BillingResponseCode.OK,
+    BillingClient.BillingResponseCode.BILLING_UNAVAILABLE,
+    BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+    BillingClient.BillingResponseCode.SERVICE_TIMEOUT,
+    BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE,
+    BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED,
+    BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED,
+    BillingClient.BillingResponseCode.ITEM_NOT_OWNED,
+    BillingClient.BillingResponseCode.USER_CANCELED
+)

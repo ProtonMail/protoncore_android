@@ -21,6 +21,7 @@ package me.proton.core.paymentiap.data.repository
 import app.cash.turbine.test
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.ProductDetailsResponseListener
@@ -32,14 +33,18 @@ import com.android.billingclient.api.QueryPurchasesParams
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.unmockkObject
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
+import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
+import me.proton.core.util.kotlin.CoreLogger
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -117,6 +122,52 @@ internal class GoogleBillingRepositoryImplTest {
         val result = tested.use { it.getProductDetails("plan-name") }
         assertSame(result, null)
         assertTrue(assertSingleResult("getProductDetails").isSuccess)
+    }
+
+    @Test
+    fun `get product details error`() = runTestWithResultContext {
+        mockkObject(CoreLogger)
+        mockClientResult {
+            every { queryProductDetailsAsync(any(), any()) } answers {
+                val listener = invocation.args[1] as ProductDetailsResponseListener
+                listener.onProductDetailsResponse(
+                    BillingResult.newBuilder().setResponseCode(BillingResponseCode.ERROR).setDebugMessage("error")
+                        .build(), listOf()
+                )
+            }
+        }
+        val exception = assertFailsWith<BillingClientError> {
+            tested.use { it.getProductDetails("plan-name") }
+        }
+        assertSame("error", exception.debugMessage)
+        assertEquals(BillingResponseCode.ERROR, exception.responseCode)
+        verify(exactly = 1) {
+            CoreLogger.e(
+                LogTag.GIAP_ERROR,
+                exception,
+                "Billing response code: 6, billing debug message: error"
+            )
+        }
+        unmockkObject(CoreLogger)
+    }
+
+    @Test
+    fun `get product details no error`() = runTestWithResultContext {
+        mockkObject(CoreLogger)
+        mockClientResult {
+            every { queryProductDetailsAsync(any(), any()) } answers {
+                val listener = invocation.args[1] as ProductDetailsResponseListener
+                listener.onProductDetailsResponse(
+                    BillingResult.newBuilder().setResponseCode(BillingResponseCode.OK).setDebugMessage("no error")
+                        .build(), listOf()
+                )
+            }
+        }
+        val result = tested.use { it.getProductDetails("plan-name") }
+        assertSame(result, null)
+        assertTrue(assertSingleResult("getProductDetails").isSuccess)
+        verify(exactly = 0) { CoreLogger.e(LogTag.GIAP_ERROR, any(), any()            ) }
+        unmockkObject(CoreLogger)
     }
 
     @Test
