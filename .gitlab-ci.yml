@@ -285,7 +285,7 @@ pass-integration-tests:
       --test ${TEST_APK}
       --device model=${DEVICE_MODEL}
       --test-targets "$TEST_TARGET"
-      --timeout 25m
+      --timeout 30m
       --results-dir=$RESULTS_DIR
       --num-flaky-test-attempts=$FLAKY_TEST_RERUN
       --environment-variables listener=me.proton.core.test.android.ToastingRunListener
