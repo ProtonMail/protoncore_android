@@ -20,7 +20,6 @@ package me.proton.core.accountrecovery.test.robot
 
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.test.fusion.Fusion.node
-import me.proton.test.fusion.ui.compose.ComposeWaiter.waitFor
 
 public class AccountRecoveryGracePeriodRobot {
     private val cancelRecoveryButton = node.withText(R.string.account_recovery_cancel)
@@ -32,10 +31,8 @@ public class AccountRecoveryGracePeriodRobot {
     }
 
     public fun uiElementsDisplayed() {
-        node.waitFor {
-            dialogTitle.assertIsDisplayed()
-            cancelRecoveryButton.assertIsDisplayed()
-            continueButton.assertIsDisplayed()
-        }
+        dialogTitle.await { assertIsDisplayed() }
+        cancelRecoveryButton.await { assertIsDisplayed() }
+        continueButton.await { assertIsDisplayed() }
     }
 }
