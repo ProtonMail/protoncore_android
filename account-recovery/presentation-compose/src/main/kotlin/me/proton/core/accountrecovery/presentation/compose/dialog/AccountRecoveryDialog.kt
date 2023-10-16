@@ -33,6 +33,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
@@ -71,10 +72,11 @@ fun AccountRecoveryDialog(
     onError: (Throwable?) -> Unit
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
+    val savedStateRegistryOwner = LocalSavedStateRegistryOwner.current
     val state by rememberAsState(viewModel.state, viewModel.initialState)
 
     LaunchedEffect(Unit) {
-        lifecycleOwner.launchOnScreenView {
+        lifecycleOwner.launchOnScreenView(savedStateRegistryOwner.savedStateRegistry) {
             viewModel.screenId.collect { screenId ->
                 screenId?.let { viewModel.onScreenView(it) }
             }

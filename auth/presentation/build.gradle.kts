@@ -60,6 +60,7 @@ dependencies {
         project(Module.paymentPresentation),
         project(Module.planPresentation),
         project(Module.presentation),
+        project(Module.telemetryPresentation),
         project(Module.userDomain),
         project(Module.userSettingsDomain),
         `activity-noktx`,

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,26 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.telemetry.presentation.annotation
 
-plugins {
-    protonAndroidLibrary
-}
+import androidx.annotation.IdRes
 
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.telemetry"
-}
-
-dependencies {
-    api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
-        project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
-    )
-}
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS)
+public annotation class ViewClicked(
+    public val event: String,
+    public val viewIds: Array<String>
+)

@@ -1324,7 +1324,6 @@ public final class me/proton/core/auth/presentation/ui/AddAccountActivity : me/p
 	public fun <init> ()V
 	public final fun getAccountManager ()Lme/proton/core/accountmanager/domain/AccountManager;
 	public final fun getAuthOrchestrator ()Lme/proton/core/auth/presentation/AuthOrchestrator;
-	public fun onBackPressed ()V
 	public final fun setAccountManager (Lme/proton/core/accountmanager/domain/AccountManager;)V
 	public final fun setAuthOrchestrator (Lme/proton/core/auth/presentation/AuthOrchestrator;)V
 }

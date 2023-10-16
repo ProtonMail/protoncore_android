@@ -260,6 +260,7 @@ public object Module {
     public const val telemetryDagger: String = "$telemetry:telemetry-dagger"
     public const val telemetryDomain: String = "$telemetry:telemetry-domain"
     public const val telemetryData: String = "$telemetry:telemetry-data"
+    public const val telemetryPresentation: String = "$telemetry:telemetry-presentation"
 
     // Proguard rules
     public const val proguardRules: String = ":proguard-rules"

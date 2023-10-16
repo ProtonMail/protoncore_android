@@ -25,13 +25,14 @@ import me.proton.android.core.coreexample.init.AccountStateHandlerInitializer
 import me.proton.android.core.coreexample.init.EventManagerInitializer
 import me.proton.android.core.coreexample.init.FeatureFlagInitializer
 import me.proton.android.core.coreexample.init.LoggerInitializer
-import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
 import me.proton.android.core.coreexample.init.WorkManagerInitializer
 import me.proton.core.auth.presentation.MissingScopeInitializer
 import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
+import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
 import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
+import me.proton.core.telemetry.presentation.ProductMetricsInitializer
 
 @HiltAndroidApp
 class CoreExampleApp : Application() {
@@ -49,6 +50,7 @@ class CoreExampleApp : Application() {
             initializeComponent(KeyTransparencyInitializer::class.java)
             initializeComponent(LoggerInitializer::class.java)
             initializeComponent(FeatureFlagInitializer::class.java)
+            initializeComponent(ProductMetricsInitializer::class.java)
         }
     }
 }

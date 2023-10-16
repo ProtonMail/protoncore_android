@@ -18,35 +18,50 @@
 
 package me.proton.core.presentation.utils
 
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
+import androidx.savedstate.SavedStateRegistry
 import kotlinx.coroutines.launch
 
-/** A "screen view" event takes place during the state defined by this value. */
-private val SCREEN_VIEW_COLLECTION_STATE = Lifecycle.State.CREATED
+private const val SAVED_STATE_PROVIDER_KEY = "core.telemetry.screen_metrics"
 
 /** Executes [block] whenever we are in a state that corresponds to a "screen view".
  * The best practice is to call this function when the lifecycle is initialized,
- * (e.g. in [ComponentActivity.onCreate]),
- * to avoid multiple repeating coroutines doing the same thing.
- * @see [Lifecycle.repeatOnLifecycle]
+ * (e.g. in [ComponentActivity.onCreate]).
  */
-fun LifecycleOwner.launchOnScreenView(block: suspend () -> Unit) {
-    lifecycleScope.launch {
-        repeatOnLifecycle(SCREEN_VIEW_COLLECTION_STATE) {
-            block()
-        }
-    }
-}
+fun ComponentActivity.launchOnScreenView(block: suspend () -> Unit): () -> Unit =
+    launchOnScreenView(savedStateRegistry, block)
 
 /** Executes [block] whenever we are in a state that corresponds to a "screen view".
  * This function should be called in [Fragment.onCreateView] or [Fragment.onViewCreated].
- * @see [LifecycleOwner.launchOnScreenView]
  */
-fun Fragment.launchOnScreenView(block: suspend () -> Unit) {
-    viewLifecycleOwner.launchOnScreenView(block)
+fun Fragment.launchOnScreenView(block: suspend () -> Unit): () -> Unit =
+    launchOnScreenView(savedStateRegistry, block)
+
+fun LifecycleOwner.launchOnScreenView(
+    savedStateRegistry: SavedStateRegistry,
+    block: suspend () -> Unit
+): () -> Unit {
+    if (savedStateRegistry.getSavedStateProvider(SAVED_STATE_PROVIDER_KEY) == null) {
+        savedStateRegistry.registerSavedStateProvider(SAVED_STATE_PROVIDER_KEY) { Bundle.EMPTY }
+    }
+
+    val lifecycleObserver = object : DefaultLifecycleObserver {
+        override fun onCreate(owner: LifecycleOwner) {
+            owner.lifecycle.removeObserver(this)
+            if (savedStateRegistry.consumeRestoredStateForKey(SAVED_STATE_PROVIDER_KEY) == null) {
+                lifecycleScope.launch { block() }
+            }
+        }
+    }
+    lifecycle.addObserver(lifecycleObserver)
+
+    return {
+        savedStateRegistry.unregisterSavedStateProvider(SAVED_STATE_PROVIDER_KEY)
+        lifecycle.removeObserver(lifecycleObserver)
+    }
 }

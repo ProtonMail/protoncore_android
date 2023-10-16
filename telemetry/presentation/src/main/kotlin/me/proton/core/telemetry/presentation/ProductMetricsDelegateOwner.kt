@@ -16,26 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.telemetry.presentation
 
-plugins {
-    protonAndroidLibrary
+/**
+ * The interface can be applied to activities or fragments.
+ * It cannot be used, if your activity or fragment
+ * also uses the [me.proton.core.telemetry.presentation.annotation.ProductMetrics] annotation.
+ */
+public interface ProductMetricsDelegateOwner {
+    public val productMetricsDelegate: ProductMetricsDelegate
 }
 
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.telemetry"
-}
-
-dependencies {
-    api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
-        project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
-    )
-}
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }
+public fun ProductMetricsDelegateOwner(delegate: ProductMetricsDelegate): ProductMetricsDelegateOwner =
+    object : ProductMetricsDelegateOwner {
+        override val productMetricsDelegate: ProductMetricsDelegate = delegate
+    }

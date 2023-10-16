@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,11 +32,13 @@ import me.proton.core.auth.presentation.entity.AddAccountWorkflow
 import me.proton.core.auth.presentation.onLoginResult
 import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.onClick
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {
+class AddAccountActivity :
+    ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {
 
     @Inject
     lateinit var authOrchestrator: AuthOrchestrator
@@ -58,6 +60,7 @@ class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        addOnBackPressedCallback { onClose() }
         authOrchestrator.register(this)
 
         // A Lottie animation will be added in the next iteration.
@@ -75,10 +78,6 @@ class AddAccountActivity : ProtonViewBindingActivity<ActivityAddAccountBinding>(
     override fun onDestroy() {
         authOrchestrator.unregister()
         super.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        onClose()
     }
 
     private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {

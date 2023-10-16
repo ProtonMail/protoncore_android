@@ -16,26 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.telemetry.presentation
 
-plugins {
-    protonAndroidLibrary
+import me.proton.core.domain.entity.UserId
+import me.proton.core.telemetry.domain.TelemetryManager
+
+public interface ProductMetricsDelegate {
+    public val productGroup: String
+    public val productFlow: String
+    public val productDimensions: Map<String, String> get() = emptyMap()
+    public val userId: UserId? get() = null
+    public val telemetryManager: TelemetryManager
 }
-
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.telemetry"
-}
-
-dependencies {
-    api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
-        project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
-    )
-}
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }

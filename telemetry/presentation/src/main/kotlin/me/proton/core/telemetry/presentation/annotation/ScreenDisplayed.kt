@@ -16,26 +16,20 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.telemetry.presentation.annotation
 
-plugins {
-    protonAndroidLibrary
-}
-
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.telemetry"
-}
-
-dependencies {
-    api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
-        project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
-    )
-}
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }
+/**
+ * The annotation can be applied to an activity or a fragment.
+ * If applied, the telemetry data will be automatically collected
+ * when the given screen is displayed.
+ * @param event The telemetry event name.
+ * @param dimensions Additional dimensions to use for this event.
+ *  The array must have an event number of elements,
+ *  which will be mapped to a `Map<String, String>`.
+ */
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS)
+public annotation class ScreenDisplayed(
+    public val event: String,
+    public val dimensions: Array<String> = []
+)

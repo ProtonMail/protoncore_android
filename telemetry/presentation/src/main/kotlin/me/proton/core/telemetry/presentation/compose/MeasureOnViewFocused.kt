@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,26 +16,21 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.telemetry.presentation.compose
 
-plugins {
-    protonAndroidLibrary
-}
+import androidx.compose.runtime.Composable
+import me.proton.core.telemetry.presentation.measureOnViewFocused
 
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
+@Composable
+public fun MeasureOnViewFocused(
+    event: String,
+    productDimensions: Map<String, String> = emptyMap()
+) {
+    val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
 
-android {
-    namespace = "me.proton.core.telemetry"
-}
-
-dependencies {
-    api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
-        project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
+    measureOnViewFocused(
+        event = event,
+        delegateOwner = screenMetricsDelegateOwner,
+        productDimensions = productDimensions
     )
 }
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }

@@ -728,6 +728,14 @@ public final class me/proton/core/presentation/utils/ActivityScreenContentProtec
 	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/presentation/utils/ApplicationExtensionsKt {
+	public static final fun launchOnUiComponentCreated (Landroid/app/Application;Lme/proton/core/presentation/utils/OnUiComponentCreatedListener;)Lkotlin/jvm/functions/Function0;
+}
+
+public final class me/proton/core/presentation/utils/BackPressedExtensionsKt {
+	public static final fun launchOnBackPressed (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcher;Lkotlin/jvm/functions/Function0;)Lkotlin/jvm/functions/Function0;
+}
+
 public final class me/proton/core/presentation/utils/CardType : java/lang/Enum {
 	public static final field AMEX Lme/proton/core/presentation/utils/CardType;
 	public static final field DISCOVER Lme/proton/core/presentation/utils/CardType;
@@ -838,6 +846,10 @@ public final class me/proton/core/presentation/utils/OnBackPressedCallbacksKt {
 	public static synthetic fun addOnBackPressedCallback$default (Landroidx/fragment/app/FragmentActivity;Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Landroidx/activity/OnBackPressedCallback;
 }
 
+public abstract interface class me/proton/core/presentation/utils/OnUiComponentCreatedListener {
+	public abstract fun invoke (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+}
+
 public final class me/proton/core/presentation/utils/ProtectScreenConfiguration {
 	public fun <init> ()V
 	public fun <init> (Z)V
@@ -893,8 +905,9 @@ public final class me/proton/core/presentation/utils/ScreenContentProtectorKt {
 }
 
 public final class me/proton/core/presentation/utils/ScreenViewExtensionsKt {
-	public static final fun launchOnScreenView (Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;)V
-	public static final fun launchOnScreenView (Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function1;)V
+	public static final fun launchOnScreenView (Landroidx/activity/ComponentActivity;Lkotlin/jvm/functions/Function1;)Lkotlin/jvm/functions/Function0;
+	public static final fun launchOnScreenView (Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;)Lkotlin/jvm/functions/Function0;
+	public static final fun launchOnScreenView (Landroidx/lifecycle/LifecycleOwner;Landroidx/savedstate/SavedStateRegistry;Lkotlin/jvm/functions/Function1;)Lkotlin/jvm/functions/Function0;
 }
 
 public final class me/proton/core/presentation/utils/SnackType : java/lang/Enum {
@@ -997,6 +1010,27 @@ public final class me/proton/core/presentation/utils/TextUtils {
 	public static final fun showToast (Landroid/content/Context;Ljava/lang/CharSequence;II)V
 	public static synthetic fun showToast$default (Landroid/content/Context;IIIILjava/lang/Object;)V
 	public static synthetic fun showToast$default (Landroid/content/Context;Ljava/lang/CharSequence;IIILjava/lang/Object;)V
+}
+
+public abstract class me/proton/core/presentation/utils/UiComponent {
+	public synthetic fun <init> (Ljava/lang/Object;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public abstract fun findViewById (I)Landroid/view/View;
+	public abstract fun getIdentifier (Ljava/lang/String;)I
+	public final fun getValue ()Ljava/lang/Object;
+}
+
+public final class me/proton/core/presentation/utils/UiComponent$UiActivity : me/proton/core/presentation/utils/UiComponent {
+	public fun <init> (Landroid/app/Activity;)V
+	public fun findViewById (I)Landroid/view/View;
+	public final fun getActivity ()Landroid/app/Activity;
+	public fun getIdentifier (Ljava/lang/String;)I
+}
+
+public final class me/proton/core/presentation/utils/UiComponent$UiFragment : me/proton/core/presentation/utils/UiComponent {
+	public fun <init> (Landroidx/fragment/app/Fragment;)V
+	public fun findViewById (I)Landroid/view/View;
+	public final fun getFragment ()Landroidx/fragment/app/Fragment;
+	public fun getIdentifier (Ljava/lang/String;)I
 }
 
 public final class me/proton/core/presentation/utils/UiUtilsKt {

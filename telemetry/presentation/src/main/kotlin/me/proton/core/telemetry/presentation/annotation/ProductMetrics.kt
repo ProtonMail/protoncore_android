@@ -16,26 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.telemetry.presentation.annotation
 
-plugins {
-    protonAndroidLibrary
-}
-
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.telemetry"
-}
-
-dependencies {
-    api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
-        project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
-    )
-}
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }
+/**
+ * The annotation can be applied to activities or fragments.
+ * It cannot be used, if your activity or fragment
+ * also implements [me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner].
+ */
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.CLASS)
+public annotation class ProductMetrics(
+    public val group: String,
+    public val flow: String,
+    public val dimensions: Array<String> = []
+)

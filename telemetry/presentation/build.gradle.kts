@@ -17,25 +17,45 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    protonAndroidLibrary
+    protonComposeUiLibrary
+    protonDagger
 }
 
-protonCoverage.disabled.set(true)
+protonCoverage {
+    minBranchCoveragePercentage.set(15)
+    minLineCoveragePercentage.set(56)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 android {
-    namespace = "me.proton.core.telemetry"
+    namespace = "me.proton.core.telemetry.presentation"
 }
 
 dependencies {
     api(
-        project(Module.telemetryDagger),
-        project(Module.telemetryData),
+        project(Module.domain),
         project(Module.telemetryDomain),
-        project(Module.telemetryPresentation)
+        activity,
+        fragment,
+        `startup-runtime`
+    )
+
+    implementation(
+        project(Module.presentation),
+        project(Module.presentationCompose),
+        `activity-compose`,
+        `compose-runtime`,
+        `compose-ui`,
+    )
+
+    testImplementation(
+        `android-arch-testing`,
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
     )
 }
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }
