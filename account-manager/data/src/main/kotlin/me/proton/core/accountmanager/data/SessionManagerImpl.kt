@@ -81,11 +81,17 @@ class SessionManagerImpl @Inject constructor(
     }
 
     private suspend fun internalRefreshSession(session: Session): Boolean {
+        fun log(message: String) = CoreLogger.i(LogTag.SESSION_REFRESH, message)
         val lastRefresh = lastRefreshMap[session.sessionId] ?: Long.MIN_VALUE
         val refreshedRecently = monoClock() <= lastRefresh + refreshDebounceMs
+        val currentSession = sessionProvider.getSession(session.sessionId)
+        val sessionChanged = currentSession != session
         // Don't attempt if refreshed recently. Prevent race issues.
-        if (refreshedRecently) return true
-        CoreLogger.i(LogTag.SESSION_REFRESH, "Session refreshing: ${session.toStringLog()}")
+        when {
+            refreshedRecently -> { log("Session refreshed recently, skipping."); return true }
+            sessionChanged -> { log("Session changed: ${session.toStringLog()}"); return true }
+        }
+        log("Session refreshing: ${session.toStringLog()}")
         return authRepository.refreshSession(session)
             .onSuccess { refreshed ->
                 lastRefreshMap[session.sessionId] = monoClock()

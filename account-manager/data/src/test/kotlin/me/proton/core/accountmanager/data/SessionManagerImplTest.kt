@@ -169,7 +169,7 @@ class SessionManagerImplTest {
     fun `refreshSession unauthenticated then requestSession`() = runTest {
         // Given
         coEvery { sessionProvider.getSessionId(any()) } returns null
-        coEvery { sessionProvider.getSession(any()) } returns null
+        coEvery { sessionProvider.getSession(any()) } returns unauthSession
         coEvery { authRepository.refreshSession(any()) } returns error422
 
         // When
@@ -253,6 +253,23 @@ class SessionManagerImplTest {
         coVerify(exactly = 1) { accountRepository.updateSessionToken(authSession.sessionId, any(), any()) }
         coVerify(exactly = 1) { accountRepository.updateSessionScopes(authSession.sessionId, any()) }
         coVerify(exactly = 1) { sessionListener.onSessionTokenRefreshed(authSession) }
+    }
+
+    @Test
+    fun `refreshSession skipped because session changed`() = runTest {
+        // Given
+        coEvery { sessionProvider.getSessionId(any()) } returns authSession.sessionId
+        coEvery { sessionProvider.getSession(any()) } returns authSession.copy(accessToken = "new")
+
+        // When
+        mockedManager().refreshSession(authSession)
+
+        // Then
+        coVerify(exactly = 0) { authRepository.refreshSession(authSession) }
+        coVerify(exactly = 0) { authRepository.requestSession() }
+        coVerify(exactly = 0) { sessionListener.onSessionForceLogout(unauthSession, error422.httpCode) }
+        coVerify(exactly = 0) { sessionListener.onSessionTokenCreated(any(), unauthSession) }
+        coVerify(exactly = 0) { sessionListener.onSessionTokenRefreshed(unauthSession) }
     }
 
     @Test
