@@ -30,7 +30,10 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.slot
 import io.mockk.spyk
+import io.mockk.unmockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
@@ -70,6 +73,7 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.test.kotlin.flowTest
+import org.junit.After
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
@@ -81,8 +85,10 @@ import kotlin.test.assertTrue
 class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
     private val featureFlagDao = mockk<FeatureFlagDao> {
+        coEvery { this@mockk.getAll(any<Scope>()) } returns emptyList<FeatureFlagEntity>()
         coEvery { this@mockk.insertOrUpdate(any<FeatureFlagEntity>()) } just Runs
         coEvery { this@mockk.insertOrUpdate(*anyVararg<FeatureFlagEntity>()) } just Runs
+        coEvery { this@mockk.deleteAll(any<UserId>(), any<Scope>()) } just Runs
     }
     private val database = mockk<FeatureFlagDatabase> {
         every { this@mockk.featureFlagDao() } returns featureFlagDao
@@ -117,11 +123,22 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         local = spyk(FeatureFlagLocalDataSourceImpl(database))
         remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider, workManager))
         repository = FeatureFlagRepositoryImpl(
-            local,
-            remote,
-            workManager,
-            TestCoroutineScopeProvider(coroutinesRule.dispatchers)
+            localDataSource = local,
+            remoteDataSource = remote,
+            workManager = workManager,
+            scopeProvider = TestCoroutineScopeProvider(coroutinesRule.dispatchers)
         )
+
+        mockkStatic("androidx.room.RoomDatabaseKt")
+        val transactionLambda = slot<suspend () -> Unit>()
+        coEvery { database.inTransaction(capture(transactionLambda)) } coAnswers {
+            transactionLambda.captured.invoke()
+        }
+    }
+
+    @After
+    fun clean() {
+        unmockkStatic("androidx.room.RoomDatabaseKt")
     }
 
     @Test
@@ -363,8 +380,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     @Test
     fun getValueReturnTrue() = coroutinesTest {
         // Given
-        val featureId = FeatureId("Test")
-        coEvery { remote.getAll(any()) } returns listOf(
+        val list = listOf(
             FeatureFlag(
                 userId = userId,
                 featureId = featureId,
@@ -373,9 +389,17 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 value = true
             )
         )
+        coEvery { remote.getAll(any()) } returns list
+        coEvery { local.getAll(Scope.Unleash) } returns list
+
         // When
         repository.getAll(userId)
+
         // Then
+        coVerify { remote.getAll(userId) }
+        coVerify { local.replaceAll(userId, Scope.Unleash, list) }
+        coVerify { local.getAll(Scope.Unleash) }
+
         val result = repository.getValue(userId, featureId)
         assertNotNull(result)
         assertTrue(result)
@@ -384,8 +408,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     @Test
     fun getValueReturnFalse() = coroutinesTest {
         // Given
-        val featureId = FeatureId("Test")
-        coEvery { remote.getAll(any()) } returns listOf(
+        val list = listOf(
             FeatureFlag(
                 userId = userId,
                 featureId = featureId,
@@ -394,9 +417,17 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 value = false
             )
         )
+        coEvery { remote.getAll(any()) } returns list
+        coEvery { local.getAll(Scope.Unleash) } returns list
+
         // When
         repository.getAll(userId)
+
         // Then
+        coVerify { remote.getAll(userId) }
+        coVerify { local.replaceAll(userId, Scope.Unleash, list) }
+        coVerify { local.getAll(Scope.Unleash) }
+
         val result = repository.getValue(userId, featureId)
         assertNotNull(result)
         assertFalse(result)
@@ -405,11 +436,18 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     @Test
     fun getValueReturnNull() = coroutinesTest {
         // Given
-        val featureId = FeatureId("Test")
-        coEvery { remote.getAll(userId) } returns emptyList()
+        val list = emptyList<FeatureFlag>()
+        coEvery { remote.getAll(any()) } returns list
+        coEvery { local.getAll(Scope.Unleash) } returns list
+
         // When
         repository.getAll(userId)
+
         // Then
+        coVerify { remote.getAll(userId) }
+        coVerify { local.replaceAll(userId, Scope.Unleash, list) }
+        coVerify { local.getAll(Scope.Unleash) }
+
         val result = repository.getValue(userId, featureId)
         assertNull(result)
     }
@@ -420,27 +458,32 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val userId1 = UserId("1")
         val userId2 = UserId("2")
         val featureId = FeatureId("Test")
-        coEvery { remote.getAll(userId1) } returns listOf(
+        val list1 = listOf(
             FeatureFlag(
-                userId = userId,
+                userId = userId1,
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
                 value = true
             )
         )
-        coEvery { remote.getAll(userId2) } returns listOf(
+        val list2 =  listOf(
             FeatureFlag(
-                userId = userId,
+                userId = userId2,
                 featureId = featureId,
                 scope = Scope.Unleash,
                 defaultValue = false,
                 value = false
             )
         )
+        coEvery { remote.getAll(userId1) } returns list1
+        coEvery { remote.getAll(userId2) } returns list2
+        coEvery { local.getAll(Scope.Unleash) } returns list1 + list2
+
         // When
         repository.getAll(userId1)
         repository.getAll(userId2)
+
         // Then
         val result1 = repository.getValue(userId1, featureId)
         assertNotNull(result1)
@@ -455,7 +498,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     fun getValueReturnTrueThenNull() = coroutinesTest {
         // Given
         val featureId = FeatureId("Test")
-        coEvery { remote.getAll(userId) } returns listOf(
+        val list = listOf(
             FeatureFlag(
                 userId = userId,
                 featureId = featureId,
@@ -464,8 +507,12 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 value = true
             )
         )
+        coEvery { remote.getAll(userId) } returns list
+        coEvery { local.getAll(Scope.Unleash) } returns list
+
         // When
         repository.getAll(userId)
+
         // Then
         val result1 = repository.getValue(userId, featureId)
         assertNotNull(result1)
@@ -473,8 +520,11 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         // Given
         coEvery { remote.getAll(userId) } returns emptyList()
+        coEvery { local.getAll(Scope.Unleash) } returns emptyList()
+
         // When
         repository.getAll(userId)
+
         // Then
         val result2 = repository.getValue(userId, featureId)
         assertNull(result2)
@@ -484,6 +534,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     fun refreshAllFeatureFlagsEnqueueWorker() = coroutinesTest {
         // When
         repository.refreshAll(userId)
+
         // Then
         coVerify {
             workManager.enqueueUniqueWork(

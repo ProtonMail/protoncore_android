@@ -24,15 +24,22 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.data.room.db.BaseDao
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.entity.FeatureFlagEntity
+import me.proton.core.featureflag.domain.entity.Scope
 
 @Dao
 public abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
+
+    @Query("SELECT * FROM FeatureFlagEntity WHERE scope = :scope")
+    internal abstract suspend fun getAll(scope: Scope): List<FeatureFlagEntity>
 
     @Query("SELECT * FROM FeatureFlagEntity WHERE featureId IN (:featureIds) AND userId IN (:userIds)")
     internal abstract fun observe(userIds: List<UserId>, featureIds: List<String>): Flow<List<FeatureFlagEntity>>
 
     @Query("DELETE FROM FeatureFlagEntity WHERE userId IN (:userIds)")
     internal abstract suspend fun deleteAll(userIds: List<UserId>)
+
+    @Query("DELETE FROM FeatureFlagEntity WHERE userId = :userId AND scope = :scope")
+    internal abstract suspend fun deleteAll(userId: UserId, scope: Scope)
 
     @Query("UPDATE FeatureFlagEntity SET value = :value WHERE userId = :userId AND featureId = :featureId")
     internal abstract fun updateValue(userId: UserId, featureId: String, value: Boolean)

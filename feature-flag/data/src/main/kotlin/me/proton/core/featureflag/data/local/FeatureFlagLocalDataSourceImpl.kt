@@ -24,14 +24,26 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.db.FeatureFlagDatabase
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import javax.inject.Inject
 
 public class FeatureFlagLocalDataSourceImpl @Inject constructor(
-    db: FeatureFlagDatabase
+    private val db: FeatureFlagDatabase
 ) : FeatureFlagLocalDataSource {
 
     private val dao = db.featureFlagDao()
+
+    override suspend fun getAll(scope: Scope): List<FeatureFlag> =
+        dao.getAll(scope).map { it.toFeatureFlag() }
+
+    override suspend fun replaceAll(userId: UserId?, scope: Scope, flags: List<FeatureFlag>) {
+        check(flags.all { it.scope == scope && it.userId == userId })
+        db.inTransaction {
+            dao.deleteAll(userId.orGlobal(), scope)
+            dao.insertOrUpdate(*flags.map { it.toEntity() }.toTypedArray())
+        }
+    }
 
     override fun observe(userId: UserId?, featureIds: Set<FeatureId>): Flow<List<FeatureFlag>> =
         dao.observe(userId.withGlobal(), featureIds.map { it.id })

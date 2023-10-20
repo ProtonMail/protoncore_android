@@ -26,8 +26,12 @@ import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.data.local.orGlobal
 import me.proton.core.featureflag.data.remote.worker.FetchUnleashTogglesWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -66,7 +70,18 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         )
     ).disableCache().buildProtonStore(scopeProvider)
 
-    private val unleashFeatureMap = mutableMapOf<UserId?, MutableMap<FeatureId, FeatureFlag>>()
+    private val unleashFeatureMapMutex = Mutex()
+    private var unleashFeatureMap = mutableMapOf<UserId?, MutableMap<FeatureId, FeatureFlag>>()
+
+    init { scopeProvider.GlobalIOSupervisedScope.launch { putAllUnleashInMemory() } }
+
+    private suspend fun putAllUnleashInMemory() = unleashFeatureMapMutex.withLock {
+        val list = localDataSource.getAll(Scope.Unleash)
+        mutableMapOf<UserId?, MutableMap<FeatureId, FeatureFlag>>().let { map ->
+            list.forEach { map.getOrPut(it.userId) { mutableMapOf() }[it.featureId] = it }
+            unleashFeatureMap = map
+        }
+    }
 
     override fun getValue(
         userId: UserId?,
@@ -76,10 +91,8 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     override suspend fun getAll(
         userId: UserId?
     ): List<FeatureFlag> = remoteDataSource.getAll(userId).also { list ->
-        unleashFeatureMap.getOrPut(userId) { mutableMapOf() }.also { map ->
-            map.clear()
-            map.putAll(list.associateBy { flag -> flag.featureId })
-        }
+        localDataSource.replaceAll(userId, Scope.Unleash, list)
+        putAllUnleashInMemory()
     }
 
     override fun refreshAll(

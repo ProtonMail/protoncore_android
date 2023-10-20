@@ -22,8 +22,11 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 
 public interface FeatureFlagLocalDataSource {
+    public suspend fun getAll(scope: Scope): List<FeatureFlag>
+    public suspend fun replaceAll(userId: UserId?, scope: Scope, flags: List<FeatureFlag>)
     public fun observe(userId: UserId?, featureIds: Set<FeatureId>): Flow<List<FeatureFlag>>
     public suspend fun upsert(flags: List<FeatureFlag>)
     public suspend fun updateValue(userId: UserId?, featureId: FeatureId, value: Boolean)

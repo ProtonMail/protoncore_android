@@ -294,6 +294,8 @@ public final class me/proton/core/featureflag/data/db/FeatureFlagDao_Impl : me/p
 	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun delete ([Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAll$feature_flag_data_release (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll$feature_flag_data_release (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll$feature_flag_data_release (Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static fun getRequiredConverters ()Ljava/util/List;
 	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun insertOrIgnore ([Lme/proton/core/featureflag/data/entity/FeatureFlagEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
