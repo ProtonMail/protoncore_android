@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@
   <string name="plans_subscription">账户等级</string>
   <string name="plans_renewal_date">下次自动续费日期为 &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">账户等级将于 &lt;b&gt;%s&lt;/b&gt; 失效</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
-  <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
-  <string name="plans_pay_other">Pay for %d months</string>
+  <string name="plans_pay_monthly">每月支付</string>
+  <string name="plans_pay_annually">每年支付</string>
+  <string name="plans_pay_biennially">每两年付费</string>
+  <string name="plans_pay_other">每%d月支付</string>
   <string name="plans_billed_yearly">* 按每年 %s 收费</string>
   <string name="plans_billed_monthly">按月计费</string>
   <string name="plans_billing_monthly">1 个月</string>
@@ -45,7 +45,7 @@
   <string name="plans_proton_for_free">免费获得Proton</string>
   <string name="plans_get_proton">获得 %s</string>
   <string name="plans_manage_your_subscription">登录 <a href="https://account.proton.me">account.proton.me</a> 调整账户等级</string>
-  <string name="plans_used_space">邮箱容量 %s，已使用 %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">共 %2$s，已使用 %1$s</string>
   <string name="plans_payments_info_not_available">不适用</string>
   <string name="plans_manage_your_subscription_google">您的订阅将由 Google Play 商店管理。</string>
   <string name="plans_manage_your_subscription_other">无法在移动端应用中管理您的订阅。</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@
   <string name="plans_subscription">Subscripció</string>
   <string name="plans_renewal_date">El pla s\'autorenovarà el &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">El pla caducarà el &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
-  <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
-  <string name="plans_pay_other">Pay for %d months</string>
+  <string name="plans_pay_monthly">Pagament mensual</string>
+  <string name="plans_pay_annually">Pagament anual</string>
+  <string name="plans_pay_biennially">Pagament cada 2 anys</string>
+  <string name="plans_pay_other">Pagament per %d mesos</string>
   <string name="plans_billed_yearly">*Facturat anualment a %s</string>
   <string name="plans_billed_monthly">Facturat mensualment</string>
   <string name="plans_billing_monthly">1 mes</string>
@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Obtingueu Proton gratuïtament</string>
   <string name="plans_get_proton">Obtingueu %s</string>
   <string name="plans_manage_your_subscription">Gestioneu la subscripció en <a href="https://account.protonmail.com">account.protonmail.com</a></string>
-  <string name="plans_used_space">%s de %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s de %2$s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">La seva suscripció es gestionada per Google Play.</string>
   <string name="plans_manage_your_subscription_other">La seva subscripció no es pot gestionar des de l\'aplicació mòbil.</string>

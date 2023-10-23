@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Proton으로 개인 정보 보호</string>
+  <string name="welcome_subtitle">암호화가 데이터를 안전하게 보호해줍니다. 당신의 데이터는 온전히 당신의 것이죠.</string>
+  <string name="welcome_subtitle_mail">암호화 이메일은 당신의 대화를 안전하게 보호합니다. 당신의 받은 편지함은 온전히 당신의 것이죠.</string>
+  <string name="welcome_subtitle_mail_alt">개인 정보. 보안. 편의. 개인 데이터를 완벽하게 보호할 수 있는 암호화된 이메일입니다.</string>
+  <string name="welcome_subtitle_drive">클라우드 스토리지의 편리함과 암호화 기술의 보안성. 신뢰할 수 있는 클라우드 스토리지 솔루션입니다.</string>
+  <string name="welcome_subtitle_drive_alt">파일을 안전하게 보관하는 방법. 가장 가능한 암호화를 통해 업로드, 동기화 및 공유하세요.</string>
+  <string name="welcome_subtitle_calendar">암호화 캘린더가 당신의 삶의 이벤트를 안전하게 보호합니다.</string>
+  <string name="welcome_subtitle_calendar_alt">종단간 암호화 캘린더는 체계적이고, 추적하고, 통제할 수 있도록 도와줍니다.</string>
+  <string name="welcome_subtitle_vpn">빠른 속도의 스위스 VPN은 인터넷 연결 암호화를 통해 사생활을 보호해 줍니다.</string>
+  <string name="welcome_subtitle_vpn_alt">스위스 기반 높은 속도의 VPN으로 개인 정보를 보호하세요. 최고의 보안, 1600개 이상 서버, 그리고 제한 없음.</string>
+  <string name="welcome_subtitle_pass">당신의 모든 비밀번호. 한 곳에서 안전하게 보호하고 개인 정보에서 가장 신뢰할 수 있는 이름으로 보호됩니다.</string>
+  <string name="welcome_subtitle_pass_alt">당신의 모든 비밀번호. 한 곳에서 안전하게 보호하고 개인 정보에서 가장 신뢰할 수 있는 이름으로 보호됩니다.</string>
+  <string name="welcome_privacy_by_default">기본적으로 보호됩니다</string>
+  <string name="auth_password_label">비밀번호</string>
+  <string name="auth_password_help">비밀번호는 8자 이상이어야 합니다.</string>
+  <string name="auth_current_login_password">현재 로그인 비밀번호</string>
+  <string name="auth_enter_six_digit_code">6자리 인증 코드를 입력하세요</string>
+  <string name="auth_second_factor_code">2단계 인증 코드</string>
+  <string name="auth_email">이메일</string>
+  <string name="auth_email_username">사용자 이름 또는 비밀번호</string>
+  <string name="auth_account_details">Proton 계정 상세 정보를 입력하십시오.</string>
+  <string name="auth_sign_in">로그인</string>
+  <string name="auth_sign_in_action">로그인</string>
+  <string name="auth_sign_in_sso">조직에 로그인</string>
+  <string name="auth_sign_in_with_password">비밀번호로 로그인</string>
+  <string name="auth_continue_to_proton_vpn">Proton VPN으로 계속하기</string>
+  <string name="auth_sign_in_with_sso">SSO로 로그인</string>
+  <string name="auth_help_label">지원</string>
+  <string name="auth_login_assistive_text">Proton 이메일 또는 사용자 이름을 입력해 주세요.</string>
+  <string name="auth_login_sso_assistive_text">이메일을 입력해 주십시오.</string>
+  <string name="auth_help_title">어떻게 도와드릴까요?</string>
+  <string name="auth_help_option_forgot_username">사용자 이름을 잊었습니다</string>
+  <string name="auth_help_option_forgot_password">비밀번호를 잊었습니다</string>
+  <string name="auth_help_option_other">다른 로그인 문제</string>
+  <string name="auth_help_other">여전히 도움이 필요한가요? 저희에게 바로 연락주세요.</string>
+  <string name="auth_help_option_customer_support">고객 지원</string>
+  <string name="auth_2fa_title">2단계 인증</string>
+  <string name="auth_2fa_label">2단계 인증 코드</string>
+  <string name="auth_2fa_recovery_code_label">복구 코드</string>
+  <string name="auth_2fa_assistive_text">6자리 인증 코드를 입력하세요.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">여덟 글자의 복구 코드를 입력하세요.</string>
+  <string name="auth_2fa_action">인증</string>
+  <string name="auth_2fa_use_recovery_code">복구 코드 사용</string>
+  <string name="auth_2fa_use_2fa_code">2단계 인증 코드 사용</string>
+  <string name="auth_2fa_error_empty_code">6자리 인증 코드를 입력하세요</string>
+  <string name="auth_mailbox_title">메일함 잠금해제</string>
+  <string name="auth_mailbox_password_label">메일함 비밀번호</string>
+  <string name="auth_mailbox_unlock_action">잠금 해제</string>
+  <string name="auth_forgot_password">비밀번호를 잊었습니다</string>
+  <string name="auth_login_general_error">오류가 발생했습니다.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton 주소 필요</string>
+  <string name="auth_login_external_account_unsupported_message">Proton 웹 설정에서 이 계정에 연결된 Proton Mail 주소를 받으세요.</string>
+  <string name="auth_login_external_account_unsupported_help_action">더 알아보기</string>
+  <string name="auth_login_empty_credentials">자격 증명을 비워둘 수 없습니다.</string>
+  <string name="auth_mailbox_empty_credentials">자격 증명을 비워둘 수 없습니다.</string>
+  <string name="auth_create_address_title">Proton 주소 필요</string>
+  <string name="auth_create_address_subtitle">Proton 메일 및 Proton 캘린더를 사용하려면 Proton 이메일 주소가 필요합니다. 여전히 %1$s을(를) 사용하여 로그인하고 계정을 복구할 수 있습니다.</string>
+  <string name="auth_username">사용자 이름</string>
+  <string name="auth_username_next_action">계속</string>
+  <string name="auth_create_address_result_title">%s 가능</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s가 당신의 새 Proton Mail 이메일 주소가 될 것입니다.</string>
+  <string name="auth_create_address_result_subtitle">이 이메일로 모든 Proton 서비스에 로그인할 수 있습니다.</string>
+  <string name="auth_create_address_result_recovery_title">복구 이메일 주소:</string>
+  <string name="auth_create_address_create">주소 생성</string>
+  <string name="auth_create_address_creating">주소 생성 중</string>
+  <string name="auth_create_address_terms">주소 만들기를 클릭하면, 당신은 Proton의 <a href="https://proton.me/legal/terms">이용 약관</a>에 동의하게 됩니다.</string>
+  <string name="auth_create_address_error_credentials">자격 증명을 비워둘 수 없습니다.</string>
+  <string name="auth_create_address_error_no_available_domain">사용 가능한 도메인이 없습니다.</string>
+  <string name="auth_create_address_error_private_key">비밀 키 생성에 실패했습니다.</string>
+  <string name="auth_create_address_error_signed_key_list">키 목록 생성에 실패했습니다.</string>
+  <string name="auth_create_address_error_setusername">사용자 이름 연결을 실패했습니다.</string>
+  <string name="auth_create_address_error_username_unavailable">선택한 사용자 이름은 사용할 수 없습니다.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">기본 보안 키를 찾을 수 없음.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">기본 보안 키 오류.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">유효하지 않은 통신 전송.</string>
+  <string name="auth_password_chooser_title">비밀번호 변경</string>
+  <string name="auth_password_chooser_description">Proton 앱을 조직의 구성원으로 사용하려면 먼저 브라우저를 통해 Proton에 로그인하여 비밀번호를 변경해야 합니다.</string>
+  <string name="auth_password_chooser_change">비밀번호 변경</string>
+  <string name="auth_user_check_one_free_error">1개의 무료 Proton 계정만을 사용할 수 있습니다.</string>
+  <string name="auth_user_check_delinquent_error">사용자의 계정이 현재 연체된 요금으로 인해 대기 상태입니다.</string>
+  <string name="auth_user_check_delinquent_action">청구서 지불</string>
+  <string name="auth_account_not_found_error">계정에 오류가 발생했습니다</string>
+  <string name="auth_one_account_all_services">모든 Proton 서비스를 위한 하나의 계정.</string>
+  <string name="auth_create_account">계정 만들기</string>
+  <string name="auth_long_signup">잠시만 기다려 주십시오…</string>
+  <string name="auth_long_login">로그인 중, 기다려 주세요…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Proton 계정 만들기</string>
+  <string name="auth_signup_current_email">대신 현재 이메일 주소 사용하기</string>
+  <string name="auth_signup_external_footnote">Proton 주소가 있으면, 모든 Proton 서비스를 이용할 수 있습니다</string>
+  <string name="auth_signup_internal_footnote">Proton Mail과 Proton Calendar를 사용하려면 Proton 주소가 필요합니다</string>
+  <string name="auth_signup_create_secure_proton_address">새로운 암호화된 이메일 주소를 얻으세요</string>
+  <string name="auth_signup_username">사용자 이름</string>
+  <string name="auth_signup_domain">도메인</string>
+  <string name="auth_signup_email">이메일</string>
+  <string name="auth_signup_next">다음</string>
+  <string name="auth_signup_choose_password">비밀번호 생성</string>
+  <string name="auth_signup_repeat_password">비밀번호 확인</string>
+  <string name="auth_signup_recovery_method_title">복구 방법 설정 (선택 사항)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">복구 방법 설정</string>
+  <string name="auth_signup_recovery_method_subtitle">계정이 잠기면 이 이메일 또는 전화번호로 복구 지침을 보내드리겠습니다.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">계정이 잠기면 이 이메일로 복구 지침을 보내드리겠습니다.</string>
+  <string name="auth_signup_recovery_method_email">이메일</string>
+  <string name="auth_signup_recovery_method_phone">전화</string>
+  <string name="auth_signup_recovery_method_email_hint">복구 이메일</string>
+  <string name="auth_signup_recovery_method_phone_hint">복구 전화번호</string>
+  <string name="auth_signup_terms_conditions">이용 약관</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">다음을 클릭하면, Proton의 <annotation link="terms">이용 약관</annotation>에 동의하게 됩니다.</string>
+  <string name="auth_signup_skip_recovery_title">계정 복구 방법 추가를 건너뛰시겠습니까?</string>
+  <string name="auth_signup_skip_recovery_description">복구 방법은 비밀번호를 잊어버렸거나 계정이 잠긴 경우 계정에 액세스하는 데 도움이 됩니다.</string>
+  <string name="auth_signup_skip_recovery">건너뛰기</string>
+  <string name="auth_signup_set_recovery">복구 방법 설정</string>
+  <string name="auth_signup_no_connectivity">이용 약관을 표시할 연결 없음.</string>
+  <string name="auth_signup_error_username_blank">사용자 이름은 비울 수 없습니다.</string>
+  <string name="auth_signup_error_passwords_do_not_match">비밀번호가 일치하지 않습니다.</string>
+  <string name="auth_signup_validation_password_length">비밀번호는 8글자 이상이어야 합니다.</string>
+  <string name="auth_signup_validation_password">비밀번호는 비워둘 수 없습니다.</string>
+  <string name="auth_signup_your_account_is_being_setup">사용자의 계정이 곧 생성됩니다…</string>
+  <string name="auth_signup_please_wait">1분 이상 걸리지 않습니다.</string>
+  <string name="auth_signup_replacement_code">코드를 받지 못하셨나요?</string>
+  <string name="auth_signup_verify">인증</string>
+  <string name="auth_signup_verification_code">인증 코드</string>
+  <string name="auth_signup_enter_code_subtitle">%s로 전송된 인증 코드를 입력하십시오:</string>
+  <string name="auth_signup_error_human_verification_failed">사람임을 인증하는 데 실패했습니다.</string>
+  <string name="auth_signup_congratulations_subtitle">Proton 계정이 성공적으로 생성되었습니다.\n사생활의 세계를 즐기세요.</string>
+  <string name="auth_signup_congratulations">축하합니다!</string>
+  <string name="auth_signup_start_using_proton">Proton 사용 시작</string>
+  <string name="auth_signup_start_using_calendar">Proton Calendar 사용 시작</string>
+  <string name="auth_signup_start_using_mail">Proton Mail 사용 시작</string>
+  <string name="auth_signup_start_using_drive">Proton Drive 사용 시작</string>
+  <string name="auth_signup_start_using_vpn">Proton VPN 사용 시작</string>
+  <string name="auth_signup_start_using_pass">Proton Pass 사용 시작</string>
+  <string name="auth_signup_error_validation_recovery_destination">복구 위치가 유효하지 않습니다.</string>
+</resources>

@@ -31,7 +31,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Vælg din betalingsmetode</string>
-  <string name="payments_add_credit_debit_card">Tilføj kredit/betalingskort</string>
+  <string name="payments_add_credit_debit_card">Tilføj kredit/debetkort</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Betal %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Betal med</string>
   <string name="payments_method_icon">Betalingsmetode-ikon.</string>
@@ -56,11 +56,11 @@
   <string name="payment_cc_list_item">%1$s - %2$s (Udløber %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">Ikke tilgængelig</string>
-  <string name="payments_billing_monthly">For 1 month</string>
+  <string name="payments_billing_monthly">I 1 måned</string>
   <string name="payments_billing_yearly">I 1 år</string>
-  <string name="payments_billing_two_years">For 2 years</string>
+  <string name="payments_billing_two_years">I 2 år</string>
   <string name="payment_use_google_pay_instead">Brug Google Pay i stedet</string>
-  <string name="payment_use_credit_card_instead">Brug kredit-/debetkort i stedet</string>
+  <string name="payment_use_credit_card_instead">Brug kredit/debetkort i stedet</string>
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Bekræft opgradering af konto</string>

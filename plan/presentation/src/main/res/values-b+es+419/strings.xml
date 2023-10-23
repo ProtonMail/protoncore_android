@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Obtenga Proton gratis</string>
   <string name="plans_get_proton">Obtenga %s</string>
   <string name="plans_manage_your_subscription">Gestione su suscripción en <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space">%s de %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s de %2$s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Su suscripción es gestionada por Google Play.</string>
   <string name="plans_manage_your_subscription_other">Su suscripción no puede gestionarse dentro de la aplicación móvil.</string>

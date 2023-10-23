@@ -18,30 +18,30 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">Password reset requested</string>
+  <string name="account_recovery_grace_period_info_title">Получен запрос на сброс пароля</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="one">Был запрошен сброс пароля для <b>%1$s</b> Вы можете изменить пароль через %2$d час.\n\n Если это были не вы, нажмите сюда.</item>
     <item quantity="few">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
     <item quantity="many">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
     <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
-  <string name="account_recovery_cancel_title">Cancel password reset?</string>
-  <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
-  <string name="account_recovery_cancel_password_label">Current password</string>
-  <string name="account_recovery_cancel_password_placeholder">Password</string>
-  <string name="account_recovery_cancel_now">Cancel password reset</string>
-  <string name="account_recovery_cancel_back">Back</string>
+  <string name="account_recovery_cancel_title">Отменить сброс пароля?</string>
+  <string name="account_recovery_cancel_subtitle">Вводите пароль для отмены.</string>
+  <string name="account_recovery_cancel_password_label">Текущий пароль</string>
+  <string name="account_recovery_cancel_password_placeholder">Пароль</string>
+  <string name="account_recovery_cancel_now">Отменить сброс пароля</string>
+  <string name="account_recovery_cancel_back">Назад</string>
   <!-- Account recovery cancelled -->
-  <string name="account_recovery_cancelled_title">Password reset cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <string name="account_recovery_cancelled_title">Сброс пароля отменен</string>
+  <string name="account_recovery_cancelled_subtitle">Ваша учетная запись может быть под угрозой.\n\n Защитите ее сменив пароль.</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">Password reset available</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <string name="account_recovery_password_started_title">Доступен сброс пароля</string>
+  <string name="account_recovery_password_started_subtitle">Для сброса пароля, вернитесь к устройству и браузеру с которого был сделан запрос.\n\n Это необходимо сделать до того как %s.\n\nесли вы не отправляли запрос, отмените его сейчас.</string>
   <!-- Recovery window ended -->
-  <string name="account_recovery_window_ended_title">Password reset expired</string>
-  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <string name="account_recovery_window_ended_title">Время вышло</string>
+  <string name="account_recovery_window_ended_subtitle">Необходима смена пароля %s</string>
   <!-- Other -->
-  <string name="account_recovery_cancel">Cancel request</string>
-  <string name="account_recovery_dismiss">Got it</string>
+  <string name="account_recovery_cancel">Отменить запрос</string>
+  <string name="account_recovery_dismiss">Применить</string>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
   <string name="plans_pay_monthly">Paiement mensuel</string>
   <string name="plans_pay_annually">Paiement annuel</string>
   <string name="plans_pay_biennially">Paiement tous les 2 ans</string>
-  <string name="plans_pay_other">Paiement tous les %d mois</string>
+  <string name="plans_pay_other">Paiement pour %d mois</string>
   <string name="plans_billed_yearly">*Facturé annuellement : %s</string>
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>
@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Obtenir Proton gratuitement</string>
   <string name="plans_get_proton">Obtenir %s</string>
   <string name="plans_manage_your_subscription">Gérez votre abonnement sur <a href="https://account.proton.me">account.proton.me</a>.</string>
-  <string name="plans_used_space">%s sur %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s sur %2$s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Google Play gère votre abonnement.</string>
   <string name="plans_manage_your_subscription_other">Vous ne pouvez pas gérer votre abonnement dans l\'application mobile.</string>
@@ -147,11 +147,11 @@
   <string name="unlimited_devices">Nombre illimité d\'appareils</string>
   <string name="integrated_2fa_authenticator">Authentification à deux facteurs (A2F) intégrée</string>
   <string name="multiple_vaults">Plusieurs coffres-forts</string>
-  <string name="unlimited_email_alias">Nombre illimité d\'alias « Hide My Email »</string>
+  <string name="unlimited_email_alias">Nombre illimité d\'alias « hide-my-email »</string>
   <string name="custom_email_alias_domains">Domaines personnalisés pour les alias d\'adresses e-mail</string>
   <string name="multiple_forwarding_mailboxes">Plusieurs messageries de transfert</string>
   <string name="priority_support">Assistance prioritaire</string>
   <string name="one_vault">1 coffre-fort</string>
-  <string name="ten_hide_my_email_aliases">10 alias « Hide My Email »</string>
+  <string name="ten_hide_my_email_aliases">10 alias « hide-my-email »</string>
   <!-- endregion -->
 </resources>

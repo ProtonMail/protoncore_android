@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Αποκτήστε το Proton δωρεάν</string>
   <string name="plans_get_proton">Αποκτήστε %s</string>
   <string name="plans_manage_your_subscription">Διαχειριστείτε τη συνδρομή σας στο <a href="https://account.protonmail.com">account.protonmail.com</a></string>
-  <string name="plans_used_space">%s από %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s από %2$s</string>
   <string name="plans_payments_info_not_available">δ/υ</string>
   <string name="plans_manage_your_subscription_google">Η συνδρομή σας διαχειρίζεται από το Google Play.</string>
   <string name="plans_manage_your_subscription_other">Δεν είναι δυνατή η διαχείριση της συνδρομής σας εντός της εφαρμογής για κινητές συσκευές.</string>

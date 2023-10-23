@@ -20,8 +20,8 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Passwortzurücksetzung angefordert</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">Eine Passwortrücksetzung für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunde(n) ändern.\n\nStoppe die Anfrage wenn sie nicht von dir ist.</item>
-    <item quantity="other">Eine Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunden ändern.\n\n Sollte die Anfrage nicht von dir sein, brich diese ab.</item>
+    <item quantity="one">Eine Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunde ändern.\n\nStoppe die Anfrage umgehend, wenn diese nicht von dir ist.</item>
+    <item quantity="other">Eine Zurücksetzung des Passworts für <b>%1$s</b> wurde angefragt. Du kannst dein Passwort in %2$d Stunden ändern.\n\nStoppe die Anfrage umgehend, wenn diese nicht von dir ist.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Passwortzurücksetzung abbrechen?</string>
@@ -32,7 +32,7 @@
   <string name="account_recovery_cancel_back">Zurück</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">Passwortzurücksetzung abgebrochen</string>
-  <string name="account_recovery_cancelled_subtitle">Falls du nie eine Passwort-Änderung beauftragt hast könnte dein Account gefährdet sein. \n\nSichere deinen Account, indem du dein Passwort änderst.</string>
+  <string name="account_recovery_cancelled_subtitle">Falls du nie eine Passwort-Änderung beantragt hast, könnte dein Konto gefährdet sein.\n\nSichere dein Konto, indem du dein Passwort änderst.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Passwortzurücksetzung verfügbar</string>
   <string name="account_recovery_password_started_subtitle">Um dein Passwort zurückzusetzen, kehre zu dem Gerät und Browser zurück, von dem aus du die Anfrage zur Passwortrücksetzung gestellt hast.\n\nDu musst dies tun, bevor %s abläuft.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Zurücksetzung sofort ab.</string>

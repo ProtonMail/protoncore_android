@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">오류가 발생했습니다.</string>
+  <string name="payments_no_connectivity">3DS 확인 페이지 표시할 연결 없음.</string>
+  <string name="payments_3ds_not_approved">3DS 승인이 거부되었습니다.</string>
+  <string name="payments_error_card_name">카드 상의 이름이 필요합니다.</string>
+  <string name="payments_error_card_number">유효하지 않은 카드 번호.</string>
+  <string name="payments_error_cvc">올바른 보안 코드를 입력하세요.</string>
+  <string name="payments_error_session">로그인된 사용자가 구독하려면 유효한 세션 ID가 필요합니다.</string>
+  <string name="payments_error_signup_paymentmethod">현재 결제 수단으로는 가입할 수 없습니다.</string>
+  <string name="payments_error_invalid_session">유효하지 않은 세션.</string>
+  <string name="payments_no_payment_provider">활성화된 결제 수단 제공자가 없음.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">결제 수단을 선택하세요</string>
+  <string name="payments_add_credit_debit_card">신용/체크카드 추가</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">%s 결제</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">이 수단으로 결제</string>
+  <string name="payments_method_icon">결제 수단 아이콘.</string>
+  <string name="payments_method_surcharge">*이 결제 방법으로 구매하면 수수료가 부과됩니다.</string>
+  <string name="payments_method_terms_conditions">Google Pay로 결제하면 Google Pay의 이용 약관을 수락하고 이후 결제를 Google이 설정하는 데 동의하게 됩니다.</string>
+  <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">계속</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">결제 정보</string>
+  <string name="payments_card_name">카드 소유자 이름</string>
+  <string name="payments_card_number">카드 번호</string>
+  <string name="payments_expiration_date">만료 일자</string>
+  <string name="payments_security_code">보안 코드</string>
+  <string name="payments_postal_code">ZIP 코드</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">월/년</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">국가</string>
+  <string name="payments_paying_in_process">결제 중</string>
+  <string name="payments_choose_country">국가 선택</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (%3$s/%4$s 만료)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">해당 없음</string>
+  <string name="payments_billing_monthly">1개월간</string>
+  <string name="payments_billing_yearly">1년간</string>
+  <string name="payments_billing_two_years">2년간</string>
+  <string name="payment_use_google_pay_instead">대신 Google Pay 사용</string>
+  <string name="payment_use_credit_card_instead">대신 신용/체크카드 사용</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">계정 업그레이드 확인</string>
+  <string name="payments_giap_unredeemed_description">Google Pay 결제는 성공적으로 처리되었지만, 계정 업그레이드 절차가 중단되었습니다. 지금 결제를 적용하여 계정을 업그레이드하시겠습니까?</string>
+  <string name="payments_giap_unredeemed_confirm">업그레이드 확인</string>
+  <string name="payments_giap_redeem_success">계정이 성공적으로 업그레이드되었습니다</string>
+  <string name="payments_giap_redeem_error">업그레이드를 완료할 수 없습니다. 나중에 다시 시도해 주세요.</string>
+  <!-- endregion -->
+</resources>

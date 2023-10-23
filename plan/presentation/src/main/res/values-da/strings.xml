@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@
   <string name="plans_subscription">Abonnement</string>
   <string name="plans_renewal_date">Dit abonnement vil automatisk blive fornyet &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Dit abonnement vil udløbe &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
-  <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
-  <string name="plans_pay_other">Pay for %d months</string>
+  <string name="plans_pay_monthly">Betal månedligt</string>
+  <string name="plans_pay_annually">Betal årligt</string>
+  <string name="plans_pay_biennially">Betal hvert 2. år</string>
+  <string name="plans_pay_other">Betal for %d måneder</string>
   <string name="plans_billed_yearly">*Faktureret årligt %s</string>
   <string name="plans_billed_monthly">Faktureret månedligt</string>
   <string name="plans_billing_monthly">I 1 måned</string>
@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>
   <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space">%s af %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s of %2$s</string>
   <string name="plans_payments_info_not_available">Ikke tilgængelig</string>
   <string name="plans_manage_your_subscription_google">Dit abonnement håndteres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Dit abonnement kan ikke administreres i mobilappen.</string>

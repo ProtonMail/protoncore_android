@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">Resetování hesla vyžádáno</string>
+  <string name="account_recovery_grace_period_info_title">Vyžádáno resetování hesla</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="one">Pro <b>%1$s</b> bylo vyžádáno resetování hesla. Heslo si můžete změnit za %2$d hodinu.\n\nPokud jste o změnu nepožádali, zrušte resetování nyní.</item>
     <item quantity="few">Pro <b>%1$s</b> bylo vyžádáno resetování hesla. Heslo si můžete změnit za %2$d hodiny.\n\nPokud jste o změnu nepožádali, zrušte resetování nyní.</item>
@@ -37,10 +37,10 @@
   <string name="account_recovery_cancelled_subtitle">Pokud jste o změnu hesla nikdy nepožádali, může být váš účet ohrožen.\n\nZabezpečte si svůj účet změnou hesla.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Resetování hesla je k dispozici</string>
-  <string name="account_recovery_password_started_subtitle">Chcete-li resetovat své heslo, jděte zpět do zařízení a prohlížeče, ze kterého jste zadali požadavek na resetování hesla.\n\nToto je třeba provést před %s.\n\nPokud jste o resetování hesla nepožádali, zrušte resetování nyní.</string>
+  <string name="account_recovery_password_started_subtitle">Chcete-li resetovat své heslo, použijte znovu zařízení a prohlížeč, ze kterého jste zadali požadavek na reset hesla.\n\nToto je potřeba provést před %s.\n\nPokud jste o reset hesla nepožádali, tak reset zrušte.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Resetování hesla vypršelo</string>
-  <string name="account_recovery_window_ended_subtitle">Budete muset požádat o resetování nového hesla pro %s.</string>
+  <string name="account_recovery_window_ended_subtitle">Budete muset požádat o nové resetování hesla pro %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Zrušit žádost</string>
   <string name="account_recovery_dismiss">Rozumím</string>

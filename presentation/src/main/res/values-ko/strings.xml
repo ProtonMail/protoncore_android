@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">링크를 열 브라우저를 찾을 수 없습니다.</string>
+  <string name="presentation_force_update_title">업데이트가 필요합니다</string>
+  <string name="presentation_force_update_message">이 버전의 앱은 더 이상 지원되지 않습니다, 계속 사용하려면 업데이트하세요.</string>
+  <string name="presentation_force_update_learn_more">더 알아보기</string>
+  <string name="presentation_force_update_update">업데이트</string>
+  <string name="presentation_market_missing">기기에서 어플리케이션을 찾을 수 없습니다. 앱 스토어에서 설치하세요.</string>
+  <string name="presentation_authenticate">인증</string>
+  <string name="presentation_signin_to_continue">계속하려면 로그인하세요</string>
+  <string name="presentation_alert_title">알림</string>
+  <string name="presentation_alert_ok">확인</string>
+  <string name="presentation_alert_enter">입력</string>
+  <string name="presentation_alert_cancel">취소</string>
+  <string name="presentation_alert_continue">계속하기</string>
+  <string name="presentation_alert_submit">제출</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">문제 보고</string>
+  <string name="presentation_menu_item_title_settings">설정</string>
+  <string name="presentation_menu_item_title_subscription">구독</string>
+  <string name="presentation_menu_item_title_sign_out">로그아웃</string>
+  <!-- Other -->
+  <string name="presentation_back">이전</string>
+  <string name="presentation_close">닫기</string>
+  <string name="presentation_retry">다시 시도</string>
+  <string name="presentation_skip">건너뛰기</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">서버에 연결할 수 없습니다.</string>
+  <string name="presentation_check_your_connection">연결을 확인하세요</string>
+  <string name="presentation_connectivity_issues">연결 문제</string>
+  <string name="presentation_field_required">필수 기재 항목입니다.</string>
+  <string name="presentation_error_general">오류가 발생했습니다.</string>
+</resources>

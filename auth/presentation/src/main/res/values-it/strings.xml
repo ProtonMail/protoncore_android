@@ -59,11 +59,11 @@
   <string name="auth_2fa_assistive_text">Inserisci il codice a 6 cifre.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Inserisci un codice di ripristino di 8 caratteri.</string>
   <string name="auth_2fa_action">Autentica</string>
-  <string name="auth_2fa_use_recovery_code">Utilizza un codice di recupero</string>
+  <string name="auth_2fa_use_recovery_code">Usa un codice di recupero</string>
   <string name="auth_2fa_use_2fa_code">Utilizza autenticazione in due passaggi</string>
   <string name="auth_2fa_error_empty_code">Inserisci il codice a 6 cifre.</string>
-  <string name="auth_mailbox_title">Sblocca la tua casella email</string>
-  <string name="auth_mailbox_password_label">Password della casella email</string>
+  <string name="auth_mailbox_title">Sblocca la tua casella di posta</string>
+  <string name="auth_mailbox_password_label">Password della casella di posta</string>
   <string name="auth_mailbox_unlock_action">Sblocca</string>
   <string name="auth_forgot_password">Password dimenticata</string>
   <string name="auth_login_general_error">Si è verificato un errore.</string>
@@ -78,7 +78,7 @@
   <string name="auth_username_next_action">Continua</string>
   <string name="auth_create_address_result_title">%s è disponibile</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s sarà il tuo nuovo indirizzo email di Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">Utilizzerai questo indirizzo per accedere a tutti i servizi Proton.</string>
+  <string name="auth_create_address_result_subtitle">Userai questo indirizzo per accedere a tutti i servizi di Proton.</string>
   <string name="auth_create_address_result_recovery_title">Il tuo indirizzo email di recupero è:</string>
   <string name="auth_create_address_create">Crea indirizzo</string>
   <string name="auth_create_address_creating">Creazione indirizzo</string>
@@ -112,7 +112,7 @@
   <string name="auth_signup_username">Nome utente</string>
   <string name="auth_signup_domain">Dominio</string>
   <string name="auth_signup_email">Email</string>
-  <string name="auth_signup_next">Prossimo</string>
+  <string name="auth_signup_next">Avanti</string>
   <string name="auth_signup_choose_password">Crea la tua password</string>
   <string name="auth_signup_repeat_password">Ripeti la password</string>
   <string name="auth_signup_recovery_method_title">Imposta metodo di recupero (opzionale)</string>

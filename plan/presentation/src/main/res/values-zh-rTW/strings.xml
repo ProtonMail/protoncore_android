@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@
   <string name="plans_subscription">訂閲</string>
   <string name="plans_renewal_date">您的方案將於 &lt;b&gt;%s&lt;/b&gt; 自動續購</string>
   <string name="plans_expiration_date">您的方案將會在 &lt;b&gt;%s&lt;/b&gt; 到期</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
-  <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
-  <string name="plans_pay_other">Pay for %d months</string>
+  <string name="plans_pay_monthly">月繳</string>
+  <string name="plans_pay_annually">年繳</string>
+  <string name="plans_pay_biennially">雙年繳</string>
+  <string name="plans_pay_other">%d月繳</string>
   <string name="plans_billed_yearly">* 年繳款單金額為 %s</string>
   <string name="plans_billed_monthly">每月出帳</string>
   <string name="plans_billing_monthly">為期1個月</string>
@@ -45,7 +45,7 @@
   <string name="plans_proton_for_free">取得免費版 Proton</string>
   <string name="plans_get_proton">取得 %s</string>
   <string name="plans_manage_your_subscription">在 <a href="https://account.protonmail.com">account.protonmail.com</a> 管理您的訂閱</string>
-  <string name="plans_used_space">已用 %s，最多 %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s 中的 %1$s</string>
   <string name="plans_payments_info_not_available">不適用</string>
   <string name="plans_manage_your_subscription_google">您的訂閱是由 Google Play 管理。</string>
   <string name="plans_manage_your_subscription_other">您的訂閱無法在行動裝置應用程式內管理。</string>

@@ -30,7 +30,7 @@
   <string name="welcome_subtitle_pass">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindung oleh nama yang paling terpercaya di ranah privasi.</string>
   <string name="welcome_subtitle_pass_alt">Seluruh kata sandi Anda. Tersimpan aman di satu tempat dan terlindung oleh nama yang paling terpercaya di ranah privasi.</string>
   <string name="welcome_privacy_by_default">Privasi sebagai hal yang baku</string>
-  <string name="auth_password_label">Kata Sandi</string>
+  <string name="auth_password_label">Kata sandi</string>
   <string name="auth_password_help">Kata sandi harus mengandung minimal 8 karakter</string>
   <string name="auth_current_login_password">Kata sandi saat ini</string>
   <string name="auth_enter_six_digit_code">Masukkan kode 6 digit</string>
@@ -132,7 +132,7 @@
   <string name="auth_signup_no_connectivity">Tidak ada koneksi untuk menampilkan Syarat dan Ketentuan.</string>
   <string name="auth_signup_error_username_blank">Nama pengguna tidak boleh kosong.</string>
   <string name="auth_signup_error_passwords_do_not_match">Kata sandi tidak cocok.</string>
-  <string name="auth_signup_validation_password_length">Kata sandi harus minimal 8 karakter.</string>
+  <string name="auth_signup_validation_password_length">Kata sandi harus mengandung minimal 8 karakter.</string>
   <string name="auth_signup_validation_password">Kata sandi tidak boleh kosong.</string>
   <string name="auth_signup_your_account_is_being_setup">Akun Anda sedang dibuat…</string>
   <string name="auth_signup_please_wait">Biasanya tidak sampai satu menit.</string>

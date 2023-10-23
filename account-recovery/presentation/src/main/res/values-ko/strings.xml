@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">비밀번호 재설정 요청됨</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="other"><b>%1$s</b>에 대한 비밀번호 재설정이 요청되었습니다. %2$d 시간 내에 비밀번호 변경이 가능합니다. \n\n 만약 직접 요청한 것이 아니라면, 취소하세요.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">비밀번호 재설정을 취소합니까?</string>
+  <string name="account_recovery_cancel_subtitle">취소하려면 비밀번호를 입력하세요.</string>
+  <string name="account_recovery_cancel_password_label">현재 비밀번호</string>
+  <string name="account_recovery_cancel_password_placeholder">비밀번호</string>
+  <string name="account_recovery_cancel_now">비밀번호 재설정 취소</string>
+  <string name="account_recovery_cancel_back">이전</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">비밀번호 재설정이 취소되었습니다</string>
+  <string name="account_recovery_cancelled_subtitle">비밀번호 변경을 요청한 적이 없다면, 계정의 보안에 대한 문제가 있을 수 있습니다. \n\n 비밀번호를 변경하여 계정을 보호하시기 바랍니다.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">비밀번호 재설정 가능</string>
+  <string name="account_recovery_password_started_subtitle">비밀번호를 재설정 하기 위해선, 비밀번호 재설정을 요청한 기기의 브라우저로 돌아가세요.\n\n %s 전에 이 작업이 완료되어야 합니다. \n\n 이 요청을 직접 수행하지 않았다면, 즉시 재설정을 취소하세요.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">만료된 비밀번호 재설정입니다.</string>
+  <string name="account_recovery_window_ended_subtitle">%s 의 새 비밀번호 재설정 요청이 필요합니다.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">요청 취소</string>
+  <string name="account_recovery_dismiss">확인</string>
+</resources>

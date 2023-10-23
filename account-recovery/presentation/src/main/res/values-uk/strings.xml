@@ -20,10 +20,10 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Запит на відновлення пароля</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="few">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="many">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="one">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d години. \n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="few">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин. \n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="many">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин. \n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
+    <item quantity="other">Був створений запит на скидання пароля для <b>%1$s</b>. Ви можете змінити пароль протягом %2$d годин.\n\nЯкщо ви не робили цей запит, скасуйте його зараз.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Скасувати відновлення пароля?</string>
@@ -34,13 +34,13 @@
   <string name="account_recovery_cancel_back">Назад</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">Відновлення пароля скасовано</string>
-  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <string name="account_recovery_cancelled_subtitle">Якщо ви ніколи не створювали запит на зміну пароля, ваш обліковий запис може бути у небезпеці.\n\nЗахистіть свій обліковий запис, змінивши пароль.</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">Password reset available</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <string name="account_recovery_password_started_title">Доступне скидання паролю</string>
+  <string name="account_recovery_password_started_subtitle">Щоб скинути пароль, поверніться до браузера на пристрої, з якого ви зробили запит на скидання пароля.\n\nВам необхідно це зробити до %s.\n\nЯкщо ви не робили запит на скидання пароля, скасуйте його зараз.</string>
   <!-- Recovery window ended -->
-  <string name="account_recovery_window_ended_title">Password reset expired</string>
-  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <string name="account_recovery_window_ended_title">Скидання пароля протерміновано</string>
+  <string name="account_recovery_window_ended_subtitle">Вам необхідно запросити нове скидання пароля для %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Скасувати запит</string>
   <string name="account_recovery_dismiss">Зрозуміло</string>

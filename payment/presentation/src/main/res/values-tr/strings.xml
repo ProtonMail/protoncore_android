@@ -27,7 +27,7 @@
   <string name="payments_error_session">Oturum açmış bir kullanıcı olarak abone olurken geçerli oturum kimliği gereklidir.</string>
   <string name="payments_error_signup_paymentmethod">Var olan ödeme yöntemiyle hesap açılamadı.</string>
   <string name="payments_error_invalid_session">Oturum geçersiz.</string>
-  <string name="payments_no_payment_provider">Herhangi bir etkin ödeme hizmeti sağlayıcısı bulunamadı.</string>
+  <string name="payments_no_payment_provider">Herhangi bir etkin ödeme aracısı bulunamadı.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Ödeme yönteminizi seçin</string>

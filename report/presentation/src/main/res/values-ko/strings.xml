@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">문제 보고</string>
+  <string name="core_report_bug_close">닫기</string>
+  <string name="core_report_bug_subject_field_hint">제목</string>
+  <string name="core_report_bug_subject_field_required">제목을 입력하세요</string>
+  <string name="core_report_bug_description_field_hint">무엇이 잘못되었나요? 최소 10글자입니다</string>
+  <string name="core_report_bug_description_field_placeholder">발생한 문제를 최대한 상세하게 설명해 주세요. 오류 메시지가 표시되었다면, 무엇이었는지 알려주세요.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="other">최소 %d글자를 입력하세요</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">버그 신고를 닫을까요?</string>
+  <string name="core_report_bug_discard_changes_description">이 페이지를 닫으면, 신고가 저장되지 않습니다.</string>
+  <string name="core_report_bug_discard_changes_cancel">계속 작성하기</string>
+  <string name="core_report_bug_discard_changes_confirm">저장하지 않고 닫기</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="other">최대 %d글자입니다</item>
+  </plurals>
+  <string name="core_report_bug_general_error">문제가 발생했습니다.몇 분 후에 다시 시도해 주세요.</string>
+  <string name="core_report_bug_send">신고하기</string>
+  <string name="core_report_bug_success">신고해 주셔서 감사합니다</string>
+</resources>

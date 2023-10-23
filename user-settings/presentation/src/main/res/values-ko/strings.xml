@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">복구 이메일</string>
+  <string name="settings_recovery_email_current">현재 복구 이메일 주소</string>
+  <string name="settings_recovery_email_new">새로운 복구 이메일 주소</string>
+  <string name="settings_recovery_email_confirm">복구 이메일 주소 확인</string>
+  <string name="settings_recovery_email_new_hint">이메일 주소 입력</string>
+  <string name="settings_recovery_email_confirm_hint">이메일 주소 재입력</string>
+  <string name="settings_save">저장</string>
+  <string name="settings_password_required">로그인 비밀번호 입력</string>
+  <string name="settings_password_required_ok">확인</string>
+  <string name="settings_not_set">설정되지 않음</string>
+  <string name="settings_recovery_email_error_no_match">새 복구 주소가 일치하지 않습니다</string>
+  <string name="settings_validation_email">이메일이 유효하지 않습니다</string>
+  <string name="settings_general_error">오류 발생.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_change_login_password">비밀번호 변경</string>
+  <string name="settings_password_management_change_mailbox_password">메일함 비밀번호 변경</string>
+  <string name="settings_password_management_header">비밀번호 관리</string>
+  <string name="settings_login_password_hint_current">현재 로그인 비밀번호</string>
+  <string name="settings_login_password_hint_new">새 로그인 비밀번호</string>
+  <string name="settings_login_password_hint_new_confirm">새로운 로그인 비밀번호 확인</string>
+  <string name="settings_mailbox_password_hint_new">새 메일함 비밀번호</string>
+  <string name="settings_mailbox_password_hint_new_confirm">새로운 메일함 비밀번호 확인</string>
+  <string name="settings_change_password_error">비밀번호 변경에 오류가 발생했습니다</string>
+  <string name="settings_recovery_email_success">복구 이메일이 변경되었습니다</string>
+  <string name="settings_password_management_success">비밀번호 변경됨</string>
+  <string name="settings_password_management_login_password_success">로그인 비밀번호가 변경되었습니다</string>
+  <string name="settings_password_management_mailbox_password_success">메일함 비밀번호가 변경되었습니다</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">익명 원격 측정</string>
+  <string name="device_settings_telemetry_hint">서비스 품질 향상을 위해, 익명의 데이터를 수집할 수 있습니다.</string>
+  <string name="device_settings_crashreport_title">익명 충돌 보고서</string>
+  <string name="device_settings_crashreport_hint">앱 오류가 발생시, 리포트가 원인의 상세 정보와 함께 자사 엔지니어에게 전송됩니다. 이 데이터는 오직 앱 향상에만 사용할 것입니다.</string>
+</resources>

@@ -31,7 +31,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Choisissez votre moyen de paiement.</string>
-  <string name="payments_add_credit_debit_card">Ajouter une carte de crédit/débit</string>
+  <string name="payments_add_credit_debit_card">Ajouter une carte de paiement</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Payer %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Payer avec</string>
   <string name="payments_method_icon">Icône de moyen de paiement.</string>
@@ -60,7 +60,7 @@
   <string name="payments_billing_yearly">Pour 1 an</string>
   <string name="payments_billing_two_years">Pour 2 ans</string>
   <string name="payment_use_google_pay_instead">Utiliser plutôt Google Pay</string>
-  <string name="payment_use_credit_card_instead">Utiliser plutôt une carte de crédit ou de débit</string>
+  <string name="payment_use_credit_card_instead">Utiliser plutôt une carte de paiement</string>
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Confirmez la mise à niveau du compte.</string>

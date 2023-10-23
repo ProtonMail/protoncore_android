@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Skaffa Proton gratis</string>
   <string name="plans_get_proton">Skaffa %s</string>
   <string name="plans_manage_your_subscription">Hantera din prenumeration på <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space">%s av %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s av %2$s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Din prenumeration är hanterad av Google Play.</string>
   <string name="plans_manage_your_subscription_other">Din prenumeration kan inte hanteras i mobilappen.</string>
@@ -143,13 +143,13 @@
   <string name="secure_core" comment="new_plans">Secure Core-servrar</string>
   <string name="tor_vpn" comment="new_plans">Tor över VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Obegränsat antal lösenord och anteckningar</string>
+  <string name="unlimited_logins_and_notes">Obegränsat antal inloggningar och anteckningar</string>
   <string name="unlimited_devices">Obegränsat antal enheter</string>
-  <string name="integrated_2fa_authenticator">Integrerad 2FA-autentisering</string>
+  <string name="integrated_2fa_authenticator">Integrerad tvåfaktorsautentisering</string>
   <string name="multiple_vaults">Flera valv</string>
   <string name="unlimited_email_alias">Obegränsat antal Hide-my-email-alias</string>
   <string name="custom_email_alias_domains">Anpassade domäner för e-postalias</string>
-  <string name="multiple_forwarding_mailboxes">Flera vidarebefordrade brevlådor</string>
+  <string name="multiple_forwarding_mailboxes">Flera vidarebefordrande brevlådor</string>
   <string name="priority_support">Prioriterad support</string>
   <string name="one_vault">1 valv</string>
   <string name="ten_hide_my_email_aliases">10 Hide-my-email-alias</string>

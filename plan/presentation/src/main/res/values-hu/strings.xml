@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,10 +29,10 @@
   <string name="plans_subscription">Előfizetés</string>
   <string name="plans_renewal_date">Csomagja automatikusan megújításra kerül: &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Csomagja lejár: &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
-  <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
-  <string name="plans_pay_other">Pay for %d months</string>
+  <string name="plans_pay_monthly">Fizetés havonta</string>
+  <string name="plans_pay_annually">Fizetés évente</string>
+  <string name="plans_pay_biennially">Fizetés 2 évente</string>
+  <string name="plans_pay_other">Fizetés %d hónapra</string>
   <string name="plans_billed_yearly">*Számlázva évente: %s</string>
   <string name="plans_billed_monthly">Havonta számlázva</string>
   <string name="plans_billing_monthly">1 hónapra</string>
@@ -46,13 +46,13 @@
   <string name="plans_proton_for_free">Szerezze be a Protont ingyen</string>
   <string name="plans_get_proton">%s beszerzése</string>
   <string name="plans_manage_your_subscription">Az előfizetését az <a href="https://account.proton.me">account.proton.me</a> címen kezelheti</string>
-  <string name="plans_used_space">%s / %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
   <string name="plans_payments_info_not_available">nem elérhető</string>
   <string name="plans_manage_your_subscription_google">Az előfizetését a Google Play kezeli.</string>
   <string name="plans_manage_your_subscription_other">Az előfizetését nem lehet a mobile alkalmazásban kezelni.</string>
   <string name="plans_autorenew_subscriptions">Az alkalmazásból csak éves, automatikusan megújuló előfizetés érhető el.</string>
   <string name="plans_can_not_upgrade_from_mobile">A mobil alkalmazásból a csomag nem változtatható.</string>
-  <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
+  <string name="plans_no_upgrade_available">Jelenleg nincs elérhető frissítés</string>
   <string name="plans_limited_offer">Korlátozott idejű ajánlat</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

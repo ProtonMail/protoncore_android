@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@
   <string name="plans_proton_for_free">Luați Proton gratuit</string>
   <string name="plans_get_proton">Luați %s</string>
   <string name="plans_manage_your_subscription">Gestionați abonamentul la <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space">%s din %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s din %2$s</string>
   <string name="plans_payments_info_not_available">n/d</string>
   <string name="plans_manage_your_subscription_google">Abonamentul este gestionat de către Google Play.</string>
   <string name="plans_manage_your_subscription_other">Abonamentul nu poate fi gestionat din aplicația mobilă.</string>
@@ -159,7 +159,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">Autentificări și note nelimitate</string>
   <string name="unlimited_devices">Dispozitive nelimitate</string>
-  <string name="integrated_2fa_authenticator">Autentificator 2FA integrat</string>
+  <string name="integrated_2fa_authenticator">Autentificator A2F integrat</string>
   <string name="multiple_vaults">Seifuri multiple</string>
   <string name="unlimited_email_alias">Aliasuri nelimitate „Hide My Email”</string>
   <string name="custom_email_alias_domains">Domenii personale pentru aliasuri de e-mail</string>

@@ -18,28 +18,28 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">Password reset requested</string>
+  <string name="account_recovery_grace_period_info_title">Nulstilling af adgangskode anmodet</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="one">Der blev anmodet om nulstilling af adgangskoden for <b>%1$s</b>. Du kan ændre din adgangskode om %2$d time.\n\nHvis du ikke har foretaget denne anmodning, skal du annullere den nu.</item>
+    <item quantity="other">Der blev anmodet om nulstilling af adgangskoden for <b>%1$s</b>. Du kan ændre din adgangskode om %2$d timer.\n\nHvis du ikke har foretaget denne anmodning, skal du annullere den nu.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
-  <string name="account_recovery_cancel_title">Cancel password reset?</string>
-  <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
-  <string name="account_recovery_cancel_password_label">Current password</string>
-  <string name="account_recovery_cancel_password_placeholder">Password</string>
-  <string name="account_recovery_cancel_now">Cancel password reset</string>
-  <string name="account_recovery_cancel_back">Back</string>
+  <string name="account_recovery_cancel_title">Annullér nulstilling af adgangskode?</string>
+  <string name="account_recovery_cancel_subtitle">Indtast din adgangskode for at annullere.</string>
+  <string name="account_recovery_cancel_password_label">Nuværende adgangskode</string>
+  <string name="account_recovery_cancel_password_placeholder">Adgangskode</string>
+  <string name="account_recovery_cancel_now">Annullér nulstilling af adgangskode</string>
+  <string name="account_recovery_cancel_back">Tilbage</string>
   <!-- Account recovery cancelled -->
-  <string name="account_recovery_cancelled_title">Password reset cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <string name="account_recovery_cancelled_title">Nulstilling af adgangskode annulleret</string>
+  <string name="account_recovery_cancelled_subtitle">Hvis du aldrig har bedt om at ændre din adgangskode, kan din konto være i fare.\n\nBeskyt din konto ved at ændre din adgangskode.</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">Password reset available</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <string name="account_recovery_password_started_title">Nulstilling af adgangskode tilgængelig</string>
+  <string name="account_recovery_password_started_subtitle">For at nulstille din adgangskode skal du vende tilbage til den enhed og browser, hvorfra du anmodede om nulstilling af din adgangskode.\n\nDet skal du gøre før %s.\n\nHvis du ikke har bedt om at nulstille din adgangskode, skal du annullere nulstillingen nu.</string>
   <!-- Recovery window ended -->
-  <string name="account_recovery_window_ended_title">Password reset expired</string>
-  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <string name="account_recovery_window_ended_title">Nulstilling af adgangskode udløbet</string>
+  <string name="account_recovery_window_ended_subtitle">Du er nødt til at anmode om en ny nulstilling af adgangskoden til %s.</string>
   <!-- Other -->
-  <string name="account_recovery_cancel">Cancel request</string>
-  <string name="account_recovery_dismiss">Got it</string>
+  <string name="account_recovery_cancel">Annullér anmodning</string>
+  <string name="account_recovery_dismiss">Forstået</string>
 </resources>

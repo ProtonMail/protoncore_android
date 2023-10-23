@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@
   <string name="plans_payment_error">支払いエラーが発生しました。再度お試しいただくか、無料プランを作成してください。</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">1 ヶ月あたり</string>
-  <string name="plan_price_annually">年あたり</string>
+  <string name="plan_price_annually">1年あたり</string>
   <string name="plans_current_plan">現在のプラン</string>
   <string name="plans_upgrade_plan">プランをアップグレード</string>
   <string name="plans_subscription">サブスクリプション</string>
@@ -31,7 +31,7 @@
   <string name="plans_expiration_date">プランは &lt;b&gt;%s&lt;/b&gt; に期限切れになります</string>
   <string name="plans_pay_monthly">月払い</string>
   <string name="plans_pay_annually">年払い</string>
-  <string name="plans_pay_biennially">2年ごとに支払う</string>
+  <string name="plans_pay_biennially">2年ごとの支払い</string>
   <string name="plans_pay_other">%d ヶ月分の支払い</string>
   <string name="plans_billed_yearly">* 1 年毎に %s が請求されます</string>
   <string name="plans_billed_monthly">毎月請求されます</string>
@@ -45,7 +45,7 @@
   <string name="plans_proton_for_free">Proton を無料を入手</string>
   <string name="plans_get_proton">%s を入手</string>
   <string name="plans_manage_your_subscription"><a href="https://account.proton.me">account.proton.me</a> からサブスクリプションを管理</string>
-  <string name="plans_used_space">%s / %s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%2$s の中の%1$s</string>
   <string name="plans_payments_info_not_available">n/a</string>
   <string name="plans_manage_your_subscription_google">Google Play によってサブスクリプションは管理されています。</string>
   <string name="plans_manage_your_subscription_other">モバイルアプリではサブスクリプションを管理できません。</string>

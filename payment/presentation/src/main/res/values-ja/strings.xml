@@ -33,7 +33,7 @@
   <string name="payments_choose_payment_method">支払方法を選択してください</string>
   <string name="payments_add_credit_debit_card">新しいクレジットカードまたはデビットカードを追加</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">%s を支払う</string>
-  <string name="payments_pay_with" comment="Example: Pay with debit card">お支払い: </string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">お支払い方法</string>
   <string name="payments_method_icon">支払い手段のアイコン。</string>
   <string name="payments_method_surcharge">*この支払い方法での購入には追加料金がかかります。</string>
   <string name="payments_method_terms_conditions">Google Pay で購入することで Google Pay の利用規約に同意し、Google による定期購入が有効になります。</string>

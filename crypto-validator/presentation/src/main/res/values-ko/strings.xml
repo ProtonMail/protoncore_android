@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="crypto_keystore_error_title">암호화 오류</string>
+  <string name="crypto_keystore_error_message">이 기기는 데이터를 안전하게 유지하는 데 사용하는 Android Keystore의 잘못된 구현을 사용합니다. 즉, 공격자가 이 장치에 물리적으로 접근하면 데이터가 손상될 수 있습니다. 무엇을 하시겠습니까?</string>
+  <string name="crypto_keystore_error_continue_action">계속</string>
+  <string name="crypto_keystore_error_more_info_action">상세정보 보기</string>
+  <string name="crypto_keystore_error_logout_action">로그아웃</string>
+  <string name="crypto_keystore_error_exit_action">종료</string>
+</resources>

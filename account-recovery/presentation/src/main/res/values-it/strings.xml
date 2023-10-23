@@ -35,7 +35,7 @@
   <string name="account_recovery_cancelled_subtitle">Se non sei stato tu a chiedere il cambio della password, il tuo account potrebbe essere a rischio.\n\nProteggilo cambiando la password.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Reimpostazione della password disponibile</string>
-  <string name="account_recovery_password_started_subtitle">Per reimpostare la password, torna al dispositivo e browser da cui hai effettuato la richiesta di reimpostazione della password.\n\nDovrai farlo prima del %s.\n\nSe non sei stato tu a chiedere la reimpostazione della password, annullala adesso.</string>
+  <string name="account_recovery_password_started_subtitle">Per reimpostare la tua password, torna al dispositivo e browser da cui hai effettuato la richiesta di reimpostazione della password.\n\nDovrai farlo prima del %s.\n\nSe non sei stato tu a chiedere la reimpostazione della password, annullala adesso.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Reimpostazione password scaduta</string>
   <string name="account_recovery_window_ended_subtitle">Dovrai richiedere una nuova reimpostazione della password per %s.</string>
