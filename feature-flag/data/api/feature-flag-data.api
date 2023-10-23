@@ -19,6 +19,7 @@ public final class me/proton/core/featureflag/data/BuildConfig {
 
 public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getFreshValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrDefault (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lme/proton/core/featureflag/domain/entity/FeatureFlag;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Z
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
@@ -37,8 +38,9 @@ public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl_Factor
 }
 
 public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter {
-	public fun <init> (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
-	public final fun start ()V
+	public fun <init> (Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public final fun start (Z)V
+	public static synthetic fun start$default (Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;ZILjava/lang/Object;)V
 }
 
 public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter_Factory : dagger/internal/Factory {
@@ -46,7 +48,7 @@ public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter_Fac
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;
-	public static fun newInstance (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;
+	public static fun newInstance (Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;
 }
 
 public abstract class me/proton/core/featureflag/data/db/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
@@ -273,6 +275,21 @@ public final class me/proton/core/featureflag/data/remote/response/GetUnleashTog
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager {
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkManager;)V
+	public final fun cancel (Lme/proton/core/domain/entity/UserId;)V
+	public final fun enqueueOneTime (Lme/proton/core/domain/entity/UserId;)V
+	public final fun enqueuePeriodic (Lme/proton/core/domain/entity/UserId;Z)V
+}
+
+public final class me/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkManager;)Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;
+}
+
 public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
 }
 
@@ -341,7 +358,8 @@ public final class me/proton/core/featureflag/data/repository/FeatureFlagReposit
 	public fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
-	public fun refreshAll (Lme/proton/core/domain/entity/UserId;)V
+	public fun refreshAllOneTime (Lme/proton/core/domain/entity/UserId;)V
+	public fun refreshAllPeriodic (Lme/proton/core/domain/entity/UserId;Z)V
 	public fun update (Lme/proton/core/featureflag/domain/entity/FeatureFlag;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -350,6 +368,6 @@ public final class me/proton/core/featureflag/data/repository/FeatureFlagReposit
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Landroidx/work/WorkManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
 }
 

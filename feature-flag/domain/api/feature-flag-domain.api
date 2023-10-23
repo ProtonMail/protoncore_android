@@ -3,6 +3,7 @@ public abstract interface annotation class me/proton/core/featureflag/domain/Exp
 
 public abstract interface class me/proton/core/featureflag/domain/FeatureFlagManager {
 	public abstract fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getFreshValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getOrDefault (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lme/proton/core/featureflag/domain/entity/FeatureFlag;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Z
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
@@ -14,6 +15,7 @@ public abstract interface class me/proton/core/featureflag/domain/FeatureFlagMan
 
 public final class me/proton/core/featureflag/domain/FeatureFlagManager$DefaultImpls {
 	public static synthetic fun get$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getFreshValue$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getOrDefault$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lme/proton/core/featureflag/domain/entity/FeatureFlag;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getValue$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ILjava/lang/Object;)Z
 	public static synthetic fun observe$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
@@ -95,7 +97,8 @@ public abstract interface class me/proton/core/featureflag/domain/repository/Fea
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;Z)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
-	public abstract fun refreshAll (Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun refreshAllOneTime (Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun refreshAllPeriodic (Lme/proton/core/domain/entity/UserId;Z)V
 	public abstract fun update (Lme/proton/core/featureflag/domain/entity/FeatureFlag;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -106,7 +109,8 @@ public final class me/proton/core/featureflag/domain/repository/FeatureFlagRepos
 	public static synthetic fun getValue$default (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ILjava/lang/Object;)Ljava/lang/Boolean;
 	public static synthetic fun observe$default (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;Lme/proton/core/domain/entity/UserId;Ljava/util/Set;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun observe$default (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
-	public static synthetic fun refreshAll$default (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
+	public static synthetic fun refreshAllOneTime$default (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
+	public static synthetic fun refreshAllPeriodic$default (Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)V
 }
 
 public final class me/proton/core/featureflag/domain/usecase/FetchFeatureIdsRemote {

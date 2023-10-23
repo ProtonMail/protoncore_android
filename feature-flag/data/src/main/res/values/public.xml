@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <public name="core_feature_feature_flag_worker_repeat_interval_unauth_seconds" type="integer" />
+    <public name="core_feature_feature_flag_worker_repeat_interval_auth_seconds" type="integer" />
+</resources>

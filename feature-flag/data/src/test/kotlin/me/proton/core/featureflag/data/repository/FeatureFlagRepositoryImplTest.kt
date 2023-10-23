@@ -18,8 +18,6 @@
 
 package me.proton.core.featureflag.data.repository
 
-import androidx.work.ExistingWorkPolicy
-import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import app.cash.turbine.test
 import io.mockk.Called
@@ -47,7 +45,7 @@ import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
-import me.proton.core.featureflag.data.remote.worker.FetchUnleashTogglesWorker
+import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureApiResponse
@@ -111,6 +109,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         } returns TestApiManager(featuresApi)
     }
     private val workManager = mockk<WorkManager>(relaxed = true)
+    private val workerManager = mockk<FeatureFlagWorkerManager>(relaxed = true)
 
     private lateinit var apiProvider: ApiProvider
     private lateinit var local: FeatureFlagLocalDataSource
@@ -125,7 +124,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         repository = FeatureFlagRepositoryImpl(
             localDataSource = local,
             remoteDataSource = remote,
-            workManager = workManager,
+            workerManager = workerManager,
             scopeProvider = TestCoroutineScopeProvider(coroutinesRule.dispatchers)
         )
 
@@ -531,17 +530,20 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     }
 
     @Test
-    fun refreshAllFeatureFlagsEnqueueWorker() = coroutinesTest {
+    fun refreshAllOneTimeFeatureFlagsEnqueueWorker() = coroutinesTest {
         // When
-        repository.refreshAll(userId)
+        repository.refreshAllOneTime(userId)
 
         // Then
-        coVerify {
-            workManager.enqueueUniqueWork(
-                /* uniqueWorkName = */ FetchUnleashTogglesWorker.getUniqueWorkName(userId),
-                /* existingWorkPolicy = */ ExistingWorkPolicy.REPLACE,
-                /* work = */ any<OneTimeWorkRequest>()
-            )
-        }
+        coVerify { workerManager.enqueueOneTime(userId) }
+    }
+
+    @Test
+    fun refreshAllPeriodicFeatureFlagsEnqueueWorker() = coroutinesTest {
+        // When
+        repository.refreshAllPeriodic(userId, true)
+
+        // Then
+        coVerify { workerManager.enqueuePeriodic(userId, true) }
     }
 }

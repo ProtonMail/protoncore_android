@@ -34,6 +34,8 @@ public interface FeatureFlagManager {
 
     /**
      * Get a feature flag value.
+     *
+     * @return value, otherwise false.
      */
     @ExperimentalProtonFeatureFlag
     public fun getValue(
@@ -42,7 +44,20 @@ public interface FeatureFlagManager {
     ): Boolean
 
     /**
-     * Fetches all feature flags from the remote source and stores them, in background.
+     * Get a fresh feature flag value (refresh all before returning).
+     *
+     * @return [getValue], on success or any error.
+     */
+    @ExperimentalProtonFeatureFlag
+    public suspend fun getFreshValue(
+        userId: UserId? = null,
+        featureId: FeatureId
+    ): Boolean
+
+    /**
+     * Enqueue a refresh of all feature flags from the remote source and stores them, in background.
+     *
+     * Note: if already enqueued, cancel previous and enqueue a new one.
      */
     @ExperimentalProtonFeatureFlag
     public fun refreshAll(

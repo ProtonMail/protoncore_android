@@ -131,12 +131,12 @@ class FeatureFlagManagerImplTest {
     @Test
     fun refreshAllCallsRepository() = runTest {
         // Given
-        coEvery { repository.refreshAll(any()) } just Runs
+        coEvery { repository.refreshAllOneTime(any()) } just Runs
 
         // When
         manager.refreshAll(userId = null)
 
         // Then
-        coVerify { repository.refreshAll(null) }
+        coVerify { repository.refreshAllOneTime(null) }
     }
 }

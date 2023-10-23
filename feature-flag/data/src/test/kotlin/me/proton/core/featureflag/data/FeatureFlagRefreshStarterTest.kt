@@ -27,17 +27,17 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
-import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
 import org.junit.Before
 import org.junit.Test
 
-@OptIn(ExperimentalProtonFeatureFlag::class)
 class FeatureFlagRefreshStarterTest {
 
     private val userIdReady = UserId("ready")
     private val userIdDisabled = UserId("disabled")
+    private val userIdRemoved = UserId("removed")
     private val accountReady = mockk<Account>(relaxed = true) {
         every { state } returns AccountState.Ready
         every { userId } returns userIdReady
@@ -46,9 +46,13 @@ class FeatureFlagRefreshStarterTest {
         every { state } returns AccountState.Disabled
         every { userId } returns userIdDisabled
     }
+    private val accountRemoved = mockk<Account>(relaxed = true) {
+        every { state } returns AccountState.Removed
+        every { userId } returns userIdRemoved
+    }
     private val mutableAccount = MutableSharedFlow<Account>(replay = 1)
 
-    private val featureFlagManager = mockk<FeatureFlagManager>(relaxed = true)
+    private val workerManager = mockk<FeatureFlagWorkerManager>(relaxed = true)
     private val accountManager = mockk<AccountManager>(relaxed = true) {
         every { onAccountStateChanged(any()) } returns mutableAccount
     }
@@ -58,54 +62,65 @@ class FeatureFlagRefreshStarterTest {
     @Before
     fun setUp() {
         starter = FeatureFlagRefreshStarter(
-            featureFlagManager = featureFlagManager,
+            workerManager = workerManager,
             accountManager = accountManager,
             scopeProvider = UnconfinedTestCoroutineScopeProvider()
         )
     }
 
     @Test
-    fun startCallRefreshNull() = runTest {
+    fun startCallEnqueueOneTimeForNull() = runTest {
         // When
         starter.start()
         // Then
-        verify { featureFlagManager.refreshAll(null) }
+        verify { workerManager.enqueueOneTime(null) }
     }
 
     @Test
-    fun startCallRefreshOnAccountStateReady() = runTest {
+    fun startCallEnqueuePeriodicOnAccountStateReady() = runTest {
         // Given
         starter.start()
         // When
         mutableAccount.emit(accountReady)
         // Then
-        verify(exactly = 1) { featureFlagManager.refreshAll(null) }
-        verify(exactly = 1) { featureFlagManager.refreshAll(userIdReady) }
-        verify(exactly = 0) { featureFlagManager.refreshAll(userIdDisabled) }
+        verify(exactly = 1) { workerManager.enqueuePeriodic(userIdReady, any()) }
+        verify(exactly = 0) { workerManager.enqueuePeriodic(userIdDisabled, any()) }
     }
 
     @Test
-    fun startDoNotCallRefreshOnAccountStateDisabled() = runTest {
+    fun startCallCancelOnAccountStateDisabled() = runTest {
         // Given
         starter.start()
         // When
         mutableAccount.emit(accountDisabled)
         // Then
-        verify(exactly = 1) { featureFlagManager.refreshAll(null) }
-        verify(exactly = 0) { featureFlagManager.refreshAll(userIdReady) }
-        verify(exactly = 0) { featureFlagManager.refreshAll(userIdDisabled) }
+        verify(exactly = 0) { workerManager.cancel(userIdReady) }
+        verify(exactly = 1) { workerManager.cancel(userIdDisabled) }
+        verify(exactly = 0) { workerManager.cancel(userIdRemoved) }
     }
 
     @Test
-    fun startCallRefreshOnInitialAccountStateReady() = runTest {
+    fun startCallCancelOnAccountStateRemoved() = runTest {
+        // Given
+        starter.start()
+        // When
+        mutableAccount.emit(accountRemoved)
+        // Then
+        verify(exactly = 0) { workerManager.cancel(userIdReady) }
+        verify(exactly = 0) { workerManager.cancel(userIdDisabled) }
+        verify(exactly = 1) { workerManager.cancel(userIdRemoved) }
+    }
+
+    @Test
+    fun startCallEnqueuePeriodicOnInitialAccountStateReady() = runTest {
         // Given
         mutableAccount.emit(accountReady)
         // When
         starter.start()
 
         // Then
-        verify(exactly = 1) { featureFlagManager.refreshAll(null) }
-        verify(exactly = 1) { featureFlagManager.refreshAll(userIdReady) }
-        verify(exactly = 0) { featureFlagManager.refreshAll(userIdDisabled) }
+        verify(exactly = 1) { workerManager.enqueuePeriodic(userIdReady, any()) }
+        verify(exactly = 0) { workerManager.enqueuePeriodic(userIdDisabled, any()) }
+        verify(exactly = 0) { workerManager.enqueuePeriodic(userIdRemoved, any()) }
     }
 }

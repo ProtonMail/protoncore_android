@@ -41,9 +41,18 @@ public interface FeatureFlagRepository {
     public suspend fun getAll(userId: UserId? = null): List<FeatureFlag>
 
     /**
-     * Fetches all feature flags from the remote source, update local, in background.
+     * Enqueue a refresh of all feature flags from the remote source, update local, in background.
+     *
+     * Note: if already enqueued, cancel previous and enqueue a new one.
      */
-    public fun refreshAll(userId: UserId? = null)
+    public fun refreshAllOneTime(userId: UserId? = null)
+
+    /**
+     * Enqueue a refresh of all feature flags from the remote source, update local, in background.
+     *
+     * Note: if already enqueued do nothing, except if [immediately] is true enqueue a new one.
+     */
+    public fun refreshAllPeriodic(userId: UserId? = null, immediately: Boolean = false)
 
     /**
      * Observe a feature flag value from the local source, if exist, or from remote source otherwise.

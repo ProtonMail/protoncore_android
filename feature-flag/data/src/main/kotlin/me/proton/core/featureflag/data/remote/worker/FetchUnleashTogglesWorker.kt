@@ -20,12 +20,12 @@ package me.proton.core.featureflag.data.remote.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
-import androidx.work.Constraints
+import androidx.work.Constraints.Builder
 import androidx.work.CoroutineWorker
 import androidx.work.Data
-import androidx.work.NetworkType
-import androidx.work.OneTimeWorkRequest
+import androidx.work.NetworkType.CONNECTED
 import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
@@ -34,6 +34,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.usecase.FetchUnleashTogglesRemote
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
+import java.util.concurrent.TimeUnit.SECONDS
+import kotlin.time.Duration
 
 @HiltWorker
 internal class FetchUnleashTogglesWorker @AssistedInject constructor(
@@ -65,18 +67,28 @@ internal class FetchUnleashTogglesWorker @AssistedInject constructor(
             )
         }
 
-        fun getRequest(userId: UserId?): OneTimeWorkRequest {
-            val inputData = makeInputData(userId)
-            val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-            return OneTimeWorkRequestBuilder<FetchUnleashTogglesWorker>()
-                .setConstraints(constraints)
-                .setInputData(inputData)
-                .build()
-        }
+        fun getOneTimeWorkRequest(
+            userId: UserId?,
+        ) = OneTimeWorkRequestBuilder<FetchUnleashTogglesWorker>()
+            .setInputData(makeInputData(userId))
+            .setConstraints(Builder().setRequiredNetworkType(CONNECTED).build())
+            .build()
 
-        fun getUniqueWorkName(userId: UserId?) =
-            "${FetchUnleashTogglesWorker::class.simpleName}-fetchAll-$userId"
+        fun getPeriodicWorkRequest(
+            userId: UserId?,
+            repeatInterval: Duration
+        ) = PeriodicWorkRequestBuilder<FetchUnleashTogglesWorker>(
+            repeatInterval = repeatInterval.inWholeSeconds,
+            repeatIntervalTimeUnit = SECONDS
+        )
+            .setInputData(makeInputData(userId))
+            .setConstraints(Builder().setRequiredNetworkType(CONNECTED).build())
+            .build()
+
+        fun getOneTimeUniqueWorkName(userId: UserId?) =
+            "${FetchUnleashTogglesWorker::class.simpleName}-one-time-$userId"
+
+        fun getPeriodicUniqueWorkName(userId: UserId?) =
+            "${FetchUnleashTogglesWorker::class.simpleName}-periodic-$userId"
     }
 }

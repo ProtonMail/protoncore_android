@@ -18,8 +18,6 @@
 
 package me.proton.core.featureflag.data.repository
 
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkManager
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -31,8 +29,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.local.orGlobal
-import me.proton.core.featureflag.data.remote.worker.FetchUnleashTogglesWorker
+import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.entity.Scope
@@ -47,7 +44,7 @@ import javax.inject.Singleton
 public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val localDataSource: FeatureFlagLocalDataSource,
     private val remoteDataSource: FeatureFlagRemoteDataSource,
-    private val workManager: WorkManager,
+    private val workerManager: FeatureFlagWorkerManager,
     scopeProvider: CoroutineScopeProvider
 ) : FeatureFlagRepository {
 
@@ -95,15 +92,14 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         putAllUnleashInMemory()
     }
 
-    override fun refreshAll(
+    override fun refreshAllOneTime(
         userId: UserId?
-    ) {
-        workManager.enqueueUniqueWork(
-            FetchUnleashTogglesWorker.getUniqueWorkName(userId),
-            ExistingWorkPolicy.REPLACE,
-            FetchUnleashTogglesWorker.getRequest(userId),
-        )
-    }
+    ): Unit = workerManager.enqueueOneTime(userId)
+
+    override fun refreshAllPeriodic(
+        userId: UserId?,
+        immediately: Boolean
+    ): Unit = workerManager.enqueuePeriodic(userId, immediately = immediately)
 
     override fun observe(
         userId: UserId?,

@@ -40,9 +40,15 @@ public class FeatureFlagManagerImpl @Inject internal constructor(
     ): Boolean = repository.getValue(userId, featureId) ?: false
 
     @ExperimentalProtonFeatureFlag
+    override suspend fun getFreshValue(
+        userId: UserId?,
+        featureId: FeatureId
+    ): Boolean = runCatching { repository.getAll(userId) }.run { getValue(userId, featureId) }
+
+    @ExperimentalProtonFeatureFlag
     override fun refreshAll(
         userId: UserId?
-    ): Unit = repository.refreshAll(userId)
+    ): Unit = repository.refreshAllOneTime(userId)
 
     override fun observe(
         userId: UserId?,
