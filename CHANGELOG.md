@@ -11,6 +11,28 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.1.0] - 2023-10-23
+
+### Chores
+
+- payment-iap:
+  - Report to Sentry response code + message on BillingClientError.
+  - BillingClientError sentry logs updated with response code+message.
+
+### Features
+
+- feature-flag:
+  - Added Unleash FeatureFlag persistence.
+- payment-iap:
+  - Allow for simplified upgrade flow for Google IAP.
+- plan:
+  - Allow for simplified upgrade flow for Google IAP.
+
+### Bug Fixes
+
+- plan:
+  - Crash when observing currency, if country is not specified in default Locale.
+
 ## [17.0.3] - 2023-10-12
 
 ### Chores
