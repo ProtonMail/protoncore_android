@@ -48,7 +48,7 @@ import javax.inject.Inject
 @Suppress("TooManyFunctions")
 @HiltViewModel
 internal class DynamicPlanListViewModel @Inject constructor(
-    override val manager: ObservabilityManager,
+    override val observabilityManager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
     private val getDynamicPlans: GetDynamicPlans
 ) : ProtonViewModel(), ObservabilityContext {
@@ -94,7 +94,7 @@ internal class DynamicPlanListViewModel @Inject constructor(
     }
 
     private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = flowWithResultContext {
-        it.onResultEnqueue("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
+        it.onResultEnqueueObservability("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
         send(State.Loading)
         val filteredPlans = getDynamicPlans(filter.userId).plans.filterBy(filter.cycle, filter.currency)
         send(State.Success(filteredPlans, filter))

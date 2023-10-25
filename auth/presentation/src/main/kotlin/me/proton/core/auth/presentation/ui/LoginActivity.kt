@@ -51,6 +51,12 @@ import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validateUsername
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.annotation.ScreenClosed
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
+import me.proton.core.telemetry.presentation.annotation.ViewClicked
+import me.proton.core.telemetry.presentation.annotation.ViewFocused
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
@@ -58,7 +64,17 @@ import javax.inject.Inject
  * Login Activity which allows users to Login to any Proton client application.
  */
 @AndroidEntryPoint
-class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate) {
+@ScreenDisplayed(event = "fe.signin.displayed")
+@ScreenClosed(event = "user.signin.closed")
+@ViewClicked(
+    event = "user.signin.clicked",
+    viewIds = ["signInButton"]
+)
+@ViewFocused(
+    event = "user.signin.focused",
+    viewIds = ["usernameInput", "passwordInput"]
+)
+class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), ProductMetricsDelegateOwner {
 
     // Additional button appearing when login fails and it's potentially caused by blocking.
     // When product injects null no dedicated button will appear.
@@ -77,6 +93,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     private val loginSsoResultLauncher = registerForActivityResult(StartLoginSso()) {
         if (it != null) onSuccess(UserId(it.userId), it.nextStep)
     }
+
+    override val productMetricsDelegate: ProductMetricsDelegate get() = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -134,6 +152,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                         it.error.getUserMessage(resources),
                         it.isPotentialBlocking
                     )
+
                     is LoginViewModel.State.InvalidPassword -> onWrongPassword(it.error.getUserMessage(resources))
                     is LoginViewModel.State.ExternalAccountNotSupported -> onExternalAccountNotSupported()
                 }.exhaustive

@@ -44,7 +44,7 @@ import javax.inject.Inject
 @Suppress("TooManyFunctions")
 @HiltViewModel
 internal class DynamicPlanSelectionViewModel @Inject constructor(
-    override val manager: ObservabilityManager,
+    override val observabilityManager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
     private val observeUserCurrency: ObserveUserCurrency,
     private val getDynamicPlans: GetDynamicPlans

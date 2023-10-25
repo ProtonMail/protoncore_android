@@ -50,7 +50,7 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
     private val redeemGooglePurchase: RedeemGooglePurchase,
-    override val manager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager
 ) : ProtonViewModel(), ObservabilityContext {
     private val _state: MutableStateFlow<State> = MutableStateFlow(State.Loading)
     internal val state: StateFlow<State> = _state.asStateFlow()
@@ -63,7 +63,7 @@ internal class UnredeemedPurchaseViewModel @Inject constructor(
         unredeemedPurchase: UnredeemedGooglePurchase,
         userId: UserId
     ) = viewModelScope.launchWithResultContext {
-        onResultEnqueue("createOrUpdateSubscription") { CheckoutBillingSubscribeTotal(toHttpApiStatus(), google) }
+        onResultEnqueueObservability("createOrUpdateSubscription") { CheckoutBillingSubscribeTotal(toHttpApiStatus(), google) }
 
         flow {
             emit(State.Loading)

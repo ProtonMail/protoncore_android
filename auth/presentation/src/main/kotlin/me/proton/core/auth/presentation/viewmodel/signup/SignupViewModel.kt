@@ -76,7 +76,7 @@ internal class SignupViewModel @Inject constructor(
     private val performLogin: PerformLogin,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
-    override val manager: ObservabilityManager,
+    override val observabilityManager: ObservabilityManager,
     private val canUpgradeToPaid: CanUpgradeToPaid,
     private val isDynamicPlanEnabled: IsDynamicPlanEnabled,
     savedStateHandle: SavedStateHandle
@@ -131,7 +131,7 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun onScreenView(screenId: SignupScreenViewTotalV1.ScreenId) {
-        enqueue(SignupScreenViewTotalV1(screenId))
+        enqueueObservability(SignupScreenViewTotalV1(screenId))
     }
 
     private fun setExternalRecoveryEmail(recoveryMethod: RecoveryMethod?) {
@@ -217,7 +217,7 @@ internal class SignupViewModel @Inject constructor(
         val recoveryEmail = destination.takeIf { type == RecoveryMethodType.EMAIL }
         val recoveryPhone = destination.takeIf { type == RecoveryMethodType.SMS }
         val result = withResultContext {
-            onResultEnqueue("createUser") {
+            onResultEnqueueObservability("createUser") {
                 SignupAccountCreationTotal(this, accountType.toObservabilityAccountType())
             }
             performCreateUser(
@@ -238,7 +238,7 @@ internal class SignupViewModel @Inject constructor(
 
     private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) = flow<State> {
         val userId = withResultContext {
-            onResultEnqueue("createExternalEmailUser") {
+            onResultEnqueueObservability("createExternalEmailUser") {
                 SignupAccountCreationTotal(this, AccountTypeLabels.external)
             }
             performCreateExternalEmailUser(

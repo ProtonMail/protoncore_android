@@ -36,7 +36,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ChooseUsernameViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
-    override val manager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager
 ) : ProtonViewModel(), ObservabilityContext {
 
     private val mainState = MutableStateFlow<State>(State.Idle)
@@ -52,8 +52,8 @@ internal class ChooseUsernameViewModel @Inject constructor(
     }
 
     fun checkUsername(username: String) = viewModelScope.launchWithResultContext {
-        onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
-        onResultEnqueue("checkUsernameAvailable") { SignupUsernameAvailabilityTotal(this) }
+        onResultEnqueueObservability("getAvailableDomains") { SignupFetchDomainsTotal(this) }
+        onResultEnqueueObservability("checkUsernameAvailable") { SignupUsernameAvailabilityTotal(this) }
 
         flow {
             emit(State.Processing)

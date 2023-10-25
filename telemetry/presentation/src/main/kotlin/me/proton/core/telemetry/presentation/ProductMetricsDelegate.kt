@@ -19,12 +19,47 @@
 package me.proton.core.telemetry.presentation
 
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
 import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.domain.entity.TelemetryEvent
 
 public interface ProductMetricsDelegate {
+    public val telemetryManager: TelemetryManager
+
     public val productGroup: String
     public val productFlow: String
-    public val productDimensions: Map<String, String> get() = emptyMap()
+    public val productDimensions: Map<String, String> get() = mapOf(KEY_FLOW to productFlow)
     public val userId: UserId? get() = null
-    public val telemetryManager: TelemetryManager
+
+    public fun Result<*>.toTelemetryEvent(
+        name: String,
+        dimensions: Map<String, String> = emptyMap()
+    ): TelemetryEvent = TelemetryEvent(
+        name = name,
+        group = productGroup,
+        dimensions = productDimensions
+            .plus(KEY_RESULT to if (isSuccess) VALUE_SUCCESS else VALUE_FAILURE)
+            .plus(dimensions),
+        values = mutableMapOf<String, Float>().apply {
+            putHttpCodeIfNotNull(this@toTelemetryEvent)
+        }
+    )
+
+    private fun MutableMap<String, Float>.putHttpCodeIfNotNull(result: Result<*>) {
+        result.getHttpCode()?.let { put(KEY_HTTP_CODE, it.toFloat()) }
+    }
+
+    private fun Result<*>.getHttpCode(): Int? {
+        return ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)?.httpCode
+    }
+
+    public companion object {
+        public const val KEY_FLOW: String = "flow"
+        public const val KEY_RESULT: String = "result"
+        public const val KEY_HTTP_CODE: String = "http_code"
+
+        public const val VALUE_SUCCESS: String = "success"
+        public const val VALUE_FAILURE: String = "failure"
+    }
 }

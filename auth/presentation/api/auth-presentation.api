@@ -1480,12 +1480,13 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_TwoPassModeActivi
 	protected fun inject ()V
 }
 
-public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton/core/auth/presentation/ui/AuthActivity {
+public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton/core/auth/presentation/ui/AuthActivity, me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner {
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginActivity$Companion;
 	public field blockingHelp Lme/proton/core/auth/presentation/ui/LoginActivity$BlockingHelp;
 	public fun <init> ()V
+	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
 	public fun onBackPressed ()V
 	public fun onError (ZLjava/lang/String;Z)V
 	public fun showLoading (Z)V
@@ -1970,12 +1971,12 @@ public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDia
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
-	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
-	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lkotlinx/coroutines/Job;
 	public final fun startWorkFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun stopWorkflow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
@@ -2191,16 +2192,16 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
-	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onIdentityProviderCancel ()V
 	public final fun onIdentityProviderError ()V
 	public final fun onIdentityProviderPageLoad (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;)V
 	public final fun onIdentityProviderSuccess (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
-	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)V
 	public final fun startLoginWorkflow (Ljava/lang/String;)Lkotlinx/coroutines/Job;
 }
@@ -2288,11 +2289,11 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_HiltModules {

@@ -77,7 +77,7 @@ class AccountRecoveryViewModel @Inject constructor(
     private val cancelRecovery: CancelRecovery,
     private val getUser: GetUser,
     private val keyStoreCrypto: KeyStoreCrypto,
-    override val manager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager
 ) : ViewModel(), ObservabilityContext {
 
     private val userId = UserId(requireNotNull(savedStateHandle.get<String>(Arg.UserId)))
@@ -107,7 +107,7 @@ class AccountRecoveryViewModel @Inject constructor(
         )
 
     internal fun onScreenView(screenId: ScreenId) {
-        manager.enqueue(AccountRecoveryScreenViewTotal(screenId))
+        observabilityManager.enqueue(AccountRecoveryScreenViewTotal(screenId))
     }
 
     internal fun userAcknowledged() {
@@ -182,7 +182,7 @@ class AccountRecoveryViewModel @Inject constructor(
     @VisibleForTesting
     internal fun startAccountRecoveryCancel(password: String) =
         viewModelScope.launchWithResultContext {
-            onResultEnqueue("account_recovery.cancellation") { AccountRecoveryCancellationTotal(this) }
+            onResultEnqueueObservability("account_recovery.cancellation") { AccountRecoveryCancellationTotal(this) }
 
             cancellationFlow.update { CancellationState(processing = true) }
             cancellationFlow.value = when {

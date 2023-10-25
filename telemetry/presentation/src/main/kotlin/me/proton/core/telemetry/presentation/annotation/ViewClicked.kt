@@ -18,8 +18,6 @@
 
 package me.proton.core.telemetry.presentation.annotation
 
-import androidx.annotation.IdRes
-
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
 public annotation class ViewClicked(

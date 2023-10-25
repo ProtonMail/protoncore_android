@@ -26,6 +26,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.AccountWorkflowHandler
@@ -45,6 +46,8 @@ import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.domain.entity.TelemetryEvent
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -68,6 +71,8 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
     @MockK(relaxUnitFun = true)
     private lateinit var observabilityManager: ObservabilityManager
+    @MockK(relaxUnitFun = true)
+    private lateinit var telemetryManager: TelemetryManager
     // endregion
 
     // region test data
@@ -428,7 +433,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         viewModel.startLoginWorkflow(
             username = testUserName,
             password = testPassword,
-            requiredAccountType = mockk(),
+            requiredAccountType = AccountType.Internal,
             loginMetricData = { loginData },
             unlockUserMetricData = { unlockData },
             userCheckMetricData = { userCheckData }
@@ -442,6 +447,105 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         assertTrue(dataSlots.contains(userCheckData))
     }
 
+    @Test
+    fun `login returns correct state telemetry event correctly enqueued`() = coroutinesTest {
+        // GIVEN
+        val sessionInfo = mockSessionInfo()
+        coEvery { createLoginSession.invoke(any(), any(), any()) } coAnswers {
+            result("performLogin") { sessionInfo }
+        }
+
+        coEvery {
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } coAnswers {
+            result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Error("error") }
+            result("unlockUserPrimaryKey") { UserManager.UnlockResult.Success }
+            PostLoginAccountSetup.Result.Error.UserCheckError(PostLoginAccountSetup.UserCheckResult.Error("error"))
+        }
+        val viewModel = makeLoginViewModel()
+
+        viewModel.startLoginWorkflow(
+            username = testUserName,
+            password = testPassword,
+            requiredAccountType = AccountType.Internal
+        ).join()
+
+        // THEN
+        val telemetryEventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(telemetryEventSlot)) }
+        val telemetryEvent = telemetryEventSlot.captured
+        assertEquals("be.signin.auth", telemetryEvent.name)
+        assertEquals("account.android.signup", telemetryEvent.group)
+        assertEquals(
+            mapOf("account_type" to "internal", "flow" to "mobile_signup_full", "result" to "success"),
+            telemetryEvent.dimensions
+        )
+    }
+
+    @Test
+    fun `login returns error telemetry event correctly enqueued`() = coroutinesTest {
+        // GIVEN
+        coEvery { createLoginSession.invoke(any(), any(), any()) } coAnswers {
+            result("performLogin") {
+                throw ApiException(
+                    ApiResult.Error.Http(
+                        httpCode = 123,
+                        "http error",
+                        ApiResult.Error.ProtonData(
+                            code = 1234,
+                            error = "proton error"
+                        )
+                    )
+                    )
+            }
+        }
+        coEvery {
+            postLoginAccountSetup.invoke(
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any(),
+                any()
+            )
+        } coAnswers {
+            result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Success }
+            result("unlockUserPrimaryKey") { UserManager.UnlockResult.Success }
+            PostLoginAccountSetup.Result.UserUnlocked(mockk())
+        }
+        val viewModel = makeLoginViewModel()
+
+        viewModel.startLoginWorkflow(
+            username = testUserName,
+            password = testPassword,
+            requiredAccountType = AccountType.Internal
+        ).join()
+
+        // THEN
+        val telemetryEventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(telemetryEventSlot)) }
+        val telemetryEvent = telemetryEventSlot.captured
+        assertEquals("be.signin.auth", telemetryEvent.name)
+        assertEquals("account.android.signup", telemetryEvent.group)
+        assertEquals(
+            mapOf("account_type" to "internal", "flow" to "mobile_signup_full", "result" to "failure"),
+            telemetryEvent.dimensions
+        )
+    }
+
     private fun makeLoginViewModel(isSsoEnabled: IsSsoEnabled = IsSsoEnabled { false }): LoginViewModel =
         LoginViewModel(
             savedStateHandle,
@@ -450,7 +554,8 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
             keyStoreCrypto,
             postLoginAccountSetup,
             isSsoEnabled,
-            observabilityManager
+            observabilityManager,
+            telemetryManager
         )
 
     private fun mockSessionInfo(

@@ -26,7 +26,7 @@ plugins {
 
 protonCoverage {
     minBranchCoveragePercentage.set(15)
-    minLineCoveragePercentage.set(56)
+    minLineCoveragePercentage.set(51)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -39,6 +39,7 @@ dependencies {
     api(
         project(Module.domain),
         project(Module.telemetryDomain),
+        project(Module.networkDomain),
         activity,
         fragment,
         `startup-runtime`

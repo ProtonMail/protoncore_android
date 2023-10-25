@@ -73,7 +73,7 @@ public abstract class BillingCommonViewModel(
     private val getCountry: GetCountry,
     private val humanVerificationManager: HumanVerificationManager,
     private val clientIdProvider: ClientIdProvider,
-    private val observabilityManager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager
 ) : ProtonViewModel(), ObservabilityContext {
 
     private val _subscriptionState = MutableStateFlow<State>(State.Idle)
@@ -160,9 +160,9 @@ public abstract class BillingCommonViewModel(
         paymentType: PaymentType,
         subscriptionManagement: SubscriptionManagement
     ): Job = viewModelScope.launchWithResultContext {
-        onResultEnqueue("createPaymentToken") { getCreatePaymentTokenObservabilityData(paymentType) }
-        onResultEnqueue("createOrUpdateSubscription") { getSubscribeObservabilityData(paymentType) }
-        onResultEnqueue("validateSubscription") { getValidatePlanObservabilityData(paymentType) }
+        onResultEnqueueObservability("createPaymentToken") { getCreatePaymentTokenObservabilityData(paymentType) }
+        onResultEnqueueObservability("createOrUpdateSubscription") { getSubscribeObservabilityData(paymentType) }
+        onResultEnqueueObservability("validateSubscription") { getValidatePlanObservabilityData(paymentType) }
 
         flow {
             emit(State.Processing)

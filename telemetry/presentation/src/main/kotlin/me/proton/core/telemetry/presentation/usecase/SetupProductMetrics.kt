@@ -95,29 +95,31 @@ internal class SetupProductMetrics @Inject constructor(
             )
         }
 
-        component.value.findAnnotation<ViewClicked>()?.let {
+        component.value.findAnnotation<ViewClicked>()?.let { viewClicked ->
 
-            for (viewId in it.viewIds) {
+            for (viewId in viewClicked.viewIds) {
                 val id = component.getIdentifier(viewId)
                 val view = component.findViewById<View>(id)
                 view.setOnClickListener { _ ->
                     measureOnViewClicked(
-                        event = it.event,
-                        delegateOwner = resolvedDelegateOwner
+                        event = viewClicked.event,
+                        delegateOwner = resolvedDelegateOwner,
+                        productDimensions = mapOf("item" to viewId)
                     )
                 }
             }
         }
 
-        component.value.findAnnotation<ViewFocused>()?.let {
+        component.value.findAnnotation<ViewFocused>()?.let { viewFocused ->
 
-            for (viewId in it.viewIds) {
+            for (viewId in viewFocused.viewIds) {
                 val id = component.getIdentifier(viewId)
                 val view = component.findViewById<View>(id)
                 view.setOnFocusChangeListener { _, _ ->
                     measureOnViewFocused(
-                        event = it.event,
+                        event = viewFocused.event,
                         delegateOwner = resolvedDelegateOwner,
+                        productDimensions = mapOf("item" to viewId)
                     )
                 }
             }

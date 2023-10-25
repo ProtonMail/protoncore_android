@@ -31,7 +31,7 @@ import kotlin.test.assertEquals
 
 class ObservabilityContextTest : ObservabilityContext {
 
-    override val manager: ObservabilityManager = mockk {
+    override val observabilityManager: ObservabilityManager = mockk {
         every { enqueue(any<ObservabilityData>(), any()) } returns Unit
     }
 
@@ -68,14 +68,14 @@ class ObservabilityContextTest : ObservabilityContext {
     @Test
     fun resultCollectorEnqueueExtension() = runTest {
         val value = withResultContext {
-            onResultEnqueue("key1") { toEvent() }
-            onResultEnqueue("key2") { toEvent() }
-            onCompleteEnqueue { toEvent() }
+            onResultEnqueueObservability("key1") { toEvent() }
+            onResultEnqueueObservability("key2") { toEvent() }
+            onCompleteEnqueueObservability { toEvent() }
 
             callProducers()
         }
 
-        verify(exactly = 3) { manager.enqueue(any<ObservabilityData>(), any()) }
+        verify(exactly = 3) { observabilityManager.enqueue(any<ObservabilityData>(), any()) }
 
         assertEquals(expected = 1, actual = value)
     }
@@ -86,14 +86,14 @@ class ObservabilityContextTest : ObservabilityContext {
         every { producerKey2.produce() } returns listOf(4)
 
         val value = withResultContext {
-            onResultEnqueue("key1") { toEvent() }
-            onResultEnqueue("key2") { toEvent() }
-            onCompleteEnqueue { toEvent() }
+            onResultEnqueueObservability("key1") { toEvent() }
+            onResultEnqueueObservability("key2") { toEvent() }
+            onCompleteEnqueueObservability { toEvent() }
 
             callProducers()
         }
 
-        verify(exactly = 3) { manager.enqueue(any<ObservabilityData>(), any()) }
+        verify(exactly = 3) { observabilityManager.enqueue(any<ObservabilityData>(), any()) }
 
         assertEquals(expected = 4, actual = value)
     }
@@ -101,13 +101,13 @@ class ObservabilityContextTest : ObservabilityContext {
     @Test
     fun launchWithResultContext() = runTest {
         launchWithResultContext {
-            onResultEnqueue("key1") { toEvent() }
-            onResultEnqueue("key2") { toEvent() }
-            onCompleteEnqueue { toEvent() }
+            onResultEnqueueObservability("key1") { toEvent() }
+            onResultEnqueueObservability("key2") { toEvent() }
+            onCompleteEnqueueObservability { toEvent() }
 
             callProducers()
         }.join()
 
-        verify(exactly = 3) { manager.enqueue(any<ObservabilityData>(), any()) }
+        verify(exactly = 3) { observabilityManager.enqueue(any<ObservabilityData>(), any()) }
     }
 }
