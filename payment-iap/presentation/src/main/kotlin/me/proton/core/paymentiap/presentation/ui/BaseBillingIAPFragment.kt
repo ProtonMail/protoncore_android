@@ -33,6 +33,8 @@ import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.paymentiap.presentation.LogTag.DEFAULT
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
+import me.proton.core.paymentiap.presentation.viewmodel.GoogleProductDetails
+import me.proton.core.paymentiap.presentation.viewmodel.GoogleProductId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.util.kotlin.CoreLogger
@@ -80,8 +82,8 @@ public abstract class BaseBillingIAPFragment(
                         CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_fetching_google_plan))
                         onError(R.string.payments_iap_error_fetching_google_plan)
                     }
-                    is BillingIAPViewModel.State.Success.GoogleProductDetails -> {
-                        onPriceAvailable(it.amount, it.currency, it.formattedPriceAndCurrency)
+                    is BillingIAPViewModel.State.Success.GoogleProductsDetails -> {
+                        onPricesAvailable(it.details)
                     }
                     is BillingIAPViewModel.State.Success.PurchaseSuccess -> {
                         onPurchaseSuccess(it.productId, it.purchaseToken, it.orderID, it.customerId, it.billingInput)
@@ -108,18 +110,16 @@ public abstract class BaseBillingIAPFragment(
         }
     }
 
-    protected fun queryGooglePlan(planName: String) {
-        billingIAPViewModel.queryProductDetails(planName)
+    protected fun queryGooglePlans(productIds: List<GoogleProductId>) {
+        billingIAPViewModel.queryProductDetails(productIds)
     }
 
     protected fun pay(input: BillingInput) {
         billingIAPViewModel.makePurchase(requireActivity(), input)
     }
 
-    protected abstract fun onPriceAvailable(
-        amount: Long,
-        currency: String,
-        formattedPriceAndCurrency: String
+    protected abstract fun onPricesAvailable(
+        details: Map<GoogleProductId, GoogleProductDetails>
     )
 
     protected abstract fun onPurchaseSuccess(

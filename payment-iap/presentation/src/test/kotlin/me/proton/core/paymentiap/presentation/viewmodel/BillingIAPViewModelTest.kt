@@ -24,9 +24,12 @@ import com.android.billingclient.api.Purchase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
+import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
+import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
@@ -49,15 +52,27 @@ import kotlin.test.assertEquals
 
 class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
 
-    private val billingRepository = mockk<GoogleBillingRepository>(relaxed = true)
-    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    private val findUnacknowledgedGooglePurchase = mockk<FindUnacknowledgedGooglePurchase>()
+    @RelaxedMockK
+    private lateinit var billingRepository: GoogleBillingRepository
+
+    @RelaxedMockK
+    private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK
+    private lateinit var findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
 
     private lateinit var tested: BillingIAPViewModel
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+
+        coEvery { billingRepository.getProductsDetails(any()) } coAnswers {
+            result("getProductDetails") {
+                firstArg<List<String>>().map { id -> mockk { every { productId } returns id } }
+            }
+        }
+
         tested = createViewModel()
     }
 
@@ -70,11 +85,6 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @Test
     fun `observability data is recorded for product query`() = coroutinesTest {
-        // GIVEN
-        coEvery { billingRepository.getProductDetails(any()) } coAnswers {
-            result("getProductDetails") { mockk() }
-        }
-
         // WHEN
         tested.queryProductDetails("test-plan-name").join()
 
@@ -87,11 +97,17 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `observability data is recorded unredeemed purchase is returned`() = coroutinesTest {
         // GIVEN
+        val productId = "test-plan-name"
         coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns mockk()
-        tested.queryProductDetails("test-plan-name").join()
+        tested.queryProductDetails(productId).join()
 
         // WHEN
-        tested.makePurchase(mockk(), mockk()).join()
+        val billingInput = mockk<BillingInput> {
+            every { plan.vendors } returns mapOf(
+                AppStore.GooglePlay to PaymentVendorDetails("", productId)
+            )
+        }
+        tested.makePurchase(mockk(), billingInput).join()
 
         // THEN
         verify { observabilityManager.enqueue(any<CheckoutGiapBillingUnredeemedTotalV1>(), any()) }
@@ -123,13 +139,12 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `query for a product that does not exist`() = coroutinesTest {
         // GIVEN
-        coEvery { billingRepository.getProductDetails(any()) } returns null
+        coEvery { billingRepository.getProductsDetails(any()) } returns null
 
         // WHEN
         tested.queryProductDetails("test-plan-name").join()
 
         // THEN
-
         assertEquals(
             BillingIAPViewModel.State.Error.ProductDetailsError.ProductMismatch,
             tested.billingIAPState.value
@@ -139,7 +154,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `feature not supported when querying for a product`() = coroutinesTest {
         // GIVEN
-        coEvery { billingRepository.getProductDetails(any()) } throws BillingClientError(
+        coEvery { billingRepository.getProductsDetails(any()) } throws BillingClientError(
             BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED, "Feature not supported"
         )
 
@@ -154,15 +169,31 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
+    fun `purchase product that was not queried`() = coroutinesTest {
+        // WHEN
+        tested.queryProductDetails("test-plan-name").join()
+        val billingInput = mockk<BillingInput> {
+            every { plan.vendors } returns mapOf(
+                AppStore.GooglePlay to PaymentVendorDetails("", "unknown-plan-name")
+            )
+        }
+        tested.makePurchase(mockk(), billingInput).join()
+
+        // THEN
+        val state = tested.billingIAPState.value
+        assertTrue(
+            state is BillingIAPViewModel.State.Error.ProductDetailsError.Message
+                && "unknown-plan-name" in requireNotNull(state.error)
+        )
+    }
+
+    @Test
     fun `customerId is not matching`() = coroutinesTest {
         // GIVEN
         val googleProductId = "google-product"
         val purchaseUpdatedFlow = MutableSharedFlow<Pair<BillingResult, List<Purchase>?>>()
         every { billingRepository.purchaseUpdated } returns purchaseUpdatedFlow
         coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
-        coEvery { billingRepository.getProductDetails(any()) } returns mockk {
-            every { productId } returns googleProductId
-        }
 
         tested = createViewModel()
         tested.queryProductDetails(googleProductId).join()

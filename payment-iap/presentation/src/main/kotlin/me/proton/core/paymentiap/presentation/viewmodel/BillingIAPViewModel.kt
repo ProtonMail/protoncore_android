@@ -51,16 +51,26 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.presentation.entity.BillingInput
-import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.presentation.savedstate.state
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
+
+public data class GoogleProductDetails(
+    val priceAmountMicros: Long,
+    val currency: String,
+    val formattedPriceAndCurrency: String,
+) {
+    val priceAmount : Double get() = priceAmountMicros / 1000000.0
+}
+
+@JvmInline
+public value class GoogleProductId(public val id: String)
 
 @HiltViewModel
 internal class BillingIAPViewModel @Inject constructor(
@@ -82,11 +92,9 @@ internal class BillingIAPViewModel @Inject constructor(
         data class UnredeemedPurchase(val purchase: GooglePurchase) : State()
 
         sealed class Success : State() {
-            data class GoogleProductDetails(
-                val amount: Long,
-                val currency: String,
-                val formattedPriceAndCurrency: String,
-            ) : Success()
+            data class GoogleProductsDetails(
+                val details: Map<GoogleProductId, GoogleProductDetails>
+            ): State()
 
             object PurchaseFlowLaunched : State()
 
@@ -122,7 +130,7 @@ internal class BillingIAPViewModel @Inject constructor(
         }
     }
 
-    private lateinit var selectedProduct: ProductDetails
+    private lateinit var queriedProducts: Map<GoogleProductId, ProductDetails>
 
     init {
         listenForPurchases()
@@ -133,29 +141,37 @@ internal class BillingIAPViewModel @Inject constructor(
         billingRepository.destroy()
     }
 
-    fun queryProductDetails(googlePlanName: String) = viewModelScope.launchWithResultContext {
+    fun queryProductDetails(googlePlanName: String) =
+        queryProductDetails(listOf(GoogleProductId(googlePlanName)))
+
+    fun queryProductDetails(googlePlanNames: List<GoogleProductId>) = viewModelScope.launchWithResultContext {
         onResultEnqueue("getProductDetails") { CheckoutGiapBillingProductQueryTotal(toGiapStatus()) }
 
         flow {
             emit(State.QueryingProductDetails)
 
-            val productDetails = billingRepository.getProductDetails(googlePlanName)
-            if (productDetails == null) {
+            val productsDetails = billingRepository.getProductsDetails(googlePlanNames.map { it.id })?.takeIfNotEmpty()
+            if (productsDetails == null) {
                 emit(State.Error.ProductDetailsError.ProductMismatch)
                 return@flow
             }
 
-            selectedProduct = productDetails
+            queriedProducts = productsDetails.associateBy { GoogleProductId(it.productId) }
 
-            val price = productDetails.getProductPrice()
-            if (price == null) {
+            val havePrices = productsDetails.all { it.getProductPrice() != null }
+            if (!havePrices) {
                 emit(State.Error.ProductDetailsError.Price)
             } else {
                 emit(
-                    State.Success.GoogleProductDetails(
-                        amount = price.priceAmountMicros,
-                        currency = price.priceCurrencyCode,
-                        formattedPriceAndCurrency = price.formattedPrice,
+                    State.Success.GoogleProductsDetails(
+                        productsDetails.associate {
+                            val price = requireNotNull(it.getProductPrice())
+                            GoogleProductId(it.productId) to GoogleProductDetails(
+                                priceAmountMicros = price.priceAmountMicros,
+                                currency = price.priceCurrencyCode,
+                                formattedPriceAndCurrency = price.formattedPrice,
+                            )
+                        }
                     )
                 )
             }
@@ -194,17 +210,17 @@ internal class BillingIAPViewModel @Inject constructor(
             }
 
             flow {
-                require(this@BillingIAPViewModel::selectedProduct.isInitialized) {
-                    "Product must be set before making the purchase."
+                val productId = input.googlePlanName
+                val product = requireNotNull(queriedProducts[GoogleProductId(productId)]) {
+                    "$productId details must be fetched before making the purchase."
                 }
-
                 val unredeemedPurchase =
-                    findUnacknowledgedGooglePurchase.byProduct(selectedProduct.productId)
+                    findUnacknowledgedGooglePurchase.byProduct(product.productId)
                 if (unredeemedPurchase != null) {
                     manager.enqueue(CheckoutGiapBillingUnredeemedTotalV1())
                     emit(State.UnredeemedPurchase(unredeemedPurchase))
                 } else {
-                    launchBillingFlow(activity, input.googleCustomerId)
+                    launchBillingFlow(activity, input.googleCustomerId, product)
                 }
             }.catch { error ->
                 _billingIAPState.tryEmit(State.Error.ProductDetailsError.Message(error.message))
@@ -221,13 +237,14 @@ internal class BillingIAPViewModel @Inject constructor(
     /** Launches Google billing flow. */
     private suspend fun FlowCollector<State>.launchBillingFlow(
         activity: FragmentActivity,
-        customerId: String
+        customerId: String,
+        product: ProductDetails
     ) {
-        val offer = requireNotNull(selectedProduct.subscriptionOfferDetails?.firstOrNull())
+        val offer = requireNotNull(product.subscriptionOfferDetails?.firstOrNull())
         emit(State.PurchaseStarted)
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
-                .setProductDetails(selectedProduct)
+                .setProductDetails(product)
                 .setOfferToken(offer.offerToken)
                 .build()
         )
@@ -247,8 +264,9 @@ internal class BillingIAPViewModel @Inject constructor(
     private fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
         val state = when {
             billingResult.responseCode == BillingClient.BillingResponseCode.OK && !purchases.isNullOrEmpty() -> {
-                val purchase = purchases.firstOrNull { purchase ->
-                    purchase.products.contains(selectedProduct.productId)
+                val queriedProductIds = queriedProducts.keys.map { it.id }
+                val purchase = purchases.firstOrNull{ purchase ->
+                    purchase.products.any { it in queriedProductIds }
                 }
                 if (purchase?.purchaseState == Purchase.PurchaseState.PURCHASED) {
                     onSubscriptionPurchased(purchase)
@@ -277,12 +295,15 @@ internal class BillingIAPViewModel @Inject constructor(
         val purchaseCustomerId = requireNotNull(purchase.accountIdentifiers?.obfuscatedAccountId) {
             "The purchase should contain a customer ID."
         }
+        val productId = requireNotNull(purchase.products.firstOrNull()) {
+            "The purchase should contain a product ID."
+        }
 
         return if (purchaseCustomerId.isEmpty()) {
             State.Error.ProductPurchaseError.IncorrectCustomerId
         } else {
             State.Success.PurchaseSuccess(
-                productId = selectedProduct.productId,
+                productId = productId,
                 purchaseToken = GooglePurchaseToken(purchase.purchaseToken),
                 orderID = purchase.orderId,
                 customerId = purchaseCustomerId,
@@ -303,6 +324,11 @@ internal class BillingIAPViewModel @Inject constructor(
 
 private val BillingInput.googleCustomerId: String
     get() = requireNotNull(plan.vendors[AppStore.GooglePlay]?.customerId) {
+        "Missing Vendor data for Google Play."
+    }
+
+private val BillingInput.googlePlanName: String
+    get() = requireNotNull(plan.vendors[AppStore.GooglePlay]?.vendorPlanName) {
         "Missing Vendor data for Google Play."
     }
 

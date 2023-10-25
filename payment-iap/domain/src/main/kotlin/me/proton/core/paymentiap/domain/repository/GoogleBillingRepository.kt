@@ -47,7 +47,7 @@ public interface GoogleBillingRepository : AutoCloseable {
     /**
      * @throws BillingClientError
      */
-    public suspend fun getProductDetails(googlePlayPlanName: String): ProductDetails?
+    public suspend fun getProductsDetails(googlePlayPlanNames: List<String>): List<ProductDetails>?
 
     /**
      * @throws BillingClientError

@@ -88,21 +88,23 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         connectedBillingClient.destroy()
     }
 
-    override suspend fun getProductDetails(
-        googlePlayPlanName: String
-    ): ProductDetails? = result("getProductDetails") {
-        val product = QueryProductDetailsParams.Product.newBuilder()
-            .setProductId(googlePlayPlanName)
-            .setProductType(BillingClient.ProductType.SUBS)
-            .build()
+    override suspend fun getProductsDetails(
+        googleProductIds: List<String>
+    ): List<ProductDetails>? = result("getProductDetails") {
+        val products = googleProductIds.map { productId ->
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(productId)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        }
         val params = QueryProductDetailsParams.newBuilder()
-            .setProductList(listOf(product))
+            .setProductList(products)
             .build()
         val result = connectedBillingClient.withClient { it.queryProductDetails(params) }
         result.billingResult.checkOk()
-        val productDetails = result.productDetailsList?.firstOrNull()
-        if (productDetails == null) {
-            CoreLogger.i(LogTag.GIAP_ERROR, "Google product not found: `$googlePlayPlanName`.")
+        val productDetails = result.productDetailsList
+        if (productDetails.isNullOrEmpty()) {
+            CoreLogger.i(LogTag.GIAP_ERROR, "Google products not found: $googleProductIds.")
         }
         productDetails
     }

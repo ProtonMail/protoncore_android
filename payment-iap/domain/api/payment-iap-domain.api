@@ -41,7 +41,7 @@ public abstract interface class me/proton/core/paymentiap/domain/repository/Goog
 	public abstract fun acknowledgePurchase-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun close ()V
 	public abstract fun destroy ()V
-	public abstract fun getProductDetails (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getProductsDetails (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun launchBillingFlow (Landroid/app/Activity;Lcom/android/billingclient/api/BillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

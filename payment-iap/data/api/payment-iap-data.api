@@ -14,7 +14,7 @@ public final class me/proton/core/paymentiap/data/repository/GoogleBillingReposi
 	public fun acknowledgePurchase-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun close ()V
 	public fun destroy ()V
-	public fun getProductDetails (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getProductsDetails (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
 	public fun launchBillingFlow (Landroid/app/Activity;Lcom/android/billingclient/api/BillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

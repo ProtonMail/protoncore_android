@@ -110,8 +110,8 @@ internal class GoogleBillingRepositoryImplTest {
                 listener.onProductDetailsResponse(BillingResult(), listOf(productDetails))
             }
         }
-        val result = tested.use { it.getProductDetails("plan-name") }
-        assertSame(result, productDetails)
+        val result = tested.use { it.getProductsDetails(listOf("plan-name")) }
+        assertEquals(result, listOf(productDetails))
     }
 
     @Test
@@ -122,8 +122,8 @@ internal class GoogleBillingRepositoryImplTest {
                 listener.onProductDetailsResponse(BillingResult(), listOf())
             }
         }
-        val result = tested.use { it.getProductDetails("plan-name") }
-        assertSame(result, null)
+        val result = tested.use { it.getProductsDetails(listOf("plan-name")) }
+        assertSame(result, emptyList())
         assertTrue(assertSingleResult("getProductDetails").isSuccess)
     }
 
@@ -140,7 +140,7 @@ internal class GoogleBillingRepositoryImplTest {
             }
         }
         val exception = assertFailsWith<BillingClientError> {
-            tested.use { it.getProductDetails("plan-name") }
+            tested.use { it.getProductsDetails(listOf("plan-name")) }
         }
         assertSame("error", exception.debugMessage)
         assertEquals(BillingResponseCode.ERROR, exception.responseCode)
@@ -166,8 +166,8 @@ internal class GoogleBillingRepositoryImplTest {
                 )
             }
         }
-        val result = tested.use { it.getProductDetails("plan-name") }
-        assertSame(result, null)
+        val result = tested.use { it.getProductsDetails(listOf("plan-name")) }
+        assertSame(result, emptyList())
         assertTrue(assertSingleResult("getProductDetails").isSuccess)
         verify(exactly = 0) { CoreLogger.e(LogTag.GIAP_ERROR, any(), any()            ) }
         unmockkObject(CoreLogger)

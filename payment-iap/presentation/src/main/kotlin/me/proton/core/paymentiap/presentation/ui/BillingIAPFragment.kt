@@ -43,6 +43,7 @@ import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBinding
 import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
 import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
+import me.proton.core.paymentiap.presentation.viewmodel.GoogleProductId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
@@ -108,12 +109,14 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                         CoreLogger.i(DEFAULT, getString(R.string.payments_iap_error_fetching_google_plan))
                         onError(R.string.payments_iap_error_fetching_google_plan)
                     }
-                    is BillingIAPViewModel.State.Success.GoogleProductDetails -> {
+                    is BillingIAPViewModel.State.Success.GoogleProductsDetails -> {
                         val currentPlan = binding.selectedPlanDetailsLayout.plan ?: return@onEach
+                        val productId = requireNotNull(currentPlan.vendors[AppStore.GooglePlay]?.vendorPlanName)
+                        val details = requireNotNull(it.details[GoogleProductId(productId)])
                         binding.selectedPlanDetailsLayout.plan = currentPlan.copy(
-                            amount = it.amount,
-                            currency = it.currency,
-                            formattedPriceAndCurrency = it.formattedPriceAndCurrency
+                            amount = details.priceAmountMicros,
+                            currency = details.currency,
+                            formattedPriceAndCurrency = details.formattedPriceAndCurrency
                         )
                         viewModel.setGPayButtonState(true)
                     }
