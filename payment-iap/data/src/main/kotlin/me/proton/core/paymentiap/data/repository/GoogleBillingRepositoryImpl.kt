@@ -46,7 +46,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
-import me.proton.core.paymentiap.data.listOfKnownBillingCodes
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.repository.BillingClientError
@@ -124,15 +123,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
 
     private fun BillingResult.checkOk() {
         if (responseCode != BillingResponseCode.OK) {
-            throw BillingClientError(responseCode, debugMessage).also {
-                if (it.responseCode !in listOfKnownBillingCodes) {
-                    CoreLogger.e(
-                        LogTag.GIAP_ERROR,
-                        it,
-                        "Billing response code: $responseCode, billing debug message: $debugMessage"
-                    )
-                }
-            }
+            throw BillingClientError(responseCode, debugMessage)
         }
     }
 }
@@ -191,15 +182,7 @@ internal class ConnectedBillingClient @AssistedInject constructor(
         connectionState
             .onEach {
                 if (it is BillingClientConnectionState.Error) {
-                    throw BillingClientError(it.responseCode, it.debugMessage).also { error ->
-                        if (error.responseCode !in listOfKnownBillingCodes) {
-                            CoreLogger.e(
-                                LogTag.GIAP_ERROR,
-                                error,
-                                "Billing response code: ${error.responseCode}, billing debug message: ${error.debugMessage}"
-                            )
-                        }
-                    }
+                    throw BillingClientError(it.responseCode, it.debugMessage)
                 }
             }
             .first { it == BillingClientConnectionState.Connected }

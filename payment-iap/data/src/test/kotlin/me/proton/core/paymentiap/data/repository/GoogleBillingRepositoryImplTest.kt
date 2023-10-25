@@ -38,10 +38,12 @@ import io.mockk.slot
 import io.mockk.unmockkObject
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
+import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.repository.BillingClientError
+import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
 import me.proton.core.util.kotlin.CoreLogger
@@ -49,6 +51,7 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
+import kotlin.test.assertFalse
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -141,13 +144,13 @@ internal class GoogleBillingRepositoryImplTest {
         }
         assertSame("error", exception.debugMessage)
         assertEquals(BillingResponseCode.ERROR, exception.responseCode)
-        verify(exactly = 1) {
-            CoreLogger.e(
-                LogTag.GIAP_ERROR,
-                exception,
-                "Billing response code: 6, billing debug message: error"
-            )
-        }
+
+        val result = assertSingleResult("getProductDetails")
+        assertTrue(result.isFailure)
+        val status = result.toGiapStatus()
+        assertEquals(GiapStatus.googlePlayError, status)
+        verify(exactly = 1) { CoreLogger.e(LogTag.GIAP_ERROR, exception) }
+
         unmockkObject(CoreLogger)
     }
 

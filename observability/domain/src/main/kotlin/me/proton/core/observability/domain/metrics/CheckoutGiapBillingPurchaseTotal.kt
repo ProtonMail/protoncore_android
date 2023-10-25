@@ -48,14 +48,15 @@ public data class CheckoutGiapBillingPurchaseTotal(
         developerError,
         featureNotSupported,
         googlePlayError,
+        incorrectCustomerId,
         itemAlreadyOwned,
         itemNotOwned,
         itemUnavailable,
         userCanceled,
         notFound,
         statusNull,
-        unknown,
-        incorrectCustomerId
+        cancellation,
+        unknown
     }
 }
 
@@ -75,5 +76,6 @@ public fun GiapStatus.toPurchaseGiapStatus(): CheckoutGiapBillingPurchaseTotal.P
         GiapStatus.userCanceled -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.userCanceled
         GiapStatus.notFound -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.notFound
         GiapStatus.statusNull -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.statusNull
+        GiapStatus.cancellation -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.cancellation
         GiapStatus.unknown -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.unknown
     }

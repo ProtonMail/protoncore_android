@@ -67,7 +67,9 @@ public data class SignupLoginTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
+        http1xx,
         http2xx,
+        http3xx,
         http401,
         http422_2001InvalidValue,
         http422_2028Banned,
@@ -86,6 +88,7 @@ public data class SignupLoginTotal(
         notConnected,
         parseError,
         sslError,
+        cancellation,
         unknown
     }
 }
@@ -113,12 +116,15 @@ private fun Result<*>.toApiStatus(): ApiStatus = when {
 }
 
 private fun HttpApiStatus.toSignupLoginTotalApiStatus(): ApiStatus = when (this) {
+    HttpApiStatus.http1xx -> ApiStatus.http1xx
     HttpApiStatus.http2xx -> ApiStatus.http2xx
+    HttpApiStatus.http3xx -> ApiStatus.http3xx
     HttpApiStatus.http4xx -> ApiStatus.http4xx
     HttpApiStatus.http5xx -> ApiStatus.http5xx
     HttpApiStatus.connectionError -> ApiStatus.connectionError
     HttpApiStatus.notConnected -> ApiStatus.notConnected
     HttpApiStatus.parseError -> ApiStatus.parseError
     HttpApiStatus.sslError -> ApiStatus.sslError
+    HttpApiStatus.cancellation -> ApiStatus.cancellation
     HttpApiStatus.unknown -> ApiStatus.unknown
 }

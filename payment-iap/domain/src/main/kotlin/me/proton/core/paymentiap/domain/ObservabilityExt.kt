@@ -20,6 +20,7 @@ package me.proton.core.paymentiap.domain
 
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
+import kotlinx.coroutines.CancellationException
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.paymentiap.domain.repository.BillingClientError
 import me.proton.core.util.kotlin.CoreLogger
@@ -28,30 +29,34 @@ public fun Result<*>.toGiapStatus(): GiapStatus {
     if (isSuccess && getOrNull() == null) return GiapStatus.notFound
     return when (val throwable = exceptionOrNull()) {
         null -> GiapStatus.success
-        is BillingClientError -> throwable.responseCode.toGiapStatus()
-        else -> {
-            CoreLogger.e(LogTag.GIAP_ERROR, throwable, "Unknown BillingClientError.")
-            GiapStatus.unknown
-        }
+        is BillingClientError -> throwable.toGiapStatus()
+        is CancellationException -> GiapStatus.cancellation
+        else -> GiapStatus.unknown.also { CoreLogger.e(LogTag.GIAP_ERROR, throwable) }
     }
 }
 
 public fun BillingResult.toGiapStatus(): GiapStatus = responseCode.toGiapStatus()
 
-private fun Int?.toGiapStatus(): GiapStatus =
-    when (this) {
-        BillingClient.BillingResponseCode.OK -> GiapStatus.success
-        BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> GiapStatus.billingUnavailable
-        BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> GiapStatus.serviceDisconnected
-        BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> GiapStatus.serviceTimeout
-        BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> GiapStatus.serviceUnavailable
-        BillingClient.BillingResponseCode.DEVELOPER_ERROR -> GiapStatus.developerError
-        BillingClient.BillingResponseCode.ERROR -> GiapStatus.googlePlayError
-        BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> GiapStatus.featureNotSupported
-        BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> GiapStatus.itemAlreadyOwned
-        BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> GiapStatus.itemNotOwned
-        BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> GiapStatus.itemUnavailable
-        BillingClient.BillingResponseCode.USER_CANCELED -> GiapStatus.userCanceled
-        null -> GiapStatus.statusNull
-        else -> GiapStatus.unknown
-    }
+private fun BillingClientError.toGiapStatus() = when (val status = responseCode.toGiapStatus()) {
+    GiapStatus.developerError -> status.also { CoreLogger.e(LogTag.GIAP_ERROR, this) }
+    GiapStatus.googlePlayError -> status.also { CoreLogger.e(LogTag.GIAP_ERROR, this) }
+    GiapStatus.unknown -> status.also { CoreLogger.e(LogTag.GIAP_ERROR, this) }
+    else -> status
+}
+
+private fun Int?.toGiapStatus() = when (this) {
+    BillingClient.BillingResponseCode.OK -> GiapStatus.success
+    BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> GiapStatus.billingUnavailable
+    BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> GiapStatus.serviceDisconnected
+    BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> GiapStatus.serviceTimeout
+    BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> GiapStatus.serviceUnavailable
+    BillingClient.BillingResponseCode.DEVELOPER_ERROR -> GiapStatus.developerError
+    BillingClient.BillingResponseCode.ERROR -> GiapStatus.googlePlayError
+    BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED -> GiapStatus.featureNotSupported
+    BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED -> GiapStatus.itemAlreadyOwned
+    BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> GiapStatus.itemNotOwned
+    BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> GiapStatus.itemUnavailable
+    BillingClient.BillingResponseCode.USER_CANCELED -> GiapStatus.userCanceled
+    null -> GiapStatus.statusNull
+    else -> GiapStatus.unknown
+}

@@ -21,11 +21,10 @@ package me.proton.core.observability.domain.metrics
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.ResponseCodes.AUTH_SWITCH_TO_SRP
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.hasProtonErrorCode
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
@@ -47,7 +46,9 @@ public data class LoginObtainSsoChallengeTokenTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class Status {
+        http1xx,
         http2xx,
+        http3xx,
         http4xx,
         http5xx,
         connectionError,
@@ -55,29 +56,26 @@ public data class LoginObtainSsoChallengeTokenTotal(
         parseError,
         sslError,
         ssoDomainNotFound,
+        cancellation,
         unknown
     }
 }
 
 private fun Result<*>.toStatus(): LoginObtainSsoChallengeTokenTotal.Status = when {
-    isSsoDomainNotFound() -> LoginObtainSsoChallengeTokenTotal.Status.ssoDomainNotFound
+    hasProtonErrorCode(AUTH_SWITCH_TO_SRP) -> LoginObtainSsoChallengeTokenTotal.Status.ssoDomainNotFound
     else -> toHttpApiStatus().toStatus()
 }
 
-private fun Result<*>.isSsoDomainNotFound(): Boolean =
-    toProtonErrorCode() == ResponseCodes.AUTH_SWITCH_TO_SRP
-
-private fun Result<*>.toProtonErrorCode(): Int? =
-    ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)?.proton?.code
-
-private fun HttpApiStatus.toStatus(): LoginObtainSsoChallengeTokenTotal.Status =
-    when (this) {
-        HttpApiStatus.http2xx -> LoginObtainSsoChallengeTokenTotal.Status.http2xx
-        HttpApiStatus.http4xx -> LoginObtainSsoChallengeTokenTotal.Status.http4xx
-        HttpApiStatus.http5xx -> LoginObtainSsoChallengeTokenTotal.Status.http5xx
-        HttpApiStatus.connectionError -> LoginObtainSsoChallengeTokenTotal.Status.connectionError
-        HttpApiStatus.notConnected -> LoginObtainSsoChallengeTokenTotal.Status.notConnected
-        HttpApiStatus.parseError -> LoginObtainSsoChallengeTokenTotal.Status.parseError
-        HttpApiStatus.sslError -> LoginObtainSsoChallengeTokenTotal.Status.sslError
-        HttpApiStatus.unknown -> LoginObtainSsoChallengeTokenTotal.Status.unknown
-    }
+private fun HttpApiStatus.toStatus(): LoginObtainSsoChallengeTokenTotal.Status = when (this) {
+    HttpApiStatus.http1xx -> LoginObtainSsoChallengeTokenTotal.Status.http1xx
+    HttpApiStatus.http2xx -> LoginObtainSsoChallengeTokenTotal.Status.http2xx
+    HttpApiStatus.http3xx -> LoginObtainSsoChallengeTokenTotal.Status.http3xx
+    HttpApiStatus.http4xx -> LoginObtainSsoChallengeTokenTotal.Status.http4xx
+    HttpApiStatus.http5xx -> LoginObtainSsoChallengeTokenTotal.Status.http5xx
+    HttpApiStatus.connectionError -> LoginObtainSsoChallengeTokenTotal.Status.connectionError
+    HttpApiStatus.notConnected -> LoginObtainSsoChallengeTokenTotal.Status.notConnected
+    HttpApiStatus.parseError -> LoginObtainSsoChallengeTokenTotal.Status.parseError
+    HttpApiStatus.sslError -> LoginObtainSsoChallengeTokenTotal.Status.sslError
+    HttpApiStatus.cancellation -> LoginObtainSsoChallengeTokenTotal.Status.cancellation
+    HttpApiStatus.unknown -> LoginObtainSsoChallengeTokenTotal.Status.unknown
+}

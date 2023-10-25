@@ -25,11 +25,12 @@ import me.proton.core.network.domain.HttpResponseCodes.HTTP_BAD_REQUEST
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_CONFLICT
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNAUTHORIZED
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNPROCESSABLE
-import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.hasProtonErrorCode
+import me.proton.core.network.domain.ResponseCodes.HUMAN_VERIFICATION_REQUIRED
+import me.proton.core.network.domain.ResponseCodes.NOT_ALLOWED
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.hasProtonErrorCode
 import me.proton.core.observability.domain.metrics.common.isHttpError
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
@@ -55,7 +56,9 @@ public data class SignupAccountCreationTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
+        http1xx,
         http2xx,
+        http3xx,
         http409UsernameConflict,
         http422HvRequired,
         http400,
@@ -68,34 +71,35 @@ public data class SignupAccountCreationTotal(
         notConnected,
         parseError,
         sslError,
+        cancellation,
         unknown
     }
 }
 
 private fun Result<*>.toApiStatus(): SignupAccountCreationTotal.ApiStatus = when {
-    isHvRequiredError() -> SignupAccountCreationTotal.ApiStatus.http422HvRequired
-    isUsernameConflictError() -> SignupAccountCreationTotal.ApiStatus.http409UsernameConflict
     isHttpError(HTTP_BAD_REQUEST) -> SignupAccountCreationTotal.ApiStatus.http400
     isHttpError(HTTP_UNAUTHORIZED) -> SignupAccountCreationTotal.ApiStatus.http401
-    isHttpError(HTTP_CONFLICT) -> SignupAccountCreationTotal.ApiStatus.http409
-    isHttpError(HTTP_UNPROCESSABLE) -> SignupAccountCreationTotal.ApiStatus.http422
+    isHttpError(HTTP_CONFLICT) -> when {
+        hasProtonErrorCode(NOT_ALLOWED) -> SignupAccountCreationTotal.ApiStatus.http409UsernameConflict
+        else -> SignupAccountCreationTotal.ApiStatus.http409
+    }
+    isHttpError(HTTP_UNPROCESSABLE) -> when {
+        hasProtonErrorCode(HUMAN_VERIFICATION_REQUIRED) -> SignupAccountCreationTotal.ApiStatus.http422HvRequired
+        else -> SignupAccountCreationTotal.ApiStatus.http422
+    }
     else -> toHttpApiStatus().toAccountCreationApiStatus()
 }
 
-private fun Result<*>.isHvRequiredError(): Boolean = isHttpError(HTTP_UNPROCESSABLE) &&
-        exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.HUMAN_VERIFICATION_REQUIRED) == true
-
-private fun Result<*>.isUsernameConflictError(): Boolean = isHttpError(HTTP_CONFLICT) &&
-        exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.NOT_ALLOWED) == true
-
-private fun HttpApiStatus.toAccountCreationApiStatus(): SignupAccountCreationTotal.ApiStatus =
-    when (this) {
-        HttpApiStatus.http2xx -> SignupAccountCreationTotal.ApiStatus.http2xx
-        HttpApiStatus.http4xx -> SignupAccountCreationTotal.ApiStatus.http4xx
-        HttpApiStatus.http5xx -> SignupAccountCreationTotal.ApiStatus.http5xx
-        HttpApiStatus.connectionError -> SignupAccountCreationTotal.ApiStatus.connectionError
-        HttpApiStatus.notConnected -> SignupAccountCreationTotal.ApiStatus.notConnected
-        HttpApiStatus.parseError -> SignupAccountCreationTotal.ApiStatus.parseError
-        HttpApiStatus.sslError -> SignupAccountCreationTotal.ApiStatus.sslError
-        HttpApiStatus.unknown -> SignupAccountCreationTotal.ApiStatus.unknown
-    }
+private fun HttpApiStatus.toAccountCreationApiStatus() = when (this) {
+    HttpApiStatus.http1xx -> SignupAccountCreationTotal.ApiStatus.http1xx
+    HttpApiStatus.http2xx -> SignupAccountCreationTotal.ApiStatus.http2xx
+    HttpApiStatus.http3xx -> SignupAccountCreationTotal.ApiStatus.http3xx
+    HttpApiStatus.http4xx -> SignupAccountCreationTotal.ApiStatus.http4xx
+    HttpApiStatus.http5xx -> SignupAccountCreationTotal.ApiStatus.http5xx
+    HttpApiStatus.connectionError -> SignupAccountCreationTotal.ApiStatus.connectionError
+    HttpApiStatus.notConnected -> SignupAccountCreationTotal.ApiStatus.notConnected
+    HttpApiStatus.parseError -> SignupAccountCreationTotal.ApiStatus.parseError
+    HttpApiStatus.sslError -> SignupAccountCreationTotal.ApiStatus.sslError
+    HttpApiStatus.cancellation -> SignupAccountCreationTotal.ApiStatus.cancellation
+    HttpApiStatus.unknown -> SignupAccountCreationTotal.ApiStatus.unknown
+}

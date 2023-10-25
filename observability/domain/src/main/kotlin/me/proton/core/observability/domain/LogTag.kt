@@ -19,7 +19,15 @@
 package me.proton.core.observability.domain
 
 public object LogTag {
+    /** Default tag. */
+    public const val DEFAULT: String = "core.observability"
+
     /** An observability event has been enqueued. */
     public const val ENQUEUE: String = "core.observability.enqueue"
-    public const val DEFAULT: String = "core.observability"
+
+    /** An unknown error has been mapped. */
+    public const val UNKNOWN: String = "core.observability.error.unknown"
+
+    /** A parse error has been mapped. */
+    public const val PARSE: String = "core.observability.error.parse"
 }

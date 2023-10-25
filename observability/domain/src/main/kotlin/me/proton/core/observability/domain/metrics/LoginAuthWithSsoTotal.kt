@@ -21,11 +21,10 @@ package me.proton.core.observability.domain.metrics
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
 import me.proton.core.observability.domain.entity.SchemaId
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
+import me.proton.core.observability.domain.metrics.common.isHttpError
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
@@ -46,7 +45,9 @@ public data class LoginAuthWithSsoTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class Status {
+        http1xx,
         http2xx,
+        http3xx,
         http422,
         http4xx,
         http5xx,
@@ -54,29 +55,26 @@ public data class LoginAuthWithSsoTotal(
         notConnected,
         parseError,
         sslError,
+        cancellation,
         unknown
     }
 }
 
 private fun Result<*>.toStatus(): LoginAuthWithSsoTotal.Status = when {
-    isUnprocessable() -> LoginAuthWithSsoTotal.Status.http422
+    isHttpError(HttpResponseCodes.HTTP_UNPROCESSABLE) -> LoginAuthWithSsoTotal.Status.http422
     else -> toHttpApiStatus().toStatus()
 }
 
-private fun Result<*>.isUnprocessable(): Boolean =
-    toHttpError()?.httpCode == HttpResponseCodes.HTTP_UNPROCESSABLE
-
-private fun Result<*>.toHttpError(): ApiResult.Error.Http? =
-    ((exceptionOrNull() as? ApiException)?.error as? ApiResult.Error.Http)
-
-private fun HttpApiStatus.toStatus(): LoginAuthWithSsoTotal.Status =
-    when (this) {
-        HttpApiStatus.http2xx -> LoginAuthWithSsoTotal.Status.http2xx
-        HttpApiStatus.http4xx -> LoginAuthWithSsoTotal.Status.http4xx
-        HttpApiStatus.http5xx -> LoginAuthWithSsoTotal.Status.http5xx
-        HttpApiStatus.connectionError -> LoginAuthWithSsoTotal.Status.connectionError
-        HttpApiStatus.notConnected -> LoginAuthWithSsoTotal.Status.notConnected
-        HttpApiStatus.parseError -> LoginAuthWithSsoTotal.Status.parseError
-        HttpApiStatus.sslError -> LoginAuthWithSsoTotal.Status.sslError
-        HttpApiStatus.unknown -> LoginAuthWithSsoTotal.Status.unknown
-    }
+private fun HttpApiStatus.toStatus(): LoginAuthWithSsoTotal.Status = when (this) {
+    HttpApiStatus.http1xx -> LoginAuthWithSsoTotal.Status.http1xx
+    HttpApiStatus.http2xx -> LoginAuthWithSsoTotal.Status.http2xx
+    HttpApiStatus.http3xx -> LoginAuthWithSsoTotal.Status.http3xx
+    HttpApiStatus.http4xx -> LoginAuthWithSsoTotal.Status.http4xx
+    HttpApiStatus.http5xx -> LoginAuthWithSsoTotal.Status.http5xx
+    HttpApiStatus.connectionError -> LoginAuthWithSsoTotal.Status.connectionError
+    HttpApiStatus.notConnected -> LoginAuthWithSsoTotal.Status.notConnected
+    HttpApiStatus.parseError -> LoginAuthWithSsoTotal.Status.parseError
+    HttpApiStatus.sslError -> LoginAuthWithSsoTotal.Status.sslError
+    HttpApiStatus.unknown -> LoginAuthWithSsoTotal.Status.unknown
+    HttpApiStatus.cancellation -> LoginAuthWithSsoTotal.Status.cancellation
+}

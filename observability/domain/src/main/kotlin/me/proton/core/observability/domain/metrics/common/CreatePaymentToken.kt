@@ -29,7 +29,6 @@ import me.proton.core.network.domain.ResponseCodes.INVALID_REQUIREMENTS
 import me.proton.core.network.domain.ResponseCodes.INVALID_VALUE
 import me.proton.core.network.domain.ResponseCodes.NOT_SAME_AS_FIELD
 import me.proton.core.network.domain.ResponseCodes.VALUE_OUT_OF_BOUNDS
-import me.proton.core.network.domain.hasProtonErrorCode
 
 @Serializable
 public data class CreatePaymentTokenLabels constructor(
@@ -39,7 +38,9 @@ public data class CreatePaymentTokenLabels constructor(
 
 @Suppress("EnumNaming", "EnumEntryName")
 public enum class CreatePaymentTokenStatus {
+    http1xx,
     http2xx,
+    http3xx,
     http400InvalidValue,
     http400ValueOutOfBounds,
     http400NotSameAsField,
@@ -55,39 +56,39 @@ public enum class CreatePaymentTokenStatus {
     notConnected,
     parseError,
     sslError,
+    cancellation,
     unknown
 }
 
 internal fun Result<*>.toCreatePaymentTokenStatus(): CreatePaymentTokenStatus = when {
     isHttpError(HTTP_BAD_REQUEST) -> when {
-        isProtonError(INVALID_VALUE) -> CreatePaymentTokenStatus.http400InvalidValue
-        isProtonError(VALUE_OUT_OF_BOUNDS) -> CreatePaymentTokenStatus.http400ValueOutOfBounds
-        isProtonError(NOT_SAME_AS_FIELD) -> CreatePaymentTokenStatus.http400NotSameAsField
-        isProtonError(CURRENCY_FORMAT) -> CreatePaymentTokenStatus.http400CurrencyFormat
-        isProtonError(BODY_PARSE_FAILURE) -> CreatePaymentTokenStatus.http400BodyParseFailure
+        hasProtonErrorCode(INVALID_VALUE) -> CreatePaymentTokenStatus.http400InvalidValue
+        hasProtonErrorCode(VALUE_OUT_OF_BOUNDS) -> CreatePaymentTokenStatus.http400ValueOutOfBounds
+        hasProtonErrorCode(NOT_SAME_AS_FIELD) -> CreatePaymentTokenStatus.http400NotSameAsField
+        hasProtonErrorCode(CURRENCY_FORMAT) -> CreatePaymentTokenStatus.http400CurrencyFormat
+        hasProtonErrorCode(BODY_PARSE_FAILURE) -> CreatePaymentTokenStatus.http400BodyParseFailure
         else -> CreatePaymentTokenStatus.http400
     }
 
     isHttpError(HTTP_UNPROCESSABLE) -> when {
-        isProtonError(INVALID_REQUIREMENTS) -> CreatePaymentTokenStatus.http422InvalidRequirements
-        isProtonError(HUMAN_VERIFICATION_REQUIRED) -> CreatePaymentTokenStatus.http422HvRequired
+        hasProtonErrorCode(INVALID_REQUIREMENTS) -> CreatePaymentTokenStatus.http422InvalidRequirements
+        hasProtonErrorCode(HUMAN_VERIFICATION_REQUIRED) -> CreatePaymentTokenStatus.http422HvRequired
         else -> CreatePaymentTokenStatus.http422
     }
 
     else -> toHttpApiStatus().toUsernameAvailabilityStatus()
 }
 
-private fun Result<*>.isProtonError(protonCode: Int): Boolean =
-    exceptionOrNull()?.hasProtonErrorCode(protonCode) == true
-
-private fun HttpApiStatus.toUsernameAvailabilityStatus(): CreatePaymentTokenStatus =
-    when (this) {
-        HttpApiStatus.http2xx -> CreatePaymentTokenStatus.http2xx
-        HttpApiStatus.http4xx -> CreatePaymentTokenStatus.http4xx
-        HttpApiStatus.http5xx -> CreatePaymentTokenStatus.http5xx
-        HttpApiStatus.connectionError -> CreatePaymentTokenStatus.connectionError
-        HttpApiStatus.notConnected -> CreatePaymentTokenStatus.notConnected
-        HttpApiStatus.parseError -> CreatePaymentTokenStatus.parseError
-        HttpApiStatus.sslError -> CreatePaymentTokenStatus.sslError
-        HttpApiStatus.unknown -> CreatePaymentTokenStatus.unknown
-    }
+private fun HttpApiStatus.toUsernameAvailabilityStatus(): CreatePaymentTokenStatus = when (this) {
+    HttpApiStatus.http1xx -> CreatePaymentTokenStatus.http1xx
+    HttpApiStatus.http2xx -> CreatePaymentTokenStatus.http2xx
+    HttpApiStatus.http3xx -> CreatePaymentTokenStatus.http3xx
+    HttpApiStatus.http4xx -> CreatePaymentTokenStatus.http4xx
+    HttpApiStatus.http5xx -> CreatePaymentTokenStatus.http5xx
+    HttpApiStatus.connectionError -> CreatePaymentTokenStatus.connectionError
+    HttpApiStatus.notConnected -> CreatePaymentTokenStatus.notConnected
+    HttpApiStatus.parseError -> CreatePaymentTokenStatus.parseError
+    HttpApiStatus.sslError -> CreatePaymentTokenStatus.sslError
+    HttpApiStatus.cancellation -> CreatePaymentTokenStatus.cancellation
+    HttpApiStatus.unknown -> CreatePaymentTokenStatus.unknown
+}

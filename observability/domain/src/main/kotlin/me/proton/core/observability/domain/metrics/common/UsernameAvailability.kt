@@ -20,9 +20,9 @@ package me.proton.core.observability.domain.metrics.common
 
 import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Serializable
-import me.proton.core.network.domain.HttpResponseCodes
-import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.hasProtonErrorCode
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_CONFLICT
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNPROCESSABLE
+import me.proton.core.network.domain.ResponseCodes.USER_EXISTS_USERNAME_ALREADY_USED
 
 @Serializable
 public data class UsernameAvailabilityLabels constructor(
@@ -32,7 +32,9 @@ public data class UsernameAvailabilityLabels constructor(
 
 @Suppress("EnumNaming", "EnumEntryName")
 public enum class UsernameAvailabilityStatus {
+    http1xx,
     http2xx,
+    http3xx,
     http409UsernameConflict,
     http409,
     http422,
@@ -42,28 +44,29 @@ public enum class UsernameAvailabilityStatus {
     notConnected,
     parseError,
     sslError,
+    cancellation,
     unknown
 }
 
 internal fun Result<*>.toUsernameAvailabilityStatus(): UsernameAvailabilityStatus = when {
-    isUsernameConflict() -> UsernameAvailabilityStatus.http409UsernameConflict
-    isHttpError(HttpResponseCodes.HTTP_CONFLICT) -> UsernameAvailabilityStatus.http409
-    isHttpError(HttpResponseCodes.HTTP_UNPROCESSABLE) -> UsernameAvailabilityStatus.http422
+    isHttpError(HTTP_CONFLICT) -> when {
+        hasProtonErrorCode(USER_EXISTS_USERNAME_ALREADY_USED) -> UsernameAvailabilityStatus.http409UsernameConflict
+        else -> UsernameAvailabilityStatus.http409
+    }
+    isHttpError(HTTP_UNPROCESSABLE) -> UsernameAvailabilityStatus.http422
     else -> toHttpApiStatus().toUsernameAvailabilityStatus()
 }
 
-private fun Result<*>.isUsernameConflict(): Boolean =
-    isHttpError(HttpResponseCodes.HTTP_CONFLICT) &&
-            exceptionOrNull()?.hasProtonErrorCode(ResponseCodes.USER_EXISTS_USERNAME_ALREADY_USED) == true
-
-private fun HttpApiStatus.toUsernameAvailabilityStatus(): UsernameAvailabilityStatus =
-    when (this) {
-        HttpApiStatus.http2xx -> UsernameAvailabilityStatus.http2xx
-        HttpApiStatus.http4xx -> UsernameAvailabilityStatus.http4xx
-        HttpApiStatus.http5xx -> UsernameAvailabilityStatus.http5xx
-        HttpApiStatus.connectionError -> UsernameAvailabilityStatus.connectionError
-        HttpApiStatus.notConnected -> UsernameAvailabilityStatus.notConnected
-        HttpApiStatus.parseError -> UsernameAvailabilityStatus.parseError
-        HttpApiStatus.sslError -> UsernameAvailabilityStatus.sslError
-        HttpApiStatus.unknown -> UsernameAvailabilityStatus.unknown
-    }
+private fun HttpApiStatus.toUsernameAvailabilityStatus(): UsernameAvailabilityStatus = when (this) {
+    HttpApiStatus.http1xx -> UsernameAvailabilityStatus.http1xx
+    HttpApiStatus.http2xx -> UsernameAvailabilityStatus.http2xx
+    HttpApiStatus.http3xx -> UsernameAvailabilityStatus.http3xx
+    HttpApiStatus.http4xx -> UsernameAvailabilityStatus.http4xx
+    HttpApiStatus.http5xx -> UsernameAvailabilityStatus.http5xx
+    HttpApiStatus.connectionError -> UsernameAvailabilityStatus.connectionError
+    HttpApiStatus.notConnected -> UsernameAvailabilityStatus.notConnected
+    HttpApiStatus.parseError -> UsernameAvailabilityStatus.parseError
+    HttpApiStatus.sslError -> UsernameAvailabilityStatus.sslError
+    HttpApiStatus.cancellation -> UsernameAvailabilityStatus.cancellation
+    HttpApiStatus.unknown -> UsernameAvailabilityStatus.unknown
+}

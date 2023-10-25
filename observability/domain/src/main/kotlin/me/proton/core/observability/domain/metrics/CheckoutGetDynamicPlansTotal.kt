@@ -45,7 +45,9 @@ public data class CheckoutGetDynamicPlansTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
+        http1xx,
         http2xx,
+        http3xx,
         http409,
         http422,
         http4xx,
@@ -54,6 +56,7 @@ public data class CheckoutGetDynamicPlansTotal(
         notConnected,
         parseError,
         sslError,
+        cancellation,
         unknown
     }
 }
@@ -66,12 +69,15 @@ internal fun Result<*>.toGetDynamicPlansApiStatus(): CheckoutGetDynamicPlansTota
 
 public fun HttpApiStatus.toGetDynamicPlansApiStatus(): CheckoutGetDynamicPlansTotal.ApiStatus =
     when (this) {
+        HttpApiStatus.http1xx -> CheckoutGetDynamicPlansTotal.ApiStatus.http1xx
         HttpApiStatus.http2xx -> CheckoutGetDynamicPlansTotal.ApiStatus.http2xx
+        HttpApiStatus.http3xx -> CheckoutGetDynamicPlansTotal.ApiStatus.http3xx
         HttpApiStatus.http4xx -> CheckoutGetDynamicPlansTotal.ApiStatus.http4xx
         HttpApiStatus.http5xx -> CheckoutGetDynamicPlansTotal.ApiStatus.http5xx
         HttpApiStatus.connectionError -> CheckoutGetDynamicPlansTotal.ApiStatus.connectionError
         HttpApiStatus.notConnected -> CheckoutGetDynamicPlansTotal.ApiStatus.notConnected
         HttpApiStatus.parseError -> CheckoutGetDynamicPlansTotal.ApiStatus.parseError
         HttpApiStatus.sslError -> CheckoutGetDynamicPlansTotal.ApiStatus.sslError
+        HttpApiStatus.cancellation -> CheckoutGetDynamicPlansTotal.ApiStatus.cancellation
         HttpApiStatus.unknown -> CheckoutGetDynamicPlansTotal.ApiStatus.unknown
     }

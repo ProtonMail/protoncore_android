@@ -34,5 +34,6 @@ public enum class GiapStatus {
     userCanceled,
     notFound,
     statusNull,
+    cancellation,
     unknown
 }

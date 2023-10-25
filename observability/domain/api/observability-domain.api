@@ -2,6 +2,8 @@ public final class me/proton/core/observability/domain/LogTag {
 	public static final field DEFAULT Ljava/lang/String;
 	public static final field ENQUEUE Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/observability/domain/LogTag;
+	public static final field PARSE Ljava/lang/String;
+	public static final field UNKNOWN Ljava/lang/String;
 }
 
 public abstract interface class me/proton/core/observability/domain/ObservabilityContext {
@@ -101,8 +103,11 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 	public static final field notConnected Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
@@ -393,8 +398,11 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 	public static final field http409 Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 	public static final field http422 Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
@@ -476,9 +484,11 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
-	public static final field failureNoSubscription Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 	public static final field http409 Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 	public static final field http422 Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
@@ -559,9 +569,12 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public static final field failureNoSubscription Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public static final field notConnected Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
@@ -811,6 +824,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus : java/lang/Enum {
 	public static final field billingUnavailable Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field developerError Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field featureNotSupported Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field googlePlayError Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
@@ -1409,8 +1423,11 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
 	public static final field http422 Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
@@ -1625,8 +1642,11 @@ public final class me/proton/core/observability/domain/metrics/LoginObtainSsoCha
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public static final field notConnected Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
@@ -2104,8 +2124,11 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http400 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http401 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public static final field http409 Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
@@ -2259,8 +2282,11 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
 	public static final field http401 Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
 	public static final field http422 Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
 	public static final field http422_10001AccountFailedGeneric Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
@@ -2537,8 +2563,11 @@ public final class me/proton/core/observability/domain/metrics/common/CreatePaym
 }
 
 public final class me/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
 	public static final field http400 Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
 	public static final field http400BodyParseFailure Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
 	public static final field http400CurrencyFormat Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
@@ -2611,6 +2640,7 @@ public final class me/proton/core/observability/domain/metrics/common/GiapLabels
 
 public final class me/proton/core/observability/domain/metrics/common/GiapStatus : java/lang/Enum {
 	public static final field billingUnavailable Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field developerError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field featureNotSupported Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field googlePlayError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
@@ -2630,8 +2660,11 @@ public final class me/proton/core/observability/domain/metrics/common/GiapStatus
 }
 
 public final class me/proton/core/observability/domain/metrics/common/HttpApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field http4xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field http5xx Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public static final field notConnected Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
@@ -2781,8 +2814,11 @@ public final class me/proton/core/observability/domain/metrics/common/UsernameAv
 }
 
 public final class me/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
 	public static final field connectionError Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
 	public static final field http2xx Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
 	public static final field http409 Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
 	public static final field http409UsernameConflict Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
 	public static final field http422 Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;

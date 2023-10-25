@@ -45,8 +45,9 @@ public data class CheckoutGetDynamicSubscriptionTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
+        http1xx,
         http2xx,
-        failureNoSubscription,
+        http3xx,
         http409,
         http422,
         http4xx,
@@ -55,11 +56,12 @@ public data class CheckoutGetDynamicSubscriptionTotal(
         notConnected,
         parseError,
         sslError,
+        cancellation,
         unknown
     }
 }
 
-internal fun Result<*>.toGetDynamicSubscriptionApiStatus(): CheckoutGetDynamicSubscriptionTotal.ApiStatus = when {
+internal fun Result<*>.toGetDynamicSubscriptionApiStatus() = when {
     isHttpError(HttpResponseCodes.HTTP_CONFLICT) -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http409
     isHttpError(HttpResponseCodes.HTTP_UNPROCESSABLE) -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http422
     else -> toHttpApiStatus().toGetDynamicSubscriptionApiStatus()
@@ -67,12 +69,15 @@ internal fun Result<*>.toGetDynamicSubscriptionApiStatus(): CheckoutGetDynamicSu
 
 public fun HttpApiStatus.toGetDynamicSubscriptionApiStatus(): CheckoutGetDynamicSubscriptionTotal.ApiStatus =
     when (this) {
+        HttpApiStatus.http1xx -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http1xx
         HttpApiStatus.http2xx -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http2xx
+        HttpApiStatus.http3xx -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http3xx
         HttpApiStatus.http4xx -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http4xx
         HttpApiStatus.http5xx -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.http5xx
         HttpApiStatus.connectionError -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.connectionError
         HttpApiStatus.notConnected -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.notConnected
         HttpApiStatus.parseError -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.parseError
         HttpApiStatus.sslError -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.sslError
+        HttpApiStatus.cancellation -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.cancellation
         HttpApiStatus.unknown -> CheckoutGetDynamicSubscriptionTotal.ApiStatus.unknown
     }

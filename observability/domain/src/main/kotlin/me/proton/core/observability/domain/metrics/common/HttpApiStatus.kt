@@ -18,26 +18,33 @@
 
 package me.proton.core.observability.domain.metrics.common
 
+import kotlinx.coroutines.CancellationException
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.observability.domain.LogTag
+import me.proton.core.util.kotlin.CoreLogger
+import java.text.ParseException
 import javax.net.ssl.SSLException
 
 @Suppress("EnumNaming", "EnumEntryName")
 public enum class HttpApiStatus {
+    http1xx,
     http2xx,
+    http3xx,
     http4xx,
     http5xx,
     connectionError,
     notConnected,
     parseError,
     sslError,
+    cancellation,
     unknown
 }
 
 public fun <R> Result<R>.toHttpApiStatus(): HttpApiStatus =
     exceptionOrNull()?.toHttpApiStatus() ?: HttpApiStatus.http2xx
 
-@Suppress("MagicNumber")
+@Suppress("MagicNumber", "CyclomaticComplexMethod")
 public fun Throwable.toHttpApiStatus(): HttpApiStatus = when (this) {
     is ApiException -> when (val apiError = this.error) {
         is ApiResult.Error.Certificate -> HttpApiStatus.sslError
@@ -45,16 +52,18 @@ public fun Throwable.toHttpApiStatus(): HttpApiStatus = when (this) {
             true -> HttpApiStatus.connectionError
             false -> HttpApiStatus.notConnected
         }
-
         is ApiResult.Error.Http -> when (apiError.httpCode) {
+            in 100..199 -> HttpApiStatus.http1xx
+            in 200..299 -> HttpApiStatus.http2xx
+            in 300..399 -> HttpApiStatus.http3xx
             in 400..499 -> HttpApiStatus.http4xx
             in 500..599 -> HttpApiStatus.http5xx
-            else -> HttpApiStatus.unknown
+            else -> HttpApiStatus.unknown.also { CoreLogger.e(LogTag.UNKNOWN, this) }
         }
-
         is ApiResult.Error.Parse -> HttpApiStatus.parseError
     }
-
     is SSLException -> HttpApiStatus.sslError
-    else -> HttpApiStatus.unknown
+    is CancellationException -> HttpApiStatus.cancellation
+    is ParseException -> HttpApiStatus.parseError.also { CoreLogger.e(LogTag.PARSE, this) }
+    else -> HttpApiStatus.unknown.also { CoreLogger.e(LogTag.UNKNOWN, this) }
 }

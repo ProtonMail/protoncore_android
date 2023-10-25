@@ -40,21 +40,26 @@ public data class CheckoutGetSubscriptionTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
-        http2xx,
         failureNoSubscription,
+        http1xx,
+        http2xx,
+        http3xx,
         http4xx,
         http5xx,
         connectionError,
         notConnected,
         parseError,
         sslError,
+        cancellation,
         unknown
     }
 }
 
 public fun HttpApiStatus.toGetSubscriptionApiStatus(): CheckoutGetSubscriptionTotal.ApiStatus =
     when (this) {
+        HttpApiStatus.http1xx -> CheckoutGetSubscriptionTotal.ApiStatus.http1xx
         HttpApiStatus.http2xx -> CheckoutGetSubscriptionTotal.ApiStatus.http2xx
+        HttpApiStatus.http3xx -> CheckoutGetSubscriptionTotal.ApiStatus.http3xx
         HttpApiStatus.http4xx -> CheckoutGetSubscriptionTotal.ApiStatus.http4xx
         HttpApiStatus.http5xx -> CheckoutGetSubscriptionTotal.ApiStatus.http5xx
         HttpApiStatus.connectionError -> CheckoutGetSubscriptionTotal.ApiStatus.connectionError
@@ -62,4 +67,5 @@ public fun HttpApiStatus.toGetSubscriptionApiStatus(): CheckoutGetSubscriptionTo
         HttpApiStatus.parseError -> CheckoutGetSubscriptionTotal.ApiStatus.parseError
         HttpApiStatus.sslError -> CheckoutGetSubscriptionTotal.ApiStatus.sslError
         HttpApiStatus.unknown -> CheckoutGetSubscriptionTotal.ApiStatus.unknown
+        HttpApiStatus.cancellation -> CheckoutGetSubscriptionTotal.ApiStatus.cancellation
     }

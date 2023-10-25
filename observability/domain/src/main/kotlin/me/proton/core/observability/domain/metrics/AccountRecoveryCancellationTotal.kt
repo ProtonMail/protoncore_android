@@ -45,7 +45,9 @@ public data class AccountRecoveryCancellationTotal(
 
     @Suppress("EnumNaming", "EnumEntryName")
     public enum class ApiStatus {
+        http1xx,
         http2xx,
+        http3xx,
         http4xx,
         http5xx,
         connectionError,
@@ -53,6 +55,7 @@ public data class AccountRecoveryCancellationTotal(
         parseError,
         sslError,
         wrongPassword,
+        cancellation,
         unknown
     }
 }
@@ -65,12 +68,15 @@ private fun <R> Result<R>.toApiStatus(): AccountRecoveryCancellationTotal.ApiSta
 }
 
 private fun HttpApiStatus.toApiStatus(): AccountRecoveryCancellationTotal.ApiStatus = when (this) {
+    HttpApiStatus.http1xx -> AccountRecoveryCancellationTotal.ApiStatus.http1xx
     HttpApiStatus.http2xx -> AccountRecoveryCancellationTotal.ApiStatus.http2xx
+    HttpApiStatus.http3xx -> AccountRecoveryCancellationTotal.ApiStatus.http3xx
     HttpApiStatus.http4xx -> AccountRecoveryCancellationTotal.ApiStatus.http4xx
     HttpApiStatus.http5xx -> AccountRecoveryCancellationTotal.ApiStatus.http5xx
     HttpApiStatus.connectionError -> AccountRecoveryCancellationTotal.ApiStatus.connectionError
     HttpApiStatus.notConnected -> AccountRecoveryCancellationTotal.ApiStatus.notConnected
     HttpApiStatus.parseError -> AccountRecoveryCancellationTotal.ApiStatus.parseError
     HttpApiStatus.sslError -> AccountRecoveryCancellationTotal.ApiStatus.sslError
+    HttpApiStatus.cancellation -> AccountRecoveryCancellationTotal.ApiStatus.cancellation
     HttpApiStatus.unknown -> AccountRecoveryCancellationTotal.ApiStatus.unknown
 }
