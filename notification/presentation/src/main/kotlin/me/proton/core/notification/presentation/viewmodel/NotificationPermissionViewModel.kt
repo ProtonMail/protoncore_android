@@ -22,50 +22,62 @@ import android.Manifest.permission.POST_NOTIFICATIONS
 import android.app.Activity
 import android.os.Build
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.usecase.IsNotificationsPermissionRequestEnabled
+import me.proton.core.notification.domain.usecase.IsNotificationsPermissionShowRationale
 import me.proton.core.notification.presentation.internal.GetAndroidSdkLevel
 import javax.inject.Inject
 
 @HiltViewModel
 internal class NotificationPermissionViewModel @Inject constructor(
     private val permissionRequestEnabled: IsNotificationsPermissionRequestEnabled,
+    private val permissionShowRationale: IsNotificationsPermissionShowRationale,
     private val getAndroidSdkLevel: GetAndroidSdkLevel,
     private val notificationManager: ProtonNotificationManager
 ) : ViewModel() {
     private val _state = MutableStateFlow(State.Idle)
     val state: StateFlow<State> = _state.asStateFlow()
 
-    fun setup(activity: Activity) = when {
-        !permissionRequestEnabled() -> {
-            // Permission request handling is disabled.
-            _state.value = State.Finish
-        }
+    fun setup(activity: Activity) = viewModelScope.launch {
+        when {
+            !permissionRequestEnabled() -> {
+                // Permission request handling is disabled.
+                _state.value = State.Finish
+            }
 
-        getAndroidSdkLevel() < Build.VERSION_CODES.TIRAMISU -> {
-            // On Android SDK level lower than 33,
-            // notification permission is not needed.
-            _state.value = State.Finish
-        }
+            getAndroidSdkLevel() < Build.VERSION_CODES.TIRAMISU -> {
+                // On Android SDK level lower than 33,
+                // notification permission is not needed.
+                _state.value = State.Finish
+            }
 
-        activity.applicationContext.applicationInfo.targetSdkVersion < Build.VERSION_CODES.TIRAMISU -> {
-            // For apps targeting Android SDK level lower than 33,
-            // the only way to trigger a request for notification permission
-            // is to create a notification channel.
-            notificationManager.setupNotificationChannel()
-            _state.value = State.Finish
-        }
+            activity.applicationContext.applicationInfo.targetSdkVersion < Build.VERSION_CODES.TIRAMISU -> {
+                // For apps targeting Android SDK level lower than 33,
+                // the only way to trigger a request for notification permission
+                // is to create a notification channel.
+                notificationManager.setupNotificationChannel()
+                _state.value = State.Finish
+            }
 
-        activity.shouldShowRequestPermissionRationale(POST_NOTIFICATIONS) -> {
-            _state.value = State.ShowRationale
-        }
+            activity.shouldShowRequestPermissionRationale(POST_NOTIFICATIONS) -> {
+                permissionShowRationale.onShowRationale()
+                _state.value = State.ShowRationale
+            }
 
-        else -> {
-            _state.value = State.LaunchPermissionRequest
+            permissionShowRationale() -> {
+                permissionShowRationale.onShowRationale()
+                _state.value = State.ShowRationale
+            }
+
+            else -> {
+                _state.value = State.LaunchPermissionRequest
+            }
         }
     }
 

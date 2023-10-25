@@ -33,6 +33,7 @@ import me.proton.core.notification.domain.usecase.ConfigureNotificationChannel
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.IsNotificationsPermissionRequestEnabled
+import me.proton.core.notification.domain.usecase.IsNotificationsPermissionShowRationale
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.domain.usecase.ReplaceNotificationViews
 import me.proton.core.notification.domain.usecase.ShowNotificationView
@@ -43,6 +44,7 @@ import me.proton.core.notification.presentation.usecase.ConfigureNotificationCha
 import me.proton.core.notification.presentation.usecase.GetNotificationChannelIdImpl
 import me.proton.core.notification.presentation.usecase.IsNotificationsEnabledImpl
 import me.proton.core.notification.presentation.usecase.IsNotificationsPermissionRequestEnabledImpl
+import me.proton.core.notification.presentation.usecase.IsNotificationsPermissionShowRationaleImpl
 import me.proton.core.notification.presentation.usecase.ObservePushNotificationsImpl
 import me.proton.core.notification.presentation.usecase.ReplaceNotificationViewsImpl
 import me.proton.core.notification.presentation.usecase.ShowNotificationViewImpl
@@ -72,6 +74,11 @@ public interface CoreNotificationModule {
     public fun bindIsNotificationsPermissionRequestEnabled(
         impl: IsNotificationsPermissionRequestEnabledImpl
     ): IsNotificationsPermissionRequestEnabled
+
+    @Binds
+    public fun bindIsNotificationsPermissionShowRationale(
+        impl: IsNotificationsPermissionShowRationaleImpl
+    ): IsNotificationsPermissionShowRationale
 
     @Binds
     public fun bindNotificationLocalDataSource(impl: NotificationLocalDataSourceImpl): NotificationLocalDataSource

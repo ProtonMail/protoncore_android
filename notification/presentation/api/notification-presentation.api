@@ -21,6 +21,19 @@ public final class me/proton/core/notification/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/notification/presentation/NotificationDataStoreProvider {
+	public fun <init> (Landroid/content/Context;)V
+	public final fun getPermissionDataStore ()Landroidx/datastore/core/DataStore;
+}
+
+public final class me/proton/core/notification/presentation/NotificationDataStoreProvider_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/NotificationDataStoreProvider_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/presentation/NotificationDataStoreProvider;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/notification/presentation/NotificationDataStoreProvider;
+}
+
 public final class me/proton/core/notification/presentation/NotificationDeeplink {
 	public static final field INSTANCE Lme/proton/core/notification/presentation/NotificationDeeplink;
 }
@@ -268,6 +281,20 @@ public final class me/proton/core/notification/presentation/usecase/IsNotificati
 	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/notification/presentation/usecase/IsNotificationsPermissionRequestEnabledImpl;
 }
 
+public final class me/proton/core/notification/presentation/usecase/IsNotificationsPermissionShowRationaleImpl : me/proton/core/notification/domain/usecase/IsNotificationsPermissionShowRationale {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/notification/presentation/NotificationDataStoreProvider;)V
+	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onShowRationale (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/notification/presentation/usecase/IsNotificationsPermissionShowRationaleImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/IsNotificationsPermissionShowRationaleImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/notification/presentation/usecase/IsNotificationsPermissionShowRationaleImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/notification/presentation/NotificationDataStoreProvider;)Lme/proton/core/notification/presentation/usecase/IsNotificationsPermissionShowRationaleImpl;
+}
+
 public final class me/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl : me/proton/core/notification/domain/usecase/ObservePushNotifications {
 	public fun <init> (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/push/domain/repository/PushRepository;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun invoke (Lme/proton/core/domain/entity/UserId;)V
@@ -307,11 +334,11 @@ public final class me/proton/core/notification/presentation/usecase/ShowNotifica
 }
 
 public final class me/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel;
-	public static fun newInstance (Lme/proton/core/notification/domain/usecase/IsNotificationsPermissionRequestEnabled;Lme/proton/core/notification/presentation/internal/GetAndroidSdkLevel;Lme/proton/core/notification/domain/ProtonNotificationManager;)Lme/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel;
+	public static fun newInstance (Lme/proton/core/notification/domain/usecase/IsNotificationsPermissionRequestEnabled;Lme/proton/core/notification/domain/usecase/IsNotificationsPermissionShowRationale;Lme/proton/core/notification/presentation/internal/GetAndroidSdkLevel;Lme/proton/core/notification/domain/ProtonNotificationManager;)Lme/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel;
 }
 
 public final class me/proton/core/notification/presentation/viewmodel/NotificationPermissionViewModel_HiltModules {

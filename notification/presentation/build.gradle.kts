@@ -46,7 +46,8 @@ dependencies {
         project(Module.pushDomain),
         activity,
         `androidx-core`,
-        `coroutines-android`
+        `coroutines-android`,
+        `datastorePreferences`
     )
 
     testImplementation(

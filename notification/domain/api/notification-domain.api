@@ -140,6 +140,11 @@ public abstract interface class me/proton/core/notification/domain/usecase/IsNot
 	public abstract fun invoke ()Z
 }
 
+public abstract interface class me/proton/core/notification/domain/usecase/IsNotificationsPermissionShowRationale {
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onShowRationale (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/notification/domain/usecase/ObservePushNotifications {
 	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)V
 }
