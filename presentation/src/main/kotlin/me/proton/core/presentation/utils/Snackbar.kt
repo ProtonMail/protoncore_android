@@ -27,6 +27,12 @@ import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.presentation.R
 
+object SnackbarLength {
+    const val SHORT = 2500 // 2.5s.
+    const val LONG = 5000 // 5sec.
+    const val INDEFINITE = Snackbar.LENGTH_INDEFINITE
+}
+
 enum class SnackType(@DrawableRes val background: Int) {
     Success(R.drawable.snackbar_background_success),
     Norm(R.drawable.snackbar_background_norm),
@@ -39,7 +45,7 @@ enum class SnackType(@DrawableRes val background: Int) {
  */
 fun View.normSnack(
     @StringRes messageRes: Int,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) =
     snack(messageRes = messageRes, type = SnackType.Norm, length = length, configBlock = configBlock)
@@ -47,7 +53,7 @@ fun View.normSnack(
 /**
  * Shows normal snack bar.
  */
-fun View.normSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null) =
+fun View.normSnack(message: String, length: Int = SnackbarLength.LONG, configBlock: (Snackbar.() -> Unit)? = null) =
     snack(message = message, type = SnackType.Norm, length = length, configBlock = configBlock)
 
 /**
@@ -55,7 +61,7 @@ fun View.normSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBl
  */
 fun View.warningSnack(
     @StringRes messageRes: Int,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) =
     snack(messageRes = messageRes, type = SnackType.Warning, length = length, configBlock = configBlock)
@@ -63,7 +69,7 @@ fun View.warningSnack(
 /**
  * Shows warning snack bar.
  */
-fun View.warningSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null,) =
+fun View.warningSnack(message: String, length: Int = SnackbarLength.LONG, configBlock: (Snackbar.() -> Unit)? = null,) =
     snack(message = message, type = SnackType.Warning, length = length, configBlock = configBlock)
 
 /**
@@ -71,7 +77,7 @@ fun View.warningSnack(message: String, length: Int = Snackbar.LENGTH_LONG, confi
  */
 fun View.errorSnack(
     @StringRes messageRes: Int,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) =
     snack(messageRes = messageRes, type = SnackType.Error, length = length, configBlock = configBlock)
@@ -79,7 +85,7 @@ fun View.errorSnack(
 /**
  * Shows red error snack bar.
  */
-fun View.errorSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null) =
+fun View.errorSnack(message: String, length: Int = SnackbarLength.LONG, configBlock: (Snackbar.() -> Unit)? = null) =
     snack(message = message, type = SnackType.Error, length = length, configBlock = configBlock)
 
 /**
@@ -89,7 +95,7 @@ fun View.errorSnack(
     message: String,
     action: String?,
     actionOnClick: (() -> Unit)?,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) = snack(
     message = message,
@@ -105,7 +111,7 @@ fun View.errorSnack(
  */
 fun View.successSnack(
     @StringRes messageRes: Int,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) =
     snack(messageRes = messageRes, type = SnackType.Success, length = length, configBlock = configBlock)
@@ -113,25 +119,25 @@ fun View.successSnack(
 /**
  * Shows green success snack bar.
  */
-fun View.successSnack(message: String, length: Int = Snackbar.LENGTH_LONG, configBlock: (Snackbar.() -> Unit)? = null) =
+fun View.successSnack(message: String, length: Int = SnackbarLength.LONG, configBlock: (Snackbar.() -> Unit)? = null) =
     snack(message = message, type = SnackType.Success, length = length, configBlock = configBlock)
 
 /**
  * General snack bar util function which takes message and type as config.
- * The default showing length is [Snackbar.LENGTH_LONG].
+ * The default showing length is [SnackbarLength.LONG].
  *
  * @param messageRes the String resource message id
  */
 fun View.snack(
     @StringRes messageRes: Int,
     type: SnackType,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) = snack(message = resources.getString(messageRes), type = type, length = length, configBlock = configBlock)
 
 /**
  * General snack bar util function which takes message and color as config.
- * The default showing length is [Snackbar.LENGTH_LONG].
+ * The default showing length is [SnackbarLength.LONG].
  *
  * @param messageRes the String resource message id
  */
@@ -145,14 +151,14 @@ fun View.snack(
 
 /**
  * General snack bar util function which takes message, color and length as config.
- * The default showing length is [Snackbar.LENGTH_LONG].
+ * The default showing length is [SnackbarLength.LONG].
  */
 fun View.snack(
     message: String,
     type: SnackType,
     action: String? = null,
     actionOnClick: (() -> Unit)? = null,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) = snack(message, type, length) {
     if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
@@ -169,7 +175,7 @@ fun View.snack(
     @DrawableRes color: Int?,
     action: String? = null,
     actionOnClick: (() -> Unit)? = null,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) = snack(message, color, length) {
     if (action != null && actionOnClick != null) setAction(action) { actionOnClick() }
@@ -178,13 +184,13 @@ fun View.snack(
 
 /**
  * General snack bar util function which takes message, type and length and a configuration block.
- * The default showing length is [Snackbar.LENGTH_LONG].
+ * The default showing length is [SnackbarLength.LONG].
  */
 @Suppress("deprecation")
 fun View.snack(
     message: String,
     type: SnackType,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ) = snack(message, type.background, length, configBlock)
 
@@ -195,7 +201,7 @@ fun View.snack(
 fun View.snack(
     message: String,
     @DrawableRes color: Int?,
-    length: Int = Snackbar.LENGTH_LONG,
+    length: Int = SnackbarLength.LONG,
     configBlock: (Snackbar.() -> Unit)? = null,
 ): Snackbar {
     return Snackbar.make(this, message, length).apply {

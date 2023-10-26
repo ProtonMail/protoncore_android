@@ -953,6 +953,13 @@ public final class me/proton/core/presentation/utils/SnackbarKt {
 	public static synthetic fun warningSnack$default (Landroid/view/View;Ljava/lang/String;ILkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lcom/google/android/material/snackbar/Snackbar;
 }
 
+public final class me/proton/core/presentation/utils/SnackbarLength {
+	public static final field INDEFINITE I
+	public static final field INSTANCE Lme/proton/core/presentation/utils/SnackbarLength;
+	public static final field LONG I
+	public static final field SHORT I
+}
+
 public abstract interface class me/proton/core/presentation/utils/StringBox {
 	public static final field Companion Lme/proton/core/presentation/utils/StringBox$Companion;
 	public abstract fun get (Landroid/content/Context;)Ljava/lang/String;

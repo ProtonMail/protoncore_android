@@ -29,6 +29,7 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonSecureActivity
+import me.proton.core.presentation.utils.SnackbarLength
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
@@ -79,8 +80,8 @@ abstract class AuthActivity<ViewBindingT : ViewBinding>(
                 action = action,
                 actionOnClick = actionOnClick,
                 length = when {
-                    action != null && actionOnClick != null -> Snackbar.LENGTH_INDEFINITE
-                    else -> Snackbar.LENGTH_LONG
+                    action != null && actionOnClick != null -> SnackbarLength.INDEFINITE
+                    else -> SnackbarLength.LONG
                 }
             )
         } else {
