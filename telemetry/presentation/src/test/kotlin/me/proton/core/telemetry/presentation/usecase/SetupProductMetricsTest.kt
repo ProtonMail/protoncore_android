@@ -22,6 +22,8 @@ import android.app.Activity
 import android.app.Application
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.declaringKotlinFile
@@ -32,6 +34,7 @@ import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
+import me.proton.core.presentation.ui.view.ProtonButton
 import me.proton.core.presentation.utils.OnUiComponentCreatedListener
 import me.proton.core.presentation.utils.UiComponent
 import me.proton.core.presentation.utils.launchOnUiComponentCreated
@@ -47,7 +50,9 @@ import me.proton.core.telemetry.presentation.measureOnScreenClosed
 import me.proton.core.telemetry.presentation.measureOnScreenDisplayed
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 import me.proton.core.telemetry.presentation.measureOnViewFocused
+import me.proton.core.telemetry.presentation.setupViewMetrics
 import org.junit.Rule
+import java.util.Collections.list
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -66,6 +71,12 @@ class SetupProductMetricsTest {
     @MockK
     private lateinit var telemetryManager: TelemetryManager
 
+    @MockK
+    private lateinit var lifecycle : Lifecycle
+
+    @MockK
+    private lateinit var lifecycleOwner : LifecycleOwner
+
     private lateinit var onUiComponentCreatedSlot: CapturingSlot<OnUiComponentCreatedListener>
     private lateinit var tested: SetupProductMetrics
 
@@ -78,6 +89,7 @@ class SetupProductMetricsTest {
         mockkStatic(::measureOnScreenClosed.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnViewClicked.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnViewFocused.declaringKotlinFile.qualifiedName!!)
+        mockkStatic(LifecycleOwner::setupViewMetrics.declaringKotlinFile.qualifiedName!!)
 
         onUiComponentCreatedSlot = slot()
         every { any<Application>().launchOnUiComponentCreated(capture(onUiComponentCreatedSlot)) } returns mockk()
@@ -85,6 +97,9 @@ class SetupProductMetricsTest {
         every { measureOnScreenClosed(any(), any(), any(), any(), any()) } returns mockk()
         every { measureOnViewClicked(any(), any(), any()) } returns mockk()
         every { measureOnViewFocused(any(), any(), any()) } returns mockk()
+
+        every { lifecycleOwner.lifecycle } returns lifecycle
+        every { lifecycle.addObserver(any()) } answers {}
 
         tested = SetupProductMetrics(application, telemetryManager)
     }
@@ -125,7 +140,7 @@ class SetupProductMetricsTest {
         // WHEN - simulate creating an activity
         val view = mockk<View>(relaxed = true)
         onUiComponentCreatedSlot.captured.invoke(
-            mockk(),
+            lifecycleOwner,
             mockk(),
             mockk(),
             mockk<UiComponent.UiActivity> {
@@ -142,7 +157,7 @@ class SetupProductMetricsTest {
                 productEvent = "screen_displayed",
                 productDimensions = mapOf("screen_dimension_displayed" to "sdd"),
                 delegateOwner = capture(delegateOwnerSlot),
-                lifecycleOwner = any(),
+                lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = any()
             )
         }
@@ -169,12 +184,53 @@ class SetupProductMetricsTest {
             )
         }
 
-        verify {
-            view.setOnClickListener(any())
+        verify(exactly = 2) {
+            lifecycleOwner.setupViewMetrics(any())
+        }
+    }
+
+    @Test
+    fun `ui component with view clicks`() {
+        // WHEN
+        tested()
+
+        // THEN
+        verify { application.launchOnUiComponentCreated(any()) }
+
+        // WHEN - simulate creating an activity
+        val blockSlot = mutableListOf<() -> Unit>()
+        val lifecycleOwner = mockk<LifecycleOwner> {
+            every {
+                setupViewMetrics(capture(blockSlot))
+            } returns mockk()
+        }
+
+        val view = mockk<ProtonButton>(relaxed = true)
+        onUiComponentCreatedSlot.captured.invoke(
+            lifecycleOwner,
+            mockk(),
+            mockk(),
+            mockk<UiComponent.UiActivity> {
+                every { value } returns mockk<ActivityWithAnnotations>()
+                every { findViewById<View>(any()) } returns view
+                every { getIdentifier(any()) } returns 1
+            }
+        )
+
+        // THEN
+        blockSlot[0].invoke()
+        blockSlot[1].invoke()
+
+        verify(exactly = 2) {
+            lifecycleOwner.setupViewMetrics(any())
         }
 
         verify {
-            view.onFocusChangeListener = any()
+            view.setOnFocusChangeListener(any())
+        }
+
+        verify {
+            view.setOnClickListener(any())
         }
     }
 
@@ -184,7 +240,7 @@ class SetupProductMetricsTest {
         val delegate = TestProductMetricsDelegate(telemetryManager)
         tested()
         onUiComponentCreatedSlot.captured.invoke(
-            mockk(),
+            lifecycleOwner,
             mockk(),
             mockk(),
             mockk<UiComponent.UiActivity> {
@@ -203,7 +259,7 @@ class SetupProductMetricsTest {
                 productEvent = "screen_displayed",
                 productDimensions = mapOf("screen_dimension_displayed" to "sdd"),
                 delegateOwner = capture(delegateOwnerSlot),
-                lifecycleOwner = any(),
+                lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = any()
             )
         }

@@ -51,6 +51,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.presentation),
         project(Module.userSettingsDomain),
+        project(Module.telemetryPresentation),
         appcompat,
         `constraint-layout`,
         coordinatorlayout,

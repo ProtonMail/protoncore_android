@@ -33,4 +33,19 @@ open class ProtonButton @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = com.google.android.material.R.attr.materialButtonStyle
-) : MaterialButton(context, attrs, defStyleAttr)
+) : MaterialButton(context, attrs, defStyleAttr), AdditionalOnClickListenerContract {
+
+    private val multipleClickListener = MultipleClickListener()
+
+    init {
+        super.setOnClickListener(multipleClickListener)
+    }
+
+    override fun setOnClickListener(listener: OnClickListener?) {
+        multipleClickListener.addListener(listener)
+    }
+
+    override fun removeAdditionalOnClickListener() {
+        multipleClickListener.removeAdditionalOnClickListener()
+    }
+}

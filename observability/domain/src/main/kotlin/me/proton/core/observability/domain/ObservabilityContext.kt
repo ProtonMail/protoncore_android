@@ -5,20 +5,20 @@ import me.proton.core.util.kotlin.coroutine.ResultCollector
 
 public interface ObservabilityContext {
 
-    public val manager: ObservabilityManager
+    public val observabilityManager: ObservabilityManager
 
-    public fun enqueue(data: ObservabilityData): Unit = manager.enqueue(data)
+    public fun enqueueObservability(data: ObservabilityData): Unit = observabilityManager.enqueue(data)
 
-    public fun <T> Result<T>.enqueue(
+    public fun <T> Result<T>.enqueueObservability(
         block: Result<T>.() -> ObservabilityData
-    ): Result<T> = also { enqueue(block(this)) }
+    ): Result<T> = also { enqueueObservability(block(this)) }
 
-    public suspend fun <T> ResultCollector<T>.onResultEnqueue(
+    public suspend fun <T> ResultCollector<T>.onResultEnqueueObservability(
         key: String,
         block: Result<T>.() -> ObservabilityData
-    ): Unit = onResult(key) { enqueue(block) }
+    ): Unit = onResult(key) { enqueueObservability(block) }
 
-    public suspend fun <T> ResultCollector<T>.onCompleteEnqueue(
+    public suspend fun <T> ResultCollector<T>.onCompleteEnqueueObservability(
         block: Result<T>.() -> ObservabilityData
-    ): Unit = onComplete { enqueue(block) }
+    ): Unit = onComplete { enqueueObservability(block) }
 }

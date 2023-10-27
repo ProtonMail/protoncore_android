@@ -34,7 +34,7 @@ import javax.inject.Provider
 public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
     private val googleBillingRepositoryProvider: Provider<GoogleBillingRepository>,
     private val googlePurchaseRepository: GooglePurchaseRepository,
-    override val manager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager
 ) : AcknowledgeGooglePlayPurchase, ObservabilityContext {
     override suspend fun invoke(paymentToken: ProtonPaymentToken) {
         val googlePurchaseToken = requireNotNull(googlePurchaseRepository.findGooglePurchaseToken(paymentToken)) {
@@ -44,7 +44,7 @@ public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
     }
 
     override suspend fun invoke(purchaseToken: GooglePurchaseToken): Unit = withResultContext {
-        onResultEnqueue("acknowledgePurchase") { CheckoutGiapBillingAcknowledgeTotal(toGiapStatus()) }
+        onResultEnqueueObservability("acknowledgePurchase") { CheckoutGiapBillingAcknowledgeTotal(toGiapStatus()) }
 
         // Create a new instance of `GoogleBillingRepository` and clean up after it:
         googleBillingRepositoryProvider.get().use { googleBillingRepository ->

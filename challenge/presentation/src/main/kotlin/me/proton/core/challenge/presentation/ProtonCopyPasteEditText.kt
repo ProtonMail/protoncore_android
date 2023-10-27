@@ -26,11 +26,12 @@ import android.content.Context
 import android.graphics.Rect
 import android.util.AttributeSet
 import com.google.android.material.textfield.TextInputEditText
+import me.proton.core.presentation.ui.view.ProtonTextInputEditText
 
 /**
  * TextInputEditText that notifies the copy and paste events for anti abuse purposes.
  */
-public class ProtonCopyPasteEditText : TextInputEditText {
+public class ProtonCopyPasteEditText : ProtonTextInputEditText {
 
     private val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     private var copyPasteListener: OnCopyPasteListener? = null

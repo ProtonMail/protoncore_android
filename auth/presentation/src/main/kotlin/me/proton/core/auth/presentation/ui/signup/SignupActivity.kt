@@ -63,11 +63,21 @@ import me.proton.core.plan.presentation.ui.hasPlanSignupFragment
 import me.proton.core.plan.presentation.ui.removePlansSignup
 import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.annotation.ScreenClosed
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
+import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate) {
+@ScreenDisplayed(event = "fe.signup.displayed")
+@ScreenClosed(event = "user.signup.closed")
+class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate),
+    ProductMetricsDelegateOwner {
+
+    override val productMetricsDelegate: ProductMetricsDelegate get() = signUpViewModel
 
     private val signUpViewModel by viewModels<SignupViewModel>()
     private val loginViewModel by viewModels<LoginViewModel>()

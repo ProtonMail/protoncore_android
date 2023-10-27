@@ -125,14 +125,14 @@ public abstract class me/proton/core/accountrecovery/presentation/compose/ui/Hil
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field $stable I
 	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Ljava/time/Clock;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
-	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun getInitialState ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Loading;
-	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getScreenId ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State {

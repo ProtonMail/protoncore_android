@@ -38,7 +38,7 @@ import me.proton.core.presentation.ui.setTextOrGoneIfNull
  */
 // Noticed code duplication here, should be refactored properly as single with [ProtonInput]
 // See https://material.io/develop/android/components/text-fields ("Implementing an exposed dropdown menu").
-open class ProtonAutoCompleteInput : LinearLayout {
+open class ProtonAutoCompleteInput : LinearLayout, AdditionalOnClickListenerContract {
 
     constructor(context: Context) : super(context) {
         init(context)
@@ -66,6 +66,8 @@ open class ProtonAutoCompleteInput : LinearLayout {
     }
 
     private val binding = ProtonAutocompleteInputBinding.inflate(LayoutInflater.from(context), this)
+
+    private val multipleClickListener = MultipleClickListener()
 
     private fun init(context: Context, attrs: AttributeSet? = null) {
         orientation = VERTICAL
@@ -206,10 +208,16 @@ open class ProtonAutoCompleteInput : LinearLayout {
     }
 
     override fun setOnClickListener(listener: OnClickListener?) {
-        binding.inputLayout.setOnClickListener(listener)
-        binding.inputLayout.setEndIconOnClickListener(listener)
-        binding.input.setOnClickListener(listener)
-        binding.label.setOnClickListener(listener)
+        multipleClickListener.addListener(listener)
+
+        binding.inputLayout.setOnClickListener(multipleClickListener)
+        binding.inputLayout.setEndIconOnClickListener(multipleClickListener)
+        binding.input.setOnClickListener(multipleClickListener)
+        binding.label.setOnClickListener(multipleClickListener)
+    }
+
+    override fun removeAdditionalOnClickListener() {
+        multipleClickListener.removeAdditionalOnClickListener()
     }
     // endregion
 }

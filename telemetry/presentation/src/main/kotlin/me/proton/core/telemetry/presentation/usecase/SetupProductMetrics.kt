@@ -24,12 +24,14 @@ import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.LifecycleOwner
 import androidx.savedstate.SavedStateRegistryOwner
+import me.proton.core.presentation.ui.view.AdditionalOnClickListener
+import me.proton.core.presentation.ui.view.AdditionalOnFocusChangeListener
 import me.proton.core.presentation.utils.UiComponent
 import me.proton.core.presentation.utils.launchOnUiComponentCreated
 import me.proton.core.telemetry.domain.TelemetryManager
-import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
@@ -38,6 +40,7 @@ import me.proton.core.telemetry.presentation.measureOnScreenClosed
 import me.proton.core.telemetry.presentation.measureOnScreenDisplayed
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 import me.proton.core.telemetry.presentation.measureOnViewFocused
+import me.proton.core.telemetry.presentation.setupViewMetrics
 import javax.inject.Inject
 
 internal class SetupProductMetrics @Inject constructor(
@@ -56,11 +59,14 @@ internal class SetupProductMetrics @Inject constructor(
     ) {
         val delegateOwner = component.value as? ProductMetricsDelegateOwner
         val productMetrics = component.value.findAnnotation<ProductMetrics>()
+        val hasProductMetricsAnnotation = component.value.hasProductMetricsAnnotation()
 
-        if (delegateOwner != null && productMetrics != null) {
-            error("Cannot use both the ${ProductMetricsDelegateOwner::class.simpleName} and ${ProductMetrics::class.simpleName} annotation in ${component.value::class.qualifiedName}.")
-        } else if (delegateOwner == null && productMetrics == null) {
-            return
+        when {
+            delegateOwner != null && productMetrics != null ->
+                error("Cannot use both the ${ProductMetricsDelegateOwner::class.simpleName} and ${ProductMetrics::class.simpleName} annotation in ${component.value::class.qualifiedName}.")
+            delegateOwner == null && productMetrics == null && hasProductMetricsAnnotation ->
+                error("${component.value::class.qualifiedName} must implement either ${ProductMetricsDelegateOwner::class.simpleName} or annotate ${ProductMetrics::class.simpleName} annotation.")
+            delegateOwner == null && productMetrics == null -> return
         }
 
         val resolvedDelegateOwner = when {
@@ -95,34 +101,47 @@ internal class SetupProductMetrics @Inject constructor(
             )
         }
 
-        component.value.findAnnotation<ViewClicked>()?.let {
+        component.value.findAnnotation<ViewClicked>()?.let { viewClicked ->
 
-            for (viewId in it.viewIds) {
-                val id = component.getIdentifier(viewId)
-                val view = component.findViewById<View>(id)
-                view.setOnClickListener { _ ->
-                    measureOnViewClicked(
-                        event = it.event,
-                        delegateOwner = resolvedDelegateOwner
-                    )
+            lifecycleOwner.setupViewMetrics {
+                for (viewId in viewClicked.viewIds) {
+                    val id = component.getIdentifier(viewId)
+                    val view = component.findViewById<View>(id)
+
+                    view?.setOnClickListener(object : AdditionalOnClickListener {
+                        override fun onClick(p0: View?) {
+                            measureOnViewClicked(
+                                event = viewClicked.event,
+                                delegateOwner = resolvedDelegateOwner,
+                                productDimensions = mapOf("item" to viewId)
+                            )
+                        }
+                    })
                 }
             }
         }
 
-        component.value.findAnnotation<ViewFocused>()?.let {
+        component.value.findAnnotation<ViewFocused>()?.let { viewFocused ->
 
-            for (viewId in it.viewIds) {
-                val id = component.getIdentifier(viewId)
-                val view = component.findViewById<View>(id)
-                view.setOnFocusChangeListener { _, _ ->
-                    measureOnViewFocused(
-                        event = it.event,
-                        delegateOwner = resolvedDelegateOwner,
-                    )
+            lifecycleOwner.setupViewMetrics {
+                for (viewId in viewFocused.viewIds) {
+                    val id = component.getIdentifier(viewId)
+                    val view = component.findViewById<View>(id)
+
+                    view?.onFocusChangeListener = object : AdditionalOnFocusChangeListener {
+                        override fun onFocusChange(view: View?, hasFocus: Boolean) {
+                            if (hasFocus) {
+                                measureOnViewFocused(
+                                    event = viewFocused.event,
+                                    delegateOwner = resolvedDelegateOwner,
+                                    productDimensions = mapOf("item" to viewId)
+                                )
+                            }
+                        }
+                    }
                 }
             }
         }
-
     }
 }
 
@@ -137,6 +156,12 @@ private class AnnotationProductMetricsDelegate(
 
 private inline fun <reified T : Annotation> Any.findAnnotation(): T? =
     javaClass.annotations.filterIsInstance<T>().firstOrNull()
+
+private inline fun Any.hasProductMetricsAnnotation(): Boolean =
+    javaClass.annotations.filterIsInstance<ScreenDisplayed>().firstOrNull() != null ||
+    javaClass.annotations.filterIsInstance<ScreenClosed>().firstOrNull() != null ||
+    javaClass.annotations.filterIsInstance<ViewClicked>().firstOrNull() != null ||
+    javaClass.annotations.filterIsInstance<ViewFocused>().firstOrNull() != null
 
 @VisibleForTesting
 internal fun <T> Array<T>.toMap(): Map<T, T> {

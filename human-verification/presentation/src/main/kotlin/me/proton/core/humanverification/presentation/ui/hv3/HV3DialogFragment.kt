@@ -67,12 +67,14 @@ import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.normSnack
 import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.util.kotlin.deserializeOrNull
 import java.net.URLEncoder
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_v3) {
+class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verification_v3), ProductMetricsDelegateOwner {
 
     @Inject
     @HumanVerificationApiHost
@@ -112,6 +114,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
                     when (it.itemId) {
                         R.id.menu_help -> {
                             childFragmentManager.showHelp()
+                            viewModel.onHelp()
                             true
                         }
                         else -> false
@@ -207,6 +210,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         view?.errorSnack(R.string.presentation_connectivity_issues)
         setLoading(false)
         viewModel.onPageLoad(error.toHvPageLoadStatus())
+        viewModel.onHumanVerificationResult(false)
     }
 
     @MainThread
@@ -217,6 +221,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
                 val token = requireNotNull(response.payload?.token)
                 val tokenType = requireNotNull(response.payload?.type)
                 setResult(HumanVerificationToken(token, tokenType), cancelled = false)
+                viewModel.onHumanVerificationResult(true)
             }
             Type.Notification -> {
                 val message = requireNotNull(response.payload?.text)
@@ -340,6 +345,9 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             )
         }
     }
+
+    override val productMetricsDelegate: ProductMetricsDelegate
+        get() = viewModel
 }
 
 private fun Configuration.isUsingDarkMode(): Boolean =

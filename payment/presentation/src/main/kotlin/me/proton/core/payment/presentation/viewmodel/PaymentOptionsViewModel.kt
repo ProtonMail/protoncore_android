@@ -34,8 +34,6 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsGetPaymentMethodsTotal
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsSubscribeTotal
-import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsValidatePlanTotal
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
@@ -75,7 +73,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
     clientIdProvider: ClientIdProvider,
-    override val manager: ObservabilityManager
+    observabilityManager: ObservabilityManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
     createPaymentToken,
@@ -83,7 +81,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
     getCountry,
     humanVerificationManager,
     clientIdProvider,
-    manager
+    observabilityManager
 ) {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!
@@ -113,7 +111,7 @@ internal class PaymentOptionsViewModel @Inject constructor(
      * Returns the existing available (saved) payment methods for a user.
      */
     fun getAvailablePaymentMethods(userId: UserId) = viewModelScope.launchWithResultContext {
-        onResultEnqueue("getAvailablePaymentMethods") {
+        onResultEnqueueObservability("getAvailablePaymentMethods") {
             CheckoutPaymentMethodsGetPaymentMethodsTotal(toHttpApiStatus())
         }
 

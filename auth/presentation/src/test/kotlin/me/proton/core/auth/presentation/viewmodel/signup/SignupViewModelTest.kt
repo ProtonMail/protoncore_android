@@ -53,6 +53,7 @@ import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.PlansOrchestrator
+import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.CreateUserType
@@ -94,6 +95,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @MockK(relaxed = true)
     private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK(relaxed = true)
+    private lateinit var telemetryManager: TelemetryManager
 
     @MockK(relaxed = true)
     private lateinit var canUpgradeToPaid: CanUpgradeToPaid
@@ -196,6 +200,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             observabilityManager,
             canUpgradeToPaid,
             isDynamicPlanEnabled,
+            telemetryManager,
             mockk(relaxed = true)
         )
         coEvery { clientIdProvider.getClientId(any()) } returns testClientId

@@ -34,9 +34,23 @@ import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ScreenClosed
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
+import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ProductMetrics(
+    group = "account.android.signup",
+    flow = "mobile_signup_full"
+)
+@ScreenDisplayed(event = "fe.add_account.displayed")
+@ScreenClosed(event = "user.add_account.closed")
+@ViewClicked(
+    event = "user.add_account.clicked",
+    viewIds = ["sign_up", "sign_in"]
+)
 class AddAccountActivity :
     ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {
 

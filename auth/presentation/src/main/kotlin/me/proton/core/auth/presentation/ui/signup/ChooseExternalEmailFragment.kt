@@ -47,9 +47,24 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validateEmail
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ViewClicked
+import me.proton.core.telemetry.presentation.annotation.ViewFocused
 import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
+@ProductMetrics(
+    group = "account.android.signup",
+    flow = "mobile_signup_full"
+)
+@ViewClicked(
+    event = "user.signup.clicked",
+    viewIds = ["nextButton", "switchButton"]
+)
+@ViewFocused(
+    event = "user.signup.focused",
+    viewIds = ["emailInput"]
+)
 class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choose_external_email) {
 
     private val viewModel by viewModels<ChooseExternalEmailViewModel>()

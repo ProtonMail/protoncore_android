@@ -22,17 +22,20 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.presentation.entity.HumanVerificationToken
+import me.proton.core.humanverification.presentation.telemetry.ProductMetricsDelegateHv
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.HvPageLoadTotal
 import me.proton.core.observability.domain.metrics.HvScreenViewTotal
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import javax.inject.Inject
 
@@ -47,13 +50,18 @@ class HV3ViewModel @Inject constructor(
     private val getUserSettings: GetUserSettings,
     private val networkPrefs: NetworkPrefs,
     private val product: Product,
-) : ProtonViewModel() {
+    override val telemetryManager: TelemetryManager
+) : ProtonViewModel(), ProductMetricsDelegateHv {
+
+    override val productGroup: String = "account.android.signup"
+    override val productFlow: String = "mobile_signup_full"
 
     private val backgroundContext = Dispatchers.IO + viewModelScope.coroutineContext
 
-    val activeAltUrlForDoH: String? get() = networkPrefs.activeAltBaseUrl?.let {
-        if (!it.endsWith("/")) "$it/" else it
-    }
+    val activeAltUrlForDoH: String?
+        get() = networkPrefs.activeAltBaseUrl?.let {
+            if (!it.endsWith("/")) "$it/" else it
+        }
 
     suspend fun getHumanVerificationExtraParams() = withContext(backgroundContext) {
         val userId = accountRepository.getPrimaryUserId()
@@ -87,6 +95,26 @@ class HV3ViewModel @Inject constructor(
 
     fun onScreenView() {
         observabilityManager.enqueue(HvScreenViewTotal(HvScreenViewTotal.ScreenId.hv3))
+    }
+
+    fun onHelp() = viewModelScope.launch {
+        withContext(backgroundContext) {
+            val userId = accountRepository.getPrimaryUserId().firstOrNull()
+            telemetryManager.enqueue(
+                userId,
+                toTelemetryHelpEvent("user.hv.clicked")
+            )
+        }
+    }
+
+    fun onHumanVerificationResult(success: Boolean) = viewModelScope.launch {
+        withContext(backgroundContext) {
+            val userId = accountRepository.getPrimaryUserId().firstOrNull()
+            telemetryManager.enqueue(
+                userId,
+                toTelemetryEvent(name = "fe.hv.verify", isSuccess = success)
+            )
+        }
     }
 
     fun onPageLoad(status: HvPageLoadTotal.Status) {

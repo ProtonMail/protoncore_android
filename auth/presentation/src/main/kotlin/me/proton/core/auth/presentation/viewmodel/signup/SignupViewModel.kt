@@ -43,10 +43,13 @@ import me.proton.core.auth.domain.usecase.userAlreadyExists
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
+import me.proton.core.auth.presentation.telemetry.ProductMetricsDelegateAuth
+import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
@@ -60,6 +63,10 @@ import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
+import me.proton.core.telemetry.domain.TelemetryContext
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.withResultContext
@@ -76,11 +83,18 @@ internal class SignupViewModel @Inject constructor(
     private val performLogin: PerformLogin,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
-    override val manager: ObservabilityManager,
+    override val observabilityManager: ObservabilityManager,
     private val canUpgradeToPaid: CanUpgradeToPaid,
     private val isDynamicPlanEnabled: IsDynamicPlanEnabled,
-    savedStateHandle: SavedStateHandle
-) : ViewModel(), ObservabilityContext {
+    override val telemetryManager: TelemetryManager,
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel(), ObservabilityContext, ProductMetricsDelegateAuth, TelemetryContext {
+
+    override val productGroup: String = "account.android.signup"
+    override val productFlow: String = "mobile_signup_full"
+    override var userId: UserId?
+        get() = savedStateHandle.get<String>(LoginViewModel.STATE_USER_ID)?.let { UserId(it) }
+        set(value) { savedStateHandle[LoginViewModel.STATE_USER_ID] = value?.id }
 
     private val _state by savedStateHandle.flowState(
         mutableSharedFlow = MutableSharedFlow<State>(replay = 1).apply { tryEmit(State.Idle) },
@@ -131,7 +145,7 @@ internal class SignupViewModel @Inject constructor(
     }
 
     fun onScreenView(screenId: SignupScreenViewTotalV1.ScreenId) {
-        enqueue(SignupScreenViewTotalV1(screenId))
+        enqueueObservability(SignupScreenViewTotalV1(screenId))
     }
 
     private fun setExternalRecoveryEmail(recoveryMethod: RecoveryMethod?) {
@@ -217,8 +231,11 @@ internal class SignupViewModel @Inject constructor(
         val recoveryEmail = destination.takeIf { type == RecoveryMethodType.EMAIL }
         val recoveryPhone = destination.takeIf { type == RecoveryMethodType.SMS }
         val result = withResultContext {
-            onResultEnqueue("createUser") {
+            onResultEnqueueObservability("createUser") {
                 SignupAccountCreationTotal(this, accountType.toObservabilityAccountType())
+            }
+            onResultEnqueueTelemetry("createUser") {
+                    toTelemetryEvent("be.signup.create_user", accountType)
             }
             performCreateUser(
                 username = username,
@@ -238,8 +255,11 @@ internal class SignupViewModel @Inject constructor(
 
     private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) = flow<State> {
         val userId = withResultContext {
-            onResultEnqueue("createExternalEmailUser") {
+            onResultEnqueueObservability("createExternalEmailUser") {
                 SignupAccountCreationTotal(this, AccountTypeLabels.external)
+            }
+            onResultEnqueueTelemetry("createExternalEmailUser") {
+                toTelemetryEvent("be.signup.create_user", AccountType.External)
             }
             performCreateExternalEmailUser(
                 email = externalEmail,

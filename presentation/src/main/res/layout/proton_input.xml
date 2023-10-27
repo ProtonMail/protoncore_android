@@ -51,7 +51,7 @@
         tools:helperText="Optional help text"
         tools:suffixText="\@protonmail.com">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <me.proton.core.presentation.ui.view.ProtonTextInputEditText
             android:id="@+id/input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

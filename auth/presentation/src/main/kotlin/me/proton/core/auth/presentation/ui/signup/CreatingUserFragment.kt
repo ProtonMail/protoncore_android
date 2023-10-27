@@ -21,7 +21,16 @@ package me.proton.core.auth.presentation.ui.signup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import me.proton.core.auth.presentation.R
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 
+@ProductMetrics(
+    group = "account.android.signup",
+    flow = "mobile_signup_full"
+)
+@ScreenDisplayed(
+    event = "fe.create_account.displayed"
+)
 class CreatingUserFragment : SignupFragment(R.layout.fragment_creating_user) {
     override fun onBackPressed() {
         setFragmentResult(FRAGMENT_RESULT_REQUEST_KEY, bundleOf(KEY_CANCELLED to true))

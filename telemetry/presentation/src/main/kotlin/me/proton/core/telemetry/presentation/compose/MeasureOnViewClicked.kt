@@ -19,6 +19,7 @@
 package me.proton.core.telemetry.presentation.compose
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 
 @Composable
@@ -27,7 +28,6 @@ public fun MeasureOnViewClicked(
     productDimensions: Map<String, String> = emptyMap()
 ) {
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
-
     measureOnViewClicked(
         event = event,
         delegateOwner = screenMetricsDelegateOwner,

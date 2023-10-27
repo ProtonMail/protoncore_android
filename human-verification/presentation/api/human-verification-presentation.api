@@ -390,7 +390,7 @@ public final class me/proton/core/humanverification/presentation/ui/common/WebRe
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
+public final class me/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment, me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/hv3/HV3DialogFragment$Companion;
 	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
 	public field humanVerificationBaseUrl Ljava/lang/String;
@@ -401,6 +401,7 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Dialo
 	public final fun getHumanVerificationBaseUrl ()Ljava/lang/String;
 	public final fun getNetworkPrefs ()Lme/proton/core/network/domain/NetworkPrefs;
 	public final fun getNetworkRequestOverrider ()Lme/proton/core/humanverification/domain/utils/NetworkRequestOverrider;
+	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
 	public final fun setHumanVerificationBaseUrl (Ljava/lang/String;)V
@@ -614,21 +615,32 @@ public final class me/proton/core/humanverification/presentation/viewmodel/hv3/H
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/domain/entity/Product;)V
+public final class me/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/humanverification/presentation/telemetry/ProductMetricsDelegateHv {
+	public fun <init> (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/domain/entity/Product;Lme/proton/core/telemetry/domain/TelemetryManager;)V
 	public final fun getActiveAltUrlForDoH ()Ljava/lang/String;
 	public final fun getHumanVerificationExtraParams (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getProductDimensions ()Ljava/util/Map;
+	public fun getProductFlow ()Ljava/lang/String;
+	public fun getProductGroup ()Ljava/lang/String;
+	public fun getTelemetryManager ()Lme/proton/core/telemetry/domain/TelemetryManager;
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun onHelp ()Lkotlinx/coroutines/Job;
 	public final fun onHumanVerificationResult (Lme/proton/core/network/domain/client/ClientId;Lme/proton/core/humanverification/presentation/entity/HumanVerificationToken;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun onHumanVerificationResult (Z)Lkotlinx/coroutines/Job;
 	public final fun onPageLoad (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;)V
 	public final fun onScreenView ()V
+	public fun toTelemetryEvent (Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
+	public fun toTelemetryEvent (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
+	public fun toTelemetryEvent (Ljava/lang/String;Z)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
+	public fun toTelemetryHelpEvent (Ljava/lang/String;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel;
-	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/domain/entity/Product;)Lme/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationWorkflowHandler;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/network/domain/NetworkPrefs;Lme/proton/core/domain/entity/Product;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel;
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_HiltModules {

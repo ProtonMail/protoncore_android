@@ -57,17 +57,17 @@ fun interface OnUiComponentCreatedListener {
 }
 
 sealed class UiComponent(val value: Any) {
-    abstract fun <V : View> findViewById(@IdRes id: Int): V
+    abstract fun <V : View> findViewById(@IdRes id: Int): V?
     abstract fun getIdentifier(id: String): Int
 
     class UiActivity(val activity: Activity) : UiComponent(activity) {
-        override fun <V : View> findViewById(id: Int): V = activity.findViewById(id)
+        override fun <V : View> findViewById(id: Int): V? = activity.findViewById(id)
         override fun getIdentifier(id: String): Int =
             activity.resources.getIdentifier(id, "id", activity.packageName)
     }
 
     class UiFragment(val fragment: Fragment) : UiComponent(fragment) {
-        override fun <V : View> findViewById(id: Int): V = fragment.requireView().findViewById(id)
+        override fun <V : View> findViewById(id: Int): V? = fragment.requireView().findViewById(id)
         override fun getIdentifier(id: String): Int =
             fragment.resources.getIdentifier(id, "id", fragment.requireContext().packageName)
     }

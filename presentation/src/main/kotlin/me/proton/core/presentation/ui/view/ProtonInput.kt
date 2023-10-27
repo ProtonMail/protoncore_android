@@ -428,6 +428,10 @@ open class ProtonInput : LinearLayout {
         }
     }
 
+    override fun setOnFocusChangeListener(listener: OnFocusChangeListener?) {
+        input.onFocusChangeListener = listener
+    }
+
     /**
      * Set the action mode for the end icon.
      */

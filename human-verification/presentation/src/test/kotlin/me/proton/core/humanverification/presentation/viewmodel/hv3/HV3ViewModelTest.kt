@@ -40,6 +40,7 @@ import me.proton.core.observability.domain.metrics.HvPageLoadTotal
 import me.proton.core.observability.domain.metrics.HvPageLoadTotal.Routing
 import me.proton.core.observability.domain.metrics.HvPageLoadTotal.Status
 import me.proton.core.observability.domain.metrics.HvScreenViewTotal
+import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.usersettings.domain.entity.RecoverySetting
@@ -61,6 +62,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
     private val getSettings = mockk<GetUserSettings>(relaxed = true)
     private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+    private val telemetryManager = mockk<TelemetryManager>(relaxed = true)
 
     lateinit var viewModel: HV3ViewModel
 
@@ -79,6 +81,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             getSettings,
             networkPrefs,
             Product.Mail,
+            telemetryManager
         )
     }
 
@@ -136,6 +139,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             getSettings,
             networkPrefs,
             Product.Vpn,
+            telemetryManager
         )
         every { accountRepository.getPrimaryUserId() } returns flowOf(UserId("some_user_id"))
         val settingsMock = mockk<UserSettings>().apply {
@@ -159,6 +163,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             getSettings,
             networkPrefs,
             Product.Vpn,
+            telemetryManager
         )
         // WHEN
         viewModel.onScreenView()
@@ -179,6 +184,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             getSettings,
             networkPrefs,
             Product.Vpn,
+            telemetryManager
         )
         // WHEN
         viewModel.onPageLoad(pageLoad.Labels.status)
@@ -199,6 +205,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             getSettings,
             networkPrefs,
             Product.Vpn,
+            telemetryManager
         )
         // WHEN
         viewModel.onPageLoad(pageLoad.Labels.status)

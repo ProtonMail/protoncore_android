@@ -17,7 +17,7 @@ public abstract class me/proton/core/challenge/presentation/Hilt_ProtonMetadataI
 	protected fun inject ()V
 }
 
-public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText : com/google/android/material/textfield/TextInputEditText {
+public final class me/proton/core/challenge/presentation/ProtonCopyPasteEditText : me/proton/core/presentation/ui/view/ProtonTextInputEditText {
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
@@ -38,7 +38,7 @@ public final class me/proton/core/challenge/presentation/ProtonMetadataInput : m
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public final fun flush (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getChallengeManager ()Lme/proton/core/challenge/domain/ChallengeManager;
-	public synthetic fun getInput ()Lcom/google/android/material/textfield/TextInputEditText;
+	public synthetic fun getInput ()Lme/proton/core/presentation/ui/view/ProtonTextInputEditText;
 	public fun onCopyText (Ljava/lang/String;)V
 	public fun onFocus (Z)V
 	public fun onKey (Landroid/view/View;ILandroid/view/KeyEvent;)Z

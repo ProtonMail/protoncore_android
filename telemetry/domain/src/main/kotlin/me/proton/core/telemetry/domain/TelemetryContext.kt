@@ -26,19 +26,24 @@ public interface TelemetryContext {
 
     public val telemetryManager: TelemetryManager
 
-    public fun enqueue(userId: UserId? = null, data: TelemetryEvent): Unit = telemetryManager.enqueue(userId, data)
+    public fun enqueueTelemetry(
+        userId: UserId? = null,
+        data: TelemetryEvent
+    ): Unit = telemetryManager.enqueue(userId, data)
 
-    public fun <T> Result<T>.enqueue(userId: UserId? = null, block: Result<T>.() -> TelemetryEvent): Result<T> =
-        also { enqueue(userId, block(this)) }
+    public fun <T> Result<T>.enqueueTelemetry(
+        userId: UserId? = null,
+        block: Result<T>.() -> TelemetryEvent
+    ): Result<T> = also { enqueueTelemetry(userId, block(this)) }
 
-    public suspend fun <T> ResultCollector<T>.onResultEnqueue(
+    public suspend fun <T> ResultCollector<T>.onResultEnqueueTelemetry(
         key: String,
         userId: UserId? = null,
         block: Result<T>.() -> TelemetryEvent
-    ): Unit = onResult(key) { enqueue(userId, block) }
+    ): Unit = onResult(key) { enqueueTelemetry(userId, block) }
 
-    public suspend fun <T> ResultCollector<T>.onCompleteEnqueue(
+    public suspend fun <T> ResultCollector<T>.onCompleteEnqueueTelemetry(
         userId: UserId? = null,
         block: Result<T>.() -> TelemetryEvent
-    ): Unit = onComplete { enqueue(userId, block) }
+    ): Unit = onComplete { enqueueTelemetry(userId, block) }
 }

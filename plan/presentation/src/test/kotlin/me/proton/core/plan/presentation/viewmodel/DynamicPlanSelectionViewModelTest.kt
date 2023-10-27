@@ -80,7 +80,7 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
     @BeforeTest
     fun setUp() {
         tested = DynamicPlanSelectionViewModel(
-            manager = observabilityManager,
+            observabilityManager = observabilityManager,
             observeUserId = observeUserId,
             observeUserCurrency = observeUserCurrency,
             getDynamicPlans = getDynamicPlans

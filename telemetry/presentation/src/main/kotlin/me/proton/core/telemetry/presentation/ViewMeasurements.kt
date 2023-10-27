@@ -18,7 +18,24 @@
 
 package me.proton.core.telemetry.presentation
 
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
+
+public fun LifecycleOwner.setupViewMetrics(
+    block: () -> Unit
+) {
+    val observer = object : DefaultLifecycleObserver {
+        // The callback is registered during STARTED state, because we want to register it as the last one.
+        override fun onStart(owner: LifecycleOwner) {
+            super.onStart(owner)
+            owner.lifecycle.removeObserver(this)
+
+            block()
+        }
+    }
+    lifecycle.addObserver(observer)
+}
 
 public fun measureOnViewClicked(
     event: String,

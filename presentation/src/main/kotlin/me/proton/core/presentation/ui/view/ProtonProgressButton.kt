@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.drawable.AnimatedVectorDrawable
 import android.os.Build
 import android.util.AttributeSet
+import android.view.View
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
@@ -104,10 +105,21 @@ open class ProtonProgressButton @JvmOverloads constructor(
 
     /** Sets the click listener. */
     override fun setOnClickListener(listener: OnClickListener?) {
-        super.setOnClickListener {
-            if (autoLoading) setLoading()
-            listener?.onClick(it)
-        }
+        super.setOnClickListener(
+            when (listener) {
+                is AdditionalOnClickListener -> object : AdditionalOnClickListener {
+                    override fun onClick(view: View) {
+                        if (autoLoading) setLoading()
+                        listener.onClick(view)
+                    }
+                }
+                null -> null
+                else -> OnClickListener { view ->
+                    if (autoLoading) setLoading()
+                    listener.onClick(view)
+                }
+            }
+        )
     }
 
     override fun onDetachedFromWindow() {

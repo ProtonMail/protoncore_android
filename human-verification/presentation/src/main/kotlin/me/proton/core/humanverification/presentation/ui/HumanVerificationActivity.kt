@@ -30,9 +30,18 @@ import me.proton.core.humanverification.presentation.ui.common.REQUEST_KEY
 import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERIFICATION
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ScreenClosed
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@ProductMetrics(
+    group = "account.android.signup",
+    flow = "mobile_signup_full"
+)
+@ScreenDisplayed(event = "fe.hv.displayed")
+@ScreenClosed(event = "user.hv.closed")
 class HumanVerificationActivity : AppCompatActivity() {
 
     @Inject
