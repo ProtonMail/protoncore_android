@@ -63,10 +63,9 @@ import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
+import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.telemetry.domain.TelemetryContext
 import me.proton.core.telemetry.domain.TelemetryManager
-import me.proton.core.telemetry.domain.entity.TelemetryEvent
-import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.user.domain.entity.createUserType
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.withResultContext
@@ -146,6 +145,13 @@ internal class SignupViewModel @Inject constructor(
 
     fun onScreenView(screenId: SignupScreenViewTotalV1.ScreenId) {
         enqueueObservability(SignupScreenViewTotalV1(screenId))
+    }
+
+    fun onInputValidationResult(result: InputValidationResult) = viewModelScope.launch {
+        telemetryManager.enqueue(
+            null,
+            result.toTelemetryEvent(name = "fe.signup_password.validate")
+        )
     }
 
     private fun setExternalRecoveryEmail(recoveryMethod: RecoveryMethod?) {

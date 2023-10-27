@@ -849,13 +849,15 @@ public final class me/proton/core/presentation/utils/InputValidationResult {
 	public static final field MAX_YEAR I
 	public static final field MIN_MONTH I
 	public static final field YEAR_2000 I
-	public fun <init> (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;)V
-	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lme/proton/core/presentation/utils/ValidationType;
-	public final fun copy (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;)Lme/proton/core/presentation/utils/InputValidationResult;
-	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/InputValidationResult;Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;ILjava/lang/Object;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;Ljava/lang/String;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static synthetic fun copy$default (Lme/proton/core/presentation/utils/InputValidationResult;Ljava/lang/String;Lme/proton/core/presentation/utils/ValidationType;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAdditionalText ()Ljava/lang/String;
 	public final fun getCardType ()Lme/proton/core/presentation/utils/CardType;
 	public final fun getText ()Ljava/lang/String;
 	public final fun getValidationType ()Lme/proton/core/presentation/utils/ValidationType;
@@ -1102,6 +1104,7 @@ public final class me/proton/core/presentation/utils/ValidationType : java/lang/
 	public static final field Email Lme/proton/core/presentation/utils/ValidationType;
 	public static final field NotBlank Lme/proton/core/presentation/utils/ValidationType;
 	public static final field Password Lme/proton/core/presentation/utils/ValidationType;
+	public static final field PasswordMatch Lme/proton/core/presentation/utils/ValidationType;
 	public static final field PasswordMinLength Lme/proton/core/presentation/utils/ValidationType;
 	public static final field Username Lme/proton/core/presentation/utils/ValidationType;
 	public final fun getMaxLong ()I
@@ -1122,6 +1125,7 @@ public final class me/proton/core/presentation/utils/ValidationUtilsKt {
 	public static final fun validateEmail (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun validateExpirationDate (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun validatePassword (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun validatePasswordMatch (Lme/proton/core/presentation/ui/view/ProtonInput;Ljava/lang/String;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun validatePasswordMinLength (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun validateUsername (Lme/proton/core/presentation/ui/view/ProtonInput;)Lme/proton/core/presentation/utils/InputValidationResult;
 }

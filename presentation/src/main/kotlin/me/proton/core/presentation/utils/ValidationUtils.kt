@@ -38,6 +38,9 @@ fun ProtonInput.validatePassword() =
 fun ProtonInput.validatePasswordMinLength() =
     InputValidationResult(this.text.toString(), ValidationType.PasswordMinLength)
 
+fun ProtonInput.validatePasswordMatch(confirmPassword: String) =
+    InputValidationResult(this.text.toString(), ValidationType.PasswordMinLength, confirmPassword)
+
 fun ProtonInput.validateEmail() =
     InputValidationResult(this.text.toString(), ValidationType.Email)
 
@@ -55,6 +58,7 @@ enum class ValidationType(val minLong: Int = Int.MIN_VALUE, val maxLong: Int = I
     Username,
     Password,
     PasswordMinLength(8),
+    PasswordMatch,
     Email,
     CreditCard,
     CreditCardCVC(minLong = 3, maxLong = 4),
@@ -71,7 +75,8 @@ enum class CardType(val regex: String) {
 
 data class InputValidationResult(
     val text: String,
-    val validationType: ValidationType = ValidationType.NotBlank
+    val validationType: ValidationType = ValidationType.NotBlank,
+    val additionalText: String? = null
 ) {
     var cardType: CardType? = null
 
@@ -80,6 +85,7 @@ data class InputValidationResult(
         ValidationType.Username -> validateUsername()
         ValidationType.Password -> validatePassword()
         ValidationType.PasswordMinLength -> validatePasswordMinLength(validationType.minLong)
+        ValidationType.PasswordMatch -> validateNotBlank() && text == additionalText
         ValidationType.Email -> validateEmail()
         ValidationType.CreditCard -> {
             cardType = validateCreditCard()

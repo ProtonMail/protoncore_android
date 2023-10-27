@@ -53,7 +53,11 @@ import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.presentation.PlansOrchestrator
+import me.proton.core.presentation.utils.InputValidationResult
+import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.CreateUserType
@@ -703,5 +707,77 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             SignupAccountCreationTotal.ApiStatus.http2xx,
             accountCreationEventSlot.captured.Labels.status
         )
+    }
+
+    @Test
+    fun `telemetry data for pass validation`() = coroutinesTest {
+        // GIVEN
+        val result = InputValidationResult("test-pass", ValidationType.PasswordMinLength)
+        // WHEN
+        viewModel.onInputValidationResult(result).join()
+
+        // THEN
+        val eventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(eventSlot)) }
+        val event = eventSlot.captured
+        assertEquals(
+            "fe.signup_password.validate",
+            event.name
+        )
+        assertEquals("success", event.dimensions[ProductMetricsDelegate.KEY_RESULT])
+    }
+
+    @Test
+    fun `telemetry data for pass validation invalid`() = coroutinesTest {
+        // GIVEN
+        val result = InputValidationResult("pass", ValidationType.PasswordMinLength)
+        // WHEN
+        viewModel.onInputValidationResult(result).join()
+
+        // THEN
+        val eventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(eventSlot)) }
+        val event = eventSlot.captured
+        assertEquals(
+            "fe.signup_password.validate",
+            event.name
+        )
+        assertEquals("password_too_weak", event.dimensions[ProductMetricsDelegate.KEY_RESULT])
+    }
+
+    @Test
+    fun `telemetry data for pass validation match`() = coroutinesTest {
+        // GIVEN
+        val result = InputValidationResult("test-pass", ValidationType.PasswordMatch, "test-pass")
+        // WHEN
+        viewModel.onInputValidationResult(result).join()
+
+        // THEN
+        val eventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(eventSlot)) }
+        val event = eventSlot.captured
+        assertEquals(
+            "fe.signup_password.validate",
+            event.name
+        )
+        assertEquals("success", event.dimensions[ProductMetricsDelegate.KEY_RESULT])
+    }
+
+    @Test
+    fun `telemetry data for pass validation not match`() = coroutinesTest {
+        // GIVEN
+        val result = InputValidationResult("test-pass", ValidationType.PasswordMatch, "test-pass2")
+        // WHEN
+        viewModel.onInputValidationResult(result).join()
+
+        // THEN
+        val eventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(eventSlot)) }
+        val event = eventSlot.captured
+        assertEquals(
+            "fe.signup_password.validate",
+            event.name
+        )
+        assertEquals("password_mismatch", event.dimensions[ProductMetricsDelegate.KEY_RESULT])
     }
 }

@@ -21,6 +21,8 @@ package me.proton.core.telemetry.presentation
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.presentation.utils.InputValidationResult
+import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
 
