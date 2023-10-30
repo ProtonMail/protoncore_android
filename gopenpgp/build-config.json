@@ -4,35 +4,43 @@
     "build_dir":"build",
     "out_dir":"out",
     "go_mobile_dir":"mobile",
-    "go_mobile_flags": [
+    "go_mobile_flags":[
         "-x",
         "-ldflags=\"-s -w \"",
         "-trimpath"
     ],
     "build_name":"gopenpgp",
-    "commit_message": "feat(gopenpgp): Update to gopenpgp v2.7.3-proton and reset key transparency to v0.0.1.",
-    "upload_branch": "update-2.7.3-old-kt",
+    "commit_message":"feat(gopenpgp): Update to gopenpgp v2.7.4-proton.",
+    "upload_branch":"update-2.7.4-and-v0.0.1",
     "java_pkg":"com.proton.gopenpgp",
-    "targets":["android"],
-    "requirements": [
+    "targets":[
+        "android"
+    ],
+    "requirements":[
         {
-            "module":
-            {
+            "module":{
                 "path":"github.com/ProtonMail/gopenpgp/v2",
-                "version":"v2.7.3-proton"
+                "version":"v2.7.4-proton"
             },
-            "packages": ["crypto", "armor", "constants", "models", "subtle", "helper"]
+            "packages":[
+                "crypto",
+                "armor",
+                "constants",
+                "models",
+                "subtle",
+                "helper"
+            ]
         },
         {
             "module":{
                 "path":"github.com/ProtonMail/go-srp",
-                "version": "v0.0.7"
+                "version":"v0.0.7"
             }
         },
         {
             "module":{
                 "path":"github.com/ProtonMail/pm-key-transparency-go-client",
-                "version": "v0.0.1"
+                "version":"v0.0.1"
             }
         }
     ]
