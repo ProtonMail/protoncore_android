@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.observability.domain.ObservabilityContext
@@ -36,7 +37,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ChooseExternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
-    override val observabilityManager: ObservabilityManager
+    override val manager: ObservabilityManager
 ) : ProtonViewModel(), ObservabilityContext {
 
     private val mainState = MutableStateFlow<State>(State.Idle)
@@ -53,8 +54,8 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
     }
 
     fun checkExternalEmail(email: String) = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("checkExternalEmailAvailable") { SignupEmailAvailabilityTotal(this) }
-        onResultEnqueueObservability("getAvailableDomains") { SignupFetchDomainsTotal(this) }
+        onResultEnqueue("checkExternalEmailAvailable") { SignupEmailAvailabilityTotal(this) }
+        onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
 
         flow {
             emit(State.Processing)

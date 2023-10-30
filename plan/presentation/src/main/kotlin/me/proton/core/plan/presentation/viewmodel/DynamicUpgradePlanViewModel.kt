@@ -49,7 +49,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DynamicUpgradePlanViewModel @Inject constructor(
-    override val observabilityManager: ObservabilityManager,
+    override val manager: ObservabilityManager,
     private val accountManager: AccountManager,
     private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
     private val canUpgradeFromMobile: CanUpgradeFromMobile,
@@ -112,7 +112,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     }
 
     fun onScreenView() {
-        observabilityManager.enqueue(CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlansUpgrade))
+        manager.enqueue(CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlansUpgrade))
     }
 
     private fun onLoad() = viewModelScope.launch {

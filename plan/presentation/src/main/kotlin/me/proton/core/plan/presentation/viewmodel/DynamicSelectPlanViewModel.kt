@@ -47,7 +47,7 @@ import javax.inject.Inject
 internal class DynamicSelectPlanViewModel @Inject constructor(
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getDynamicPlans: GetDynamicPlans,
-    override val observabilityManager: ObservabilityManager,
+    override val manager: ObservabilityManager,
     @SupportSignupPaidPlans val supportPaidPlans: Boolean
 ) : ProtonViewModel(), ObservabilityContext {
     sealed class State {
@@ -85,7 +85,7 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
     }
 
     fun onScreenView() {
-        enqueueObservability(CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlanSelection))
+        enqueue(CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlanSelection))
     }
 
     private fun onLoad() = viewModelScope.launch {

@@ -35,7 +35,6 @@ import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag
-import me.proton.core.auth.presentation.telemetry.ProductMetricsDelegateAuth
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -49,9 +48,6 @@ import me.proton.core.network.domain.isPotentialBlocking
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.ObservabilityData
-import me.proton.core.telemetry.domain.TelemetryContext
-import me.proton.core.telemetry.domain.TelemetryManager
-import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
@@ -67,15 +63,8 @@ internal class LoginViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     isSsoEnabled: IsSsoEnabled,
-    override val observabilityManager: ObservabilityManager,
-    override val telemetryManager: TelemetryManager
-) : ViewModel(), ProductMetricsDelegateAuth, ObservabilityContext, TelemetryContext {
-
-    override val productGroup: String = "account.android.signup"
-    override val productFlow: String = "mobile_signup_full"
-    override var userId: UserId?
-        get() = savedStateHandle.get<String>(STATE_USER_ID)?.let { UserId(it) }
-        set(value) { savedStateHandle[STATE_USER_ID] = value?.id }
+    override val manager: ObservabilityManager
+) : ViewModel(), ObservabilityContext {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
@@ -93,7 +82,9 @@ internal class LoginViewModel @Inject constructor(
     }
 
     fun stopLoginWorkflow(): Job = viewModelScope.launch {
-        userId?.let { accountWorkflow.handleAccountDisabled(it) }
+        savedStateHandle.get<String>(STATE_USER_ID)?.let {
+            accountWorkflow.handleAccountDisabled(UserId(it))
+        }
     }
 
     fun startLoginWorkflow(
@@ -124,24 +115,21 @@ internal class LoginViewModel @Inject constructor(
         userCheckMetricData: ((Result<*>) -> ObservabilityData)? = null
     ) = viewModelScope.launchWithResultContext {
         loginMetricData?.let {
-            onResultEnqueueObservability("performLogin") { it(this) }
+            onResultEnqueue("performLogin") { it(this) }
         }
         unlockUserMetricData?.let {
-            onResultEnqueueObservability("unlockUserPrimaryKey") { it(this) }
+            onResultEnqueue("unlockUserPrimaryKey") { it(this) }
         }
         userCheckMetricData?.let {
-            onResultEnqueueObservability("defaultUserCheck") { it(this) }
-        }
-
-        onResultEnqueueTelemetry("performLogin") {
-            toTelemetryEvent("be.signin.auth", requiredAccountType)
+            onResultEnqueue("defaultUserCheck") { it(this)}
         }
 
         flow {
             emit(State.Processing)
 
             val sessionInfo = createLoginSession(username, encryptedPassword, requiredAccountType)
-            userId = sessionInfo.userId
+
+            savedStateHandle[STATE_USER_ID] = sessionInfo.userId.id
 
             val result = postLoginAccountSetup(
                 userId = sessionInfo.userId,

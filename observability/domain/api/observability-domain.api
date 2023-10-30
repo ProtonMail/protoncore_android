@@ -5,18 +5,18 @@ public final class me/proton/core/observability/domain/LogTag {
 }
 
 public abstract interface class me/proton/core/observability/domain/ObservabilityContext {
-	public abstract fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
-	public abstract fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-	public abstract fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
-	public abstract fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public abstract fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public abstract fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
+	public abstract fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/domain/ObservabilityContext$DefaultImpls {
-	public static fun enqueueObservability (Lme/proton/core/observability/domain/ObservabilityContext;Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
-	public static fun enqueueObservability-KWTtemM (Lme/proton/core/observability/domain/ObservabilityContext;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-	public static fun onCompleteEnqueueObservability (Lme/proton/core/observability/domain/ObservabilityContext;Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static fun onResultEnqueueObservability (Lme/proton/core/observability/domain/ObservabilityContext;Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun enqueue (Lme/proton/core/observability/domain/ObservabilityContext;Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public static fun enqueue-KWTtemM (Lme/proton/core/observability/domain/ObservabilityContext;Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public static fun onCompleteEnqueue (Lme/proton/core/observability/domain/ObservabilityContext;Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun onResultEnqueue (Lme/proton/core/observability/domain/ObservabilityContext;Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/observability/domain/ObservabilityManager {

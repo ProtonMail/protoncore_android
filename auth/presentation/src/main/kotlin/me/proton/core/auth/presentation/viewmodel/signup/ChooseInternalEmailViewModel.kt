@@ -40,7 +40,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ChooseInternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
-    override val observabilityManager: ObservabilityManager
+    override val manager: ObservabilityManager
 ) : ProtonViewModel(), ObservabilityContext {
 
     private var preFillUsername: String? = null
@@ -72,7 +72,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
     }
 
     fun getDomains() = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("getAvailableDomains") { SignupFetchDomainsTotal(this) }
+        onResultEnqueue("getAvailableDomains") { SignupFetchDomainsTotal(this) }
 
         flow {
             emit(State.Processing)
@@ -104,7 +104,7 @@ internal class ChooseInternalEmailViewModel @Inject constructor(
     }.launchIn(viewModelScope)
 
     fun checkUsername(username: String, domain: String) = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("checkUsernameAvailable") { SignupUsernameAvailabilityTotal(this) }
+        onResultEnqueue("checkUsernameAvailable") { SignupUsernameAvailabilityTotal(this) }
 
         flow {
             emit(State.Processing)

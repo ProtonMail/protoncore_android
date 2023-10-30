@@ -67,9 +67,9 @@ class TelemetryContextTest : TelemetryContext {
     @Test
     fun resultCollectorEnqueueExtension() = runTest {
         val value = withResultContext {
-            onResultEnqueueTelemetry("key1", userId) { toEvent() }
-            onResultEnqueueTelemetry("key2", userId) { toEvent() }
-            onCompleteEnqueueTelemetry(userId) { toEvent() }
+            onResultEnqueue("key1", userId) { toEvent() }
+            onResultEnqueue("key2", userId) { toEvent() }
+            onCompleteEnqueue(userId) { toEvent() }
 
             callProducers()
         }
@@ -85,9 +85,9 @@ class TelemetryContextTest : TelemetryContext {
         every { producerKey2.produce() } returns listOf(4)
 
         val value = withResultContext {
-            onResultEnqueueTelemetry("key1", userId) { toEvent() }
-            onResultEnqueueTelemetry("key2", userId) { toEvent() }
-            onCompleteEnqueueTelemetry(userId) { toEvent() }
+            onResultEnqueue("key1", userId) { toEvent() }
+            onResultEnqueue("key2", userId) { toEvent() }
+            onCompleteEnqueue(userId) { toEvent() }
 
             callProducers()
         }
@@ -100,9 +100,9 @@ class TelemetryContextTest : TelemetryContext {
     @Test
     fun launchWithResultContext() = runTest {
         launchWithResultContext {
-            onResultEnqueueTelemetry("key1", userId) { toEvent() }
-            onResultEnqueueTelemetry("key2", userId) { toEvent() }
-            onCompleteEnqueueTelemetry(userId) { toEvent() }
+            onResultEnqueue("key1", userId) { toEvent() }
+            onResultEnqueue("key2", userId) { toEvent() }
+            onCompleteEnqueue(userId) { toEvent() }
 
             callProducers()
         }.join()
@@ -112,9 +112,9 @@ class TelemetryContextTest : TelemetryContext {
     @Test
     fun resultCollectorEnqueueExtensionUnAuth() = runTest {
         val value = withResultContext {
-            onResultEnqueueTelemetry("key1") { toEvent() }
-            onResultEnqueueTelemetry("key2") { toEvent() }
-            onCompleteEnqueueTelemetry { toEvent() }
+            onResultEnqueue("key1") { toEvent() }
+            onResultEnqueue("key2") { toEvent() }
+            onCompleteEnqueue { toEvent() }
 
             callProducers()
         }
@@ -130,9 +130,9 @@ class TelemetryContextTest : TelemetryContext {
         every { producerKey2.produce() } returns listOf(4)
 
         val value = withResultContext {
-            onResultEnqueueTelemetry("key1") { toEvent() }
-            onResultEnqueueTelemetry("key2") { toEvent() }
-            onCompleteEnqueueTelemetry { toEvent() }
+            onResultEnqueue("key1") { toEvent() }
+            onResultEnqueue("key2") { toEvent() }
+            onCompleteEnqueue { toEvent() }
 
             callProducers()
         }
@@ -145,9 +145,9 @@ class TelemetryContextTest : TelemetryContext {
     @Test
     fun launchWithResultContextUnAuth() = runTest {
         launchWithResultContext {
-            onResultEnqueueTelemetry("key1") { toEvent() }
-            onResultEnqueueTelemetry("key2") { toEvent() }
-            onCompleteEnqueueTelemetry { toEvent() }
+            onResultEnqueue("key1") { toEvent() }
+            onResultEnqueue("key2") { toEvent() }
+            onCompleteEnqueue { toEvent() }
 
             callProducers()
         }.join()

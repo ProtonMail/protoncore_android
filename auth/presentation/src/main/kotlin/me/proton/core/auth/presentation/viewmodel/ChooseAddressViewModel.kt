@@ -58,7 +58,7 @@ import javax.inject.Inject
 class ChooseAddressViewModel @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val accountAvailability: AccountAvailability,
-    override val observabilityManager: ObservabilityManager,
+    override val manager: ObservabilityManager,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val setupUsername: SetupUsername
 ) : ProtonViewModel(), ObservabilityContext {
@@ -92,8 +92,8 @@ class ChooseAddressViewModel @Inject constructor(
     }
 
     fun startWorkFlow(userId: UserId) = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("getAvailableDomains") { LoginEaToIaFetchDomainsTotal(this) }
-        onResultEnqueueObservability("checkUsernameAvailable") { LoginEaToIaUsernameAvailabilityTotal(this) }
+        onResultEnqueue("getAvailableDomains") { LoginEaToIaFetchDomainsTotal(this) }
+        onResultEnqueue("checkUsernameAvailable") { LoginEaToIaUsernameAvailabilityTotal(this) }
 
         flow {
             emit(State.Processing)
@@ -114,8 +114,8 @@ class ChooseAddressViewModel @Inject constructor(
         domain: String,
         isTwoPassModeNeeded: Boolean
     ) = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("unlockUserPrimaryKey") { LoginEaToIaUnlockUserTotalV1(this.toUnlockUserStatus()) }
-        onResultEnqueueObservability("defaultUserCheck") { LoginEaToIaUserCheckTotalV1(this.toUserCheckStatus())}
+        onResultEnqueue("unlockUserPrimaryKey") { LoginEaToIaUnlockUserTotalV1(this.toUnlockUserStatus()) }
+        onResultEnqueue("defaultUserCheck") { LoginEaToIaUserCheckTotalV1(this.toUserCheckStatus())}
 
         flow {
             emit(State.Processing)
@@ -177,6 +177,6 @@ class ChooseAddressViewModel @Inject constructor(
     }
 
     internal fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
-        observabilityManager.enqueue(LoginScreenViewTotal(screenId))
+        manager.enqueue(LoginScreenViewTotal(screenId))
     }
 }

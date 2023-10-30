@@ -36,7 +36,7 @@ class LoginSsoViewModel @Inject constructor(
     private val requiredAccountType: AccountType,
     private val getAuthInfoSso: GetAuthInfoSso,
     private val createLoginSsoSession: CreateLoginSsoSession,
-    override val observabilityManager: ObservabilityManager
+    override val manager: ObservabilityManager
 ) : ViewModel(), ObservabilityContext {
 
     private val mutableState = MutableStateFlow<State>(State.Idle)
@@ -54,7 +54,7 @@ class LoginSsoViewModel @Inject constructor(
     fun startLoginWorkflow(
         email: String,
     ) = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("getAuthInfoSso") { LoginObtainSsoChallengeTokenTotal(this) }
+        onResultEnqueue("getAuthInfoSso") { LoginObtainSsoChallengeTokenTotal(this) }
         flow {
             emit(State.Processing)
             val result = getAuthInfoSso(email = email)
@@ -72,8 +72,8 @@ class LoginSsoViewModel @Inject constructor(
         email: String,
         url: String,
     ) = viewModelScope.launchWithResultContext {
-        enqueueObservability(LoginSsoIdentityProviderResultTotal(Status.success))
-        onResultEnqueueObservability("performLoginSso") { LoginAuthWithSsoTotal(this) }
+        enqueue(LoginSsoIdentityProviderResultTotal(Status.success))
+        onResultEnqueue("performLoginSso") { LoginAuthWithSsoTotal(this) }
         flow {
             emit(State.Processing)
             // Ex: url = "https://app-api.proton.domain/sso/login#token=token&uid=uid"
@@ -94,21 +94,21 @@ class LoginSsoViewModel @Inject constructor(
     }
 
     fun onIdentityProviderError() {
-        enqueueObservability(LoginSsoIdentityProviderResultTotal(Status.error))
+        enqueue(LoginSsoIdentityProviderResultTotal(Status.error))
         mutableState.tryEmit(State.Idle)
     }
 
     fun onIdentityProviderCancel() {
-        enqueueObservability(LoginSsoIdentityProviderResultTotal(Status.cancel))
+        enqueue(LoginSsoIdentityProviderResultTotal(Status.cancel))
         mutableState.tryEmit(State.Idle)
     }
 
     fun onIdentityProviderPageLoad(result: ProtonWebViewActivity.Result) {
-        observabilityManager.enqueue(LoginSsoIdentityProviderPageLoadTotal(result.pageLoadErrorCode))
+        manager.enqueue(LoginSsoIdentityProviderPageLoadTotal(result.pageLoadErrorCode))
     }
 
     fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
-        observabilityManager.enqueue(LoginScreenViewTotal(screenId))
+        manager.enqueue(LoginScreenViewTotal(screenId))
     }
 }
 

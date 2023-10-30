@@ -54,7 +54,7 @@ public open class BillingViewModel @Inject constructor(
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
     clientIdProvider: ClientIdProvider,
-    observabilityManager: ObservabilityManager
+    override val manager: ObservabilityManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
     createPaymentToken,
@@ -62,7 +62,7 @@ public open class BillingViewModel @Inject constructor(
     getCountry,
     humanVerificationManager,
     clientIdProvider,
-    observabilityManager
+    manager
 ) {
     private val _state = MutableStateFlow<State>(State.Idle)
     public val state: StateFlow<State> = _state.asStateFlow()

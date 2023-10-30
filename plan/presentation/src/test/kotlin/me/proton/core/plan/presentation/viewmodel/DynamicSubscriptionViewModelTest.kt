@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
@@ -70,7 +71,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
     @Before
     fun before() {
         viewModel = DynamicSubscriptionViewModel(
-            observabilityManager = observabilityManager,
+            manager = observabilityManager,
             observeUserId = observeUserId,
             observeUserCurrency = observeUserCurrency,
             getDynamicSubscription = getDynamicSubscription,

@@ -413,13 +413,12 @@ public abstract interface class me/proton/core/payment/presentation/ui/PaymentTo
 public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field Companion Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion;
 	public fun <init> (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
-	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
-	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
-	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
+	public fun enqueue (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueue-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun getPlansValidationState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getSubscriptionResult ()Lkotlinx/coroutines/flow/StateFlow;
-	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onCompleteEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueue (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$ScreenId;)V
 	public final fun onThreeDSTokenApproved-TdXInxU (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
 	public static synthetic fun onThreeDSTokenApproved-TdXInxU$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
@@ -583,6 +582,7 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingCommonVi
 public class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel {
 	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun announcePlan ()V
+	public fun getManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getUserInteractionState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun onLoadingStateChange (Z)V

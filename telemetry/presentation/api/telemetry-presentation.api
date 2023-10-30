@@ -13,33 +13,16 @@ public abstract interface class me/proton/core/telemetry/presentation/HiltWrappe
 }
 
 public abstract interface class me/proton/core/telemetry/presentation/ProductMetricsDelegate {
-	public static final field Companion Lme/proton/core/telemetry/presentation/ProductMetricsDelegate$Companion;
-	public static final field KEY_FLOW Ljava/lang/String;
-	public static final field KEY_HTTP_CODE Ljava/lang/String;
-	public static final field KEY_RESULT Ljava/lang/String;
-	public static final field VALUE_FAILURE Ljava/lang/String;
-	public static final field VALUE_SUCCESS Ljava/lang/String;
 	public abstract fun getProductDimensions ()Ljava/util/Map;
 	public abstract fun getProductFlow ()Ljava/lang/String;
 	public abstract fun getProductGroup ()Ljava/lang/String;
 	public abstract fun getTelemetryManager ()Lme/proton/core/telemetry/domain/TelemetryManager;
 	public abstract fun getUserId ()Lme/proton/core/domain/entity/UserId;
-	public abstract fun toTelemetryEvent (Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
-}
-
-public final class me/proton/core/telemetry/presentation/ProductMetricsDelegate$Companion {
-	public static final field KEY_FLOW Ljava/lang/String;
-	public static final field KEY_HTTP_CODE Ljava/lang/String;
-	public static final field KEY_RESULT Ljava/lang/String;
-	public static final field VALUE_FAILURE Ljava/lang/String;
-	public static final field VALUE_SUCCESS Ljava/lang/String;
 }
 
 public final class me/proton/core/telemetry/presentation/ProductMetricsDelegate$DefaultImpls {
 	public static fun getProductDimensions (Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;)Ljava/util/Map;
 	public static fun getUserId (Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;)Lme/proton/core/domain/entity/UserId;
-	public static fun toTelemetryEvent (Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
-	public static synthetic fun toTelemetryEvent$default (Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
 }
 
 public abstract interface class me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner {

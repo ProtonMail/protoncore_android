@@ -103,7 +103,7 @@ class AccountRecoveryDialogSnapshotMockTest {
                 observeUserRecovery = observeUserRecovery,
                 cancelRecovery = cancelRecovery,
                 keyStoreCrypto = keyStoreCrypto,
-                observabilityManager = observabilityManager,
+                manager = observabilityManager,
                 getUser = getUser
             )
         )

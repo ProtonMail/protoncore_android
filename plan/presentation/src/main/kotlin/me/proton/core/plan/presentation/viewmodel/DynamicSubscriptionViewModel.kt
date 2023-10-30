@@ -46,7 +46,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class DynamicSubscriptionViewModel @Inject constructor(
-    override val observabilityManager: ObservabilityManager,
+    override val manager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
     private val observeUserCurrency: ObserveUserCurrency,
     private val getDynamicSubscription: GetDynamicSubscription,
@@ -83,7 +83,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         .flatMapLatest { (userId, currency) -> loadSubscription(userId, currency) }
 
     private suspend fun loadSubscription(userId: UserId?, currency: String) = flowWithResultContext {
-        it.onResultEnqueueObservability("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
+        it.onResultEnqueue("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
         send(State.Loading)
         when (userId) {
             null -> send(State.UserNotExist)
@@ -105,7 +105,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     }
 
     fun onScreenView() {
-        observabilityManager.enqueue(
+        manager.enqueue(
             CheckoutScreenViewTotal(CheckoutScreenViewTotal.ScreenId.dynamicPlansCurrentSubscription)
         )
     }

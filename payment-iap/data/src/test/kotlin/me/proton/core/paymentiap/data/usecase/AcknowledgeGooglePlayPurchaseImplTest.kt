@@ -53,7 +53,7 @@ internal class AcknowledgeGooglePlayPurchaseImplTest {
         tested = AcknowledgeGooglePlayPurchaseImpl(
             googleBillingRepositoryProvider = { googleBillingRepository },
             googlePurchaseRepository = googlePurchaseRepository,
-            observabilityManager = observabilityManager
+            manager = observabilityManager
         )
     }
 
