@@ -11,6 +11,39 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.2.0] - 2023-10-30
+
+### Features
+
+- feature-flag:
+  - Improved Unleash FeatureFlag refresh strategy.
+- notification:
+  - Added Permission Request Show Rationale config.
+- observability:
+  - Added http1xx/http3xx/cancellation ApiStatus and Log unknown.
+- presentation:
+  - Added Custom Snackbar Duration (short: 2.5s, long: 5s).
+- telemetry:
+  - Add WelcomeScreen and LoginScreen metrics.
+  - Add view and screen metrics api.
+
+### Bug Fixes
+
+- account-manager:
+  - Prevent refresh if session changed in the meantime.
+- notification:
+  - Cancel ObservePushNotifications on Account not Ready.
+
+### Internationalization
+
+- Upgrade translations from crowdin (c1a757f2).
+
+### Reverted Changes
+
+- "feat(telemetry): Add WelcomeScreen and LoginScreen metrics."
+
+  This reverts commit d75d59b9ac16890b4b7f3a4637713a0aadbb485e.
+
 ## [17.1.0] - 2023-10-23
 
 ### Chores
