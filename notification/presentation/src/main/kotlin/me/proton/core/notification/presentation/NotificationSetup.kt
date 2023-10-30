@@ -19,6 +19,8 @@
 package me.proton.core.notification.presentation
 
 import androidx.lifecycle.DefaultLifecycleObserver
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.first
@@ -27,7 +29,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.onAccountState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.entity.NotificationId
@@ -42,8 +43,10 @@ import me.proton.core.presentation.app.AppLifecycleObserver
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Suppress("LongParameterList")
+@Singleton
 public class NotificationSetup @Inject internal constructor(
     private val accountManager: AccountManager,
     private val activityProvider: ActivityProvider,
@@ -59,17 +62,37 @@ public class NotificationSetup @Inject internal constructor(
     public operator fun invoke() {
         if (!isNotificationsEnabled()) return
 
+        // Register Notification Deeplink.
         setupDeeplink()
 
-        accountManager.onAccountState(AccountState.Ready).onEach { account ->
-            observePushNotifications(account.userId)
-        }.launchIn(scopeProvider.GlobalDefaultSupervisedScope)
-
-        // Setup for notification permissions:
         scopeProvider.GlobalDefaultSupervisedScope.launch {
+            // Setup for notification permissions.
             waitForConditions()
             setupNotifications()
         }
+
+        scopeProvider.GlobalDefaultSupervisedScope.launch {
+            // Observe/cancel Push Notifications.
+            observeAccountState()
+        }
+    }
+
+    private suspend fun observeAccountState() {
+        accountManager.onAccountStateChanged(initialState = true).onEach { account ->
+            when (account.state) {
+                AccountState.Ready -> observePushes(account.userId)
+                else -> cancelPushes(account.userId)
+            }
+        }.collect()
+    }
+
+    private fun observePushes(userId: UserId) {
+        observeJobMap[userId]?.cancel()
+        observeJobMap[userId] = observePushNotifications(userId)
+    }
+
+    private fun cancelPushes(userId: UserId) {
+        observeJobMap[userId]?.cancel()
     }
 
     /** App in foreground, an account is ready. */
@@ -106,5 +129,9 @@ public class NotificationSetup @Inject internal constructor(
             notificationManager.onNotificationConsumed(notificationId, userId)
         }
         return true
+    }
+
+    internal companion object {
+        val observeJobMap: MutableMap<UserId, Job> = mutableMapOf()
     }
 }

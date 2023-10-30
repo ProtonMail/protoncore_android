@@ -297,7 +297,7 @@ public final class me/proton/core/notification/presentation/usecase/IsNotificati
 
 public final class me/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl : me/proton/core/notification/domain/usecase/ObservePushNotifications {
 	public fun <init> (Lme/proton/core/notification/domain/repository/NotificationRepository;Lme/proton/core/notification/domain/ProtonNotificationManager;Lme/proton/core/push/domain/repository/PushRepository;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
-	public fun invoke (Lme/proton/core/domain/entity/UserId;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 }
 
 public final class me/proton/core/notification/presentation/usecase/ObservePushNotificationsImpl_Factory : dagger/internal/Factory {

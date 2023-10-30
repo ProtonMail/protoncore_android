@@ -18,6 +18,7 @@
 
 package me.proton.core.notification.presentation.usecase
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
@@ -36,8 +37,8 @@ public class ObservePushNotificationsImpl @Inject constructor(
     private val pushRepository: PushRepository,
     private val scopeProvider: CoroutineScopeProvider
 ) : ObservePushNotifications {
-    override fun invoke(userId: UserId) {
-        scopeProvider.GlobalDefaultSupervisedScope.launch {
+    override fun invoke(userId: UserId): Job {
+        return scopeProvider.GlobalDefaultSupervisedScope.launch {
             pushRepository.observeAllPushes(userId, PushObjectType.Notifications).collect {
                 handlePushes(it, userId)
             }

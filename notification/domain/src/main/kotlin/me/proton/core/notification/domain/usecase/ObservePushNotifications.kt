@@ -18,6 +18,7 @@
 
 package me.proton.core.notification.domain.usecase
 
+import kotlinx.coroutines.Job
 import me.proton.core.domain.entity.UserId
 
 public interface ObservePushNotifications {
@@ -26,5 +27,5 @@ public interface ObservePushNotifications {
      * and [me.proton.core.push.domain.entity.PushObjectType.Notifications] type
      * are observed.
      */
-    public operator fun invoke(userId: UserId)
+    public operator fun invoke(userId: UserId): Job
 }
