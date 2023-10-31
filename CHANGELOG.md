@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.2.1] - 2023-10-31
+
+### Bug Fixes
+
+- observability:
+  - Update Observability Metrics version.
+
 ## [17.2.0] - 2023-10-30
 
 ### Features
