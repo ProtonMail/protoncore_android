@@ -28,7 +28,7 @@ import me.proton.core.observability.domain.metrics.common.toUsernameAvailability
 
 @Serializable
 @Schema(description = "Checking for username availability when converting External account to Internal.")
-@SchemaId("https://proton.me/android_core_login_eaToIaUsernameAvailability_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_login_eaToIaUsernameAvailability_total_v3.schema.json")
 public data class LoginEaToIaUsernameAvailabilityTotal(
     override val Labels: UsernameAvailabilityLabels,
     @Required override val Value: Long = 1

@@ -27,7 +27,7 @@ import me.proton.core.observability.domain.metrics.common.GiapStatus
 
 @Serializable
 @Schema(description = "Launching the GIAP billing flow.")
-@SchemaId("https://proton.me/android_core_checkout_giapBilling_launchBilling_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_giapBilling_launchBilling_total_v3.schema.json")
 public data class CheckoutGiapBillingLaunchBillingTotal(
     override val Labels: GiapLabels,
     @Required override val Value: Long = 1

@@ -28,7 +28,7 @@ import me.proton.core.observability.domain.metrics.common.toUsernameAvailability
 
 @Serializable
 @Schema(description = "Checking for username availability during the signup.")
-@SchemaId("https://proton.me/android_core_signup_usernameAvailability_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_signup_usernameAvailability_total_v3.schema.json")
 public data class SignupUsernameAvailabilityTotal(
     override val Labels: UsernameAvailabilityLabels,
     @Required override val Value: Long = 1

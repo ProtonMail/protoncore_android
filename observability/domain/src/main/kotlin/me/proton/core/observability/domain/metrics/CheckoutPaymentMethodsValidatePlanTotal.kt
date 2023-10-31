@@ -27,7 +27,7 @@ import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
 @Schema(description = "Validating a plan on Existing Payment Options screen.")
-@SchemaId("https://proton.me/android_core_checkout_paymentMethods_validatePlan_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_paymentMethods_validatePlan_total_v3.schema.json")
 public data class CheckoutPaymentMethodsValidatePlanTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1

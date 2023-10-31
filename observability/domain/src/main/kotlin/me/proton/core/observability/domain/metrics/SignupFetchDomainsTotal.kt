@@ -28,7 +28,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Fetching the domains during the signup.")
-@SchemaId("https://proton.me/android_core_signup_fetchDomains_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_signup_fetchDomains_total_v3.schema.json")
 public data class SignupFetchDomainsTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1

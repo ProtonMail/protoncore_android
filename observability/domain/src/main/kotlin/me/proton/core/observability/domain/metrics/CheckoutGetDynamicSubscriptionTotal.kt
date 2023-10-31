@@ -29,7 +29,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Querying for a current dynamic subscription.")
-@SchemaId("https://proton.me/android_core_checkout_dynamicPlans_getDynamicSubscription_total_v1.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_dynamicPlans_getDynamicSubscription_total_v2.schema.json")
 public data class CheckoutGetDynamicSubscriptionTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1

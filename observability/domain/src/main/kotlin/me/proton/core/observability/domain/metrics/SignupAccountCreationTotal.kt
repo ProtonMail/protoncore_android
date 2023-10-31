@@ -36,7 +36,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Account creation.")
-@SchemaId("https://proton.me/android_core_signup_accountCreation_total_v3.schema.json")
+@SchemaId("https://proton.me/android_core_signup_accountCreation_total_v4.schema.json")
 public data class SignupAccountCreationTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,

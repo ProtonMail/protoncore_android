@@ -28,7 +28,7 @@ import me.proton.core.observability.domain.metrics.common.toCreatePaymentTokenSt
 
 @Serializable
 @Schema(description = "Creating a payment token on Existing Payment Options screen.")
-@SchemaId("https://proton.me/android_core_checkout_paymentMethods_createPaymentToken_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_paymentMethods_createPaymentToken_total_v3.schema.json")
 public data class CheckoutPaymentMethodsCreatePaymentTokenTotal(
     override val Labels: CreatePaymentTokenLabels,
     @Required override val Value: Long = 1

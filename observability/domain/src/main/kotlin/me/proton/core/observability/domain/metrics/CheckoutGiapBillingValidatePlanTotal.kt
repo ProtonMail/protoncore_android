@@ -27,7 +27,7 @@ import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 
 @Serializable
 @Schema(description = "Validating a plan for GIAP billing.")
-@SchemaId("https://proton.me/android_core_checkout_giapBilling_validatePlan_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_giapBilling_validatePlan_total_v3.schema.json")
 public data class CheckoutGiapBillingValidatePlanTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1

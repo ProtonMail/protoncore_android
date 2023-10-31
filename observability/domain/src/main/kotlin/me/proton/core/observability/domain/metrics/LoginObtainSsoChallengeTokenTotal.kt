@@ -29,7 +29,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Obtaining the SSO challenge token.")
-@SchemaId("https://proton.me/android_core_login_sso_obtainChallengeToken_total_v1.schema.json")
+@SchemaId("https://proton.me/android_core_login_sso_obtainChallengeToken_total_v2.schema.json")
 public data class LoginObtainSsoChallengeTokenTotal(
     override val Labels: StatusLabels,
     @Required override val Value: Long = 1,

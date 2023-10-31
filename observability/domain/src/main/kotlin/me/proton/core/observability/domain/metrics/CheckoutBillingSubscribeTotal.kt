@@ -26,7 +26,7 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 
 @Serializable
 @Schema(description = "Subscribing to a paid plan (after the login).")
-@SchemaId("https://proton.me/android_core_checkout_billing_subscribe_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_billing_subscribe_total_v3.schema.json")
 public data class CheckoutBillingSubscribeTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,

@@ -27,7 +27,7 @@ import me.proton.core.observability.domain.metrics.common.GiapStatus
 
 @Serializable
 @Schema(description = "Querying for a product via Google Billing library.")
-@SchemaId("https://proton.me/android_core_checkout_giapBilling_productQuery_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_checkout_giapBilling_productQuery_total_v3.schema.json")
 public data class CheckoutGiapBillingProductQueryTotal(
     override val Labels: GiapLabels,
     @Required override val Value: Long = 1

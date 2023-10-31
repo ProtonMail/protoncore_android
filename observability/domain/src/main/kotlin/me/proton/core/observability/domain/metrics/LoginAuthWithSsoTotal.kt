@@ -29,7 +29,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Perform an auth, using SSO token.")
-@SchemaId("https://proton.me/android_core_login_sso_auth_total_v1.schema.json")
+@SchemaId("https://proton.me/android_core_login_sso_auth_total_v2.schema.json")
 public data class LoginAuthWithSsoTotal(
     override val Labels: StatusLabels,
     @Required override val Value: Long = 1,

@@ -29,7 +29,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 
 @Serializable
 @Schema(description = "Cancel an account recovery attempt.")
-@SchemaId("https://proton.me/android_core_accountRecovery_cancellation_total_v1.schema.json")
+@SchemaId("https://proton.me/android_core_accountRecovery_cancellation_total_v2.schema.json")
 public data class AccountRecoveryCancellationTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,

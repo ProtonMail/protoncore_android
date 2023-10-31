@@ -1986,110 +1986,110 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$Companion;
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)V
 	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;
 	public final fun component2 ()J
-	public final fun copy (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;J)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;
 	public fun equals (Ljava/lang/Object;)Z
 	public synthetic fun getLabels ()Ljava/lang/Object;
 	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$$serializer;
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$Companion {
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData {
-	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData$Companion;
-	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
-	public final fun component1 ()Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData$Companion;
+	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
 	public final fun component2 ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
-	public final fun copy (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;
-	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSession_type ()Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;
+	public final fun getSession_type ()Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData$$serializer;
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData$$serializer;
 	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
 	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;
 	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
 	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;)V
 	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$LabelsData$Companion {
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType : java/lang/Enum {
-	public static final field standard Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;
-	public static final field unauth Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;
-	public static fun values ()[Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotalV1$SessionType;
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType : java/lang/Enum {
+	public static final field standard Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
+	public static final field unauth Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal : me/proton/core/observability/domain/metrics/ObservabilityData {

@@ -44,7 +44,7 @@ import me.proton.core.observability.domain.metrics.common.toObservabilityAccount
 
 @Serializable
 @Schema(description = "Logging in just after the signup.")
-@SchemaId("https://proton.me/android_core_signup_login_total_v3.schema.json")
+@SchemaId("https://proton.me/android_core_signup_login_total_v4.schema.json")
 public data class SignupLoginTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
