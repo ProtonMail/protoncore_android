@@ -31,13 +31,14 @@ class ServerTimeInterceptor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val response = chain.proceed(request)
-        val serverUtc = response.headers.getDate("date")
-        if (serverUtc != null) {
-            serverTimeListener.onServerTimeMillisUpdated(serverUtc.time)
-        } else {
-            CoreLogger.e(LogTag.SERVER_TIME_PARSE_ERROR, "Could not parse 'date' from response headers")
+        if (response.isSuccessful) {
+            val serverUtc = response.headers.getDate("date")
+            if (serverUtc != null) {
+                serverTimeListener.onServerTimeMillisUpdated(serverUtc.time)
+            } else {
+                CoreLogger.e(LogTag.SERVER_TIME_PARSE_ERROR, "Could not parse 'date' from response headers")
+            }
         }
-
         return response
     }
 }
