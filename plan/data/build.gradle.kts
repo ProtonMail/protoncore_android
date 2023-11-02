@@ -36,9 +36,6 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.plan.data"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
@@ -51,8 +48,6 @@ dependencies {
         `javax-inject`,
         `serialization-core`
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.kotlinUtil),

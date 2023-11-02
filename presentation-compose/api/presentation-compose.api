@@ -17,6 +17,7 @@ public final class me/proton/core/compose/activity/CameraLauncherKt {
 public final class me/proton/core/compose/activity/Capture : java/lang/Enum {
 	public static final field IMAGE Lme/proton/core/compose/activity/Capture;
 	public static final field VIDEO Lme/proton/core/compose/activity/Capture;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/compose/activity/Capture;
 	public static fun values ()[Lme/proton/core/compose/activity/Capture;
 }
@@ -356,6 +357,7 @@ public final class me/proton/core/compose/component/ProtonSnackbarType : java/la
 	public static final field NORM Lme/proton/core/compose/component/ProtonSnackbarType;
 	public static final field SUCCESS Lme/proton/core/compose/component/ProtonSnackbarType;
 	public static final field WARNING Lme/proton/core/compose/component/ProtonSnackbarType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/compose/component/ProtonSnackbarType;
 	public static fun values ()[Lme/proton/core/compose/component/ProtonSnackbarType;
 }

@@ -192,6 +192,8 @@ public abstract class me/proton/core/usersettings/presentation/ui/Hilt_PasswordM
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/usersettings/presentation/ui/Hilt_PasswordManagementFragment : me/proton/core/presentation/ui/ProtonSecureFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -214,6 +216,8 @@ public abstract class me/proton/core/usersettings/presentation/ui/Hilt_UpdateRec
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/usersettings/presentation/ui/Hilt_UpdateRecoveryEmailFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {

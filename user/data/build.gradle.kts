@@ -36,9 +36,6 @@ protonCoverage {
 
 android {
     namespace = "me.proton.core.user.data"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -59,8 +56,6 @@ dependencies {
         `serialization-core`,
         retrofit
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.accountData),

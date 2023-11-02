@@ -32,9 +32,6 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.payment.data"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
@@ -46,8 +43,6 @@ dependencies {
         `javax-inject`,
         `serialization-core`
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.dataRoom),

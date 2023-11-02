@@ -52,9 +52,10 @@ public class ProtonGlobalCoveragePlugin : Plugin<Project> {
             target.evaluationDependsOn(project.path)
         }
 
+        target.plugins.apply(PluginIds.javaLibrary)
+        target.plugins.apply(PluginIds.kotlinJvm)
+
         target.afterEvaluate {
-            target.plugins.apply(PluginIds.javaLibrary)
-            target.plugins.apply(PluginIds.kotlinJvm)
             target.plugins.apply(KoverGradlePlugin::class.java)
 
             target.extensions.configure<ProtonCoverageExtension> {

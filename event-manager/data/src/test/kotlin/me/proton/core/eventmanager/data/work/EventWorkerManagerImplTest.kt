@@ -75,8 +75,15 @@ internal class EventWorkerManagerImplTest {
     private val futureOperation = SettableFuture.create<Operation.State.SUCCESS>()
     private val operation = mockk<Operation> { coEvery { this@mockk.result } returns futureOperation }
 
-    private fun createWorkInfo(state: WorkInfo.State) =
-        WorkInfo(UUID.randomUUID(), state, Data.EMPTY, emptyList(), Data.EMPTY, 0)
+    private fun createWorkInfo(state: WorkInfo.State) = WorkInfo(
+        /* id = */ UUID.randomUUID(),
+        /* state = */ state,
+        /* outputData = */ Data.EMPTY,
+        /* tags = */ emptyList(),
+        /* progress = */ Data.EMPTY,
+        /* runAttemptCount = */ 0,
+        /* generation = */ 0
+    )
 
     @Before
     fun setup() {

@@ -51,6 +51,7 @@ public abstract interface class me/proton/core/accountmanager/domain/migrator/Ac
 public final class me/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration : java/lang/Enum {
 	public static final field DecryptPassphrase Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
 	public static final field RefreshUser Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
 	public static fun values ()[Lme/proton/core/accountmanager/domain/migrator/AccountMigrator$Migration;
 }

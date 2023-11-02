@@ -121,7 +121,6 @@ public final class me/proton/core/eventmanager/data/api/EventApi$DefaultImpls {
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;II)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
@@ -134,7 +133,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCalendarEven
 	public final fun getRefresh ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -154,7 +152,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCalendarEven
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;
@@ -163,7 +160,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCalendarLate
 	public final fun getEventId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -183,7 +179,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCalendarLate
 
 public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;II)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
@@ -196,7 +191,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsRe
 	public final fun getRefresh ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCoreEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -216,7 +210,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreEventsRe
 
 public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;
@@ -225,7 +218,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEv
 	public final fun getEventId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -245,7 +237,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetCoreLatestEv
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;II)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
@@ -258,7 +249,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsR
 	public final fun getRefresh ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetDriveEventsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -278,7 +268,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetDriveEventsR
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse {
 	public static final field Companion Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;
@@ -287,7 +276,6 @@ public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestE
 	public final fun getEventId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetDriveLatestEventIdResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

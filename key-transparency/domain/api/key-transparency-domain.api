@@ -87,6 +87,7 @@ public final class me/proton/core/keytransparency/domain/entity/CertificateIssue
 	public static final field Companion Lme/proton/core/keytransparency/domain/entity/CertificateIssuer$Companion;
 	public static final field LetsEncrypt Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
 	public static final field ZeroSsl Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
 	public static fun values ()[Lme/proton/core/keytransparency/domain/entity/CertificateIssuer;
@@ -156,6 +157,7 @@ public final class me/proton/core/keytransparency/domain/entity/ProofType : java
 	public static final field Companion Lme/proton/core/keytransparency/domain/entity/ProofType$Companion;
 	public static final field EXISTENCE Lme/proton/core/keytransparency/domain/entity/ProofType;
 	public static final field OBSOLESCENCE Lme/proton/core/keytransparency/domain/entity/ProofType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getIntEnum ()Lme/proton/core/domain/type/IntEnum;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/keytransparency/domain/entity/ProofType;
@@ -323,6 +325,7 @@ public final class me/proton/core/keytransparency/domain/usecase/HostType : java
 	public static final field Black Lme/proton/core/keytransparency/domain/usecase/HostType;
 	public static final field Other Lme/proton/core/keytransparency/domain/usecase/HostType;
 	public static final field Production Lme/proton/core/keytransparency/domain/usecase/HostType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/keytransparency/domain/usecase/HostType;
 	public static fun values ()[Lme/proton/core/keytransparency/domain/usecase/HostType;
 }

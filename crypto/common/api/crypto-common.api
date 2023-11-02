@@ -303,6 +303,7 @@ public final class me/proton/core/crypto/common/pgp/PGPCrypto$DefaultImpls {
 
 public final class me/proton/core/crypto/common/pgp/PGPCrypto$KeyType : java/lang/Enum {
 	public static final field X25519 Lme/proton/core/crypto/common/pgp/PGPCrypto$KeyType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public fun toString ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/crypto/common/pgp/PGPCrypto$KeyType;
 	public static fun values ()[Lme/proton/core/crypto/common/pgp/PGPCrypto$KeyType;
@@ -347,6 +348,7 @@ public final class me/proton/core/crypto/common/pgp/PGPHeader : java/lang/Enum {
 	public static final field PrivateKey Lme/proton/core/crypto/common/pgp/PGPHeader;
 	public static final field PublicKey Lme/proton/core/crypto/common/pgp/PGPHeader;
 	public static final field Signature Lme/proton/core/crypto/common/pgp/PGPHeader;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/crypto/common/pgp/PGPHeader;
 	public static fun values ()[Lme/proton/core/crypto/common/pgp/PGPHeader;
 }
@@ -355,6 +357,7 @@ public final class me/proton/core/crypto/common/pgp/PacketType : java/lang/Enum 
 	public static final field Data Lme/proton/core/crypto/common/pgp/PacketType;
 	public static final field Key Lme/proton/core/crypto/common/pgp/PacketType;
 	public static final field Signature Lme/proton/core/crypto/common/pgp/PacketType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/crypto/common/pgp/PacketType;
 	public static fun values ()[Lme/proton/core/crypto/common/pgp/PacketType;
 }
@@ -440,6 +443,7 @@ public final class me/proton/core/crypto/common/pgp/VerificationStatus : java/la
 	public static final field NotSigned Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static final field Success Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static final field Unknown Lme/proton/core/crypto/common/pgp/VerificationStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/crypto/common/pgp/VerificationStatus;
 	public static fun values ()[Lme/proton/core/crypto/common/pgp/VerificationStatus;
 }

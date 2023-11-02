@@ -803,6 +803,7 @@ public final class me/proton/core/auth/presentation/entity/AddAccountWorkflow : 
 	public static final field CredentialLess Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 	public static final field SignIn Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 	public static final field SignUp Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 	public static fun values ()[Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 }
@@ -989,6 +990,7 @@ public final class me/proton/core/auth/presentation/entity/NextStep : java/lang/
 	public static final field SecondFactor Lme/proton/core/auth/presentation/entity/NextStep;
 	public static final field TwoPassMode Lme/proton/core/auth/presentation/entity/NextStep;
 	public fun describeContents ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/NextStep;
 	public static fun values ()[Lme/proton/core/auth/presentation/entity/NextStep;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
@@ -1273,6 +1275,7 @@ public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod
 public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethodType : java/lang/Enum {
 	public static final field EMAIL Lme/proton/core/auth/presentation/entity/signup/RecoveryMethodType;
 	public static final field SMS Lme/proton/core/auth/presentation/entity/signup/RecoveryMethodType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/signup/RecoveryMethodType;
 	public static fun values ()[Lme/proton/core/auth/presentation/entity/signup/RecoveryMethodType;
 }
@@ -1475,6 +1478,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_AddAccountActivit
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_AuthHelpActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1484,6 +1489,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_AuthHelpActivity 
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_ChooseAddressActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1493,6 +1500,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_ChooseAddressActi
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_ConfirmPasswordActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1502,6 +1511,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_ConfirmPasswordAc
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_LoginActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1511,6 +1522,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_LoginActivity : m
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_LoginSsoActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1520,6 +1533,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_LoginSsoActivity 
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_SecondFactorActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1529,6 +1544,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_SecondFactorActiv
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_TwoPassModeActivity : me/proton/core/auth/presentation/ui/AuthActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1538,6 +1555,8 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_TwoPassModeActivi
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton/core/auth/presentation/ui/AuthActivity, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
@@ -1900,6 +1919,8 @@ public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_SignupActi
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_SignupFinishedFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {

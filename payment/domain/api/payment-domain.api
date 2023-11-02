@@ -92,6 +92,7 @@ public final class me/proton/core/payment/domain/entity/Currency : java/lang/Enu
 	public static final field CHF Lme/proton/core/payment/domain/entity/Currency;
 	public static final field EUR Lme/proton/core/payment/domain/entity/Currency;
 	public static final field USD Lme/proton/core/payment/domain/entity/Currency;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/Currency;
 	public static fun values ()[Lme/proton/core/payment/domain/entity/Currency;
 }
@@ -173,6 +174,7 @@ public final class me/proton/core/payment/domain/entity/PaymentMethodType : java
 	public static final field CARD Lme/proton/core/payment/domain/entity/PaymentMethodType;
 	public static final field Companion Lme/proton/core/payment/domain/entity/PaymentMethodType$Companion;
 	public static final field PAYPAL Lme/proton/core/payment/domain/entity/PaymentMethodType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentMethodType;
 	public static fun values ()[Lme/proton/core/payment/domain/entity/PaymentMethodType;
@@ -248,6 +250,7 @@ public final class me/proton/core/payment/domain/entity/PaymentTokenStatus : jav
 	public static final field FAILED Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 	public static final field NOT_SUPPORTED Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 	public static final field PENDING Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 	public static fun values ()[Lme/proton/core/payment/domain/entity/PaymentTokenStatus;
 }
@@ -365,6 +368,7 @@ public final class me/proton/core/payment/domain/entity/SubscriptionCycle : java
 	public static final field OTHER Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static final field TWO_YEARS Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static final field YEARLY Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public static fun values ()[Lme/proton/core/payment/domain/entity/SubscriptionCycle;
@@ -532,6 +536,7 @@ public final class me/proton/core/payment/domain/usecase/PaymentProvider : java/
 	public static final field CardPayment Lme/proton/core/payment/domain/usecase/PaymentProvider;
 	public static final field GoogleInAppPurchase Lme/proton/core/payment/domain/usecase/PaymentProvider;
 	public static final field PayPal Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/usecase/PaymentProvider;
 	public static fun values ()[Lme/proton/core/payment/domain/usecase/PaymentProvider;
 }

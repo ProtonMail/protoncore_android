@@ -39,6 +39,7 @@ dependencies {
     )
 
     testImplementation(
+        project(Module.kotlinTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,

@@ -27,13 +27,9 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.util.android.dagger"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
-    coreLibraryDesugaring(`desugar-jdk-libs`)
     implementation(
         project(Module.kotlinUtil),
         project(Module.presentation),

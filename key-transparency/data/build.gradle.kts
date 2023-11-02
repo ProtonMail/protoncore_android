@@ -40,9 +40,6 @@ protonBuild {
 
 android {
     namespace = "me.proton.core.keytransparency.data"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -64,8 +61,6 @@ dependencies {
         `room-ktx`,
 
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     api(
         project(Module.cryptoCommon),

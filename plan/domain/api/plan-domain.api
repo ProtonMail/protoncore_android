@@ -64,6 +64,7 @@ public final class me/proton/core/plan/domain/entity/DynamicDecorationAnchor : j
 	public static final field Subtitle Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
 	public static final field Title Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
 	public final fun getAnchor ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicDecorationAnchor;
 }
@@ -168,6 +169,7 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanFeature : java/l
 	public static final field CatchAll Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
 	public static final field Companion Lme/proton/core/plan/domain/entity/DynamicPlanFeature$Companion;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanFeature;
 }
@@ -206,6 +208,7 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanLayout : java/la
 	public static final field Companion Lme/proton/core/plan/domain/entity/DynamicPlanLayout$Companion;
 	public static final field Default Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
 	public final fun getCode ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanLayout;
 }
@@ -261,6 +264,7 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanService : java/l
 	public static final field Pass Lme/proton/core/plan/domain/entity/DynamicPlanService;
 	public static final field Vpn Lme/proton/core/plan/domain/entity/DynamicPlanService;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanService;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanService;
 }
@@ -273,6 +277,7 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanState : java/lan
 	public static final field Available Lme/proton/core/plan/domain/entity/DynamicPlanState;
 	public static final field Unavailable Lme/proton/core/plan/domain/entity/DynamicPlanState;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanState;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanState;
 }
@@ -282,6 +287,7 @@ public final class me/proton/core/plan/domain/entity/DynamicPlanType : java/lang
 	public static final field Primary Lme/proton/core/plan/domain/entity/DynamicPlanType;
 	public static final field Secondary Lme/proton/core/plan/domain/entity/DynamicPlanType;
 	public final fun getCode ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicPlanType;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/DynamicPlanType;
 }
@@ -555,6 +561,7 @@ public final class me/proton/core/plan/domain/entity/SubscriptionManagement : ja
 	public static final field Companion Lme/proton/core/plan/domain/entity/SubscriptionManagement$Companion;
 	public static final field GOOGLE_MANAGED Lme/proton/core/plan/domain/entity/SubscriptionManagement;
 	public static final field PROTON_MANAGED Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/SubscriptionManagement;
 	public static fun values ()[Lme/proton/core/plan/domain/entity/SubscriptionManagement;

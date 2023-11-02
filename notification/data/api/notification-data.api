@@ -26,7 +26,6 @@ public final class me/proton/core/notification/data/NotificationEventListener_Fa
 public final class me/proton/core/notification/data/NotificationEvents {
 	public static final field Companion Lme/proton/core/notification/data/NotificationEvents$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/List;
@@ -36,7 +35,6 @@ public final class me/proton/core/notification/data/NotificationEvents {
 	public final fun getNotifications ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/notification/data/NotificationEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/data/NotificationEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -133,7 +131,6 @@ public final class me/proton/core/notification/data/remote/NotificationRemoteDat
 public final class me/proton/core/notification/data/remote/response/NotificationPayloadResponse {
 	public static final field Companion Lme/proton/core/notification/data/remote/response/NotificationPayloadResponse$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -147,7 +144,6 @@ public final class me/proton/core/notification/data/remote/response/Notification
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/notification/data/remote/response/NotificationPayloadResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/data/remote/response/NotificationPayloadResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -167,7 +163,6 @@ public final class me/proton/core/notification/data/remote/response/Notification
 
 public final class me/proton/core/notification/data/remote/response/NotificationResponse {
 	public static final field Companion Lme/proton/core/notification/data/remote/response/NotificationResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;JLjava/lang/String;Lkotlinx/serialization/json/JsonElement;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;JLjava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()J
@@ -182,7 +177,6 @@ public final class me/proton/core/notification/data/remote/response/Notification
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/notification/data/remote/response/NotificationResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/data/remote/response/NotificationResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

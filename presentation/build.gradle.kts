@@ -67,9 +67,6 @@ dependencies {
         `lifecycle-process`,
     )
 
-    // Android
-    compileOnly(`android-annotation`)
-
     // Test
     testImplementation(
         project(Module.androidTest),

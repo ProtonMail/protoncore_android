@@ -19,7 +19,6 @@ public final class me/proton/core/payment/data/ProtonIAPBillingLibraryImpl : me/
 
 public final class me/proton/core/payment/data/api/request/CardDetailsBody {
 	public static final field Companion Lme/proton/core/payment/data/api/request/CardDetailsBody$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -40,7 +39,6 @@ public final class me/proton/core/payment/data/api/request/CardDetailsBody {
 	public final fun getZip ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/payment/data/api/request/CardDetailsBody;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/payment/data/api/request/CardDetailsBody$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -60,7 +58,6 @@ public final class me/proton/core/payment/data/api/request/CardDetailsBody$Compa
 
 public final class me/proton/core/payment/data/api/request/IAPDetailsBody {
 	public static final field Companion Lme/proton/core/payment/data/api/request/IAPDetailsBody$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -77,7 +74,6 @@ public final class me/proton/core/payment/data/api/request/IAPDetailsBody {
 	public final fun getPurchaseToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/payment/data/api/request/IAPDetailsBody;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/payment/data/api/request/IAPDetailsBody$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

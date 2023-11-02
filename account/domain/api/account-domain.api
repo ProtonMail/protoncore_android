@@ -73,6 +73,7 @@ public final class me/proton/core/account/domain/entity/AccountState : java/lang
 	public static final field UnlockFailed Lme/proton/core/account/domain/entity/AccountState;
 	public static final field UserAddressKeyCheckFailed Lme/proton/core/account/domain/entity/AccountState;
 	public static final field UserKeyCheckFailed Lme/proton/core/account/domain/entity/AccountState;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/account/domain/entity/AccountState;
 	public static fun values ()[Lme/proton/core/account/domain/entity/AccountState;
 }
@@ -81,6 +82,7 @@ public final class me/proton/core/account/domain/entity/AccountType : java/lang/
 	public static final field External Lme/proton/core/account/domain/entity/AccountType;
 	public static final field Internal Lme/proton/core/account/domain/entity/AccountType;
 	public static final field Username Lme/proton/core/account/domain/entity/AccountType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/account/domain/entity/AccountType;
 	public static fun values ()[Lme/proton/core/account/domain/entity/AccountType;
 }
@@ -110,6 +112,7 @@ public final class me/proton/core/account/domain/entity/SessionState : java/lang
 	public static final field SecondFactorFailed Lme/proton/core/account/domain/entity/SessionState;
 	public static final field SecondFactorNeeded Lme/proton/core/account/domain/entity/SessionState;
 	public static final field SecondFactorSuccess Lme/proton/core/account/domain/entity/SessionState;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/account/domain/entity/SessionState;
 	public static fun values ()[Lme/proton/core/account/domain/entity/SessionState;
 }

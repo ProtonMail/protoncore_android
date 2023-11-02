@@ -206,6 +206,8 @@ public abstract class me/proton/core/notification/presentation/ui/Hilt_Notificat
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public final class me/proton/core/notification/presentation/ui/NotificationPermissionActivity : me/proton/core/presentation/ui/ProtonActivity {

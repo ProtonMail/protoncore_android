@@ -518,6 +518,7 @@ public final class me/proton/core/plan/presentation/entity/PlanCurrency : java/l
 	public static final field Companion Lme/proton/core/plan/presentation/entity/PlanCurrency$Companion;
 	public static final field EUR Lme/proton/core/plan/presentation/entity/PlanCurrency;
 	public static final field USD Lme/proton/core/plan/presentation/entity/PlanCurrency;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getSign ()Ljava/lang/String;
 	public final fun toSubscriptionCurrency ()Lme/proton/core/payment/domain/entity/Currency;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/PlanCurrency;
@@ -537,6 +538,7 @@ public final class me/proton/core/plan/presentation/entity/PlanCycle : java/lang
 	public static final field TWO_YEARS Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public static final field YEARLY Lme/proton/core/plan/presentation/entity/PlanCycle;
 	public final fun getCycleDurationMonths ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getPrice (Lme/proton/core/plan/presentation/entity/PlanPricing;)Ljava/lang/Double;
 	public final fun getValue ()I
 	public final fun promotionPercentage (Lme/proton/core/plan/presentation/entity/PlanPromotionPercentage;)I
@@ -894,6 +896,7 @@ public final class me/proton/core/plan/presentation/entity/PlanSubscription {
 public final class me/proton/core/plan/presentation/entity/PlanType : java/lang/Enum {
 	public static final field ADDON Lme/proton/core/plan/presentation/entity/PlanType;
 	public static final field NORMAL Lme/proton/core/plan/presentation/entity/PlanType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/PlanType;
 	public static fun values ()[Lme/proton/core/plan/presentation/entity/PlanType;
@@ -1010,6 +1013,7 @@ public final class me/proton/core/plan/presentation/entity/UnredeemedGooglePurch
 public final class me/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus : java/lang/Enum {
 	public static final field NotSubscribed Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;
 	public static final field SubscribedButNotAcknowledged Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;
 	public static fun values ()[Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;
 }
@@ -1236,6 +1240,8 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicSelectPlan
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicSelectPlanFragment : me/proton/core/plan/presentation/ui/BasePlansFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1271,6 +1277,8 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicUpgradePla
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_DynamicUpgradePlanFragment : me/proton/core/presentation/ui/ProtonFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1306,6 +1314,8 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_UnredeemedPurchas
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_UpgradeActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -1315,6 +1325,8 @@ public abstract class me/proton/core/plan/presentation/ui/Hilt_UpgradeActivity :
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/plan/presentation/ui/Hilt_UpgradePlansFragment : me/proton/core/plan/presentation/ui/BasePlansFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {

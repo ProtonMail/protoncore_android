@@ -68,9 +68,6 @@ dependencies {
         `compose-ui-tooling`,
     )
 
-    // Android
-    compileOnly(`android-annotation`)
-
     androidTestImplementation(
         `android-test-runner`,
         `compose-ui-test`,

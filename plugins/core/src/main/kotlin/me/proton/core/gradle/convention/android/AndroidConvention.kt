@@ -26,9 +26,11 @@ import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.api.dsl.Packaging
 import com.android.build.api.dsl.TestExtension
+import `desugar-jdk-libs`
 import me.proton.core.gradle.convention.BuildConvention
 import me.proton.core.gradle.plugin.CommonConfigurationExtension
 import org.gradle.api.Project
+import org.gradle.kotlin.dsl.dependencies
 import org.gradle.kotlin.dsl.findByType
 import org.gradle.kotlin.dsl.getByType
 

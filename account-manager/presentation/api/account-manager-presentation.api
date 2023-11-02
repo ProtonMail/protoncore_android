@@ -225,6 +225,7 @@ public final class me/proton/core/accountmanager/presentation/entity/AccountList
 	public static final field Account Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
 	public static final field Action Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
 	public static final field Section Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
 	public static fun values ()[Lme/proton/core/accountmanager/presentation/entity/AccountListItem$Type;
 }

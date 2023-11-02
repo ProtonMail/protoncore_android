@@ -208,6 +208,8 @@ public abstract class me/proton/core/humanverification/presentation/ui/Hilt_Huma
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/HumanVerificationActivity : me/proton/core/presentation/ui/ProtonActivity, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
@@ -368,7 +370,6 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Dialo
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Companion;
-	public synthetic fun <init> (ILme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload;)V
 	public synthetic fun <init> (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
@@ -380,7 +381,6 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 	public final fun getType ()Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -404,6 +404,7 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 	public static final field Info Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$MessageType;
 	public static final field Success Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$MessageType;
 	public static final field Warning Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$MessageType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$MessageType;
 	public static fun values ()[Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$MessageType;
@@ -416,7 +417,6 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload {
 	public static final field Companion Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -432,7 +432,6 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -456,6 +455,7 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 	public static final field Notification Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
 	public static final field Resize Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
 	public static final field Success Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
 	public static fun values ()[Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
@@ -490,6 +490,7 @@ public abstract class me/proton/core/humanverification/presentation/ui/hv3/Hilt_
 
 public final class me/proton/core/humanverification/presentation/utils/HumanVerificationVersion : java/lang/Enum {
 	public static final field HV3 Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
 	public static fun values ()[Lme/proton/core/humanverification/presentation/utils/HumanVerificationVersion;
 }

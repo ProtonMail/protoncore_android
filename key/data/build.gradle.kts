@@ -35,9 +35,6 @@ protonCoverage {
 
 android {
     namespace = "me.proton.core.key.data"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -55,8 +52,6 @@ dependencies {
         retrofit,
         `serialization-core`,
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.kotlinUtil),

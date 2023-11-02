@@ -131,7 +131,6 @@ public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataS
 
 public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlagBody {
 	public static final field Companion Lme/proton/core/featureflag/data/remote/request/PutFeatureFlagBody$Companion;
-	public synthetic fun <init> (IZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Z)V
 	public final fun component1 ()Z
 	public final fun copy (Z)Lme/proton/core/featureflag/data/remote/request/PutFeatureFlagBody;
@@ -140,7 +139,6 @@ public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlag
 	public fun hashCode ()I
 	public final fun isEnabled ()Z
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/request/PutFeatureFlagBody;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlagBody$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -160,7 +158,6 @@ public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlag
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloadResource {
 	public static final field Companion Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -171,7 +168,6 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloa
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -191,7 +187,6 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloa
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashToggleResource {
 	public static final field Companion Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
@@ -202,7 +197,6 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashToggle
 	public final fun getVariant ()Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashToggleResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -222,7 +216,6 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashToggle
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashVariantResource {
 	public static final field Companion Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;)V
 	public synthetic fun <init> (Ljava/lang/String;ZLme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -236,7 +229,6 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashVarian
 	public final fun getPayload ()Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashVariantResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -256,7 +248,6 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashVarian
 
 public final class me/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse {
 	public static final field Companion Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$Companion;
-	public synthetic fun <init> (IILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (ILjava/util/List;)V
 	public final fun component1 ()I
 	public final fun component2 ()Ljava/util/List;
@@ -267,7 +258,6 @@ public final class me/proton/core/featureflag/data/remote/response/GetUnleashTog
 	public final fun getToggles ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

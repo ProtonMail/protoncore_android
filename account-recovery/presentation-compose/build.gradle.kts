@@ -26,7 +26,7 @@ plugins {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(57)
+    branchCoveragePercentage.set(54)
     lineCoveragePercentage.set(80)
 }
 
@@ -34,9 +34,6 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.accountrecovery.presentation.compose"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 protonBuild {
@@ -66,8 +63,6 @@ dependencies {
         `lifecycle-viewModel`,
         `lifecycle-viewModel-compose`,
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.observabilityDomain),

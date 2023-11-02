@@ -29,7 +29,6 @@ public final class me/proton/core/notification/domain/entity/Notification {
 
 public final class me/proton/core/notification/domain/entity/NotificationId {
 	public static final field Companion Lme/proton/core/notification/domain/entity/NotificationId$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/notification/domain/entity/NotificationId;
@@ -38,7 +37,6 @@ public final class me/proton/core/notification/domain/entity/NotificationId {
 	public final fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/notification/domain/entity/NotificationId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/domain/entity/NotificationId$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

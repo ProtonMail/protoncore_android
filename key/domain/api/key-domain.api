@@ -558,6 +558,7 @@ public final class me/proton/core/key/domain/entity/key/Recipient : java/lang/En
 	public static final field Companion Lme/proton/core/key/domain/entity/key/Recipient$Companion;
 	public static final field External Lme/proton/core/key/domain/entity/key/Recipient;
 	public static final field Internal Lme/proton/core/key/domain/entity/key/Recipient;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/Recipient;
 	public static fun values ()[Lme/proton/core/key/domain/entity/key/Recipient;
@@ -680,6 +681,7 @@ public final class me/proton/core/key/domain/repository/Source : java/lang/Enum 
 	public static final field LocalIfAvailable Lme/proton/core/key/domain/repository/Source;
 	public static final field RemoteNoCache Lme/proton/core/key/domain/repository/Source;
 	public static final field RemoteOrCached Lme/proton/core/key/domain/repository/Source;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/key/domain/repository/Source;
 	public static fun values ()[Lme/proton/core/key/domain/repository/Source;
 }

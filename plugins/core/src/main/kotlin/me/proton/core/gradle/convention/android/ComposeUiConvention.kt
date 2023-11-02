@@ -20,7 +20,7 @@
 
 package me.proton.core.gradle.convention.android
 
-import `compose version`
+import `compose compiler version`
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.LibraryExtension
@@ -39,6 +39,6 @@ private fun <T> T.applyConvention() where T : CommonExtension<*, *, *, *, *> {
     buildFeatures.compose = true
 
     composeOptions {
-        kotlinCompilerExtensionVersion = `compose version`
+        kotlinCompilerExtensionVersion = `compose compiler version`
     }
 }

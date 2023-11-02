@@ -75,6 +75,7 @@ public final class me/proton/core/util/android/sharedpreferences/PrefType : java
 	public static final field LONG Lme/proton/core/util/android/sharedpreferences/PrefType;
 	public static final field SERIALIZABLE Lme/proton/core/util/android/sharedpreferences/PrefType;
 	public static final field STRING Lme/proton/core/util/android/sharedpreferences/PrefType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getKClass ()Lkotlin/reflect/KClass;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/util/android/sharedpreferences/PrefType;
 	public static fun values ()[Lme/proton/core/util/android/sharedpreferences/PrefType;

@@ -2,6 +2,7 @@ public final class me/proton/core/mailsettings/domain/entity/ComposerMode : java
 	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ComposerMode$Companion;
 	public static final field Maximized Lme/proton/core/mailsettings/domain/entity/ComposerMode;
 	public static final field Normal Lme/proton/core/mailsettings/domain/entity/ComposerMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ComposerMode;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ComposerMode;
@@ -79,6 +80,7 @@ public final class me/proton/core/mailsettings/domain/entity/MessageButtons : ja
 	public static final field Companion Lme/proton/core/mailsettings/domain/entity/MessageButtons$Companion;
 	public static final field ReadFirst Lme/proton/core/mailsettings/domain/entity/MessageButtons;
 	public static final field UnreadFirst Lme/proton/core/mailsettings/domain/entity/MessageButtons;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/MessageButtons;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/MessageButtons;
@@ -94,6 +96,7 @@ public final class me/proton/core/mailsettings/domain/entity/MimeType : java/lan
 	public static final field Html Lme/proton/core/mailsettings/domain/entity/MimeType;
 	public static final field Mixed Lme/proton/core/mailsettings/domain/entity/MimeType;
 	public static final field PlainText Lme/proton/core/mailsettings/domain/entity/MimeType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/MimeType;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/MimeType;
@@ -109,6 +112,7 @@ public final class me/proton/core/mailsettings/domain/entity/PMSignature : java/
 	public static final field Companion Lme/proton/core/mailsettings/domain/entity/PMSignature$Companion;
 	public static final field Disabled Lme/proton/core/mailsettings/domain/entity/PMSignature;
 	public static final field Enabled Lme/proton/core/mailsettings/domain/entity/PMSignature;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/PMSignature;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/PMSignature;
@@ -127,6 +131,7 @@ public final class me/proton/core/mailsettings/domain/entity/PackageType : java/
 	public static final field PgpInline Lme/proton/core/mailsettings/domain/entity/PackageType;
 	public static final field PgpMime Lme/proton/core/mailsettings/domain/entity/PackageType;
 	public static final field ProtonMail Lme/proton/core/mailsettings/domain/entity/PackageType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getType ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/PackageType;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/PackageType;
@@ -144,6 +149,7 @@ public final class me/proton/core/mailsettings/domain/entity/ShowImage : java/la
 	public static final field Embedded Lme/proton/core/mailsettings/domain/entity/ShowImage;
 	public static final field None Lme/proton/core/mailsettings/domain/entity/ShowImage;
 	public static final field Remote Lme/proton/core/mailsettings/domain/entity/ShowImage;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public final fun includesEmbedded ()Z
 	public final fun includesRemote ()Z
@@ -164,6 +170,7 @@ public final class me/proton/core/mailsettings/domain/entity/ShowMoved : java/la
 	public static final field Drafts Lme/proton/core/mailsettings/domain/entity/ShowMoved;
 	public static final field None Lme/proton/core/mailsettings/domain/entity/ShowMoved;
 	public static final field Sent Lme/proton/core/mailsettings/domain/entity/ShowMoved;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ShowMoved;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ShowMoved;
@@ -181,6 +188,7 @@ public final class me/proton/core/mailsettings/domain/entity/SwipeAction : java/
 	public static final field Spam Lme/proton/core/mailsettings/domain/entity/SwipeAction;
 	public static final field Star Lme/proton/core/mailsettings/domain/entity/SwipeAction;
 	public static final field Trash Lme/proton/core/mailsettings/domain/entity/SwipeAction;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/SwipeAction;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/SwipeAction;
@@ -195,6 +203,7 @@ public final class me/proton/core/mailsettings/domain/entity/ViewLayout : java/l
 	public static final field Column Lme/proton/core/mailsettings/domain/entity/ViewLayout;
 	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ViewLayout$Companion;
 	public static final field Row Lme/proton/core/mailsettings/domain/entity/ViewLayout;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ViewLayout;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ViewLayout;
@@ -209,6 +218,7 @@ public final class me/proton/core/mailsettings/domain/entity/ViewMode : java/lan
 	public static final field Companion Lme/proton/core/mailsettings/domain/entity/ViewMode$Companion;
 	public static final field ConversationGrouping Lme/proton/core/mailsettings/domain/entity/ViewMode;
 	public static final field NoConversationGrouping Lme/proton/core/mailsettings/domain/entity/ViewMode;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/mailsettings/domain/entity/ViewMode;
 	public static fun values ()[Lme/proton/core/mailsettings/domain/entity/ViewMode;

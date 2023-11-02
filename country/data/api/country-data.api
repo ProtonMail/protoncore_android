@@ -7,7 +7,6 @@ public final class me/proton/core/country/data/BuildConfig {
 
 public final class me/proton/core/country/data/entity/CountriesDataModel {
 	public static final field Companion Lme/proton/core/country/data/entity/CountriesDataModel$Companion;
-	public synthetic fun <init> (ILjava/util/List;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;)V
 	public final fun component1 ()Ljava/util/List;
 	public final fun copy (Ljava/util/List;)Lme/proton/core/country/data/entity/CountriesDataModel;
@@ -16,7 +15,6 @@ public final class me/proton/core/country/data/entity/CountriesDataModel {
 	public final fun getCountries ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/country/data/entity/CountriesDataModel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/country/data/entity/CountriesDataModel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -36,7 +34,6 @@ public final class me/proton/core/country/data/entity/CountriesDataModel$Compani
 
 public final class me/proton/core/country/data/entity/CountryDataModel {
 	public static final field Companion Lme/proton/core/country/data/entity/CountryDataModel$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;I)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -49,7 +46,6 @@ public final class me/proton/core/country/data/entity/CountryDataModel {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/country/data/entity/CountryDataModel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/country/data/entity/CountryDataModel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

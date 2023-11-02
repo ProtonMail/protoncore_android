@@ -3,7 +3,6 @@ public final class me/proton/core/report/domain/entity/BugReport {
 	public static final field DescriptionMaxLength I
 	public static final field DescriptionMinLength I
 	public static final field SubjectMaxLength I
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -18,7 +17,6 @@ public final class me/proton/core/report/domain/entity/BugReport {
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/report/domain/entity/BugReport;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/report/domain/entity/BugReport$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -40,7 +38,6 @@ public final class me/proton/core/report/domain/entity/BugReport$Companion {
 
 public final class me/proton/core/report/domain/entity/BugReportExtra {
 	public static final field Companion Lme/proton/core/report/domain/entity/BugReportExtra$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -51,7 +48,6 @@ public final class me/proton/core/report/domain/entity/BugReportExtra {
 	public final fun getIsp ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/report/domain/entity/BugReportExtra$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -72,6 +68,7 @@ public final class me/proton/core/report/domain/entity/BugReportExtra$Companion 
 public final class me/proton/core/report/domain/entity/BugReportField : java/lang/Enum {
 	public static final field Description Lme/proton/core/report/domain/entity/BugReportField;
 	public static final field Subject Lme/proton/core/report/domain/entity/BugReportField;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportField;
 	public static fun values ()[Lme/proton/core/report/domain/entity/BugReportField;
 }
@@ -82,7 +79,6 @@ public final class me/proton/core/report/domain/entity/BugReportKt {
 
 public final class me/proton/core/report/domain/entity/BugReportMeta {
 	public static final field Companion Lme/proton/core/report/domain/entity/BugReportMeta$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/domain/entity/Product;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/domain/entity/Product;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -99,7 +95,6 @@ public final class me/proton/core/report/domain/entity/BugReportMeta {
 	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/report/domain/entity/BugReportMeta;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/report/domain/entity/BugReportMeta$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -123,6 +118,7 @@ public final class me/proton/core/report/domain/entity/BugReportValidationError 
 	public static final field DescriptionTooShort Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static final field SubjectMissing Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static final field SubjectTooLong Lme/proton/core/report/domain/entity/BugReportValidationError;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getField ()Lme/proton/core/report/domain/entity/BugReportField;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static fun values ()[Lme/proton/core/report/domain/entity/BugReportValidationError;

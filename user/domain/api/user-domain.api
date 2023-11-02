@@ -111,6 +111,7 @@ public final class me/proton/core/user/domain/entity/AddressType : java/lang/Enu
 	public static final field External Lme/proton/core/user/domain/entity/AddressType;
 	public static final field Original Lme/proton/core/user/domain/entity/AddressType;
 	public static final field Premium Lme/proton/core/user/domain/entity/AddressType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/AddressType;
 	public static fun values ()[Lme/proton/core/user/domain/entity/AddressType;
@@ -123,6 +124,7 @@ public final class me/proton/core/user/domain/entity/AddressType$Companion {
 public final class me/proton/core/user/domain/entity/CreateUserType : java/lang/Enum {
 	public static final field Normal Lme/proton/core/user/domain/entity/CreateUserType;
 	public static final field Username Lme/proton/core/user/domain/entity/CreateUserType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/CreateUserType;
 	public static fun values ()[Lme/proton/core/user/domain/entity/CreateUserType;
@@ -139,6 +141,7 @@ public final class me/proton/core/user/domain/entity/Delinquent : java/lang/Enum
 	public static final field InvoiceMailDisabled Lme/proton/core/user/domain/entity/Delinquent;
 	public static final field InvoiceOverdue Lme/proton/core/user/domain/entity/Delinquent;
 	public static final field None Lme/proton/core/user/domain/entity/Delinquent;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/Delinquent;
 	public static fun values ()[Lme/proton/core/user/domain/entity/Delinquent;
@@ -190,6 +193,7 @@ public final class me/proton/core/user/domain/entity/Role : java/lang/Enum {
 	public static final field NoOrganization Lme/proton/core/user/domain/entity/Role;
 	public static final field OrganizationAdmin Lme/proton/core/user/domain/entity/Role;
 	public static final field OrganizationMember Lme/proton/core/user/domain/entity/Role;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/Role;
 	public static fun values ()[Lme/proton/core/user/domain/entity/Role;
@@ -205,6 +209,7 @@ public final class me/proton/core/user/domain/entity/Type : java/lang/Enum {
 	public static final field External Lme/proton/core/user/domain/entity/Type;
 	public static final field Managed Lme/proton/core/user/domain/entity/Type;
 	public static final field Proton Lme/proton/core/user/domain/entity/Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/Type;
 	public static fun values ()[Lme/proton/core/user/domain/entity/Type;
@@ -388,6 +393,7 @@ public final class me/proton/core/user/domain/entity/UserRecovery$Reason : java/
 	public static final field Cancelled Lme/proton/core/user/domain/entity/UserRecovery$Reason;
 	public static final field Companion Lme/proton/core/user/domain/entity/UserRecovery$Reason$Companion;
 	public static final field None Lme/proton/core/user/domain/entity/UserRecovery$Reason;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/UserRecovery$Reason;
 	public static fun values ()[Lme/proton/core/user/domain/entity/UserRecovery$Reason;
@@ -404,6 +410,7 @@ public final class me/proton/core/user/domain/entity/UserRecovery$State : java/l
 	public static final field Grace Lme/proton/core/user/domain/entity/UserRecovery$State;
 	public static final field Insecure Lme/proton/core/user/domain/entity/UserRecovery$State;
 	public static final field None Lme/proton/core/user/domain/entity/UserRecovery$State;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/user/domain/entity/UserRecovery$State;
 	public static fun values ()[Lme/proton/core/user/domain/entity/UserRecovery$State;

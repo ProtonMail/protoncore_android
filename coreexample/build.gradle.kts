@@ -46,7 +46,7 @@ android {
     buildFeatures.compose = true
 
     composeOptions {
-        kotlinCompilerExtensionVersion = `compose version`
+        kotlinCompilerExtensionVersion = `compose compiler version`
     }
     compileOptions {
         isCoreLibraryDesugaringEnabled = true

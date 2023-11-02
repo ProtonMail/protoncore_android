@@ -42,6 +42,7 @@ public final class me/proton/core/humanverification/domain/entity/TokenType : ja
 	public static final field EMAIL Lme/proton/core/humanverification/domain/entity/TokenType;
 	public static final field PAYMENT Lme/proton/core/humanverification/domain/entity/TokenType;
 	public static final field SMS Lme/proton/core/humanverification/domain/entity/TokenType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/humanverification/domain/entity/TokenType;
 	public static fun values ()[Lme/proton/core/humanverification/domain/entity/TokenType;

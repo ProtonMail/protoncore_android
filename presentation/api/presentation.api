@@ -53,6 +53,7 @@ public abstract interface class me/proton/core/presentation/app/AppLifecycleProv
 public final class me/proton/core/presentation/app/AppLifecycleProvider$State : java/lang/Enum {
 	public static final field Background Lme/proton/core/presentation/app/AppLifecycleProvider$State;
 	public static final field Foreground Lme/proton/core/presentation/app/AppLifecycleProvider$State;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/app/AppLifecycleProvider$State;
 	public static fun values ()[Lme/proton/core/presentation/app/AppLifecycleProvider$State;
 }
@@ -162,6 +163,8 @@ public abstract class me/proton/core/presentation/ui/Hilt_ProtonWebViewActivity 
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public abstract class me/proton/core/presentation/ui/ProtonActivity : androidx/appcompat/app/AppCompatActivity, me/proton/core/presentation/utils/OnUiComponentCreatedListener {
@@ -668,6 +671,7 @@ public final class me/proton/core/presentation/ui/view/ProtonInput$EndIconMode :
 	public static final field NONE Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
 	public static final field PASSWORD_TOGGLE Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
 	public final fun getAction ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
 	public static fun values ()[Lme/proton/core/presentation/ui/view/ProtonInput$EndIconMode;
 }
@@ -734,6 +738,7 @@ public class me/proton/core/presentation/ui/view/ProtonProgressButton : me/proto
 public final class me/proton/core/presentation/ui/view/ProtonProgressButton$State : java/lang/Enum {
 	public static final field IDLE Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
 	public static final field LOADING Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
 	public static fun values ()[Lme/proton/core/presentation/ui/view/ProtonProgressButton$State;
 }
@@ -803,6 +808,7 @@ public final class me/proton/core/presentation/utils/CardType : java/lang/Enum {
 	public static final field MASTERCARD Lme/proton/core/presentation/utils/CardType;
 	public static final field OTHER Lme/proton/core/presentation/utils/CardType;
 	public static final field VISA Lme/proton/core/presentation/utils/CardType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getRegex ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/utils/CardType;
 	public static fun values ()[Lme/proton/core/presentation/utils/CardType;
@@ -983,6 +989,7 @@ public final class me/proton/core/presentation/utils/SnackType : java/lang/Enum 
 	public static final field Success Lme/proton/core/presentation/utils/SnackType;
 	public static final field Warning Lme/proton/core/presentation/utils/SnackType;
 	public final fun getBackground ()I
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/utils/SnackType;
 	public static fun values ()[Lme/proton/core/presentation/utils/SnackType;
 }
@@ -1132,6 +1139,7 @@ public final class me/proton/core/presentation/utils/ValidationType : java/lang/
 	public static final field PasswordMatch Lme/proton/core/presentation/utils/ValidationType;
 	public static final field PasswordMinLength Lme/proton/core/presentation/utils/ValidationType;
 	public static final field Username Lme/proton/core/presentation/utils/ValidationType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getMaxLong ()I
 	public final fun getMinLong ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/presentation/utils/ValidationType;

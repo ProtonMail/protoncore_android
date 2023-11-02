@@ -100,7 +100,7 @@ private fun Project.setupDetekt(configuration: ProtonDetektConfiguration) {
 
     // val libs = project.rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
     // `detekt version` = libs.findVersion("detekt").get().toString()
-    `detekt version` = "1.23.0"
+    `detekt version` = "1.23.5"
 
     val defaultConfigFilePath = "config/detekt/config.yml"
 

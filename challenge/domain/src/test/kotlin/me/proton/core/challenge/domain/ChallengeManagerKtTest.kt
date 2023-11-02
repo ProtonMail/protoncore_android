@@ -26,11 +26,12 @@ import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
+import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-public class ChallengeManagerKtTest {
+public class ChallengeManagerKtTest : CoroutinesTest by CoroutinesTest() {
 
     private val challengeManager = mockk<ChallengeManager>()
 

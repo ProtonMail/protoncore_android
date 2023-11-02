@@ -59,6 +59,7 @@ public final class me/proton/core/telemetry/domain/entity/TelemetryEvent {
 public final class me/proton/core/telemetry/domain/entity/TelemetryPriority : java/lang/Enum {
 	public static final field Default Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 	public static final field Immediate Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 	public static fun values ()[Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 }

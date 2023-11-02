@@ -31,7 +31,6 @@ public final class me/proton/core/label/domain/entity/Label {
 
 public final class me/proton/core/label/domain/entity/LabelId {
 	public static final field Companion Lme/proton/core/label/domain/entity/LabelId$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/label/domain/entity/LabelId;
@@ -40,7 +39,6 @@ public final class me/proton/core/label/domain/entity/LabelId {
 	public final fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/label/domain/entity/LabelId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/domain/entity/LabelId$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -68,6 +66,7 @@ public final class me/proton/core/label/domain/entity/LabelType : java/lang/Enum
 	public static final field MessageFolder Lme/proton/core/label/domain/entity/LabelType;
 	public static final field MessageLabel Lme/proton/core/label/domain/entity/LabelType;
 	public static final field SystemFolder Lme/proton/core/label/domain/entity/LabelType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/label/domain/entity/LabelType;
 	public static fun values ()[Lme/proton/core/label/domain/entity/LabelType;

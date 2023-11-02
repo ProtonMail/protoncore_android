@@ -67,6 +67,7 @@ public final class me/proton/core/network/data/PinningKt {
 public final class me/proton/core/network/data/PinningMethod : java/lang/Enum {
 	public static final field LeafSPKI Lme/proton/core/network/data/PinningMethod;
 	public static final field Regular Lme/proton/core/network/data/PinningMethod;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/network/data/PinningMethod;
 	public static fun values ()[Lme/proton/core/network/data/PinningMethod;
 }
@@ -239,7 +240,6 @@ public abstract interface class me/proton/core/network/data/protonApi/BaseRetrof
 public final class me/proton/core/network/data/protonApi/Details {
 	public static final field Companion Lme/proton/core/network/data/protonApi/Details$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/lang/Integer;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/lang/Integer;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/util/List;Ljava/lang/Integer;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/List;
@@ -257,7 +257,6 @@ public final class me/proton/core/network/data/protonApi/Details {
 	public final fun getVerificationToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/network/data/protonApi/Details;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/network/data/protonApi/Details$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -278,7 +277,6 @@ public final class me/proton/core/network/data/protonApi/Details$Companion {
 public final class me/proton/core/network/data/protonApi/GenericResponse {
 	public static final field Companion Lme/proton/core/network/data/protonApi/GenericResponse$Companion;
 	public fun <init> (I)V
-	public synthetic fun <init> (IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun copy (I)Lme/proton/core/network/data/protonApi/GenericResponse;
 	public static synthetic fun copy$default (Lme/proton/core/network/data/protonApi/GenericResponse;IILjava/lang/Object;)Lme/proton/core/network/data/protonApi/GenericResponse;
@@ -286,7 +284,6 @@ public final class me/proton/core/network/data/protonApi/GenericResponse {
 	public final fun getCode ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/network/data/protonApi/GenericResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/network/data/protonApi/GenericResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -319,7 +316,6 @@ public final class me/proton/core/network/data/protonApi/IntToBoolSerializer : k
 
 public final class me/proton/core/network/data/protonApi/ProtonErrorData {
 	public static final field Companion Lme/proton/core/network/data/protonApi/ProtonErrorData$Companion;
-	public synthetic fun <init> (IILjava/lang/String;Ljava/lang/String;Lme/proton/core/network/data/protonApi/Details;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (ILjava/lang/String;Ljava/lang/String;Lme/proton/core/network/data/protonApi/Details;)V
 	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lme/proton/core/network/data/protonApi/Details;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
@@ -336,7 +332,6 @@ public final class me/proton/core/network/data/protonApi/ProtonErrorData {
 	public final fun getErrorDescription ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/network/data/protonApi/ProtonErrorData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/network/data/protonApi/ProtonErrorData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

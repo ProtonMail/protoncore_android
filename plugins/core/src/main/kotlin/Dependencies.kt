@@ -52,7 +52,7 @@ public val DependencyHandler.`compose-animation`: Any
 public val DependencyHandler.`compose-animation-core`: Any
     get() = compose("animation", moduleSuffix = "core", version = `composeAnimation version`)
 public val DependencyHandler.`compose-compiler`: Any
-    get() = compose("compiler")
+    get() = compose("compiler") version `compose compiler version`
 public val DependencyHandler.`compose-foundation`: Any
     get() = compose("foundation", version = `composeFoundation version`)
 public val DependencyHandler.`compose-foundation-layout`: Any

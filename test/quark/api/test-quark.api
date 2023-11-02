@@ -61,13 +61,13 @@ public final class me/proton/core/test/quark/Quark$GenKeys : java/lang/Enum {
 	public static final field None Lme/proton/core/test/quark/Quark$GenKeys;
 	public static final field RSA2048 Lme/proton/core/test/quark/Quark$GenKeys;
 	public static final field RSA4096 Lme/proton/core/test/quark/Quark$GenKeys;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/quark/Quark$GenKeys;
 	public static fun values ()[Lme/proton/core/test/quark/Quark$GenKeys;
 }
 
 public final class me/proton/core/test/quark/Quark$InternalApi {
 	public static final field Companion Lme/proton/core/test/quark/Quark$InternalApi$Companion;
-	public synthetic fun <init> (ILjava/util/LinkedHashMap;Ljava/util/LinkedHashMap;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/LinkedHashMap;Ljava/util/LinkedHashMap;)V
 	public final fun component1 ()Ljava/util/LinkedHashMap;
 	public final fun component2 ()Ljava/util/LinkedHashMap;
@@ -78,7 +78,6 @@ public final class me/proton/core/test/quark/Quark$InternalApi {
 	public final fun getEndpoints ()Ljava/util/LinkedHashMap;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/test/quark/Quark$InternalApi;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/test/quark/Quark$InternalApi$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -105,12 +104,14 @@ public final class me/proton/core/test/quark/Quark$InternalApiEndpoint : java/la
 	public static final field SYSTEM_ENV Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field USER_CREATE Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field USER_CREATE_ADDRESS Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static fun values ()[Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 }
 
 public final class me/proton/core/test/quark/data/BillingCycle : java/lang/Enum {
 	public static final field Yearly Lme/proton/core/test/quark/data/BillingCycle;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getMonthlyPrice ()D
 	public final fun getValue ()Ljava/lang/String;
 	public final fun getYearlyPrice ()Ljava/lang/Number;
@@ -121,7 +122,6 @@ public final class me/proton/core/test/quark/data/BillingCycle : java/lang/Enum 
 public final class me/proton/core/test/quark/data/Card {
 	public static final field Companion Lme/proton/core/test/quark/data/Card$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/data/Card$Brand;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -144,7 +144,6 @@ public final class me/proton/core/test/quark/data/Card {
 	public final fun getZip ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/test/quark/data/Card;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/test/quark/data/Card$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -164,20 +163,10 @@ public final class me/proton/core/test/quark/data/Card$Brand : java/lang/Enum {
 	public static final field Mastercard Lme/proton/core/test/quark/data/Card$Brand;
 	public static final field Unknown Lme/proton/core/test/quark/data/Card$Brand;
 	public static final field Visa Lme/proton/core/test/quark/data/Card$Brand;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/quark/data/Card$Brand;
 	public static fun values ()[Lme/proton/core/test/quark/data/Card$Brand;
-}
-
-public final class me/proton/core/test/quark/data/Card$Brand$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/test/quark/data/Card$Brand$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/data/Card$Brand;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/quark/data/Card$Brand;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class me/proton/core/test/quark/data/Card$Brand$Companion {
@@ -194,6 +183,7 @@ public final class me/proton/core/test/quark/data/Currency : java/lang/Enum {
 	public static final field Euro Lme/proton/core/test/quark/data/Currency;
 	public static final field USD Lme/proton/core/test/quark/data/Currency;
 	public final fun getCode ()Ljava/lang/String;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getSymbol ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/quark/data/Currency;
 	public static fun values ()[Lme/proton/core/test/quark/data/Currency;
@@ -210,23 +200,13 @@ public final class me/proton/core/test/quark/data/Plan : java/lang/Enum {
 	public static final field Unlimited Lme/proton/core/test/quark/data/Plan;
 	public static final field Visionary Lme/proton/core/test/quark/data/Plan;
 	public static final field VpnPlus Lme/proton/core/test/quark/data/Plan;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getPlanName ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
 	public final fun setPlanName (Ljava/lang/String;)V
 	public final fun setText (Ljava/lang/String;)V
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/quark/data/Plan;
 	public static fun values ()[Lme/proton/core/test/quark/data/Plan;
-}
-
-public final class me/proton/core/test/quark/data/Plan$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/test/quark/data/Plan$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/test/quark/data/Plan;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/test/quark/data/Plan;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
 }
 
 public final class me/proton/core/test/quark/data/Plan$Companion {
@@ -236,7 +216,6 @@ public final class me/proton/core/test/quark/data/Plan$Companion {
 public final class me/proton/core/test/quark/data/User {
 	public static final field Companion Lme/proton/core/test/quark/data/User$Companion;
 	public fun <init> ()V
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/test/quark/data/Plan;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -272,7 +251,6 @@ public final class me/proton/core/test/quark/data/User {
 	public final fun isOnePasswordWithUsername ()Z
 	public final fun isPaid ()Z
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/test/quark/data/User;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/test/quark/data/User$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -308,7 +286,6 @@ public final class me/proton/core/test/quark/data/User$Users$Companion {
 
 public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResponse {
 	public static final field Companion Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse$Companion;
-	public synthetic fun <init> (IJLjava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (JLjava/lang/String;II)V
 	public final fun component1 ()J
 	public final fun component2 ()Ljava/lang/String;
@@ -323,7 +300,6 @@ public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResp
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/test/quark/response/CreateUserAddressQuarkResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -343,7 +319,6 @@ public final class me/proton/core/test/quark/response/CreateUserAddressQuarkResp
 
 public final class me/proton/core/test/quark/response/CreateUserQuarkResponse {
 	public static final field Companion Lme/proton/core/test/quark/response/CreateUserQuarkResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;JLjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public synthetic fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -373,7 +348,6 @@ public final class me/proton/core/test/quark/response/CreateUserQuarkResponse {
 	public final fun getUserId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/test/quark/response/CreateUserQuarkResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/test/quark/response/CreateUserQuarkResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

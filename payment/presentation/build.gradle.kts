@@ -34,9 +34,6 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.payment.presentation"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
@@ -57,8 +54,6 @@ dependencies {
         material,
         recyclerview
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         // Core

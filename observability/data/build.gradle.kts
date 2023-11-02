@@ -37,9 +37,6 @@ protonDagger {
 
 android {
     namespace = "me.proton.core.observability.data"
-    compileOptions {
-        isCoreLibraryDesugaringEnabled = true
-    }
 }
 
 dependencies {
@@ -52,8 +49,6 @@ dependencies {
         project(Module.observabilityDomain),
         project(Module.userSettingsDomain),
     )
-
-    coreLibraryDesugaring(`desugar-jdk-libs`)
 
     implementation(
         project(Module.kotlinUtil),

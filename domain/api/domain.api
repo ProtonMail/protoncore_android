@@ -85,6 +85,7 @@ public final class me/proton/core/domain/arch/MapperKt {
 public final class me/proton/core/domain/arch/ResponseSource : java/lang/Enum {
 	public static final field Local Lme/proton/core/domain/arch/ResponseSource;
 	public static final field Remote Lme/proton/core/domain/arch/ResponseSource;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/domain/arch/ResponseSource;
 	public static fun values ()[Lme/proton/core/domain/arch/ResponseSource;
 }
@@ -97,6 +98,7 @@ public final class me/proton/core/domain/arch/extension/EntityListFlowUtilsKt {
 public final class me/proton/core/domain/entity/AppStore : java/lang/Enum {
 	public static final field FDroid Lme/proton/core/domain/entity/AppStore;
 	public static final field GooglePlay Lme/proton/core/domain/entity/AppStore;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getValue ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/domain/entity/AppStore;
 	public static fun values ()[Lme/proton/core/domain/entity/AppStore;
@@ -108,6 +110,7 @@ public final class me/proton/core/domain/entity/Product : java/lang/Enum {
 	public static final field Mail Lme/proton/core/domain/entity/Product;
 	public static final field Pass Lme/proton/core/domain/entity/Product;
 	public static final field Vpn Lme/proton/core/domain/entity/Product;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/domain/entity/Product;
 	public static fun values ()[Lme/proton/core/domain/entity/Product;
 }
@@ -118,7 +121,6 @@ public abstract interface class me/proton/core/domain/entity/UniqueId {
 
 public final class me/proton/core/domain/entity/UserId : me/proton/core/domain/entity/UniqueId {
 	public static final field Companion Lme/proton/core/domain/entity/UserId$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/domain/entity/UserId;
@@ -127,7 +129,6 @@ public final class me/proton/core/domain/entity/UserId : me/proton/core/domain/e
 	public fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/domain/entity/UserId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/domain/entity/UserId$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

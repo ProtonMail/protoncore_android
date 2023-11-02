@@ -32,12 +32,13 @@ import me.proton.core.gradle.plugins.coverage.rules.daggerRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinParcelizeRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinSerializationRules
 import me.proton.core.gradle.plugins.coverage.rules.roomDbRules
-import net.razvan.JacocoToCoberturaExtension
+import net.razvan.JacocoToCoberturaTask
 import net.razvan.JacocoToCoberturaPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.named
 import org.gradle.language.base.plugins.LifecycleBasePlugin
 
 /** Default dir path for the HTML report, relative to the build directory. */
@@ -54,7 +55,7 @@ private const val DEFAULT_XML_REPORT_COBERTURA_FILE =
 
 private const val TASK_NAME_KOVER = KoverNames.DEFAULT_XML_REPORT_NAME
 private const val TASK_NAME_COBERTURA = "coberturaXmlReport"
-private const val TASK_NAME_JACOCO_TO_COBERTURA = "jacocoToCobertura"
+private const val TASK_NAME_JACOCO_TO_COBERTURA = JacocoToCoberturaPlugin.TASK_NAME
 
 internal const val PROTON_COVERAGE_EXT: String = "protonCoverage"
 
@@ -141,7 +142,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
     }
 
     private fun Project.configureJacocoToCoberturaExtension() {
-        extensions.configure<JacocoToCoberturaExtension> {
+        tasks.named<JacocoToCoberturaTask>(TASK_NAME_JACOCO_TO_COBERTURA) {
             inputFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_FILE))
             outputFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_COBERTURA_FILE))
             splitByPackage.set(true)

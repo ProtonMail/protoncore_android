@@ -44,7 +44,6 @@ internal class KotlinConvention : BuildConvention<KotlinConventionSettings> {
         target.afterEvaluate {
             val apiMode = getApiMode(settings, commonConfig)
             target.kotlinExtension.explicitApi = apiMode
-            applyApiModeFix(target, apiMode)
         }
     }
 
@@ -52,29 +51,6 @@ internal class KotlinConvention : BuildConvention<KotlinConventionSettings> {
         kotlinOptions {
             freeCompilerArgs = freeCompilerArgs + defaultCompilerArgs
             jvmTarget = commonConfig.jvmTarget.get().toString()
-        }
-    }
-
-    // TODO: can be removed when Kotlin is updated to 1.9.x
-    private fun applyApiModeFix(
-        target: Project,
-        apiMode: ExplicitApiMode,
-    ) {
-        val apiModeName = when (apiMode) {
-            ExplicitApiMode.Strict -> "strict"
-            ExplicitApiMode.Warning -> "warning"
-            ExplicitApiMode.Disabled -> "disable"
-        }
-
-        if (apiMode != ExplicitApiMode.Disabled) {
-            target.tasks.withType<KotlinCompile> {
-                // Workaround for https://youtrack.jetbrains.com/issue/KT-37652
-                if (name.endsWith("TestKotlin")) return@withType
-
-                kotlinOptions {
-                    freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=${apiModeName}"
-                }
-            }
         }
     }
 

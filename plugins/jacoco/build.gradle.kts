@@ -49,7 +49,7 @@ repositories {
 }
 
 dependencies {
-    val jacocoVersion = "0.8.7"
+    val jacocoVersion = "0.8.10"
 
     implementation(gradleApi())
     implementation(kotlin("gradle-plugin"))

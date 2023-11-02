@@ -64,6 +64,8 @@ public abstract class me/proton/core/crypto/validator/presentation/ui/Hilt_Crypt
 	public final fun generatedComponent ()Ljava/lang/Object;
 	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
 	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
 }
 
 public final class me/proton/core/crypto/validator/presentation/viewmodel/CryptoValidatorErrorViewModel_Factory : dagger/internal/Factory {

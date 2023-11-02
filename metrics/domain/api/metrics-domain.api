@@ -4,7 +4,6 @@ public abstract interface class me/proton/core/metrics/domain/MetricsManager {
 
 public final class me/proton/core/metrics/domain/entity/Metrics {
 	public static final field Companion Lme/proton/core/metrics/domain/entity/Metrics$Companion;
-	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lkotlinx/serialization/json/JsonElement;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
@@ -17,7 +16,6 @@ public final class me/proton/core/metrics/domain/entity/Metrics {
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final synthetic fun write$Self (Lme/proton/core/metrics/domain/entity/Metrics;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/metrics/domain/entity/Metrics$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

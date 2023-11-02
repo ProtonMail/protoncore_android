@@ -561,6 +561,7 @@ public final class me/proton/core/test/android/robots/auth/AccountSwitcherRobot$
 	public static final field Remove Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
 	public static final field SignIn Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
 	public static final field SignOut Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public final fun getResId ()I
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
 	public static fun values ()[Lme/proton/core/test/android/robots/auth/AccountSwitcherRobot$UserAction;
@@ -727,6 +728,7 @@ public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethod
 public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType : java/lang/Enum {
 	public static final field EMAIL Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
 	public static final field PHONE Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
 	public static fun values ()[Lme/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot$RecoveryMethodType;
 }

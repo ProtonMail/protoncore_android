@@ -55,8 +55,6 @@ dependencies {
         `serialization-core`,
     )
 
-    compileOnly(`android-annotation`)
-
     implementation(
         project(Module.domain),
         `apacheCommon-codec`,
