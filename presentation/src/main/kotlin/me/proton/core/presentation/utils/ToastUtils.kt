@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import me.proton.core.presentation.R
 
@@ -82,9 +83,27 @@ fun Context?.errorToast(
     message: String,
     length: Int = DEFAULT_TOAST_LENGTH
 ) {
+    protonToast(message, background = R.drawable.snackbar_background_error, length = length)
+}
+
+@SuppressLint("InflateParams")
+fun Context?.normToast(
+    message: String,
+    length: Int = DEFAULT_TOAST_LENGTH
+) {
+    protonToast(message, background = R.drawable.snackbar_background_norm, length = length)
+}
+
+@SuppressLint("InflateParams")
+private fun Context?.protonToast(
+    message: String,
+    @DrawableRes background: Int,
+    length: Int
+) {
     val context = this ?: return
 
-    val customView = LayoutInflater.from(context).inflate(R.layout.proton_toast_error, null)
+    val customView = LayoutInflater.from(context).inflate(R.layout.proton_toast, null)
+    customView.setBackgroundResource(background)
     customView.findViewById<TextView>(R.id.textView).text = message
 
     val toast = Toast.makeText(context, message, length)

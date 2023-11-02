@@ -93,13 +93,13 @@ public final class me/proton/core/presentation/databinding/ProtonNavViewSectionH
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonNavViewSectionHeaderBinding;
 }
 
-public final class me/proton/core/presentation/databinding/ProtonToastErrorBinding : androidx/viewbinding/ViewBinding {
+public final class me/proton/core/presentation/databinding/ProtonToastBinding : androidx/viewbinding/ViewBinding {
 	public final field textView Landroid/widget/TextView;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/presentation/databinding/ProtonToastBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroid/widget/FrameLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonToastErrorBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/presentation/databinding/ProtonToastBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/presentation/databinding/ProtonToastBinding;
 }
 
 public final class me/proton/core/presentation/databinding/ProtonWebviewActivityBinding : androidx/viewbinding/ViewBinding {
@@ -1049,6 +1049,8 @@ public final class me/proton/core/presentation/utils/StringBox$ResourceString : 
 public final class me/proton/core/presentation/utils/TextUtils {
 	public static final fun errorToast (Landroid/content/Context;Ljava/lang/String;I)V
 	public static synthetic fun errorToast$default (Landroid/content/Context;Ljava/lang/String;IILjava/lang/Object;)V
+	public static final fun normToast (Landroid/content/Context;Ljava/lang/String;I)V
+	public static synthetic fun normToast$default (Landroid/content/Context;Ljava/lang/String;IILjava/lang/Object;)V
 	public static final fun showToast (Landroid/content/Context;I)V
 	public static final fun showToast (Landroid/content/Context;II)V
 	public static final fun showToast (Landroid/content/Context;III)V
