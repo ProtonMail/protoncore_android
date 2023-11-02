@@ -45,6 +45,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.normToast
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -200,7 +201,9 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private fun onSignInWithSso(result: LoginViewModel.State.SignInWithSso) {
         showLoading(false)
-        showError(result.error.getUserMessage(resources), useToast = true)
+        normToast(
+            result.error.getUserMessage(resources) ?: getString(R.string.auth_login_general_error)
+        )
         loginSsoResultLauncher.launch(LoginSsoInput(result.email))
     }
 
