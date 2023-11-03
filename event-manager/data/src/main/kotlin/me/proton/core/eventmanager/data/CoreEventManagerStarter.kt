@@ -24,6 +24,7 @@ import me.proton.core.accountmanager.presentation.observe
 import me.proton.core.accountmanager.presentation.onAccountReady
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.IsCoreEventManagerEnabled
 import me.proton.core.presentation.app.AppLifecycleProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -32,15 +33,22 @@ import javax.inject.Singleton
 class CoreEventManagerStarter @Inject constructor(
     private val appLifecycleProvider: AppLifecycleProvider,
     private val accountManager: AccountManager,
-    private val eventManagerProvider: EventManagerProvider
+    private val eventManagerProvider: EventManagerProvider,
+    private val isCoreEventManagerEnabled: IsCoreEventManagerEnabled
 ) {
 
-    private fun startReadyAccount() {
+    private fun startOrStopReadyAccountManager() {
         accountManager.observe(appLifecycleProvider.lifecycle, minActiveState = Lifecycle.State.CREATED)
-            .onAccountReady { eventManagerProvider.get(EventManagerConfig.Core(it.userId)).start() }
+            .onAccountReady { account ->
+                val manager = eventManagerProvider.get(EventManagerConfig.Core(account.userId))
+                when (isCoreEventManagerEnabled(account.userId)) {
+                    true -> manager.start()
+                    false -> manager.stop()
+                }
+            }
     }
 
     fun start() {
-        startReadyAccount()
+        startOrStopReadyAccountManager()
     }
 }

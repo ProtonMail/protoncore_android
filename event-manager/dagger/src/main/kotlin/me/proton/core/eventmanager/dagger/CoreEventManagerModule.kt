@@ -26,11 +26,13 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.eventmanager.data.EventManagerConfigProviderImpl
 import me.proton.core.eventmanager.data.EventManagerFactory
 import me.proton.core.eventmanager.data.EventManagerProviderImpl
+import me.proton.core.eventmanager.data.IsCoreEventManagerEnabledImpl
 import me.proton.core.eventmanager.data.repository.EventMetadataRepositoryImpl
 import me.proton.core.eventmanager.data.work.EventWorkerManagerImpl
 import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManagerConfigProvider
 import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.IsCoreEventManagerEnabled
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import javax.inject.Singleton
@@ -38,6 +40,10 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 public interface CoreEventManagerModule {
+
+    @Binds
+    @Singleton
+    public fun provideIsCoreEventManagerEnabled(impl: IsCoreEventManagerEnabledImpl): IsCoreEventManagerEnabled
 
     @Binds
     @Singleton

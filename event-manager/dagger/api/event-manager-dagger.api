@@ -14,6 +14,7 @@ public abstract interface class me/proton/core/eventmanager/dagger/CoreEventMana
 	public abstract fun provideEventManagerConfigProvider (Lme/proton/core/eventmanager/data/EventManagerConfigProviderImpl;)Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;
 	public abstract fun provideEventMetadataRepository (Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;)Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;
 	public abstract fun provideEventWorkManager (Lme/proton/core/eventmanager/data/work/EventWorkerManagerImpl;)Lme/proton/core/eventmanager/domain/work/EventWorkerManager;
+	public abstract fun provideIsCoreEventManagerEnabled (Lme/proton/core/eventmanager/data/IsCoreEventManagerEnabledImpl;)Lme/proton/core/eventmanager/domain/IsCoreEventManagerEnabled;
 }
 
 public final class me/proton/core/eventmanager/dagger/CoreEventManagerModule$Companion {

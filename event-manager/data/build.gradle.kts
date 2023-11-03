@@ -50,6 +50,7 @@ dependencies {
         project(Module.dataRoom),
         project(Module.domain),
         project(Module.eventManagerDomain),
+        project(Module.featureFlagDomain),
         project(Module.kotlinUtil),
         project(Module.networkData),
         project(Module.presentation),

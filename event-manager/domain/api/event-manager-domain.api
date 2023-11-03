@@ -206,6 +206,10 @@ public abstract interface class me/proton/core/eventmanager/domain/EventManagerP
 	public abstract fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/eventmanager/domain/IsCoreEventManagerEnabled {
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+}
+
 public final class me/proton/core/eventmanager/domain/LogTag {
 	public static final field COLLECT_ERROR Ljava/lang/String;
 	public static final field FETCH_ERROR Ljava/lang/String;

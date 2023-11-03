@@ -16,6 +16,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
+    <bool name="core_feature_core_event_manager_enabled">true</bool>
     <integer name="core_feature_event_manager_worker_repeat_internal_foreground_seconds">30</integer>
     <integer name="core_feature_event_manager_worker_repeat_internal_background_seconds">1800</integer>
     <integer name="core_feature_event_manager_worker_backoff_delay_seconds">30</integer>
