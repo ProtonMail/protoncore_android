@@ -95,10 +95,10 @@ class NotificationSetupTest {
 
     @Test
     fun notificationsDisabled() = runTest {
-        every { isNotificationsEnabled() } returns false
+        every { isNotificationsEnabled(any()) } returns false
         tested()
         runCurrent()
-        verify { isNotificationsEnabled() }
+        verify { isNotificationsEnabled(any()) }
     }
 
     @Test
@@ -107,7 +107,7 @@ class NotificationSetupTest {
         val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Background)
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns true
@@ -132,7 +132,7 @@ class NotificationSetupTest {
         val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Background)
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns true
@@ -161,7 +161,7 @@ class NotificationSetupTest {
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.Ready))
         val activity = mockk<Activity>(relaxed = true)
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns false
@@ -183,7 +183,7 @@ class NotificationSetupTest {
         val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.Ready))
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns false
@@ -204,7 +204,7 @@ class NotificationSetupTest {
         val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns false
@@ -229,7 +229,7 @@ class NotificationSetupTest {
         val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns true
@@ -254,7 +254,7 @@ class NotificationSetupTest {
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
         val observeJob = mockk<Job>()
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { appLifecycleObserver.state } returns appStateFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns true

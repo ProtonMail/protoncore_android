@@ -18,6 +18,8 @@
 
 package me.proton.core.notification.domain.usecase
 
+import me.proton.core.domain.entity.UserId
+
 public fun interface IsNotificationsEnabled {
-    public operator fun invoke(): Boolean
+    public operator fun invoke(userId: UserId?): Boolean
 }

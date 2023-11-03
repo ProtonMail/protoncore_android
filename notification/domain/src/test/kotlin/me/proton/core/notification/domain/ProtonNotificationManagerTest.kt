@@ -74,6 +74,10 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
 
     private lateinit var tested: ProtonNotificationManager
 
+    private val notification = mockk<Notification> {
+        every { userId } returns mockk()
+    }
+
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
@@ -93,7 +97,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun noSetupIfDisabled() {
         // GIVEN
-        every { isNotificationsEnabled() } returns false
+        every { isNotificationsEnabled(any()) } returns false
 
         // WHEN
         tested.setupNotificationChannel()
@@ -106,7 +110,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun setupIfEnabled() {
         // GIVEN
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         every { getNotificationChannelId() } returns "channel-id"
         justRun { configureNotificationChannel(any()) }
 
@@ -121,10 +125,10 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun noNotificationIfDisabled() {
         // GIVEN
-        every { isNotificationsEnabled() } returns false
+        every { isNotificationsEnabled(any()) } returns false
 
         // WHEN
-        tested.show(mockk())
+        tested.show(notification)
 
         // THEN
         verify(exactly = 0) { getNotificationChannelId() }
@@ -135,10 +139,10 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun noDismissIfDisabled() {
         // GIVEN
-        every { isNotificationsEnabled() } returns false
+        every { isNotificationsEnabled(any()) } returns false
 
         // WHEN
-        tested.dismiss(mockk())
+        tested.dismiss(notification)
         tested.dismiss(mockk(), mockk())
 
         // THEN
@@ -149,7 +153,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun noReplaceIfDisabled() {
         // GIVEN
-        every { isNotificationsEnabled() } returns false
+        every { isNotificationsEnabled(any()) } returns false
 
         // WHEN
         tested.replace(mockk(), mockk())
@@ -173,7 +177,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
                 body = "body"
             )
         )
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         justRun { cancelNotificationView(any()) }
         justRun { cancelNotificationView(any(), any()) }
 
@@ -229,7 +233,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
             )
         )
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         justRun { replaceNotificationViews(any(), any()) }
 
         // THEN
@@ -257,7 +261,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
             )
         )
 
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         justRun { replaceNotificationViews(any(), any()) }
 
         // WHEN
@@ -289,7 +293,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
             type = "type",
             payload = NotificationPayload.Unknown(raw = "")
         )
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         justRun { showNotificationView(any()) }
 
         // WHEN
@@ -311,7 +315,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
             type = "type",
             payload = NotificationPayload.Unknown(raw = "")
         )
-        every { isNotificationsEnabled() } returns true
+        every { isNotificationsEnabled(any()) } returns true
         justRun { showNotificationView(any()) }
 
         // WHEN

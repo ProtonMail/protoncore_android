@@ -47,21 +47,21 @@ public class ProtonNotificationManager @Inject constructor(
     private val showNotificationView: ShowNotificationView
 ) {
     public fun setupNotificationChannel() {
-        if (!isNotificationsEnabled()) return
+        if (!isNotificationsEnabled(userId = null)) return
         val channelId = getNotificationsChannelId()
         configureNotificationChannel(channelId = channelId)
     }
 
     /** Dismisses a notification with a given [notificationId] and [userId]. */
     public fun dismiss(notificationId: NotificationId, userId: UserId) {
-        if (!isNotificationsEnabled()) return
+        if (!isNotificationsEnabled(userId)) return
         cancelNotificationView(notificationId, userId)
         onNotificationConsumed(notificationId, userId)
     }
 
     /** Dismisses a [notification]. */
     public fun dismiss(notification: Notification) {
-        if (!isNotificationsEnabled()) return
+        if (!isNotificationsEnabled(notification.userId)) return
         cancelNotificationView(notification)
         onNotificationConsumed(notification.notificationId, notification.userId)
     }
@@ -81,14 +81,14 @@ public class ProtonNotificationManager @Inject constructor(
      * If an app shows it own notifications, they won't be affected.
      */
     public fun replace(notifications: List<Notification>, userId: UserId) {
-        if (!isNotificationsEnabled()) return
+        if (!isNotificationsEnabled(userId)) return
         require(notifications.all { it.userId == userId })
         replaceNotificationViews(notifications, userId)
     }
 
     /** Shows a given [notification] (or updates existing one). */
     public fun show(notification: Notification) {
-        if (!isNotificationsEnabled()) return
+        if (!isNotificationsEnabled(notification.userId)) return
         showNotificationView(notification)
     }
 }

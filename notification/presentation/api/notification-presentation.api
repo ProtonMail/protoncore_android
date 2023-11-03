@@ -256,16 +256,16 @@ public final class me/proton/core/notification/presentation/usecase/GetNotificat
 }
 
 public final class me/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl : me/proton/core/notification/domain/usecase/IsNotificationsEnabled {
-	public fun <init> (Landroid/content/Context;)V
-	public fun invoke ()Z
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 }
 
 public final class me/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl;
-	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/notification/presentation/usecase/IsNotificationsEnabledImpl;
 }
 
 public final class me/proton/core/notification/presentation/usecase/IsNotificationsPermissionRequestEnabledImpl : me/proton/core/notification/domain/usecase/IsNotificationsPermissionRequestEnabled {

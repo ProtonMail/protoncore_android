@@ -60,7 +60,7 @@ public class NotificationSetup @Inject internal constructor(
 ) : DefaultLifecycleObserver {
 
     public operator fun invoke() {
-        if (!isNotificationsEnabled()) return
+        if (!isNotificationsEnabled(userId = null)) return
 
         // Register Notification Deeplink.
         setupDeeplink()

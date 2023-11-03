@@ -44,6 +44,7 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.notificationDomain),
         project(Module.pushDomain),
+        project(Module.featureFlagDomain),
         activity,
         `androidx-core`,
         `coroutines-android`,
