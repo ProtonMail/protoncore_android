@@ -21,7 +21,9 @@ package me.proton.core.accountrecovery.presentation.compose
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.spyk
 import io.mockk.verify
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup.Companion.deeplink
 import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup.Companion.type
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
@@ -34,21 +36,34 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 
+
 class AccountRecoveryNotificationSetupTest {
 
     private val userId = UserId("userId")
     private val notificationId = NotificationId("notificationId")
     private val provider = TestDeeplinkIntentProvider()
 
+    private val isAccountRecoveryEnabled = mockk<IsAccountRecoveryEnabled> {
+        every { this@mockk.invoke(any()) } returns true
+    }
     private lateinit var manager: DeeplinkManager
     private lateinit var tested: AccountRecoveryNotificationSetup
 
     @Before
     fun before() {
-        manager = DeeplinkManager()
-        tested = AccountRecoveryNotificationSetup(manager)
+        manager = spyk(DeeplinkManager())
+        tested = AccountRecoveryNotificationSetup(isAccountRecoveryEnabled, manager)
         mockkObject(AccountRecoveryDialogActivity.Companion)
         every { AccountRecoveryDialogActivity.Companion.start(any(), any()) } returns Unit
+    }
+
+    @Test
+    fun doNotRegisterIfDisabled() {
+        every { isAccountRecoveryEnabled.invoke(any()) } returns false
+
+        tested.invoke()
+
+        verify(exactly = 0) { manager.register(any(), any()) }
     }
 
     @Test

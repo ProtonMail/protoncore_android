@@ -18,6 +18,8 @@
 
 package me.proton.core.accountrecovery.domain
 
+import me.proton.core.domain.entity.UserId
+
 public interface IsAccountRecoveryEnabled {
-    public operator fun invoke(): Boolean
+    public operator fun invoke(userId: UserId?): Boolean
 }

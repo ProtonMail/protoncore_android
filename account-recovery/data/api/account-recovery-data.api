@@ -6,8 +6,8 @@ public final class me/proton/core/accountrecovery/data/BuildConfig {
 }
 
 public final class me/proton/core/accountrecovery/data/IsAccountRecoveryEnabledImpl : me/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled {
-	public fun <init> (Landroid/content/Context;)V
-	public fun invoke ()Z
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 }
 
 public final class me/proton/core/accountrecovery/data/repository/AccountRecoveryRepositoryImpl : me/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository {

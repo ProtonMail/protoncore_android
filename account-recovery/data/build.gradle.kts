@@ -33,6 +33,7 @@ android {
 dependencies {
     api(
         project(Module.accountRecoveryDomain),
+        project(Module.featureFlagDomain),
         `hilt-android`,
         `javax-inject`
     )

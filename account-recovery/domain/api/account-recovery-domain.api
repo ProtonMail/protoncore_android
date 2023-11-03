@@ -1,5 +1,5 @@
 public abstract interface class me/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled {
-	public abstract fun invoke ()Z
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 }
 
 public abstract interface class me/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository {

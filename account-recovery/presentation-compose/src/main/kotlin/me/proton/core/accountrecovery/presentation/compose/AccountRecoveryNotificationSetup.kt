@@ -18,6 +18,7 @@
 
 package me.proton.core.accountrecovery.presentation.compose
 
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.notification.presentation.NotificationDeeplink
@@ -25,10 +26,13 @@ import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import javax.inject.Inject
 
 class AccountRecoveryNotificationSetup @Inject internal constructor(
+    private val isAccountRecoveryEnabled: IsAccountRecoveryEnabled,
     private val deeplinkManager: DeeplinkManager
 ) {
 
     operator fun invoke() {
+        if (!isAccountRecoveryEnabled(userId = null)) return
+
         deeplinkManager.register(deeplink) { link ->
             val userId = link.args[0]
             AccountRecoveryDialogActivity.start(requireNotNull(link.context), AccountRecoveryDialogInput(userId))

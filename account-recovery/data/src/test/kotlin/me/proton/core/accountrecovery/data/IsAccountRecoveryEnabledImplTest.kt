@@ -5,17 +5,27 @@ import android.content.res.Resources
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
+import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
+import me.proton.core.featureflag.domain.FeatureFlagManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
+@OptIn(ExperimentalProtonFeatureFlag::class)
 class IsAccountRecoveryEnabledImplTest {
     @MockK
     private lateinit var context: Context
 
     @MockK
+    private lateinit var featureFlagManager: FeatureFlagManager
+
+    @MockK
     private lateinit var resources: Resources
+
+    private val userId = UserId("userId")
+    private val featureId = IsAccountRecoveryEnabledImpl.featureId
 
     private lateinit var tested: IsAccountRecoveryEnabledImpl
 
@@ -23,18 +33,35 @@ class IsAccountRecoveryEnabledImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
         every { context.resources } returns resources
-        tested = IsAccountRecoveryEnabledImpl(context)
+        every { featureFlagManager.getValue(any(), any()) } returns false
+        tested = IsAccountRecoveryEnabledImpl(context, featureFlagManager)
     }
 
     @Test
     fun accountRecoveryEnabled() {
         every { resources.getBoolean(R.bool.core_feature_account_recovery_enabled) } returns true
-        assertTrue(tested())
+        every { featureFlagManager.getValue(any(), featureId) } returns true
+        assertTrue(tested(userId))
     }
 
     @Test
     fun accountRecoveryDisabled() {
         every { resources.getBoolean(R.bool.core_feature_account_recovery_enabled) } returns false
-        assertFalse(tested())
+        every { featureFlagManager.getValue(any(), featureId) } returns false
+        assertFalse(tested(userId))
+    }
+
+    @Test
+    fun accountRecoveryDisabledRemoteDisabled() {
+        every { resources.getBoolean(R.bool.core_feature_account_recovery_enabled) } returns true
+        every { featureFlagManager.getValue(any(), featureId) } returns false
+        assertFalse(tested(userId))
+    }
+
+    @Test
+    fun accountRecoveryDisabledLocalDisabled() {
+        every { resources.getBoolean(R.bool.core_feature_account_recovery_enabled) } returns false
+        every { featureFlagManager.getValue(any(), featureId) } returns true
+        assertFalse(tested(userId))
     }
 }

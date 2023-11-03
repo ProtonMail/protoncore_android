@@ -16,5 +16,5 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-    <bool name="core_feature_account_recovery_enabled">false</bool>
+    <bool name="core_feature_account_recovery_enabled">true</bool>
 </resources>
