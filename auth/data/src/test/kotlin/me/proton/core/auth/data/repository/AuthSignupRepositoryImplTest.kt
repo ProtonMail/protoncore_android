@@ -33,6 +33,7 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.runTestWithResultContext
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -70,17 +71,18 @@ class AuthSignupRepositoryImplTest {
     }
 
     @Test
-    fun `validate email returns success result`() = runTest(dispatcherProvider.Main) {
+    fun `validate email returns success result`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Success(true)
         // WHEN
         val response = repository.validateEmail("test-email")
         // THEN
         assertTrue(response)
+        assertTrue(assertSingleResult("validateEmail").isSuccess)
     }
 
     @Test
-    fun `validate email returns error result`() = runTest(dispatcherProvider.Main) {
+    fun `validate email returns error result`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Error.Http(
             httpCode = 401,
@@ -96,20 +98,22 @@ class AuthSignupRepositoryImplTest {
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("validateEmail").isFailure)
     }
 
     @Test
-    fun `validate phone returns success result`() = runTest(dispatcherProvider.Main) {
+    fun `validate phone returns success result`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Success(true)
         // WHEN
         val response = repository.validatePhone("test-phone")
         // THEN
         assertTrue(response)
+        assertTrue(assertSingleResult("validatePhone").isSuccess)
     }
 
     @Test
-    fun `validate phone returns error result`() = runTest(dispatcherProvider.Main) {
+    fun `validate phone returns error result`() = runTestWithResultContext(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any()) } returns ApiResult.Error.Http(
             httpCode = 401,
@@ -118,12 +122,13 @@ class AuthSignupRepositoryImplTest {
         )
         // WHEN
         val throwable = assertFailsWith(ApiException::class) {
-            repository.validateEmail("test-phone")
+            repository.validatePhone("test-phone")
         }
         // THEN
         assertEquals("test phone validation error", throwable.message)
         val error = throwable.error as? ApiResult.Error.Http
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("validatePhone").isFailure)
     }
 }

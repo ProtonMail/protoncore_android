@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,8 +31,14 @@ import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
-import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
+@ProductMetrics(group = "account.android.signup", flow = "mobile_signup_full")
+@ViewFocused(
+    "user.recovery_method.focused",
+    viewIds = ["email"]
+)
 class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
 
     private val recoveryMethodViewModel: RecoveryMethodViewModel by viewModels({ requireParentFragment() })
@@ -41,7 +47,7 @@ class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with(binding.emailEditText) {
+        with(binding.email) {
             onTextChange(
                 afterTextChangeListener = { editable ->
                     recoveryMethodViewModel.setActiveRecoveryMethod(
@@ -55,7 +61,7 @@ class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
         recoveryMethodViewModel.validationResult.onEach {
             when (it) {
                 is RecoveryMethodViewModel.ValidationState.Success,
-                is RecoveryMethodViewModel.ValidationState.Skipped -> binding.emailEditText.flush()
+                is RecoveryMethodViewModel.ValidationState.Skipped -> binding.email.flush()
                 else -> Unit
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)

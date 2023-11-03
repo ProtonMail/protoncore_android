@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,13 +70,13 @@ class RecoveryMethodsRobot : CoreRobot() {
      * Sets phone number input value to given [phoneNo]
      * @return [RecoveryMethodsRobot]
      */
-    fun phone(phoneNo: String): RecoveryMethodsRobot = addText(R.id.smsEditText, phoneNo)
+    fun phone(phoneNo: String): RecoveryMethodsRobot = addText(R.id.phone, phoneNo)
 
     /**
      * Clicks country code element
      * @return [CountryRobot]
      */
-    fun phoneCode(): CountryRobot = clickElement(R.id.callingCodeText)
+    fun phoneCode(): CountryRobot = clickElement(R.id.phone_country)
 
     /**
      * Clicks 'next' button
@@ -84,7 +84,7 @@ class RecoveryMethodsRobot : CoreRobot() {
      */
     inline fun <reified T> next(): T {
         view
-            .withId(R.id.nextButton)
+            .withId(R.id.next)
             .hasSibling(
                 view.withId(R.id.recoveryOptions)
             ).click()
@@ -95,7 +95,7 @@ class RecoveryMethodsRobot : CoreRobot() {
      * Clicks 'Skip' button.
      * @return [SkipRecoveryRobot]
      */
-    fun skip(): SkipRecoveryRobot = clickElement(R.id.recovery_menu_skip, TextView::class.java)
+    fun skip(): SkipRecoveryRobot = clickElement(R.id.skip, TextView::class.java)
 
     class Verify : CoreVerify() {
         fun recoveryMethodsElementsDisplayed() {
@@ -114,7 +114,7 @@ class RecoveryMethodsRobot : CoreRobot() {
         }
 
         fun skipMenuButtonNotDisplayed() {
-            view.withId(R.id.recovery_menu_skip).checkDoesNotExist()
+            view.withId(R.id.skip).checkDoesNotExist()
         }
     }
 

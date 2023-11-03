@@ -170,15 +170,17 @@ class AuthRepositoryImpl(
             response.toSession(userId = userId)
         }
 
-    override suspend fun validateEmail(email: String): Boolean =
+    override suspend fun validateEmail(email: String): Boolean = result("validateEmail") {
         provider.get<AuthenticationApi>().invoke {
             val request = EmailValidationRequest(email)
             validateEmail(request).isSuccess()
         }.valueOrThrow
+    }
 
-    override suspend fun validatePhone(phone: String): Boolean =
+    override suspend fun validatePhone(phone: String): Boolean = result("validatePhone") {
         provider.get<AuthenticationApi>().invoke {
             val request = PhoneValidationRequest(phone)
             validatePhone(request).isSuccess()
         }.valueOrThrow
+    }
 }

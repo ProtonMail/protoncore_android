@@ -46,8 +46,30 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.presentation.annotation.MenuItemClicked
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ScreenClosed
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
+import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.util.kotlin.exhaustive
 
+@ProductMetrics(group = "account.android.signup", flow = "mobile_signup_full")
+@ScreenDisplayed("fe.recovery_method.displayed")
+@ScreenClosed("user.recovery_method.closed")
+@ViewClicked(
+    "user.recovery_method.clicked",
+    viewIds = [
+        "email",
+        "phone",
+        "next",
+        "terms"
+    ]
+)
+@MenuItemClicked(
+    "user.recovery_method.clicked",
+    toolbarId = "toolbar",
+    itemIds = ["skip"]
+)
 @AndroidEntryPoint
 class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery) {
     private val canSkipRecoveryMethod get() = signupViewModel.currentAccountType != AccountType.Username
@@ -73,11 +95,11 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
 
         binding.apply {
             toolbar.apply {
-                setNavigationOnClickListener { onBackPressed() }
+                setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
                 setOnMenuItemClickListener {
                     when (it.itemId) {
-                        R.id.recovery_menu_skip -> {
+                        R.id.skip -> {
                             showSkip()
                             true
                         }
@@ -87,7 +109,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
             }
             initTabs()
             initTermsAndConditions()
-            nextButton.onClick(::onNextClicked)
+            next.onClick(::onNextClicked)
 
             adjustAccountTypeUI()
             adjustSkippingRecoveryUI()
@@ -111,7 +133,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                         showError(getString(R.string.auth_signup_error_validation_recovery_destination))
                     }
                 }
-            }.exhaustive
+            }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         observeProcessingStates()
@@ -144,19 +166,21 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
             }
         )
 
-        toolbar.menu.findItem(R.id.recovery_menu_skip)?.isVisible = canSkipRecoveryMethod
+        toolbar.menu.findItem(R.id.skip)?.isVisible = canSkipRecoveryMethod
     }
 
     private fun initTabs() = with(binding) {
         recoveryOptions.apply {
             addTab(
                 newTab().apply {
+                    id = R.id.email
                     text = getString(R.string.auth_signup_recovery_method_email)
                     tag = RecoveryMethodType.EMAIL
                 }
             )
             addTab(
                 newTab().apply {
+                    id = R.id.phone
                     text = getString(R.string.auth_signup_recovery_method_phone)
                     tag = RecoveryMethodType.SMS
                 }
@@ -179,7 +203,7 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         }
     }
 
-    private fun initTermsAndConditions() = with(binding.termsConditionsText) {
+    private fun initTermsAndConditions() = with(binding.terms) {
         val spannableString = SpannableString(getText(R.string.auth_signup_terms_conditions_full))
         val annotations = spannableString.getSpans<android.text.Annotation>()
             .filter { it.key == "link" && it.value == "terms" }
@@ -244,9 +268,9 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
 
     override fun showLoading(loading: Boolean) = with(binding) {
         if (loading) {
-            nextButton.setLoading()
+            next.setLoading()
         } else {
-            nextButton.setIdle()
+            next.setIdle()
         }
     }
 

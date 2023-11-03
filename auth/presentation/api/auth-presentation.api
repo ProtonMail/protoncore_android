@@ -568,7 +568,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentCreating
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentRecoveryEmailBinding : androidx/viewbinding/ViewBinding {
-	public final field emailEditText Lme/proton/core/challenge/presentation/ProtonMetadataInput;
+	public final field email Lme/proton/core/challenge/presentation/ProtonMetadataInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentRecoveryEmailBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -577,9 +577,9 @@ public final class me/proton/core/auth/presentation/databinding/FragmentRecovery
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentRecoverySmsBinding : androidx/viewbinding/ViewBinding {
-	public final field callingCodeText Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
 	public final field header Landroid/widget/TextView;
-	public final field smsEditText Lme/proton/core/challenge/presentation/ProtonMetadataInput;
+	public final field phone Lme/proton/core/challenge/presentation/ProtonMetadataInput;
+	public final field phoneCountry Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentRecoverySmsBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -665,13 +665,13 @@ public final class me/proton/core/auth/presentation/databinding/FragmentSignupFi
 
 public final class me/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding : androidx/viewbinding/ViewBinding {
 	public final field fragmentOptionsContainer Landroidx/fragment/app/FragmentContainerView;
-	public final field nextButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field next Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field recoveryInstructions Landroid/widget/TextView;
 	public final field recoveryOptions Lcom/google/android/material/tabs/TabLayout;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
-	public final field termsConditionsText Landroid/widget/TextView;
+	public final field terms Landroid/widget/TextView;
 	public final field titleText Landroid/widget/TextView;
-	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
+	public final field toolbar Lme/proton/core/presentation/ui/view/ProtonMaterialToolbar;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentSignupRecoveryBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroid/widget/FrameLayout;
@@ -2551,11 +2551,11 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/ChooseUsern
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/usecase/signup/ValidateEmail;Lme/proton/core/auth/domain/usecase/signup/ValidatePhone;)Lme/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/signup/ValidateEmail;Lme/proton/core/auth/domain/usecase/signup/ValidatePhone;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/RecoveryMethodViewModel_HiltModules {

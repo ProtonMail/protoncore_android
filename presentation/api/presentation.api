@@ -503,6 +503,10 @@ public abstract interface class me/proton/core/presentation/ui/view/AdditionalOn
 	public abstract fun removeAdditionalOnFocusChangeListener ()V
 }
 
+public abstract interface class me/proton/core/presentation/ui/view/AdditionalOnMenuItemClickListenerContract {
+	public abstract fun setAdditionalOnMenuItemClickListener (Landroidx/appcompat/widget/Toolbar$OnMenuItemClickListener;)V
+}
+
 public final class me/proton/core/presentation/ui/view/CompoundButtonPositionHelper {
 	public fun <init> (Landroid/widget/CompoundButton;)V
 	public final fun getWidthLeft ()I
@@ -529,6 +533,13 @@ public final class me/proton/core/presentation/ui/view/MultipleFocusChangeListen
 	public final fun addListener (Landroid/view/View$OnFocusChangeListener;)V
 	public fun onFocusChange (Landroid/view/View;Z)V
 	public fun removeAdditionalOnFocusChangeListener ()V
+}
+
+public final class me/proton/core/presentation/ui/view/MultipleMenuItemClickListener : androidx/appcompat/widget/Toolbar$OnMenuItemClickListener, me/proton/core/presentation/ui/view/AdditionalOnMenuItemClickListenerContract {
+	public fun <init> ()V
+	public fun onMenuItemClick (Landroid/view/MenuItem;)Z
+	public fun setAdditionalOnMenuItemClickListener (Landroidx/appcompat/widget/Toolbar$OnMenuItemClickListener;)V
+	public final fun setListener (Landroidx/appcompat/widget/Toolbar$OnMenuItemClickListener;)V
 }
 
 public class me/proton/core/presentation/ui/view/ProtonAutoCompleteInput : android/widget/LinearLayout, me/proton/core/presentation/ui/view/AdditionalOnClickListenerContract {
@@ -682,6 +693,15 @@ public final class me/proton/core/presentation/ui/view/ProtonInput$ProtonInputSt
 	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 	public final fun newArray (I)[Lme/proton/core/presentation/ui/view/ProtonInput$ProtonInputState;
+}
+
+public final class me/proton/core/presentation/ui/view/ProtonMaterialToolbar : com/google/android/material/appbar/MaterialToolbar, me/proton/core/presentation/ui/view/AdditionalOnMenuItemClickListenerContract {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun setAdditionalOnMenuItemClickListener (Landroidx/appcompat/widget/Toolbar$OnMenuItemClickListener;)V
+	public fun setOnMenuItemClickListener (Landroidx/appcompat/widget/Toolbar$OnMenuItemClickListener;)V
 }
 
 public final class me/proton/core/presentation/ui/view/ProtonNavigationButton : me/proton/core/presentation/ui/view/ProtonButton {

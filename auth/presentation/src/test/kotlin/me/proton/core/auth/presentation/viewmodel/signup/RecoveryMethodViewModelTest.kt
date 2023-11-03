@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,16 +21,23 @@ package me.proton.core.auth.presentation.viewmodel.signup
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import io.mockk.slot
+import io.mockk.verify
 import me.proton.core.auth.domain.usecase.signup.ValidateEmail
 import me.proton.core.auth.domain.usecase.signup.ValidatePhone
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.flowTest
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -38,20 +45,23 @@ class RecoveryMethodViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     // region mocks
     private val validateEmail = mockk<ValidateEmail>(relaxed = true)
     private val validatePhone = mockk<ValidatePhone>(relaxed = true)
+    private val telemetryManager = mockk<TelemetryManager>(relaxed = true)
     // endregion
 
     private lateinit var viewModel: RecoveryMethodViewModel
 
     @Before
     fun beforeEveryTest() {
-        viewModel = RecoveryMethodViewModel(validateEmail, validatePhone)
+        viewModel = RecoveryMethodViewModel(validateEmail, validatePhone, telemetryManager)
     }
 
     @Test
     fun `email validation returns true`() = coroutinesTest {
         // GIVEN
         val testEmail = "test-email"
-        coEvery { validateEmail.invoke(testEmail) } returns true
+        coEvery { validateEmail.invoke(testEmail) } coAnswers {
+            result("validateEmail") { true }
+        }
 
         flowTest(viewModel.validationResult) {
             // WHEN
@@ -65,6 +75,14 @@ class RecoveryMethodViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             assertTrue(successItem.value)
             coVerify(exactly = 1) {
                 validateEmail.invoke(testEmail)
+            }
+
+            verifyTelemetryEventEnqueued().apply {
+                assertEquals("user.recovery_method.verify", name)
+                assertEquals(
+                    ProductMetricsDelegate.VALUE_SUCCESS,
+                    dimensions[ProductMetricsDelegate.KEY_RESULT]
+                )
             }
         }
     }
@@ -125,7 +143,9 @@ class RecoveryMethodViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     fun `phone validation returns true`() = coroutinesTest {
         // GIVEN
         val testPhone = "test-phone"
-        coEvery { validatePhone.invoke(testPhone) } returns true
+        coEvery { validatePhone.invoke(testPhone) } coAnswers {
+            result("validateEmail") { true }
+        }
 
         flowTest(viewModel.validationResult) {
             // WHEN
@@ -139,6 +159,14 @@ class RecoveryMethodViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
             assertTrue(successItem.value)
             coVerify(exactly = 1) {
                 validatePhone.invoke(testPhone)
+            }
+
+            verifyTelemetryEventEnqueued().apply {
+                assertEquals("user.recovery_method.verify", name)
+                assertEquals(
+                    ProductMetricsDelegate.VALUE_SUCCESS,
+                    dimensions[ProductMetricsDelegate.KEY_RESULT]
+                )
             }
         }
     }
@@ -194,5 +222,11 @@ class RecoveryMethodViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 validatePhone.invoke(testPhone)
             }
         }
+    }
+
+    private fun verifyTelemetryEventEnqueued(): TelemetryEvent {
+        val eventSlot = slot<TelemetryEvent>()
+        verify { telemetryManager.enqueue(null, capture(eventSlot)) }
+        return eventSlot.captured
     }
 }

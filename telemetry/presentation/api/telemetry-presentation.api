@@ -66,6 +66,12 @@ public final class me/proton/core/telemetry/presentation/ViewMeasurementsKt {
 	public static final fun setupViewMetrics (Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function0;)V
 }
 
+public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/MenuItemClicked : java/lang/annotation/Annotation {
+	public abstract fun event ()Ljava/lang/String;
+	public abstract fun itemIds ()[Ljava/lang/String;
+	public abstract fun toolbarId ()Ljava/lang/String;
+}
+
 public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/ProductMetrics : java/lang/annotation/Annotation {
 	public abstract fun dimensions ()[Ljava/lang/String;
 	public abstract fun flow ()Ljava/lang/String;

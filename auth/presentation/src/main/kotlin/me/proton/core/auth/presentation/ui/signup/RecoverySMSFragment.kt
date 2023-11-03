@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,9 +36,20 @@ import me.proton.core.country.presentation.ui.showCountryPicker
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
-import me.proton.core.presentation.viewmodel.ViewModelResult
 import me.proton.core.presentation.viewmodel.onSuccess
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ViewClicked
+import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
+@ProductMetrics(group = "account.android.signup", flow = "mobile_signup_full")
+@ViewClicked(
+    "user.recovery_method.clicked",
+    viewIds = ["phone_country"]
+)
+@ViewFocused(
+    "user.recovery_method.focused",
+    viewIds = ["phone"]
+)
 @AndroidEntryPoint
 class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
 
@@ -52,20 +63,20 @@ class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
 
         childFragmentManager.setFragmentResultListener(CountryPickerFragment.KEY_COUNTRY_SELECTED, this) { _, bundle ->
             val country = bundle.getParcelable<CountryUIModel>(CountryPickerFragment.BUNDLE_KEY_COUNTRY)
-            binding.callingCodeText.text = "+${country?.callingCode}"
+            binding.phoneCountry.text = "+${country?.callingCode}"
         }
 
         binding.apply {
-            callingCodeText.setOnClickListener {
+            phoneCountry.setOnClickListener {
                 childFragmentManager.showCountryPicker()
             }
 
-            with(smsEditText) {
+            with(phone) {
                 onTextChange(
                     afterTextChangeListener = { editable ->
                         recoveryMethodViewModel.setActiveRecoveryMethod(
                             userSelectedMethodType = RecoveryMethodType.SMS,
-                            destination = "${callingCodeText.text}${editable}"
+                            destination = "${phoneCountry.text}${editable}"
                         )
                     }
                 )
@@ -73,14 +84,14 @@ class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
         }
 
         viewModel.countryCallingCode.onSuccess {
-            binding.callingCodeText.text =
+            binding.phoneCountry.text =
                 String.format(getString(R.string.presentation_phone_calling_code_template), it)
         }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         recoveryMethodViewModel.validationResult.onEach {
             when (it) {
                 is RecoveryMethodViewModel.ValidationState.Success,
-                is RecoveryMethodViewModel.ValidationState.Skipped -> binding.smsEditText.flush()
+                is RecoveryMethodViewModel.ValidationState.Skipped -> binding.phone.flush()
                 else -> {
                     // no operation
                 }

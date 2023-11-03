@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,23 +23,31 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.signup.ValidateEmail
 import me.proton.core.auth.domain.usecase.signup.ValidatePhone
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.auth.presentation.telemetry.ProductMetricsDelegateAuth
+import me.proton.core.auth.presentation.telemetry.ProductMetricsDelegateAuth.Companion.KEY_METHOD_TYPE
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.presentation.viewmodel.ViewModelResult
+import me.proton.core.telemetry.domain.TelemetryContext
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
 
 @HiltViewModel
 internal class RecoveryMethodViewModel @Inject constructor(
     private val validateEmail: ValidateEmail,
-    private val validatePhone: ValidatePhone
-) : ProtonViewModel() {
+    private val validatePhone: ValidatePhone,
+    override val telemetryManager: TelemetryManager
+) : ProtonViewModel(), TelemetryContext, ProductMetricsDelegateAuth {
+
+    override val productGroup: String = "account.android.signup"
+    override val productFlow: String = "mobile_signup_full"
 
     private val _recoveryMethodUpdate = MutableStateFlow(RecoveryMethodType.EMAIL)
     private val _validationResult = MutableStateFlow<ValidationState>(ValidationState.None)
@@ -85,19 +93,28 @@ internal class RecoveryMethodViewModel @Inject constructor(
     /**
      * Validates the user input recovery destination (email or phone number) on the API.
      */
-    fun validateRecoveryDestinationInput() = flow {
-        emit(ValidationState.Processing)
-        emit(
-            when (_currentActiveRecoveryMethod.type) {
-                RecoveryMethodType.EMAIL -> validateRecoveryEmail()
-                RecoveryMethodType.SMS -> validateRecoveryPhone()
-            }.exhaustive
-        )
-    }.catch { error ->
-        emit(ValidationState.Error(error))
-    }.onEach {
-        _validationResult.tryEmit(it)
-    }.launchIn(viewModelScope)
+    fun validateRecoveryDestinationInput() = viewModelScope.launchWithResultContext {
+        onResultEnqueueTelemetry("validateEmail") {
+            toTelemetryEvent("user.recovery_method.verify", mapOf(KEY_METHOD_TYPE to "email"))
+        }
+        onResultEnqueueTelemetry("validatePhone") {
+            toTelemetryEvent("user.recovery_method.verify", mapOf(KEY_METHOD_TYPE to "sms"))
+        }
+
+        flow {
+            emit(ValidationState.Processing)
+            emit(
+                when (_currentActiveRecoveryMethod.type) {
+                    RecoveryMethodType.EMAIL -> validateRecoveryEmail()
+                    RecoveryMethodType.SMS -> validateRecoveryPhone()
+                }.exhaustive
+            )
+        }.catch { error ->
+            emit(ValidationState.Error(error))
+        }.onEach {
+            _validationResult.tryEmit(it)
+        }.collect()
+    }
 
     /**
      * Checks on the API if the email is a valid one.
