@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2023 Proton AG
-  ~ This file is part of Proton AG and ProtonCore.
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -17,6 +17,11 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_notification_account_channel_name">Cuenta</string>
-  <string name="core_notification_rationale">Active las notificaciones para ayudarle en la recuperación de su cuenta.</string>
+  <string name="account_switcher_section_switch_to">Prepnúť na</string>
+  <string name="account_switcher_action_add_account">Pridať účet</string>
+  <string name="account_switcher_action_sign_in">Prihlásiť sa</string>
+  <string name="account_switcher_action_sign_out">Odhlásiť sa</string>
+  <string name="account_switcher_action_remove">Odstrániť</string>
+  <string name="account_list_item_chevron_content_description">Otvoriť prepínač účtov</string>
+  <string name="account_view_three_dots_content_description">Možnosti</string>
 </resources>

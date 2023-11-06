@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="crypto_keystore_error_title">Error de cifrado</string>
-  <string name="crypto_keystore_error_message">Este dispositivo usa una implementación defectuosa de Android Keystore que usamos para mantener sus datos seguros. Esto significa que sus datos pueden verse comprometidos si un atacante obtiene acceso físico a este dispositivo. ¿Qué desea hacer?</string>
-  <string name="crypto_keystore_error_continue_action">Continuar</string>
-  <string name="crypto_keystore_error_more_info_action">Obtener más información</string>
-  <string name="crypto_keystore_error_logout_action">Cerrar sesión</string>
-  <string name="crypto_keystore_error_exit_action">Salir</string>
+  <string name="crypto_keystore_error_title">Chyba šifrovania</string>
+  <string name="crypto_keystore_error_message">Toto zariadenie používa chybnú implementáciu aplikácie Android Keystore, ktorú používame na zabezpečenie vašich dát. To znamená, že vaše dáta môžu byť ohrozené, pokiaľ útočník získa fyzický prístup k tomuto zariadeniu. Čo si prajete urobiť?</string>
+  <string name="crypto_keystore_error_continue_action">Pokračovať</string>
+  <string name="crypto_keystore_error_more_info_action">Získajte viac informácií</string>
+  <string name="crypto_keystore_error_logout_action">Odhlásiť sa</string>
+  <string name="crypto_keystore_error_exit_action">Odísť</string>
 </resources>

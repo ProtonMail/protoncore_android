@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Bolo vyžiadané obnovenie hesla</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Bolo vyžiadané obnovenie hesla pre <b>%1$s</b>. Heslo si môžete zmeniť o %2$d hodinu.\n\nAk ste túto žiadosť neodoslali vy, zrušte ju teraz.</item>
+    <item quantity="few">Bolo vyžiadané obnovenie hesla pre <b>%1$s</b>. Heslo si môžete zmeniť o %2$d hodiny.\n\nAk ste túto žiadosť neodoslali vy, zrušte ju teraz.</item>
+    <item quantity="many">Bolo vyžiadané obnovenie hesla pre <b>%1$s</b>. Heslo si môžete zmeniť o %2$d hodín.\n\nAk ste túto žiadosť neodoslali vy, zrušte ju teraz.</item>
+    <item quantity="other">Bolo vyžiadané obnovenie hesla pre <b>%1$s</b>. Heslo si môžete zmeniť o %2$d hodín.\n\nAk ste túto žiadosť neodoslali vy, zrušte ju teraz.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Zrušiť obnovenie hesla?</string>
+  <string name="account_recovery_cancel_subtitle">Pre zrušenie zadajte svoje heslo.</string>
+  <string name="account_recovery_cancel_password_label">Aktuálne heslo</string>
+  <string name="account_recovery_cancel_password_placeholder">Heslo</string>
+  <string name="account_recovery_cancel_now">Zrušiť obnovenie hesla</string>
+  <string name="account_recovery_cancel_back">Späť</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Obnovenie hesla bolo zrušené</string>
+  <string name="account_recovery_cancelled_subtitle">Ak ste nikdy nepožiadali o zmenu hesla, váš účet môže byť ohrozený.\n\nZabezpečte svoj účet zmenou hesla.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Obnovenie hesla je k dispozícii</string>
+  <string name="account_recovery_password_started_subtitle">Ak chcete obnoviť svoje heslo, vráťte sa do zariadenia a prehliadača, z ktorého ste požiadali o obnovenie hesla.\n\nMusíte to urobiť do %s.\n\nAk ste o obnovenie hesla nepožiadali, obnovenie teraz zrušte.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Obnovenie hesla vypršalo</string>
+  <string name="account_recovery_window_ended_subtitle">Budete musieť požiadať o obnovenie nového hesla pre %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Zrušiť žiadosť</string>
+  <string name="account_recovery_dismiss">Rozumiem</string>
+</resources>

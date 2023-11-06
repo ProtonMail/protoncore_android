@@ -17,9 +17,9 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="payments_iap_surcharge_info">* Inkluderar tilläggsavgift för ytterligare leverantörsavgifter och skatter.</string>
+  <string name="payments_iap_surcharge_info">* Inkluderar tilläggsavgift för ytterligare leverantörsavgifter och momser.</string>
   <string name="payments_iap_terms_conditions">Genom att trycka på ”Köp med Google Pay” godkänner du Google Pays användarvillkor och godkänner att göra en återkommande betalning med Google.</string>
-  <string name="payments_iap_invalid_google_plan">Ogiltigt paketnamn valt. Börja om processen.</string>
+  <string name="payments_iap_invalid_google_plan">Ogiltigt paketnamn valt. Starta om processen.</string>
   <string name="payments_iap_error_google_plan_price">Problem med Googles produktpris. Starta om processen.</string>
   <string name="payments_iap_error_fetching_google_plan">Problem att hämta Google-produkt. Starta om processen.</string>
   <string name="payments_iap_error_already_owned">Du äger redan denna produkt. Välj en annan.</string>

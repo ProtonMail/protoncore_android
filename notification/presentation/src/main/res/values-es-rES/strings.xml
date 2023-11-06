@@ -18,5 +18,5 @@
   -->
 <resources>
   <string name="core_notification_account_channel_name">Cuenta</string>
-  <string name="core_notification_rationale">Habilita las notificaciones para ayudarte en la recuperación de tu cuenta.</string>
+  <string name="core_notification_rationale">Activa las notificaciones para ayudarte en la recuperación de tu cuenta.</string>
 </resources>

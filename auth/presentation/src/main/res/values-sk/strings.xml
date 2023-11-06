@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Ochráňte svoje súkromie s Protonom</string>
+  <string name="welcome_subtitle">Šifrovanie uchováva vaše údaje v súkromí. Vaše údaje skutočne patria vám.</string>
+  <string name="welcome_subtitle_mail">Šifrovaný e-mail, vďaka ktorému budú vaše konverzácie súkromné. Vaša schránka skutočne patrí vám.</string>
+  <string name="welcome_subtitle_mail_alt">Ochrana osobných údajov. Bezpečnosť. Pohodlie. Šifrovaný e-mail, ktorý vám dáva plnú kontrolu nad vašimi osobnými údajmi.</string>
+  <string name="welcome_subtitle_drive">Pohodlie cloudového úložiska a bezpečnosť technológie šifrovania. Konečne riešenie cloudového úložiska, ktorému môžete dôverovať.</string>
+  <string name="welcome_subtitle_drive_alt">Najbezpečnejší spôsob ukladania súborov. Nahrávajte, synchronizujte a zdieľajte pomocou najsilnejšieho dostupného šifrovania.</string>
+  <string name="welcome_subtitle_calendar">Šifrovaný kalendár, ktorý uchováva vaše životné udalosti v súkromí, v bezpečí a zabezpečené.</string>
+  <string name="welcome_subtitle_calendar_alt">Náš end-to-end šifrovaný kalendár vám pomôže zostať organizovaný, na správnej ceste a pod kontrolou.</string>
+  <string name="welcome_subtitle_vpn">Vysokorýchlostná švajčiarska VPN, ktorá chráni vaše súkromie šifrovaním vášho internetového pripojenia.</string>
+  <string name="welcome_subtitle_vpn_alt">Vysokorýchlostná švajčiarska VPN, ktorá chráni vaše súkromie. Maximálna bezpečnosť, 1 600+ serverov a žiadne obmedzenia.</string>
+  <string name="welcome_subtitle_pass">Všetky vaše heslá. Bezpečne na jednom mieste a chránené najdôveryhodnejším menom v súkromí.</string>
+  <string name="welcome_subtitle_pass_alt">Všetky vaše heslá. Bezpečne na jednom mieste a chránené najdôveryhodnejšou značkou v oblasti súkromia.</string>
+  <string name="welcome_privacy_by_default">Súkromie je prvoradé</string>
+  <string name="auth_password_label">Heslo</string>
+  <string name="auth_password_help">Heslo musí obsahovať aspoň 8 znakov</string>
+  <string name="auth_current_login_password">Aktuálne prihlasovacie heslo</string>
+  <string name="auth_enter_six_digit_code">Zadajte 6-miestny kód</string>
+  <string name="auth_second_factor_code">Kód pre dvojstupňové overenie</string>
+  <string name="auth_email">E-mail</string>
+  <string name="auth_email_username">Používateľské meno alebo email</string>
+  <string name="auth_account_details">Zadajte podrobnosti o svojom účte Proton.</string>
+  <string name="auth_sign_in">Prihlásiť sa</string>
+  <string name="auth_sign_in_action">Prihlásiť sa</string>
+  <string name="auth_sign_in_sso">Prihláste sa do svojej organizácie</string>
+  <string name="auth_sign_in_with_password">Prihláste sa pomocou hesla</string>
+  <string name="auth_continue_to_proton_vpn">pre pokračovanie do Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Prihlásiť sa pomocou SSO</string>
+  <string name="auth_help_label">Nápoveda</string>
+  <string name="auth_login_assistive_text">Zadajte svoj Proton email alebo používateľské meno.</string>
+  <string name="auth_login_sso_assistive_text">Zadajte svoj email.</string>
+  <string name="auth_help_title">Ako môžeme pomôcť?</string>
+  <string name="auth_help_option_forgot_username">Zabudnuté používateľské meno</string>
+  <string name="auth_help_option_forgot_password">Zabudnuté heslo</string>
+  <string name="auth_help_option_other">Iné prihlasovacie problémy</string>
+  <string name="auth_help_other">Stále potrebujete pomoc? Kontaktujte nás ihneď.</string>
+  <string name="auth_help_option_customer_support">Zákaznická podpora</string>
+  <string name="auth_2fa_title">Dvojstupňové overenie</string>
+  <string name="auth_2fa_label">Kód pre dvojstupňové overenie</string>
+  <string name="auth_2fa_recovery_code_label">Kód pre obnovenie</string>
+  <string name="auth_2fa_assistive_text">Zadajte 6-miestny kód.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Zadajte 8-miestny obnovovací kód.</string>
+  <string name="auth_2fa_action">Overiť</string>
+  <string name="auth_2fa_use_recovery_code">Použiť kód pre obnovenie</string>
+  <string name="auth_2fa_use_2fa_code">Použiť kód pre dvojstupňové overenie</string>
+  <string name="auth_2fa_error_empty_code">Zadajte 6-miestny kód.</string>
+  <string name="auth_mailbox_title">Odomknúť vašu poštovú schránku</string>
+  <string name="auth_mailbox_password_label">Heslo k poštovej schránke</string>
+  <string name="auth_mailbox_unlock_action">Odomknúť</string>
+  <string name="auth_forgot_password">Zabudnuté heslo</string>
+  <string name="auth_login_general_error">Vyskytla sa chyba.</string>
+  <string name="auth_login_external_account_unsupported_title">Vyžaduje sa adresa protonu</string>
+  <string name="auth_login_external_account_unsupported_message">Získajte e-mailovú adresu Proton prepojenú s týmto účtom vo webových nastaveniach Protonu.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Dozvedieť sa viac</string>
+  <string name="auth_login_empty_credentials">Prihlasovacie údaje by nemali byť prázdne.</string>
+  <string name="auth_mailbox_empty_credentials">Prihlasovacie údaje by nemali byť prázdne.</string>
+  <string name="auth_create_address_title">Vyžaduje sa adresa protonu</string>
+  <string name="auth_create_address_subtitle">Na používanie Proton Mail a Proton Calendar potrebujete e-mailovú adresu Proton. Na prihlásenie a obnovenie účtu budete môcť naďalej používať %1$s.</string>
+  <string name="auth_username">Používateľské meno</string>
+  <string name="auth_username_next_action">Pokračovať</string>
+  <string name="auth_create_address_result_title">%s je k dispozícii</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s bude vaša nová e-mailová adresa Proton Mail.</string>
+  <string name="auth_create_address_result_subtitle">Túto adresu budete používať na prihlásenie do všetkých služieb Protonu.</string>
+  <string name="auth_create_address_result_recovery_title">Vaša e-mailová adresa na obnovenie je:</string>
+  <string name="auth_create_address_create">Vytvoriť adresu</string>
+  <string name="auth_create_address_creating">Vytvára sa adresa</string>
+  <string name="auth_create_address_terms">Kliknutím na Vytvoriť adresu vyjadrujete súhlas so <a href="https://proton.me/legal/terms">Zmluvnými podmienkami</a> Protonu.</string>
+  <string name="auth_create_address_error_credentials">Prihlasovacie údaje by nemali byť prázdne.</string>
+  <string name="auth_create_address_error_no_available_domain">Doména nie je dostupná.</string>
+  <string name="auth_create_address_error_private_key">Generovanie súkromného kľúča zlyhalo.</string>
+  <string name="auth_create_address_error_signed_key_list">Generovanie zoznamu kľúčov zlyhalo.</string>
+  <string name="auth_create_address_error_setusername">Prepájanie používateľského mena zlyhalo.</string>
+  <string name="auth_create_address_error_username_unavailable">Zvolené používateľské meno je nedostupné.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Nenašiel sa žiadny primárny kľúč.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Chyba primárneho kľúča.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Nesprávna prístupová fráza</string>
+  <string name="auth_password_chooser_title">Zmeňte si heslo</string>
+  <string name="auth_password_chooser_description">Ak chcete používať aplikáciu Proton ako člen organizácie, musíte si najprv zmeniť heslo prihlásením sa do Protonu cez prehliadač.</string>
+  <string name="auth_password_chooser_change">Zmeniť heslo</string>
+  <string name="auth_user_check_one_free_error">Je povolený iba jeden bezplatný účet Proton.</string>
+  <string name="auth_user_check_delinquent_error">Váš účet je momentálne pozastavený z dôvodu dátumu faktúry po splatnosti.</string>
+  <string name="auth_user_check_delinquent_action">Zaplatiť faktúru</string>
+  <string name="auth_account_not_found_error">Chyba účtu</string>
+  <string name="auth_one_account_all_services">Jeden účet pre všetky Proton služby.</string>
+  <string name="auth_create_account">Vytvoriť účet</string>
+  <string name="auth_long_signup">Čakajte prosím…</string>
+  <string name="auth_long_login">Prihlasovanie, prosím čakajte…</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Vytvorte si Váš Proton účet</string>
+  <string name="auth_signup_current_email">Namesto toho použiť vašu aktuálnu e-mailovú adresu</string>
+  <string name="auth_signup_external_footnote">S adresou Proton môžete využívať všetky služby Proton</string>
+  <string name="auth_signup_internal_footnote">Na používanie Proton Mail a Proton Calendar budete potrebovať adresu Proton</string>
+  <string name="auth_signup_create_secure_proton_address">Získať novú šifrovanú emailovú adresu</string>
+  <string name="auth_signup_username">Používateľské meno</string>
+  <string name="auth_signup_domain">Doména</string>
+  <string name="auth_signup_email">E-mail</string>
+  <string name="auth_signup_next">Ďalší</string>
+  <string name="auth_signup_choose_password">Vytvorte si heslo</string>
+  <string name="auth_signup_repeat_password">Zopakovať heslo</string>
+  <string name="auth_signup_recovery_method_title">Nastaviť spôsob obnovenia (voliteľné)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Nastaviť metódu obnovenia</string>
+  <string name="auth_signup_recovery_method_subtitle">Na tento e-mail alebo telefónne číslo vám pošleme pokyny na obnovenie, ak stratíte prístup k svojmu účtu.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Ak stratíte prístup k svojmu účtu, pošleme vám na tento e-mail pokyny na obnovenie.</string>
+  <string name="auth_signup_recovery_method_email">Email</string>
+  <string name="auth_signup_recovery_method_phone">Telefón</string>
+  <string name="auth_signup_recovery_method_email_hint">E-mail pre obnovenie</string>
+  <string name="auth_signup_recovery_method_phone_hint">Telefónne číslo pre obnovenie</string>
+  <string name="auth_signup_terms_conditions">Podmienky používania</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Kliknutím na tlačidlo Ďalej vyjadrujete súhlas s <annotation link="terms">Zmluvnými podmienkami</annotation> Protonu.</string>
+  <string name="auth_signup_skip_recovery_title">Preskočiť spôsob obnovy?</string>
+  <string name="auth_signup_skip_recovery_description">Spôsob obnovenia vám pomôže získať prístup k vášmu účtu v prípade, že zabudnete heslo alebo si uzamknete účet.</string>
+  <string name="auth_signup_skip_recovery">Preskočiť</string>
+  <string name="auth_signup_set_recovery">Nastaviť spôsob obnovenia</string>
+  <string name="auth_signup_no_connectivity">Žiadne pripojenie na zobrazenie zmluvných podmienok.</string>
+  <string name="auth_signup_error_username_blank">Používateľské meno nesmie byť prázdne.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Heslá sa nezhodujú.</string>
+  <string name="auth_signup_validation_password_length">Heslo by malo mať aspoň 8 znakov.</string>
+  <string name="auth_signup_validation_password">Heslo nesmie byť prázdne.</string>
+  <string name="auth_signup_your_account_is_being_setup">Váš účet sa vytvára…</string>
+  <string name="auth_signup_please_wait">Zvyčajne to netrvá dlhšie ako minútu.</string>
+  <string name="auth_signup_replacement_code">Nedostali ste kód?</string>
+  <string name="auth_signup_verify">Overiť</string>
+  <string name="auth_signup_verification_code">Overovací Kód</string>
+  <string name="auth_signup_enter_code_subtitle">Zadajte overovací kód, ktorý bol odoslaný na %s:</string>
+  <string name="auth_signup_error_human_verification_failed">Ľudské overenie zlyhalo.</string>
+  <string name="auth_signup_congratulations_subtitle">Váš účet Proton bol úspešne vytvorený.\nUžite si svet súkromia.</string>
+  <string name="auth_signup_congratulations">Blahoželáme!</string>
+  <string name="auth_signup_start_using_proton">Začať používať Proton</string>
+  <string name="auth_signup_start_using_calendar">Začať používať Proton kalendár</string>
+  <string name="auth_signup_start_using_mail">Začať používať Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Začať používať Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Začať používať Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Začať používať Proton Pass</string>
+  <string name="auth_signup_error_validation_recovery_destination">Cieľ obnovenia je neplatný.</string>
+</resources>

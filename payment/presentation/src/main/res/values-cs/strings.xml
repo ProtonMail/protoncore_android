@@ -30,12 +30,12 @@
   <string name="payments_no_payment_provider">Nebyl nalezen žádný aktivní poskytovatel platby.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Zvolte způsob platby</string>
+  <string name="payments_choose_payment_method">Zvolte platební metodu</string>
   <string name="payments_add_credit_debit_card">Přidat novou kreditní/debetní kartu</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Zaplatit %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Zaplatit pomocí</string>
   <string name="payments_method_icon">Ikona platební metody.</string>
-  <string name="payments_method_surcharge">*Nákupy provedené tímto způsobem platby vyžadují příplatek.</string>
+  <string name="payments_method_surcharge">*Nákupy provedené touto platební metodou vyžadují příplatek.</string>
   <string name="payments_method_terms_conditions">Nákup pomocí služby Google Pay znamená, že přijímáte podmínky služby Google Pay a souhlasíte s nastavením opakované platby u společnosti Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Pokračovat</string>

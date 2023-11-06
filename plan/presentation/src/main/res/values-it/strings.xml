@@ -34,7 +34,7 @@
   <string name="plans_pay_biennially">Paga ogni 2 anni</string>
   <string name="plans_pay_other">Paga per %d mesi</string>
   <string name="plans_billed_yearly">*Fatturato annualmente il %s</string>
-  <string name="plans_billed_monthly">Fatturato mensilmente</string>
+  <string name="plans_billed_monthly">Fatturazione mensile</string>
   <string name="plans_billing_monthly">Per 1 mese</string>
   <string name="plans_billing_yearly">Per 1 anno</string>
   <string name="plans_billing_two_years">Per 2 anni</string>
@@ -127,7 +127,7 @@
   <string name="plan_id_vpn2022_header" comment="new_plans">La tua privacy e la tua sicurezza sono la nostra priorità.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Archiviazione cloud sicura che ti consente di archiviare, sincronizzare e condividere file in modo semplice e in sicurezza.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privacy e sicurezza complete con tutti i servizi Proton.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">Per una gestione password e protezione dell\'identità di livello superiore.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Per una gestione delle password e protezione dell\'identità di livello superiore.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>

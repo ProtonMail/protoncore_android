@@ -43,7 +43,7 @@
   <string name="auth_sign_in_sso">Connectez-vous à votre organisation</string>
   <string name="auth_sign_in_with_password">Connectez-vous avec un mot de passe</string>
   <string name="auth_continue_to_proton_vpn">pour accéder à Proton VPN.</string>
-  <string name="auth_sign_in_with_sso">Se connecter avec une authentification unique (SSO)</string>
+  <string name="auth_sign_in_with_sso">Se connecter avec l\'authentification unique (SSO)</string>
   <string name="auth_help_label">Aide</string>
   <string name="auth_login_assistive_text">Saisissez votre adresse e-mail Proton ou votre nom d\'utilisateur Proton.</string>
   <string name="auth_login_sso_assistive_text">Saisissez votre adresse e-mail.</string>

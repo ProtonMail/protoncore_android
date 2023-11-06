@@ -67,9 +67,9 @@
     <item quantity="other">Până la #proton_storage# spațiu stocare</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# spațiu / utilizator</item>
-    <item quantity="few">#proton_storage# spațiu / utilizator</item>
-    <item quantity="other">#proton_storage# spațiu / utilizator</item>
+    <item quantity="one">#proton_storage# spațiu/utilizator</item>
+    <item quantity="few">#proton_storage# spațiu/utilizator</item>
+    <item quantity="other">#proton_storage# spațiu/utilizator</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="one">O adresă de e-mail</item>
@@ -77,9 +77,9 @@
     <item quantity="other">#proton_addresses# de adrese de e-mail</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">O adresă / utilizator</item>
-    <item quantity="few">#proton_addresses# adrese / utilizator</item>
-    <item quantity="other">#proton_addresses# de adrese / utilizator</item>
+    <item quantity="one">#proton_addresses# adresă/utilizator</item>
+    <item quantity="few">#proton_addresses# adrese/utilizator</item>
+    <item quantity="other">#proton_addresses# de adrese/utilizator</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d din #proton_addresses# adrese</item>

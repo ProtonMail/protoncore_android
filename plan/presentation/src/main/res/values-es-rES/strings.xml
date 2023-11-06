@@ -146,12 +146,12 @@
   <string name="unlimited_logins_and_notes">Inicios de sesión y notas ilimitados</string>
   <string name="unlimited_devices">Dispositivos ilimitados</string>
   <string name="integrated_2fa_authenticator">Autenticación 2FA integrada</string>
-  <string name="multiple_vaults">Múltiples bóvedas</string>
+  <string name="multiple_vaults">Múltiples cajas fuertes</string>
   <string name="unlimited_email_alias">Alias de Hide-my-email ilimitados</string>
   <string name="custom_email_alias_domains">Dominios personalizados para alias de correo electrónico</string>
   <string name="multiple_forwarding_mailboxes">Múltiples buzones de reenvío</string>
   <string name="priority_support">Soporte prioritario</string>
-  <string name="one_vault">1 bóveda</string>
+  <string name="one_vault">1 caja fuerte</string>
   <string name="ten_hide_my_email_aliases">10 alias de Hide-my-email</string>
   <!-- endregion -->
 </resources>

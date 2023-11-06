@@ -22,7 +22,7 @@
   <string name="payments_no_connectivity">Nessuna connessione per visualizzare la pagina di conferma del 3DS.</string>
   <string name="payments_3ds_not_approved">L\'approvazione 3DS è stata rifiutata.</string>
   <string name="payments_error_card_name">Nome sulla carta richiesto.</string>
-  <string name="payments_error_card_number">Numero carta di credito non valido.</string>
+  <string name="payments_error_card_number">Numero della carta non valido.</string>
   <string name="payments_error_cvc">Inserisci un codice di sicurezza valido.</string>
   <string name="payments_error_session">È necessario un ID di sessione valido quando si iscrive un utente che ha effettuato l\'accesso.</string>
   <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente.</string>
@@ -43,7 +43,7 @@
   <!-- region billing -->
   <string name="payments_payment_details">Dettagli del pagamento</string>
   <string name="payments_card_name">Nome sulla carta</string>
-  <string name="payments_card_number">Numero carta</string>
+  <string name="payments_card_number">Numero della carta</string>
   <string name="payments_expiration_date">Data di scadenza</string>
   <string name="payments_security_code">Codice di sicurezza</string>
   <string name="payments_postal_code">CAP</string>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Nahlásiť problém</string>
+  <string name="core_report_bug_close">Zavrieť</string>
+  <string name="core_report_bug_subject_field_hint">Predmet</string>
+  <string name="core_report_bug_subject_field_required">Zadajte predmet</string>
+  <string name="core_report_bug_description_field_hint">Čo sa pokazilo? Minimálne 10 znakov</string>
+  <string name="core_report_bug_description_field_placeholder">Popíšte problém čo najpodrobnejšie. Ak sa vyskytlo chybové hlásenie, dajte nám vedieť, čo sa v ňom uvádzalo.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Zadajte aspoň %d znak</item>
+    <item quantity="few">Zadajte aspoň %d znaky</item>
+    <item quantity="many">Zadajte aspoň %d znakov</item>
+    <item quantity="other">Zadajte aspoň %d znakov</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Zatvoriť hlásenie o chybe?</string>
+  <string name="core_report_bug_discard_changes_description">Ak opustíte túto stránku, vaše hlásenie sa neuloží.</string>
+  <string name="core_report_bug_discard_changes_cancel">Pokračovať v písaní</string>
+  <string name="core_report_bug_discard_changes_confirm">Zatvoriť bez uloženia</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Maximálne %d znak</item>
+    <item quantity="few">Maximálne %d znaky</item>
+    <item quantity="many">Maximálne %d znakov</item>
+    <item quantity="other">Maximálne %d znakov</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Niečo sa pokazilo. Prosím skúste znovu o pár minút.</string>
+  <string name="core_report_bug_send">Odoslať hlásenie</string>
+  <string name="core_report_bug_success">Ďakujeme Vám za nahlásenie</string>
+</resources>

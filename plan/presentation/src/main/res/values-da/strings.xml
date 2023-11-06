@@ -46,7 +46,7 @@
   <string name="plans_proton_for_free">Få Proton gratis</string>
   <string name="plans_get_proton">Få %s</string>
   <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s of %2$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s af %2$s</string>
   <string name="plans_payments_info_not_available">Ikke tilgængelig</string>
   <string name="plans_manage_your_subscription_google">Dit abonnement håndteres af Google Play.</string>
   <string name="plans_manage_your_subscription_other">Dit abonnement kan ikke administreres i mobilappen.</string>

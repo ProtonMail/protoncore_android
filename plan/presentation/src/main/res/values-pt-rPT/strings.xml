@@ -29,7 +29,7 @@
   <string name="plans_subscription">Subscrição</string>
   <string name="plans_renewal_date">O seu plano será automaticamente renovado em &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">O seu plano expirará em &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
+  <string name="plans_pay_monthly">Pagar mensalmente</string>
   <string name="plans_pay_annually">Pay annually</string>
   <string name="plans_pay_biennially">Pay every 2 years</string>
   <string name="plans_pay_other">Pay for %d months</string>

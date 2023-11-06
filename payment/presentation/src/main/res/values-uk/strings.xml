@@ -56,9 +56,9 @@
   <string name="payment_cc_list_item">%1$s - %2$s (Чинна до %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">н/д</string>
-  <string name="payments_billing_monthly">За 1 місяць</string>
+  <string name="payments_billing_monthly">На 1 місяць</string>
   <string name="payments_billing_yearly">На 1 рік</string>
-  <string name="payments_billing_two_years">За 2 роки</string>
+  <string name="payments_billing_two_years">На 2 роки</string>
   <string name="payment_use_google_pay_instead">Натомість використати Google Pay</string>
   <string name="payment_use_credit_card_instead">Натомість використати кредитну/платіжну картку</string>
   <!-- endregion -->

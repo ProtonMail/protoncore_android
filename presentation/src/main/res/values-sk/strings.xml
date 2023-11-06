@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">Nedá sa nájsť prehliadač na otvorenie odkazu.</string>
+  <string name="presentation_force_update_title">Je potrebná aktualizácia</string>
+  <string name="presentation_force_update_message">Táto verzia aplikácie už nie je podporovaná. Ak ju chcete naďalej používať, aktualizujte ju.</string>
+  <string name="presentation_force_update_learn_more">Dozvedieť sa viac</string>
+  <string name="presentation_force_update_update">Aktualizovať</string>
+  <string name="presentation_market_missing">Aplikáciu sa na vašom zariadení nepodarilo nájsť. Prejdite do obchodu s aplikáciami a nainštalujte si ju.</string>
+  <string name="presentation_authenticate">Overiť</string>
+  <string name="presentation_signin_to_continue">Prihlásiť sa a pokračovať</string>
+  <string name="presentation_alert_title">Upozornenie</string>
+  <string name="presentation_alert_ok">OK</string>
+  <string name="presentation_alert_enter">Zadať</string>
+  <string name="presentation_alert_cancel">Zrušiť</string>
+  <string name="presentation_alert_continue">Pokračovať</string>
+  <string name="presentation_alert_submit">Potvrdiť</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">Nahlásiť problém</string>
+  <string name="presentation_menu_item_title_settings">Nastavenia</string>
+  <string name="presentation_menu_item_title_subscription">Predplatné</string>
+  <string name="presentation_menu_item_title_sign_out">Odhlásiť sa</string>
+  <!-- Other -->
+  <string name="presentation_back">Späť</string>
+  <string name="presentation_close">Zavrieť</string>
+  <string name="presentation_retry">Znova</string>
+  <string name="presentation_skip">Preskočiť</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">Nedá sa pripojiť k serveru.</string>
+  <string name="presentation_check_your_connection">Skontrolujte pripojenie</string>
+  <string name="presentation_connectivity_issues">Problémy s pripojením</string>
+  <string name="presentation_field_required">Toto pole je povinné.</string>
+  <string name="presentation_error_general">Vyskytla sa chyba.</string>
+</resources>

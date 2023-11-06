@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">Vybrať plán</string>
+  <string name="plans_select_a_plan_subtitle">Jeden plán pre všetky Proton služby</string>
+  <string name="plans_fetching_general_error">Vyskytla sa chyba pri načítaní plánov.</string>
+  <string name="plans_payment_error">Vyskytla sa platobná chyba. Skúste znova neskôr, prosím, alebo vytvorte bezplatný plán.</string>
+  <string name="plans_free_name">Free</string>
+  <string name="plan_price_monthly">mesačne</string>
+  <string name="plan_price_annually">ročne</string>
+  <string name="plans_current_plan">Aktuálny plán</string>
+  <string name="plans_upgrade_plan">Vylepšite si svoj plán</string>
+  <string name="plans_subscription">Predplatné</string>
+  <string name="plans_renewal_date">Plán vášho predplatného sa automaticky obnoví dňa &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Váš plán vyprší dňa &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Mesačná platba</string>
+  <string name="plans_pay_annually">Ročná platba</string>
+  <string name="plans_pay_biennially">Platba každé 2 roky</string>
+  <string name="plans_pay_other">Platba za %d mesiacov</string>
+  <string name="plans_billed_yearly">Účtované ročne ku %s</string>
+  <string name="plans_billed_monthly">Účtované mesačne</string>
+  <string name="plans_billing_monthly">Na mesiac</string>
+  <string name="plans_billing_yearly">Na 1 rok</string>
+  <string name="plans_billing_two_years">Na 2 roky</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Na %d mesiac</item>
+    <item quantity="few">Na %d mesiace</item>
+    <item quantity="many">Na %d mesiacov</item>
+    <item quantity="other">Na %d mesiacov</item>
+  </plurals>
+  <string name="plans_upgrade_your_plan">Vylepšite si svoj plán</string>
+  <string name="plans_proton_for_free">Získajte Proton zadarmo</string>
+  <string name="plans_get_proton">Získať %s</string>
+  <string name="plans_manage_your_subscription">Spravujte svoje predplatné na <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s z %2$s</string>
+  <string name="plans_payments_info_not_available">nedostupné</string>
+  <string name="plans_manage_your_subscription_google">Vaše predplatné je spravované cez Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Vaše predplatné nie je možné spravovať v mobilnej aplikácii.</string>
+  <string name="plans_autorenew_subscriptions">Iba predplatné s automatickým obnovovaním sú dostupné cez túto aplikáciu.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Z mobilnej aplikácie nie je možné inovovať.</string>
+  <string name="plans_no_upgrade_available">Momentálne nie je k dispozícii žiadna inovácia.</string>
+  <string name="plans_limited_offer">Časovo limitovaná ponuka</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# úložisko</item>
+    <item quantity="few">#proton_storage# úložiská</item>
+    <item quantity="many">#proton_storage# úložísk</item>
+    <item quantity="other">#proton_storage# úložísk</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Až do #proton_storage# úložiska</item>
+    <item quantity="few">Až do #proton_storage# úložísk</item>
+    <item quantity="many">Až do #proton_storage# úložísk</item>
+    <item quantity="other">Až do #proton_storage# úložísk</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# úložisko / používateľ</item>
+    <item quantity="few">#proton_storage# úložiska / používatelia</item>
+    <item quantity="many">#proton_storage# úložísk / používateľov</item>
+    <item quantity="other">#proton_storage# úložísk / používateľov</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# emailová adresa</item>
+    <item quantity="few">#proton_addresses# emailové adresy</item>
+    <item quantity="many">#proton_addresses# emailových adries</item>
+    <item quantity="other">#proton_addresses# emailových adries</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# adresa / použivatel</item>
+    <item quantity="few">#proton_addresses# adresy / použivatelia</item>
+    <item quantity="many">#proton_addresses# adries/ použivateľov</item>
+    <item quantity="other">#proton_addresses# adries/ použivateľov</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d z #proton_addresses# adresy</item>
+    <item quantity="few">%d z #proton_addresses# adries</item>
+    <item quantity="many">%d z #proton_addresses# adries</item>
+    <item quantity="other">%d z #proton_addresses# adries</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">Podpora pre #proton_domains# vlastnú emailovú doménu</item>
+    <item quantity="few">Podpora pre #proton_domains# vlastné emailové domény</item>
+    <item quantity="many">Podpora pre #proton_domains# vlastných emailových domén</item>
+    <item quantity="other">Podpora pre #proton_domains# vlastných emailových domén</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# osobný kalendár</item>
+    <item quantity="few">#proton_calendars# osobné kalendáre</item>
+    <item quantity="many">#proton_calendars# osobných kalendárov</item>
+    <item quantity="other">#proton_calendars# osobných kalendárov</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d z #proton_calendars# kalendára</item>
+    <item quantity="few">%d z #proton_calendars# kalendárov</item>
+    <item quantity="many">%d z #proton_calendars# kalendárov</item>
+    <item quantity="other">%d z #proton_calendars# kalendárov</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">Bezplatná sieť VPN na jednom zariadení</item>
+    <item quantity="few">Vysokorýchlostná VPN na #proton_vpn# zariadeniach</item>
+    <item quantity="many">Vysokorýchlostná VPN na #proton_vpn# zariadeniach</item>
+    <item quantity="other">Vysokorýchlostná VPN na #proton_vpn# zariadeniach</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# vysokorýchlostné pripojenie VPN</item>
+    <item quantity="few">#proton_vpn# vysokorýchlostné pripojenia VPN</item>
+    <item quantity="many">#proton_vpn# vysokorýchlostných pripojení VPN</item>
+    <item quantity="other">#proton_vpn# vysokorýchlostných pripojení VPN</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# používateľ</item>
+    <item quantity="few">#proton_users# používatelia</item>
+    <item quantity="many">#proton_users# používateľov</item>
+    <item quantity="other">#proton_users# používateľov</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d z #proton_users# používateľa</item>
+    <item quantity="few">%d z #proton_users# používateľov</item>
+    <item quantity="many">%d z #proton_users# používateľov</item>
+    <item quantity="other">%d z #proton_users# používateľov</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plans headers -->
+  <string name="plan_id_free_header">Základ pre súkromnú a bezpečnú komunikáciu.</string>
+  <string name="plan_id_plus_header">Plne vybavená schránka s pokročilou ochranou.</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 krajín</string>
+  <string name="plan_id_vpnbasic_high_speed">Vysoká rýchlosť</string>
+  <string name="plan_id_vpnplus_adblock">Blokátor reklám (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Podpora streamovacích služieb</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 krajín</string>
+  <string name="plan_id_vpnplus_highest_speed">Najvyššia rýchlosť</string>
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Podpora pre viac uživateľov</string>
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Bezpečný email s pokročilými funkciami pre vašu každodennú komunikáciu.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Vaše súkromie a bezpečnosť sú našou prioritou.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Bezpečné cloudové úložisko, ktoré vám umožní ukladať, synchronizovať a zdieľať súbory jednoducho a bezpečne.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Komplexné súkromie a bezpečnosť so všetkými Proton službami dohromady.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Pre správu hesiel a ochranu identity ďalšej úrovne.</string>
+  <!-- endregion -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Neobmedzený počet priečinkov, štítkov a filtrov</string>
+  <string name="highest_vpn_speed" comment="new_plans">Najvyššia rýchlosť VPN</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ serverov v 63 krajinách</string>
+  <string name="ad_blocker" comment="new_plans">Vstavaný blokovač reklám (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Prístup k streamovacím službám na celom svete</string>
+  <string name="secure_core" comment="new_plans">Servery Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">TOR cez VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="unlimited_logins_and_notes">Neobmedzený počet prihlásení a poznámok</string>
+  <string name="unlimited_devices">Neobmedzený počet zariadení</string>
+  <string name="integrated_2fa_authenticator">Integrovaný 2FA autentifikátor</string>
+  <string name="multiple_vaults">Viaceré trezory</string>
+  <string name="unlimited_email_alias">Neobmedzený počet Hide My Email aliasov</string>
+  <string name="custom_email_alias_domains">Vlastné domény pre emailové aliasy</string>
+  <string name="multiple_forwarding_mailboxes">Viacnásobné presmerovanie poštových schránok</string>
+  <string name="priority_support">Prioritná podpora</string>
+  <string name="one_vault">1 trezor</string>
+  <string name="ten_hide_my_email_aliases">10 skrytých aliasov e-mailu</string>
+  <!-- endregion -->
+</resources>

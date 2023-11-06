@@ -22,7 +22,7 @@
   <string name="human_verification_title">Verifica umana</string>
   <string name="human_verification_main_subtitle">Per prevenire abusi, verifica di essere umano utilizzando una delle seguenti opzioni</string>
   <string name="human_verification_enter_code_subtitle">Inserisci il codice di verifica inviato a %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Inserisci il codice di verifica che è stato inviato a %s. Se non trovi l\'email nella posta in arrivo, controlla la cartella spam.</string>
+  <string name="human_verification_enter_code_subtitle_email">Inserisci il codice di verifica che è stato inviato a %s. Se non trovi l\'email nella tua posta in arrivo, controlla la cartella spam.</string>
   <string name="human_verification_enter_code_subtitle_already_have_code">Inserisci il codice di verifica che già possiedi:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Email</string>
@@ -54,5 +54,5 @@
   <string name="human_verification_captcha_failed">Verifica CAPTCHA non riuscita. Riprova un\'altra volta o scegli un\'altra opzione di verifica.</string>
   <string name="human_verification_captcha_no_connectivity">Nessuna connessione. Impossibile caricare CAPTCHA.</string>
   <string name="human_verification_action_retry">Riprova</string>
-  <string name="human_verification_method_loading_failed">Impossibile caricare il metodo di verifica corrente. Se il problema persiste, prova uno degli altri metodi disponibili o controlla la schermata di Assistenza.</string>
+  <string name="human_verification_method_loading_failed">Impossibile caricare il metodo di verifica attuale. Se il problema persiste, prova uno degli altri metodi disponibili o controlla la schermata di Assistenza.</string>
 </resources>

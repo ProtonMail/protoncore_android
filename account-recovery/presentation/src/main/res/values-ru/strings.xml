@@ -20,10 +20,10 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Получен запрос на сброс пароля</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">Был запрошен сброс пароля для <b>%1$s</b> Вы можете изменить пароль через %2$d час.\n\n Если это были не вы, нажмите сюда.</item>
-    <item quantity="few">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="many">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="one">Был запрошен сброс пароля для <b>%1$s</b>. Вы можете изменить пароль через %2$d час.\n\nЕсли вы не запрашивали это изменение, отмените его незамедлительно.</item>
+    <item quantity="few">Был запрошен сброс пароля для <b>%1$s</b>. Вы можете изменить пароль через %2$d часа.\n\nЕсли вы не запрашивали это изменение, отмените его незамедлительно.</item>
+    <item quantity="many">Был запрошен сброс пароля для <b>%1$s</b>. Вы можете изменить пароль через %2$d часов.\n\nЕсли вы не запрашивали это изменение, отмените его незамедлительно.</item>
+    <item quantity="other">Был запрошен сброс пароля для <b>%1$s</b>. Вы можете изменить пароль через %2$d часа.\n\nЕсли вы не запрашивали это изменение, отмените его незамедлительно.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Отменить сброс пароля?</string>

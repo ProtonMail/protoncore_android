@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non impostato</string>
   <string name="settings_recovery_email_error_no_match">Le email di recupero non corrispondono</string>
-  <string name="settings_validation_email">Email non valida.</string>
+  <string name="settings_validation_email">L\'email non è valida.</string>
   <string name="settings_general_error">Si è verificato un errore.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Cambia password</string>
@@ -48,6 +48,6 @@
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
   <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo anonimi.</string>
-  <string name="device_settings_crashreport_title">Rapporti anonimi sugli arresti anomali</string>
-  <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviato una segnalazione ai nostri tecnici con i dettagli della causa. Li useremo solo per migliorare l\'app.</string>
+  <string name="device_settings_crashreport_title">Segnalazioni anonime sugli arresti anomali</string>
+  <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviata una segnalazione ai nostri tecnici con i dettagli della causa. Le useremo solamente al fine di migliorare l\'app.</string>
 </resources>

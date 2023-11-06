@@ -177,7 +177,7 @@
   <string name="multiple_vaults">Několik trezorů</string>
   <string name="unlimited_email_alias">Neomezený počet aliasů Hide-my-email</string>
   <string name="custom_email_alias_domains">Vlastní domény pro e-mailové aliasy</string>
-  <string name="multiple_forwarding_mailboxes">Vícenásobné přesměrování e-mailových schránek</string>
+  <string name="multiple_forwarding_mailboxes">Několik e-mailových schránek přeposílání</string>
   <string name="priority_support">Prioritní podpora</string>
   <string name="one_vault">1 trezor</string>
   <string name="ten_hide_my_email_aliases">10 Hide-my-email aliasů</string>

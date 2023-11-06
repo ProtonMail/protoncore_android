@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Adresa de e-mail de recuperare este:</string>
   <string name="auth_create_address_create">Creare adresă</string>
   <string name="auth_create_address_creating">Se creează adresa</string>
-  <string name="auth_create_address_terms">Făcând clic pe «Creare adresă», sunteți de acord cu <a href="https://proton.me/legal/terms">Termenii și condițiile</a> Proton.</string>
+  <string name="auth_create_address_terms">Făcând clic pe «Creare adresă», sunteți de acord cu &lt;a href="https://proton.me/legal/terms"&gt;Termenii și condițiile&lt;/a&gt; Proton.</string>
   <string name="auth_create_address_error_credentials">Datele de autentificare nu pot fi goale.</string>
   <string name="auth_create_address_error_no_available_domain">Nu sunt domenii disponibile.</string>
   <string name="auth_create_address_error_private_key">Generarea cheii private a eșuat.</string>
@@ -124,7 +124,7 @@
   <string name="auth_signup_recovery_method_email_hint">E-mail de recuperare</string>
   <string name="auth_signup_recovery_method_phone_hint">Numărul de telefon pentru recuperare</string>
   <string name="auth_signup_terms_conditions">Termeni și condiții</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Făcând clic pe «Înainte», sunteți de acord cu <annotation link="terms">termenii și condițiile</annotation> Proton.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Făcând clic pe «Înainte», sunteți de acord cu &lt;annotation link="terms"&gt;termenii și condițiile&lt;/annotation&gt; Proton.</string>
   <string name="auth_signup_skip_recovery_title">Omiteți metoda de recuperare?</string>
   <string name="auth_signup_skip_recovery_description">O metodă de recuperare vă ajută să accesați contul în cazul în care vă uitați parola și nu vă puteți conecta la cont.</string>
   <string name="auth_signup_skip_recovery">Omitere</string>

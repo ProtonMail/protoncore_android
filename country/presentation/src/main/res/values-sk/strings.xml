@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2023 Proton AG
-  ~ This file is part of Proton AG and ProtonCore.
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -17,6 +17,5 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_notification_account_channel_name">Cuenta</string>
-  <string name="core_notification_rationale">Active las notificaciones para ayudarle en la recuperación de su cuenta.</string>
+  <string name="countries_search">Hľadať krajinu</string>
 </resources>

@@ -31,7 +31,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Alegeți metoda de plată</string>
-  <string name="payments_add_credit_debit_card">Adăugare card de credit / debit</string>
+  <string name="payments_add_credit_debit_card">Adăugare card de credit/debit</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Plătiți %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Plată cu</string>
   <string name="payments_method_icon">Pictograma metodei de plată.</string>
@@ -60,7 +60,7 @@
   <string name="payments_billing_yearly">Pentru un an</string>
   <string name="payments_billing_two_years">Pentru doi ani</string>
   <string name="payment_use_google_pay_instead">Folosiți în schimb Google Pay</string>
-  <string name="payment_use_credit_card_instead">Folosiți în schimb un card de credit / debit</string>
+  <string name="payment_use_credit_card_instead">Folosiți în schimb un card de credit/debit</string>
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Confirmare modificare cont</string>

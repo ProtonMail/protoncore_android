@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="payments_iap_surcharge_info">* Zahŕňa príplatok za dodatočné poplatky poskytovateľa a dane.</string>
+  <string name="payments_iap_terms_conditions">Klepnutím na „Kúpiť cez Google Pay“ súhlasíte so zmluvnými podmienkami služby Google Pay a súhlasíte s nastavením opakovanej platby cez Google.</string>
+  <string name="payments_iap_invalid_google_plan">Vybrali ste neplatný názov plánu. Reštartujte proces.</string>
+  <string name="payments_iap_error_google_plan_price">Problém s cenou produktu Google. Reštartujte proces.</string>
+  <string name="payments_iap_error_fetching_google_plan">Problém s načítaním produktu Google. Reštartujte proces.</string>
+  <string name="payments_iap_error_already_owned">Tento produkt už vlastníte. Vyberte iný.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Fakturačný klient Google je momentálne nedostupný alebo odpojený.</string>
+  <string name="payments_iap_general_error">Vyskytla sa chyba. Reštartujte proces, prosím.</string>
+</resources>
