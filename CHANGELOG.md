@@ -11,6 +11,28 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [17.3.0] - 2023-11-07
+
+### Features
+
+- account-recovery:
+  - Added Remote Feature Flag for Account Recovery.
+- event-manager:
+  - Added Remote Feature Flag for Core EventManager.
+- notification:
+  - Added Remote Feature Flag for Notification.
+- payment-iap:
+  - Support multiple cycles for GIAP.
+
+### Bug Fixes
+
+- network:
+  - Update server time only on successful response.
+
+### Refactoring
+
+- Removed CoreExample Deprecated FeatureFlag.
+
 ## [17.2.1] - 2023-10-31
 
 ### Bug Fixes
