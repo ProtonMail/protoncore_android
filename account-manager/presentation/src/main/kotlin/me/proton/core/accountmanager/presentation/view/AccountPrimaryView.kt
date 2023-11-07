@@ -31,7 +31,7 @@ import androidx.lifecycle.findViewTreeLifecycleOwner
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.presentation.R
@@ -139,7 +139,7 @@ class AccountPrimaryView @JvmOverloads constructor(
 
     private fun LifecycleOwner.observeAccount() {
         accountObserver?.cancel()
-        accountObserver = (viewModel?.primaryAccount ?: flowOf(null))
+        accountObserver = (viewModel?.primaryAccount ?: emptyFlow())
             .flowWithLifecycle(lifecycle)
             .onEach { account ->
                 initials = account?.initials
