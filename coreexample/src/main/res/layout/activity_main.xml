@@ -48,21 +48,21 @@
             <LinearLayout
                 android:id="@+id/view_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/default_top_margin"
                 android:orientation="horizontal">
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/customViews"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/custom_views" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/textStyles"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/text_styles" />
@@ -70,7 +70,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/composeUi"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/proton_compose_ui" />
@@ -87,14 +87,14 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/add_account"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/account_switcher_action_add_account" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/sign_in"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/auth_sign_in" />
@@ -102,7 +102,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/accountRecoveryDialog"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="Acc Recovery" />
@@ -119,7 +119,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/signupInternal"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/signup_internal" />
 
@@ -158,7 +158,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/trigger_human_ver"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/trigger_human_ver" />
 
@@ -221,14 +221,14 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/plans"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/plans_signup" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/plansUpgrade"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/plans_upgrade" />
@@ -236,7 +236,7 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/plansCurrent"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/plans_current" />
@@ -252,14 +252,14 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/settingsRecovery"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="@string/settings_recovery_email" />
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/settingsPassword"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/settings_password_management" />
@@ -290,14 +290,14 @@
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
                     android:id="@+id/lock_scope"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginStart="@dimen/default_top_margin"
                     android:layout_weight="1"
                     android:text="@string/lock_scopes" />
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical"
                     android:padding="@dimen/gap_small">
@@ -344,13 +344,6 @@
                     android:layout_weight="1"
                     android:text="Sync Bug Report" />
 
-                <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/featureFlag"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/default_top_margin"
-                    android:layout_weight="1"
-                    android:text="Feature Flags" />
             </LinearLayout>
 
             <LinearLayout
