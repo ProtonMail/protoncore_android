@@ -11,6 +11,45 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.0.0] - 2023-11-08
+
+### Breaking Changes
+
+**Bug Fixes**
+
+- event-manager:
+  - EventMetadataDatabase migration to force fetch and persist EventsResponse.
+
+    MIGRATION: EventMetadataDatabase.MIGRATION_2.
+
+### Chores
+
+- auth:
+  - Display info-level toast if SSO sign-in is required.
+- presentation:
+  - Add `Context.normToast` extension for displaying info-level toasts.
+
+### Features
+
+- gopenpgp:
+  - Update to gopenpgp v2.7.4-proton.
+- telemetry:
+  - Add WelcomeScreen, LoginScreen and SignUp metrics.
+
+### Bug Fixes
+
+- data:
+  - Added UniqueId to generate FileContext Directory/Filename.
+- event-manager:
+  - Added UniqueId to generate FileContext Directory/Filename.
+  - Splitted EventMetadata and EventsResponse.
+- human-verification:
+  - Changed Human Verification errors log level to info.
+
+### Internationalization
+
+- Upgrade translations from crowdin (10c2cadc).
+
 ## [17.3.0] - 2023-11-07
 
 ### Features
