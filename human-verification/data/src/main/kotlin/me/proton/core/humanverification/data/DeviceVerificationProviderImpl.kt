@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,21 +22,29 @@ import me.proton.core.network.domain.deviceverification.DeviceVerificationProvid
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 import io.github.reactivecircus.cache4k.Cache
+import me.proton.core.util.android.dagger.Monotonic
 import kotlin.time.Duration.Companion.minutes
+import kotlin.time.TimeSource
+
+internal val expireAfterWrite = 3.minutes
 
 /**
  * An implementation of the DeviceVerificationProvider interface.
  */
-class DeviceVerificationProviderImpl @Inject constructor() : DeviceVerificationProvider {
+class DeviceVerificationProviderImpl @Inject constructor(
+    @Monotonic timeSource: TimeSource
+) : DeviceVerificationProvider {
 
     // Cache for storing session IDs and their corresponding solved challenges.
     private val sessionCache = Cache.Builder()
-        .expireAfterWrite(3.minutes)
+        .expireAfterWrite(expireAfterWrite)
+        .timeSource(timeSource)
         .build<SessionId, String>()
 
     // Cache for storing challenge payloads and their corresponding solved challenges.
     private val solvedCache = Cache.Builder()
-        .expireAfterWrite(3.minutes)
+        .expireAfterWrite(expireAfterWrite)
+        .timeSource(timeSource)
         .build<String, String>()
 
     /**
@@ -67,7 +75,11 @@ class DeviceVerificationProviderImpl @Inject constructor() : DeviceVerificationP
      * @param challengePayload The challenge payload to associate with the solved challenge.
      * @param solved The solved challenge.
      */
-    override suspend fun setSolvedChallenge(sessionId: SessionId, challengePayload: String, solved: String) {
+    override suspend fun setSolvedChallenge(
+        sessionId: SessionId,
+        challengePayload: String,
+        solved: String
+    ) {
         sessionCache.put(sessionId, solved)
         solvedCache.put(challengePayload, solved)
     }

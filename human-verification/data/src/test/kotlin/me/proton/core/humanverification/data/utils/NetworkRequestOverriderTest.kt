@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,14 +18,15 @@
 
 package me.proton.core.humanverification.data.utils
 
-import android.content.Context
-import android.content.res.Resources
+import android.util.Base64
 import io.mockk.every
-import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.net.HttpURLConnection
@@ -36,23 +37,23 @@ import kotlin.test.assertTrue
 
 class NetworkRequestOverriderTest {
 
-    lateinit var overrider: NetworkRequestOverriderImpl
-    lateinit var mockWebServer: MockWebServer
+    private lateinit var overrider: NetworkRequestOverriderImpl
+    private lateinit var mockWebServer: MockWebServer
 
     @Before
     fun setup() {
-        val resources = mockk<Resources> {
-            every { openRawResource(any()) } returns "".byteInputStream()
-        }
-        val context = mockk<Context> {
-            every { getResources() } returns resources
-        }
         overrider = NetworkRequestOverriderImpl(OkHttpClient())
         mockWebServer = MockWebServer().apply {
             enqueue(
                 MockResponse().setResponseCode(HttpURLConnection.HTTP_OK).setBody("Some response")
             )
         }
+        mockkStatic(Base64::class)
+    }
+
+    @After
+    fun tearDown() {
+        unmockkAll()
     }
 
     @Test
@@ -98,4 +99,20 @@ class NetworkRequestOverriderTest {
         assertEquals("Some response", result.contents?.let { String(it.readBytes()) })
     }
 
+    @Test
+    fun `override request with insecure http client`() {
+        every { Base64.decode(any<String>(), any()) } answers {
+            java.util.Base64.getDecoder().decode(firstArg<String>())
+        }
+
+        val url = mockWebServer.url("/").toUrl().toString()
+        val headers = listOf("SOME_HEADER" to "SOME_VALUE")
+
+        val result =
+            overrider.overrideRequest(url, "GET", headers, acceptSelfSignedCertificates = true)
+        val request = mockWebServer.takeRequest()
+
+        assertTrue(request.headers.map { it }.contains(headers.first()))
+        assertEquals("Some response", result.contents?.let { String(it.readBytes()) })
+    }
 }

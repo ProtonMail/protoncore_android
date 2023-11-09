@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,8 +18,13 @@
 
 package me.proton.core.humanverification.presentation
 
+import android.app.Activity
+import android.content.Intent
 import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.presentation.HumanVerificationOrchestrator.Companion.startHumanVerificationWorkflow
+import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
+import me.proton.core.humanverification.presentation.ui.HumanVerificationActivity
+import me.proton.core.network.domain.client.getType
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.app.AppLifecycleObserver
 import javax.inject.Inject
@@ -34,10 +39,25 @@ class HumanVerificationStateHandler @Inject constructor(
     fun observe() {
         humanVerificationManager
             .observe(appLifecycleObserver.lifecycle)
-            .onHumanVerificationNeeded {
+            .onHumanVerificationNeeded { hvDetails ->
                 activityProvider.lastResumed?.let { activity ->
-                    startHumanVerificationWorkflow(it, activity)
+                    startHumanVerificationWorkflow(activity, hvDetails.toHvInput())
                 }
             }
     }
+
+    private fun startHumanVerificationWorkflow(activity: Activity, input: HumanVerificationInput) {
+        val intent = Intent(activity, HumanVerificationActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra(HumanVerificationActivity.ARG_INPUT, input)
+        }
+        activity.startActivityForResult(intent, 0)
+    }
 }
+
+internal fun HumanVerificationDetails.toHvInput() = HumanVerificationInput(
+    clientId = clientId.id,
+    clientIdType = clientId.getType().value,
+    verificationMethods = verificationMethods,
+    verificationToken = requireNotNull(verificationToken)
+)

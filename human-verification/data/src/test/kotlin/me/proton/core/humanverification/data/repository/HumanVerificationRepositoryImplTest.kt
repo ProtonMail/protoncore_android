@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 
 package me.proton.core.humanverification.data.repository
 
+import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -25,6 +26,7 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.slot
 import io.mockk.unmockkStatic
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -45,6 +47,7 @@ import me.proton.core.network.domain.session.SessionId
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class HumanVerificationRepositoryImplTest {
@@ -68,9 +71,12 @@ class HumanVerificationRepositoryImplTest {
     private val simpleCrypto = object : KeyStoreCrypto {
         override fun isUsingKeyStore(): Boolean = false
         override fun encrypt(value: String): EncryptedString = "encrypted-$value"
-        override fun encrypt(value: PlainByteArray): EncryptedByteArray = EncryptedByteArray(value.array)
+        override fun encrypt(value: PlainByteArray): EncryptedByteArray =
+            EncryptedByteArray(value.array)
+
         override fun decrypt(value: EncryptedString): String = "decrypted-$value"
-        override fun decrypt(value: EncryptedByteArray): PlainByteArray = PlainByteArray(value.array)
+        override fun decrypt(value: EncryptedByteArray): PlainByteArray =
+            PlainByteArray(value.array)
     }
 
     @Before
@@ -226,5 +232,50 @@ class HumanVerificationRepositoryImplTest {
             )
         }
         coVerify(exactly = 1) { humanVerificationDetailsDao.getByClientId(clientId.id) }
+    }
+
+    @Test
+    fun `flow with state changes and initial value`() = runTest {
+        val humanVerificationEntity = HumanVerificationEntity(
+            clientId = clientId.id,
+            clientIdType = ClientIdType.SESSION,
+            verificationMethods = listOf(VerificationMethod.EMAIL),
+            verificationToken = "token-123",
+            state = HumanVerificationState.HumanVerificationNeeded
+        )
+
+        every { humanVerificationDetailsDao.getAll() } returns flowOf(
+            listOf(humanVerificationEntity)
+        )
+
+        humanVerificationRepository.onHumanVerificationStateChanged(initialState = true).test {
+            val details = awaitItem()
+            assertEquals("token-123", details.verificationToken)
+        }
+    }
+
+    @Test
+    fun `flow with state changes`() = runTest {
+        val humanVerificationEntity = HumanVerificationEntity(
+            clientId = clientId.id,
+            clientIdType = ClientIdType.SESSION,
+            verificationMethods = listOf(VerificationMethod.EMAIL),
+            verificationToken = "token-123",
+            state = HumanVerificationState.HumanVerificationNeeded
+        )
+
+        coEvery { humanVerificationDetailsDao.getByClientId(clientId.id) } returns humanVerificationEntity
+
+        humanVerificationRepository.onHumanVerificationStateChanged(initialState = false).test {
+            expectNoEvents()
+
+            humanVerificationRepository.updateHumanVerificationState(
+                clientId,
+                HumanVerificationState.HumanVerificationNeeded
+            )
+
+            val details = awaitItem()
+            assertEquals("token-123", details.verificationToken)
+        }
     }
 }

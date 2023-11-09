@@ -55,32 +55,6 @@ public final class me/proton/core/humanverification/presentation/HumanVerificati
 	public static synthetic fun onHumanVerificationSuccess$default (Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/humanverification/presentation/HumanVerificationManagerObserver;
 }
 
-public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator {
-	public static final field Companion Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator$Companion;
-	public fun <init> ()V
-	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
-	public final fun setOnHumanVerificationResult (Lkotlin/jvm/functions/Function1;)V
-	public final fun startHumanVerificationWorkflow (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;)V
-	public final fun unregister ()V
-}
-
-public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator$Companion {
-	public final fun startHumanVerificationWorkflow (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;Landroid/app/Activity;)V
-}
-
-public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestratorKt {
-	public static final fun onHumanVerificationResult (Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;Lkotlin/jvm/functions/Function1;)Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
-	public static final fun toInput (Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;
-}
-
-public final class me/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
-	public static fun newInstance ()Lme/proton/core/humanverification/presentation/HumanVerificationOrchestrator;
-}
-
 public final class me/proton/core/humanverification/presentation/HumanVerificationStateHandler {
 	public fun <init> (Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/presentation/app/AppLifecycleObserver;Lme/proton/core/humanverification/domain/HumanVerificationManager;)V
 	public final fun observe ()V
@@ -323,19 +297,6 @@ public final class me/proton/core/humanverification/presentation/ui/HumanVerific
 	public static fun injectHumanverificationExternalInput (Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity;Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/humanverification/presentation/ui/HumanVerificationActivity;)V
-}
-
-public final class me/proton/core/humanverification/presentation/ui/StartHumanVerification : androidx/activity/result/contract/ActivityResultContract {
-	public static final field Companion Lme/proton/core/humanverification/presentation/ui/StartHumanVerification$Companion;
-	public fun <init> ()V
-	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
-	public fun createIntent (Landroid/content/Context;Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;)Landroid/content/Intent;
-	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
-	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/humanverification/presentation/entity/HumanVerificationResult;
-}
-
-public final class me/proton/core/humanverification/presentation/ui/StartHumanVerification$Companion {
-	public final fun getIntent (Landroid/content/Context;Lme/proton/core/humanverification/presentation/entity/HumanVerificationInput;)Landroid/content/Intent;
 }
 
 public final class me/proton/core/humanverification/presentation/ui/common/HumanVerificationHelpFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
@@ -632,7 +593,6 @@ public final class me/proton/core/humanverification/presentation/viewmodel/hv3/H
 	public fun toTelemetryEvent (Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
 	public fun toTelemetryEvent (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
 	public fun toTelemetryEvent (Ljava/lang/String;Z)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
-	public fun toTelemetryHelpEvent (Ljava/lang/String;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
 }
 
 public final class me/proton/core/humanverification/presentation/viewmodel/hv3/HV3ViewModel_Factory : dagger/internal/Factory {

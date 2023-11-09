@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,8 @@
 package me.proton.core.humanverification.data
 
 import io.mockk.coEvery
+import io.mockk.coJustRun
+import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.toList
@@ -119,5 +121,22 @@ class HumanVerificationListenerImplTest {
         assertEquals(2, sessionStateLists.size)
 
         assertEquals(HumanVerificationListener.HumanVerificationResult.Failure, result)
+    }
+
+    @Test
+    fun `on human verification invalid`() = runTest {
+        // GIVEN
+        coJustRun { humanVerificationRepository.updateHumanVerificationState(any(), any()) }
+
+        // WHEN
+        humanVerificationListener.onHumanVerificationInvalid(clientId)
+
+        // THEN
+        coVerify {
+            humanVerificationRepository.updateHumanVerificationState(
+                clientId,
+                HumanVerificationState.HumanVerificationInvalid
+            )
+        }
     }
 }

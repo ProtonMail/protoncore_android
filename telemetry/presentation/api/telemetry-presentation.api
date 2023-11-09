@@ -16,6 +16,7 @@ public abstract interface class me/proton/core/telemetry/presentation/ProductMet
 	public static final field Companion Lme/proton/core/telemetry/presentation/ProductMetricsDelegate$Companion;
 	public static final field KEY_FLOW Ljava/lang/String;
 	public static final field KEY_HTTP_CODE Ljava/lang/String;
+	public static final field KEY_ITEM Ljava/lang/String;
 	public static final field KEY_RESULT Ljava/lang/String;
 	public static final field VALUE_FAILURE Ljava/lang/String;
 	public static final field VALUE_SUCCESS Ljava/lang/String;
@@ -30,6 +31,7 @@ public abstract interface class me/proton/core/telemetry/presentation/ProductMet
 public final class me/proton/core/telemetry/presentation/ProductMetricsDelegate$Companion {
 	public static final field KEY_FLOW Ljava/lang/String;
 	public static final field KEY_HTTP_CODE Ljava/lang/String;
+	public static final field KEY_ITEM Ljava/lang/String;
 	public static final field KEY_RESULT Ljava/lang/String;
 	public static final field VALUE_FAILURE Ljava/lang/String;
 	public static final field VALUE_SUCCESS Ljava/lang/String;

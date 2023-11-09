@@ -59,6 +59,7 @@ public interface ProductMetricsDelegate {
 
     public companion object {
         public const val KEY_FLOW: String = "flow"
+        public const val KEY_ITEM: String = "item"
         public const val KEY_RESULT: String = "result"
         public const val KEY_HTTP_CODE: String = "http_code"
 

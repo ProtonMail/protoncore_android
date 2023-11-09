@@ -29,8 +29,7 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(39)
-    minLineCoveragePercentage.set(60)
+    minBranchCoveragePercentage.set(76)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -53,6 +52,7 @@ dependencies {
     )
 
     implementation(
+        project(Module.androidUtilDagger),
         project(Module.kotlinUtil),
         project(Module.cryptoCommon),
         `coroutines-core`,
@@ -67,6 +67,7 @@ dependencies {
         junit,
         `kotlin-test`,
         mockk,
-        mockWebServer
+        mockWebServer,
+        turbine
     )
 }

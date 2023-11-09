@@ -25,6 +25,7 @@ import android.webkit.WebResourceError
 import android.webkit.WebResourceRequest
 import android.webkit.WebResourceResponse
 import android.webkit.WebView
+import androidx.annotation.VisibleForTesting
 import androidx.core.net.toUri
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
@@ -34,6 +35,7 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 import me.proton.core.util.kotlin.takeIfNotBlank
 
 /** Used to override HTTP headers to access captcha iframe on debug from outside the VPN */
@@ -78,7 +80,7 @@ class HumanVerificationWebViewClient(
     ) {
         super.onReceivedHttpError(view, request, errorResponse)
         val logMessage = "Request failed: ${request?.method} ${request?.url} with " +
-            "status ${errorResponse?.statusCode} ${errorResponse?.reasonPhrase}"
+                "status ${errorResponse?.statusCode} ${errorResponse?.reasonPhrase}"
         CoreLogger.i(HV_REQUEST_ERROR, logMessage)
         onResourceLoadingError(request, errorResponse?.let { WebResponseError.Http(it) })
     }
@@ -162,7 +164,8 @@ class HumanVerificationWebViewClient(
 
         // Copy the set-cookie headers from the overridden request into the default cookie manager
         // to ensure they are sent on requests the web app makes
-        val cookieHeaders = response.responseHeaders.filter { (key) -> key.lowercase() == "set-cookie" }
+        val cookieHeaders =
+            response.responseHeaders.filter { (key) -> key.lowercase() == "set-cookie" }
         val cookieManager = CookieManager.getInstance();
         cookieHeaders.entries.forEach { entry -> cookieManager.setCookie(url, entry.value) }
 
@@ -188,12 +191,20 @@ class HumanVerificationWebViewClient(
         private const val CSP_HEADER = "content-security-policy"
 
         private val ipv4Regex = Regex("\\d+\\.\\d+\\.\\d+\\.\\d+")
-        private val ipv6Regex = Regex("[0-9a-fA-F:/]+")
+        private val hexRegex = Regex("[0-9a-fA-F]+")
 
-        private fun String.isIpAddress(): Boolean = ipv4Regex.matches(this) || ipv6Regex.matches(this)
+        @VisibleForTesting
+        internal fun String.isIpAddress(): Boolean = ipv4Regex.matches(this) || isIpV6Address()
+
+        private fun String.isIpV6Address(): Boolean {
+            val atLeastTwoColons = count { it == ':' } >= 2
+            val filtered = replace(":", "").replace(".", "")
+            return atLeastTwoColons && hexRegex.matches(filtered)
+        }
     }
 }
 
+@ExcludeFromCoverage
 sealed class WebResponseError {
     data class Http(val response: WebResourceResponse) : WebResponseError()
     data class Ssl(val error: SslError) : WebResponseError()

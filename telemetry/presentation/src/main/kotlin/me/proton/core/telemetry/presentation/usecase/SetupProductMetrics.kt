@@ -31,6 +31,7 @@ import me.proton.core.presentation.utils.UiComponent
 import me.proton.core.presentation.utils.launchOnUiComponentCreated
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate.Companion.KEY_ITEM
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.MenuItemClicked
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
@@ -161,7 +162,7 @@ internal class SetupProductMetrics @Inject constructor(
                         measureOnViewFocused(
                             event = viewFocused.event,
                             delegateOwner = resolvedDelegateOwner,
-                            productDimensions = mapOf("item" to viewId)
+                            productDimensions = mapOf(KEY_ITEM to viewId)
                         )
                     }
                 }

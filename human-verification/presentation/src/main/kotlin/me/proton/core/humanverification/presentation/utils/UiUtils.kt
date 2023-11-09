@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ import me.proton.core.humanverification.presentation.ui.common.HumanVerification
 import me.proton.core.humanverification.presentation.ui.hv3.HV3DialogFragment
 import me.proton.core.presentation.utils.inTransaction
 
-private const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
+internal const val TAG_HUMAN_VERIFICATION_DIALOG = "human_verification_dialog"
 const val TAG_HUMAN_VERIFICATION_HELP = "human_verification_help"
 
 /** Shows the human verification dialog. */

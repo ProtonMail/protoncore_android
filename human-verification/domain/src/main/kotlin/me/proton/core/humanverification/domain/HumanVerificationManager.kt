@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,9 @@ import me.proton.core.network.domain.humanverification.HumanVerificationDetails
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
+@ExcludeFromCoverage
 interface HumanVerificationManager : HumanVerificationProvider, HumanVerificationListener {
 
     /**

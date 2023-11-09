@@ -31,6 +31,7 @@ import me.proton.core.util.kotlin.DefaultDispatcherProvider
 import me.proton.core.util.kotlin.DispatcherProvider
 import java.time.Clock
 import javax.inject.Singleton
+import kotlin.time.TimeSource
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -51,5 +52,9 @@ public abstract class CoreAndroidModule {
         @Provides
         @UtcClock
         internal fun provideClock(): Clock = Clock.systemUTC()
+
+        @Provides
+        @Monotonic
+        internal fun provideMonotonicTimeSource(): TimeSource = TimeSource.Monotonic
     }
 }
