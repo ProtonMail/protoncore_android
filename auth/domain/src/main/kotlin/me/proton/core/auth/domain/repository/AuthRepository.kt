@@ -43,6 +43,7 @@ interface AuthRepository {
      * Get Authentication Info for SSO.
      */
     suspend fun getAuthInfoSso(
+        sessionId: SessionId?,
         email: String,
     ): AuthInfo.Sso
 

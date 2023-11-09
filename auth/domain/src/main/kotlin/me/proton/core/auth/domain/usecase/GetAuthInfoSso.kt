@@ -28,9 +28,11 @@ class GetAuthInfoSso @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(
+        sessionId: SessionId?,
         email: String
     ): AuthInfo.Sso = result("getAuthInfoSso") {
         authRepository.getAuthInfoSso(
+            sessionId = sessionId,
             email = email
         )
     }

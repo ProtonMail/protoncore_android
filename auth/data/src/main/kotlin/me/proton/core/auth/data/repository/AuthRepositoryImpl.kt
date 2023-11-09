@@ -63,8 +63,8 @@ class AuthRepositoryImpl(
             getAuthInfo(request).toAuthInfo(username) as AuthInfo.Srp
         }.valueOrThrow
 
-    override suspend fun getAuthInfoSso(email: String): AuthInfo.Sso =
-        provider.get<AuthenticationApi>().invoke {
+    override suspend fun getAuthInfoSso(sessionId: SessionId?, email: String): AuthInfo.Sso =
+        provider.get<AuthenticationApi>(sessionId).invoke {
             val request = AuthInfoRequest(email, AuthIntent.SSO.value)
             getAuthInfo(request).toAuthInfo(email) as AuthInfo.Sso
         }.valueOrThrow

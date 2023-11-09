@@ -27,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginSsoBinding
 import me.proton.core.auth.presentation.entity.LoginSsoInput
@@ -107,12 +108,19 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
                 is LoginSsoViewModel.State.Processing -> showLoading(true)
                 is LoginSsoViewModel.State.SignInWithSrp -> onSignInWithSrp(it)
                 is LoginSsoViewModel.State.StartToken -> onStartToken(it)
-                is LoginSsoViewModel.State.Success -> onSuccess(it)
+                is LoginSsoViewModel.State.AccountSetupResult -> onAccountSetupResult(it)
             }
         }.launchIn(lifecycleScope)
 
         launchOnScreenView {
             viewModel.onScreenView(LoginScreenViewTotal.ScreenId.signInWithSso)
+        }
+    }
+
+    private fun onAccountSetupResult(result: LoginSsoViewModel.State.AccountSetupResult) {
+        when (result.result) {
+            is PostLoginAccountSetup.UserCheckResult.Error -> onUserCheckFailed(result.result)
+            is PostLoginAccountSetup.UserCheckResult.Success -> onSuccess(result.userId)
         }
     }
 
@@ -147,7 +155,10 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     private fun onStartToken(state: LoginSsoViewModel.State.StartToken) = lifecycleScope.launch {
         val sessionId = requireNotNull(sessionProvider.getSessionId(userId = null))
         val session = requireNotNull(sessionProvider.getSession(sessionId))
-        val extraHeaders = mapOf(AUTH_HEADER to "$BEARER_HEADER ${session.accessToken}")
+        val extraHeaders = mapOf(
+            UID_HEADER to session.sessionId.id,
+            AUTH_HEADER to "$BEARER_HEADER ${session.accessToken}"
+        )
         val url = "$baseApiUrl$AUTH_SSO_URL${state.token}"
         webViewResultLauncher.launch(
             Input(
@@ -161,10 +172,11 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
             )
         )
         viewModel.onScreenView(LoginScreenViewTotal.ScreenId.ssoIdentityProvider)
+        viewModel.onIdentityProviderStarted()
     }
 
-    private fun onSuccess(state: LoginSsoViewModel.State.Success) {
-        setResultAndFinish(state.userId)
+    private fun onSuccess(userId: UserId) {
+        setResultAndFinish(userId)
     }
 
     private fun setResultAndFinish(userId: UserId) {
@@ -173,7 +185,8 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     }
 
     companion object {
-        private const val AUTH_SSO_URL = "/auth/sso/"
+        private const val UID_HEADER = "x-pm-uid"
+        private const val AUTH_SSO_URL = "auth/sso/"
         private const val AUTH_HEADER = "Authorization"
         private const val BEARER_HEADER = "Bearer"
         private const val TOKEN = "token"

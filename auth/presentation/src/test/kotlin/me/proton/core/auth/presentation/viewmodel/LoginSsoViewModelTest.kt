@@ -26,6 +26,7 @@ import io.mockk.mockk
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.CreateLoginSsoSession
+import me.proton.core.auth.domain.usecase.PostLoginSsoAccountSetup
 import me.proton.core.auth.domain.usecase.GetAuthInfoSso
 import me.proton.core.auth.presentation.viewmodel.LoginSsoViewModel.State
 import me.proton.core.domain.entity.UserId
@@ -47,6 +48,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
     private val requiredAccountType = AccountType.External
     private val getAuthInfo = mockk<GetAuthInfoSso>()
     private val createLoginSession = mockk<CreateLoginSsoSession>()
+    private val postAccountSsoAccountSetup = mockk<PostLoginSsoAccountSetup>()
     private val manager = mockk<ObservabilityManager>(relaxed = true)
 
     private val testEmail = "username@domain.com"
@@ -56,13 +58,19 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
 
     @Before
     fun beforeEveryTest() {
-        viewModel = LoginSsoViewModel(requiredAccountType, getAuthInfo, createLoginSession, manager)
+        viewModel = LoginSsoViewModel(
+            requiredAccountType,
+            getAuthInfo,
+            createLoginSession,
+            postAccountSsoAccountSetup,
+            manager
+        )
     }
 
     @Test
     fun `getAuth for non SSO account switch to SRP`() = coroutinesTest {
         // GIVEN
-        coEvery { getAuthInfo.invoke(any()) } throws ApiException(
+        coEvery { getAuthInfo.invoke(any(), any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 404,
                 message = "Email domain not found, please sign in with a password",
@@ -79,7 +87,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
             assertIs<State.Processing>(awaitItem())
             assertIs<State.SignInWithSrp>(awaitItem())
 
-            coVerify { getAuthInfo.invoke(testEmail) }
+            coVerify { getAuthInfo.invoke(any(), testEmail) }
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -88,7 +96,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
     @Test
     fun `getAuth for SSO account StartToken`() = coroutinesTest {
         // GIVEN
-        coEvery { getAuthInfo.invoke(any()) } returns mockk {
+        coEvery { getAuthInfo.invoke(any(), any()) } returns mockk {
             every { ssoChallengeToken } returns "token"
         }
 
@@ -101,7 +109,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
             assertIs<State.Processing>(awaitItem())
             assertIs<State.StartToken>(awaitItem())
 
-            coVerify { getAuthInfo.invoke(testEmail) }
+            coVerify { getAuthInfo.invoke(any(), testEmail) }
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -114,6 +122,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns mockk {
             every { userId } returns testUserId
         }
+        coEvery { postAccountSsoAccountSetup.invoke(any()) } returns mockk()
 
         viewModel.state.test {
             // WHEN
@@ -122,7 +131,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
             // THEN
             assertIs<State.Idle>(awaitItem())
             assertIs<State.Processing>(awaitItem())
-            assertIs<State.Success>(awaitItem())
+            assertIs<State.AccountSetupResult>(awaitItem())
 
             coVerify { createLoginSession.invoke(testEmail, "token", requiredAccountType) }
             verify { manager.enqueue(LoginSsoIdentityProviderResultTotal(Status.success), any()) }

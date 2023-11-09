@@ -11,6 +11,8 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.CreateLoginSsoSession
 import me.proton.core.auth.domain.usecase.GetAuthInfoSso
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.PostLoginSsoAccountSetup
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
@@ -36,6 +38,7 @@ class LoginSsoViewModel @Inject constructor(
     private val requiredAccountType: AccountType,
     private val getAuthInfoSso: GetAuthInfoSso,
     private val createLoginSsoSession: CreateLoginSsoSession,
+    private val postLoginSsoAccountSetup: PostLoginSsoAccountSetup,
     override val observabilityManager: ObservabilityManager
 ) : ViewModel(), ObservabilityContext {
 
@@ -47,7 +50,11 @@ class LoginSsoViewModel @Inject constructor(
         object Processing : State()
         data class SignInWithSrp(val error: Throwable) : State()
         data class StartToken(val token: String) : State()
-        data class Success(val userId: UserId) : State()
+        data class AccountSetupResult(
+            val userId: UserId,
+            val result: PostLoginAccountSetup.UserCheckResult
+        ) : State()
+
         data class Error(val error: Throwable) : State()
     }
 
@@ -57,7 +64,7 @@ class LoginSsoViewModel @Inject constructor(
         onResultEnqueueObservability("getAuthInfoSso") { LoginObtainSsoChallengeTokenTotal(this) }
         flow {
             emit(State.Processing)
-            val result = getAuthInfoSso(email = email)
+            val result = getAuthInfoSso(sessionId = null, email = email)
             emit(State.StartToken(result.ssoChallengeToken))
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))
@@ -68,12 +75,17 @@ class LoginSsoViewModel @Inject constructor(
         }.collect()
     }
 
+    fun onIdentityProviderStarted() {
+        mutableState.tryEmit(State.Processing)
+    }
+
     fun onIdentityProviderSuccess(
         email: String,
         url: String,
     ) = viewModelScope.launchWithResultContext {
         enqueueObservability(LoginSsoIdentityProviderResultTotal(Status.success))
         onResultEnqueueObservability("performLoginSso") { LoginAuthWithSsoTotal(this) }
+
         flow {
             emit(State.Processing)
             // Ex: url = "https://app-api.proton.domain/sso/login#token=token&uid=uid"
@@ -83,7 +95,8 @@ class LoginSsoViewModel @Inject constructor(
             }
             val token = params?.getValue("token")
             val sessionInfo = createLoginSsoSession(email, requireNotNull(token), requiredAccountType)
-            emit(State.Success(sessionInfo.userId))
+            val result = postLoginSsoAccountSetup(userId = sessionInfo.userId)
+            emit(State.AccountSetupResult(sessionInfo.userId, result))
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))
         }.catchAll(LogTag.FLOW_ERROR_LOGIN) {

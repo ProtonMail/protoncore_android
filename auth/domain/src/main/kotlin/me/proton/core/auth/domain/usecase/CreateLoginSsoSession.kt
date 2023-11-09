@@ -72,6 +72,5 @@ class CreateLoginSsoSession @Inject constructor(
             scopes = sessionInfo.scopes,
         )
         accountWorkflow.handleSession(account, session)
-        accountWorkflow.handleAccountReady(account.userId)
     }
 }

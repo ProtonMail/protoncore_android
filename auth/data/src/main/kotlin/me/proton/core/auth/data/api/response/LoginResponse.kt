@@ -23,6 +23,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.toBooleanOrFalse
 
 @Serializable
 data class LoginResponse(
@@ -49,7 +50,7 @@ data class LoginResponse(
     @SerialName("2FA")
     val secondFactorInfo: SecondFactorInfoResponse,
     @SerialName("TemporaryPassword")
-    val temporaryPassword: Int,
+    val temporaryPassword: Int? = null,
 ) {
     fun toSessionInfo(username: String): SessionInfo = SessionInfo(
         username = username,
@@ -64,8 +65,6 @@ data class LoginResponse(
         localId = localId,
         passwordMode = passwordMode,
         secondFactor = secondFactorInfo.toSecondFactor(),
-        temporaryPassword = temporaryPassword.toBooleanOrFalse()
+        temporaryPassword = temporaryPassword?.toBooleanOrFalse() ?: false
     )
 }
-
-private fun Int.toBooleanOrFalse(): Boolean = this == 1

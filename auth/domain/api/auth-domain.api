@@ -210,7 +210,7 @@ public final class me/proton/core/auth/domain/exception/InvalidServerAuthenticat
 
 public abstract interface class me/proton/core/auth/domain/repository/AuthRepository {
 	public abstract fun getAuthInfoSrp (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getAuthInfoSso (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAuthInfoSso (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performLoginSso (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -257,7 +257,7 @@ public final class me/proton/core/auth/domain/usecase/GetAuthInfoSrp {
 
 public final class me/proton/core/auth/domain/usecase/GetAuthInfoSso {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
-	public final fun invoke (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/auth/domain/usecase/IsSsoEnabled {
@@ -410,6 +410,11 @@ public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$User
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Success : me/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult {
 	public static final field INSTANCE Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Success;
+}
+
+public final class me/proton/core/auth/domain/usecase/PostLoginSsoAccountSetup {
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/RecoverableErrorsKt {

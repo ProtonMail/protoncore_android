@@ -131,10 +131,8 @@ internal class LoginViewModel @Inject constructor(
         userCheckMetricData?.let {
             onResultEnqueueObservability("defaultUserCheck") { it(this) }
         }
-
         onResultEnqueueTelemetry("performLogin") {
             toTelemetryEvent("be.signin.auth", requiredAccountType)
-
         }
 
         flow {

@@ -2191,7 +2191,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
-	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/auth/domain/usecase/PostLoginSsoAccountSetup;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
@@ -2200,6 +2200,7 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel 
 	public final fun onIdentityProviderCancel ()V
 	public final fun onIdentityProviderError ()V
 	public final fun onIdentityProviderPageLoad (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;)V
+	public final fun onIdentityProviderStarted ()V
 	public final fun onIdentityProviderSuccess (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;)V
@@ -2207,6 +2208,19 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel 
 }
 
 public abstract class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$AccountSetupResult : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$AccountSetupResult;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$AccountSetupResult;Lme/proton/core/domain/entity/UserId;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$AccountSetupResult;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getResult ()Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Error : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
@@ -2250,23 +2264,12 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
-	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Success;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
-	public static fun newInstance (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
+	public static fun newInstance (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/usecase/GetAuthInfoSso;Lme/proton/core/auth/domain/usecase/CreateLoginSsoSession;Lme/proton/core/auth/domain/usecase/PostLoginSsoAccountSetup;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel_HiltModules {

@@ -67,6 +67,5 @@ class CreateLoginSsoSessionTest {
         // THEN
         coVerify { performLogin.invoke(testEmail, testToken) }
         coVerify { accountWorkflowHandler.handleSession(any(), any()) }
-        coVerify { accountWorkflowHandler.handleAccountReady(any()) }
     }
 }

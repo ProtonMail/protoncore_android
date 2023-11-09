@@ -32,7 +32,7 @@ import kotlin.test.assertTrue
 class GetAuthSsoTest {
 
     private val authRepository: AuthRepository = mockk {
-        coEvery { this@mockk.getAuthInfoSso(any()) } returns mockk()
+        coEvery { this@mockk.getAuthInfoSso(any(), any()) } returns mockk()
     }
 
     private val testEmail = "username@domain.com"
@@ -50,10 +50,10 @@ class GetAuthSsoTest {
         var result: Result<*>? = null
         withResultContext {
             onResult("getAuthInfoSso") { result = this }
-            tested.invoke(email = testEmail)
+            tested.invoke(sessionId = null, email = testEmail)
         }
         // THEN
-        coVerify { authRepository.getAuthInfoSso(testEmail) }
+        coVerify { authRepository.getAuthInfoSso(sessionId = null, testEmail) }
         assertTrue(requireNotNull(result).isSuccess)
     }
 }
