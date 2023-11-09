@@ -17,5 +17,5 @@
   -->
 
 <resources>
-    <bool name="core_feature_auth_sso_enabled">false</bool>
+    <bool name="core_feature_auth_sso_enabled">true</bool>
 </resources>

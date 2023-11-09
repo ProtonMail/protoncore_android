@@ -47,6 +47,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkData),
         project(Module.networkDomain),
+        project(Module.featureFlagDomain),
         `serialization-core`,
         `hilt-android`,
         `javax-inject`,

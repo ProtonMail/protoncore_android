@@ -636,15 +636,15 @@ public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/p
 }
 
 public final class me/proton/core/auth/data/usecase/IsSsoEnabledImpl : me/proton/core/auth/domain/usecase/IsSsoEnabled {
-	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 	public fun invoke ()Z
 }
 
 public final class me/proton/core/auth/data/usecase/IsSsoEnabledImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;
-	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;
 }
 

@@ -22,13 +22,30 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.auth.data.R
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
+import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
+import me.proton.core.featureflag.domain.FeatureFlagManager
+import me.proton.core.featureflag.domain.entity.FeatureId
 import javax.inject.Inject
 
 class IsSsoEnabledImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val featureFlagManager: FeatureFlagManager
 ) : IsSsoEnabled {
 
     override fun invoke(): Boolean {
+        return isLocalEnabled() && isRemoteEnabled()
+    }
+
+    private fun isLocalEnabled(): Boolean {
         return context.resources.getBoolean(R.bool.core_feature_auth_sso_enabled)
+    }
+
+    @OptIn(ExperimentalProtonFeatureFlag::class)
+    private fun isRemoteEnabled(): Boolean {
+        return featureFlagManager.getValue(userId = null, featureId)
+    }
+
+    internal companion object {
+        val featureId = FeatureId("ExternalSSO")
     }
 }
