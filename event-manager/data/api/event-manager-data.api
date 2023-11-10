@@ -427,6 +427,7 @@ public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl 
 	public fun cancel (Lme/proton/core/eventmanager/domain/EventManagerConfig;)V
 	public fun enqueue (Lme/proton/core/eventmanager/domain/EventManagerConfig;Z)V
 	public fun getBackoffDelay-UwyO8pc ()J
+	public fun getImmediateMinimumInitialDelay-UwyO8pc ()J
 	public fun getRepeatIntervalBackground-UwyO8pc ()J
 	public fun getRepeatIntervalForeground-UwyO8pc ()J
 	public fun isRunning (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

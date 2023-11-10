@@ -41,6 +41,11 @@ interface EventWorkerManager {
     suspend fun isRunning(config: EventManagerConfig): Boolean
 
     /**
+     * Get immediate minimal initial delay for any Worker to start.
+     */
+    fun getImmediateMinimumInitialDelay(): Duration
+
+    /**
      * Get repeat interval while app is in foreground.
      */
     fun getRepeatIntervalForeground(): Duration

@@ -44,11 +44,13 @@ class EventWorkerManagerImpl @Inject constructor(
 
     override fun enqueue(config: EventManagerConfig, immediately: Boolean) {
         val uniqueWorkName = getUniqueWorkName(config)
-        val initialDelay =
-            if (immediately) Duration.ZERO else when (appLifecycleProvider.state.value) {
+        val initialDelay = when (immediately) {
+            true -> getImmediateMinimumInitialDelay()
+            else -> when (appLifecycleProvider.state.value) {
                 AppLifecycleProvider.State.Background -> getRepeatIntervalBackground()
                 AppLifecycleProvider.State.Foreground -> getRepeatIntervalForeground()
             }
+        }
         val request = EventWorker.getRequestFor(this, config, initialDelay)
         workManager.enqueueUniquePeriodicWork(uniqueWorkName, REPLACE, request)
     }
@@ -63,6 +65,10 @@ class EventWorkerManagerImpl @Inject constructor(
         val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().firstOrNull()
         return info?.state == WorkInfo.State.RUNNING
     }
+
+    override fun getImmediateMinimumInitialDelay(): Duration = context.resources.getInteger(
+        R.integer.core_feature_event_manager_worker_immediate_minimum_initial_delay_seconds
+    ).toDuration(DurationUnit.SECONDS)
 
     override fun getRepeatIntervalForeground(): Duration = context.resources.getInteger(
         R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds

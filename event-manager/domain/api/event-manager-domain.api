@@ -401,6 +401,7 @@ public abstract interface class me/proton/core/eventmanager/domain/work/EventWor
 	public abstract fun cancel (Lme/proton/core/eventmanager/domain/EventManagerConfig;)V
 	public abstract fun enqueue (Lme/proton/core/eventmanager/domain/EventManagerConfig;Z)V
 	public abstract fun getBackoffDelay-UwyO8pc ()J
+	public abstract fun getImmediateMinimumInitialDelay-UwyO8pc ()J
 	public abstract fun getRepeatIntervalBackground-UwyO8pc ()J
 	public abstract fun getRepeatIntervalForeground-UwyO8pc ()J
 	public abstract fun isRunning (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
