@@ -11,6 +11,27 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.1.0] - 2023-11-10
+
+### Features
+
+- auth:
+  - Added External SSO Remote Feature Flag.
+- auth-presentation:
+  - Add telemetry for signup-recovery screen.
+- telemetry:
+  - Add Signup pass screen metrics.
+
+### Bug Fixes
+
+- auth:
+  - Fixed SSO Login flow.
+- event-manager:
+  - Added configurable EventManager Worker immediate minimum initial delay.
+  - Added Mutex on EventManagerProvider get.
+- plan:
+  - Change `plans_pay_other` string to plural.
+
 ## [18.0.0] - 2023-11-08
 
 ### Breaking Changes
