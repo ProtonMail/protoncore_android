@@ -116,7 +116,7 @@ class EventManagerImplTest {
     private lateinit var calendarManager: EventManager
 
     @Before
-    fun before() {
+    fun before() = runTest {
         database = mockk(relaxed = true) {
             coEvery { inTransaction(captureCoroutine<suspend () -> Any>()) } coAnswers {
                 coroutine<suspend () -> Any>().coInvoke()

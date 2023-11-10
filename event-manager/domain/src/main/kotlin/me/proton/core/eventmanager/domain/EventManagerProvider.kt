@@ -24,7 +24,7 @@ interface EventManagerProvider {
     /**
      * Get an [EventManager] associated with the given [config].
      */
-    fun get(config: EventManagerConfig): EventManager
+    suspend fun get(config: EventManagerConfig): EventManager
 
     /**
      * Get all [EventManager] associated with an existing [EventManagerConfig], by [userId].

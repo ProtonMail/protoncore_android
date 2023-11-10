@@ -206,7 +206,7 @@ public abstract interface class me/proton/core/eventmanager/domain/EventManagerC
 }
 
 public abstract interface class me/proton/core/eventmanager/domain/EventManagerProvider {
-	public abstract fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lme/proton/core/eventmanager/domain/EventManager;
+	public abstract fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

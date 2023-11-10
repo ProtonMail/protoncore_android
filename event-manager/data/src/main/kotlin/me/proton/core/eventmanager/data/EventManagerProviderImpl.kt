@@ -18,6 +18,8 @@
 
 package me.proton.core.eventmanager.data
 
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventListener
 import me.proton.core.eventmanager.domain.EventManager
@@ -34,11 +36,13 @@ class EventManagerProviderImpl(
     private val eventListeners: Set<EventListener<*, *>>
 ) : EventManagerProvider {
 
+    private val lock = Mutex()
+
     // 1 EventManager instance per Config.
     private val managers = mutableMapOf<EventManagerConfig, EventManager>()
     private val eventListenersByType = eventListeners.groupBy { it.type }
 
-    override fun get(config: EventManagerConfig): EventManager {
+    override suspend fun get(config: EventManagerConfig): EventManager = lock.withLock {
         // Only create a new instance if config is not found.
         return managers.getOrPut(config) {
             val deserializer = when (config) {

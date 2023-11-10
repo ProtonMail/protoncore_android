@@ -83,7 +83,7 @@ public final class me/proton/core/eventmanager/data/EventManagerImpl_Factory {
 
 public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : me/proton/core/eventmanager/domain/EventManagerProvider {
 	public fun <init> (Lme/proton/core/eventmanager/data/EventManagerFactory;Lme/proton/core/eventmanager/domain/EventManagerConfigProvider;Ljava/util/Set;)V
-	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Lme/proton/core/eventmanager/domain/EventManager;
+	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
