@@ -29,8 +29,8 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(25)
-    minLineCoveragePercentage.set(32)
+    minBranchCoveragePercentage.set(50)
+    minLineCoveragePercentage.set(49)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -61,10 +61,12 @@ dependencies {
     )
 
     testImplementation(
+        project(Module.androidTest),
         project(Module.kotlinTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        turbine
     )
 }

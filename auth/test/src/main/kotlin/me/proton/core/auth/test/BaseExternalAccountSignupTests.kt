@@ -132,7 +132,7 @@ public interface BaseExternalAccountSignupTests {
     private companion object {
         private fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
             ActivityScenario.launch(
-                StartSignup().createIntent(
+                StartSignup.createIntent(
                     ApplicationProvider.getApplicationContext(),
                     SignUpInput(accountType)
                 )

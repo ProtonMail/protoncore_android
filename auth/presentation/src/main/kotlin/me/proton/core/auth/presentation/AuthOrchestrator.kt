@@ -115,7 +115,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<AddAccountInput> =
         caller.registerForActivityResult(
-            StartAddAccount()
+            StartAddAccount
         ) {
             onAddAccountResultListener?.invoke(it)
         }
@@ -124,7 +124,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<LoginInput> =
         caller.registerForActivityResult(
-            StartLogin()
+            StartLogin
         ) {
             onLoginResultListener?.invoke(it)
         }
@@ -133,7 +133,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<LoginSsoInput> =
         caller.registerForActivityResult(
-            StartLoginSso()
+            StartLoginSso
         ) {
             onLoginSsoResultListener?.invoke(it)
         }
@@ -142,7 +142,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<TwoPassModeInput> =
         caller.registerForActivityResult(
-            StartTwoPassMode()
+            StartTwoPassMode
         ) {
             onTwoPassModeResultListener?.invoke(it)
         }
@@ -151,7 +151,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<SecondFactorInput> =
         caller.registerForActivityResult(
-            StartSecondFactor()
+            StartSecondFactor
         ) {
             onSecondFactorResultListener?.invoke(it)
         }
@@ -160,7 +160,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<ChooseAddressInput> =
         caller.registerForActivityResult(
-            StartChooseAddress()
+            StartChooseAddress
         ) {
             onChooseAddressResultListener?.invoke(it)
         }
@@ -169,7 +169,7 @@ class AuthOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<SignUpInput> =
         caller.registerForActivityResult(
-            StartSignup()
+            StartSignup
         ) {
             onSignUpResultListener?.invoke(it)
         }

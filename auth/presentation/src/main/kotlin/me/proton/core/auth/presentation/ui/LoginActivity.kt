@@ -92,7 +92,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
-    private val loginSsoResultLauncher = registerForActivityResult(StartLoginSso()) {
+    private val loginSsoResultLauncher = registerForActivityResult(StartLoginSso) {
         if (it != null) onSuccess(UserId(it.userId), it.nextStep)
     }
 

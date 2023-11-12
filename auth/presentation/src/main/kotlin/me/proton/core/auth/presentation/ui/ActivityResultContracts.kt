@@ -38,7 +38,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
 
-class StartAddAccount : ActivityResultContract<AddAccountInput, AddAccountResult?>() {
+object StartAddAccount : ActivityResultContract<AddAccountInput, AddAccountResult?>() {
 
     override fun createIntent(context: Context, input: AddAccountInput) =
         Intent(context, AddAccountActivity::class.java).apply {
@@ -52,7 +52,7 @@ class StartAddAccount : ActivityResultContract<AddAccountInput, AddAccountResult
     }
 }
 
-class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
+object StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
 
     override fun createIntent(context: Context, input: LoginInput) =
         Intent(context, LoginActivity::class.java).apply {
@@ -66,7 +66,7 @@ class StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
     }
 }
 
-class StartLoginSso : ActivityResultContract<LoginSsoInput, LoginSsoResult?>() {
+object StartLoginSso : ActivityResultContract<LoginSsoInput, LoginSsoResult?>() {
 
     override fun createIntent(context: Context, input: LoginSsoInput) =
         Intent(context, LoginSsoActivity::class.java).apply {
@@ -80,7 +80,7 @@ class StartLoginSso : ActivityResultContract<LoginSsoInput, LoginSsoResult?>() {
     }
 }
 
-class StartSecondFactor : ActivityResultContract<SecondFactorInput, SecondFactorResult?>() {
+object StartSecondFactor : ActivityResultContract<SecondFactorInput, SecondFactorResult?>() {
 
     override fun createIntent(context: Context, inupt: SecondFactorInput) =
         Intent(context, SecondFactorActivity::class.java).apply {
@@ -93,7 +93,7 @@ class StartSecondFactor : ActivityResultContract<SecondFactorInput, SecondFactor
     }
 }
 
-class StartTwoPassMode : ActivityResultContract<TwoPassModeInput, TwoPassModeResult?>() {
+object StartTwoPassMode : ActivityResultContract<TwoPassModeInput, TwoPassModeResult?>() {
 
     override fun createIntent(context: Context, inupt: TwoPassModeInput) =
         Intent(context, TwoPassModeActivity::class.java).apply {
@@ -106,7 +106,7 @@ class StartTwoPassMode : ActivityResultContract<TwoPassModeInput, TwoPassModeRes
     }
 }
 
-class StartChooseAddress : ActivityResultContract<ChooseAddressInput, ChooseAddressResult?>() {
+object StartChooseAddress : ActivityResultContract<ChooseAddressInput, ChooseAddressResult?>() {
 
     override fun createIntent(context: Context, input: ChooseAddressInput) =
         Intent(context, ChooseAddressActivity::class.java).apply {
@@ -120,7 +120,7 @@ class StartChooseAddress : ActivityResultContract<ChooseAddressInput, ChooseAddr
 }
 
 // region signup
-class StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
+object StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
 
     override fun createIntent(context: Context, input: SignUpInput) =
         Intent(context, SignupActivity::class.java).apply {
