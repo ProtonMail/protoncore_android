@@ -32,7 +32,9 @@
   <string name="plans_pay_monthly">매달 결제</string>
   <string name="plans_pay_annually">연간 결제</string>
   <string name="plans_pay_biennially">2년마다 결제</string>
-  <string name="plans_pay_other">%d개월 동안 결제</string>
+  <plurals name="plans_pay_other">
+    <item quantity="other">%d개월 마다 결제</item>
+  </plurals>
   <string name="plans_billed_yearly">*%s가 매년 청구됩니다</string>
   <string name="plans_billed_monthly">매달 청구</string>
   <string name="plans_billing_monthly">1개월간</string>

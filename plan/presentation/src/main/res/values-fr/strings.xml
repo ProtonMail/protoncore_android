@@ -32,7 +32,10 @@
   <string name="plans_pay_monthly">Paiement mensuel</string>
   <string name="plans_pay_annually">Paiement annuel</string>
   <string name="plans_pay_biennially">Paiement tous les 2 ans</string>
-  <string name="plans_pay_other">Paiement pour %d mois</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Paiement pour %d mois</item>
+    <item quantity="other">Paiement pour %d mois</item>
+  </plurals>
   <string name="plans_billed_yearly">*Facturé annuellement : %s</string>
   <string name="plans_billed_monthly">Facturé mensuellement</string>
   <string name="plans_billing_monthly">Pour 1 mois</string>

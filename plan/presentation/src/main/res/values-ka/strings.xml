@@ -32,7 +32,10 @@
   <string name="plans_pay_monthly">თვიურად გადახდა</string>
   <string name="plans_pay_annually">წლიურად გადახდა</string>
   <string name="plans_pay_biennially">გადახდა 2 წელიწადში ერთხელ</string>
-  <string name="plans_pay_other">%d თვის გადახდა</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">%d თვის გადახდა</item>
+    <item quantity="other">%d თვის გადახდა</item>
+  </plurals>
   <string name="plans_billed_yearly">*ჩამოგეჭრებათ წელიწადში ერთხელ დროზე: %s</string>
   <string name="plans_billed_monthly">გადაიხდით თვეში ერთხელ</string>
   <string name="plans_billing_monthly">1 თვით</string>

@@ -20,7 +20,7 @@
   <string name="welcome_title">Proteja su privacidad con Proton</string>
   <string name="welcome_subtitle">El cifrado mantiene sus datos privados. Sus datos realmente le pertenecen.</string>
   <string name="welcome_subtitle_mail">Correo electrónico cifrado que mantiene sus conversaciones privadas. Su bandeja de entrada realmente le pertenece.</string>
-  <string name="welcome_subtitle_mail_alt">Privacidad. Seguridad. Conveniencia. Correo electrónico cifrado que le brinda control total de sus datos personales.</string>
+  <string name="welcome_subtitle_mail_alt">Privacidad. Seguridad. Conveniencia. Correo electrónico cifrado que le ofrece control total de sus datos personales.</string>
   <string name="welcome_subtitle_drive">La conveniencia de un almacenamiento en la nube y la seguridad de la tecnología de cifrado. Por fin una solución de almacenamiento en la nube en la que puede confiar.</string>
   <string name="welcome_subtitle_drive_alt">La manera más segura de almacenar sus archivos. Cargue, sincronice y comparta con el cifrado más robusto disponible.</string>
   <string name="welcome_subtitle_calendar">Calendario cifrado que mantiene sus eventos de vida privados, seguros y protegidos.</string>

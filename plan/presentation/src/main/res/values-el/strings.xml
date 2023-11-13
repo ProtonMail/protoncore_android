@@ -32,7 +32,10 @@
   <string name="plans_pay_monthly">Μηνιαία πληρωμή</string>
   <string name="plans_pay_annually">Ετήσια πληρωμή</string>
   <string name="plans_pay_biennially">Πληρωμή κάθε 2 χρόνια</string>
-  <string name="plans_pay_other">Πληρωμή για %d μήνες</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Pay for %d month</item>
+    <item quantity="other">Pay for %d months</item>
+  </plurals>
   <string name="plans_billed_yearly">*Ετήσια χρέωση την %s</string>
   <string name="plans_billed_monthly">Μηνιαία χρέωση</string>
   <string name="plans_billing_monthly">Για 1 μήνα</string>

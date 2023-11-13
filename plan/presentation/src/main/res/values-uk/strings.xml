@@ -32,7 +32,12 @@
   <string name="plans_pay_monthly">Щомісячна оплата</string>
   <string name="plans_pay_annually">Щорічна оплата</string>
   <string name="plans_pay_biennially">Оплата кожні 2 роки</string>
-  <string name="plans_pay_other">Оплата за %d місяців</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Оплата за %d місяць</item>
+    <item quantity="few">Оплата за %d місяців</item>
+    <item quantity="many">Оплата за %d місяців</item>
+    <item quantity="other">Оплата за %d місяців</item>
+  </plurals>
   <string name="plans_billed_yearly">*Сплачується щороку %s</string>
   <string name="plans_billed_monthly">Сплачується щомісяця</string>
   <string name="plans_billing_monthly">На 1 місяць</string>

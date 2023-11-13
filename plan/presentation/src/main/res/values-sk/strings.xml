@@ -32,7 +32,12 @@
   <string name="plans_pay_monthly">Mesačná platba</string>
   <string name="plans_pay_annually">Ročná platba</string>
   <string name="plans_pay_biennially">Platba každé 2 roky</string>
-  <string name="plans_pay_other">Platba za %d mesiacov</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Pay for %d month</item>
+    <item quantity="few">Pay for %d months</item>
+    <item quantity="many">Pay for %d months</item>
+    <item quantity="other">Pay for %d months</item>
+  </plurals>
   <string name="plans_billed_yearly">Účtované ročne ku %s</string>
   <string name="plans_billed_monthly">Účtované mesačne</string>
   <string name="plans_billing_monthly">Na mesiac</string>

@@ -31,8 +31,11 @@
   <string name="plans_expiration_date">O seu plano expirará em &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_pay_monthly">Pagar mensalmente</string>
   <string name="plans_pay_annually">Pay annually</string>
-  <string name="plans_pay_biennially">Pay every 2 years</string>
-  <string name="plans_pay_other">Pay for %d months</string>
+  <string name="plans_pay_biennially">Pagar a cada 2 anos</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Pay for %d month</item>
+    <item quantity="other">Pay for %d months</item>
+  </plurals>
   <string name="plans_billed_yearly">*Faturação anual a %s</string>
   <string name="plans_billed_monthly">Faturação  mensal</string>
   <string name="plans_billing_monthly">Por 1 mês</string>

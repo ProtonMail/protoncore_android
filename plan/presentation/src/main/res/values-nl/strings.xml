@@ -32,7 +32,10 @@
   <string name="plans_pay_monthly">Maandelijks betalen</string>
   <string name="plans_pay_annually">Jaarlijks betalen</string>
   <string name="plans_pay_biennially">Betaal elke 2 jaar</string>
-  <string name="plans_pay_other">Betaal voor %d maanden</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Betaal voor %d maand</item>
+    <item quantity="other">Betaal voor %d maanden</item>
+  </plurals>
   <string name="plans_billed_yearly">*Jaarlijks gefactureerd op %s</string>
   <string name="plans_billed_monthly">Maandelijks gefactureerd</string>
   <string name="plans_billing_monthly">Voor 1 maand</string>

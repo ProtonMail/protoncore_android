@@ -32,7 +32,12 @@
   <string name="plans_pay_monthly">Платить ежемесячно</string>
   <string name="plans_pay_annually">Платить ежегодно</string>
   <string name="plans_pay_biennially">Платить каждые 2 года</string>
-  <string name="plans_pay_other">Платить за %d месяцев</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Pay for %d month</item>
+    <item quantity="few">Pay for %d months</item>
+    <item quantity="many">Pay for %d months</item>
+    <item quantity="other">Pay for %d months</item>
+  </plurals>
   <string name="plans_billed_yearly">*Ежегодная оплата %s</string>
   <string name="plans_billed_monthly">Ежемесячная оплата</string>
   <string name="plans_billing_monthly">За 1 месяц</string>

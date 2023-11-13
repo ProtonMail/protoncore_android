@@ -32,7 +32,9 @@
   <string name="plans_pay_monthly">Bayar bulanan</string>
   <string name="plans_pay_annually">Bayar tahunan</string>
   <string name="plans_pay_biennially">Bayar setiap 2 tahun</string>
-  <string name="plans_pay_other">Bayar untuk %d bulan</string>
+  <plurals name="plans_pay_other">
+    <item quantity="other">Bayar untuk %d bulan</item>
+  </plurals>
   <string name="plans_billed_yearly">*Ditagihkan secara tahunan pada harga %s</string>
   <string name="plans_billed_monthly">Ditagihkan secara bulanan</string>
   <string name="plans_billing_monthly">Untuk 1 bulan</string>

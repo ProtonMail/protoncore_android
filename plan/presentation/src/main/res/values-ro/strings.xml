@@ -32,7 +32,11 @@
   <string name="plans_pay_monthly">Plată lunară</string>
   <string name="plans_pay_annually">Plată anuală</string>
   <string name="plans_pay_biennially">Plată la fiecare doi ani</string>
-  <string name="plans_pay_other">Plată pentru %d luni</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Plată pentru %d lună</item>
+    <item quantity="few">Plată pentru %d luni</item>
+    <item quantity="other">Plată pentru %d de luni</item>
+  </plurals>
   <string name="plans_billed_yearly">*Facturat anual cu %s</string>
   <string name="plans_billed_monthly">Facturat lunar</string>
   <string name="plans_billing_monthly">Pentru o lună</string>
@@ -157,7 +161,7 @@
   <string name="secure_core" comment="new_plans">Servere Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor prin VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Autentificări și note nelimitate</string>
+  <string name="unlimited_logins_and_notes">Date de autentificare și note nelimitate</string>
   <string name="unlimited_devices">Dispozitive nelimitate</string>
   <string name="integrated_2fa_authenticator">Autentificator A2F integrat</string>
   <string name="multiple_vaults">Seifuri multiple</string>

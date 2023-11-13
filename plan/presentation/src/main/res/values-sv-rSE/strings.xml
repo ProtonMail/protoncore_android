@@ -32,7 +32,10 @@
   <string name="plans_pay_monthly">Betala månadsvis</string>
   <string name="plans_pay_annually">Betala årligen</string>
   <string name="plans_pay_biennially">Betala vartannat år</string>
-  <string name="plans_pay_other">Betala för %d månader</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Betala för %d månad</item>
+    <item quantity="other">Betala för %d månader</item>
+  </plurals>
   <string name="plans_billed_yearly">*Faktureras årligen med %s</string>
   <string name="plans_billed_monthly">Faktureras månadsvis</string>
   <string name="plans_billing_monthly">För 1 månad</string>
