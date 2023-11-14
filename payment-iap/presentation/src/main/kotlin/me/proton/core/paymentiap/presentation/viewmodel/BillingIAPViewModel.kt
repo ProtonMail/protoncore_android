@@ -38,6 +38,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
@@ -150,6 +151,9 @@ internal class BillingIAPViewModel @Inject constructor(
         flow {
             emit(State.QueryingProductDetails)
 
+            // Yield to enable collector to consume QueryingProductDetails before billing repo error is emitted.
+            yield()
+
             val productsDetails = billingRepository.getProductsDetails(googlePlanNames.map { it.id })?.takeIfNotEmpty()
             if (productsDetails == null) {
                 emit(State.Error.ProductDetailsError.ProductMismatch)
@@ -242,6 +246,10 @@ internal class BillingIAPViewModel @Inject constructor(
     ) {
         val offer = requireNotNull(product.subscriptionOfferDetails?.firstOrNull())
         emit(State.PurchaseStarted)
+
+        // Yield to enable collector to consume PurchaseStarted before billing repo error is emitted.
+        yield()
+
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 .setProductDetails(product)

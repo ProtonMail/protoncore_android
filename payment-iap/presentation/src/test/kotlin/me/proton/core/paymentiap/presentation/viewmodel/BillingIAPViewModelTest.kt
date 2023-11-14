@@ -33,6 +33,7 @@ import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
@@ -148,6 +149,33 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         assertEquals(
             BillingIAPViewModel.State.Error.ProductDetailsError.ProductMismatch,
             tested.billingIAPState.value
+        )
+    }
+
+    @Test
+    fun `collector gets QueryingProductDetails before instant error`() = coroutinesTest {
+        // GIVEN
+        coEvery { billingRepository.getProductsDetails(any()) } returns null
+
+        val recordedStates = mutableListOf<BillingIAPViewModel.State>()
+        val collectJob = launch {
+            tested.billingIAPState.collect {
+                recordedStates.add(it)
+            }
+        }
+
+        // WHEN
+        tested.queryProductDetails("test-plan-name").join()
+        collectJob.cancel()
+
+        // THEN
+        assertEquals(
+            listOf(
+                BillingIAPViewModel.State.Initializing,
+                BillingIAPViewModel.State.QueryingProductDetails,
+                BillingIAPViewModel.State.Error.ProductDetailsError.ProductMismatch,
+            ),
+            recordedStates
         )
     }
 
