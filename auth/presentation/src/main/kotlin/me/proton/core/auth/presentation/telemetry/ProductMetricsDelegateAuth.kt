@@ -31,8 +31,10 @@ internal interface ProductMetricsDelegateAuth : ProductMetricsDelegate {
         accountType: AccountType? = null
     ): TelemetryEvent = toTelemetryEvent(
         name = name,
-        dimensions = mutableMapOf<String, String>().apply {
-            accountType?.let { put(KEY_ACCOUNT_TYPE, it.name.lowercase()) }
+        dimensions = productDimensions.let {
+            if (accountType != null) {
+                it.plus(KEY_ACCOUNT_TYPE to accountType.name.lowercase())
+            } else it
         }
     )
 
@@ -43,16 +45,17 @@ internal interface ProductMetricsDelegateAuth : ProductMetricsDelegate {
         group = productGroup,
         dimensions = productDimensions
             .plus(
-                ProductMetricsDelegate.KEY_RESULT to when(isValid) {
-                true -> ProductMetricsDelegate.VALUE_SUCCESS
-                false -> {
-                    when (validationType) {
-                        ValidationType.PasswordMinLength -> VALUE_PASS_WEAK
-                        ValidationType.PasswordMatch -> VALUE_PASS_MISMATCH
-                        else -> ProductMetricsDelegate.VALUE_FAILURE
+                ProductMetricsDelegate.KEY_RESULT to when (isValid) {
+                    true -> ProductMetricsDelegate.VALUE_SUCCESS
+                    false -> {
+                        when (validationType) {
+                            ValidationType.PasswordMinLength -> VALUE_PASS_WEAK
+                            ValidationType.PasswordMatch -> VALUE_PASS_MISMATCH
+                            else -> ProductMetricsDelegate.VALUE_FAILURE
+                        }
                     }
                 }
-            })
+            )
     )
 
     companion object {
