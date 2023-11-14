@@ -22,9 +22,13 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.usersettings.data.api.UserSettingsRemoteDataSourceImpl
+import me.proton.core.usersettings.data.db.UserSettingsLocalDataSourceImpl
 import me.proton.core.usersettings.data.repository.OrganizationRepositoryImpl
 import me.proton.core.usersettings.data.repository.UserSettingsRepositoryImpl
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.usersettings.domain.repository.UserSettingsLocalDataSource
+import me.proton.core.usersettings.domain.repository.UserSettingsRemoteDataSource
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Singleton
 
@@ -39,4 +43,12 @@ public interface CoreUserSettingsModule {
     @Binds
     @Singleton
     public fun provideOrganizationRepository(impl: OrganizationRepositoryImpl): OrganizationRepository
+
+    @Binds
+    @Singleton
+    public fun provideUserSettingsLocalDataSource(impl: UserSettingsLocalDataSourceImpl): UserSettingsLocalDataSource
+
+    @Binds
+    @Singleton
+    public fun provideUserSettingsRemoteDataSource(impl: UserSettingsRemoteDataSourceImpl): UserSettingsRemoteDataSource
 }

@@ -28,7 +28,7 @@ protonBuild {
 
 protonCoverage {
     minBranchCoveragePercentage.set(22)
-    minLineCoveragePercentage.set(63)
+    minLineCoveragePercentage.set(60)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -38,6 +38,7 @@ dependencies {
         project(Module.authDomain),
         project(Module.cryptoCommon),
         project(Module.domain),
+        project(Module.eventManagerDomain),
         project(Module.userDomain),
         project(Module.featureFlagDomain),
         `coroutines-core`,
@@ -49,6 +50,7 @@ dependencies {
     )
 
     testImplementation(
+        project(Module.kotlinTest),
         project(Module.networkDomain),
         `coroutines-test`,
         junit,

@@ -36,6 +36,7 @@ data class UserSettings(
     val timeFormat: IntEnum<TimeFormat>?,
     val earlyAccess: Boolean?,
     val telemetry: Boolean?,
+    val crashReports: Boolean?,
 ) {
     enum class LogAuth(val value: Int) {
         Disabled(0),

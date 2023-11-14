@@ -109,7 +109,8 @@ class PerformUpdateLoginPasswordTest {
         timeFormat = UserSettings.TimeFormat.enumOf(2),
         weekStart = UserSettings.WeekStart.enumOf(7),
         earlyAccess = true,
-        telemetry = true
+        telemetry = true,
+        crashReports = true
     )
     // endregion
 

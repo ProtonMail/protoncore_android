@@ -18,45 +18,49 @@
 
 package me.proton.core.usersettings.presentation.compose.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
-import me.proton.core.usersettings.domain.FeatureFlags
-import me.proton.core.usersettings.domain.entity.DeviceSettings
-import me.proton.core.usersettings.domain.usecase.ObserveDeviceSettings
-import me.proton.core.usersettings.domain.usecase.ObserveFeatureFlag
-import me.proton.core.usersettings.domain.usecase.UpdateDeviceSettings
+import me.proton.core.domain.arch.mapSuccessValueOrNull
+import me.proton.core.domain.entity.UserId
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
+import me.proton.core.usersettings.domain.usecase.PerformUpdateCrashReports
+import me.proton.core.usersettings.domain.usecase.PerformUpdateTelemetry
 import javax.inject.Inject
 
 @HiltViewModel
-class DeviceSettingsViewModel @Inject constructor(
-    observeDeviceSettings: ObserveDeviceSettings,
-    observeFeatureFlag: ObserveFeatureFlag,
-    private val updateDeviceSettings: UpdateDeviceSettings,
+class UserSettingsViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    observeUserSettings: ObserveUserSettings,
+    private val performUpdateCrashReports: PerformUpdateCrashReports,
+    private val performUpdateTelemetry: PerformUpdateTelemetry,
 ) : ViewModel() {
+
+    private val userId = UserId(requireNotNull(savedStateHandle.get<String>(STATE_USER_ID)))
 
     val initialState = State()
 
-    val state: StateFlow<State> = combine(
-        observeFeatureFlag(FeatureFlags.ShowDataCollectSettings),
-        observeDeviceSettings(),
-    ) { featureFlag, deviceSettings ->
-        State(
-            isSettingsVisible = featureFlag.value,
-            isTelemetryEnabled = deviceSettings.isTelemetryEnabled,
-            isCrashReportEnabled = deviceSettings.isCrashReportEnabled
+    val state: StateFlow<State> = observeUserSettings(userId)
+        .mapSuccessValueOrNull()
+        .filterNotNull()
+        .map { userSettings ->
+            State(
+                telemetry = userSettings.telemetry ?: true,
+                crashReports = userSettings.crashReports ?: true,
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+            initialValue = initialState
         )
-    }.stateIn(
-        scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
-        initialValue = initialState
-    )
 
     fun perform(action: Action) = when (action) {
         is Action.ToggleTelemetry -> onToggleTelemetry()
@@ -64,21 +68,28 @@ class DeviceSettingsViewModel @Inject constructor(
     }
 
     private fun onToggleTelemetry() = viewModelScope.launch {
-        updateDeviceSettings.updateIsTelemetryEnabled(!state.value.isTelemetryEnabled)
+        state.value.telemetry.let { isEnabled ->
+            performUpdateTelemetry(userId, !isEnabled)
+        }
     }
 
     private fun onToggleCrashReport() = viewModelScope.launch {
-        updateDeviceSettings.updateIsCrashReportEnabled(!state.value.isCrashReportEnabled)
+        state.value.crashReports.let { isEnabled ->
+            performUpdateCrashReports(userId, !isEnabled)
+        }
     }
 
     data class State(
-        val isSettingsVisible: Boolean = FeatureFlags.ShowDataCollectSettings.default,
-        val isTelemetryEnabled: Boolean = DeviceSettings.isTelemetryEnabledDefault,
-        val isCrashReportEnabled: Boolean = DeviceSettings.isCrashReportEnabledDefault,
+        val telemetry: Boolean = true,
+        val crashReports: Boolean = true,
     )
 
     sealed interface Action {
         object ToggleTelemetry : Action
         object ToggleCrashReport : Action
+    }
+
+    companion object {
+        const val STATE_USER_ID = "userId"
     }
 }

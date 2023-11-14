@@ -31,8 +31,7 @@ import io.sentry.SentryLevel
 import io.sentry.SentryOptions
 import io.sentry.android.core.SentryAndroid
 import me.proton.android.core.coreexample.BuildConfig
-import me.proton.core.usersettings.domain.DeviceSettingsHandler
-import me.proton.core.usersettings.domain.onDeviceSettingsChanged
+import me.proton.core.usersettings.domain.UsersSettingsHandler
 import me.proton.core.util.android.sentry.IsAccountSentryLoggingEnabled
 import me.proton.core.util.android.sentry.TimberLoggerIntegration
 import me.proton.core.util.android.sentry.project.AccountSentryHubBuilder
@@ -48,8 +47,12 @@ class SentryInitializer : Initializer<Unit> {
         )
 
         val isCrashReportEnabled = AtomicBoolean(true)
-        entryPoint.deviceSettingsHandler().onDeviceSettingsChanged { settings ->
-            isCrashReportEnabled.set(settings.isCrashReportEnabled)
+        entryPoint.usersSettingsHandler().onUsersSettingsChanged(
+            merge = { usersSettings ->
+                usersSettings.none { userSettings -> userSettings?.crashReports == false }
+            }
+        ) { crashReports ->
+            isCrashReportEnabled.set(crashReports)
         }
 
         val beforeSendCallback = SentryOptions.BeforeSendCallback { event, _ ->
@@ -72,7 +75,7 @@ class SentryInitializer : Initializer<Unit> {
 
         // Account Sentry:
         entryPoint.accountSentryHubBuilder().invoke(
-            sentryDsn = BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG && isAccountSentryEnabled}.orEmpty()
+            sentryDsn = BuildConfig.ACCOUNT_SENTRY_DSN.takeIf { !BuildConfig.DEBUG && isAccountSentryEnabled }.orEmpty()
         ) { options ->
             options.beforeSend = beforeSendCallback
         }
@@ -84,7 +87,7 @@ class SentryInitializer : Initializer<Unit> {
     @InstallIn(SingletonComponent::class)
     interface SentryInitializerEntryPoint {
         fun accountSentryHubBuilder(): AccountSentryHubBuilder
-        fun deviceSettingsHandler(): DeviceSettingsHandler
+        fun usersSettingsHandler(): UsersSettingsHandler
     }
 }
 

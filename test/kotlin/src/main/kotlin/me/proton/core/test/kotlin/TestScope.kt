@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2022 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.entity
+package me.proton.core.test.kotlin
 
-data class DeviceSettings(
-    @Deprecated("Use UserSettings.telemetry instead")
-    val isTelemetryEnabled: Boolean = isTelemetryEnabledDefault,
-    @Deprecated("Use UserSettings.crashReports instead")
-    val isCrashReportEnabled: Boolean = isCrashReportEnabledDefault,
-) {
-    companion object {
-        const val isTelemetryEnabledDefault = true
-        const val isCrashReportEnabledDefault = true
-    }
-}
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.TestScope
+
+val TestScope.coroutineScopeProvider
+    get() = TestCoroutineScopeProvider(TestDispatcherProvider(StandardTestDispatcher(testScheduler)))

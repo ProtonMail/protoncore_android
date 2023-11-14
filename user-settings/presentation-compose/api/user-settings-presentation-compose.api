@@ -1,8 +1,8 @@
-public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_DeviceSettingsViewModel_HiltModules_BindsModule {
+public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_UserSettingsViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_DeviceSettingsViewModel_HiltModules_KeyModule {
+public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_UserSettingsViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -35,119 +35,82 @@ public final class me/proton/core/usersettings/presentation/compose/view/Composa
 	public final fun getLambda-3$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class me/proton/core/usersettings/presentation/compose/view/CrashReportSettingState {
-	public static final field $stable I
-	public fun <init> ()V
-	public fun <init> (ZZ)V
-	public synthetic fun <init> (ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Z
-	public final fun component2 ()Z
-	public final fun copy (ZZ)Lme/proton/core/usersettings/presentation/compose/view/CrashReportSettingState;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/compose/view/CrashReportSettingState;ZZILjava/lang/Object;)Lme/proton/core/usersettings/presentation/compose/view/CrashReportSettingState;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public final fun isEnabled ()Z
-	public final fun isVisible ()Z
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/usersettings/presentation/compose/view/CrashReportSettingStateKt {
-	public static final fun toCrashReportSettingState (Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State;)Lme/proton/core/usersettings/presentation/compose/view/CrashReportSettingState;
-}
-
 public final class me/proton/core/usersettings/presentation/compose/view/CrashReportSettingToggleItemKt {
-	public static final fun CrashReportSettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/view/CrashReportSettingState;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun CrashReportSettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun CrashReportSettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun CrashReportSettingToggleItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun CrashReportSettingToggleItemPreview (Landroidx/compose/runtime/Composer;I)V
 }
 
-public final class me/proton/core/usersettings/presentation/compose/view/TelemetrySettingState {
+public final class me/proton/core/usersettings/presentation/compose/view/TelemetrySettingToggleItemKt {
+	public static final fun TelemetrySettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TelemetrySettingToggleItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun TelemetrySettingToggleItemPreview (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel : androidx/lifecycle/ViewModel {
+	public static final field $stable I
+	public static final field Companion Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Companion;
+	public static final field STATE_USER_ID Ljava/lang/String;
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports;Lme/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry;)V
+	public final fun getInitialState ()Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State;
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun perform (Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action;)Lkotlinx/coroutines/Job;
+}
+
+public abstract interface class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action {
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action$ToggleCrashReport : me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action$ToggleCrashReport;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action$ToggleTelemetry : me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action$ToggleTelemetry;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Companion {
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State {
 	public static final field $stable I
 	public fun <init> ()V
 	public fun <init> (ZZ)V
 	public synthetic fun <init> (ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Z
-	public final fun copy (ZZ)Lme/proton/core/usersettings/presentation/compose/view/TelemetrySettingState;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/compose/view/TelemetrySettingState;ZZILjava/lang/Object;)Lme/proton/core/usersettings/presentation/compose/view/TelemetrySettingState;
+	public final fun copy (ZZ)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State;ZZILjava/lang/Object;)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCrashReports ()Z
+	public final fun getTelemetry ()Z
 	public fun hashCode ()I
-	public final fun isEnabled ()Z
-	public final fun isVisible ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/compose/view/TelemetrySettingStateKt {
-	public static final fun toTelemetrySettingState (Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State;)Lme/proton/core/usersettings/presentation/compose/view/TelemetrySettingState;
-}
-
-public final class me/proton/core/usersettings/presentation/compose/view/TelemetrySettingToggleItemKt {
-	public static final fun TelemetrySettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/view/TelemetrySettingState;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun TelemetrySettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
-	public static final fun TelemetrySettingToggleItemPreview (Landroidx/compose/runtime/Composer;I)V
-}
-
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel : androidx/lifecycle/ViewModel {
-	public static final field $stable I
-	public fun <init> (Lme/proton/core/usersettings/domain/usecase/ObserveDeviceSettings;Lme/proton/core/usersettings/domain/usecase/ObserveFeatureFlag;Lme/proton/core/usersettings/domain/usecase/UpdateDeviceSettings;)V
-	public final fun getInitialState ()Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State;
-	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun perform (Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action;)Lkotlinx/coroutines/Job;
-}
-
-public abstract interface class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action {
-}
-
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action$ToggleCrashReport : me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action$ToggleCrashReport;
-}
-
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action$ToggleTelemetry : me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$Action$ToggleTelemetry;
-}
-
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State {
-	public static final field $stable I
-	public fun <init> ()V
-	public fun <init> (ZZZ)V
-	public synthetic fun <init> (ZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Z
-	public final fun component2 ()Z
-	public final fun component3 ()Z
-	public final fun copy (ZZZ)Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State;ZZZILjava/lang/Object;)Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel$State;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public final fun isCrashReportEnabled ()Z
-	public final fun isSettingsVisible ()Z
-	public final fun isTelemetryEnabled ()Z
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_Factory;
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel;
-	public static fun newInstance (Lme/proton/core/usersettings/domain/usecase/ObserveDeviceSettings;Lme/proton/core/usersettings/domain/usecase/ObserveFeatureFlag;Lme/proton/core/usersettings/domain/usecase/UpdateDeviceSettings;)Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel;
+	public fun get ()Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports;Lme/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry;)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;
 }
 
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_HiltModules {
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_HiltModules {
 }
 
-public abstract class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel;)Landroidx/lifecycle/ViewModel;
+public abstract class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;)Landroidx/lifecycle/ViewModel;
 }
 
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_HiltModules$KeyModule {
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_HiltModules$KeyModule {
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
-	public static fun create ()Lme/proton/core/usersettings/presentation/compose/viewmodel/DeviceSettingsViewModel_HiltModules_KeyModule_ProvideFactory;
+	public static fun create ()Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

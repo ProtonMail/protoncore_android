@@ -73,7 +73,8 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         timeFormat = UserSettings.TimeFormat.enumOf(2),
         weekStart = UserSettings.WeekStart.enumOf(7),
         earlyAccess = true,
-        telemetry = true
+        telemetry = true,
+        crashReports = true
     )
     private val testUser = User(
         userId = testUserId,

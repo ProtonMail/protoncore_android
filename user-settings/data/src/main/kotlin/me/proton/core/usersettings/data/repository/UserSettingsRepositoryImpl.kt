@@ -18,6 +18,8 @@
 
 package me.proton.core.usersettings.data.repository
 
+import androidx.work.ExistingWorkPolicy
+import androidx.work.WorkManager
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -32,64 +34,44 @@ import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.data.api.request.AuthRequest
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.protonApi.isSuccess
-import me.proton.core.usersettings.data.api.UserSettingsApi
-import me.proton.core.usersettings.data.api.request.SetUsernameRequest
-import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
-import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
-import me.proton.core.usersettings.data.db.UserSettingsDatabase
-import me.proton.core.usersettings.data.extension.fromEntity
-import me.proton.core.usersettings.data.extension.fromResponse
-import me.proton.core.usersettings.data.extension.toEntity
+import me.proton.core.usersettings.data.extension.toUserSettingsPropertySerializable
+import me.proton.core.usersettings.data.worker.FetchUserSettingsWorker
+import me.proton.core.usersettings.data.worker.UpdateUserSettingsWorker
 import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.entity.UserSettingsProperty
+import me.proton.core.usersettings.domain.entity.UserSettingsProperty.CrashReports
+import me.proton.core.usersettings.domain.entity.UserSettingsProperty.Telemetry
+import me.proton.core.usersettings.domain.repository.UserSettingsLocalDataSource
+import me.proton.core.usersettings.domain.repository.UserSettingsRemoteDataSource
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 class UserSettingsRepositoryImpl @Inject constructor(
-    db: UserSettingsDatabase,
-    private val apiProvider: ApiProvider,
+    private val localDataSource: UserSettingsLocalDataSource,
+    private val remoteDataSource: UserSettingsRemoteDataSource,
     private val validateServerProof: ValidateServerProof,
+    private val workManager: WorkManager,
     scopeProvider: CoroutineScopeProvider
 ) : UserSettingsRepository {
 
-    private val userSettingsDao = db.userSettingsDao()
-
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: UserId ->
-            apiProvider.get<UserSettingsApi>(key).invoke {
-                getUserSettings().settings.fromResponse(key)
-            }.valueOrThrow
+            remoteDataSource.fetch(key)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { key -> observeByUserId(key) },
-            writer = { _, input -> insertOrUpdate(input) },
-            delete = { key -> delete(key) },
-            deleteAll = { deleteAll() }
+            reader = { key -> localDataSource.observeByUserId(key) },
+            writer = { _, input -> localDataSource.insertOrUpdate(input) },
+            delete = { key -> localDataSource.delete(key) },
+            deleteAll = { localDataSource.deleteAll() }
         )
     ).disableCache().buildProtonStore(scopeProvider) // We don't want potential stale data from memory cache
 
-    private fun observeByUserId(userId: UserId): Flow<UserSettings?> =
-        userSettingsDao.observeByUserId(userId).map { it?.fromEntity() }
-
-    private suspend fun insertOrUpdate(settings: UserSettings) =
-        userSettingsDao.insertOrUpdate(settings.toEntity())
-
-    private suspend fun delete(userId: UserId) =
-        userSettingsDao.delete(userId)
-
-    private suspend fun deleteAll() =
-        userSettingsDao.deleteAll()
-
     override suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean =
-        apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
-            setUsername(SetUsernameRequest(username = username)).isSuccess()
-        }.valueOrThrow
+        remoteDataSource.setUsername(sessionUserId, username)
 
     override suspend fun updateUserSettings(userSettings: UserSettings) {
-        insertOrUpdate(userSettings)
+        localDataSource.insertOrUpdate(userSettings)
     }
 
     override fun getUserSettingsFlow(sessionUserId: SessionUserId, refresh: Boolean): Flow<DataResult<UserSettings>> {
@@ -106,20 +88,16 @@ class UserSettingsRepositoryImpl @Inject constructor(
         srpSession: String,
         secondFactorCode: String
     ): UserSettings {
-        return apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
-            val response = updateRecoveryEmail(
-                UpdateRecoveryEmailRequest(
-                    email = email,
-                    twoFactorCode = secondFactorCode,
-                    clientEphemeral = srpProofs.clientEphemeral,
-                    clientProof = srpProofs.clientProof,
-                    srpSession = srpSession
-                )
-            )
-            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "recovery email update failed" }
-            insertOrUpdate(response.settings.fromResponse(sessionUserId))
-            getUserSettings(sessionUserId)
-        }.valueOrThrow
+        val (userSettings, serverProof) = remoteDataSource.updateRecoveryEmail(
+            sessionUserId = sessionUserId,
+            email = email,
+            srpProofs = srpProofs,
+            srpSession = srpSession,
+            secondFactorCode = secondFactorCode
+        )
+        validateServerProof(serverProof, srpProofs.expectedServerProof) { "recovery email update failed" }
+        localDataSource.insertOrUpdate(userSettings)
+        return getUserSettings(sessionUserId)
     }
 
     override suspend fun updateLoginPassword(
@@ -129,19 +107,56 @@ class UserSettingsRepositoryImpl @Inject constructor(
         secondFactorCode: String,
         auth: Auth
     ): UserSettings {
-        return apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
-            val response = updateLoginPassword(
-                UpdateLoginPasswordRequest(
-                    twoFactorCode = secondFactorCode,
-                    clientEphemeral = srpProofs.clientEphemeral,
-                    clientProof = srpProofs.clientProof,
-                    srpSession = srpSession,
-                    auth = AuthRequest.from(auth)
-                )
-            )
-            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "password change failed" }
-            insertOrUpdate(response.settings.fromResponse(sessionUserId))
-            getUserSettings(sessionUserId)
-        }.valueOrThrow
+        val (userSettings, serverProof) = remoteDataSource.updateLoginPassword(
+            sessionUserId = sessionUserId,
+            srpProofs = srpProofs,
+            srpSession = srpSession,
+            secondFactorCode = secondFactorCode,
+            auth = auth
+        )
+        validateServerProof(serverProof, srpProofs.expectedServerProof) { "password change failed" }
+        localDataSource.insertOrUpdate(userSettings)
+        return getUserSettings(sessionUserId)
+    }
+
+
+    override fun markAsStale(userId: UserId) {
+        // Replace any existing FetchUserSettingsWorker.
+        workManager.enqueueUniqueWork(
+            "freshUserSettingsWork-${userId.id}",
+            ExistingWorkPolicy.REPLACE,
+            FetchUserSettingsWorker.getRequest(userId),
+        )
+    }
+
+    override suspend fun updateCrashReports(
+        userId: UserId,
+        isEnabled: Boolean
+    ) = updateProperty(userId, CrashReports(isEnabled)) {
+        it.copy(crashReports = isEnabled)
+    }
+
+    override suspend fun updateTelemetry(
+        userId: UserId,
+        isEnabled: Boolean
+    ) = updateProperty(userId, Telemetry(isEnabled)) {
+        it.copy(telemetry = isEnabled)
+    }
+
+    private suspend fun updateProperty(
+        userId: UserId,
+        settingsProperty: UserSettingsProperty,
+        updateProperty: suspend (UserSettings) -> UserSettings
+    ): UserSettings {
+        val userSettings = getUserSettings(userId)
+        val updatedUserSettings = updateProperty(userSettings)
+        localDataSource.insertOrUpdate(updatedUserSettings)
+
+        workManager.enqueueUniqueWork(
+            "updateUserSettingsWork-${userId.id}-${settingsProperty.javaClass.simpleName}",
+            ExistingWorkPolicy.REPLACE,
+            UpdateUserSettingsWorker.getRequest(userId, settingsProperty.toUserSettingsPropertySerializable())
+        )
+        return updatedUserSettings
     }
 }

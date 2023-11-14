@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,8 +22,6 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
@@ -31,19 +29,18 @@ import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
-import kotlin.test.assertNotNull
 
-class GetUserSettingsTest {
+class PerformUpdateCrashReportsTest {
     // region mocks
     private val repository = mockk<UserSettingsRepository>(relaxed = true)
     // endregion
 
     // region test data
     private val testUserId = UserId("test-user-id")
+
     private val testUserSettingsResponse = UserSettings(
         userId = testUserId,
-        email = RecoverySetting("test-email", 1, true, true),
+        email = RecoverySetting("test-email", 1, notify = true, reset = true),
         phone = null,
         twoFA = null,
         password = PasswordSetting(mode = 1, expirationTime = null),
@@ -59,41 +56,29 @@ class GetUserSettingsTest {
         crashReports = true
     )
     // endregion
-    private lateinit var useCase: GetUserSettings
+
+    private lateinit var useCase: PerformUpdateCrashReports
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetUserSettings(repository)
+        useCase = PerformUpdateCrashReports(
+            repository = repository
+        )
     }
 
     @Test
-    fun `get user settings returns success`() = runTest {
+    fun `update crash reports returns success`() = runTest {
         // GIVEN
-        coEvery { repository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
+        coEvery {
+            repository.updateCrashReports(
+                userId = testUserId,
+                isEnabled = true
+            )
+        } returns testUserSettingsResponse
+
         // WHEN
-        val result = useCase.invoke(testUserId, refresh = true)
+        val result = useCase(testUserId, true)
         // THEN
         assertEquals(testUserSettingsResponse, result)
-        val email = result.email
-        assertNotNull(email)
-        assertEquals("test-email", email.value)
-    }
-
-    @Test
-    fun `get user settings returns error`() = runTest {
-        // GIVEN
-        coEvery { repository.getUserSettings(testUserId, any()) } throws ApiException(
-            ApiResult.Error.Connection(
-                false,
-                RuntimeException("Test error")
-            )
-        )
-        // WHEN
-        val throwable = assertFailsWith(ApiException::class) {
-            useCase.invoke(testUserId, refresh = true)
-        }
-        // THEN
-        assertNotNull(throwable)
-        assertEquals("Test error", throwable.message)
     }
 }

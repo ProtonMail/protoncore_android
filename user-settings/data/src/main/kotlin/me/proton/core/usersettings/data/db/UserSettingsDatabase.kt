@@ -88,5 +88,15 @@ interface UserSettingsDatabase : Database {
                 )
             }
         }
+
+        val MIGRATION_4 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserSettingsEntity",
+                    column = "crashReports",
+                    type = "INTEGER"
+                )
+            }
+        }
     }
 }

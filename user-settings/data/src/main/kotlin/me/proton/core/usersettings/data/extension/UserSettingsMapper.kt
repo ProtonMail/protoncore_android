@@ -57,6 +57,7 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     timeFormat = TimeFormat.enumOf(timeFormat),
     earlyAccess = earlyAccess.toBooleanOrFalse(),
     telemetry = telemetry.toBooleanOrFalse(),
+    crashReports = crashReports.toBooleanOrFalse(),
 )
 
 internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(
@@ -92,6 +93,7 @@ internal fun UserSettingsEntity.fromEntity() = UserSettings(
     timeFormat = TimeFormat.enumOf(timeFormat),
     earlyAccess = earlyAccess,
     telemetry = telemetry,
+    crashReports = crashReports,
 )
 
 internal fun UserSettings.toEntity() = UserSettingsEntity(
@@ -109,6 +111,7 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
     timeFormat = timeFormat?.value,
     earlyAccess = earlyAccess,
     telemetry = telemetry,
+    crashReports = crashReports
 )
 
 internal fun RecoverySettingEntity.fromEntity() = RecoverySetting(

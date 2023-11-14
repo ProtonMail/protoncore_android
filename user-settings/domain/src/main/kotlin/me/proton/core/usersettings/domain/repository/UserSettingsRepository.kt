@@ -23,6 +23,7 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.entity.UserSettings
 
 interface UserSettingsRepository {
@@ -80,4 +81,22 @@ interface UserSettingsRepository {
         secondFactorCode: String,
         auth: Auth
     ): UserSettings
+
+    /**
+     * Updates user's telemetry
+     */
+    suspend fun updateTelemetry(
+        userId: UserId,
+        isEnabled: Boolean,
+    ): UserSettings
+
+    /**
+     * Updates user's crash report
+     */
+    suspend fun updateCrashReports(
+        userId: UserId,
+        isEnabled: Boolean,
+    ): UserSettings
+
+    fun markAsStale(userId: UserId)
 }

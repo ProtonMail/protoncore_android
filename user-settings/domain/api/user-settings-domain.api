@@ -6,17 +6,19 @@ public final class me/proton/core/usersettings/domain/DeviceSettingsHandlerKt {
 	public static final fun onDeviceSettingsChanged (Lme/proton/core/usersettings/domain/DeviceSettingsHandler;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
 }
 
-public final class me/proton/core/usersettings/domain/FeatureFlags : java/lang/Enum {
-	public static final field ShowDataCollectSettings Lme/proton/core/usersettings/domain/FeatureFlags;
-	public final fun getDefault ()Z
-	public final fun getId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
-	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/usersettings/domain/FeatureFlags;
-	public static fun values ()[Lme/proton/core/usersettings/domain/FeatureFlags;
-}
-
 public final class me/proton/core/usersettings/domain/LogTag {
 	public static final field DEFAULT Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/usersettings/domain/LogTag;
+}
+
+public final class me/proton/core/usersettings/domain/UsersSettingsHandler {
+	public static final field Companion Lme/proton/core/usersettings/domain/UsersSettingsHandler$Companion;
+	public static final field DEFAULT Ljava/lang/String;
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;)V
+	public final fun onUsersSettingsChanged (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/usersettings/domain/UsersSettingsHandler$Companion {
 }
 
 public final class me/proton/core/usersettings/domain/entity/DeviceSettings {
@@ -158,13 +160,14 @@ public final class me/proton/core/usersettings/domain/entity/TwoFASetting {
 }
 
 public final class me/proton/core/usersettings/domain/entity/UserSettings {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component10 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component11 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component12 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component13 ()Ljava/lang/Boolean;
 	public final fun component14 ()Ljava/lang/Boolean;
+	public final fun component15 ()Ljava/lang/Boolean;
 	public final fun component2 ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun component3 ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun component4 ()Lme/proton/core/usersettings/domain/entity/PasswordSetting;
@@ -173,9 +176,10 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component9 ()Lme/proton/core/domain/type/IntEnum;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/usersettings/domain/entity/UserSettings;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettings;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettings;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettings;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCrashReports ()Ljava/lang/Boolean;
 	public final fun getDateFormat ()Lme/proton/core/domain/type/IntEnum;
 	public final fun getDensity ()Lme/proton/core/domain/type/IntEnum;
 	public final fun getEarlyAccess ()Ljava/lang/Boolean;
@@ -270,6 +274,31 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings$WeekSt
 	public final fun getMap ()Ljava/util/Map;
 }
 
+public abstract interface class me/proton/core/usersettings/domain/entity/UserSettingsProperty {
+}
+
+public final class me/proton/core/usersettings/domain/entity/UserSettingsProperty$CrashReports : me/proton/core/usersettings/domain/entity/UserSettingsProperty {
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/usersettings/domain/entity/UserSettingsProperty$CrashReports;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettingsProperty$CrashReports;ZILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettingsProperty$CrashReports;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/domain/entity/UserSettingsProperty$Telemetry : me/proton/core/usersettings/domain/entity/UserSettingsProperty {
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/usersettings/domain/entity/UserSettingsProperty$Telemetry;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettingsProperty$Telemetry;ZILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettingsProperty$Telemetry;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getValue ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public abstract interface class me/proton/core/usersettings/domain/repository/DeviceSettingsRepository {
 	public abstract fun getDeviceSettings (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeDeviceSettings ()Lkotlinx/coroutines/flow/Flow;
@@ -291,12 +320,30 @@ public final class me/proton/core/usersettings/domain/repository/OrganizationRep
 	public static synthetic fun getOrganizationKeysFlow$default (Lme/proton/core/usersettings/domain/repository/OrganizationRepository;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 }
 
-public abstract interface class me/proton/core/usersettings/domain/repository/UserSettingsRepository {
-	public abstract fun getUserSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getUserSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+public abstract interface class me/proton/core/usersettings/domain/repository/UserSettingsLocalDataSource {
+	public abstract fun delete (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun insertOrUpdate (Lme/proton/core/usersettings/domain/entity/UserSettings;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observeByUserId (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public abstract interface class me/proton/core/usersettings/domain/repository/UserSettingsRemoteDataSource {
+	public abstract fun fetch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateUserSettings (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/UserSettingsProperty;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/usersettings/domain/repository/UserSettingsRepository {
+	public abstract fun getUserSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUserSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun markAsStale (Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateCrashReports (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateTelemetry (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateUserSettings (Lme/proton/core/usersettings/domain/entity/UserSettings;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -320,9 +367,14 @@ public final class me/proton/core/usersettings/domain/usecase/ObserveDeviceSetti
 	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
 }
 
-public final class me/proton/core/usersettings/domain/usecase/ObserveFeatureFlag {
-	public fun <init> (Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
-	public final fun invoke (Lme/proton/core/usersettings/domain/FeatureFlags;)Lkotlinx/coroutines/flow/Flow;
+public final class me/proton/core/usersettings/domain/usecase/ObserveUserSettings {
+	public fun <init> (Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports {
+	public fun <init> (Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword {
@@ -335,6 +387,11 @@ public final class me/proton/core/usersettings/domain/usecase/PerformUpdateRecov
 	public fun <init> (Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry {
+	public fun <init> (Lme/proton/core/usersettings/domain/repository/UserSettingsRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword {
@@ -352,5 +409,10 @@ public final class me/proton/core/usersettings/domain/usecase/UpdateDeviceSettin
 	public fun <init> (Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
 	public final fun updateIsCrashReportEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun updateIsTelemetryEnabled (ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/usersettings/domain/usecase/UpdateUserSettingsRemote {
+	public fun <init> (Lme/proton/core/eventmanager/domain/EventManagerProvider;Lme/proton/core/usersettings/domain/repository/UserSettingsRemoteDataSource;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/UserSettingsProperty;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

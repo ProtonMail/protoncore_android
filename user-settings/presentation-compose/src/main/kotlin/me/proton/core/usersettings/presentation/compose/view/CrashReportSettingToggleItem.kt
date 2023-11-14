@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2023 Proton Technologies AG
+ * This file is part of Proton Technologies AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.usersettings.presentation.compose.view
 
 import android.content.res.Configuration
@@ -11,23 +29,23 @@ import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.usersettings.presentation.R
-import me.proton.core.usersettings.presentation.compose.viewmodel.DeviceSettingsViewModel
-import me.proton.core.usersettings.presentation.compose.viewmodel.DeviceSettingsViewModel.Action
-import me.proton.core.usersettings.presentation.compose.viewmodel.DeviceSettingsViewModel.State
+import me.proton.core.usersettings.presentation.compose.viewmodel.UserSettingsViewModel
+import me.proton.core.usersettings.presentation.compose.viewmodel.UserSettingsViewModel.Action
+import me.proton.core.usersettings.presentation.compose.viewmodel.UserSettingsViewModel.State
 
 @Composable
 fun CrashReportSettingToggleItem(
     modifier: Modifier = Modifier,
-    viewModel: DeviceSettingsViewModel? = hiltViewModelOrNull(),
-    divider: @Composable () -> Unit = { Divider() }
+    viewModel: UserSettingsViewModel? = hiltViewModelOrNull(),
+    divider: @Composable () -> Unit = { Divider() },
 ) {
     val state = when (viewModel) {
-        null -> State(isSettingsVisible = true)
+        null -> State()
         else -> rememberAsState(viewModel.state, viewModel.initialState).value
     }
     CrashReportSettingToggleItem(
         modifier = modifier,
-        state = state.toCrashReportSettingState(),
+        isEnabled = state.crashReports,
         onToggle = { viewModel?.perform(Action.ToggleCrashReport) },
         divider = { divider() }
     )
@@ -36,20 +54,18 @@ fun CrashReportSettingToggleItem(
 @Composable
 fun CrashReportSettingToggleItem(
     modifier: Modifier = Modifier,
-    state: CrashReportSettingState = CrashReportSettingState(),
+    isEnabled: Boolean = true,
     onToggle: (Boolean) -> Unit,
-    divider: @Composable () -> Unit = { Divider() }
+    divider: @Composable () -> Unit = { Divider() },
 ) {
-    if (state.isVisible) {
-        ProtonSettingsToggleItem(
-            modifier = modifier,
-            name = stringResource(id = R.string.device_settings_crashreport_title),
-            hint = stringResource(id = R.string.device_settings_crashreport_hint),
-            value = state.isEnabled,
-            onToggle = { onToggle(!it) }
-        )
-        divider()
-    }
+    ProtonSettingsToggleItem(
+        modifier = modifier,
+        name = stringResource(id = R.string.device_settings_crashreport_title),
+        hint = stringResource(id = R.string.device_settings_crashreport_hint),
+        value = isEnabled,
+        onToggle = { onToggle(!it) }
+    )
+    divider()
 }
 
 @Preview(showBackground = true)

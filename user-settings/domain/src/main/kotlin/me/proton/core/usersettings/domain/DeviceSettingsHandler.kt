@@ -11,11 +11,13 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@Deprecated("User user settings handler instead")
 class DeviceSettingsHandler @Inject constructor(
     internal val scopeProvider: CoroutineScopeProvider,
     internal val deviceSettingsRepository: DeviceSettingsRepository,
 )
 
+@Deprecated("User user settings instead")
 fun DeviceSettingsHandler.onDeviceSettingsChanged(
     block: suspend (DeviceSettings) -> Unit,
 ) = deviceSettingsRepository.observeDeviceSettings()

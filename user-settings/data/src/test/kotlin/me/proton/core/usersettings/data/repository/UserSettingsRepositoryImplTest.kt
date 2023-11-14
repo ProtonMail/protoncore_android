@@ -18,6 +18,9 @@
 
 package me.proton.core.usersettings.data.repository
 
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
@@ -38,12 +41,15 @@ import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.usersettings.data.api.UserSettingsApi
+import me.proton.core.usersettings.data.api.UserSettingsRemoteDataSourceImpl
+import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
 import me.proton.core.usersettings.data.api.response.PasswordResponse
 import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
 import me.proton.core.usersettings.data.api.response.UpdateUserSettingsResponse
 import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
+import me.proton.core.usersettings.data.db.UserSettingsLocalDataSourceImpl
 import me.proton.core.usersettings.data.db.dao.UserSettingsDao
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
@@ -65,6 +71,7 @@ class UserSettingsRepositoryImplTest {
 
     private val db = mockk<UserSettingsDatabase>(relaxed = true)
     private val userSettingsDao = mockk<UserSettingsDao>(relaxed = true)
+    private val workManager = mockk<WorkManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -92,7 +99,13 @@ class UserSettingsRepositoryImplTest {
             userSettingsApi
         )
 
-        repository = UserSettingsRepositoryImpl(db, apiProvider, validateServerProof, TestCoroutineScopeProvider(dispatcherProvider))
+        repository = UserSettingsRepositoryImpl(
+            localDataSource = UserSettingsLocalDataSourceImpl(db),
+            remoteDataSource = UserSettingsRemoteDataSourceImpl(apiProvider),
+            validateServerProof = validateServerProof,
+            workManager = workManager,
+            scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
+        )
     }
 
     @Test
@@ -110,7 +123,8 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             weekStart = 7,
             earlyAccess = 1,
-            telemetry = 1
+            telemetry = 1,
+            crashReports = 1
         )
         // GIVEN
         coEvery { userSettingsApi.getUserSettings() } returns SingleUserSettingsResponse(settingsResponse)
@@ -180,7 +194,8 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             weekStart = 7,
             earlyAccess = 1,
-            telemetry = 1
+            telemetry = 1,
+            crashReports = 1
         )
         coEvery { userSettingsApi.updateRecoveryEmail(any()) } returns UpdateUserSettingsResponse(
             settings = settingsResponse,
@@ -246,7 +261,8 @@ class UserSettingsRepositoryImplTest {
             timeFormat = 2,
             weekStart = 7,
             earlyAccess = 1,
-            telemetry = 1
+            telemetry = 1,
+            crashReports = 1
         )
         val testSalt = "test-salt"
         val testModulusId = "test-modulus-id"
@@ -265,4 +281,108 @@ class UserSettingsRepositoryImplTest {
         )
         return testAuth
     }
+
+    @Test
+    fun `update crash reports returns success`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val settingsResponse = UserSettingsResponse(
+            email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
+            phone = null,
+            twoFA = null,
+            password = PasswordResponse(mode = 1, expirationTime = null),
+            news = 0,
+            locale = "en",
+            logAuth = 1,
+            density = 1,
+            dateFormat = 1,
+            timeFormat = 2,
+            weekStart = 7,
+            earlyAccess = 1,
+            telemetry = 1,
+            crashReports = 1
+        )
+        every { userSettingsDao.observeByUserId(any()) } returns flowOf(
+            settingsResponse.fromResponse(UserId(testUserId)).toEntity()
+        )
+
+        // WHEN
+        val response = repository.updateCrashReports(
+            userId = UserId(testUserId),
+            isEnabled = true
+        )
+        // THEN
+        assertNotNull(response)
+        assertEquals(true, response.crashReports)
+        coVerify { userSettingsDao.insertOrUpdate(response.toEntity()) }
+        verify {
+            workManager.enqueueUniqueWork(
+                "updateUserSettingsWork-test-user-id-CrashReports",
+                ExistingWorkPolicy.REPLACE,
+                any<OneTimeWorkRequest>()
+            )
+        }
+    }
+
+    @Test
+    fun `update telemetry returns success`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val settingsResponse = UserSettingsResponse(
+            email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
+            phone = null,
+            twoFA = null,
+            password = PasswordResponse(mode = 1, expirationTime = null),
+            news = 0,
+            locale = "en",
+            logAuth = 1,
+            density = 1,
+            dateFormat = 1,
+            timeFormat = 2,
+            weekStart = 7,
+            earlyAccess = 1,
+            telemetry = 1,
+            crashReports = 1
+        )
+        coEvery {
+            userSettingsApi.updateTelemetry(UpdateTelemetryRequest(1))
+        } returns SingleUserSettingsResponse(
+            settings = settingsResponse,
+        )
+        every { userSettingsDao.observeByUserId(any()) } returns flowOf(
+            settingsResponse.fromResponse(UserId(testUserId)).toEntity()
+        )
+
+        // WHEN
+        val response = repository.updateTelemetry(
+            userId = UserId(testUserId),
+            isEnabled = true
+        )
+        // THEN
+        assertNotNull(response)
+        assertEquals(true, response.telemetry)
+        coVerify { userSettingsDao.insertOrUpdate(response.toEntity()) }
+        verify {
+            workManager.enqueueUniqueWork(
+                "updateUserSettingsWork-test-user-id-Telemetry",
+                ExistingWorkPolicy.REPLACE,
+                any<OneTimeWorkRequest>()
+            )
+        }
+    }
+
+
+    @Test
+    fun markAsStale() = runTest(dispatcherProvider.Main) {
+        // WHEN
+        repository.markAsStale(UserId(testUserId))
+        // THEN
+        verify {
+            workManager.enqueueUniqueWork(
+                "freshUserSettingsWork-test-user-id",
+                ExistingWorkPolicy.REPLACE,
+                any<OneTimeWorkRequest>()
+            )
+        }
+    }
+
+
 }

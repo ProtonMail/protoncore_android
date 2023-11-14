@@ -21,8 +21,10 @@ package me.proton.core.usersettings.data.api
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
+import me.proton.core.usersettings.data.api.request.UpdateCrashReportsRequest
 import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
+import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
 import me.proton.core.usersettings.data.api.response.UpdateUserSettingsResponse
 import retrofit2.http.Body
@@ -42,4 +44,10 @@ internal interface UserSettingsApi : BaseRetrofitApi {
 
     @PUT("core/v4/settings/password")
     suspend fun updateLoginPassword(@Body request: UpdateLoginPasswordRequest): UpdateUserSettingsResponse
+
+    @PUT("core/v4/settings/crashreports")
+    suspend fun updateCrashReports(@Body request: UpdateCrashReportsRequest): SingleUserSettingsResponse
+
+    @PUT("core/v4/settings/telemetry")
+    suspend fun updateTelemetry(@Body request: UpdateTelemetryRequest): SingleUserSettingsResponse
 }

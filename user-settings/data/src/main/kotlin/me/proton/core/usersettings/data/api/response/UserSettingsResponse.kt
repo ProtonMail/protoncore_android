@@ -49,6 +49,8 @@ data class UserSettingsResponse(
     val earlyAccess: Int,
     @SerialName("Telemetry")
     val telemetry: Int,
+    @SerialName("CrashReports")
+    val crashReports: Int,
 )
 
 @Serializable

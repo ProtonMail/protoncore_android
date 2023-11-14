@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,16 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.entity
+package me.proton.core.usersettings.domain.usecase
 
-data class DeviceSettings(
-    @Deprecated("Use UserSettings.telemetry instead")
-    val isTelemetryEnabled: Boolean = isTelemetryEnabledDefault,
-    @Deprecated("Use UserSettings.crashReports instead")
-    val isCrashReportEnabled: Boolean = isCrashReportEnabledDefault,
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
+import me.proton.core.usersettings.domain.repository.UserSettingsRepository
+import javax.inject.Inject
+
+class ObserveUserSettings @Inject constructor(
+    private val repository: UserSettingsRepository,
 ) {
-    companion object {
-        const val isTelemetryEnabledDefault = true
-        const val isCrashReportEnabledDefault = true
-    }
+    operator fun invoke(userId: UserId) =
+        repository.getUserSettingsFlow(userId)
 }

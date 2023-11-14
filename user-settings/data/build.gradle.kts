@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
 }
 
@@ -34,6 +35,10 @@ protonCoverage {
 
 publishOption.shouldBePublishedAsLib = true
 
+protonDagger {
+    workManagerHiltIntegration = true
+}
+
 android {
     namespace = "me.proton.core.usersettings.data"
 }
@@ -47,6 +52,7 @@ dependencies {
         project(Module.keyData),
         project(Module.networkData),
         project(Module.userSettingsDomain),
+        `android-work-runtime`,
         `coroutines-core`,
         `javax-inject`,
         retrofit,
@@ -69,9 +75,14 @@ dependencies {
     testImplementation(
         project(Module.androidTest),
         project(Module.kotlinTest),
+        `android-work-testing`,
         `coroutines-test`,
+        `hilt-android-testing`,
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        robolectric
     )
+
+    kaptTest(`hilt-android-compiler`)
 }
