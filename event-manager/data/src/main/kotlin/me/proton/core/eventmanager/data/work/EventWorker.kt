@@ -51,12 +51,15 @@ open class EventWorker @AssistedInject constructor(
 
     override suspend fun doWork(): Result {
         val config = requireNotNull(inputData.getString(KEY_INPUT_CONFIG)?.deserialize<EventManagerConfig>())
+        CoreLogger.i(LogTag.DEFAULT, "EventWorker doWork: $config")
         val manager = eventManagerProvider.get(config)
         return runCatching { manager.process() }.fold(
             onSuccess = {
+                CoreLogger.i(LogTag.DEFAULT, "EventWorker onSuccess: $config")
                 Result.success()
             },
             onFailure = {
+                CoreLogger.i(LogTag.DEFAULT, "EventWorker onFailure: $config -> $it")
                 when (it) {
                     is CancellationException -> {
                         Result.failure()
@@ -77,6 +80,9 @@ open class EventWorker @AssistedInject constructor(
     companion object {
         private const val KEY_INPUT_CONFIG = "config"
 
+        // TODO: Replace by config.id, when Core 18.1.1 is 100% rolled-out.
+        fun getRequestTagFor(config: EventManagerConfig) = config.serialize()
+
         fun getRequestFor(
             manager: EventWorkerManager,
             config: EventManagerConfig,
@@ -92,6 +98,7 @@ open class EventWorker @AssistedInject constructor(
                 .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
                 .setInitialDelay(initialDelaySeconds, TimeUnit.SECONDS)
                 .addTag(serializedConfig)
+                .addTag(config.id)
                 .addTag(config.listenerType.name)
                 .addTag(config.userId.id)
                 .build()

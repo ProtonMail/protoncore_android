@@ -420,6 +420,7 @@ public class me/proton/core/eventmanager/data/work/EventWorker : androidx/work/C
 
 public final class me/proton/core/eventmanager/data/work/EventWorker$Companion {
 	public final fun getRequestFor-SxA4cEA (Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/EventManagerConfig;J)Landroidx/work/PeriodicWorkRequest;
+	public final fun getRequestTagFor (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Ljava/lang/String;
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl : me/proton/core/eventmanager/domain/work/EventWorkerManager {

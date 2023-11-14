@@ -26,8 +26,10 @@ import androidx.work.await
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.eventmanager.data.R
 import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.LogTag
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -52,12 +54,26 @@ class EventWorkerManagerImpl @Inject constructor(
             }
         }
         val request = EventWorker.getRequestFor(this, config, initialDelay)
-        workManager.enqueueUniquePeriodicWork(uniqueWorkName, REPLACE, request)
+        val requestTag = EventWorker.getRequestTagFor(config)
+        try {
+            // Cancel any previous corresponding config EventWorker.
+            workManager.cancelAllWorkByTag(requestTag)
+        } finally {
+            CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager enqueue: $config")
+            workManager.enqueueUniquePeriodicWork(uniqueWorkName, REPLACE, request)
+        }
     }
 
     override fun cancel(config: EventManagerConfig) {
         val uniqueWorkName = getUniqueWorkName(config)
-        workManager.cancelUniqueWork(uniqueWorkName)
+        val requestTag = EventWorker.getRequestTagFor(config)
+        try {
+            // Cancel any previous corresponding config EventWorker.
+            workManager.cancelAllWorkByTag(requestTag)
+        } finally {
+            CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager cancel: $config")
+            workManager.cancelUniqueWork(uniqueWorkName)
+        }
     }
 
     override suspend fun isRunning(config: EventManagerConfig): Boolean {

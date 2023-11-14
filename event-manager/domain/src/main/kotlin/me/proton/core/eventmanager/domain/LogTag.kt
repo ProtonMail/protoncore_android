@@ -19,6 +19,9 @@
 package me.proton.core.eventmanager.domain
 
 object LogTag {
+    /** Default tag for this module. */
+    const val DEFAULT = "core.eventmanager"
+
     /** Tag for Worker Errors. */
     const val WORKER_ERROR = "core.eventmanager.worker"
 

@@ -373,6 +373,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun internalStart() {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager internalStart $config")
         if (isStarted) return
         observeJob = scopeProvider.GlobalDefaultSupervisedScope.launch {
             launch { collectAccountChanges() }
@@ -382,6 +383,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun internalStop() {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager internalStop $config")
         try {
             eventWorkerManager.cancel(config)
         } finally {
