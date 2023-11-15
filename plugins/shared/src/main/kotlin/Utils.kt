@@ -17,7 +17,6 @@
  */
 
 import org.gradle.api.Project
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.Locale
 
@@ -48,16 +47,16 @@ internal fun Project.runCommand(
     args: List<String> = emptyList(),
     currentWorkingDir: File = file("./")
 ): String {
-    val byteOut = ByteArrayOutputStream()
     val commandAsList = command.split("\\s".toRegex()).plus(args)
     val commandListPrefix = if (isWindows()) listOf("cmd", "/c") else emptyList()
     logger.info("Executing command:\'${(commandListPrefix + commandAsList).joinToString(separator = " ")}\'")
-    exec {
-        workingDir = currentWorkingDir
-        commandLine = commandListPrefix + commandAsList
-        standardOutput = byteOut
+    val commandResultProvider = providers.of(CommandResultValueSource::class.java) {
+        parameters {
+            commandLine = commandListPrefix + commandAsList
+            workingDir = currentWorkingDir
+        }
     }
-    return String(byteOut.toByteArray()).trim()
+    return commandResultProvider.get()
 }
 
 internal fun isWindows() = System.getProperty("os.name").lowercase(Locale.US).contains("windows")
