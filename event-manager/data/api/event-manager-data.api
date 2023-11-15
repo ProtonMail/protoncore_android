@@ -419,7 +419,7 @@ public class me/proton/core/eventmanager/data/work/EventWorker : androidx/work/C
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorker$Companion {
-	public final fun getRequestFor-SxA4cEA (Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/domain/EventManagerConfig;J)Landroidx/work/PeriodicWorkRequest;
+	public final fun getRequestFor-EBSBt-s (Lme/proton/core/eventmanager/domain/EventManagerConfig;JJJZZ)Landroidx/work/PeriodicWorkRequest;
 	public final fun getRequestTagFor (Lme/proton/core/eventmanager/domain/EventManagerConfig;)Ljava/lang/String;
 }
 
@@ -432,6 +432,8 @@ public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl 
 	public fun getRepeatIntervalBackground-UwyO8pc ()J
 	public fun getRepeatIntervalForeground-UwyO8pc ()J
 	public fun isRunning (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun requiresBatteryNotLow ()Z
+	public fun requiresStorageNotLow ()Z
 }
 
 public final class me/proton/core/eventmanager/data/work/EventWorkerManagerImpl_Factory : dagger/internal/Factory {

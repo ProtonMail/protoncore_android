@@ -3,4 +3,6 @@
     <public name="core_feature_event_manager_worker_repeat_internal_foreground_seconds" type="integer" />
     <public name="core_feature_event_manager_worker_repeat_internal_background_seconds" type="integer" />
     <public name="core_feature_event_manager_worker_backoff_delay_seconds" type="integer" />
+    <public name="core_feature_event_manager_worker_requires_battery_not_low" type="bool" />
+    <public name="core_feature_event_manager_worker_requires_storage_not_low" type="bool" />
 </resources>

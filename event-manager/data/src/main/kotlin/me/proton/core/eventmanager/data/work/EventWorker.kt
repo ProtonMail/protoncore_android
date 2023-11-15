@@ -83,19 +83,29 @@ open class EventWorker @AssistedInject constructor(
         // TODO: Replace by config.id, when Core 18.1.1 is 100% rolled-out.
         fun getRequestTagFor(config: EventManagerConfig) = config.serialize()
 
+        @Suppress("LongParameterList")
         fun getRequestFor(
-            manager: EventWorkerManager,
             config: EventManagerConfig,
-            initialDelay: Duration
+            backoffDelay: Duration,
+            repeatInterval: Duration,
+            initialDelay: Duration,
+            requiresBatteryNotLow: Boolean,
+            requiresStorageNotLow: Boolean
         ): PeriodicWorkRequest {
             val initialDelaySeconds = initialDelay.inWholeSeconds
-            val backoffDelaySeconds = manager.getBackoffDelay().inWholeSeconds
-            val repeatIntervalSeconds = manager.getRepeatIntervalBackground().inWholeSeconds
+            val backoffDelaySeconds = backoffDelay.inWholeSeconds
+            val repeatIntervalSeconds = repeatInterval.inWholeSeconds
             val serializedConfig = config.serialize()
             return PeriodicWorkRequestBuilder<EventWorker>(repeatIntervalSeconds, TimeUnit.SECONDS)
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, backoffDelaySeconds, TimeUnit.SECONDS)
                 .setInputData(workDataOf(KEY_INPUT_CONFIG to serializedConfig))
-                .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(NetworkType.CONNECTED)
+                        .setRequiresBatteryNotLow(requiresBatteryNotLow)
+                        .setRequiresStorageNotLow(requiresStorageNotLow)
+                        .build()
+                )
                 .setInitialDelay(initialDelaySeconds, TimeUnit.SECONDS)
                 .addTag(serializedConfig)
                 .addTag(config.id)

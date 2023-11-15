@@ -29,6 +29,7 @@ import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.LogTag
 import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.presentation.app.AppLifecycleProvider.State.Background
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 import kotlin.time.Duration
@@ -46,14 +47,23 @@ class EventWorkerManagerImpl @Inject constructor(
 
     override fun enqueue(config: EventManagerConfig, immediately: Boolean) {
         val uniqueWorkName = getUniqueWorkName(config)
-        val initialDelay = when (immediately) {
-            true -> getImmediateMinimumInitialDelay()
-            else -> when (appLifecycleProvider.state.value) {
-                AppLifecycleProvider.State.Background -> getRepeatIntervalBackground()
-                AppLifecycleProvider.State.Foreground -> getRepeatIntervalForeground()
-            }
-        }
-        val request = EventWorker.getRequestFor(this, config, initialDelay)
+        val isBackground = appLifecycleProvider.state.value == Background
+        val requiresBatteryNotLow = requiresBatteryNotLow() && isBackground
+        val requiresStorageNotLow = requiresStorageNotLow() && isBackground
+        val request = EventWorker.getRequestFor(
+            config = config,
+            backoffDelay = getBackoffDelay(),
+            repeatInterval = getRepeatIntervalBackground(),
+            initialDelay = when (immediately) {
+                true -> getImmediateMinimumInitialDelay()
+                else -> when (isBackground) {
+                    true -> getRepeatIntervalBackground()
+                    false -> getRepeatIntervalForeground()
+                }
+            },
+            requiresBatteryNotLow = requiresBatteryNotLow,
+            requiresStorageNotLow = requiresStorageNotLow
+        )
         val requestTag = EventWorker.getRequestTagFor(config)
         try {
             // Cancel any previous corresponding config EventWorker.
@@ -97,4 +107,12 @@ class EventWorkerManagerImpl @Inject constructor(
     override fun getBackoffDelay(): Duration = context.resources.getInteger(
         R.integer.core_feature_event_manager_worker_backoff_delay_seconds
     ).toDuration(DurationUnit.SECONDS)
+
+    override fun requiresBatteryNotLow(): Boolean = context.resources.getBoolean(
+        R.bool.core_feature_event_manager_worker_requires_battery_not_low
+    )
+
+    override fun requiresStorageNotLow(): Boolean = context.resources.getBoolean(
+        R.bool.core_feature_event_manager_worker_requires_storage_not_low
+    )
 }

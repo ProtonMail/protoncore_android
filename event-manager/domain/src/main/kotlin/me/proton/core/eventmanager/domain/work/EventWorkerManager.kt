@@ -59,4 +59,18 @@ interface EventWorkerManager {
      * Get backoff delay.
      */
     fun getBackoffDelay(): Duration
+
+    /**
+     * Sets whether device battery should be at an acceptable level for the Worker to run.
+     *
+     * Note: This constraint is only applied when app is in background.
+     */
+    fun requiresBatteryNotLow(): Boolean
+
+    /**
+     * Sets whether the device's available storage should be at an acceptable level for the Worker to run.
+     *
+     * Note: This constraint is only applied when app is in background.
+     */
+    fun requiresStorageNotLow(): Boolean
 }
