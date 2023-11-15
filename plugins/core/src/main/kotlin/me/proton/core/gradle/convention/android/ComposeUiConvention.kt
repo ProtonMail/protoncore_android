@@ -35,7 +35,7 @@ internal class ComposeUiConvention : BuildConvention<Unit> {
     }
 }
 
-private fun <T> T.applyConvention() where T : CommonExtension<*, *, *, *> {
+private fun <T> T.applyConvention() where T : CommonExtension<*, *, *, *, *> {
     buildFeatures.compose = true
 
     composeOptions {

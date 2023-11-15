@@ -54,7 +54,7 @@ internal class AndroidConvention : BuildConvention<AndroidConventionSettings> {
 private fun <T> T.applyConvention(
     commonConfig: CommonConfigurationExtension,
     settings: AndroidConventionSettings
-) where T : CommonExtension<*, *, *, *> {
+) where T : CommonExtension<*, *, *, *, *> {
     compileSdk = commonConfig.compileSdk.get()
     ndkVersion = commonConfig.ndkVersion.get()
 
