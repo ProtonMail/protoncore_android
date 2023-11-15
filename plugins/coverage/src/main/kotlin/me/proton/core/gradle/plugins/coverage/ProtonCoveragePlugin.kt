@@ -39,7 +39,6 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.create
 import org.gradle.language.base.plugins.LifecycleBasePlugin
-import java.io.FilenameFilter
 
 /** Default dir path for the HTML report, relative to the build directory. */
 private const val DEFAULT_HTML_REPORT_DIR = "reports/kover/html"
@@ -166,11 +165,13 @@ public class ProtonCoveragePlugin : Plugin<Project> {
      * https://docs.gitlab.com/ee/ci/testing/test_coverage_visualization.html#automatic-class-path-correction
      */
     private fun Project.fixCoberturaSourcePaths() {
-        val baseCoberturaFile = buildDir.resolve(DEFAULT_XML_REPORT_COBERTURA_FILE)
+        val baseCoberturaFile =
+            layout.buildDirectory.asFile.get().resolve(DEFAULT_XML_REPORT_COBERTURA_FILE)
         baseCoberturaFile.parentFile
-            .listFiles(FilenameFilter { _, name -> name.startsWith(DEFAULT_COBERTURA_BASENAME) })
+            .listFiles { _, name -> name.startsWith(DEFAULT_COBERTURA_BASENAME) }
             ?.forEach { coberturaFile ->
-                val sourceDir = projectDir.resolve("src/main/kotlin").absolutePath
+                val sourceDir =
+                    layout.buildDirectory.asFile.get().resolve("src/main/kotlin").absolutePath
                 val updatedText = coberturaFile.readText()
                     .replace("<source>.</source>", "<source>${sourceDir}</source>")
                 coberturaFile.writeText(updatedText)

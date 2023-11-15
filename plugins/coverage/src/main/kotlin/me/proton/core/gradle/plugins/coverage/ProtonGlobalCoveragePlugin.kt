@@ -80,7 +80,8 @@ public class ProtonGlobalCoveragePlugin : Plugin<Project> {
             description = "Prints out total line coverage percentage."
 
             doLast {
-                val xmlReportFile = project.buildDir.resolve(DEFAULT_XML_REPORT_FILE)
+                val xmlReportFile =
+                    project.layout.buildDirectory.asFile.get().resolve(DEFAULT_XML_REPORT_FILE)
                 val xmlReport = XmlSlurper().parse(xmlReportFile)
                 val counterNode =
                     xmlReport.childNodes().asSequence().filterIsInstance<Node>().firstOrNull {

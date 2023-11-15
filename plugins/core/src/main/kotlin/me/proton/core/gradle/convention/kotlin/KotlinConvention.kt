@@ -24,25 +24,27 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
+import org.jetbrains.kotlin.gradle.dsl.kotlinExtension
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 internal class KotlinConvention : BuildConvention<KotlinConventionSettings> {
     private val defaultCompilerArgs: List<String>
         get() = listOf(
-            "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-Xopt-in=kotlinx.serialization.ExperimentalSerializationApi",
-            "-Xopt-in=kotlin.time.ExperimentalTime"
+            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+            "-opt-in=kotlin.time.ExperimentalTime"
         )
 
     override fun apply(target: Project, settings: KotlinConventionSettings) {
         val commonConfig = target.rootProject.extensions.getByType<CommonConfigurationExtension>()
-
         target.tasks.withType<KotlinCompile> {
             applyConvention(commonConfig)
         }
 
         target.afterEvaluate {
-            applyApiMode(target, settings, commonConfig)
+            val apiMode = getApiMode(settings, commonConfig)
+            target.kotlinExtension.explicitApi = apiMode
+            applyApiModeFix(target, apiMode)
         }
     }
 
@@ -53,25 +55,35 @@ internal class KotlinConvention : BuildConvention<KotlinConventionSettings> {
         }
     }
 
-    private fun applyApiMode(
+    // TODO: can be removed when Kotlin is updated to 1.9.x
+    private fun applyApiModeFix(
         target: Project,
-        settings: KotlinConventionSettings,
-        commonConfig: CommonConfigurationExtension
+        apiMode: ExplicitApiMode,
     ) {
-        val apiMode: ExplicitApiMode = when {
-            settings.apiMode.isPresent -> settings.apiMode.get()
-            commonConfig.apiMode.isPresent -> commonConfig.apiMode.get()
-            else -> settings.apiMode.get()
+        val apiModeName = when (apiMode) {
+            ExplicitApiMode.Strict -> "strict"
+            ExplicitApiMode.Warning -> "warning"
+            ExplicitApiMode.Disabled -> "disable"
         }
+
         if (apiMode != ExplicitApiMode.Disabled) {
             target.tasks.withType<KotlinCompile> {
                 // Workaround for https://youtrack.jetbrains.com/issue/KT-37652
                 if (name.endsWith("TestKotlin")) return@withType
 
                 kotlinOptions {
-                    freeCompilerArgs = freeCompilerArgs + apiMode.toCompilerArg()
+                    freeCompilerArgs = freeCompilerArgs + "-Xexplicit-api=${apiModeName}"
                 }
             }
         }
+    }
+
+    private fun getApiMode(
+        settings: KotlinConventionSettings,
+        commonConfig: CommonConfigurationExtension
+    ): ExplicitApiMode = when {
+        settings.apiMode.isPresent -> settings.apiMode.get()
+        commonConfig.apiMode.isPresent -> commonConfig.apiMode.get()
+        else -> settings.apiMode.get()
     }
 }

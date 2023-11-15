@@ -195,7 +195,7 @@ internal open class ConvertToGitlabFormat : DefaultTask() {
         val report = File(reportsDir, "${project.name}.json")
             .apply { if (exists()) writeText("") }
 
-        val detektReports = File(project.buildDir, "reports/detekt")
+        val detektReports = File(project.layout.buildDirectory.asFile.get(), "reports/detekt")
         println("Looking for detekt.sarif in $detektReports")
         detektReports
             .listFiles { _, name -> name == "detekt.sarif" }

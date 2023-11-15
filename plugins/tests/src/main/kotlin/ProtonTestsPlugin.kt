@@ -20,6 +20,7 @@ import ProtonTestsExtension.Companion.setupProtonTestsExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.UnknownTaskException
+import java.util.Locale
 
 abstract class ProtonTestsPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -45,7 +46,9 @@ fun Project.setupTests(filter: (Project) -> Boolean = { true }) {
         sub.afterEvaluate {
             tasks.register("allTest") {
                 if (isAndroid) {
-                    val flavorOption = (options.unitTestFlavor ?: "").capitalize()
+                    val flavorOption = (options.unitTestFlavor ?: "").replaceFirstChar {
+                        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+                    }
                     val androidTestTaskName = "test${flavorOption}DebugUnitTest"
                     val androidTestTask = try {
                         tasks.named(androidTestTaskName)

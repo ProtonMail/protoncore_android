@@ -79,7 +79,10 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
         )
     }
 
-    private fun Project.handleBuildTypeOnly(defaultConfig: DefaultConfig, buildType: ApplicationBuildType) {
+    private fun Project.handleBuildTypeOnly(
+        defaultConfig: DefaultConfig,
+        buildType: ApplicationBuildType
+    ) {
         val mergedConfig = mergeConfigurations(
             defaultConfig.environmentConfiguration,
             buildType.environmentConfiguration
@@ -126,8 +129,9 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
         packagePath: String = PACKAGE_NAME.replace(".", "/"),
     ) {
         val location = "$generatedSourceLocation/$variantLocation"
-        val variantDirectory = project.buildDir.resolve(location)
-        val configDirectory = project.buildDir.resolve("$location/$packagePath")
+        val variantDirectory = project.layout.buildDirectory.asFile.get().resolve(location)
+        val configDirectory =
+            project.layout.buildDirectory.asFile.get().resolve("$location/$packagePath")
 
         configDirectory.mkdirs()
 

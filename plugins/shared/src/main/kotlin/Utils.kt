@@ -60,7 +60,7 @@ internal fun Project.runCommand(
     return String(byteOut.toByteArray()).trim()
 }
 
-internal fun isWindows() = System.getProperty("os.name").toLowerCase(Locale.US).contains("windows")
+internal fun isWindows() = System.getProperty("os.name").lowercase(Locale.US).contains("windows")
 
 fun Project.computeVersionNameFromBranchName(branchPrefix: String): String {
     val ciCommitRefName = System.getenv("CI_COMMIT_REF_NAME")
