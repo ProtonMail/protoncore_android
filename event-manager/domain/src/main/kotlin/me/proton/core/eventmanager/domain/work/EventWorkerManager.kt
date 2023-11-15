@@ -28,17 +28,22 @@ interface EventWorkerManager {
      *
      * @param immediately if true, start/process the task immediately, if possible.
      */
-    fun enqueue(config: EventManagerConfig, immediately: Boolean)
+    suspend fun enqueue(config: EventManagerConfig, immediately: Boolean)
 
     /**
      * Cancel Worker for this [config].
      */
-    fun cancel(config: EventManagerConfig)
+    suspend fun cancel(config: EventManagerConfig)
 
     /**
      * Returns true if Worker is running.
      */
     suspend fun isRunning(config: EventManagerConfig): Boolean
+
+    /**
+     * Returns true if Worker is enqueued.
+     */
+    suspend fun isEnqueued(config: EventManagerConfig): Boolean
 
     /**
      * Get immediate minimal initial delay for any Worker to start.

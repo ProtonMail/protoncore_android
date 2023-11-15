@@ -45,9 +45,13 @@ class EventWorkerManagerImpl @Inject constructor(
 
     private fun getUniqueWorkName(config: EventManagerConfig) = config.id
 
-    override fun enqueue(config: EventManagerConfig, immediately: Boolean) {
-        val uniqueWorkName = getUniqueWorkName(config)
+    override suspend fun enqueue(config: EventManagerConfig, immediately: Boolean) {
+        if (isEnqueued(config) && !immediately) {
+            CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager already enqueued: $config")
+            return
+        }
         val isBackground = appLifecycleProvider.state.value == Background
+        val uniqueWorkName = getUniqueWorkName(config)
         val requiresBatteryNotLow = requiresBatteryNotLow() && isBackground
         val requiresStorageNotLow = requiresStorageNotLow() && isBackground
         val request = EventWorker.getRequestFor(
@@ -74,7 +78,7 @@ class EventWorkerManagerImpl @Inject constructor(
         }
     }
 
-    override fun cancel(config: EventManagerConfig) {
+    override suspend fun cancel(config: EventManagerConfig) {
         val uniqueWorkName = getUniqueWorkName(config)
         val requestTag = EventWorker.getRequestTagFor(config)
         try {
@@ -90,6 +94,12 @@ class EventWorkerManagerImpl @Inject constructor(
         val uniqueWorkName = getUniqueWorkName(config)
         val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().firstOrNull()
         return info?.state == WorkInfo.State.RUNNING
+    }
+
+    override suspend fun isEnqueued(config: EventManagerConfig): Boolean {
+        val uniqueWorkName = getUniqueWorkName(config)
+        val info = workManager.getWorkInfosForUniqueWork(uniqueWorkName).await().firstOrNull()
+        return info?.state == WorkInfo.State.ENQUEUED
     }
 
     override fun getImmediateMinimumInitialDelay(): Duration = context.resources.getInteger(

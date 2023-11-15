@@ -65,7 +65,6 @@ open class EventWorker @AssistedInject constructor(
                         Result.failure()
                     }
                     is ApiException -> {
-                        CoreLogger.d(LogTag.WORKER_ERROR, it, "EventManager non-critical error")
                         Result.retry()
                     }
                     else -> {

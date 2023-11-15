@@ -358,7 +358,7 @@ class EventManagerImpl @AssistedInject constructor(
     private suspend fun collectAccountChanges() {
         accountManager.getAccount(config.userId)
             .distinctUntilChangedBy { it?.state }
-            .onEach { enqueueOrStop(immediately = true, failure = false) }
+            .onEach { enqueueOrStop(immediately = false, failure = false) }
             .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
             .collect()
     }
