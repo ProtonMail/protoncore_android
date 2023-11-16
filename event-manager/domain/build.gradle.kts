@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,11 @@ protonBuild {
 
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    minBranchCoveragePercentage.set(53)
+    minLineCoveragePercentage.set(80)
+}
+
 dependencies {
     api(
         project(Module.domain),
@@ -38,5 +43,11 @@ dependencies {
     implementation(
         project(Module.kotlinUtil),
         `coroutines-core`,
+    )
+
+    testImplementation(
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk
     )
 }
