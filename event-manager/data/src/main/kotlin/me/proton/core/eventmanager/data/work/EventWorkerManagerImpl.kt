@@ -24,6 +24,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.await
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.delay
 import me.proton.core.eventmanager.data.R
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.LogTag
@@ -33,6 +34,7 @@ import me.proton.core.presentation.app.AppLifecycleProvider.State.Background
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -54,12 +56,20 @@ class EventWorkerManagerImpl @Inject constructor(
         val uniqueWorkName = getUniqueWorkName(config)
         val requiresBatteryNotLow = requiresBatteryNotLow() && isBackground
         val requiresStorageNotLow = requiresStorageNotLow() && isBackground
+        val immediateMinimumInitialDelay = getImmediateMinimumInitialDelay()
         val request = EventWorker.getRequestFor(
             config = config,
             backoffDelay = getBackoffDelay(),
             repeatInterval = getRepeatIntervalBackground(),
             initialDelay = when (immediately) {
-                true -> getImmediateMinimumInitialDelay()
+                true -> when {
+                    // WorkManager do not respect setInitialDelay < 1 minute.
+                    immediateMinimumInitialDelay < 1.minutes -> {
+                        delay(immediateMinimumInitialDelay)
+                        Duration.ZERO
+                    }
+                    else -> immediateMinimumInitialDelay
+                }
                 else -> when (isBackground) {
                     true -> getRepeatIntervalBackground()
                     false -> getRepeatIntervalForeground()
