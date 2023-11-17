@@ -25,7 +25,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 internal interface PushApi : BaseRetrofitApi {
-    @GET("core/v4/pushes")
+    @GET("core/v4/pushes/active")
     suspend fun getAllPushes(): GetPushesResponse
 
     @DELETE("core/v4/pushes/{id}")
