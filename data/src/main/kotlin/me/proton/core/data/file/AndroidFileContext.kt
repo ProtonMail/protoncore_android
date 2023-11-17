@@ -3,6 +3,8 @@ package me.proton.core.data.file
 import android.content.Context
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import me.proton.core.domain.entity.UniqueId
 import java.io.File
@@ -13,7 +15,7 @@ import kotlin.time.Duration.Companion.minutes
  */
 @ExperimentalProtonFileContext
 @Suppress("TooManyFunctions")
-class AndroidFileContext<Directory: UniqueId, Filename: UniqueId>(
+class AndroidFileContext<Directory : UniqueId, Filename : UniqueId>(
     override val baseDir: String,
     val context: Context
 ) : FileContext<Directory, Filename> {
@@ -39,18 +41,25 @@ class AndroidFileContext<Directory: UniqueId, Filename: UniqueId>(
         directory: Directory,
         filename: Filename
     ): Boolean = withContext(Dispatchers.IO) {
-        cache.invalidate(getKey(directory, filename))
-        getFile(directory, filename).delete()
+        val key = getKey(directory, filename)
+        keyMutex(key).withLock {
+            cache.invalidate(key)
+            getFile(directory, filename).delete()
+        }
     }
 
     override suspend fun deleteDir(directory: Directory) = withContext(Dispatchers.IO) {
-        cache.invalidateAll()
-        getDir(directory).deleteRecursively()
+        staticMutex.withLock {
+            cache.invalidateAll()
+            getDir(directory).deleteRecursively()
+        }
     }
 
     override suspend fun deleteAll() = withContext(Dispatchers.IO) {
-        cache.invalidateAll()
-        getDir().deleteRecursively()
+        staticMutex.withLock {
+            cache.invalidateAll()
+            getDir().deleteRecursively()
+        }
     }
 
     override suspend fun writeText(
@@ -58,23 +67,35 @@ class AndroidFileContext<Directory: UniqueId, Filename: UniqueId>(
         filename: Filename,
         data: String
     ) = withContext(Dispatchers.IO) {
-        val file = getFile(directory, filename)
-        if (!file.exists()) file.createNewFile()
-        cache.invalidate(getKey(directory, filename))
-        file.also { it.writeText(data) }
+        val key = getKey(directory, filename)
+        keyMutex(key).withLock {
+            val file = getFile(directory, filename)
+            if (!file.exists()) file.createNewFile()
+            cache.invalidate(key)
+            file.also { it.writeText(data) }
+        }
     }
 
     override suspend fun readText(
         directory: Directory,
         filename: Filename
     ): String? = withContext(Dispatchers.IO) {
-        val file = getFile(directory, filename)
-        if (!file.exists()) return@withContext null
-        cache.get(getKey(directory, filename)) { file.readText() }
+        val key = getKey(directory, filename)
+        keyMutex(key).withLock {
+            val file = getFile(directory, filename)
+            if (!file.exists()) return@withContext null
+            cache.get(key) { file.readText() }
+        }
     }
 
     override suspend fun deleteText(
         directory: Directory,
         filename: Filename
     ) = deleteFile(directory, filename)
+
+    private companion object {
+        private val staticMutex: Mutex = Mutex()
+        private val mutexMap: MutableMap<String, Mutex> = mutableMapOf()
+        private suspend fun keyMutex(key: String) = staticMutex.withLock { mutexMap.getOrPut(key) { Mutex() } }
+    }
 }

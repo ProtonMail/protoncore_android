@@ -21,11 +21,15 @@ package me.proton.core.data.file
 import android.content.Context
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.joinAll
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.yield
 import me.proton.core.domain.entity.UniqueId
 import me.proton.core.domain.entity.UserId
 import java.nio.file.Files
+import kotlin.random.Random
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -47,7 +51,7 @@ class AndroidFileContextTest {
         every { getDir(any(), any()) } returns Files.createTempDirectory("AndroidFileContextTest-").toFile()
     }
 
-    data class Item(override val id: String): UniqueId
+    data class Item(override val id: String) : UniqueId
 
     private lateinit var tested: AndroidFileContext<UserId, Item>
 
@@ -165,5 +169,28 @@ class AndroidFileContextTest {
 
         assertNotNull(tested.writeText(user1, item1, "new-data11"))
         assertEquals(expected = "new-data11", actual = tested.readText(user1, item1))
+    }
+
+    @Test
+    fun concurrentReadFile() = runTest {
+        val data = Random.nextBytes(100 * 1000) // 100KB
+        val string = data.toString(Charsets.UTF_8)
+        assertNotNull(tested.writeText(user1, item1, string))
+        (1..10).map {
+            launch { assertEquals(expected = string, actual = tested.readText(user1, item1)) }
+        }.joinAll()
+    }
+
+    @Test
+    fun concurrentWriteFile() = runTest {
+        val data = Random.nextBytes(10 * 1000) // 10KB
+        val string = data.toString(Charsets.UTF_8)
+        (1..100).map {
+            launch {
+                assertNotNull(tested.writeText(user1, item1, string))
+                assertEquals(expected = string, actual = tested.readText(user1, item1))
+            }
+        }.joinAll()
+        assertEquals(expected = string, actual = tested.readText(user1, item1))
     }
 }
