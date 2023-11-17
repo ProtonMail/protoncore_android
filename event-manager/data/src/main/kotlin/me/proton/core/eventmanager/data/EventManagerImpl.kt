@@ -130,6 +130,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun fetch(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager fetch: $config")
         val eventId = metadata.eventId ?: getLatestEventId()
         eventMetadataRepository.updateEventId(config, metadata.eventId, eventId)
         runCatching(
@@ -173,6 +174,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyResetAll(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager notifyResetAll: $config")
         val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
@@ -198,6 +200,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyPrepare(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager notifyPrepare: $config")
         val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
@@ -220,6 +223,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyEvents(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager notifyEvents: $config")
         val eventId = requireNotNull(metadata.eventId)
         runInTransaction(
             config = config,
@@ -242,6 +246,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifySuccess(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager notifySuccess: $config")
         val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
@@ -264,6 +269,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyFailure(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager notifyFailure: $config")
         val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
@@ -286,6 +292,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun notifyComplete(metadata: EventMetadata) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager notifyComplete: $config")
         val eventId = requireNotNull(metadata.eventId)
         runCatching(
             config = config,
@@ -347,6 +354,7 @@ class EventManagerImpl @AssistedInject constructor(
     }
 
     private suspend fun enqueueOrStop(immediately: Boolean, failure: Boolean) {
+        CoreLogger.i(LogTag.DEFAULT, "EventManager enqueueOrStop ($immediately, $failure): $config")
         when (getNextAction(failure)) {
             Action.None -> Unit
             Action.Enqueue -> eventWorkerManager.enqueue(config, immediately)
