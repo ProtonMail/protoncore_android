@@ -39,7 +39,7 @@ fun ProtonInput.validatePasswordMinLength() =
     InputValidationResult(this.text.toString(), ValidationType.PasswordMinLength)
 
 fun ProtonInput.validatePasswordMatch(confirmPassword: String) =
-    InputValidationResult(this.text.toString(), ValidationType.PasswordMinLength, confirmPassword)
+    InputValidationResult(this.text.toString(), ValidationType.PasswordMatch, confirmPassword)
 
 fun ProtonInput.validateEmail() =
     InputValidationResult(this.text.toString(), ValidationType.Email)
