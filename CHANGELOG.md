@@ -11,6 +11,39 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.2.0] - 2023-11-21
+
+### Chores
+
+- auth: Increase coverage for auth module.
+- presentation: Fix password match validation.
+- push: Update push route.
+
+### Features
+
+- payment-iap:
+  - Make sure query and purchase start states are consumed.
+
+    Because state flow won't yield on emit e.g. QueryingProductDetails won't be
+    consumed if error state is set before producer coroutine yields. This breaks
+    "try again" scenarios that wait for error to be re-emitted but instead consumer
+    doesn't get any state update as error state is preserved through the whole
+    process.
+
+### Bug Fixes
+
+- auth: Add the product dimensions defined by `ProductMetricsDelegate`.
+
+### Internationalization
+
+- Upgrade translations from crowdin (e62b2060).
+
+## [18.1.1] - 2023-11-14
+
+### Bug Fixes
+
+- event-manager: Properly cancel any previous corresponding config EventWorker.
+
 ## [18.1.0] - 2023-11-10
 
 ### Features
