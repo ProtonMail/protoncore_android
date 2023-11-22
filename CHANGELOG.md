@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.2.1] - 2023-11-22
+
+### Bug Fixes
+
+- user-settings:
+  - Added UserSettingsViewModel Primary userId support.
+
 ## [18.2.0] - 2023-11-21
 
 ### Chores
