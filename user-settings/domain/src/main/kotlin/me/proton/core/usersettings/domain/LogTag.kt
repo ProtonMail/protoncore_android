@@ -1,6 +1,6 @@
 /*
  * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,14 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.usecase
+package me.proton.core.usersettings.domain
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
-import javax.inject.Inject
-
-class ObserveUserSettings @Inject constructor(
-    private val repository: UserSettingsRepository,
-) {
-    operator fun invoke(userId: UserId) = repository.getUserSettingsFlow(userId)
+object LogTag {
+    /** Default tag for any other issue we need to log */
+    const val DEFAULT = "core.usersettings.default"
 }

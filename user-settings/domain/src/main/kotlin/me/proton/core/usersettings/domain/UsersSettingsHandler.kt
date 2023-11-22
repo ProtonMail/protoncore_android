@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -38,8 +38,8 @@ import javax.inject.Singleton
 @Singleton
 class UsersSettingsHandler @Inject constructor(
     private val scopeProvider: CoroutineScopeProvider,
-    private  val accountManager: AccountManager,
-    private  val observeUserSettings: ObserveUserSettings,
+    private val accountManager: AccountManager,
+    private val observeUserSettings: ObserveUserSettings,
 ) {
     fun <T> onUsersSettingsChanged(
         merge: suspend (List<UserSettings?>) -> T,
@@ -54,10 +54,6 @@ class UsersSettingsHandler @Inject constructor(
         }
     }
         .onEach { block(it) }
-        .catch { CoreLogger.e(DEFAULT, it) }
+        .catch { CoreLogger.e(LogTag.DEFAULT, it) }
         .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
-    companion object {
-        /** Default tag for any other issue we need to log */
-        const val DEFAULT = "core.usersettings.default"
-    }
 }

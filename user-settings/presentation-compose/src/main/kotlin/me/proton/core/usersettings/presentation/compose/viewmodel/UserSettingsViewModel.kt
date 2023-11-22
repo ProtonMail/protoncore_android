@@ -18,19 +18,19 @@
 
 package me.proton.core.usersettings.presentation.compose.viewmodel
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.arch.mapSuccessValueOrNull
-import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateCrashReports
 import me.proton.core.usersettings.domain.usecase.PerformUpdateTelemetry
@@ -38,17 +38,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class UserSettingsViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    accountManager: AccountManager,
     observeUserSettings: ObserveUserSettings,
     private val performUpdateCrashReports: PerformUpdateCrashReports,
     private val performUpdateTelemetry: PerformUpdateTelemetry,
 ) : ViewModel() {
 
-    private val userId = UserId(requireNotNull(savedStateHandle.get<String>(STATE_USER_ID)))
+    private val primaryUserId = accountManager.getPrimaryUserId().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+        initialValue = null
+    )
 
     val initialState = State()
 
-    val state: StateFlow<State> = observeUserSettings(userId)
+    val state: StateFlow<State> = primaryUserId
+        .filterNotNull()
+        .flatMapLatest { observeUserSettings(it) }
         .mapSuccessValueOrNull()
         .filterNotNull()
         .map { userSettings ->
@@ -69,13 +75,13 @@ class UserSettingsViewModel @Inject constructor(
 
     private fun onToggleTelemetry() = viewModelScope.launch {
         state.value.telemetry.let { isEnabled ->
-            performUpdateTelemetry(userId, !isEnabled)
+            performUpdateTelemetry(requireNotNull(primaryUserId.value), !isEnabled)
         }
     }
 
     private fun onToggleCrashReport() = viewModelScope.launch {
         state.value.crashReports.let { isEnabled ->
-            performUpdateCrashReports(userId, !isEnabled)
+            performUpdateCrashReports(requireNotNull(primaryUserId.value), !isEnabled)
         }
     }
 
@@ -87,9 +93,5 @@ class UserSettingsViewModel @Inject constructor(
     sealed interface Action {
         object ToggleTelemetry : Action
         object ToggleCrashReport : Action
-    }
-
-    companion object {
-        const val STATE_USER_ID = "userId"
     }
 }

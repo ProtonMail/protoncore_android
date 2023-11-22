@@ -12,13 +12,8 @@ public final class me/proton/core/usersettings/domain/LogTag {
 }
 
 public final class me/proton/core/usersettings/domain/UsersSettingsHandler {
-	public static final field Companion Lme/proton/core/usersettings/domain/UsersSettingsHandler$Companion;
-	public static final field DEFAULT Ljava/lang/String;
 	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;)V
 	public final fun onUsersSettingsChanged (Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
-}
-
-public final class me/proton/core/usersettings/domain/UsersSettingsHandler$Companion {
 }
 
 public final class me/proton/core/usersettings/domain/entity/DeviceSettings {

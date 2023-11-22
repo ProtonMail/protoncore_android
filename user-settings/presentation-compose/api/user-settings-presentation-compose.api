@@ -49,9 +49,7 @@ public final class me/proton/core/usersettings/presentation/compose/view/Telemet
 
 public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel : androidx/lifecycle/ViewModel {
 	public static final field $stable I
-	public static final field Companion Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Companion;
-	public static final field STATE_USER_ID Ljava/lang/String;
-	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports;Lme/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports;Lme/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry;)V
 	public final fun getInitialState ()Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun perform (Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action;)Lkotlinx/coroutines/Job;
@@ -68,9 +66,6 @@ public final class me/proton/core/usersettings/presentation/compose/viewmodel/Us
 public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action$ToggleTelemetry : me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action {
 	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Action$ToggleTelemetry;
-}
-
-public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$Companion {
 }
 
 public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel$State {
@@ -94,7 +89,7 @@ public final class me/proton/core/usersettings/presentation/compose/viewmodel/Us
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports;Lme/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry;)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateCrashReports;Lme/proton/core/usersettings/domain/usecase/PerformUpdateTelemetry;)Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;
 }
 
 public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel_HiltModules {
