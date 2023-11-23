@@ -21,17 +21,11 @@ package me.proton.core.payment.domain.repository
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.PaymentStatus
-import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
-import me.proton.core.payment.domain.entity.Subscription
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.entity.SubscriptionStatus
 
 public typealias PlanQuantity = Map<String, Int> // the plan name along with the quantity number
 
@@ -66,50 +60,6 @@ public interface PaymentsRepository {
      * Can only be used for already logged in users and not during signup.
      */
     public suspend fun getAvailablePaymentMethods(sessionUserId: SessionUserId): List<PaymentMethod>
-    // endregion
-
-    // region subscription
-    /**
-     * Unauthenticated.
-     * It checks given a particular plans and cycles how much a user should pay.
-     * It also takes into an account any special coupon or gift codes.
-     * Should be called upon a user selected any plan, duration and entered a code.
-     */
-    public suspend fun validateSubscription(
-        sessionUserId: SessionUserId?,
-        codes: List<String>? = null,
-        plans: PlanQuantity,
-        currency: Currency,
-        cycle: SubscriptionCycle
-    ): SubscriptionStatus
-
-    /**
-     * Authenticated.
-     * Returns current active subscription.
-     */
-    public suspend fun getSubscription(sessionUserId: SessionUserId): Subscription?
-
-    /**
-     * Authenticated.
-     * Returns current active dynamic subscriptions.
-     */
-    public suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription>
-
-    /**
-     * Authenticated.
-     * Creates new or updates current subscription. Not for usage during sign up.
-     * Used only for upgrade after sign up.
-     */
-    public suspend fun createOrUpdateSubscription(
-        sessionUserId: SessionUserId,
-        amount: Long,
-        currency: Currency,
-        payment: PaymentTokenEntity?,
-        codes: List<String>? = null,
-        plans: PlanQuantity,
-        cycle: SubscriptionCycle,
-        subscriptionManagement: SubscriptionManagement
-    ): Subscription
     // endregion
 
     /**

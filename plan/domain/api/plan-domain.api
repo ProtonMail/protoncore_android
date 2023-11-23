@@ -2,6 +2,12 @@ public abstract interface class me/proton/core/plan/domain/ClientPlanFilter {
 	public abstract fun filter ()Lkotlin/jvm/functions/Function1;
 }
 
+public abstract interface class me/proton/core/plan/domain/IsDynamicPlanAdjustedPriceEnabled {
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public abstract fun isLocalEnabled ()Z
+	public abstract fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
 public abstract interface class me/proton/core/plan/domain/IsDynamicPlanEnabled {
 	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 	public abstract fun isLocalEnabled ()Z
@@ -301,6 +307,56 @@ public final class me/proton/core/plan/domain/entity/DynamicPlans {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/plan/domain/entity/DynamicSubscription {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Long;Ljava/time/Instant;Ljava/time/Instant;Ljava/time/Instant;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Long;Ljava/time/Instant;Ljava/time/Instant;Ljava/time/Instant;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()Ljava/time/Instant;
+	public final fun component11 ()Ljava/time/Instant;
+	public final fun component12 ()Ljava/time/Instant;
+	public final fun component13 ()Ljava/lang/String;
+	public final fun component14 ()Ljava/lang/Long;
+	public final fun component15 ()Ljava/lang/Long;
+	public final fun component16 ()Ljava/lang/Long;
+	public final fun component17 ()Ljava/lang/Boolean;
+	public final fun component18 ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun component19 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component20 ()Ljava/util/List;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/Integer;
+	public final fun component6 ()Ljava/lang/Integer;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/Long;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Long;Ljava/time/Instant;Ljava/time/Instant;Ljava/time/Instant;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/util/List;)Lme/proton/core/plan/domain/entity/DynamicSubscription;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicSubscription;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/Long;Ljava/time/Instant;Ljava/time/Instant;Ljava/time/Instant;Ljava/lang/String;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Long;Ljava/lang/Boolean;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicSubscription;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()Ljava/lang/Long;
+	public final fun getCouponCode ()Ljava/lang/String;
+	public final fun getCreateTime ()Ljava/time/Instant;
+	public final fun getCurrency ()Ljava/lang/String;
+	public final fun getCycleDescription ()Ljava/lang/String;
+	public final fun getCycleMonths ()Ljava/lang/Integer;
+	public final fun getDecorations ()Ljava/util/List;
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getDiscount ()Ljava/lang/Long;
+	public final fun getEntitlements ()Ljava/util/List;
+	public final fun getExternal ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun getName ()Ljava/lang/String;
+	public final fun getParentPlanId ()Ljava/lang/String;
+	public final fun getPeriodEnd ()Ljava/time/Instant;
+	public final fun getPeriodStart ()Ljava/time/Instant;
+	public final fun getRenew ()Ljava/lang/Boolean;
+	public final fun getRenewAmount ()Ljava/lang/Long;
+	public final fun getRenewDiscount ()Ljava/lang/Long;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getType ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/plan/domain/entity/Plan {
 	public fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;)V
 	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/Integer;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IIIILjava/lang/Long;JIILjava/lang/Integer;IILjava/lang/Integer;ZLme/proton/core/plan/domain/entity/PlanPricing;Lme/proton/core/plan/domain/entity/PlanPricing;Ljava/util/List;Ljava/util/Map;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -448,14 +504,111 @@ public final class me/proton/core/plan/domain/entity/PlanVendorData {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/plan/domain/entity/Subscription {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JJJJLme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component10 ()J
+	public final fun component11 ()J
+	public final fun component12 ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun component13 ()Ljava/util/List;
+	public final fun component14 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()J
+	public final fun component5 ()J
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()J
+	public final fun component9 ()J
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JJJJLme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/Subscription;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/Subscription;Ljava/lang/String;Ljava/lang/String;IJJLjava/lang/String;Ljava/lang/String;JJJJLme/proton/core/plan/domain/entity/SubscriptionManagement;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/Subscription;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getCouponCode ()Ljava/lang/String;
+	public final fun getCurrency ()Ljava/lang/String;
+	public final fun getCustomerId ()Ljava/lang/String;
+	public final fun getCycle ()I
+	public final fun getDiscount ()J
+	public final fun getExternal ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun getId ()Ljava/lang/String;
+	public final fun getInvoiceId ()Ljava/lang/String;
+	public final fun getPeriodEnd ()J
+	public final fun getPeriodStart ()J
+	public final fun getPlans ()Ljava/util/List;
+	public final fun getRenewAmount ()J
+	public final fun getRenewDiscount ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/entity/SubscriptionManagement : java/lang/Enum {
+	public static final field APPLE_MANAGED Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public static final field Companion Lme/proton/core/plan/domain/entity/SubscriptionManagement$Companion;
+	public static final field GOOGLE_MANAGED Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public static final field PROTON_MANAGED Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public static fun values ()[Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+}
+
+public final class me/proton/core/plan/domain/entity/SubscriptionManagement$Companion {
+	public final fun getMap ()Ljava/util/Map;
+}
+
+public final class me/proton/core/plan/domain/entity/SubscriptionManagementKt {
+	public static final fun toCheckoutBillingSubscribeManager (Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$Manager;
+}
+
 public abstract interface class me/proton/core/plan/domain/repository/PlansRepository {
+	public abstract fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getDynamicPlans (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getDynamicSubscriptions (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPlans (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPlansDefault (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getSubscription (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun validateSubscription (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/repository/PlansRepository$DefaultImpls {
+	public static synthetic fun createOrUpdateSubscription$default (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun validateSubscription$default (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/CanUpgradeFromMobile {
+	public fun <init> (ZLme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public final fun getSupportPaidPlans ()Z
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/CanUpgradeToPaid {
+	public fun <init> (ZLme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public final fun getSupportPaidPlans ()Z
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/plan/domain/usecase/CanUpgradeToPaid;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/GetCurrentSubscription {
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/GetCurrentSubscriptionKt {
+	public static final fun toProtonErrorCode (Ljava/lang/Object;I)Ljava/lang/Integer;
 }
 
 public final class me/proton/core/plan/domain/usecase/GetDynamicPlans {
 	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/AppStore;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/GetDynamicPlansAdjustedPrices {
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/AppStore;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Ljava/util/Optional;Lme/proton/core/plan/domain/IsDynamicPlanAdjustedPriceEnabled;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/GetDynamicSubscription {
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -469,5 +622,19 @@ public final class me/proton/core/plan/domain/usecase/GetPlans {
 	public synthetic fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/Product;ZLme/proton/core/plan/domain/ClientPlanFilter;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getProductExclusivePlans ()Z
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/plan/domain/usecase/PerformSubscribe {
+	public abstract fun invoke-uDK3N8w (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformSubscribe$DefaultImpls {
+	public static synthetic fun invoke-uDK3N8w$default (Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/ValidateSubscriptionPlan {
+	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 

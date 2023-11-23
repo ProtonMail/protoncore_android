@@ -49,9 +49,9 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
-import me.proton.core.payment.domain.usecase.CanUpgradeToPaid
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
+import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType

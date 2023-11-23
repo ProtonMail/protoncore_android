@@ -34,7 +34,6 @@ import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.PaymentMethodType
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.ActivityPaymentOptionsBinding
@@ -45,6 +44,7 @@ import me.proton.core.payment.presentation.entity.PaymentOptionUIModel
 import me.proton.core.payment.presentation.entity.PaymentOptionsInput
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.PaymentOptionsViewModel
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.presentation.ui.adapter.selectableProtonAdapter
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView

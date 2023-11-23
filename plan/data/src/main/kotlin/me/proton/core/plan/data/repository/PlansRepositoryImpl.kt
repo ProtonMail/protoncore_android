@@ -23,12 +23,22 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.onParseErrorLog
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionStatus
+import me.proton.core.payment.domain.repository.PlanQuantity
 import me.proton.core.plan.data.api.PlansApi
+import me.proton.core.plan.data.api.request.CheckSubscription
+import me.proton.core.plan.data.api.request.CreateSubscription
 import me.proton.core.plan.data.api.response.toDynamicPlan
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlans
+import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.Subscription
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
@@ -46,6 +56,11 @@ class PlansRepositoryImpl @Inject constructor(
 
     private val plansCache =
         Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
+
+    private fun clearPlansCache() {
+        plansCache.invalidateAll()
+        dynamicPlansCache.invalidateAll()
+    }
 
     private suspend fun getRemoteDynamicPlans(
         sessionUserId: SessionUserId?,
@@ -82,4 +97,57 @@ class PlansRepositoryImpl @Inject constructor(
         apiProvider.get<PlansApi>(sessionUserId).invoke {
             getPlansDefault().plan.toPlan()
         }.valueOrThrow
+
+    override suspend fun validateSubscription(
+        sessionUserId: SessionUserId?,
+        codes: List<String>?,
+        plans: PlanQuantity,
+        currency: Currency,
+        cycle: SubscriptionCycle
+    ): SubscriptionStatus = result("validateSubscription") {
+        apiProvider.get<PlansApi>(sessionUserId).invoke {
+            validateSubscription(
+                CheckSubscription(codes, plans, currency.name, cycle.value)
+            ).toSubscriptionStatus()
+        }.valueOrThrow
+    }
+
+    override suspend fun getSubscription(sessionUserId: SessionUserId): Subscription? =
+        apiProvider.get<PlansApi>(sessionUserId).invoke {
+            getCurrentSubscription().subscription.toSubscription()
+        }.valueOrThrow
+
+    override suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription> =
+        result("getDynamicSubscriptions") {
+            apiProvider.get<PlansApi>(sessionUserId).invoke {
+                getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
+            }.onParseErrorLog(me.proton.core.payment.domain.LogTag.DYN_SUB_PARSE).valueOrThrow
+        }
+
+    override suspend fun createOrUpdateSubscription(
+        sessionUserId: SessionUserId,
+        amount: Long,
+        currency: Currency,
+        payment: PaymentTokenEntity?,
+        codes: List<String>?,
+        plans: PlanQuantity,
+        cycle: SubscriptionCycle,
+        subscriptionManagement: SubscriptionManagement
+    ): Subscription = result("createOrUpdateSubscription") {
+        apiProvider.get<PlansApi>(sessionUserId).invoke {
+            createUpdateSubscription(
+                body = CreateSubscription(
+                    amount = amount,
+                    currency = currency.name,
+                    paymentToken = payment?.token?.value,
+                    codes = codes,
+                    plans = plans,
+                    cycle = cycle.value,
+                    external = subscriptionManagement.value
+                )
+            ).subscription.toSubscription()
+        }.valueOrThrow.apply {
+            clearPlansCache()
+        }
+    }
 }

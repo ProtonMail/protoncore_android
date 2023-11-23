@@ -147,33 +147,3 @@ public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPVi
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/paymentiap/presentation/viewmodel/GoogleProductDetails {
-	public fun <init> (JLjava/lang/String;Ljava/lang/String;)V
-	public final fun component1 ()J
-	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Ljava/lang/String;
-	public final fun copy (JLjava/lang/String;Ljava/lang/String;)Lme/proton/core/paymentiap/presentation/viewmodel/GoogleProductDetails;
-	public static synthetic fun copy$default (Lme/proton/core/paymentiap/presentation/viewmodel/GoogleProductDetails;JLjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/presentation/viewmodel/GoogleProductDetails;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCurrency ()Ljava/lang/String;
-	public final fun getFormattedPriceAndCurrency ()Ljava/lang/String;
-	public final fun getPriceAmount ()D
-	public final fun getPriceAmountMicros ()J
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/paymentiap/presentation/viewmodel/GoogleProductId {
-	public static final synthetic fun box-impl (Ljava/lang/String;)Lme/proton/core/paymentiap/presentation/viewmodel/GoogleProductId;
-	public static fun constructor-impl (Ljava/lang/String;)Ljava/lang/String;
-	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Ljava/lang/String;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Ljava/lang/String;Ljava/lang/String;)Z
-	public final fun getId ()Ljava/lang/String;
-	public fun hashCode ()I
-	public static fun hashCode-impl (Ljava/lang/String;)I
-	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Ljava/lang/String;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Ljava/lang/String;
-}
-

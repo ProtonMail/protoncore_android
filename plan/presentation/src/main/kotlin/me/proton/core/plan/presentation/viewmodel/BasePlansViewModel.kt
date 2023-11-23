@@ -31,7 +31,6 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.PaymentMethod
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
@@ -41,6 +40,7 @@ import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.entity.MASK_ALL
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanVendorData
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanCycle.Companion.toPlanCycle

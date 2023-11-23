@@ -9,6 +9,10 @@ public final class me/proton/core/paymentiap/domain/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/paymentiap/domain/GoogleBillingExtensionsKt {
+	public static final fun firstPriceOrNull (Lcom/android/billingclient/api/ProductDetails;)Lcom/android/billingclient/api/ProductDetails$PricingPhase;
+}
+
 public final class me/proton/core/paymentiap/domain/LogTag {
 	public static final field GIAP_ERROR Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/paymentiap/domain/LogTag;
@@ -17,6 +21,21 @@ public final class me/proton/core/paymentiap/domain/LogTag {
 public final class me/proton/core/paymentiap/domain/ObservabilityExtKt {
 	public static final fun toGiapStatus (Lcom/android/billingclient/api/BillingResult;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final fun toGiapStatus (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+}
+
+public final class me/proton/core/paymentiap/domain/entity/GoogleProductPrice : me/proton/core/payment/domain/entity/ProductPrice {
+	public fun <init> (JLjava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (JLjava/lang/String;Ljava/lang/String;)Lme/proton/core/paymentiap/domain/entity/GoogleProductPrice;
+	public static synthetic fun copy$default (Lme/proton/core/paymentiap/domain/entity/GoogleProductPrice;JLjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/paymentiap/domain/entity/GoogleProductPrice;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getCurrency ()Ljava/lang/String;
+	public fun getFormattedPriceAndCurrency ()Ljava/lang/String;
+	public fun getPriceAmountMicros ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/paymentiap/domain/entity/GooglePurchaseWrapperKt {

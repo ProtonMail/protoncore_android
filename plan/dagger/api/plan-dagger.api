@@ -10,7 +10,9 @@ public final class me/proton/core/plan/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/plan/dagger/CorePlanModule {
+	public abstract fun bindPerformSubscribe (Lme/proton/core/plan/data/usecase/PerformSubscribeImpl;)Lme/proton/core/plan/domain/usecase/PerformSubscribe;
 	public abstract fun provideIconsEndpoint (Lme/proton/core/plan/data/PlanIconsEndpointProviderImpl;)Lme/proton/core/plan/domain/PlanIconsEndpointProvider;
+	public abstract fun provideIsDynamicPlanAdjustedPricesEnabled (Lme/proton/core/plan/data/IsDynamicPlanAdjustedPriceEnabledImpl;)Lme/proton/core/plan/domain/IsDynamicPlanAdjustedPriceEnabled;
 	public abstract fun provideIsDynamicPlanEnabled (Lme/proton/core/plan/data/IsDynamicPlanEnabledImpl;)Lme/proton/core/plan/domain/IsDynamicPlanEnabled;
 	public abstract fun providePlansRepository (Lme/proton/core/plan/data/repository/PlansRepositoryImpl;)Lme/proton/core/plan/domain/repository/PlansRepository;
 }

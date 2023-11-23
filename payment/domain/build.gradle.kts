@@ -20,11 +20,12 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonKotlinLibrary
+    kotlin("plugin.serialization")
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(54)
-    minLineCoveragePercentage.set(65)
+    minBranchCoveragePercentage.set(82)
+    minLineCoveragePercentage.set(71)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -36,7 +37,6 @@ dependencies {
         project(Module.networkDomain),
         project(Module.observabilityDomain),
         project(Module.userDomain),
-        project(Module.planDomain),
         `javax-inject`
     )
 
@@ -44,6 +44,7 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.featureFlagDomain),
         `coroutines-core`,
+        `serialization-core`,
     )
 
     testImplementation(

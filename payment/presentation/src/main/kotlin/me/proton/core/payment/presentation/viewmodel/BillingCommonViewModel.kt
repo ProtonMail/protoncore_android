@@ -41,13 +41,9 @@ import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
-import me.proton.core.payment.domain.entity.Subscription
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
-import me.proton.core.payment.domain.usecase.PerformSubscribe
-import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.adjustExpirationYear
 import me.proton.core.payment.presentation.entity.BillingResult
@@ -57,6 +53,10 @@ import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.PLAN_ADDON
 import me.proton.core.plan.domain.entity.PLAN_PRODUCT
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.Subscription
+import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext

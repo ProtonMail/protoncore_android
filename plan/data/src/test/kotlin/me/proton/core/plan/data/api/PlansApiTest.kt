@@ -20,12 +20,14 @@ package me.proton.core.plan.data.api
 
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
+import me.proton.core.plan.data.api.request.CreateSubscription
 import me.proton.core.plan.domain.entity.MASK_CALENDAR
 import me.proton.core.plan.domain.entity.MASK_DRIVE
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.MASK_VPN
 import me.proton.core.plan.domain.entity.PlanDuration
 import me.proton.core.plan.domain.entity.PlanVendorData
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.BuildRetrofitApi
 import me.proton.core.test.kotlin.enqueueFromResourceFile
 import okhttp3.mockwebserver.MockWebServer
@@ -141,5 +143,57 @@ class PlansApiTest {
         // Then
         assertEquals(1, plans.size)
         assertTrue(plans[0].vendors.isEmpty())
+    }
+
+    @Test
+    fun `get current subscription with customer ID`() = runTest {
+        // Given
+        webServer.enqueueFromResourceFile("GET/payments/v4/subscription.json", javaClass.classLoader)
+
+        // When
+        val subscription = tested.getCurrentSubscription().subscription.toSubscription()
+
+        // Then
+        assertEquals("customer-1", subscription.customerId)
+        assertEquals(SubscriptionManagement.GOOGLE_MANAGED, subscription.external)
+        assertEquals(1, subscription.plans.size)
+    }
+
+    @Test
+    fun `get current dynamic subscription with customer ID`() = runTest {
+        // Given
+        webServer.enqueueFromResourceFile("GET/payments/v4/dynamic-subscription.json", javaClass.classLoader)
+
+        // When
+        val subscription = tested.getDynamicSubscriptions().subscriptions.first().toDynamicSubscription("endpoint")
+
+        // Then
+        assertEquals(28788, subscription.amount)
+        assertEquals(SubscriptionManagement.PROTON_MANAGED, subscription.external)
+    }
+
+    @Test
+    fun `create subscription`() = runTest {
+        // Given
+        webServer.enqueueFromResourceFile("POST/payments/v4/subscription.json", javaClass.classLoader)
+
+        // When
+        val subscription = tested.createUpdateSubscription(
+            CreateSubscription(
+                amount = 4788,
+                currency = "CHF",
+                paymentToken = "token-123",
+                codes = null,
+                plans = mapOf("mail2022" to 1),
+                cycle = 12,
+                external = SubscriptionManagement.GOOGLE_MANAGED.value
+            )
+        ).subscription.toSubscription()
+
+        // Then
+        assertNull(subscription.customerId)
+        assertEquals(12, subscription.cycle)
+        assertEquals(1, subscription.plans.size)
+        assertEquals("mail2022", subscription.plans.first().name)
     }
 }

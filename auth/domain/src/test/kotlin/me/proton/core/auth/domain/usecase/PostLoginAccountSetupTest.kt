@@ -35,8 +35,8 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.domain.entity.SubscriptionManagement
-import me.proton.core.payment.domain.usecase.PerformSubscribe
+import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import org.junit.Assert.assertEquals

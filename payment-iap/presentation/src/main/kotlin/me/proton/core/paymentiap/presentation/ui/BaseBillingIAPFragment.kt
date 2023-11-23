@@ -29,12 +29,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.presentation.entity.BillingInput
+import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
 import me.proton.core.paymentiap.presentation.LogTag.DEFAULT
 import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
-import me.proton.core.paymentiap.presentation.viewmodel.GoogleProductDetails
-import me.proton.core.paymentiap.presentation.viewmodel.GoogleProductId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.util.kotlin.CoreLogger
@@ -110,7 +110,7 @@ public abstract class BaseBillingIAPFragment(
         }
     }
 
-    protected fun queryGooglePlans(productIds: List<GoogleProductId>) {
+    protected fun queryGooglePlans(productIds: List<ProductId>) {
         billingIAPViewModel.queryProductDetails(productIds)
     }
 
@@ -119,7 +119,7 @@ public abstract class BaseBillingIAPFragment(
     }
 
     protected abstract fun onPricesAvailable(
-        details: Map<GoogleProductId, GoogleProductDetails>
+        details: Map<ProductId, GoogleProductPrice>
     )
 
     protected abstract fun onPurchaseSuccess(

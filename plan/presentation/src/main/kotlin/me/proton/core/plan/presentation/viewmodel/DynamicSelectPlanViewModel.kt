@@ -38,7 +38,7 @@ import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.isFree
-import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
@@ -46,7 +46,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class DynamicSelectPlanViewModel @Inject constructor(
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
-    private val getDynamicPlans: GetDynamicPlans,
+    private val getDynamicPlans: GetDynamicPlansAdjustedPrices,
     override val observabilityManager: ObservabilityManager,
     @SupportSignupPaidPlans val supportPaidPlans: Boolean
 ) : ProtonViewModel(), ObservabilityContext {

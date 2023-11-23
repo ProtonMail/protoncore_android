@@ -22,6 +22,7 @@ import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import javax.inject.Inject
 
 class PlanIconsEndpointProviderImpl @Inject constructor(
@@ -33,5 +34,7 @@ class PlanIconsEndpointProviderImpl @Inject constructor(
     override fun get(): String = when (networkPrefs.activeAltBaseUrl) {
         null -> "$baseProtonApiUrl/payments/v5/resources/icons/"
         else -> "${networkPrefs.activeAltBaseUrl}/payments/v5/resources/icons/"
-    }.replace("//", "/")
+    }.standardizeUrl()
 }
+
+private fun String.standardizeUrl(): String = replace("//", "/").toHttpUrlOrNull().toString()

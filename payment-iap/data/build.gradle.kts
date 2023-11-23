@@ -42,7 +42,8 @@ plugins {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(68)
+    minBranchCoveragePercentage.set(90)
+    minLineCoveragePercentage.set(100)
 }
 
 publishOption.shouldBePublishedAsLib = true

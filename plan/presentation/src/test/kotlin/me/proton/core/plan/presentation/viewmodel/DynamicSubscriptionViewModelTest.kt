@@ -25,9 +25,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.payment.domain.entity.DynamicSubscription
-import me.proton.core.payment.domain.usecase.CanUpgradeFromMobile
-import me.proton.core.payment.domain.usecase.GetDynamicSubscription
+import me.proton.core.plan.domain.entity.DynamicSubscription
+import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
+import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.test.android.ArchTest

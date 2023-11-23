@@ -27,18 +27,19 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.GooglePurchase
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.payment.domain.usecase.GetCurrentSubscription
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanDuration
 import me.proton.core.plan.domain.entity.PlanVendorData
+import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.usecase.GetCurrentSubscription
 import me.proton.core.plan.domain.usecase.GetPlans
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import java.util.Optional
+import kotlin.jvm.optionals.getOrNull
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -58,6 +59,7 @@ class CheckUnredeemedGooglePurchaseTest {
         findUnacknowledgedGooglePurchaseOptional = mockk {
             every { isPresent } returns true
             every { get() } returns findUnacknowledgedGooglePurchase
+            every { getOrNull() } returns findUnacknowledgedGooglePurchase
         }
         getAvailablePaymentProviders = mockk()
         getCurrentSubscription = mockk()
@@ -238,6 +240,7 @@ class CheckUnredeemedGooglePurchaseTest {
         }
         val plan = mockk<Plan> {
             every { name } returns "plan-A"
+            every { cycle } returns 12
             every { vendors } returns mapOf(
                 AppStore.GooglePlay to PlanVendorData(
                     customerA,
@@ -251,6 +254,7 @@ class CheckUnredeemedGooglePurchaseTest {
         coEvery { getCurrentSubscription.invoke(userId) } returns mockk {
             every { customerId } returns "customer-A"
             every { external } returns SubscriptionManagement.GOOGLE_MANAGED
+            every { cycle } returns 12
             every { plans } returns listOf(mockk { every { name } returns "plan-A" })
         }
         coEvery { getPlans.invoke(userId) } returns listOf(plan)

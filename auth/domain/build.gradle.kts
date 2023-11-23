@@ -44,6 +44,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.paymentDomain),
+        project(Module.planDomain),
         project(Module.userDomain),
         `javax-inject`,
     )

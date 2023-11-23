@@ -26,8 +26,8 @@ plugins {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(24)
-    minLineCoveragePercentage.set(37)
+    minBranchCoveragePercentage.set(31)
+    minLineCoveragePercentage.set(61)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -44,6 +44,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.observabilityDomain),
         project(Module.paymentDomain),
+        project(Module.planDomain),
         project(Module.presentation),
         `activity-noktx`,
         `constraint-layout`,

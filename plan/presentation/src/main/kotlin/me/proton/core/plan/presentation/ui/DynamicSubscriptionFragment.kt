@@ -24,8 +24,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.payment.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.DynamicDecoration
+import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicSubscriptionBinding
 import me.proton.core.plan.presentation.entity.toStringRes

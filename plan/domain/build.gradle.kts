@@ -27,8 +27,8 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(48)
-    minLineCoveragePercentage.set(76)
+    minBranchCoveragePercentage.set(55)
+    minLineCoveragePercentage.set(81)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -38,6 +38,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.observabilityDomain),
+        project(Module.paymentDomain),
         `javax-inject`
     )
 

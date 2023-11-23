@@ -212,16 +212,16 @@ public final class me/proton/core/payment/presentation/entity/BillingInput$Creat
 public final class me/proton/core/payment/presentation/entity/BillingResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public static final field Companion Lme/proton/core/payment/presentation/entity/BillingResult$Companion;
-	public fun <init> (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)V
+	public fun <init> (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Z
 	public final fun component4 ()J
 	public final fun component5 ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun component6 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
-	public final fun component7 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun copy (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/entity/BillingResult;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingResult;ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingResult;
+	public final fun component7 ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun copy (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/entity/BillingResult;
+	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/entity/BillingResult;ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/entity/BillingResult;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
@@ -229,7 +229,7 @@ public final class me/proton/core/payment/presentation/entity/BillingResult : an
 	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getPaySuccess ()Z
 	public final fun getSubscriptionCreated ()Z
-	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun getSubscriptionManagement ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
 	public final fun getToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -412,7 +412,7 @@ public abstract interface class me/proton/core/payment/presentation/ui/PaymentTo
 
 public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field Companion Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion;
-	public fun <init> (Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
@@ -421,10 +421,10 @@ public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommo
 	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onScreenView (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$ScreenId;)V
-	public final fun onThreeDSTokenApproved-TdXInxU (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
-	public static synthetic fun onThreeDSTokenApproved-TdXInxU$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
-	public final fun subscribe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
-	public static synthetic fun subscribe$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun onThreeDSTokenApproved-TdXInxU (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onThreeDSTokenApproved-TdXInxU$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun subscribe (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lkotlinx/coroutines/Job;
+	public static synthetic fun subscribe$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/PaymentType;Lme/proton/core/plan/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 	public final fun validatePlan (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;)Lkotlinx/coroutines/Job;
 	public static synthetic fun validatePlan$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel;Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/List;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
@@ -519,41 +519,41 @@ public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommo
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
-	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()J
 	public final fun component2 ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun component4-LPgRuuE ()Ljava/lang/String;
-	public final fun component5 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun copy-fcbg0T4 (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;
-	public static synthetic fun copy-fcbg0T4$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;
+	public final fun component5 ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun copy-fcbg0T4 (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;
+	public static synthetic fun copy-fcbg0T4$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SignUpTokenReady;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
 	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getPaymentToken-LPgRuuE ()Ljava/lang/String;
-	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun getSubscriptionManagement ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success {
-	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()J
 	public final fun component2 ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
-	public final fun component4 ()Lme/proton/core/payment/domain/entity/Subscription;
+	public final fun component4 ()Lme/proton/core/plan/domain/entity/Subscription;
 	public final fun component5-oTEqFM4 ()Ljava/lang/String;
-	public final fun component6 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun copy-4KdbQwM (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;
-	public static synthetic fun copy-4KdbQwM$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;
+	public final fun component6 ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun copy-4KdbQwM (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;
+	public static synthetic fun copy-4KdbQwM$default (Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/Subscription;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$State$Success$SubscriptionCreated;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
 	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getPaymentToken-oTEqFM4 ()Ljava/lang/String;
-	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun getSubscriptionStatus ()Lme/proton/core/payment/domain/entity/Subscription;
+	public final fun getSubscriptionManagement ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun getSubscriptionStatus ()Lme/proton/core/plan/domain/entity/Subscription;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -581,7 +581,7 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingCommonVi
 }
 
 public class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel {
-	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun announcePlan ()V
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getUserInteractionState ()Lkotlinx/coroutines/flow/SharedFlow;
@@ -715,7 +715,7 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingViewMode
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
-	public static fun newInstance (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
+	public static fun newInstance (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules {
@@ -748,7 +748,7 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsV
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_HiltModules {

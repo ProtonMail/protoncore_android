@@ -25,10 +25,8 @@ import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import me.proton.core.payment.data.api.request.CreatePaymentToken
-import me.proton.core.payment.data.api.request.CreateSubscription
 import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.BuildRetrofitApi
 import me.proton.core.test.kotlin.enqueueFromResourceFile
 import okhttp3.mockwebserver.MockWebServer
@@ -112,57 +110,5 @@ class PaymentsApiTest {
         assertEquals(expectedRequestJson, requestJson)
 
         assertEquals("payment_token", result.token.value)
-    }
-
-    @Test
-    fun `get current subscription with customer ID`() = runTest {
-        // Given
-        webServer.enqueueFromResourceFile("GET/payments/v4/subscription.json", javaClass.classLoader)
-
-        // When
-        val subscription = tested.getCurrentSubscription().subscription.toSubscription()
-
-        // Then
-        assertEquals("customer-1", subscription.customerId)
-        assertEquals(SubscriptionManagement.GOOGLE_MANAGED, subscription.external)
-        assertEquals(1, subscription.plans.size)
-    }
-
-    @Test
-    fun `get current dynamic subscription with customer ID`() = runTest {
-        // Given
-        webServer.enqueueFromResourceFile("GET/payments/v4/dynamic-subscription.json", javaClass.classLoader)
-
-        // When
-        val subscription = tested.getDynamicSubscriptions().subscriptions.first().toDynamicSubscription("endpoint")
-
-        // Then
-        assertEquals(28788, subscription.amount)
-        assertEquals(SubscriptionManagement.PROTON_MANAGED, subscription.external)
-    }
-
-    @Test
-    fun `create subscription`() = runTest {
-        // Given
-        webServer.enqueueFromResourceFile("POST/payments/v4/subscription.json", javaClass.classLoader)
-
-        // When
-        val subscription = tested.createUpdateSubscription(
-            CreateSubscription(
-                amount = 4788,
-                currency = "CHF",
-                paymentToken = "token-123",
-                codes = null,
-                plans = mapOf("mail2022" to 1),
-                cycle = 12,
-                external = SubscriptionManagement.GOOGLE_MANAGED.value
-            )
-        ).subscription.toSubscription()
-
-        // Then
-        assertNull(subscription.customerId)
-        assertEquals(12, subscription.cycle)
-        assertEquals(1, subscription.plans.size)
-        assertEquals("mail2022", subscription.plans.first().name)
     }
 }

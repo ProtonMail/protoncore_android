@@ -29,7 +29,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
@@ -54,7 +54,7 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     private val plans = listOf(dynamicPlan)
 
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
-    private val getDynamicPlans = mockk<GetDynamicPlans> {
+    private val getDynamicPlans = mockk<GetDynamicPlansAdjustedPrices> {
         coEvery { this@mockk.invoke(any()) } returns DynamicPlans(null, plans)
     }
     private val mutableUserIdFlow = MutableStateFlow<UserId?>(userId1)

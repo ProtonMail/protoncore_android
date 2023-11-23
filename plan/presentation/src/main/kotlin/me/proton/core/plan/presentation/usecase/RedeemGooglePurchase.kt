@@ -23,12 +23,12 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
-import me.proton.core.payment.domain.usecase.PerformSubscribe
-import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus

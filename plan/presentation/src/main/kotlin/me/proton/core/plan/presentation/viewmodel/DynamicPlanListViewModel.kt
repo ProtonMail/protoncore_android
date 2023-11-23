@@ -37,7 +37,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGetDynamicPlansTotal
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.filterBy
-import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.DynamicPlanFilter
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.ObserveUserId
@@ -50,7 +50,7 @@ import javax.inject.Inject
 internal class DynamicPlanListViewModel @Inject constructor(
     override val observabilityManager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
-    private val getDynamicPlans: GetDynamicPlans
+    private val getDynamicPlans: GetDynamicPlansAdjustedPrices
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {

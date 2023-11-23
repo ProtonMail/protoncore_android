@@ -33,17 +33,27 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.plan.data.api.PlansApi
+import me.proton.core.plan.data.entity.dynamicSubscription
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlans
+import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanOffer
 import me.proton.core.plan.domain.entity.PlanOfferPricing
 import me.proton.core.plan.domain.entity.PlanPricing
+import me.proton.core.plan.domain.entity.Subscription
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.runTestWithResultContext
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertContentEquals
@@ -51,6 +61,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 class PlansRepositoryImplTest {
     // region mocks
@@ -316,5 +327,132 @@ class PlansRepositoryImplTest {
 
         // THEN
         assertContentEquals(plans, result)
+    }
+
+    @Test
+    fun `validate subscription returns success`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        val subscriptionStatus = SubscriptionStatus(
+            amount = 5,
+            amountDue = 2,
+            proration = 0,
+            couponDiscount = 0,
+            coupon = null,
+            credit = 3,
+            currency = Currency.CHF,
+            cycle = SubscriptionCycle.YEARLY,
+            gift = null
+        )
+        coEvery { apiManager.invoke<SubscriptionStatus>(any()) } returns ApiResult.Success(subscriptionStatus)
+        // WHEN
+        val validationResult = repository.validateSubscription(
+            sessionUserId = SessionUserId(testUserId),
+            plans = mapOf("test-plan-id" to 1),
+            currency = Currency.CHF,
+            cycle = SubscriptionCycle.YEARLY
+        )
+        // THEN
+        assertNotNull(validationResult)
+        assertTrue(assertSingleResult("validateSubscription").isSuccess)
+    }
+
+    @Test
+    fun `get subscription returns success`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<List<DynamicSubscription>>(any()) } returns ApiResult.Success(
+            listOf(
+                dynamicSubscription
+            )
+        )
+        // WHEN
+        val result = repository.getDynamicSubscriptions(SessionUserId(testUserId))
+        assertNotNull(result)
+        assertTrue(assertSingleResult("getDynamicSubscriptions").isSuccess)
+    }
+
+    @Test
+    fun `validate subscription returns error`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SubscriptionStatus>(any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+        )
+        // WHEN
+        val throwable = assertFailsWith(ApiException::class) {
+            repository.validateSubscription(
+                sessionUserId = SessionUserId(testUserId),
+                plans = mapOf("test-plan-id" to 1),
+                currency = Currency.CHF,
+                cycle = SubscriptionCycle.YEARLY
+            )
+        }
+        // THEN
+        assertEquals("test error", throwable.message)
+        val error = throwable.error as? ApiResult.Error.Http
+        assertNotNull(error)
+        assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("validateSubscription").isFailure)
+    }
+
+    @Test
+    fun `create subscription returns success`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        val subscription = Subscription(
+            id = "test-subscription-id",
+            invoiceId = "test-invoice-id",
+            cycle = 12,
+            periodStart = 1L,
+            periodEnd = 2L,
+            couponCode = null,
+            currency = "EUR",
+            amount = 5,
+            discount = 0,
+            renewDiscount = 0,
+            renewAmount = 5,
+            plans = listOf(mockk()),
+            external = SubscriptionManagement.PROTON_MANAGED,
+            customerId = null
+        )
+        coEvery { apiManager.invoke<Subscription>(any()) } returns ApiResult.Success(subscription)
+        // WHEN
+        val createSubscriptionResult = repository.createOrUpdateSubscription(
+            sessionUserId = SessionUserId(testUserId),
+            amount = 1,
+            currency = Currency.CHF,
+            codes = null,
+            plans = mapOf("test-plan-id" to 1),
+            cycle = SubscriptionCycle.YEARLY,
+            payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id")),
+            subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+        )
+        // THEN
+        assertNotNull(createSubscriptionResult)
+        assertTrue(assertSingleResult("createOrUpdateSubscription").isSuccess)
+    }
+
+    @Test
+    fun `create subscription returns error`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<Subscription>(any()) } returns ApiResult.Error.Http(
+            httpCode = 401, message = "test http error", proton = ApiResult.Error.ProtonData(1, "test error")
+        )
+        // WHEN
+        val throwable = assertFailsWith(ApiException::class) {
+            repository.createOrUpdateSubscription(
+                sessionUserId = SessionUserId(testUserId),
+                amount = 1,
+                currency = Currency.CHF,
+                codes = null,
+                plans = mapOf("test-plan-id" to 1),
+                cycle = SubscriptionCycle.YEARLY,
+                payment = PaymentTokenEntity(ProtonPaymentToken("test-token-id")),
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+            )
+        }
+        // THEN
+        assertEquals("test error", throwable.message)
+        val error = throwable.error as? ApiResult.Error.Http
+        assertNotNull(error)
+        assertEquals(1, error.proton?.code)
+        assertTrue(assertSingleResult("createOrUpdateSubscription").isFailure)
     }
 }

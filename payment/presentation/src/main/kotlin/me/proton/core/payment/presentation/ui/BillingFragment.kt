@@ -33,13 +33,13 @@ import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentType
-import me.proton.core.payment.domain.entity.SubscriptionManagement
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.databinding.FragmentBillingBinding
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.utils.addOnBackPressedCallback

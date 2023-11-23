@@ -40,7 +40,7 @@ import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.isFree
-import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.getSelectedPlan
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -55,7 +55,7 @@ class DynamicSelectPlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
 
     @MockK
-    private lateinit var getDynamicPlans: GetDynamicPlans
+    private lateinit var getDynamicPlans: GetDynamicPlansAdjustedPrices
 
     @MockK(relaxUnitFun = true)
     private lateinit var observabilityManager: ObservabilityManager

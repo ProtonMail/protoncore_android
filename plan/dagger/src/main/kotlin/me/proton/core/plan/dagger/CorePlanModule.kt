@@ -22,12 +22,16 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.plan.data.IsDynamicPlanAdjustedPriceEnabledImpl
 import me.proton.core.plan.data.IsDynamicPlanEnabledImpl
 import me.proton.core.plan.data.PlanIconsEndpointProviderImpl
 import me.proton.core.plan.data.repository.PlansRepositoryImpl
+import me.proton.core.plan.data.usecase.PerformSubscribeImpl
+import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.plan.domain.usecase.PerformSubscribe
 import javax.inject.Singleton
 
 @Module
@@ -45,4 +49,11 @@ public interface CorePlanModule {
     @Binds
     @Singleton
     public fun provideIsDynamicPlanEnabled(impl: IsDynamicPlanEnabledImpl): IsDynamicPlanEnabled
+
+    @Binds
+    @Singleton
+    public fun provideIsDynamicPlanAdjustedPricesEnabled(impl: IsDynamicPlanAdjustedPriceEnabledImpl): IsDynamicPlanAdjustedPriceEnabled
+
+    @Binds
+    public fun bindPerformSubscribe(impl: PerformSubscribeImpl): PerformSubscribe
 }

@@ -33,7 +33,7 @@ import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentType
-import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel.Companion.buildPlansList
@@ -43,7 +43,7 @@ import me.proton.core.paymentiap.presentation.R
 import me.proton.core.paymentiap.presentation.databinding.FragmentBillingIapBinding
 import me.proton.core.paymentiap.presentation.entity.GooglePlanShortDetails
 import me.proton.core.paymentiap.presentation.viewmodel.BillingIAPViewModel
-import me.proton.core.paymentiap.presentation.viewmodel.GoogleProductId
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
@@ -112,7 +112,7 @@ public class BillingIAPFragment : ProtonFragment(R.layout.fragment_billing_iap) 
                     is BillingIAPViewModel.State.Success.GoogleProductsDetails -> {
                         val currentPlan = binding.selectedPlanDetailsLayout.plan ?: return@onEach
                         val productId = requireNotNull(currentPlan.vendors[AppStore.GooglePlay]?.vendorPlanName)
-                        val details = requireNotNull(it.details[GoogleProductId(productId)])
+                        val details = requireNotNull(it.details[ProductId(productId)])
                         binding.selectedPlanDetailsLayout.plan = currentPlan.copy(
                             amount = details.priceAmountMicros,
                             currency = details.currency,

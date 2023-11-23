@@ -20,6 +20,7 @@ package me.proton.core.plan.domain.entity
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.type.IntEnum
+import java.time.Instant
 import java.util.Calendar
 import java.util.EnumSet
 
@@ -93,27 +94,77 @@ val unlimitedPlan = DynamicPlan(
             )
         )
     ).associateBy { it.cycle },
-    /*
-    offers = listOf(
-        DynamicPlanOffer(
-            name = "Next month's offer",
-            startTime = Calendar.getInstance().let {
-                it.roll(Calendar.MONTH, 1)
+    services = EnumSet.allOf(DynamicPlanService::class.java)
+)
+
+val unlimitedPlanNoVendor = DynamicPlan(
+    name = "bundle2022",
+    order = 2,
+    state = DynamicPlanState.Available,
+    title = "Proton Unlimited",
+    type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
+    decorations = listOf(DynamicDecoration.Starred("tick")),
+    description = null,
+    entitlements = listOf(
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
+            text = "500 GB storage",
+            hint = "Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive."
+        ),
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
+            text = "Unlimited folders, labels, and filters."
+        )
+    ),
+    features = EnumSet.allOf(DynamicPlanFeature::class.java),
+    instances = listOf(
+        DynamicPlanInstance(
+            cycle = 1,
+            description = "For 1 month",
+            periodEnd = Calendar.getInstance().let {
+                it.add(Calendar.MONTH, 1)
                 it.toInstant()
             },
-            endTime = Calendar.getInstance().let {
-                it.roll(Calendar.MONTH, 2)
-                it.toInstant()
-            },
-            months = 1,
             price = listOf(
                 DynamicPlanPrice(
                     id = "aJZHNZE_fd_rWygalcsahpc8ihMinUHUFGWXq8K0eoGH72CbCXp2KS82uvTPwdOw04ufbLk8zDyRDj7oNPrQCA==",
                     currency = "CHF",
-                    current = 1199
+                    current = 499,
+                    default = 499
                 )
-            )
+            ).associateBy { it.currency },
         )
-    ),*/
+    ).associateBy { it.cycle },
     services = EnumSet.allOf(DynamicPlanService::class.java)
 )
+
+val dynamicSubscription = DynamicSubscription(
+    name = "free",
+    title = "Proton Free",
+    description = "Current Plan",
+    type = 1,
+    createTime = Instant.ofEpochSecond(1_570_708_458),
+    currency = "CHF",
+    cycleDescription = "1 year",
+    cycleMonths = 12,
+    discount = -28_788,
+    amount = 0,
+    external = SubscriptionManagement.PROTON_MANAGED,
+    periodStart = Instant.ofEpochSecond(1_665_402_858),
+    periodEnd = Instant.ofEpochSecond(1_696_938_858),
+    renew = true,
+    renewDiscount = -28_788,
+    renewAmount = 0,
+    couponCode = "COUPON123",
+    decorations = listOf(
+        DynamicDecoration.Starred(iconName = "tick")
+    ),
+    entitlements = listOf(
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
+            text = "Up to 1 GB storage",
+            hint = "Start with 500 MB and unlock more storage along the way."
+        )
+    ),
+)
+

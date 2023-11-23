@@ -38,11 +38,11 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.payment.domain.usecase.PerformSubscribe
-import me.proton.core.payment.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.payment.presentation.ActivePaymentProvider
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
+import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import javax.inject.Inject
 
 @HiltViewModel

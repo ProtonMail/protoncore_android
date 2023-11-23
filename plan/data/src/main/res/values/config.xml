@@ -17,4 +17,5 @@
   -->
 <resources>
     <bool name="core_feature_dynamic_plan_enabled">true</bool>
+    <bool name="core_feature_dynamic_plan_adjusted_prices_enabled">false</bool>
 </resources>

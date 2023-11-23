@@ -19,10 +19,17 @@
 package me.proton.core.plan.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.plan.data.api.request.CheckSubscription
+import me.proton.core.plan.data.api.request.CreateSubscription
+import me.proton.core.plan.data.api.response.CheckSubscriptionResponse
 import me.proton.core.plan.data.api.response.DefaultPlanResponse
 import me.proton.core.plan.data.api.response.DynamicPlansResponse
+import me.proton.core.plan.data.api.response.DynamicSubscriptionsResponse
 import me.proton.core.plan.data.api.response.PlansResponse
+import me.proton.core.plan.data.api.response.SubscriptionResponse
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Query
 
 internal interface PlansApi : BaseRetrofitApi {
@@ -45,4 +52,30 @@ internal interface PlansApi : BaseRetrofitApi {
      */
     @GET("payments/v4/plans/default")
     suspend fun getPlansDefault(): DefaultPlanResponse
+
+    /**
+     * Creates new or updates the current active subscription.
+     * Authorized.
+     */
+    @POST("payments/v4/subscription")
+    suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
+
+    /**
+     * Returns current active subscription.
+     * Authorized.
+     */
+    @GET("payments/v4/subscription")
+    suspend fun getCurrentSubscription(): SubscriptionResponse
+
+    @GET("payments/v5/subscription")
+    suspend fun getDynamicSubscriptions(): DynamicSubscriptionsResponse
+
+    /**
+     * It checks given a particular plans and cycles how much a user should pay.
+     * It also takes into an account any special coupon or gift codes.
+     * Should be called upon a user selected any plan, duration and entered a code.
+     * Unauthorized.
+     */
+    @POST("payments/v4/subscription/check")
+    suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
 }

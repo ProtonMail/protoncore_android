@@ -28,7 +28,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.bundlePlan
@@ -68,7 +68,7 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
     private val observeUserCurrency = mockk<ObserveUserCurrency>(relaxed = true) {
         coEvery { this@mockk.invoke(any()) } returns mutableUserCurrencyFlow
     }
-    private val getDynamicPlans = mockk<GetDynamicPlans>(relaxed = true) {
+    private val getDynamicPlans = mockk<GetDynamicPlansAdjustedPrices>(relaxed = true) {
         coEvery { this@mockk.invoke(any()) } returns DynamicPlans(
             defaultCycle = null,
             plans = listOf(mailPlusPlan, bundlePlan)

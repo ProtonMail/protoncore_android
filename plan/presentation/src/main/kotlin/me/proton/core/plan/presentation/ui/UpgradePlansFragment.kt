@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.onEach
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
-import me.proton.core.payment.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentPlansUpgradeBinding
 import me.proton.core.plan.presentation.entity.PlanDetailsItem

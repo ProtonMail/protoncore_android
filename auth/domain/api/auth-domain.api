@@ -66,21 +66,21 @@ public final class me/proton/core/auth/domain/entity/AuthIntent : java/lang/Enum
 }
 
 public final class me/proton/core/auth/domain/entity/BillingDetails {
-	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()J
 	public final fun component2 ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun component3 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5-oTEqFM4 ()Ljava/lang/String;
-	public final fun component6 ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
-	public final fun copy-4KdbQwM (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;)Lme/proton/core/auth/domain/entity/BillingDetails;
-	public static synthetic fun copy-4KdbQwM$default (Lme/proton/core/auth/domain/entity/BillingDetails;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/BillingDetails;
+	public final fun component6 ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
+	public final fun copy-4KdbQwM (JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)Lme/proton/core/auth/domain/entity/BillingDetails;
+	public static synthetic fun copy-4KdbQwM$default (Lme/proton/core/auth/domain/entity/BillingDetails;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/BillingDetails;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
 	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
 	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
 	public final fun getPlanName ()Ljava/lang/String;
-	public final fun getSubscriptionManagement ()Lme/proton/core/payment/domain/entity/SubscriptionManagement;
+	public final fun getSubscriptionManagement ()Lme/proton/core/plan/domain/entity/SubscriptionManagement;
 	public final fun getToken-oTEqFM4 ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -296,7 +296,7 @@ public final class me/proton/core/auth/domain/usecase/PerformSecondFactor {
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }

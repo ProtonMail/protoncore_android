@@ -856,13 +856,13 @@ public final class me/proton/core/plan/presentation/entity/PlanPromotionPercenta
 }
 
 public final class me/proton/core/plan/presentation/entity/PlanSubscription {
-	public fun <init> (Lme/proton/core/payment/domain/entity/Subscription;Z)V
-	public final fun component1 ()Lme/proton/core/payment/domain/entity/Subscription;
+	public fun <init> (Lme/proton/core/plan/domain/entity/Subscription;Z)V
+	public final fun component1 ()Lme/proton/core/plan/domain/entity/Subscription;
 	public final fun component2 ()Z
-	public final fun copy (Lme/proton/core/payment/domain/entity/Subscription;Z)Lme/proton/core/plan/presentation/entity/PlanSubscription;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanSubscription;Lme/proton/core/payment/domain/entity/Subscription;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanSubscription;
+	public final fun copy (Lme/proton/core/plan/domain/entity/Subscription;Z)Lme/proton/core/plan/presentation/entity/PlanSubscription;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/PlanSubscription;Lme/proton/core/plan/domain/entity/Subscription;ZILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/PlanSubscription;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSubscription ()Lme/proton/core/payment/domain/entity/Subscription;
+	public final fun getSubscription ()Lme/proton/core/plan/domain/entity/Subscription;
 	public final fun getSubscriptionPlanSupportedFromCore ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -966,7 +966,7 @@ public final class me/proton/core/plan/presentation/entity/SubscribedPlan {
 }
 
 public final class me/proton/core/plan/presentation/entity/SubscriptionManagementKt {
-	public static final fun toStringRes (Lme/proton/core/payment/domain/entity/SubscriptionManagement;Z)Ljava/lang/Integer;
+	public static final fun toStringRes (Lme/proton/core/plan/domain/entity/SubscriptionManagement;Z)Ljava/lang/Integer;
 }
 
 public final class me/proton/core/plan/presentation/entity/UnredeemedGooglePurchase {
@@ -1414,7 +1414,7 @@ public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGoogl
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
 }
 
 public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency {
@@ -1456,7 +1456,7 @@ public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/payment/domain/usecase/PerformSubscribe;Lme/proton/core/payment/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
 }
 
 public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView : androidx/constraintlayout/widget/ConstraintLayout {
@@ -1571,7 +1571,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanListVie
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/GetDynamicPlansAdjustedPrices;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanListViewModel_HiltModules {
@@ -1598,7 +1598,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelecti
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicPlansAdjustedPrices;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_HiltModules {
@@ -1625,7 +1625,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanV
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel;
-	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;Lme/proton/core/observability/domain/ObservabilityManager;Z)Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetDynamicPlansAdjustedPrices;Lme/proton/core/observability/domain/ObservabilityManager;Z)Lme/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicSelectPlanViewModel_HiltModules {
@@ -1652,7 +1652,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptio
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/payment/domain/usecase/GetDynamicSubscription;Lme/proton/core/payment/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_HiltModules {
@@ -1679,7 +1679,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicUpgradePlan
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/payment/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel_HiltModules {
@@ -1760,7 +1760,7 @@ public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewMo
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
-	public static fun newInstance (Lme/proton/core/domain/entity/Product;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/payment/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
+	public static fun newInstance (Lme/proton/core/domain/entity/Product;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/plan/domain/usecase/GetPlanDefault;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/usersettings/domain/usecase/GetOrganization;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;ZLme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/UpgradePlansViewModel_HiltModules {
