@@ -163,7 +163,7 @@ unit-tests-and-coverage-report:
     - assemble
   stage: test
   script:
-    - ./gradlew -Pci --console=plain coberturaXmlReport globalLineCoverage :coverage:koverHtmlReport -x :coverage:jacocoToCobertura
+    - ./gradlew -Pci --console=plain :coreexample:testDevDebugUnitTest coberturaXmlReport globalLineCoverage :coverage:koverHtmlReport -x :coverage:jacocoToCobertura
     - ./gradlew -Pci --console=plain koverVerify
     - ./gradlew -Pci --console=plain verifyPaparazziDebug
   coverage: /TotalLineCoverage.*?(\d{1,3}\.\d{0,2})%/

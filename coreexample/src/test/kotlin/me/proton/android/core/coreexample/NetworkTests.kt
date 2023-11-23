@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -40,7 +40,8 @@ import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.DohProvider
 import me.proton.core.network.domain.TimeoutOverride
-import me.proton.core.network.domain.server.ServerTimeListener
+import me.proton.core.network.domain.server.ServerClock
+import me.proton.core.network.domain.server.ServerTimeManager
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -328,9 +329,12 @@ class NetworkTests {
 
         @Provides
         @Singleton
-        internal fun provideServerTimeListener() = object : ServerTimeListener {
-            override fun onServerTimeMillisUpdated(epochMillis: Long) {}
-        }
+        fun provideServerTimeManager() = ServerTimeManager {}
+
+        @Provides
+        @Singleton
+        fun provideServerClock(serverTimeManager: ServerTimeManager): ServerClock =
+            ServerClock(serverTimeManager)
     }
 
     companion object {
