@@ -481,6 +481,12 @@ public final class me/proton/core/payment/domain/usecase/GetPaymentTokenStatus {
 	public final fun invoke-moyEFhY (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/payment/domain/usecase/GetPreferredPaymentProvider {
+	public fun <init> (Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/payment/domain/usecase/GetPreferredPaymentProvider;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/payment/domain/usecase/GetStorePrice {
 	public abstract fun invoke-pLEiLWY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
