@@ -18,8 +18,10 @@
 
 package me.proton.core.paymentiap.presentation.viewmodel
 
+import android.app.Activity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -40,11 +42,15 @@ import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQue
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.common.GiapStatus
+import me.proton.core.payment.domain.entity.GoogleBillingResult
+import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
-import me.proton.core.paymentiap.domain.repository.BillingClientError
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.util.kotlin.coroutine.result
 import kotlin.test.BeforeTest
@@ -54,7 +60,7 @@ import kotlin.test.assertEquals
 class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @RelaxedMockK
-    private lateinit var billingRepository: GoogleBillingRepository
+    private lateinit var billingRepository: GoogleBillingRepository<Activity>
 
     @RelaxedMockK
     private lateinit var observabilityManager: ObservabilityManager
@@ -69,8 +75,10 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         MockKAnnotations.init(this)
 
         coEvery { billingRepository.getProductsDetails(any()) } coAnswers {
-            result("getProductDetails") {
-                firstArg<List<String>>().map { id -> mockk { every { productId } returns id } }
+            result("getProductsDetails") {
+                firstArg<List<ProductId>>().map { id ->
+                    mockk<ProductDetails> { every { productId } returns id.id }.wrap()
+                }
             }
         }
 
@@ -120,7 +128,8 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         every { billingRepository.purchaseUpdated } returns flowOf(
             BillingResult.newBuilder()
                 .setResponseCode(BillingClient.BillingResponseCode.DEVELOPER_ERROR)
-                .build() to null
+                .build()
+                .wrap() to null
         )
 
         // WHEN
@@ -211,7 +220,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         val state = tested.billingIAPState.value
         assertTrue(
             state is BillingIAPViewModel.State.Error.ProductDetailsError.Message
-                && "unknown-plan-name" in requireNotNull(state.error)
+                    && "unknown-plan-name" in requireNotNull(state.error)
         )
     }
 
@@ -219,7 +228,8 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `customerId is not matching`() = coroutinesTest {
         // GIVEN
         val googleProductId = "google-product"
-        val purchaseUpdatedFlow = MutableSharedFlow<Pair<BillingResult, List<Purchase>?>>()
+        val purchaseUpdatedFlow =
+            MutableSharedFlow<Pair<GoogleBillingResult, List<GooglePurchase>?>>()
         every { billingRepository.purchaseUpdated } returns purchaseUpdatedFlow
         coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
 
@@ -240,15 +250,20 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested.makePurchase(mockk(), billingInput).join()
 
         purchaseUpdatedFlow.emit(
-            BillingResult.newBuilder()
-                .setResponseCode(BillingClient.BillingResponseCode.OK)
-                .build() to listOf(mockk {
-                every { accountIdentifiers } returns mockk {
-                    every { obfuscatedAccountId } returns "" // empty clientId
-                }
-                every { products } returns listOf(googleProductId)
-                every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            })
+            Pair(
+                BillingResult.newBuilder()
+                    .setResponseCode(BillingClient.BillingResponseCode.OK)
+                    .build()
+                    .wrap(),
+
+                listOf(mockk<Purchase> {
+                    every { accountIdentifiers } returns mockk {
+                        every { obfuscatedAccountId } returns "" // empty clientId
+                    }
+                    every { products } returns listOf(googleProductId)
+                    every { purchaseState } returns Purchase.PurchaseState.PURCHASED
+                }.wrap())
+            )
         )
 
         // THEN

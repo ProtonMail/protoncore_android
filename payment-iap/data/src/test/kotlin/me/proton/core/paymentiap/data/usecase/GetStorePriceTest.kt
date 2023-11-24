@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import io.mockk.coEvery
 import io.mockk.every
@@ -26,9 +27,10 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.getProductPrice
-import me.proton.core.paymentiap.domain.repository.BillingClientError
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -39,7 +41,7 @@ import kotlin.test.assertNull
 
 class GetStorePriceTest {
 
-    private lateinit var googleBillingRepository: GoogleBillingRepository
+    private lateinit var googleBillingRepository: GoogleBillingRepository<Activity>
     private lateinit var tested: GetStorePrice
 
     @BeforeTest
@@ -72,7 +74,7 @@ class GetStorePriceTest {
             every { priceCurrencyCode } returns "CHF"
         }
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
-            productDetails
+            productDetails.wrap()
         )
         val result = tested(testPlanName)
         assertNotNull(result)
@@ -87,7 +89,7 @@ class GetStorePriceTest {
         val productDetails = mockk<com.android.billingclient.api.ProductDetails>(relaxed = true)
         every { productDetails.getProductPrice() } returns null
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
-            productDetails
+            productDetails.wrap()
         )
         val result = tested(testPlanName)
         assertNull(result)

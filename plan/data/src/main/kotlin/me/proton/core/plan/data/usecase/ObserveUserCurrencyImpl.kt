@@ -16,39 +16,38 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.usecase
+package me.proton.core.plan.data.usecase
 
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
-import org.jetbrains.annotations.VisibleForTesting
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency.Companion.availableCurrencies
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency.Companion.fallbackCurrency
 import java.util.Currency
 import java.util.Locale
 import javax.inject.Inject
 
-class ObserveUserCurrency @Inject constructor(
+class ObserveUserCurrencyImpl @Inject constructor(
     private val userManager: UserManager
-) {
+) : ObserveUserCurrency {
     @VisibleForTesting
     internal val localCurrency = Locale.getDefault().takeIf { it.country.isNotEmpty() }?.let {
         Currency.getInstance(it).currencyCode
     }
 
     @VisibleForTesting
-    internal val defaultCurrency = availableCurrencies.firstOrNull { it == localCurrency } ?: fallbackCurrency
+    internal val defaultCurrency =
+        availableCurrencies.firstOrNull { it == localCurrency } ?: fallbackCurrency
 
-    operator fun invoke(userId: UserId?): Flow<String> = when (userId) {
+    override operator fun invoke(userId: UserId?): Flow<String> = when (userId) {
         null -> flowOf(defaultCurrency)
-        else -> userManager.observeUser(userId).mapLatest { user -> user?.currency.validate() ?: defaultCurrency }
+        else -> userManager.observeUser(userId)
+            .mapLatest { user -> user?.currency.validate() ?: defaultCurrency }
     }
 
     private fun String?.validate(): String? = takeIf { it in availableCurrencies }
-
-    companion object {
-        // ISO 4217 3-letter codes.
-        const val fallbackCurrency = "USD"
-        val availableCurrencies = listOf("CHF", "EUR", fallbackCurrency)
-    }
 }

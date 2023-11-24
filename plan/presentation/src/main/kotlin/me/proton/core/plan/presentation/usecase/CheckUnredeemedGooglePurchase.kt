@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -84,7 +84,7 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
     private suspend fun GooglePurchase.findCorrespondingPlan(userId: UserId): Plan? {
         return getPlans(userId).find { plan ->
             productIds.all { id ->
-                plan.vendors[AppStore.GooglePlay]?.names?.values?.contains(id) == true
+                plan.vendors[AppStore.GooglePlay]?.names?.values?.contains(id.id) == true
             }
         }
     }

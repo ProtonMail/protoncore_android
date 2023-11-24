@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,25 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.paymentiap.domain.repository
+package me.proton.core.payment.domain.repository
 
-import android.app.Activity
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingFlowParams
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.ProductDetails
-import com.android.billingclient.api.Purchase
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.payment.domain.entity.GoogleBillingFlowParams
+import me.proton.core.payment.domain.entity.GoogleBillingResult
+import me.proton.core.payment.domain.entity.GoogleProductDetails
+import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProductId
 
 /** Repository for interacting with Google Play Billing Client.
  * Make sure to [destroy] it once you're done. You can use the [use] function to do that automatically.
  */
-public interface GoogleBillingRepository : AutoCloseable {
-    public val purchaseUpdated: Flow<Pair<BillingResult, List<Purchase>?>>
+public interface GoogleBillingRepository<A: Any> : AutoCloseable {
+    public val purchaseUpdated: Flow<Pair<GoogleBillingResult, List<GooglePurchase>?>>
 
     /**
-     * @param purchaseToken A token from [Purchase.getPurchaseToken].
+     * @param purchaseToken A token from [GooglePurchase.purchaseToken].
      * @throws BillingClientError
      */
     public suspend fun acknowledgePurchase(purchaseToken: GooglePurchaseToken)
@@ -47,17 +46,17 @@ public interface GoogleBillingRepository : AutoCloseable {
     /**
      * @throws BillingClientError
      */
-    public suspend fun getProductsDetails(googlePlayPlanNames: List<String>): List<ProductDetails>?
+    public suspend fun getProductsDetails(googlePlayPlanNames: List<ProductId>): List<GoogleProductDetails>?
 
     /**
      * @throws BillingClientError
      */
-    public suspend fun launchBillingFlow(activity: Activity, billingFlowParams: BillingFlowParams)
+    public suspend fun launchBillingFlow(activity: A, billingFlowParams: GoogleBillingFlowParams)
 
     /** Query for active subscriptions.
      * @throws BillingClientError
      */
-    public suspend fun querySubscriptionPurchases(): List<Purchase>
+    public suspend fun querySubscriptionPurchases(): List<GooglePurchase>
 
     override fun close() {
         destroy()
@@ -66,13 +65,12 @@ public interface GoogleBillingRepository : AutoCloseable {
 
 /** Error response from the Google Billing client.
  * @property responseCode Response code from the Google Billing client.
- *  Possible values are marked by [BillingClient.BillingResponseCode].
+ *  Possible values are marked by `com.android.billingclient.api.BillingClient.BillingResponseCode`.
  *  If [responseCode] is `null`, it's likely because the device
  *  is using a custom Android ROM with unofficial/fake play services.
  * @property debugMessage The debug message returned by the Google Billing client.
  */
 public data class BillingClientError(
-    @BillingClient.BillingResponseCode
     public val responseCode: Int?,
     public val debugMessage: String?
 ) : Throwable("responseCode: $responseCode message: $debugMessage")

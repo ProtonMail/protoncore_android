@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotal
@@ -25,14 +26,14 @@ import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.util.kotlin.coroutine.withResultContext
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class AcknowledgeGooglePlayPurchaseImpl @Inject constructor(
-    private val googleBillingRepositoryProvider: Provider<GoogleBillingRepository>,
+    private val googleBillingRepositoryProvider: Provider<GoogleBillingRepository<Activity>>,
     private val googlePurchaseRepository: GooglePurchaseRepository,
     override val observabilityManager: ObservabilityManager
 ) : AcknowledgeGooglePlayPurchase, ObservabilityContext {

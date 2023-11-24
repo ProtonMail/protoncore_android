@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.presentation.viewmodel
 
+import android.app.Activity
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
@@ -48,9 +49,12 @@ import me.proton.core.observability.domain.metrics.CheckoutGiapBillingPurchaseTo
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
 import me.proton.core.observability.domain.metrics.CheckoutGiapBillingUnredeemedTotalV1
 import me.proton.core.observability.domain.metrics.toPurchaseGiapStatus
+import me.proton.core.payment.domain.entity.GoogleBillingResult
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
@@ -67,7 +71,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class BillingIAPViewModel @Inject constructor(
-    private val billingRepository: GoogleBillingRepository,
+    private val billingRepository: GoogleBillingRepository<Activity>,
     private val findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase,
     override val observabilityManager: ObservabilityManager,
     savedStateHandle: SavedStateHandle
@@ -138,7 +142,7 @@ internal class BillingIAPViewModel @Inject constructor(
         queryProductDetails(listOf(ProductId(googlePlanName)))
 
     fun queryProductDetails(googlePlanNames: List<ProductId>) = viewModelScope.launchWithResultContext {
-        onResultEnqueueObservability("getProductDetails") { CheckoutGiapBillingProductQueryTotal(toGiapStatus()) }
+        onResultEnqueueObservability("getProductsDetails") { CheckoutGiapBillingProductQueryTotal(toGiapStatus()) }
 
         flow {
             emit(State.QueryingProductDetails)
@@ -146,7 +150,9 @@ internal class BillingIAPViewModel @Inject constructor(
             // Yield to enable collector to consume QueryingProductDetails before billing repo error is emitted.
             yield()
 
-            val productsDetails = billingRepository.getProductsDetails(googlePlanNames.map { it.id })?.takeIfNotEmpty()
+            val productsDetails = billingRepository.getProductsDetails(googlePlanNames)
+                ?.takeIfNotEmpty()
+                ?.map { it.unwrap() }
             if (productsDetails == null) {
                 emit(State.Error.ProductDetailsError.ProductMismatch)
                 return@flow
@@ -211,7 +217,7 @@ internal class BillingIAPViewModel @Inject constructor(
                     "$productId details must be fetched before making the purchase."
                 }
                 val unredeemedPurchase =
-                    findUnacknowledgedGooglePurchase.byProduct(product.productId)
+                    findUnacknowledgedGooglePurchase.byProduct(ProductId(product.productId))
                 if (unredeemedPurchase != null) {
                     observabilityManager.enqueue(CheckoutGiapBillingUnredeemedTotalV1())
                     emit(State.UnredeemedPurchase(unredeemedPurchase))
@@ -253,7 +259,7 @@ internal class BillingIAPViewModel @Inject constructor(
             .setObfuscatedAccountId(customerId)
             .build()
 
-        billingRepository.launchBillingFlow(activity, billingFlowParams)
+        billingRepository.launchBillingFlow(activity, billingFlowParams.wrap())
         emit(State.Success.PurchaseFlowLaunched)
     }
 
@@ -261,13 +267,14 @@ internal class BillingIAPViewModel @Inject constructor(
         onPurchasesUpdated(it.first, it.second)
     }.launchIn(viewModelScope)
 
-    private fun onPurchasesUpdated(billingResult: BillingResult, purchases: List<Purchase>?) {
+    private fun onPurchasesUpdated(googleBillingResult: GoogleBillingResult, purchases: List<GooglePurchase>?) {
+        val billingResult = googleBillingResult.unwrap()
         val state = when {
             billingResult.responseCode == BillingClient.BillingResponseCode.OK && !purchases.isNullOrEmpty() -> {
                 val queriedProductIds = queriedProducts.keys.map { it.id }
                 val purchase = purchases.firstOrNull{ purchase ->
-                    purchase.products.any { it in queriedProductIds }
-                }
+                    purchase.productIds.any { it.id in queriedProductIds }
+                }?.unwrap()
                 if (purchase?.purchaseState == Purchase.PurchaseState.PURCHASED) {
                     onSubscriptionPurchased(purchase)
                 } else {

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.plan.presentation.usecase
+package me.proton.core.plan.data.usecase
 
 import app.cash.turbine.test
 import io.mockk.coEvery
@@ -62,12 +62,12 @@ class ObserveUserCurrencyTest : CoroutinesTest by CoroutinesTest() {
         }
     }
 
-    private lateinit var tested: ObserveUserCurrency
+    private lateinit var tested: ObserveUserCurrencyImpl
 
     @BeforeTest
     fun setUp() {
         Locale.setDefault(Locale.US)
-        tested = ObserveUserCurrency(userManager)
+        tested = ObserveUserCurrencyImpl(userManager)
     }
 
     @AfterTest

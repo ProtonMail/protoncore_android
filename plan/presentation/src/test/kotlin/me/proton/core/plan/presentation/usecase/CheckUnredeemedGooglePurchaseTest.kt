@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -91,7 +92,7 @@ class CheckUnredeemedGooglePurchaseTest {
         val userId = UserId("user-1")
         val productId = "google_plan_name"
         val googlePurchase = mockk<GooglePurchase> {
-            every { productIds } returns listOf(productId)
+            every { productIds } returns listOf(ProductId(productId))
         }
         val plan = mockk<Plan> {
             every { vendors } returns mapOf(
@@ -117,7 +118,7 @@ class CheckUnredeemedGooglePurchaseTest {
     fun `plan purchased and user not subscribed, but no corresponding plan`() = runTest {
         val userId = UserId("user-1")
         val googlePurchase = mockk<GooglePurchase> {
-            every { productIds } returns listOf("google_plan_name")
+            every { productIds } returns listOf(ProductId("google_plan_name"))
         }
         val plan = mockk<Plan> {
             every { vendors } returns mapOf(
@@ -142,7 +143,7 @@ class CheckUnredeemedGooglePurchaseTest {
         val userId = UserId("user-1")
         val productId = "google_plan_name"
         val googlePurchase = mockk<GooglePurchase> {
-            every { productIds } returns listOf(productId)
+            every { productIds } returns listOf(ProductId(productId))
         }
         val plan = mockk<Plan> {
             every { vendors } returns mapOf(
@@ -173,7 +174,7 @@ class CheckUnredeemedGooglePurchaseTest {
         val productId = "google_plan_name"
         val googlePurchase = mockk<GooglePurchase> {
             every { customerId } returns customerA
-            every { productIds } returns listOf(productId)
+            every { productIds } returns listOf(ProductId(productId))
         }
         val plan = mockk<Plan> {
             every { vendors } returns mapOf(
@@ -205,7 +206,7 @@ class CheckUnredeemedGooglePurchaseTest {
         val productId = "google_plan_name"
         val googlePurchase = mockk<GooglePurchase> {
             every { customerId } returns customerA
-            every { productIds } returns listOf(productId)
+            every { productIds } returns listOf(ProductId(productId))
         }
         val plan = mockk<Plan> {
             every { name } returns planA
@@ -236,7 +237,7 @@ class CheckUnredeemedGooglePurchaseTest {
         val productId = "google_plan_name"
         val googlePurchase = mockk<GooglePurchase> {
             every { customerId } returns customerA
-            every { productIds } returns listOf(productId)
+            every { productIds } returns listOf(ProductId(productId))
         }
         val plan = mockk<Plan> {
             every { name } returns "plan-A"
@@ -294,11 +295,11 @@ class CheckUnredeemedGooglePurchaseTest {
 
         val googlePurchaseA = mockk<GooglePurchase> {
             every { customerId } returns customerA
-            every { productIds } returns listOf(productA)
+            every { productIds } returns listOf(ProductId(productA))
         }
         val googlePurchaseB = mockk<GooglePurchase> {
             every { customerId } returns customerB
-            every { productIds } returns listOf(productB)
+            every { productIds } returns listOf(ProductId(productB))
         }
 
         coEvery { findUnacknowledgedGooglePurchase.invoke() } returns listOf(googlePurchaseA, googlePurchaseB)

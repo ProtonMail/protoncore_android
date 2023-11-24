@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 package me.proton.core.plan.presentation.entity
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 
 data class DynamicPlanFilter(
     val userId: UserId? = null,

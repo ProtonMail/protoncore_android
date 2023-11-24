@@ -18,19 +18,26 @@
 
 package me.proton.core.payment.domain.usecase
 
+import me.proton.core.payment.domain.entity.GoogleBillingFlowParams
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
 
-public interface FindUnacknowledgedGooglePurchase {
-    /** Returns any unredeemed purchases.
-     * The most recent purchases are at the beginning of the list.
-     * May return an empty list if Billing service is not available (either temporarily or permanently).
-     */
-    public suspend operator fun invoke(): List<GooglePurchase>
+/**
+ * Launches a Google In App Purchase dialog.
+ */
+public interface LaunchGiapBillingFlow<A : Any> {
+    public suspend operator fun invoke(
+        activity: A,
+        googleProductId: ProductId,
+        params: GoogleBillingFlowParams
+    ): Result
 
-    /** Return the most recent purchase for the given [customerId]. */
-    public suspend fun byCustomer(customerId: String): GooglePurchase?
+    public sealed class Result {
+        public sealed class Error : Result() {
+            public object EmptyCustomerId : Error()
+            public object PurchaseNotFound: Error()
+        }
 
-    /** Return the most recent purchase for the given [productId]. */
-    public suspend fun byProduct(productId: ProductId): GooglePurchase?
+        public data class PurchaseSuccess(public val purchase: GooglePurchase) : Result()
+    }
 }

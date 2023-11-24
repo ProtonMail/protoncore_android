@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,7 +22,9 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
 import kotlinx.coroutines.CancellationException
 import me.proton.core.observability.domain.metrics.common.GiapStatus
-import me.proton.core.paymentiap.domain.repository.BillingClientError
+import me.proton.core.payment.domain.entity.GoogleBillingResult
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.util.kotlin.CoreLogger
 
 public fun Result<*>.toGiapStatus(): GiapStatus {
@@ -43,6 +45,8 @@ private fun BillingClientError.toGiapStatus() = when (val status = responseCode.
     GiapStatus.unknown -> status.also { CoreLogger.e(LogTag.GIAP_ERROR, this) }
     else -> status
 }
+
+public fun GoogleBillingResult.toGiapStatus(): GiapStatus = unwrap().toGiapStatus()
 
 private fun Int?.toGiapStatus() = when (this) {
     BillingClient.BillingResponseCode.OK -> GiapStatus.success

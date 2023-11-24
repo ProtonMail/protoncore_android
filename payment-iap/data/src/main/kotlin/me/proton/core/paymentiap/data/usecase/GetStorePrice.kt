@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,23 +18,26 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
+import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.getProductPrice
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class GetStorePrice @Inject constructor(
-    private val billingRepositoryProvider: Provider<GoogleBillingRepository>
+    private val billingRepositoryProvider: Provider<GoogleBillingRepository<Activity>>
 ) : GetStorePrice {
     override suspend fun invoke(planName: ProductId): ProductPrice? {
         val googlePlansWithPrices =
             billingRepositoryProvider.get().use { repository ->
-                repository.getProductsDetails(listOf(planName.id))?.firstOrNull()
-                    ?.getProductPrice()?.let { price ->
+                repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
+                    ?.getProductPrice()
+                    ?.let { price ->
                         GoogleProductPrice(
                             priceAmountMicros = price.priceAmountMicros,
                             currency = price.priceCurrencyCode,

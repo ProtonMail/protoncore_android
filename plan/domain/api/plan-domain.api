@@ -588,6 +588,29 @@ public final class me/proton/core/plan/domain/usecase/CanUpgradeToPaid {
 	public static synthetic fun invoke$default (Lme/proton/core/plan/domain/usecase/CanUpgradeToPaid;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase {
+	public abstract fun invoke-IKDzvDE (ILjava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase$Result {
+	public synthetic fun <init> (JLme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Currency;Ljava/util/List;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()J
+	public final fun component2 ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5-LPgRuuE ()Ljava/lang/String;
+	public final fun copy-ul_hpgw (JLme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Currency;Ljava/util/List;Ljava/lang/String;)Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase$Result;
+	public static synthetic fun copy-ul_hpgw$default (Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase$Result;JLme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/payment/domain/entity/Currency;Ljava/util/List;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase$Result;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getCycle ()Lme/proton/core/payment/domain/entity/SubscriptionCycle;
+	public final fun getPlanNames ()Ljava/util/List;
+	public final fun getToken-LPgRuuE ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/plan/domain/usecase/GetCurrentSubscription {
 	public fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -622,6 +645,95 @@ public final class me/proton/core/plan/domain/usecase/GetPlans {
 	public synthetic fun <init> (Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/domain/entity/Product;ZLme/proton/core/plan/domain/ClientPlanFilter;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getProductExclusivePlans ()Z
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/plan/domain/usecase/ObserveUserCurrency {
+	public static final field Companion Lme/proton/core/plan/domain/usecase/ObserveUserCurrency$Companion;
+	public static final field fallbackCurrency Ljava/lang/String;
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/plan/domain/usecase/ObserveUserCurrency$Companion {
+	public static final field fallbackCurrency Ljava/lang/String;
+	public final fun getAvailableCurrencies ()Ljava/util/List;
+}
+
+public abstract interface class me/proton/core/plan/domain/usecase/PerformGiapPurchase {
+	public abstract fun invoke (Ljava/lang/Object;ILme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result {
+}
+
+public abstract class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result {
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$EmptyCustomerId : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public static final field INSTANCE Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$EmptyCustomerId;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$GiapUnredeemed : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public fun <init> (Lme/proton/core/payment/domain/entity/GooglePurchase;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/GooglePurchase;
+	public final fun copy (Lme/proton/core/payment/domain/entity/GooglePurchase;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$GiapUnredeemed;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$GiapUnredeemed;Lme/proton/core/payment/domain/entity/GooglePurchase;ILjava/lang/Object;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$GiapUnredeemed;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getGooglePurchase ()Lme/proton/core/payment/domain/entity/GooglePurchase;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$GoogleProductDetailsNotFound : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public static final field INSTANCE Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$GoogleProductDetailsNotFound;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$PurchaseNotFound : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public static final field INSTANCE Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$PurchaseNotFound;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$RecoverableBillingError : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public fun <init> (Lme/proton/core/payment/domain/repository/BillingClientError;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/repository/BillingClientError;
+	public final fun copy (Lme/proton/core/payment/domain/repository/BillingClientError;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$RecoverableBillingError;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$RecoverableBillingError;Lme/proton/core/payment/domain/repository/BillingClientError;ILjava/lang/Object;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$RecoverableBillingError;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Lme/proton/core/payment/domain/repository/BillingClientError;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$UnrecoverableBillingError : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public fun <init> (Lme/proton/core/payment/domain/repository/BillingClientError;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/repository/BillingClientError;
+	public final fun copy (Lme/proton/core/payment/domain/repository/BillingClientError;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$UnrecoverableBillingError;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$UnrecoverableBillingError;Lme/proton/core/payment/domain/repository/BillingClientError;ILjava/lang/Object;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$UnrecoverableBillingError;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getError ()Lme/proton/core/payment/domain/repository/BillingClientError;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$UserCancelled : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error {
+	public static final field INSTANCE Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$Error$UserCancelled;
+}
+
+public final class me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$GiapSuccess : me/proton/core/plan/domain/usecase/PerformGiapPurchase$Result {
+	public synthetic fun <init> (Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;ZLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/payment/domain/entity/GooglePurchase;
+	public final fun component2 ()J
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Z
+	public final fun component5-LPgRuuE ()Ljava/lang/String;
+	public final fun copy-ul_hpgw (Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;ZLjava/lang/String;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$GiapSuccess;
+	public static synthetic fun copy-ul_hpgw$default (Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$GiapSuccess;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;ZLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/usecase/PerformGiapPurchase$Result$GiapSuccess;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAmount ()J
+	public final fun getCurrency ()Ljava/lang/String;
+	public final fun getPurchase ()Lme/proton/core/payment/domain/entity/GooglePurchase;
+	public final fun getSubscriptionCreated ()Z
+	public final fun getToken-LPgRuuE ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class me/proton/core/plan/domain/usecase/PerformSubscribe {

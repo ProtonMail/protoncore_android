@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -30,7 +31,7 @@ import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.util.kotlin.coroutine.result
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -38,7 +39,7 @@ import kotlin.test.assertEquals
 
 internal class AcknowledgeGooglePlayPurchaseImplTest {
 
-    private val googleBillingRepository = mockk<GoogleBillingRepository>(relaxed = true) {
+    private val googleBillingRepository = mockk<GoogleBillingRepository<Activity>>(relaxed = true) {
         coEvery { acknowledgePurchase(any()) } coAnswers {
             result("acknowledgePurchase") { Unit }
         }

@@ -57,6 +57,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.networkDomain),
         project(Module.featureFlagDomain),
+        project(Module.userDomain),
         retrofit,
         serialization("core"),
         `serialization-json`,
@@ -68,6 +69,7 @@ dependencies {
         `coroutines-test`,
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        turbine
     )
 }

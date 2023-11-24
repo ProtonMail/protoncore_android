@@ -37,8 +37,8 @@ import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.domain.usecase.GetDynamicSubscription
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.entity.DynamicUser
-import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.flowWithResultContext

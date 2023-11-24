@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -21,12 +21,14 @@ package me.proton.core.paymentiap.domain.entity
 import com.android.billingclient.api.Purchase
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProductId
 
 internal data class GooglePurchaseWrapper(val purchase: Purchase) : GooglePurchase {
-    override val customerId: String? = purchase.accountIdentifiers?.obfuscatedAccountId
+    override val customerId: String? get() = purchase.accountIdentifiers?.obfuscatedAccountId
     override val orderId: String get() = purchase.orderId
     override val packageName: String get() = purchase.packageName
-    override val productIds: List<String> get() = purchase.products
+    override val productIds: List<ProductId>
+        get() = purchase.products.map { ProductId(it) }
     override val purchaseToken: GooglePurchaseToken get() = GooglePurchaseToken(purchase.purchaseToken)
 }
 

@@ -16,21 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.domain.usecase
+package me.proton.core.plan.domain.usecase
 
+import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.plan.domain.entity.DynamicPlan
 
-public interface FindUnacknowledgedGooglePurchase {
-    /** Returns any unredeemed purchases.
-     * The most recent purchases are at the beginning of the list.
-     * May return an empty list if Billing service is not available (either temporarily or permanently).
-     */
-    public suspend operator fun invoke(): List<GooglePurchase>
+public interface CreatePaymentTokenForGooglePurchase {
+    public suspend operator fun invoke(
+        cycle: Int,
+        googleProductId: ProductId,
+        plan: DynamicPlan,
+        purchase: GooglePurchase,
+        userId: UserId?
+    ): Result
 
-    /** Return the most recent purchase for the given [customerId]. */
-    public suspend fun byCustomer(customerId: String): GooglePurchase?
-
-    /** Return the most recent purchase for the given [productId]. */
-    public suspend fun byProduct(productId: ProductId): GooglePurchase?
+    public data class Result(
+        public val amount: Long,
+        public val cycle: SubscriptionCycle,
+        public val currency: Currency,
+        public val planNames: List<String>,
+        public val token: ProtonPaymentToken
+    )
 }

@@ -10,13 +10,14 @@ public final class me/proton/core/paymentiap/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl : me/proton/core/paymentiap/domain/repository/GoogleBillingRepository {
+public final class me/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl : me/proton/core/payment/domain/repository/GoogleBillingRepository {
 	public fun acknowledgePurchase-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun close ()V
 	public fun destroy ()V
 	public fun getProductsDetails (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
-	public fun launchBillingFlow (Landroid/app/Activity;Lcom/android/billingclient/api/BillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun launchBillingFlow (Landroid/app/Activity;Lme/proton/core/payment/domain/entity/GoogleBillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun launchBillingFlow (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/GoogleBillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -34,12 +35,17 @@ public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayP
 public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl : me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {
 	public fun <init> (Ljavax/inject/Provider;)V
 	public fun byCustomer (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun byProduct (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun byProduct-pLEiLWY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/paymentiap/data/usecase/GetStorePriceImpl : me/proton/core/payment/domain/usecase/GetStorePrice {
 	public fun <init> (Ljavax/inject/Provider;)V
 	public fun invoke-pLEiLWY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/paymentiap/data/usecase/PrepareGiapPurchaseImpl : me/proton/core/payment/domain/usecase/PrepareGiapPurchase {
+	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;)V
+	public fun invoke-m4Zr2R0 (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,7 +18,9 @@
 
 package me.proton.core.plan.dagger
 
+import android.app.Activity
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -26,11 +28,15 @@ import me.proton.core.plan.data.IsDynamicPlanAdjustedPriceEnabledImpl
 import me.proton.core.plan.data.IsDynamicPlanEnabledImpl
 import me.proton.core.plan.data.PlanIconsEndpointProviderImpl
 import me.proton.core.plan.data.repository.PlansRepositoryImpl
+import me.proton.core.plan.data.usecase.ObserveUserCurrencyImpl
 import me.proton.core.plan.data.usecase.PerformSubscribeImpl
 import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency
+import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import javax.inject.Singleton
 
@@ -56,4 +62,13 @@ public interface CorePlanModule {
 
     @Binds
     public fun bindPerformSubscribe(impl: PerformSubscribeImpl): PerformSubscribe
+
+    @Binds
+    public fun bindObserveUserCurrency(impl: ObserveUserCurrencyImpl): ObserveUserCurrency
+
+    @BindsOptionalOf
+    public fun optionalPerformGiapPurchase(): PerformGiapPurchase<Activity>
+
+    @BindsOptionalOf
+    public fun optionalCreateSubscriptionForGiap(): CreatePaymentTokenForGooglePurchase
 }

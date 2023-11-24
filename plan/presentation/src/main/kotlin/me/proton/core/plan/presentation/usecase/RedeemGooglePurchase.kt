@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -75,7 +75,7 @@ internal class RedeemGooglePurchase @Inject constructor(
             amount = subscriptionStatus.amountDue,
             currency = subscriptionStatus.currency,
             paymentType = PaymentType.GoogleIAP(
-                productId = googlePurchase.productIds.first(),
+                productId = googlePurchase.productIds.first().id,
                 purchaseToken = googlePurchase.purchaseToken,
                 orderId = googlePurchase.orderId,
                 packageName = googlePurchase.packageName,
@@ -98,8 +98,9 @@ internal class RedeemGooglePurchase @Inject constructor(
     }
 
     private fun getPlanCycleForPurchase(googlePurchase: GooglePurchase, purchasedPlan: Plan): PlanCycle {
+        val googleProductIds = googlePurchase.productIds.map { it.id }
         val planVendorData = requireNotNull(purchasedPlan.vendors[AppStore.GooglePlay])
-        val (planDuration, _) = planVendorData.names.entries.first { it.value in googlePurchase.productIds }
+        val (planDuration, _) = planVendorData.names.entries.first { it.value in googleProductIds }
         return requireNotNull(PlanCycle.map[planDuration.months])
     }
 

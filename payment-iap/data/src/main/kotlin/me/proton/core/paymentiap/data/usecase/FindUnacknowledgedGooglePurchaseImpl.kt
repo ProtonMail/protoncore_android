@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,26 +18,27 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
-import me.proton.core.paymentiap.domain.entity.wrap
-import me.proton.core.paymentiap.domain.repository.BillingClientError
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.entity.unwrap
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
-    private val billingRepositoryProvider: Provider<GoogleBillingRepository>
+    private val billingRepositoryProvider: Provider<GoogleBillingRepository<Activity>>
 ) : FindUnacknowledgedGooglePurchase {
     public override suspend operator fun invoke(): List<GooglePurchase> {
         return runCatching {
             billingRepositoryProvider.get().use { repository ->
                 repository.querySubscriptionPurchases()
-                    .filter { it.isPurchasedButNotAcknowledged() }
-                    .sortedByDescending { it.purchaseTime }
-                    .map { it.wrap() }
+                    .filter { it.unwrap().isPurchasedButNotAcknowledged() }
+                    .sortedByDescending { it.unwrap().purchaseTime }
             }
         }.getOrElse {
             if (it is BillingClientError && it.responseCode in ALLOWED_BILLING_ERRORS) {
@@ -54,7 +55,7 @@ public class FindUnacknowledgedGooglePurchaseImpl @Inject constructor(
         }
     }
 
-    override suspend fun byProduct(productId: String): GooglePurchase? {
+    override suspend fun byProduct(productId: ProductId): GooglePurchase? {
         return invoke().find { purchase ->
             purchase.productIds.contains(productId)
         }

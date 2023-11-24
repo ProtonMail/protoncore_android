@@ -15,6 +15,8 @@ public abstract interface class me/proton/core/payment/dagger/CorePaymentModule 
 	public abstract fun optionalAcknowledgeGooglePlayPurchase ()Lme/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase;
 	public abstract fun optionalFindUnredeemedGooglePurchase ()Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;
 	public abstract fun optionalGetPlanAndCurrency ()Lme/proton/core/payment/domain/usecase/GetStorePrice;
+	public abstract fun optionalLaunchGiapBillingFlow ()Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;
+	public abstract fun optionalPrepareGiapPurchase ()Lme/proton/core/payment/domain/usecase/PrepareGiapPurchase;
 	public abstract fun provideActivePaymentProvider (Lme/proton/core/payment/presentation/ActivePaymentProviderImpl;)Lme/proton/core/payment/presentation/ActivePaymentProvider;
 	public abstract fun provideGooglePlayBillingLibrary (Lme/proton/core/payment/data/ProtonIAPBillingLibraryImpl;)Lme/proton/core/payment/domain/usecase/ProtonIAPBillingLibrary;
 	public abstract fun providePaymentManager (Lme/proton/core/payment/data/PaymentManagerImpl;)Lme/proton/core/payment/domain/PaymentManager;

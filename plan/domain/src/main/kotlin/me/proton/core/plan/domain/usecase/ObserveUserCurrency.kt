@@ -16,11 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.presentation
+package me.proton.core.plan.domain.usecase
 
-public object LogTag {
-    public const val EMPTY_ACTIVE_PAYMENT_PROVIDER: String = "core.payment.provider.active.empty"
-    public const val SUBSCRIPTION_CREATION: String = "core.payment.subscription.create"
-    public const val SUBSCRIPTION_CREATION_REDEEM: String = "core.payment.subscription.redeem"
-    public const val UNKNOWN_ERROR: String = "core.payment.error.unknown"
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.domain.entity.UserId
+
+interface ObserveUserCurrency {
+    operator fun invoke(userId: UserId?): Flow<String>
+
+    companion object {
+        // ISO 4217 3-letter codes.
+        const val fallbackCurrency = "USD"
+        val availableCurrencies = listOf("CHF", "EUR", fallbackCurrency)
+    }
 }

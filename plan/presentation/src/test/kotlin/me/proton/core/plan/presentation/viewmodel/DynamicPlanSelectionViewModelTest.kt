@@ -29,11 +29,11 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.bundlePlan
 import me.proton.core.plan.presentation.entity.mailPlusPlan
-import me.proton.core.plan.presentation.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.State

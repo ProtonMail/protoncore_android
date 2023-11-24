@@ -16,11 +16,6 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.presentation
+package me.proton.core.payment.domain.entity
 
-public object LogTag {
-    public const val EMPTY_ACTIVE_PAYMENT_PROVIDER: String = "core.payment.provider.active.empty"
-    public const val SUBSCRIPTION_CREATION: String = "core.payment.subscription.create"
-    public const val SUBSCRIPTION_CREATION_REDEEM: String = "core.payment.subscription.redeem"
-    public const val UNKNOWN_ERROR: String = "core.payment.error.unknown"
-}
+public interface GoogleBillingFlowParams

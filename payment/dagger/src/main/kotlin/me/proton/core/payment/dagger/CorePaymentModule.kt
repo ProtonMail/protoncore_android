@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.dagger
 
+import android.app.Activity
 import dagger.Binds
 import dagger.BindsOptionalOf
 import dagger.Module
@@ -34,12 +35,13 @@ import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetStorePrice
+import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
+import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
 import me.proton.core.payment.domain.usecase.ProtonIAPBillingLibrary
 import me.proton.core.payment.presentation.ActivePaymentProvider
 import me.proton.core.payment.presentation.ActivePaymentProviderImpl
 import me.proton.core.payment.presentation.entity.SecureEndpoint
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -74,6 +76,12 @@ public interface CorePaymentModule {
     /** Optional binding, provided by payment-iap-dagger. */
     @BindsOptionalOf
     public fun optionalGetPlanAndCurrency(): GetStorePrice
+
+    @BindsOptionalOf
+    public fun optionalLaunchGiapBillingFlow(): LaunchGiapBillingFlow<Activity>
+
+    @BindsOptionalOf
+    public fun optionalPrepareGiapPurchase(): PrepareGiapPurchase
 
     public companion object {
         @Provides

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.dagger
 
+import android.app.Activity
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -31,7 +32,15 @@ import me.proton.core.paymentiap.data.repository.GoogleBillingRepositoryImpl
 import me.proton.core.paymentiap.data.usecase.FindUnacknowledgedGooglePurchaseImpl
 import me.proton.core.paymentiap.data.usecase.GetStorePriceImpl
 import me.proton.core.paymentiap.domain.BillingClientFactory
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
+import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
+import me.proton.core.paymentiap.presentation.usecase.LaunchGiapBillingFlowImpl
+import me.proton.core.paymentiap.presentation.usecase.PerformGiapPurchaseImpl
+import me.proton.core.paymentiap.data.usecase.PrepareGiapPurchaseImpl
+import me.proton.core.paymentiap.presentation.usecase.CreatePaymentTokenForGooglePurchaseImpl
+import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
+import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,7 +53,7 @@ public interface CorePaymentIapBillingModule {
 @InstallIn(SingletonComponent::class)
 public interface CorePaymentIapModule {
     @Binds
-    public fun bindGoogleBillingRepository(impl: GoogleBillingRepositoryImpl): GoogleBillingRepository
+    public fun bindGoogleBillingRepository(impl: GoogleBillingRepositoryImpl): GoogleBillingRepository<Activity>
 
     @Binds
     public fun bindAcknowledgeGooglePlayPurchase(impl: AcknowledgeGooglePlayPurchaseImpl): AcknowledgeGooglePlayPurchase
@@ -54,4 +63,16 @@ public interface CorePaymentIapModule {
 
     @Binds
     public fun bindGetGooglePlanPriceAndCurrency(impl: GetStorePriceImpl): GetStorePrice
+
+    @Binds
+    public fun bindLaunchGiapBillingFlow(impl: LaunchGiapBillingFlowImpl): LaunchGiapBillingFlow<Activity>
+
+    @Binds
+    public fun bindPerformGiapPurchase(impl: PerformGiapPurchaseImpl): PerformGiapPurchase<Activity>
+
+    @Binds
+    public fun bindPrepareGiapPurchase(impl: PrepareGiapPurchaseImpl): PrepareGiapPurchase
+
+    @Binds
+    public fun bindCreateSubscriptionForGiap(impl: CreatePaymentTokenForGooglePurchaseImpl): CreatePaymentTokenForGooglePurchase
 }

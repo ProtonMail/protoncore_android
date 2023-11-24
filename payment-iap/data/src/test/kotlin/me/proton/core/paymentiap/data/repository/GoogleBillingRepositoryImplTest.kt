@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@ import app.cash.turbine.test
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.ProductDetailsResponseListener
@@ -40,18 +41,21 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
-import me.proton.core.paymentiap.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.paymentiap.domain.entity.unwrap
+import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
 import me.proton.core.util.kotlin.CoreLogger
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
-import kotlin.test.assertFalse
 import kotlin.test.assertSame
 import kotlin.test.assertTrue
 
@@ -93,7 +97,7 @@ internal class GoogleBillingRepositoryImplTest {
             every { acknowledgePurchase(any(), any()) } answers {
                 val listener = invocation.args[1] as AcknowledgePurchaseResponseListener
                 val result = BillingResult.newBuilder()
-                    .setResponseCode(BillingClient.BillingResponseCode.ERROR)
+                    .setResponseCode(BillingResponseCode.ERROR)
                     .build()
                 listener.onAcknowledgePurchaseResponse(result)
             }
@@ -110,7 +114,9 @@ internal class GoogleBillingRepositoryImplTest {
                 listener.onProductDetailsResponse(BillingResult(), listOf(productDetails))
             }
         }
-        val result = tested.use { it.getProductsDetails(listOf("plan-name")) }
+        val result = tested.use {
+            it.getProductsDetails(listOf(ProductId("plan-name")))
+        }?.map { it.unwrap() }
         assertEquals(result, listOf(productDetails))
     }
 
@@ -122,9 +128,9 @@ internal class GoogleBillingRepositoryImplTest {
                 listener.onProductDetailsResponse(BillingResult(), listOf())
             }
         }
-        val result = tested.use { it.getProductsDetails(listOf("plan-name")) }
-        assertSame(result, emptyList())
-        assertTrue(assertSingleResult("getProductDetails").isSuccess)
+        val result = tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
+        assertTrue(result?.isEmpty() == true)
+        assertTrue(assertSingleResult("getProductsDetails").isSuccess)
     }
 
     @Test
@@ -140,12 +146,12 @@ internal class GoogleBillingRepositoryImplTest {
             }
         }
         val exception = assertFailsWith<BillingClientError> {
-            tested.use { it.getProductsDetails(listOf("plan-name")) }
+            tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
         }
         assertSame("error", exception.debugMessage)
         assertEquals(BillingResponseCode.ERROR, exception.responseCode)
 
-        val result = assertSingleResult("getProductDetails")
+        val result = assertSingleResult("getProductsDetails")
         assertTrue(result.isFailure)
         val status = result.toGiapStatus()
         assertEquals(GiapStatus.googlePlayError, status)
@@ -166,9 +172,9 @@ internal class GoogleBillingRepositoryImplTest {
                 )
             }
         }
-        val result = tested.use { it.getProductsDetails(listOf("plan-name")) }
-        assertSame(result, emptyList())
-        assertTrue(assertSingleResult("getProductDetails").isSuccess)
+        val result = tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
+        assertTrue(result?.isEmpty() == true)
+        assertTrue(assertSingleResult("getProductsDetails").isSuccess)
         verify(exactly = 0) { CoreLogger.e(LogTag.GIAP_ERROR, any(), any()            ) }
         unmockkObject(CoreLogger)
     }
@@ -178,7 +184,7 @@ internal class GoogleBillingRepositoryImplTest {
         mockClientResult {
             every { launchBillingFlow(any(), any()) } returns BillingResult()
         }
-        tested.use { it.launchBillingFlow(mockk(), mockk()) }
+        tested.use { it.launchBillingFlow(mockk(), mockk<BillingFlowParams>().wrap()) }
         assertTrue(assertSingleResult("launchBillingFlow").isSuccess)
     }
 
@@ -195,8 +201,8 @@ internal class GoogleBillingRepositoryImplTest {
                 )
             }
         }
-        val result = tested.use { it.querySubscriptionPurchases() }
-        assertSame(result, purchaseList)
+        val result = tested.use { it.querySubscriptionPurchases() }.map { it.unwrap() }
+        assertContentEquals(result, purchaseList)
         assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
     }
 
@@ -213,15 +219,15 @@ internal class GoogleBillingRepositoryImplTest {
                 )
             }
         }
-        val result = tested.use { it.querySubscriptionPurchases() }
-        assertSame(result, purchaseList)
+        val result = tested.use { it.querySubscriptionPurchases() }.map { it.unwrap() }
+        assertContentEquals(result, purchaseList)
         assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
     }
 
     @Test
     fun `fails to connect`() {
         coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } throws BillingClientError(
-            BillingClient.BillingResponseCode.BILLING_UNAVAILABLE, "test error"
+            BillingResponseCode.BILLING_UNAVAILABLE, "test error"
         )
         runTest {
             assertFailsWith<BillingClientError> {
@@ -233,7 +239,7 @@ internal class GoogleBillingRepositoryImplTest {
     @Test
     fun `purchase is emitted`() = runTest(testDispatcherProvider.Main) {
         val expectedBillingResult = mockk<BillingResult>()
-        val expectedPurchaseList = mockk<List<Purchase>>()
+        val expectedPurchaseList = listOf<Purchase>(mockk(), mockk())
 
         factory.purchasesUpdatedListener.onPurchasesUpdated(
             expectedBillingResult,
@@ -241,8 +247,8 @@ internal class GoogleBillingRepositoryImplTest {
         )
         tested.purchaseUpdated.test {
             val (billingResult, purchaseList) = awaitItem()
-            assertEquals(expectedBillingResult, billingResult)
-            assertEquals(expectedPurchaseList, purchaseList)
+            assertEquals(expectedBillingResult, billingResult.unwrap())
+            assertEquals(expectedPurchaseList, purchaseList?.map { it.unwrap() })
         }
     }
 

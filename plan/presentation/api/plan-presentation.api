@@ -1417,25 +1417,6 @@ public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGoogl
 	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
 }
 
-public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency {
-	public static final field Companion Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency$Companion;
-	public static final field fallbackCurrency Ljava/lang/String;
-	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
-}
-
-public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency$Companion {
-	public final fun getAvailableCurrencies ()Ljava/util/List;
-}
-
-public final class me/proton/core/plan/presentation/usecase/ObserveUserCurrency_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;
-	public static fun newInstance (Lme/proton/core/user/domain/UserManager;)Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;
-}
-
 public final class me/proton/core/plan/presentation/usecase/ObserveUserId {
 	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
 	public final fun getUser ()Lme/proton/core/plan/presentation/entity/DynamicUser;
@@ -1598,7 +1579,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelecti
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicPlansAdjustedPrices;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicPlansAdjustedPrices;)Lme/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicPlanSelectionViewModel_HiltModules {
@@ -1652,7 +1633,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptio
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/presentation/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_HiltModules {
