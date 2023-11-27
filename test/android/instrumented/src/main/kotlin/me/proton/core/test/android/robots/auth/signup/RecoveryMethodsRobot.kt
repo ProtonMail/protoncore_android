@@ -64,7 +64,7 @@ class RecoveryMethodsRobot : CoreRobot() {
      * Sets email input value to given [email]
      * @return [RecoveryMethodsRobot]
      */
-    fun email(email: String): RecoveryMethodsRobot = addText(R.id.emailEditText, email)
+    fun email(email: String): RecoveryMethodsRobot = addText(R.id.email, email)
 
     /**
      * Sets phone number input value to given [phoneNo]
@@ -99,13 +99,13 @@ class RecoveryMethodsRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun recoveryMethodsElementsDisplayed() {
-            view.withId(R.id.emailEditText).checkDisplayed()
+            view.withId(R.id.email).checkDisplayed()
             view.withText(RecoveryMethodType.EMAIL.name).checkDisplayed()
             view.withText(RecoveryMethodType.PHONE.name).checkDisplayed()
         }
 
         fun onlyEmailRecoveryDisplayed() {
-            view.withId(R.id.emailEditText).checkDisplayed()
+            view.withId(R.id.email).checkDisplayed()
             view.withId(R.id.recoveryOptions).checkNotDisplayed()
         }
 

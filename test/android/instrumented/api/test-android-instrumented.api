@@ -681,11 +681,6 @@ public final class me/proton/core/test/android/robots/auth/signup/ChooseUsername
 	public final fun chooseUsernameElementsDisplayed ()V
 }
 
-public final class me/proton/core/test/android/robots/auth/signup/CodeVerificationRobot : me/proton/core/test/android/robots/CoreRobot {
-	public fun <init> ()V
-	public final fun setCode (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/CodeVerificationRobot;
-}
-
 public final class me/proton/core/test/android/robots/auth/signup/PasswordSetupRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun confirmPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;

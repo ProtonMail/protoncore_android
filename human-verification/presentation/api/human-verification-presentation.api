@@ -98,17 +98,6 @@ public final class me/proton/core/humanverification/presentation/databinding/Con
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/ContentHumanVerificationHelpWebBinding;
 }
 
-public final class me/proton/core/humanverification/presentation/databinding/DialogHumanVerificationMainBinding : androidx/viewbinding/ViewBinding {
-	public final field fragmentOptionsContainer Landroid/widget/FrameLayout;
-	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
-	public final field verificationOptions Lcom/google/android/material/tabs/TabLayout;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/humanverification/presentation/databinding/DialogHumanVerificationMainBinding;
-	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/humanverification/presentation/databinding/DialogHumanVerificationMainBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/DialogHumanVerificationMainBinding;
-}
-
 public final class me/proton/core/humanverification/presentation/databinding/DialogHumanVerificationV3Binding : androidx/viewbinding/ViewBinding {
 	public final field appbar Lcom/google/android/material/appbar/AppBarLayout;
 	public final field humanVerificationWebView Lme/proton/core/presentation/ui/webview/ProtonWebView;
@@ -122,41 +111,6 @@ public final class me/proton/core/humanverification/presentation/databinding/Dia
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/DialogHumanVerificationV3Binding;
 }
 
-public final class me/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationCaptchaBinding : androidx/viewbinding/ViewBinding {
-	public final field captchaWebView Lme/proton/core/presentation/ui/webview/ProtonWebView;
-	public final field progress Landroid/widget/ProgressBar;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationCaptchaBinding;
-	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroid/widget/FrameLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationCaptchaBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationCaptchaBinding;
-}
-
-public final class me/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEmailBinding : androidx/viewbinding/ViewBinding {
-	public final field emailEditText Lme/proton/core/presentation/ui/view/ProtonInput;
-	public final field getVerificationCodeButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field proceedButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field title Landroid/widget/TextView;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEmailBinding;
-	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEmailBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEmailBinding;
-}
-
-public final class me/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEnterCodeBinding : androidx/viewbinding/ViewBinding {
-	public final field requestReplacementButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field title Landroid/widget/TextView;
-	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
-	public final field verificationCodeEditText Lme/proton/core/presentation/ui/view/ProtonInput;
-	public final field verifyButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEnterCodeBinding;
-	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEnterCodeBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationEnterCodeBinding;
-}
-
 public final class me/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationHelpBinding : androidx/viewbinding/ViewBinding {
 	public final field helpSubtitle Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
@@ -167,20 +121,6 @@ public final class me/proton/core/humanverification/presentation/databinding/Fra
 	public fun getRoot ()Landroidx/coordinatorlayout/widget/CoordinatorLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationHelpBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationHelpBinding;
-}
-
-public final class me/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationSmsBinding : androidx/viewbinding/ViewBinding {
-	public final field callingCodeText Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;
-	public final field getVerificationCodeButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field header Landroid/widget/TextView;
-	public final field proceedButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
-	public final field smsEditText Lme/proton/core/presentation/ui/view/ProtonInput;
-	public final field title Landroid/widget/TextView;
-	public static fun bind (Landroid/view/View;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationSmsBinding;
-	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
-	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationSmsBinding;
-	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/humanverification/presentation/databinding/FragmentHumanVerificationSmsBinding;
 }
 
 public final class me/proton/core/humanverification/presentation/entity/HumanVerificationInput : android/os/Parcelable {
