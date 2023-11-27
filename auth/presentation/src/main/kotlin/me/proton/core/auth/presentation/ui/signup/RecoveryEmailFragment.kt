@@ -34,7 +34,7 @@ import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
-@ProductMetrics(group = "account.android.signup", flow = "mobile_signup_full")
+@ProductMetrics(group = "account.any.signup", flow = "mobile_signup_full")
 @ViewFocused(
     "user.recovery_method.focused",
     viewIds = ["email"]

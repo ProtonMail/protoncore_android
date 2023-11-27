@@ -57,7 +57,7 @@ import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
 @ProductMetrics(
-    group = "account.android.signup",
+    group = "account.any.signup",
     flow = "mobile_signup_full"
 )
 @ViewClicked(

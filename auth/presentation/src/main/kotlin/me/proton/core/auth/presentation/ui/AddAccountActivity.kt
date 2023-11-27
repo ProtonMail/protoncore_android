@@ -42,7 +42,7 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 @ProductMetrics(
-    group = "account.android.signup",
+    group = "account.any.signup",
     flow = "mobile_signup_full"
 )
 @ScreenDisplayed(event = "fe.add_account.displayed")

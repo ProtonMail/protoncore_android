@@ -485,7 +485,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         verify { telemetryManager.enqueue(null, capture(telemetryEventSlot)) }
         val telemetryEvent = telemetryEventSlot.captured
         assertEquals("be.signin.auth", telemetryEvent.name)
-        assertEquals("account.android.signup", telemetryEvent.group)
+        assertEquals("account.any.signup", telemetryEvent.group)
         assertEquals(
             mapOf("account_type" to "internal", "flow" to "mobile_signup_full", "result" to "success"),
             telemetryEvent.dimensions
@@ -539,7 +539,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         verify { telemetryManager.enqueue(null, capture(telemetryEventSlot)) }
         val telemetryEvent = telemetryEventSlot.captured
         assertEquals("be.signin.auth", telemetryEvent.name)
-        assertEquals("account.android.signup", telemetryEvent.group)
+        assertEquals("account.any.signup", telemetryEvent.group)
         assertEquals(
             mapOf("account_type" to "internal", "flow" to "mobile_signup_full", "result" to "failure"),
             telemetryEvent.dimensions

@@ -41,7 +41,7 @@ import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
-@ProductMetrics(group = "account.android.signup", flow = "mobile_signup_full")
+@ProductMetrics(group = "account.any.signup", flow = "mobile_signup_full")
 @ViewClicked(
     "user.recovery_method.clicked",
     viewIds = ["phone_country"]

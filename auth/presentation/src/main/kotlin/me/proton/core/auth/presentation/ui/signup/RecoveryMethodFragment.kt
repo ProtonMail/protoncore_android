@@ -53,7 +53,7 @@ import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.util.kotlin.exhaustive
 
-@ProductMetrics(group = "account.android.signup", flow = "mobile_signup_full")
+@ProductMetrics(group = "account.any.signup", flow = "mobile_signup_full")
 @ScreenDisplayed("fe.recovery_method.displayed")
 @ScreenClosed("user.recovery_method.closed")
 @ViewClicked(

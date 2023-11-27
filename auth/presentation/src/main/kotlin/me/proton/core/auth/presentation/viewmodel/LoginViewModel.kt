@@ -70,7 +70,7 @@ internal class LoginViewModel @Inject constructor(
     override val telemetryManager: TelemetryManager
 ) : ViewModel(), ProductMetricsDelegateAuth, ObservabilityContext, TelemetryContext {
 
-    override val productGroup: String = "account.android.signup"
+    override val productGroup: String = "account.any.signup"
     override val productFlow: String = "mobile_signup_full"
     override var userId: UserId?
         get() = savedStateHandle.get<String>(STATE_USER_ID)?.let { UserId(it) }

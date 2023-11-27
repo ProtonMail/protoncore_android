@@ -46,7 +46,7 @@ internal class RecoveryMethodViewModel @Inject constructor(
     override val telemetryManager: TelemetryManager
 ) : ProtonViewModel(), TelemetryContext, ProductMetricsDelegateAuth {
 
-    override val productGroup: String = "account.android.signup"
+    override val productGroup: String = "account.any.signup"
     override val productFlow: String = "mobile_signup_full"
 
     private val _recoveryMethodUpdate = MutableStateFlow(RecoveryMethodType.EMAIL)
