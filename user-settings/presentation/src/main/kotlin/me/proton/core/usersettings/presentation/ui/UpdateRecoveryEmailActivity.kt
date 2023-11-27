@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import me.proton.core.presentation.utils.normToast
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.ActivityUpdateRecoveryEmailBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
@@ -47,6 +48,9 @@ class UpdateRecoveryEmailActivity :
             UpdateRecoveryEmailFragment.KEY_UPDATE_RESULT, this@UpdateRecoveryEmailActivity
         ) { _, bundle ->
             val result = bundle.getParcelable<UpdateRecoveryEmailResult>(UpdateRecoveryEmailFragment.ARG_UPDATE_RESULT)
+            if (result?.result == true) {
+                normToast(getString(R.string.settings_recovery_email_success))
+            }
             val intent = Intent().putExtra(ARG_RESULT, result)
             setResult(Activity.RESULT_OK, intent)
             finish()
