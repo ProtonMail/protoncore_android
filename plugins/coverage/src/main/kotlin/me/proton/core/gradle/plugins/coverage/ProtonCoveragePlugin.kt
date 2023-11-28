@@ -171,7 +171,7 @@ public class ProtonCoveragePlugin : Plugin<Project> {
             .listFiles { _, name -> name.startsWith(DEFAULT_COBERTURA_BASENAME) }
             ?.forEach { coberturaFile ->
                 val sourceDir =
-                    layout.buildDirectory.asFile.get().resolve("src/main/kotlin").absolutePath
+                    layout.projectDirectory.asFile.resolve("src/main/kotlin").absolutePath
                 val updatedText = coberturaFile.readText()
                     .replace("<source>.</source>", "<source>${sourceDir}</source>")
                 coberturaFile.writeText(updatedText)
