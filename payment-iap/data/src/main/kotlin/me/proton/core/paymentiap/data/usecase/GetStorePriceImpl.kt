@@ -18,21 +18,23 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
+import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.firstPriceOrNull
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class GetStorePriceImpl @Inject constructor(
-    private val billingRepositoryProvider: Provider<GoogleBillingRepository>
+    private val billingRepositoryProvider: Provider<GoogleBillingRepository<Activity>>
 ) : GetStorePrice {
     override suspend fun invoke(planName: ProductId): ProductPrice? =
         billingRepositoryProvider.get().use { repository ->
-            repository.getProductsDetails(listOf(planName.id))?.firstOrNull()
+            repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
                 ?.firstPriceOrNull()?.let { price ->
                     GoogleProductPrice(
                         priceAmountMicros = price.priceAmountMicros,

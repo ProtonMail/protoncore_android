@@ -18,17 +18,22 @@
 
 package me.proton.core.paymentiap.data.usecase
 
+import android.app.Activity
 import com.android.billingclient.api.BillingClient.BillingResponseCode
+import com.android.billingclient.api.ProductDetails
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
+import me.proton.core.payment.domain.entity.GoogleProductDetails
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.paymentiap.domain.entity.unwrap
+import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.firstPriceOrNull
-import me.proton.core.paymentiap.domain.repository.BillingClientError
-import me.proton.core.paymentiap.domain.repository.GoogleBillingRepository
 import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -39,7 +44,7 @@ import kotlin.test.assertNull
 
 class GetStorePriceImplTest {
 
-    private lateinit var googleBillingRepository: GoogleBillingRepository
+    private lateinit var googleBillingRepository: GoogleBillingRepository<Activity>
     private lateinit var tested: GetStorePriceImpl
 
     @BeforeTest
@@ -65,14 +70,14 @@ class GetStorePriceImplTest {
     @Test
     fun `billing repository returns non empty`() = runTest {
         val testPlanName = ProductId("test-plan-name")
-        val productDetails = mockk<com.android.billingclient.api.ProductDetails>(relaxed = true)
+        val productDetails = mockk<ProductDetails>(relaxed = true)
         every { productDetails.firstPriceOrNull() } returns mockk {
             every { priceAmountMicros } returns 1000000
             every { formattedPrice } returns "CHF 100"
             every { priceCurrencyCode } returns "CHF"
         }
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
-            productDetails
+            productDetails.wrap()
         )
         val result = tested(testPlanName)
         assertNotNull(result)
@@ -84,10 +89,10 @@ class GetStorePriceImplTest {
     @Test
     fun `billing repository returns non empty and no prices`() = runTest {
         val testPlanName = ProductId("test-plan-name")
-        val productDetails = mockk<com.android.billingclient.api.ProductDetails>(relaxed = true)
+        val productDetails = mockk<ProductDetails>(relaxed = true)
         every { productDetails.firstPriceOrNull() } returns null
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
-            productDetails
+            productDetails.wrap()
         )
         val result = tested(testPlanName)
         assertNull(result)
