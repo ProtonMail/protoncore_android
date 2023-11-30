@@ -23,8 +23,8 @@ import javax.inject.Inject
 
 /** The order of preference, where the first item is the most preferred one. */
 private val paymentProviderPreference = arrayOf(
-    PaymentProvider.CardPayment,
-    PaymentProvider.GoogleInAppPurchase
+    PaymentProvider.GoogleInAppPurchase,
+    PaymentProvider.CardPayment
 )
 
 public class GetPreferredPaymentProvider @Inject constructor(

@@ -90,6 +90,6 @@ class GetPreferredPaymentProviderTest {
         val result = tested()
 
         // THEN
-        assertEquals(PaymentProvider.CardPayment, result)
+        assertEquals(PaymentProvider.GoogleInAppPurchase, result)
     }
 }
