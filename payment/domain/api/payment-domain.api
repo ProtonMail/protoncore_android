@@ -414,13 +414,17 @@ public final class me/proton/core/payment/domain/repository/BillingClientError :
 	public fun toString ()Ljava/lang/String;
 }
 
+public abstract interface class me/proton/core/payment/domain/repository/ConnectedBillingClientInterface {
+	public abstract fun launchBilling (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/GoogleBillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/payment/domain/repository/GoogleBillingRepository : java/lang/AutoCloseable {
 	public abstract fun acknowledgePurchase-udh31AY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun close ()V
 	public abstract fun destroy ()V
 	public abstract fun getProductsDetails (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
-	public abstract fun launchBillingFlow (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/GoogleBillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun launchBillingFlow (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

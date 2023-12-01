@@ -184,7 +184,7 @@ internal class GoogleBillingRepositoryImplTest {
         mockClientResult {
             every { launchBillingFlow(any(), any()) } returns BillingResult()
         }
-        tested.use { it.launchBillingFlow(mockk(), mockk<BillingFlowParams>().wrap()) }
+        tested.use { it.launchBillingFlow(mockk(relaxed = true)) } //mockk<BillingFlowParams>().wrap()
         assertTrue(assertSingleResult("launchBillingFlow").isSuccess)
     }
 
@@ -222,18 +222,6 @@ internal class GoogleBillingRepositoryImplTest {
         val result = tested.use { it.querySubscriptionPurchases() }.map { it.unwrap() }
         assertContentEquals(result, purchaseList)
         assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
-    }
-
-    @Test
-    fun `fails to connect`() {
-        coEvery { factory.connectedBillingClient.withClient<BillingResult>(any()) } throws BillingClientError(
-            BillingResponseCode.BILLING_UNAVAILABLE, "test error"
-        )
-        runTest {
-            assertFailsWith<BillingClientError> {
-                tested.use { it.launchBillingFlow(mockk(), mockk()) }
-            }
-        }
     }
 
     @Test

@@ -19,6 +19,7 @@
 package me.proton.core.paymentiap.data.repository
 
 import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.queryPurchasesAsync
@@ -31,7 +32,9 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
+import me.proton.core.payment.domain.entity.GoogleBillingFlowParams
 import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.paymentiap.domain.entity.wrap
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -157,5 +160,20 @@ internal class ConnectedBillingClientTest {
             )
         }
         coVerify(exactly = 1) { billingClient.launchBillingFlow(any(), any()) }
+    }
+
+    @Test
+    fun `launch billing`() = runTest {
+        val job = launch(start = CoroutineStart.UNDISPATCHED) {
+            tested.withClient { it.queryPurchasesAsync(mockk<QueryPurchasesParams>(), mockk()) }
+        }
+        verify(exactly = 1) { billingClient.startConnection(tested) }
+
+        tested.onBillingSetupFinished(BillingResult())
+        tested.launchBilling(mockk(relaxed = true), mockk<BillingFlowParams>().wrap())
+        job.join()
+        coVerify(exactly = 1) {
+            billingClient.launchBillingFlow(any(), any())
+        }
     }
 }

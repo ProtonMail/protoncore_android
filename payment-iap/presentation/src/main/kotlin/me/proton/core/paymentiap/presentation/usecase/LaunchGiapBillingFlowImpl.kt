@@ -51,9 +51,11 @@ public class LaunchGiapBillingFlowImpl @Inject constructor(
         googleProductId: ProductId,
         params: GoogleBillingFlowParams
     ): LaunchGiapBillingFlow.Result {
-        return googleBillingRepository.get().use {
-            it.launchBillingFlow(activity, params)
-            val (googleBillingResult, purchases) = it.purchaseUpdated.first()
+        return googleBillingRepository.get().use { repository ->
+            repository.launchBillingFlow {
+                it.launchBilling(activity, params)
+            }
+            val (googleBillingResult, purchases) = repository.purchaseUpdated.first()
             onPurchasesUpdated(googleBillingResult, googleProductId, purchases)
         }
     }

@@ -49,6 +49,7 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.ConnectedBillingClientInterface
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
@@ -115,10 +116,9 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
     }
 
     override suspend fun launchBillingFlow(
-        activity: Activity,
-        billingFlowParams: GoogleBillingFlowParams
+        block: suspend (ConnectedBillingClientInterface<Activity>) -> Unit
     ): Unit = result("launchBillingFlow") {
-        connectedBillingClient.withClient { it.launchBillingFlow(activity, billingFlowParams.unwrap()) }
+        block(connectedBillingClient)
     }
 
     override suspend fun querySubscriptionPurchases(): List<GooglePurchase> = result("querySubscriptionPurchases") {
@@ -144,7 +144,7 @@ internal interface ConnectedBillingClientFactory {
 internal class ConnectedBillingClient @AssistedInject constructor(
     billingClientFactory: BillingClientFactory,
     @Assisted private val purchasesUpdatedListener: PurchasesUpdatedListener
-) : BillingClientStateListener {
+) : ConnectedBillingClientInterface<Activity>, BillingClientStateListener {
     private val billingClient = billingClientFactory(purchasesUpdatedListener)
     private val connectionState = MutableStateFlow<BillingClientConnectionState>(BillingClientConnectionState.Idle)
 
@@ -156,6 +156,10 @@ internal class ConnectedBillingClient @AssistedInject constructor(
     suspend fun <T> withClient(body: suspend (BillingClient) -> T): T {
         waitForConnection()
         return body(billingClient)
+    }
+
+    override suspend fun launchBilling(activity: Activity, billingFlowParams: GoogleBillingFlowParams) {
+        withClient { it.launchBillingFlow(activity, billingFlowParams.unwrap()) }
     }
 
     override fun onBillingServiceDisconnected() {

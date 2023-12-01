@@ -16,8 +16,7 @@ public final class me/proton/core/paymentiap/data/repository/GoogleBillingReposi
 	public fun destroy ()V
 	public fun getProductsDetails (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
-	public fun launchBillingFlow (Landroid/app/Activity;Lme/proton/core/payment/domain/entity/GoogleBillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public synthetic fun launchBillingFlow (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/GoogleBillingFlowParams;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun launchBillingFlow (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

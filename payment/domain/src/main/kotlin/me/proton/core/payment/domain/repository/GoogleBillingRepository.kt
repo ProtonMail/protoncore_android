@@ -51,7 +51,7 @@ public interface GoogleBillingRepository<A: Any> : AutoCloseable {
     /**
      * @throws BillingClientError
      */
-    public suspend fun launchBillingFlow(activity: A, billingFlowParams: GoogleBillingFlowParams)
+    public suspend fun launchBillingFlow(block: suspend (ConnectedBillingClientInterface<A>) -> Unit)
 
     /** Query for active subscriptions.
      * @throws BillingClientError
@@ -74,3 +74,7 @@ public data class BillingClientError(
     public val responseCode: Int?,
     public val debugMessage: String?
 ) : Throwable("responseCode: $responseCode message: $debugMessage")
+
+public interface ConnectedBillingClientInterface<A : Any> {
+    public suspend fun launchBilling(activity: A, billingFlowParams: GoogleBillingFlowParams)
+}

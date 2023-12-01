@@ -77,7 +77,15 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
         coEvery { billingRepository.getProductsDetails(any()) } coAnswers {
             result("getProductsDetails") {
                 firstArg<List<ProductId>>().map { id ->
-                    mockk<ProductDetails> { every { productId } returns id.id }.wrap()
+                    mockk<ProductDetails> {
+                        every { productId } returns id.id
+                        every { subscriptionOfferDetails } returns listOf(mockk {
+                            every { offerToken } returns "offer-token"
+                        })
+                        every { oneTimePurchaseOfferDetails } returns mockk(relaxed = true)
+                        every { zza() } returns "packageName"
+                        every { productType } returns BillingClient.ProductType.SUBS
+                    }.wrap()
                 }
             }
         }
@@ -278,5 +286,35 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
             CheckoutGiapBillingPurchaseTotal.PurchaseStatus.incorrectCustomerId,
             dataSlot.captured.Labels.status
         )
+    }
+
+    @Test
+    fun `launch billing flow`() = coroutinesTest {
+        // GIVEN
+        val productId = "test-plan-name"
+        val billingInput = mockk<BillingInput> {
+            every { plan.vendors } returns mapOf(
+                AppStore.GooglePlay to PaymentVendorDetails("", productId)
+            )
+        }
+        coEvery { billingRepository.launchBillingFlow(any()) } returns Unit
+        coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
+        // WHEN
+        val recordedStates = mutableListOf<BillingIAPViewModel.State>()
+        val collectJob = launch {
+            tested.billingIAPState.collect {
+                recordedStates.add(it)
+            }
+        }
+        tested.queryProductDetails("test-plan-name").join()
+        tested.makePurchase(mockk(), billingInput).join()
+
+        // THEN
+        collectJob.cancel()
+        assertEquals(
+            BillingIAPViewModel.State.Success.PurchaseFlowLaunched,
+            tested.billingIAPState.value
+        )
+//        assertEquals(2, recordedStates.size)
     }
 }

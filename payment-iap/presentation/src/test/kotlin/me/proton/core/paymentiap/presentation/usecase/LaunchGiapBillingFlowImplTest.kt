@@ -70,7 +70,7 @@ class LaunchGiapBillingFlowImplTest {
         val responseCode = BillingResponseCode.SERVICE_UNAVAILABLE
         val billingResult = makeBillingResult(responseCode)
         val purchaseUpdates = flowOf(Pair(billingResult, null))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN & THEN
@@ -86,7 +86,7 @@ class LaunchGiapBillingFlowImplTest {
         val responseCode = BillingResponseCode.OK
         val billingResult = makeBillingResult(responseCode)
         val purchaseUpdates = flowOf(Pair(billingResult, null))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN
@@ -102,7 +102,7 @@ class LaunchGiapBillingFlowImplTest {
         val responseCode = BillingResponseCode.OK
         val billingResult = makeBillingResult(responseCode)
         val purchaseUpdates = flowOf(Pair(billingResult, emptyList<GooglePurchase>()))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN
@@ -125,7 +125,7 @@ class LaunchGiapBillingFlowImplTest {
             }
         }.wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN
@@ -146,7 +146,7 @@ class LaunchGiapBillingFlowImplTest {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
         }.wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN & THEN
@@ -168,7 +168,7 @@ class LaunchGiapBillingFlowImplTest {
             }
         }.wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN
@@ -191,7 +191,7 @@ class LaunchGiapBillingFlowImplTest {
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
         }.wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
-        coJustRun { googleBillingRepository.launchBillingFlow(any(), any()) }
+        coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
 
         // WHEN

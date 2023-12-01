@@ -258,7 +258,11 @@ internal class BillingIAPViewModel @Inject constructor(
             .setObfuscatedAccountId(customerId)
             .build()
 
-        billingRepository.launchBillingFlow(activity, billingFlowParams.wrap())
+        billingRepository.launchBillingFlow {
+            viewModelScope.launch {
+                it.launchBilling(activity, billingFlowParams.wrap())
+            }
+        }
         emit(State.Success.PurchaseFlowLaunched)
     }
 
