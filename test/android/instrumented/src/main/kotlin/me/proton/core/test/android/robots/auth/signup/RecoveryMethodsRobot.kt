@@ -99,13 +99,13 @@ class RecoveryMethodsRobot : CoreRobot() {
 
     class Verify : CoreVerify() {
         fun recoveryMethodsElementsDisplayed() {
-            view.withId(R.id.email).checkDisplayed()
+            view.isInputField(R.id.email).checkDisplayed()
             view.withText(RecoveryMethodType.EMAIL.name).checkDisplayed()
             view.withText(RecoveryMethodType.PHONE.name).checkDisplayed()
         }
 
         fun onlyEmailRecoveryDisplayed() {
-            view.withId(R.id.email).checkDisplayed()
+            view.isInputField(R.id.email).checkDisplayed()
             view.withId(R.id.recoveryOptions).checkNotDisplayed()
         }
 
