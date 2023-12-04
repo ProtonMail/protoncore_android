@@ -61,7 +61,7 @@
   <string name="auth_2fa_action">Auðkenna</string>
   <string name="auth_2fa_use_recovery_code">Nota endurheimtukóða</string>
   <string name="auth_2fa_use_2fa_code">Nota tveggja-þátta kóða</string>
-  <string name="auth_2fa_error_empty_code">Enter the 6-digit code.</string>
+  <string name="auth_2fa_error_empty_code">Settu inn 6-stafa kóðann.</string>
   <string name="auth_mailbox_title">Aflæstu pósthólfinu þínu</string>
   <string name="auth_mailbox_password_label">Lykilorð á pósthólfi</string>
   <string name="auth_mailbox_unlock_action">Aflæsa</string>
@@ -117,7 +117,7 @@
   <string name="auth_signup_repeat_password">Endurtaka lykilorð</string>
   <string name="auth_signup_recovery_method_title">Stilltu endurheimtuaðferð (valfrjálst)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Stilltu endurheimtuaðferð</string>
-  <string name="auth_signup_recovery_method_subtitle">We will send recovery instructions to this email or phone number if you get locked out of your account.</string>
+  <string name="auth_signup_recovery_method_subtitle">Við munum senda endurheimtarleiðbeiningar á þetta netfang eða símanúmer ef þú læsist úti á reikningnum þínum.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">We will send recovery instructions to this email if you get locked out of your account.</string>
   <string name="auth_signup_recovery_method_email">Tölvupóstur</string>
   <string name="auth_signup_recovery_method_phone">Sími</string>

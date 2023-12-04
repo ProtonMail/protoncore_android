@@ -22,7 +22,7 @@
   <string name="settings_recovery_email_current">Current recovery email address</string>
   <string name="settings_recovery_email_new">New recovery email address</string>
   <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
-  <string name="settings_recovery_email_new_hint">Enter email address</string>
+  <string name="settings_recovery_email_new_hint">آدرس ایمیل را وارد کنید</string>
   <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
   <string name="settings_save">ذخیره</string>
   <string name="settings_password_required">گذرواژه ورود خود را وارد کنید</string>
@@ -32,8 +32,8 @@
   <string name="settings_validation_email">ایمیل نامعتبر است.</string>
   <string name="settings_general_error">خطایی رخ داد.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Change password</string>
-  <string name="settings_password_management_change_mailbox_password">Change mailbox password</string>
+  <string name="settings_password_management_change_login_password">تغییر گذرواژه</string>
+  <string name="settings_password_management_change_mailbox_password">تغییر گذرواژه نامه‌دان</string>
   <string name="settings_password_management_header">مدیریت گذرواژه</string>
   <string name="settings_login_password_hint_current">گذرواژه ورود کنونی</string>
   <string name="settings_login_password_hint_new">گذرواژه ورود جدید</string>

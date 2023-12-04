@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">Velg en plan</string>
+  <string name="plans_select_a_plan_subtitle">En plan for alle Proton-tjenester</string>
+  <string name="plans_fetching_general_error">En feil oppstod ved henting av planer.</string>
+  <string name="plans_payment_error">En betalingsfeil oppstod. Vennligst forsøk igjen eller opprett en gratis plan.</string>
+  <string name="plans_free_name">Free</string>
+  <string name="plan_price_monthly">per måned</string>
+  <string name="plan_price_annually">per år</string>
+  <string name="plans_current_plan">Gjeldende plan</string>
+  <string name="plans_upgrade_plan">Oppgrader planen din</string>
+  <string name="plans_subscription">Abonnement</string>
+  <string name="plans_renewal_date">Planen din vil automatisk fornyes den &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Planen din utløper den &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Betal månedlig</string>
+  <string name="plans_pay_annually">Betal årlig</string>
+  <string name="plans_pay_biennially">Betal hvert andre år</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Betal for %d måned</item>
+    <item quantity="other">Betal for %d måneder</item>
+  </plurals>
+  <string name="plans_billed_yearly">*Faktureres årlig på %s</string>
+  <string name="plans_billed_monthly">Faktureres månedlig</string>
+  <string name="plans_billing_monthly">For 1 måned</string>
+  <string name="plans_billing_yearly">For 1 år</string>
+  <string name="plans_billing_two_years">For 2 år</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">For %d måned</item>
+    <item quantity="other">For %d måneder</item>
+  </plurals>
+  <string name="plans_upgrade_your_plan">Oppgrader planen din</string>
+  <string name="plans_proton_for_free">Få Proton gratis</string>
+  <string name="plans_get_proton">Få %s</string>
+  <string name="plans_manage_your_subscription">Administrer abonnementet ditt på <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s av %2$s</string>
+  <string name="plans_payments_info_not_available">i/t</string>
+  <string name="plans_manage_your_subscription_google">Abonnementet ditt er forvaltet av Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Abonnementet ditt kan ikke forvaltes med mobilappen.</string>
+  <string name="plans_autorenew_subscriptions">Bare årsabonnementer med automatisk fornyelse er tilgjengelige via denne appen.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Du kan ikke oppgradere fra mobilappen.</string>
+  <string name="plans_no_upgrade_available">Det finnes for øyeblikket ingen tilgjengelige oppgraderinger.</string>
+  <string name="plans_limited_offer">Tidsbegrenset tilbud</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# lagringsplass</item>
+    <item quantity="other">#proton_storage# lagringsplass</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Opp til #proton_storage# lagringsplass</item>
+    <item quantity="other">Opp til #proton_storage# lagringsplass</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# lagringsplass / bruker</item>
+    <item quantity="other">#proton_storage# lagringsplass / bruker</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# e-postadresse</item>
+    <item quantity="other">#proton_addresses# e-postadresser</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# adresse / bruker</item>
+    <item quantity="other">#proton_addresses# adresser / bruker</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">%d av #proton_addresses# adresse</item>
+    <item quantity="other">%d av #proton_addresses# adresser</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">Støtte for #proton_domains# egendefinet e-postdomene</item>
+    <item quantity="other">Støtte for #proton_domains# egendefinerte e-postdomener</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# personlig kalender</item>
+    <item quantity="other">#proton_calendars# personlige kalendere</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">%d av #proton_calendars# kalender</item>
+    <item quantity="other">%d av #proton_calendars# kalendere</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">Gratis VPN på en enkelt enhet</item>
+    <item quantity="other">Høyhastighets VPN på #proton_vpn# enheter</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# høyhastighets VPN-tilkobling</item>
+    <item quantity="other">#proton_vpn# høyhastighets VPN-tilkoblinger</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# bruker</item>
+    <item quantity="other">#proton_users# brukere</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">%d av #proton_users# bruker</item>
+    <item quantity="other">%d av #proton_users# brukere</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plans headers -->
+  <string name="plan_id_free_header">Det grunnleggende for privat og sikker kommunikasjon.</string>
+  <string name="plan_id_plus_header">Postboks med alle funksjoner og avansert beskyttelse.</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 land</string>
+  <string name="plan_id_vpnbasic_high_speed">Høy hastighet</string>
+  <string name="plan_id_vpnplus_adblock">Annonseblokkering (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Støtte for strømmetjenester</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 land</string>
+  <string name="plan_id_vpnplus_highest_speed">Høyeste hastighet</string>
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Flerbruker støtte</string>
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-post med avanserte funksjoner for daglig kommunikasjon.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Ditt personvern og sikkerhet er vår prioritet.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Sikker skylagring som lar deg lagre, synkronisere og dele filer lett og trygt.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Omfattende personvern og sikkerhet med alle Proton-tjenester kombinert.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">For passordadministrasjon og identitetsbeskyttelse på neste nivå.</string>
+  <!-- endregion -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Ubegrenset antall mapper, etiketter og filtre</string>
+  <string name="highest_vpn_speed" comment="new_plans">Høyeste VPN-hastighet</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ tjenere i 63 land</string>
+  <string name="ad_blocker" comment="new_plans">Innebygget annonseblokkering (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Tilgang til strømmetjenester globalt</string>
+  <string name="secure_core" comment="new_plans">Secure Core-tjenere</string>
+  <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="unlimited_logins_and_notes">Ubegrenset pålogginger og notater</string>
+  <string name="unlimited_devices">Ubegrenset antall enheter</string>
+  <string name="integrated_2fa_authenticator">Integrert 2FA-autentisering</string>
+  <string name="multiple_vaults">Flere hvelv</string>
+  <string name="unlimited_email_alias">Ubegrenset antall Hide My Email-aliaser</string>
+  <string name="custom_email_alias_domains">Egendefinerte domener for e-postaliaser</string>
+  <string name="multiple_forwarding_mailboxes">Flere postbokser for videresending</string>
+  <string name="priority_support">Prioritert støtte</string>
+  <string name="one_vault">1 hvelv</string>
+  <string name="ten_hide_my_email_aliases">10 Hide My Email-aliaser</string>
+  <!-- endregion -->
+</resources>

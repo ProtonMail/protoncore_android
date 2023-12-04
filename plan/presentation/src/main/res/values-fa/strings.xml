@@ -48,7 +48,7 @@
   <string name="plans_upgrade_your_plan">طرح خود را ارتقا دهید</string>
   <string name="plans_proton_for_free">دریافت رایگان Proton</string>
   <string name="plans_get_proton">%s را دریافت کنید</string>
-  <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">اشتراک خود را در <a href="https://account.proton.me">account.proton.me</a> مدیریت کنید</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s of %2$s</string>
   <string name="plans_payments_info_not_available">در دسترس/ نیست</string>
   <string name="plans_manage_your_subscription_google">اشتراک شما توسط Google Play مدیریت میشود.</string>
@@ -59,56 +59,56 @@
   <string name="plans_limited_offer">Limited time offer</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# storage</item>
-    <item quantity="other">#proton_storage# storage</item>
+    <item quantity="one">#proton_storage# فضای ذخیره سازی</item>
+    <item quantity="other">#proton_storage# فضای ذخیره سازی</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Up to #proton_storage# storage</item>
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="one">فضای ذخیر سازی تا #proton_storage#</item>
+    <item quantity="other">فضای ذخیر سازی تا #proton_storage#</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# storage / user</item>
-    <item quantity="other">#proton_storage# storage / user</item>
+    <item quantity="one">#proton_storage# فضای ذخیره سازی / کاربر</item>
+    <item quantity="other">#proton_storage# فضای ذخیره سازی / کاربر</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# email address</item>
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="one">#proton_addresses# آدرس ایمیل</item>
+    <item quantity="other">#proton_addresses# آدرس ایمیل</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# address / user</item>
     <item quantity="other">#proton_addresses# addresses / user</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_addresses# address</item>
-    <item quantity="other">%d of #proton_addresses# addresses</item>
+    <item quantity="one">%d از #proton_addresses# آدرس</item>
+    <item quantity="other">%d از #proton_addresses# آدرس</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Support for #proton_domains# custom email domain</item>
-    <item quantity="other">Support for #proton_domains# custom email domains</item>
+    <item quantity="one">پشتیبانی از #proton_domains# دامنه ایمیل سفارشی</item>
+    <item quantity="other">پشتیبانی از #proton_domains# دامنه ایمیل سفارشی</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# personal calendar</item>
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="one">#proton_calendars# تقویم شخصی</item>
+    <item quantity="other">#proton_calendars# تقویم شخصی</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_calendars# calendar</item>
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="one">%d از #proton_calendars# تقویم</item>
+    <item quantity="other">%d از #proton_calendars# تقویم</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">VPN رایگان در یک دستگاه</item>
     <item quantity="other">VPN پرسرعت بر روی #proton_vpn# دستگاه</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# اتصال VPN پرسرعت</item>
+    <item quantity="other">#proton_vpn# اتصالات VPN پرسرعت</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# user</item>
-    <item quantity="other">#proton_users# users</item>
+    <item quantity="one">#proton_users# کاربر</item>
+    <item quantity="other">#proton_users# کاربران</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_users# user</item>
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="one">%d از #proton_users# کاربر</item>
+    <item quantity="other">%d از #proton_users# کاربر</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -128,7 +128,7 @@
   <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">ایمیل امن با امکانات پیشرفته برای ارتباطات روزمره شما.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">حریم خصوصی و امنیت شما اولویت ماست.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">ذخیره‌سازی ابری امن که به شما اجازه می‌دهد فایل‌ها را به‌آسانی و به‌طور مطمئن نگهداری، همگام‌سازی و اشتراک‌گذاری کنید.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">حریم خصوصی و امنیت جامع با ترکیبی از تمام خدمات Proton.</string>
   <string name="plan_id_pass2023_header" comment="new_plans">For next-level password management and identity protection.</string>
   <!-- endregion -->
@@ -146,15 +146,15 @@
   <string name="secure_core" comment="new_plans">سرورهای Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor روی VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Unlimited logins and notes</string>
-  <string name="unlimited_devices">Unlimited devices</string>
+  <string name="unlimited_logins_and_notes">ورودها و یادداشت‌های نامحدود</string>
+  <string name="unlimited_devices">دستگاه های نامحدود</string>
   <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
   <string name="multiple_vaults">Multiple vaults</string>
   <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
   <string name="custom_email_alias_domains">Custom domains for email aliases</string>
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
-  <string name="priority_support">Priority support</string>
+  <string name="priority_support">اولویت پشتیبانی</string>
   <string name="one_vault">1 vault</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
+  <string name="ten_hide_my_email_aliases">۱۰ پنهان‌سازی نام‌های مستعار ایمیل</string>
   <!-- endregion -->
 </resources>

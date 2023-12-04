@@ -46,6 +46,6 @@
   <string name="presentation_general_connection_error">اتصال به سرور امکان‌پذیر نیست.</string>
   <string name="presentation_check_your_connection">اتصال خود را بررسی کنید</string>
   <string name="presentation_connectivity_issues">اشکال در اتصال</string>
-  <string name="presentation_field_required">This field is required.</string>
-  <string name="presentation_error_general">An error occurred.</string>
+  <string name="presentation_field_required">این قسمت الزامی است.</string>
+  <string name="presentation_error_general">خطایی رخ داد.</string>
 </resources>

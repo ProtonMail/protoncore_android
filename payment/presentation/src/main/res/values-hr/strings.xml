@@ -48,7 +48,7 @@
   <string name="payments_security_code">Sigurnosni kȏd</string>
   <string name="payments_postal_code">ZIP code</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>
-  <string name="payments_expiration_date_hint">MM/YY</string>
+  <string name="payments_expiration_date_hint">MM/GG</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Država</string>
   <string name="payments_paying_in_process">Paying</string>

@@ -59,20 +59,20 @@
   <string name="plans_limited_offer">Limited time offer</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# storage</item>
-    <item quantity="other">#proton_storage# storage</item>
+    <item quantity="one">#proton_storage# geymslurými</item>
+    <item quantity="other">#proton_storage# geymslurými</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="one">Up to #proton_storage# storage</item>
-    <item quantity="other">Up to #proton_storage# storage</item>
+    <item quantity="one">Allt að #proton_storage# geymslupláss</item>
+    <item quantity="other">Allt að #proton_storage# geymslupláss</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# storage / user</item>
     <item quantity="other">#proton_storage# storage / user</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# email address</item>
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="one">#proton_addresses# netfang</item>
+    <item quantity="other">#proton_addresses# netföng</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# address / user</item>
@@ -87,28 +87,28 @@
     <item quantity="other">Support for #proton_domains# custom email domains</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
-    <item quantity="one">#proton_calendars# personal calendar</item>
-    <item quantity="other">#proton_calendars# personal calendars</item>
+    <item quantity="one">#proton_calendars# persónulegt dagatal</item>
+    <item quantity="other">#proton_calendars# persónuleg dagatöl</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_calendars# calendar</item>
-    <item quantity="other">%d of #proton_calendars# calendars</item>
+    <item quantity="one">%d af #proton_calendars# dagatali</item>
+    <item quantity="other">%d af #proton_calendars# dagatölum</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Free VPN on a single device</item>
-    <item quantity="other">High-speed VPN on #proton_vpn# devices</item>
+    <item quantity="one">Frítt VPN á einu tæki</item>
+    <item quantity="other">Háhraða VPN á #proton_vpn# tækjum</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# high-speed VPN connection</item>
-    <item quantity="other">#proton_vpn# high-speed VPN connections</item>
+    <item quantity="one">#proton_vpn# háhraða VPN tenging</item>
+    <item quantity="other">#proton_vpn# háhraða VPN tengingar</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
-    <item quantity="one">#proton_users# user</item>
-    <item quantity="other">#proton_users# users</item>
+    <item quantity="one">#proton_users# notandi</item>
+    <item quantity="other">#proton_users# notendur</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d of #proton_users# user</item>
-    <item quantity="other">%d of #proton_users# users</item>
+    <item quantity="one">%d af #proton_users# notanda</item>
+    <item quantity="other">%d af #proton_users# notendum</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -126,7 +126,7 @@
   <string name="plan_id_professional_multiuser">Fjölnotendastuðningur</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Secure email with advanced features for your everyday communications.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Öruggur tölvupóstur með háþróuðum eiginleikum fyrir dagleg samskipti þín.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Your privacy and security are our priority.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Secure cloud storage that lets you store, sync and share files easily and securely.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Comprehensive privacy and security with all Proton services combined.</string>
@@ -139,10 +139,10 @@
   </string-array>
   <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Ótakmarkaðar möppur, merkimiðar og síur</string>
-  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
+  <string name="highest_vpn_speed" comment="new_plans">Hámarks VPN hraði</string>
   <string name="servers_in_countries" comment="new_plans">1500+ netþjónar í 63 löndum</string>
   <string name="ad_blocker" comment="new_plans">Innbyggður auglýsingabani (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
+  <string name="streaming_services_access" comment="new_plans">Aðgangur að streymisþjónustu um allan heim</string>
   <string name="secure_core" comment="new_plans">Öruggir Core netþjónar</string>
   <string name="tor_vpn" comment="new_plans">Tor yfir VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
@@ -153,7 +153,7 @@
   <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
   <string name="custom_email_alias_domains">Custom domains for email aliases</string>
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
-  <string name="priority_support">Priority support</string>
+  <string name="priority_support">Forgangsstuðningur</string>
   <string name="one_vault">1 vault</string>
   <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
   <!-- endregion -->

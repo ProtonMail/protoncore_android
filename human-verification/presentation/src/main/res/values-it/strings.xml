@@ -26,9 +26,9 @@
   <string name="human_verification_enter_code_subtitle_already_have_code">Inserisci il codice di verifica che già possiedi:</string>
   <string name="human_verification_option_captcha">CAPTCHA</string>
   <string name="human_verification_option_email">Email</string>
-  <string name="human_verification_option_email_subtitle">La tua email verrà utilizzata solo per questa verifica una tantum. Se non trovi l\'email nella posta in arrivo, controlla la cartella spam.</string>
+  <string name="human_verification_option_email_subtitle">La tua email verrà usata solamente per questa verifica una tantum. Se non trovi l\'email nella posta in arrivo, controlla la cartella spam.</string>
   <string name="human_verification_option_sms">Numero di telefono</string>
-  <string name="human_verification_option_sms_subtitle">Il tuo numero di telefono sarà utilizzato solo per questa verifica una tantum.</string>
+  <string name="human_verification_option_sms_subtitle">Il tuo numero di telefono sarà usato solamente per questa verifica una tantum.</string>
   <string name="human_verification_get_verification_code">Ottieni il codice di verifica</string>
   <string name="human_verification_already_have_code">Ho già un codice</string>
   <string name="human_verification_request_replacement_code">Non hai ricevuto il codice?</string>
@@ -36,8 +36,8 @@
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Hai bisogno di aiuto con la verifica umana?</string>
   <string name="human_verification_code">Codice di verifica</string>
-  <string name="human_verification_code_request_new_code_title">Richiedere nuovo codice?</string>
-  <string name="human_verification_code_request_new_code_action">Richiedi nuovo codice</string>
+  <string name="human_verification_code_request_new_code_title">Richiedere un nuovo codice?</string>
+  <string name="human_verification_code_request_new_code_action">Richiedi un nuovo codice</string>
   <string name="human_verification_code_request_new_code">Ottieni un codice sostitutivo inviato a %s.</string>
   <string name="email">Email</string>
   <string name="email_hint">email@esempio.it</string>
@@ -48,8 +48,8 @@
   <string name="human_verification_help_manual">Se stai avendo problemi con la creazione del tuo account, chiedi un invito e ti risponderemo entro 1 giorno lavorativo.</string>
   <string name="human_verification_help_website_title">Visita il nostro Centro Assistenza</string>
   <string name="human_verification_help_website">Scopri di più sulla verifica umana e sul motivo per cui la chiediamo.</string>
-  <string name="human_verification_sending_failed">Invio del codice di verifica non riuscito. Per favore riprova.</string>
-  <string name="human_verification_incorrect_code">Codice errato. Per favore riprova.</string>
+  <string name="human_verification_sending_failed">Invio del codice di verifica non riuscito. Riprova.</string>
+  <string name="human_verification_incorrect_code">Codice errato. Riprova.</string>
   <string name="human_verification_resent_code">Ti abbiamo inviato un altro codice.</string>
   <string name="human_verification_captcha_failed">Verifica CAPTCHA non riuscita. Riprova un\'altra volta o scegli un\'altra opzione di verifica.</string>
   <string name="human_verification_captcha_no_connectivity">Nessuna connessione. Impossibile caricare CAPTCHA.</string>

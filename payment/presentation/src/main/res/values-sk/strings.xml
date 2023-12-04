@@ -44,7 +44,7 @@
   <string name="payments_payment_details">Platobné údaje</string>
   <string name="payments_card_name">Meno na karte</string>
   <string name="payments_card_number">Číslo karty</string>
-  <string name="payments_expiration_date">Dátum exspirácie</string>
+  <string name="payments_expiration_date">Koniec platnosti</string>
   <string name="payments_security_code">Bezpečnostný kód</string>
   <string name="payments_postal_code">PSČ</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>

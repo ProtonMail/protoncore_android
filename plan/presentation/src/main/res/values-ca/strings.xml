@@ -33,8 +33,8 @@
   <string name="plans_pay_annually">Pagament anual</string>
   <string name="plans_pay_biennially">Pagament cada 2 anys</string>
   <plurals name="plans_pay_other">
-    <item quantity="one">Pay for %d month</item>
-    <item quantity="other">Pay for %d months</item>
+    <item quantity="one">Pagament per %d mes</item>
+    <item quantity="other">Pagament per %d mesos</item>
   </plurals>
   <string name="plans_billed_yearly">*Facturat anualment a %s</string>
   <string name="plans_billed_monthly">Facturat mensualment</string>

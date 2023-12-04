@@ -46,6 +46,6 @@
   <string name="presentation_general_connection_error">Gat ekki tengst við þjón.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
-  <string name="presentation_field_required">This field is required.</string>
-  <string name="presentation_error_general">An error occurred.</string>
+  <string name="presentation_field_required">Þessi reitur er nauðsynlegur.</string>
+  <string name="presentation_error_general">Villa kom upp.</string>
 </resources>

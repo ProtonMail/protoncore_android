@@ -76,9 +76,9 @@
     <item quantity="other">#proton_storage# storage / user</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# email address</item>
-    <item quantity="few">#proton_addresses# email addresses</item>
-    <item quantity="other">#proton_addresses# email addresses</item>
+    <item quantity="one">#proton_addresses# adresa e-pošte</item>
+    <item quantity="few">#proton_addresses# adrese e-pošte</item>
+    <item quantity="other">#proton_addresses# adrese e-pošte</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="one">#proton_addresses# address / user</item>
@@ -168,8 +168,8 @@
   <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
   <string name="custom_email_alias_domains">Custom domains for email aliases</string>
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
-  <string name="priority_support">Priority support</string>
-  <string name="one_vault">1 vault</string>
+  <string name="priority_support">Prioritetna podrška</string>
+  <string name="one_vault">1 trezor</string>
   <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
   <!-- endregion -->
 </resources>

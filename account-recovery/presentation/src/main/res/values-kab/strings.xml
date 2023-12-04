@@ -26,7 +26,7 @@
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Cancel password reset?</string>
   <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
-  <string name="account_recovery_cancel_password_label">Current password</string>
+  <string name="account_recovery_cancel_password_label">Awal uffir amiran</string>
   <string name="account_recovery_cancel_password_placeholder">Password</string>
   <string name="account_recovery_cancel_now">Cancel password reset</string>
   <string name="account_recovery_cancel_back">Back</string>

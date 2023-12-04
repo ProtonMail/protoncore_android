@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">Wachtwoordherstel aangevraagd</string>
+  <string name="account_recovery_grace_period_info_title">Wachtwoord reset aangevraagd</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="one">Een wachtwoordherstel is aangevraagd voor <b>%1$s</b>. U kunt uw wachtwoord wijzigen over %2$d uur.\n\nAls u dit niet heeft aangevraagd, annuleer het nu.</item>
     <item quantity="other">Een wachtwoordherstel is aangevraagd voor <b>%1$s</b>. U kunt uw wachtwoord wijzigen over %2$d uur.\n\nAls u dit niet heeft aangevraagd, annuleer het nu.</item>

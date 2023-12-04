@@ -17,10 +17,10 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">使用 Proton 来保护您的隐私</string>
+  <string name="welcome_title">使用 Proton 系列产品来捍卫您的隐私</string>
   <string name="welcome_subtitle">我们依靠加密机制保护个人隐私，让您的数据真正归您所有。</string>
   <string name="welcome_subtitle_mail">加密邮件保护您的通讯隐私，打造您的专属收件箱。</string>
-  <string name="welcome_subtitle_mail_alt">隐私、安全、便利相辅相成。将个人数据掌控权交给您自己的加密邮箱。</string>
+  <string name="welcome_subtitle_mail_alt">隐私、安全与便利相辅相成。加密电邮将把数据掌控权归还于您。</string>
   <string name="welcome_subtitle_drive">便捷的云端存储与安全的加密技术完美结合，众望所归的可信云存储服务。</string>
   <string name="welcome_subtitle_drive_alt">最安全的文件存储方式。上传、同步、分享文件均有前沿加密技术保护。</string>
   <string name="welcome_subtitle_calendar">加密日历让您的生活大小事保持隐私、安全和可靠。</string>
@@ -42,12 +42,12 @@
   <string name="auth_sign_in_action">登录</string>
   <string name="auth_sign_in_sso">登录到您的组织</string>
   <string name="auth_sign_in_with_password">使用密码登录</string>
-  <string name="auth_continue_to_proton_vpn">继续使用 Proton VPN</string>
+  <string name="auth_continue_to_proton_vpn">以使用 Proton VPN</string>
   <string name="auth_sign_in_with_sso">使用SSO登录</string>
   <string name="auth_help_label">帮助</string>
   <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>
   <string name="auth_login_sso_assistive_text">请输入您的邮箱地址</string>
-  <string name="auth_help_title">您需要什么帮助？</string>
+  <string name="auth_help_title">需要帮助吗？</string>
   <string name="auth_help_option_forgot_username">忘记用户名</string>
   <string name="auth_help_option_forgot_password">忘记密码</string>
   <string name="auth_help_option_other">其他登录问题</string>
@@ -60,7 +60,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">请输入 8 位恢复码。</string>
   <string name="auth_2fa_action">验证账户</string>
   <string name="auth_2fa_use_recovery_code">使用恢复码</string>
-  <string name="auth_2fa_use_2fa_code">使用双重验证码</string>
+  <string name="auth_2fa_use_2fa_code">输入一次性密码</string>
   <string name="auth_2fa_error_empty_code">请输入 6 位验证码。</string>
   <string name="auth_mailbox_title">解锁您的邮箱</string>
   <string name="auth_mailbox_password_label">邮箱密码</string>

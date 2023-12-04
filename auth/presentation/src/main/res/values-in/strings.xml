@@ -58,7 +58,7 @@
   <string name="auth_2fa_recovery_code_label">Kode pemulihan</string>
   <string name="auth_2fa_assistive_text">Masukkan kode 6 digit.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Masukkan kode pemulihan 8 karakter.</string>
-  <string name="auth_2fa_action">Otentikasi</string>
+  <string name="auth_2fa_action">Autentikasi</string>
   <string name="auth_2fa_use_recovery_code">Gunakan kode pemulihan</string>
   <string name="auth_2fa_use_2fa_code">Gunakan kode dua faktor</string>
   <string name="auth_2fa_error_empty_code">Masukkan kode 6 digit.</string>
@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Alamat surel pemulihan Anda adalah:</string>
   <string name="auth_create_address_create">Buat alamat</string>
   <string name="auth_create_address_creating">Buat alamat</string>
-  <string name="auth_create_address_terms">Dengan mengklik Buat alamat, Anda menyatakan diri setuju pada <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton.</string>
+  <string name="auth_create_address_terms">Dengan mengeklik Buat alamat, Anda menyatakan diri setuju dengan <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh kosong.</string>
   <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
   <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>

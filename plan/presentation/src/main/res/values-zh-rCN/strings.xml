@@ -33,7 +33,7 @@
   <string name="plans_pay_annually">每年支付</string>
   <string name="plans_pay_biennially">每两年付费</string>
   <plurals name="plans_pay_other">
-    <item quantity="other">Pay for %d months</item>
+    <item quantity="other">支付 %d 个月</item>
   </plurals>
   <string name="plans_billed_yearly">* 按每年 %s 收费</string>
   <string name="plans_billed_monthly">按月计费</string>

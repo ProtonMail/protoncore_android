@@ -34,7 +34,7 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Cambia password</string>
   <string name="settings_password_management_change_mailbox_password">Cambia la password della casella di posta</string>
-  <string name="settings_password_management_header">Gestione password</string>
+  <string name="settings_password_management_header">Gestione delle password</string>
   <string name="settings_login_password_hint_current">Password di accesso attuale</string>
   <string name="settings_login_password_hint_new">Nuova password di accesso</string>
   <string name="settings_login_password_hint_new_confirm">Conferma la password di accesso</string>

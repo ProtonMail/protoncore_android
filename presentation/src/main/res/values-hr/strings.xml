@@ -40,12 +40,12 @@
   <!-- Other -->
   <string name="presentation_back">Natrag</string>
   <string name="presentation_close">Zatvori</string>
-  <string name="presentation_retry">Retry</string>
+  <string name="presentation_retry">Pokušaj ponovno</string>
   <string name="presentation_skip">Preskoči</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Povezivanje na poslužitelj nije moguće.</string>
   <string name="presentation_check_your_connection">Check your connection</string>
   <string name="presentation_connectivity_issues">Connectivity issues</string>
-  <string name="presentation_field_required">This field is required.</string>
-  <string name="presentation_error_general">An error occurred.</string>
+  <string name="presentation_field_required">Ovo polje je obavezno.</string>
+  <string name="presentation_error_general">Došlo je do pogreške.</string>
 </resources>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="welcome_title">Beskytt personvernet ditt med Proton</string>
+  <string name="welcome_subtitle">Kryptering holder dataene dine private. Dataene dine tilhører virkelig deg.</string>
+  <string name="welcome_subtitle_mail">Kryptert e-post som holder dine samtaler private. Din innboks tilhører virkelig deg.</string>
+  <string name="welcome_subtitle_mail_alt">Personvern. Sikkerhet. Brukervennlighet. Kryptert e-post som gir deg full kontroll over dine personlige data.</string>
+  <string name="welcome_subtitle_drive">Bekvemmeligheten av skylagring og garantien av krypteringsteknologi. Endelig en skylagringsløsning du kan stole på.</string>
+  <string name="welcome_subtitle_drive_alt">Tryggeste måten å lagre dine filer på. Last opp, synkroniser, og del med den sterkeste tilgjengelige kryptering.</string>
+  <string name="welcome_subtitle_calendar">Kryptert kalender som holder livshendelsene dine private, trygge og sikre.</string>
+  <string name="welcome_subtitle_calendar_alt">Vår ende-til-ende-krypterte kalender hjelper deg med å holde orden, være på sporet og ha kontroll.</string>
+  <string name="welcome_subtitle_vpn">Høy-hastighets sveitsisk VPN som beskytter ditt personvern ved å kryptere internettforbindelsen din.</string>
+  <string name="welcome_subtitle_vpn_alt">Høy-hastighets sveitsisk VPN som ivaretar ditt personvern. Maksimum sikkerhet, 1600+ tjenere og ingen restriksjoner.</string>
+  <string name="welcome_subtitle_pass">Alle passordene dine. Trygt på ett sted og beskyttet av det mest betrodde navnet innen personvern.</string>
+  <string name="welcome_subtitle_pass_alt">Alle passordene dine. Trygt på ett sted og beskyttet av det mest betrodde navnet innen personvern.</string>
+  <string name="welcome_privacy_by_default">Privacy by default</string>
+  <string name="auth_password_label">Passord</string>
+  <string name="auth_password_help">Passord må inneholde minst 8 tegn</string>
+  <string name="auth_current_login_password">Gjeldende påloggingspassord</string>
+  <string name="auth_enter_six_digit_code">Skriv inn 6-sifret kode</string>
+  <string name="auth_second_factor_code">Tofaktorkode</string>
+  <string name="auth_email">E-post</string>
+  <string name="auth_email_username">Brukernavn eller e-post</string>
+  <string name="auth_account_details">Skriv inn Proton-kontoopplysningene dine.</string>
+  <string name="auth_sign_in">Logg på</string>
+  <string name="auth_sign_in_action">Logg på</string>
+  <string name="auth_sign_in_sso">Logg på din organisasjon</string>
+  <string name="auth_sign_in_with_password">Logg på med et passord</string>
+  <string name="auth_continue_to_proton_vpn">for å forsette til Proton VPN</string>
+  <string name="auth_sign_in_with_sso">Logg på med SSO</string>
+  <string name="auth_help_label">Hjelp</string>
+  <string name="auth_login_assistive_text">Vennligst oppgi din Proton-e-postadresse eller brukernavn.</string>
+  <string name="auth_login_sso_assistive_text">Vennligst skriv inn din e-postadresse.</string>
+  <string name="auth_help_title">Hvordan kan vi hjelpe?</string>
+  <string name="auth_help_option_forgot_username">Glemt brukernavn</string>
+  <string name="auth_help_option_forgot_password">Glemt passord</string>
+  <string name="auth_help_option_other">Andre påloggingsproblemer</string>
+  <string name="auth_help_other">Trenger du fortsatt hjelp? Kontakt oss direkte.</string>
+  <string name="auth_help_option_customer_support">Kundestøtte</string>
+  <string name="auth_2fa_title">Tofaktorautentisering</string>
+  <string name="auth_2fa_label">Tofaktorkode</string>
+  <string name="auth_2fa_recovery_code_label">Gjenopprettingskode</string>
+  <string name="auth_2fa_assistive_text">Skriv inn den 6-sifrede koden.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">Skriv inn en gjenopprettingskode på 8 tegn.</string>
+  <string name="auth_2fa_action">Autentiser</string>
+  <string name="auth_2fa_use_recovery_code">Bruk gjenopprettingskode</string>
+  <string name="auth_2fa_use_2fa_code">Bruk tofaktorkode</string>
+  <string name="auth_2fa_error_empty_code">Skriv inn den 6-sifrede koden.</string>
+  <string name="auth_mailbox_title">Lås opp postkassen din</string>
+  <string name="auth_mailbox_password_label">Postbokspassord</string>
+  <string name="auth_mailbox_unlock_action">Lås opp</string>
+  <string name="auth_forgot_password">Glemt passord</string>
+  <string name="auth_login_general_error">En feil oppstod.</string>
+  <string name="auth_login_external_account_unsupported_title">Proton-adresse kreves</string>
+  <string name="auth_login_external_account_unsupported_message">Få en Proton Mail-adresse tilknyttet denne kontoen i innstilligene for Proton på nettet.</string>
+  <string name="auth_login_external_account_unsupported_help_action">Lær mer</string>
+  <string name="auth_login_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
+  <string name="auth_mailbox_empty_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
+  <string name="auth_create_address_title">Proton-adresse kreves</string>
+  <string name="auth_create_address_subtitle">Du behøver en Proton-e-postadresse for å bruke Proton Mail og Proton Calendar. Du vil fremdeles være i stand til å bruke %1$s for å logge på, og for å gjenopprette kontoen din.</string>
+  <string name="auth_username">Brukernavn</string>
+  <string name="auth_username_next_action">Fortsett</string>
+  <string name="auth_create_address_result_title">%s er tilgjengelig</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s er din nye Proton Mail e-postadresse.</string>
+  <string name="auth_create_address_result_subtitle">Du vil bruke denne e-postadressen for å logge på alle Proton-tjenester.</string>
+  <string name="auth_create_address_result_recovery_title">Din gjenopprettings-e-postadresse er:</string>
+  <string name="auth_create_address_create">Opprett adresse</string>
+  <string name="auth_create_address_creating">Oppretter adresse</string>
+  <string name="auth_create_address_terms">Ved å klikke Opprett adresse, sier du deg enig med Protons <a href="https://proton.me/legal/terms">Brukervilkår</a>.</string>
+  <string name="auth_create_address_error_credentials">Påloggingsinformasjonen skal ikke være tom.</string>
+  <string name="auth_create_address_error_no_available_domain">Ingen tilgjengelig domene.</string>
+  <string name="auth_create_address_error_private_key">Generering av privat nøkkel mislyktes.</string>
+  <string name="auth_create_address_error_signed_key_list">Generering av nøkkelliste mislyktes.</string>
+  <string name="auth_create_address_error_setusername">Tilknytning av brukernavn mislyktes.</string>
+  <string name="auth_create_address_error_username_unavailable">Valgt brukernavn er utilgjengelig.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">Ingen primærnøkkel funnet.</string>
+  <string name="auth_mailbox_login_error_primary_key_error">Primærnøkkel feil.</string>
+  <string name="auth_mailbox_login_error_invalid_passphrase">Ugyldig passordfrase.</string>
+  <string name="auth_password_chooser_title">Endre ditt passord</string>
+  <string name="auth_password_chooser_description">For å bruke Proton-appen som et medlem av en organisasjon, trenger du først å endre passordet ditt ved å logge på Proton gjennom en nettleser.</string>
+  <string name="auth_password_chooser_change">Endre passord</string>
+  <string name="auth_user_check_one_free_error">Kun en gratis Proton-konto er tillatt.</string>
+  <string name="auth_user_check_delinquent_error">Kontoen din er for øyeblikket satt på vent på grunn av en forfalt faktura.</string>
+  <string name="auth_user_check_delinquent_action">Betal faktura</string>
+  <string name="auth_account_not_found_error">Feil med kontoen</string>
+  <string name="auth_one_account_all_services">En konto for alle Proton-tjenester.</string>
+  <string name="auth_create_account">Opprett en konto</string>
+  <string name="auth_long_signup">Vennligst vent...</string>
+  <string name="auth_long_login">Logger på, vennligst vent...</string>
+  <!-- signup related strings -->
+  <string name="auth_signup_create_account">Opprett din Proton-konto</string>
+  <string name="auth_signup_current_email">Bruk din nåværende e-postadresse istedenfor</string>
+  <string name="auth_signup_external_footnote">Med en Proton-adresse kan du bruke alle Proton-tjenester.</string>
+  <string name="auth_signup_internal_footnote">Du trenger en Proton-adresse for å bruke Proton Mail og Proton Calendar</string>
+  <string name="auth_signup_create_secure_proton_address">Få en ny kryptert e-postadresse</string>
+  <string name="auth_signup_username">Brukernavn</string>
+  <string name="auth_signup_domain">Domene</string>
+  <string name="auth_signup_email">E-post</string>
+  <string name="auth_signup_next">Neste</string>
+  <string name="auth_signup_choose_password">Opprett passordet ditt</string>
+  <string name="auth_signup_repeat_password">Gjenta passord</string>
+  <string name="auth_signup_recovery_method_title">Angi gjenopprettingsmetode (valgfritt)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Angi gjenopprettingsmetode</string>
+  <string name="auth_signup_recovery_method_subtitle">Vi vil sende gjenopprettingsinstruksjoner til denne e-postadressen eller telefonnummer hvis du blir utestengt fra kontoen din.</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">Vi vil sende gjenopprettingsinstruksjoner til denne e-postadressen hvis du blir utestengt fra kontoen din.</string>
+  <string name="auth_signup_recovery_method_email">E-post</string>
+  <string name="auth_signup_recovery_method_phone">Telefon</string>
+  <string name="auth_signup_recovery_method_email_hint">E-post for gjenoppretting</string>
+  <string name="auth_signup_recovery_method_phone_hint">Telefonnummer for gjenoppretting</string>
+  <string name="auth_signup_terms_conditions">Vilkår og betingelser</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved å klikke neste, sier du deg enig med Protons <annotation link="terms">Brukervilkår</annotation>.</string>
+  <string name="auth_signup_skip_recovery_title">Hopp over gjenopprettingsmetode?</string>
+  <string name="auth_signup_skip_recovery_description">En gjenopprettingsmetode vil hjelpe deg med å få tilgang til kontoen din i tilfelle du glemmer passordet ditt eller blir utestengt fra kontoen din.</string>
+  <string name="auth_signup_skip_recovery">Hopp over</string>
+  <string name="auth_signup_set_recovery">Angi gjenopprettingsmetode</string>
+  <string name="auth_signup_no_connectivity">Ingen forbindelse for å vise brukervilkår.</string>
+  <string name="auth_signup_error_username_blank">Brukernavn kan ikke være tomt.</string>
+  <string name="auth_signup_error_passwords_do_not_match">Passordene samsvarer ikke.</string>
+  <string name="auth_signup_validation_password_length">Passordet bør være minst 8 tegn langt.</string>
+  <string name="auth_signup_validation_password">Passordet kan ikke være tomt.</string>
+  <string name="auth_signup_your_account_is_being_setup">Din konto opprettes...</string>
+  <string name="auth_signup_please_wait">Det tar vanligvis ikke lenger enn ett minutt.</string>
+  <string name="auth_signup_replacement_code">Fikk du ikke koden?</string>
+  <string name="auth_signup_verify">Verifiser</string>
+  <string name="auth_signup_verification_code">Verifiseringskode</string>
+  <string name="auth_signup_enter_code_subtitle">Skriv inn verifiseringskoden som ble sendt til %s:</string>
+  <string name="auth_signup_error_human_verification_failed">Menneskelig verifisering mislyktes.</string>
+  <string name="auth_signup_congratulations_subtitle">Din Proton-konto ble opprettet.\nNyt en verden med personvern.</string>
+  <string name="auth_signup_congratulations">Gratulerer!</string>
+  <string name="auth_signup_start_using_proton">Begynn å bruke Proton</string>
+  <string name="auth_signup_start_using_calendar">Begynn å bruke Proton Calendar</string>
+  <string name="auth_signup_start_using_mail">Begynn å bruke Proton Mail</string>
+  <string name="auth_signup_start_using_drive">Begynn å bruke Proton Drive</string>
+  <string name="auth_signup_start_using_vpn">Begynn å bruke Proton VPN</string>
+  <string name="auth_signup_start_using_pass">Begynn å bruke Proton Pass</string>
+  <string name="auth_signup_error_validation_recovery_destination">Gjenopprettingdestinasjon er ugyldig.</string>
+</resources>

@@ -34,7 +34,7 @@
   <string name="plans_pay_biennially">Оплата кожні 2 роки</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Оплата за %d місяць</item>
-    <item quantity="few">Оплата за %d місяців</item>
+    <item quantity="few">Оплата за %d місяці</item>
     <item quantity="many">Оплата за %d місяців</item>
     <item quantity="other">Оплата за %d місяців</item>
   </plurals>

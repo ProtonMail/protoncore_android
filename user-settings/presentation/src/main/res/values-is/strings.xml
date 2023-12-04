@@ -32,8 +32,8 @@
   <string name="settings_validation_email">Póstfangið er ógilt.</string>
   <string name="settings_general_error">Villa kom upp.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_change_login_password">Change password</string>
-  <string name="settings_password_management_change_mailbox_password">Change mailbox password</string>
+  <string name="settings_password_management_change_login_password">Breyta lykilorði</string>
+  <string name="settings_password_management_change_mailbox_password">Breyta lykilorði á pósthólfi</string>
   <string name="settings_password_management_header">Sýsl með lykilorð</string>
   <string name="settings_login_password_hint_current">Núverandi lykilorð innskráningar</string>
   <string name="settings_login_password_hint_new">Nýtt innskráningarlykilorð</string>

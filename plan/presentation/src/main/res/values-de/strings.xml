@@ -33,8 +33,8 @@
   <string name="plans_pay_annually">Jährlich zahlen</string>
   <string name="plans_pay_biennially">Alle zwei Jahre zahlen</string>
   <plurals name="plans_pay_other">
-    <item quantity="one">Pay for %d month</item>
-    <item quantity="other">Pay for %d months</item>
+    <item quantity="one">Für %d Monat zahlen</item>
+    <item quantity="other">Für %d Monate zahlen</item>
   </plurals>
   <string name="plans_billed_yearly">*Jährlich abgerechnet mit %s</string>
   <string name="plans_billed_monthly">Monatlich abgerechnet</string>
