@@ -20,6 +20,7 @@ package me.proton.core.test.android.robots
 
 import android.widget.TextView
 import androidx.annotation.StringRes
+import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.presentation.R
 import me.proton.core.test.android.instrumented.utils.StringUtils
 
@@ -30,11 +31,13 @@ open class CoreVerify : CoreRobot() {
     fun errorSnackbarDisplayed(@StringRes stringRes: Int) {
         view
             .withSnackbarText(StringUtils.stringFromResource(stringRes))
+            .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     }
 
     fun errorSnackbarDisplayed(text: String) {
         view
             .withSnackbarText(text)
+            .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     }
 
     fun inputErrorDisplayed(@StringRes stringRes: Int, scroll: Boolean = false) {
@@ -49,5 +52,6 @@ open class CoreVerify : CoreRobot() {
     fun snackbarDisplayed(@StringRes stringRes: Int) {
         view
             .withSnackbarText(StringUtils.stringFromResource(stringRes))
+            .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     }
 }

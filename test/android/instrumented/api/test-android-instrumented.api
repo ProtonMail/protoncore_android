@@ -691,6 +691,7 @@ public final class me/proton/core/test/android/robots/auth/signup/PasswordSetupR
 public final class me/proton/core/test/android/robots/auth/signup/PasswordSetupRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun passwordSetupElementsDisplayed ()V
+	public final fun recoveryMethodsElementsNotDisplayed ()V
 }
 
 public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethodsRobot : me/proton/core/test/android/robots/CoreRobot {

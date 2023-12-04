@@ -74,6 +74,11 @@ class SignupWithGoogleIapTests : BaseMockTest {
     fun googleBillingNotAvailable() {
         billingClient.mockStartConnection(BillingResponseCode.BILLING_UNAVAILABLE)
 
+        dispatcher.mockFromAssets(
+            "GET", "/payments/v4/status/google",
+            "GET/payments/v4/status/google-iap-only.json"
+        )
+
         val intent = StartStaticUpgradePlan.createIntent(appContext, PlanInput())
         ActivityScenario.launch<UpgradeActivity>(intent)
 

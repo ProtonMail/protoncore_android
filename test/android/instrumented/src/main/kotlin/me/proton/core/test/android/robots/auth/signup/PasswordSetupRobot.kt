@@ -60,6 +60,12 @@ class PasswordSetupRobot : CoreRobot() {
             view.withId(R.id.confirmPasswordInput).checkDisplayed()
             view.withId(R.id.passwordInput).checkDisplayed()
         }
+
+        fun recoveryMethodsElementsNotDisplayed() {
+            view.withId(R.id.email).checkDoesNotExist()
+            view.withText(RecoveryMethodsRobot.RecoveryMethodType.EMAIL.name).checkDoesNotExist()
+            view.withText(RecoveryMethodsRobot.RecoveryMethodType.PHONE.name).checkDoesNotExist()
+        }
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

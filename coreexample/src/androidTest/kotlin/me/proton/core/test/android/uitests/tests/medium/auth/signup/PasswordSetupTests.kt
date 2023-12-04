@@ -57,7 +57,7 @@ class PasswordSetupTests : BaseTest() {
             .confirmPassword("1234567890")
             .next<PasswordSetupRobot>()
             .verify {
-                passwordSetupElementsDisplayed()
+                recoveryMethodsElementsNotDisplayed()
                 errorSnackbarDisplayed(R.string.auth_signup_error_passwords_do_not_match)
             }
     }
