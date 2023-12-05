@@ -74,6 +74,14 @@ internal class ApiResultRetryTest {
     }
 
     @Test
+    fun `421 error`() {
+        val result = ApiResult.Error.Http(421, "Misdirected Request")
+        assertTrue { result.isRetryable() }
+        assertTrue { result.needsRetry(0, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+        assertFalse { result.needsRetry(2, MAX_RETRY_COUNT, MAX_RETRY_AFTER) }
+    }
+
+    @Test
     fun `429 error with no Retry-After`() {
         val result = ApiResult.Error.Http(429, "Too Many Requests")
         assertTrue { result.isRetryable() }

@@ -723,6 +723,24 @@ class EventManagerImplTest {
     }
 
     @Test
+    fun fetchThrowApiExceptionRetryableMisdirected() = runTest {
+        // GIVEN
+        coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
+            ApiResult.Error.Http(421, "Misdirected Request")
+        )
+        // WHEN
+        assertFailsWith<ApiException> {
+            user1Manager.process()
+        }
+        // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Enqueued)
+        }
+        // Worker will retry.
+    }
+
+    @Test
     fun fetchThrowException() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws Exception()

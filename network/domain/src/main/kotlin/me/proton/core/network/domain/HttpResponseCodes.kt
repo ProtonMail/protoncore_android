@@ -24,6 +24,7 @@ package me.proton.core.network.domain
 object HttpResponseCodes {
     const val HTTP_UNAUTHORIZED = 401
     const val HTTP_BAD_REQUEST = 400
+    const val HTTP_MISDIRECTED_REQUEST = 421
     const val HTTP_UNPROCESSABLE = 422
     const val HTTP_FORBIDDEN = 403
     const val HTTP_REQUEST_TIMEOUT = 408

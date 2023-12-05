@@ -220,8 +220,9 @@ fun <T> ApiResult<T>.isRetryable(): Boolean = when (this) {
     is ApiResult.Error.Certificate -> true
     is ApiResult.Error.Connection -> true
     is ApiResult.Error.Http -> when (httpCode) {
-        HttpResponseCodes.HTTP_REQUEST_TIMEOUT,
-        HttpResponseCodes.HTTP_TOO_MANY_REQUESTS,
+        HttpResponseCodes.HTTP_MISDIRECTED_REQUEST -> true
+        HttpResponseCodes.HTTP_REQUEST_TIMEOUT -> true
+        HttpResponseCodes.HTTP_TOO_MANY_REQUESTS -> true
         in 500..599 -> true
         else -> false
     }
