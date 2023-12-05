@@ -314,7 +314,7 @@ class EventManagerImplTest {
     }
 
     @Test
-    fun callCorrectFailure() = runTest {
+    fun callNotifyFailure() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
             EventMetadata(
@@ -359,6 +359,117 @@ class EventManagerImplTest {
     }
 
     @Test
+    fun callNotifyResetAll() = runTest {
+        // GIVEN
+        coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
+            EventMetadata(
+                user1.userId, EventId(eventId), user1Config,
+                createdAt = 1,
+                state = State.Fetching,
+                retry = EventManagerImpl.retriesBeforeNotifyResetAll + 1
+            )
+        )
+        // WHEN
+        user1Manager.process()
+        // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            userEventListener.onResetAll(user1Config)
+            contactEventListener.onResetAll(user1Config)
+            userEventListener.onComplete(user1Config)
+            contactEventListener.onComplete(user1Config)
+        }
+        coVerify(exactly = 0) {
+            userEventListener.onPrepare(user1Config, any())
+            userEventListener.onUpdate(user1Config, any())
+            userEventListener.onDelete(user1Config, any())
+            userEventListener.onCreate(user1Config, any())
+            userEventListener.onPartial(user1Config, any())
+            userEventListener.onSuccess(user1Config)
+            userEventListener.onFailure(user1Config)
+
+            contactEventListener.onPrepare(user1Config, any())
+            contactEventListener.onCreate(user1Config, any())
+            contactEventListener.onUpdate(user1Config, any())
+            contactEventListener.onDelete(user1Config, any())
+            contactEventListener.onPartial(user1Config, any())
+            contactEventListener.onSuccess(user1Config)
+            contactEventListener.onFailure(user1Config)
+        }
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyResetAll)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyComplete)
+            eventMetadataRepository.updateState(user1Config, any(), State.Completed)
+        }
+    }
+
+    @Test
+    fun callDeleteAllMetadata() = runTest {
+        // GIVEN
+        coEvery { eventMetadataRepository.get(user1Config) } returns listOf(
+            EventMetadata(
+                user1.userId, EventId(eventId), user1Config,
+                createdAt = 1,
+                state = State.Fetching,
+                retry = EventManagerImpl.retriesBeforeDeleteAllMetadata + 1
+            )
+        )
+        // WHEN
+        user1Manager.process()
+        // THEN
+        coVerify { eventMetadataRepository.deleteAll(user1Config) }
+    }
+
+    @Test
+    fun callCorrectFetchPrepareUpdateCreateForUser1() = runTest {
+        // GIVEN
+        val event = EventMetadata(user1.userId, EventId(eventId), user1Config, createdAt = 1, state = State.Fetching)
+        coEvery { eventMetadataRepository.get(user1Config) } returns listOf(event)
+        // WHEN
+        user1Manager.process()
+        // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            userEventListener.onPrepare(user1Config, any())
+            userEventListener.onUpdate(user1Config, any())
+            userEventListener.onSuccess(user1Config)
+            userEventListener.onComplete(user1Config)
+        }
+        coVerify(ordering = Ordering.ORDERED) {
+            contactEventListener.onPrepare(user1Config, any())
+            contactEventListener.onCreate(user1Config, any())
+            contactEventListener.onSuccess(user1Config)
+            contactEventListener.onComplete(user1Config)
+        }
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Persisted)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyPrepare)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyEvents)
+            eventMetadataRepository.updateState(user1Config, any(), State.Success)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifySuccess)
+            eventMetadataRepository.updateState(user1Config, any(), State.NotifyComplete)
+            eventMetadataRepository.updateState(user1Config, any(), State.Completed)
+        }
+    }
+
+    @Test
+    fun callFetchThrowException() = runTest {
+        // GIVEN
+        val event = EventMetadata(user1.userId, EventId(eventId), user1Config, createdAt = 1, state = State.Fetching)
+        coEvery { eventMetadataRepository.get(user1Config) } returns listOf(event)
+        coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws IllegalStateException("NotRetryable")
+        coEvery { eventMetadataRepository.getEvents(any(), any()) }  throws IllegalStateException("NotRetryable")
+        // WHEN
+        assertFailsWith<IllegalStateException> {
+            user1Manager.process()
+        }
+        // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Enqueued)
+        }
+    }
+
+    @Test
     fun callOnPrepareThrowException() = runTest {
         // GIVEN
         coEvery { userEventListener.onPrepare(user1Config, any()) } throws Exception("IOException")
@@ -384,11 +495,60 @@ class EventManagerImplTest {
         coVerify(atLeast = 1) { userEventListener.inTransaction(any()) }
         coVerify(atLeast = 1) { userEventListener.onUpdate(user1Config, any()) }
         coVerify(exactly = 0) { userEventListener.onSuccess(user1Config) }
-        coVerify(atLeast = 1) { eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare) }
-        coVerify(atLeast = 1) { eventMetadataRepository.updateState(any(), any(), State.NotifyEvents) }
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare)
+            eventMetadataRepository.updateState(any(), any(), State.NotifyEvents)
+        }
         coVerify(exactly = 0) { eventMetadataRepository.updateState(any(), any(), State.Success) }
         coVerify(atLeast = 1) { eventMetadataRepository.updateMetadata(any()) }
         coVerify(atLeast = 1) { eventWorkerManager.enqueue(any(), true) }
+    }
+
+    @Test
+    fun callOnSuccessThrowException() = runTest {
+        // GIVEN
+        coEvery { userEventListener.onSuccess(user1Config) } throws ApiException(ApiResult.Error.Connection())
+        // WHEN
+        user1Manager.process()
+        // THEN
+        coVerify(atLeast = 1) { userEventListener.inTransaction(any()) }
+        coVerify(atLeast = 1) { userEventListener.onUpdate(user1Config, any()) }
+        coVerify(exactly = 1) { userEventListener.onSuccess(user1Config) }
+        coVerify(exactly = 0) { userEventListener.onComplete(user1Config) }
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare)
+            eventMetadataRepository.updateState(any(), any(), State.NotifyEvents)
+            eventMetadataRepository.updateState(any(), any(), State.Success)
+            eventMetadataRepository.updateState(any(), any(), State.NotifySuccess)
+            eventMetadataRepository.updateState(any(), any(), State.Success)
+        }
+        coVerify(exactly = 0) { eventMetadataRepository.updateState(any(), any(), State.Completed) }
+        coVerify(atLeast = 1) { eventMetadataRepository.updateMetadata(any()) }
+        coVerify(atLeast = 1) { eventWorkerManager.enqueue(any(), true) }
+    }
+
+    @Test
+    fun callOnCompleteThrowException() = runTest {
+        // GIVEN
+        coEvery { userEventListener.onComplete(user1Config) } throws ApiException(ApiResult.Error.Connection())
+        // WHEN
+        user1Manager.process()
+        // THEN
+        coVerify(atLeast = 1) { userEventListener.inTransaction(any()) }
+        coVerify(atLeast = 1) { userEventListener.onUpdate(user1Config, any()) }
+        coVerify(exactly = 1) { userEventListener.onSuccess(user1Config) }
+        coVerify(exactly = 1) { userEventListener.onComplete(user1Config) }
+        coVerify(exactly = 0) { userEventListener.onResetAll(user1Config) }
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(any(), any(), State.NotifyPrepare)
+            eventMetadataRepository.updateState(any(), any(), State.NotifyEvents)
+            eventMetadataRepository.updateState(any(), any(), State.Success)
+            eventMetadataRepository.updateState(any(), any(), State.NotifySuccess)
+            eventMetadataRepository.updateState(any(), any(), State.NotifyComplete)
+            eventMetadataRepository.updateState(any(), any(), State.Completed)
+        }
+        coVerify(atLeast = 1) { eventMetadataRepository.updateMetadata(any()) }
+        coVerify(atLeast = 1) { eventWorkerManager.enqueue(any(), immediately = false) }
     }
 
     @Test
@@ -508,49 +668,73 @@ class EventManagerImplTest {
         assertEquals(calendarId, calendarEventListener.config.asCalendar().calendarId)
     }
 
-    @Test(expected = ApiException::class)
+    @Test
     fun fetchThrowApiExceptionForceUpdate() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(400, "Bad Request", ApiResult.Error.ProtonData(APP_VERSION_BAD, "Please Update"))
         )
         // WHEN
-        user1Manager.process()
+        assertFailsWith<ApiException> {
+            user1Manager.process()
+        }
         // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Enqueued)
+        }
         // Worker will retry.
     }
 
-    @Test(expected = ApiException::class)
+    @Test
     fun fetchThrowApiExceptionIsUnauthorized() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(401, "Unauthorized")
         )
         // WHEN
-        user1Manager.process()
+        assertFailsWith<ApiException> {
+            user1Manager.process()
+        }
         // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Enqueued)
+        }
         // Worker handle it as a retry, but will be cancelled on user force logout.
     }
 
-    @Test(expected = ApiException::class)
+    @Test
     fun fetchThrowApiExceptionRetryable() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Connection()
         )
         // WHEN
-        user1Manager.process()
+        assertFailsWith<ApiException> {
+            user1Manager.process()
+        }
         // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Enqueued)
+        }
         // Worker will retry.
     }
 
-    @Test(expected = Exception::class)
+    @Test
     fun fetchThrowException() = runTest {
         // GIVEN
         coEvery { eventMetadataRepository.getEvents(any(), any(), any()) } throws Exception()
         // WHEN
-        user1Manager.process()
+        assertFailsWith<Exception> {
+            user1Manager.process()
+        }
         // THEN
+        coVerify(ordering = Ordering.ORDERED) {
+            eventMetadataRepository.updateState(user1Config, any(), State.Fetching)
+            eventMetadataRepository.updateState(user1Config, any(), State.Enqueued)
+        }
         // Worker will retry.
     }
 
