@@ -22,6 +22,7 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
+import retrofit2.http.QueryMap
 
 interface EventApi : BaseRetrofitApi {
 
@@ -33,6 +34,7 @@ interface EventApi : BaseRetrofitApi {
     @GET("{endpoint}/{eventId}")
     suspend fun getEvents(
         @Path("endpoint", encoded = true) endpoint: String,
-        @Path("eventId") eventId: String
+        @Path("eventId") eventId: String,
+        @QueryMap params: Map<String, String>? = null
     ): ResponseBody
 }

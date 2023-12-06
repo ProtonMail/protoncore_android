@@ -45,5 +45,5 @@ interface EventMetadataRepository {
     suspend fun getEvents(config: EventManagerConfig, eventId: EventId): EventsResponse?
 
     suspend fun getLatestEventId(userId: UserId, endpoint: String): EventIdResponse
-    suspend fun getEvents(userId: UserId, eventId: EventId, endpoint: String): EventsResponse
+    suspend fun getEvents(config: EventManagerConfig, eventId: EventId, endpoint: String): EventsResponse
 }

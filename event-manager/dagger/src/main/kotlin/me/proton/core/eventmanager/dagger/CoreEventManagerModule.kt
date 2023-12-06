@@ -19,6 +19,7 @@
 package me.proton.core.eventmanager.dagger
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,6 +27,7 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.eventmanager.data.EventManagerConfigProviderImpl
 import me.proton.core.eventmanager.data.EventManagerFactory
 import me.proton.core.eventmanager.data.EventManagerProviderImpl
+import me.proton.core.eventmanager.data.EventManagerQueryMapProvider
 import me.proton.core.eventmanager.data.IsCoreEventManagerEnabledImpl
 import me.proton.core.eventmanager.data.repository.EventMetadataRepositoryImpl
 import me.proton.core.eventmanager.data.work.EventWorkerManagerImpl
@@ -57,6 +59,9 @@ public interface CoreEventManagerModule {
     @Singleton
     public fun provideEventWorkManager(impl: EventWorkerManagerImpl): EventWorkerManager
 
+    @BindsOptionalOf
+    public fun bindsEventManagerQueryMapProvider(): EventManagerQueryMapProvider
+
     public companion object {
         @Provides
         @Singleton
@@ -68,4 +73,5 @@ public interface CoreEventManagerModule {
         ): EventManagerProvider =
             EventManagerProviderImpl(eventManagerFactory, eventManagerConfigProvider, eventListeners)
     }
+
 }

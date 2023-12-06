@@ -87,6 +87,10 @@ public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : m
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/eventmanager/data/EventManagerQueryMapProvider {
+	public abstract fun getQueryMap (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/eventmanager/data/IsCoreEventManagerEnabledImpl : me/proton/core/eventmanager/domain/IsCoreEventManagerEnabled {
 	public static final field Companion Lme/proton/core/eventmanager/data/IsCoreEventManagerEnabledImpl$Companion;
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
@@ -106,8 +110,12 @@ public final class me/proton/core/eventmanager/data/IsCoreEventManagerEnabledImp
 }
 
 public abstract interface class me/proton/core/eventmanager/data/api/EventApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
-	public abstract fun getEvents (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getEvents (Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getLatestEventId (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/eventmanager/data/api/EventApi$DefaultImpls {
+	public static synthetic fun getEvents$default (Lme/proton/core/eventmanager/data/api/EventApi;Ljava/lang/String;Ljava/lang/String;Ljava/util/Map;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/eventmanager/data/api/response/GetCalendarEventsResponse {
@@ -372,7 +380,7 @@ public final class me/proton/core/eventmanager/data/extension/EventMetadataKt {
 }
 
 public class me/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl : me/proton/core/data/file/FileContext, me/proton/core/eventmanager/domain/repository/EventMetadataRepository {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Landroid/content/Context;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;Ljava/util/Optional;)V
 	public fun delete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun deleteAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -386,7 +394,7 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun get (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getBaseDir ()Ljava/lang/String;
-	public fun getEvents (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getEvents (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun getFile (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFile (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -405,11 +413,11 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 }
 
 public final class me/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/network/data/ApiProvider;Ljava/util/Optional;)Lme/proton/core/eventmanager/data/repository/EventMetadataRepositoryImpl;
 }
 
 public class me/proton/core/eventmanager/data/work/EventWorker : androidx/work/CoroutineWorker {

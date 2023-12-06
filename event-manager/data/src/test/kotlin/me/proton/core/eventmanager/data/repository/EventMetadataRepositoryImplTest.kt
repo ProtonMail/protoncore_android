@@ -19,6 +19,7 @@
 package me.proton.core.eventmanager.data.repository
 
 import android.content.Context
+import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
@@ -26,19 +27,28 @@ import io.mockk.spyk
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.data.EventManagerQueryMapProvider
+import me.proton.core.eventmanager.data.api.EventApi
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.entity.EventId
 import me.proton.core.eventmanager.domain.entity.EventMetadata
 import me.proton.core.eventmanager.domain.entity.EventsResponse
+import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.test.android.api.TestApiManager
+import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.Test
 import java.nio.file.Files
+import java.util.Optional
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 
-class EventMetadataRepositoryImplTest {
+class EventMetadataRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
     private val userId1 = UserId("id1")
     private val userId2 = UserId("id2")
@@ -55,9 +65,18 @@ class EventMetadataRepositoryImplTest {
         every { getDir(any(), any()) } returns Files.createTempDirectory("EventMetadataRepositoryImplTest-").toFile()
     }
 
-    private val db = mockk<EventMetadataDatabase>(relaxed = true)
-    private val apiProvider = mockk<ApiProvider>(relaxed = true)
+    private val eventApi = mockk<EventApi>(relaxed = true)
+    private val sessionProvider = mockk<SessionProvider> {
+        coEvery { this@mockk.getSessionId(userId1) } returns SessionId("userId1-sessionId")
+    }
+    private val apiManagerFactory = mockk<ApiManagerFactory> {
+        every { this@mockk.create( any(), interfaceClass = EventApi::class ) } returns TestApiManager(eventApi)
+    }
 
+    private val db = mockk<EventMetadataDatabase>(relaxed = true)
+    private val eventManagerQueryMapProvider = mockk<EventManagerQueryMapProvider>(relaxed = true)
+
+    private lateinit var apiProvider: ApiProvider
     private lateinit var tested: EventMetadataRepositoryImpl
 
     private fun newMetadata(
@@ -71,7 +90,8 @@ class EventMetadataRepositoryImplTest {
 
     @BeforeTest
     fun before() {
-        tested = spyk(EventMetadataRepositoryImpl(context, db, apiProvider))
+        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatchers)
+        tested = spyk(EventMetadataRepositoryImpl(context, db, apiProvider, Optional.of(eventManagerQueryMapProvider)))
     }
 
     @AfterTest
@@ -179,5 +199,18 @@ class EventMetadataRepositoryImplTest {
         // THEN
         coVerify { tested.deleteDir(user1CoreConfig) }
         coVerify { tested.writeText(user1CoreConfig, eventId, any()) }
+    }
+
+    @Test
+    fun getEventsUsesQueryMapFromProviderWhenAvailable() = runTest {
+        // GIVEN
+        val endpoint = "core/events"
+        coEvery { eventManagerQueryMapProvider.getQueryMap(user1CoreConfig) } returns mapOf("MessageCounts" to "1")
+
+        // WHEN
+        tested.getEvents(user1CoreConfig, eventId, endpoint)
+
+        // THEN
+        coVerify { eventManagerQueryMapProvider.getQueryMap(user1CoreConfig) }
     }
 }

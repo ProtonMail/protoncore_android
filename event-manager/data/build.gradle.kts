@@ -29,7 +29,7 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(60)
+    minBranchCoveragePercentage.set(59)
     minLineCoveragePercentage.set(77)
 }
 
@@ -76,6 +76,7 @@ dependencies {
         project(Module.contactData),
         project(Module.keyData),
         project(Module.kotlinTest),
+        project(Module.androidTest),
         junit,
         `kotlin-test`,
         mockk

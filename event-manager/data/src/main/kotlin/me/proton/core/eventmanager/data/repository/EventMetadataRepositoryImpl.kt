@@ -24,6 +24,7 @@ import me.proton.core.data.file.AndroidFileContext
 import me.proton.core.data.file.ExperimentalProtonFileContext
 import me.proton.core.data.file.FileContext
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.data.EventManagerQueryMapProvider
 import me.proton.core.eventmanager.data.api.EventApi
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
 import me.proton.core.eventmanager.data.entity.EventMetadataEntity
@@ -37,14 +38,17 @@ import me.proton.core.eventmanager.domain.entity.EventsResponse
 import me.proton.core.eventmanager.domain.entity.State
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 @OptIn(ExperimentalProtonFileContext::class)
 open class EventMetadataRepositoryImpl @Inject constructor(
     @ApplicationContext
     private val context: Context,
     private val db: EventMetadataDatabase,
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val eventManagerQueryMapProvider: Optional<EventManagerQueryMapProvider>
 ) : EventMetadataRepository,
     FileContext<EventManagerConfig, EventId> by AndroidFileContext("events", context) {
 
@@ -144,11 +148,11 @@ open class EventMetadataRepositoryImpl @Inject constructor(
     }.valueOrThrow
 
     override suspend fun getEvents(
-        userId: UserId,
+        config: EventManagerConfig,
         eventId: EventId,
         endpoint: String
-    ): EventsResponse = apiProvider.get<EventApi>(userId).invoke {
-        val response = getEvents(endpoint, eventId.id)
+    ): EventsResponse = apiProvider.get<EventApi>(config.userId).invoke {
+        val response = getEvents(endpoint, eventId.id, eventManagerQueryMapProvider.getOrNull()?.getQueryMap(config))
         EventsResponse(response.string())
     }.valueOrThrow
 }
