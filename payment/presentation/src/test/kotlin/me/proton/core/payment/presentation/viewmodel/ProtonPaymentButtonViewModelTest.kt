@@ -38,6 +38,7 @@ import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -190,11 +191,11 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
 
         // THEN
         assertContentEquals(
-            listOf(ButtonState.Idle, ButtonState.Loading, ButtonState.Idle),
+            listOf(ButtonState.Idle, ButtonState.Loading),
             button1States
         )
         assertContentEquals(
-            listOf(ButtonState.Idle, ButtonState.Disabled, ButtonState.Idle),
+            listOf(ButtonState.Idle, ButtonState.Disabled),
             button2States
         )
         assertContentEquals(
@@ -209,6 +210,60 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
                     subscriptionCreated = true,
                     token
                 )
+            ),
+            button1Events
+        )
+        assertTrue(button2Events.isEmpty())
+    }
+
+    @Test
+    fun `failed giap payment`() = coroutinesTest {
+        // GIVEN
+        val button1StatesFlow = tested.buttonStates(1)
+        val button2StatesFlow = tested.buttonStates(2)
+        val button1EventsFlow = tested.paymentEvents(1)
+        val button2EventsFlow = tested.paymentEvents(2)
+
+        val button1States = mutableListOf<ButtonState>()
+        val button2States = mutableListOf<ButtonState>()
+        val button1Events = mutableListOf<ProtonPaymentEvent>()
+        val button2Events = mutableListOf<ProtonPaymentEvent>()
+
+        val plan = mockk<DynamicPlan>()
+        val cycle = 12
+        val currency = "CHF"
+
+        every { activityProvider.lastResumed } returns mockk()
+        coEvery { performGiapPurchase(any(), any(), any(), any()) } returns
+                PerformGiapPurchase.Result.Error.RecoverableBillingError(
+                    BillingClientError(null, null)
+                )
+
+        val jobs = listOf(
+            launch { button1StatesFlow.collect { button1States.add(it) } },
+            launch { button2StatesFlow.collect { button2States.add(it) } },
+            launch { button1EventsFlow.collect { button1Events.add(it) } },
+            launch { button2EventsFlow.collect { button2Events.add(it) } }
+        )
+
+        // WHEN
+        tested.onPayClicked(1, currency, cycle, PaymentProvider.GoogleInAppPurchase, plan, null)
+            .join()
+        jobs.map { it.cancel() }
+
+        // THEN
+        assertContentEquals(
+            listOf(ButtonState.Idle, ButtonState.Loading, ButtonState.Idle),
+            button1States
+        )
+        assertContentEquals(
+            listOf(ButtonState.Idle, ButtonState.Disabled, ButtonState.Idle),
+            button2States
+        )
+        assertContentEquals(
+            listOf(
+                ProtonPaymentEvent.Loading,
+                ProtonPaymentEvent.Error.RecoverableBillingError
             ),
             button1Events
         )

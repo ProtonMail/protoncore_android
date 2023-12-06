@@ -28,8 +28,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.lastOrNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.yield
 import me.proton.core.domain.entity.UserId
@@ -100,7 +100,7 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         emitButtonState(ButtonState.Disabled, exceptButton = buttonId)
         yield() // needed for testing; otherwise button state will be swallowed
 
-        flow {
+        val lastEvent = flow {
             emit(ProtonPaymentEvent.Loading)
 
             when (resolvedPaymentProvider) {
@@ -128,9 +128,11 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
             emit(Error.Generic(it))
         }.onEach {
             emitPaymentEvent(it, buttonId)
-        }.collect()
+        }.lastOrNull()
 
-        emitButtonState(ButtonState.Idle)
+        if (lastEvent !is ProtonPaymentEvent.GiapSuccess) {
+            emitButtonState(ButtonState.Idle)
+        }
     }
 
     fun buttonStates(buttonId: Int): StateFlow<ButtonState> =
