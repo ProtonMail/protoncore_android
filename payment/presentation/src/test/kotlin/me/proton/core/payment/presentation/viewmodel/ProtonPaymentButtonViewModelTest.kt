@@ -313,6 +313,31 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
         assertTrue(data.any { it is CheckoutGiapBillingCreatePaymentTokenTotal })
         assertTrue(data.any { it is CheckoutBillingSubscribeTotal })
     }
+
+    @Test
+    fun `emits unknown error`() = coroutinesTest {
+        // GIVEN
+        val plan = mockk<DynamicPlan>()
+        val cycle = 12
+        val currency = "CHF"
+        val events = tested.paymentEvents(1)
+        val throwable = Throwable("unknown")
+
+        every { activityProvider.lastResumed } returns mockk()
+        coEvery { performGiapPurchase(any(), any(), any(), any()) } throws throwable
+
+        events.test {
+            // WHEN
+            tested.onPayClicked(1, currency, cycle, PaymentProvider.GoogleInAppPurchase, plan, null).join()
+
+            // THEN
+            assertEquals(ProtonPaymentEvent.Loading, awaitItem())
+            assertEquals(
+                ProtonPaymentEvent.Error.Generic(throwable),
+                awaitItem()
+            )
+        }
+    }
 }
 
 private class FakeConvertToObservabilityGiapStatus : ConvertToObservabilityGiapStatus {

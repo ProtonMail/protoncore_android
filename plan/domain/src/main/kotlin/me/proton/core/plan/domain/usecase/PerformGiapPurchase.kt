@@ -24,6 +24,7 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 public interface PerformGiapPurchase<A : Any> {
     /** Performs full GIAP flow. */
@@ -34,6 +35,7 @@ public interface PerformGiapPurchase<A : Any> {
         userId: UserId?
     ): Result
 
+    @ExcludeFromCoverage
     public sealed class Result {
         public sealed class Error : Result() {
             /** The customer ID (`obfuscatedAccountId`) that was received from Google Billing library was empty.

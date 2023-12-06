@@ -25,6 +25,7 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 public interface CreatePaymentTokenForGooglePurchase {
     public suspend operator fun invoke(
@@ -35,6 +36,7 @@ public interface CreatePaymentTokenForGooglePurchase {
         userId: UserId?
     ): Result
 
+    @ExcludeFromCoverage
     public data class Result(
         public val amount: Long,
         public val cycle: SubscriptionCycle,
