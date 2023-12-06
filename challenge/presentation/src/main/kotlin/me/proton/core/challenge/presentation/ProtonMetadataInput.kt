@@ -113,11 +113,11 @@ public class ProtonMetadataInput : ProtonInput, OnKeyListener, OnTouchListener,
         challengeManager.addOrUpdateFrameToFlow(
             flow = flow,
             challengeFrame = frame,
-            focusTime = focusList,
+            focusTime = focusList.toList(), // Pass a copy so it doesn't change when focusList is being mutated.
             clicks = clickCount,
-            copies = copyList,
-            pastes = pasteList,
-            keys = keyList
+            copies = copyList.toList(),
+            pastes = pasteList.toList(),
+            keys = keyList.toList()
         )
     }
 
