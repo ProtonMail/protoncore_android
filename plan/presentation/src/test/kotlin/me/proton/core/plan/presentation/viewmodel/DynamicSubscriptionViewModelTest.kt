@@ -27,7 +27,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
-import me.proton.core.plan.domain.usecase.GetDynamicSubscription
+import me.proton.core.plan.domain.usecase.GetDynamicSubscriptionAdjustedPrices
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.test.android.ArchTest
@@ -54,7 +54,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
     private val observeUserCurrency = mockk<ObserveUserCurrency>(relaxed = true) {
         coEvery { this@mockk.invoke(any()) } returns mutableUserCurrencyFlow
     }
-    private val getDynamicSubscription = mockk<GetDynamicSubscription> {
+    private val getDynamicSubscriptionAdjustedPrices = mockk<GetDynamicSubscriptionAdjustedPrices> {
         coEvery { this@mockk.invoke(any()) } coAnswers {
             result("getDynamicSubscription") {
                 subscription
@@ -73,7 +73,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
             observabilityManager = observabilityManager,
             observeUserId = observeUserId,
             observeUserCurrency = observeUserCurrency,
-            getDynamicSubscription = getDynamicSubscription,
+            getDynamicSubscriptionAdjustedPrices = getDynamicSubscriptionAdjustedPrices,
             canUpgradeFromMobile = canUpgradeFromMobile
         )
     }
@@ -139,7 +139,7 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
     @Test
     fun observeStateError() = runTest {
         // Given
-        coEvery { getDynamicSubscription.invoke(any()) } throws Exception()
+        coEvery { getDynamicSubscriptionAdjustedPrices.invoke(any()) } throws Exception()
         // When
         viewModel.state.test {
             // Then

@@ -168,3 +168,62 @@ val dynamicSubscription = DynamicSubscription(
     ),
 )
 
+val dynamicSubscriptionPaid = DynamicSubscription(
+    name = "bundle2022",
+    title = "Proton Unlimited",
+    description = "Current Plan",
+    type = 1,
+    createTime = Instant.ofEpochSecond(1_570_708_458),
+    currency = "CHF",
+    cycleDescription = "1 month",
+    cycleMonths = 1,
+    discount = -28_788,
+    amount = 0,
+    external = SubscriptionManagement.GOOGLE_MANAGED,
+    periodStart = Instant.ofEpochSecond(1_665_402_858),
+    periodEnd = Instant.ofEpochSecond(1_696_938_858),
+    renew = true,
+    renewDiscount = -28_788,
+    renewAmount = 0,
+    couponCode = "COUPON123",
+    decorations = listOf(
+        DynamicDecoration.Starred(iconName = "tick")
+    ),
+    entitlements = listOf(
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
+            text = "Up to 1 GB storage",
+            hint = "Start with 500 MB and unlock more storage along the way."
+        )
+    ),
+)
+
+val dynamicSubscriptionPaidProtonManaged = DynamicSubscription(
+    name = "bundle2022",
+    title = "Proton Unlimited",
+    description = "Current Plan",
+    type = 1,
+    createTime = Instant.ofEpochSecond(1_570_708_458),
+    currency = "CHF",
+    cycleDescription = "1 month",
+    cycleMonths = 1,
+    discount = -28_788,
+    amount = 0,
+    external = SubscriptionManagement.PROTON_MANAGED,
+    periodStart = Instant.ofEpochSecond(1_665_402_858),
+    periodEnd = Instant.ofEpochSecond(1_696_938_858),
+    renew = true,
+    renewDiscount = -28_788,
+    renewAmount = 0,
+    couponCode = "COUPON123",
+    decorations = listOf(
+        DynamicDecoration.Starred(iconName = "tick")
+    ),
+    entitlements = listOf(
+        DynamicEntitlement.Description(
+            iconUrl = "tick",
+            text = "Up to 1 GB storage",
+            hint = "Start with 500 MB and unlock more storage along the way."
+        )
+    ),
+)

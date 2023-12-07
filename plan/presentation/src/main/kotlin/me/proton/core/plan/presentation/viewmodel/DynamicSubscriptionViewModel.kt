@@ -36,7 +36,7 @@ import me.proton.core.observability.domain.metrics.CheckoutGetDynamicSubscriptio
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
-import me.proton.core.plan.domain.usecase.GetDynamicSubscription
+import me.proton.core.plan.domain.usecase.GetDynamicSubscriptionAdjustedPrices
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.ObserveUserId
@@ -49,7 +49,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     override val observabilityManager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
     private val observeUserCurrency: ObserveUserCurrency,
-    private val getDynamicSubscription: GetDynamicSubscription,
+    private val getDynamicSubscriptionAdjustedPrices: GetDynamicSubscriptionAdjustedPrices,
     private val canUpgradeFromMobile: CanUpgradeFromMobile,
 ) : ProtonViewModel(), ObservabilityContext {
 
@@ -89,7 +89,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
             null -> send(State.UserNotExist)
             else -> send(
                 State.Success(
-                    dynamicSubscription = getDynamicSubscription(userId),
+                    dynamicSubscription = getDynamicSubscriptionAdjustedPrices(userId),
                     canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId),
                     userCurrency = currency
                 )

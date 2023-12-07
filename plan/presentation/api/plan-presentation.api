@@ -1633,7 +1633,7 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptio
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/presentation/usecase/ObserveUserId;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/GetDynamicSubscriptionAdjustedPrices;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptionViewModel_HiltModules {
