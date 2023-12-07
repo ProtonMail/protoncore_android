@@ -36,6 +36,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -54,7 +55,7 @@ import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
 
 @HiltViewModel
-internal class ProtonPaymentViewModel @Inject constructor(
+internal class ProtonPaymentButtonViewModel @Inject constructor(
     private val activityProvider: ActivityProvider,
     private val getPreferredPaymentProvider: GetPreferredPaymentProvider,
     override val observabilityManager: ObservabilityManager,
@@ -115,7 +116,7 @@ internal class ProtonPaymentViewModel @Inject constructor(
                         plan,
                         userId
                     )
-                    val event = onPurchaseResult(cycle, plan, purchaseResult)
+                    val event = onPurchaseResult(cycle, currency, plan, purchaseResult)
                     emit(event)
                 }
 
@@ -167,11 +168,18 @@ internal class ProtonPaymentViewModel @Inject constructor(
 
     private fun onPurchaseResult(
         cycle: Int,
+        originalCurrency: String,
         plan: DynamicPlan,
         result: PerformGiapPurchase.Result?
     ): ProtonPaymentEvent = when (result) {
         is PerformGiapPurchase.Result.Error.EmptyCustomerId -> Error.EmptyCustomerId
-        is PerformGiapPurchase.Result.Error.GiapUnredeemed -> Error.GiapUnredeemed(result.googlePurchase)
+        is PerformGiapPurchase.Result.Error.GiapUnredeemed -> Error.GiapUnredeemed(
+            cycle = result.cycle,
+            googleProductId = result.googleProductId,
+            googlePurchase = result.googlePurchase,
+            originalCurrency = originalCurrency,
+            plan = result.plan
+        )
         is PerformGiapPurchase.Result.Error.GoogleProductDetailsNotFound -> Error.GoogleProductDetailsNotFound
         is PerformGiapPurchase.Result.Error.PurchaseNotFound -> Error.PurchaseNotFound
         is PerformGiapPurchase.Result.Error.RecoverableBillingError -> Error.RecoverableBillingError
@@ -208,7 +216,13 @@ public sealed class ProtonPaymentEvent {
     public sealed class Error : ProtonPaymentEvent() {
         public object EmptyCustomerId : Error()
         public data class Generic(public val throwable: Throwable) : Error()
-        public data class GiapUnredeemed(public val googlePurchase: GooglePurchase) : Error()
+        public data class GiapUnredeemed(
+            public val cycle: Int,
+            public val googleProductId: ProductId,
+            public val googlePurchase: GooglePurchase,
+            public val originalCurrency: String,
+            public val plan: DynamicPlan,
+        ) : Error()
         public object GoogleProductDetailsNotFound : Error()
         public object PurchaseNotFound : Error()
         public object RecoverableBillingError : Error()

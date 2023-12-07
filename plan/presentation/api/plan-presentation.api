@@ -226,6 +226,7 @@ public final class me/proton/core/plan/presentation/databinding/DynamicPlanViewB
 	public final field contentRenewal Landroid/widget/TextView;
 	public final field contentSeparator Landroid/view/View;
 	public final field description Landroid/widget/TextView;
+	public final field paymentButtonStub Landroid/view/ViewStub;
 	public final field priceCycle Landroid/widget/TextView;
 	public final field priceLayout Landroid/widget/LinearLayout;
 	public final field pricePercentage Landroid/widget/TextView;
@@ -419,6 +420,14 @@ public final class me/proton/core/plan/presentation/databinding/PlansListViewBin
 	public fun getRoot ()Landroid/widget/LinearLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/PlansListViewBinding;
+}
+
+public final class me/proton/core/plan/presentation/databinding/ProtonPaymentButtonBinding : androidx/viewbinding/ViewBinding {
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/ProtonPaymentButtonBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Lme/proton/core/payment/presentation/view/ProtonPaymentButton;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/ProtonPaymentButtonBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/ProtonPaymentButtonBinding;
 }
 
 public final class me/proton/core/plan/presentation/entity/DynamicPlanFilter {
@@ -1071,11 +1080,20 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanListFragment :
 	public final fun setCycle (I)V
 	public final fun setOnPlanList (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnPlanSelected (Lkotlin/jvm/functions/Function1;)V
+	public final fun setOnProtonPaymentResultListener (Lme/proton/core/payment/presentation/view/ProtonPaymentEventListener;)V
 	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
 }
 
 public abstract interface class me/proton/core/plan/presentation/ui/DynamicPlanListFragment_GeneratedInjector {
 	public abstract fun injectDynamicPlanListFragment (Lme/proton/core/plan/presentation/ui/DynamicPlanListFragment;)V
+}
+
+public final class me/proton/core/plan/presentation/ui/DynamicPlanListFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectIsDynamicPlanAdjustedPriceEnabled (Lme/proton/core/plan/presentation/ui/DynamicPlanListFragment;Lme/proton/core/plan/domain/IsDynamicPlanAdjustedPriceEnabled;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/plan/presentation/ui/DynamicPlanListFragment;)V
 }
 
 public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragment : me/proton/core/presentation/ui/ProtonFragment {
@@ -1492,8 +1510,9 @@ public final class me/proton/core/plan/presentation/view/DynamicPlanView : andro
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getButtonText ()Ljava/lang/CharSequence;
-	public final fun getButtonTextIsVisible ()Z
+	public final fun getContentButtonIsEnabled ()Z
+	public final fun getContentButtonIsVisible ()Z
+	public final fun getContentButtonText ()Ljava/lang/CharSequence;
 	public final fun getDescription ()Ljava/lang/CharSequence;
 	public final fun getEntitlements ()Landroid/view/ViewGroup;
 	public final fun getPriceCycle ()Ljava/lang/CharSequence;
@@ -1504,12 +1523,14 @@ public final class me/proton/core/plan/presentation/view/DynamicPlanView : andro
 	public final fun getRenewalText ()Ljava/lang/CharSequence;
 	public final fun getStarred ()Z
 	public final fun getTitle ()Ljava/lang/CharSequence;
+	public final fun inflatePaymentButton (I)Lme/proton/core/payment/presentation/view/ProtonPaymentButton;
 	public final fun isCollapsable ()Z
 	public final fun isCollapsed ()Z
-	public final fun setButtonText (Ljava/lang/CharSequence;)V
-	public final fun setButtonTextIsVisible (Z)V
 	public final fun setCollapsable (Z)V
 	public final fun setCollapsed (Z)V
+	public final fun setContentButtonIsEnabled (Z)V
+	public final fun setContentButtonIsVisible (Z)V
+	public final fun setContentButtonText (Ljava/lang/CharSequence;)V
 	public final fun setDescription (Ljava/lang/CharSequence;)V
 	public final fun setOnButtonClickListener (Landroid/view/View$OnClickListener;)V
 	public final fun setPriceCycle (Ljava/lang/CharSequence;)V

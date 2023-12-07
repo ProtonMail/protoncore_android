@@ -96,7 +96,12 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         userId: UserId?
     ): Result = when (prepareResult) {
         is PrepareGiapPurchase.Result.ProductDetailsNotFound -> Error.GoogleProductDetailsNotFound
-        is PrepareGiapPurchase.Result.Unredeemed -> Error.GiapUnredeemed(prepareResult.googlePurchase)
+        is PrepareGiapPurchase.Result.Unredeemed -> Error.GiapUnredeemed(
+            cycle = cycle,
+            googleProductId = googleProductId,
+            googlePurchase = prepareResult.googlePurchase,
+            plan = plan
+        )
         is PrepareGiapPurchase.Result.Success -> onPrepareGiapPurchaseSuccess(
             activity,
             cycle,

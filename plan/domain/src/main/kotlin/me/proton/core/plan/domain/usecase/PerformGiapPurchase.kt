@@ -20,6 +20,7 @@ package me.proton.core.plan.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.plan.domain.entity.DynamicPlan
@@ -41,7 +42,12 @@ public interface PerformGiapPurchase<A : Any> {
             public object EmptyCustomerId : Error()
 
             /** An unredeemed [googlePurchase] was detected, which should be resolved. */
-            public data class GiapUnredeemed(public val googlePurchase: GooglePurchase) : Error()
+            public data class GiapUnredeemed(
+                public val cycle: Int,
+                public val googleProductId: ProductId,
+                public val googlePurchase: GooglePurchase,
+                public val plan: DynamicPlan,
+            ) : Error()
 
             /** A product was not found in Google Play. */
             public object GoogleProductDetailsNotFound : Error()

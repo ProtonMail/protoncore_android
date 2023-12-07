@@ -22,11 +22,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
@@ -63,12 +64,15 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         data class SetUser(val user: DynamicUser) : Action()
         data class SelectPlan(val selectedPlan: SelectedPlan) : Action()
         data class SetBillingResult(val result: BillingResult) : Action()
+        data class SetGiapBillingResult(
+            val selectedPlan: SelectedPlan,
+            val result: BillingResult
+        ) : Action()
         object SetBillingCanceled : Action()
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableSelectedPlan = MutableStateFlow<SelectedPlan?>(null)
-    private val mutablePaymentResult = MutableStateFlow<BillingResult?>(null)
+    private val mutableSelectedItem = MutableStateFlow<Pair<SelectedPlan?, BillingResult?>>(Pair(null, null))
 
     val state = observeCurrencies().stateIn(
         scope = viewModelScope,
@@ -93,10 +97,7 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         DynamicPlanFilters(userId, dynamicPlans?.defaultCycle ?: 0, instancesCycles, currencies)
     }
 
-    private fun observeState(filters: DynamicPlanFilters) = combine(
-        mutableSelectedPlan,
-        mutablePaymentResult,
-    ) { plan, result ->
+    private fun observeState(filters: DynamicPlanFilters) = mutableSelectedItem.map { (plan, result) ->
         when {
             plan == null -> State.Idle(filters)
             result != null -> when {
@@ -114,6 +115,7 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         is Action.SetUser -> onSetUser(action.user)
         is Action.SelectPlan -> onSelectPlan(action.selectedPlan)
         is Action.SetBillingResult -> onSetPaymentResult(action.result)
+        is Action.SetGiapBillingResult -> onSetGiapPaymentResult(action.selectedPlan, action.result)
         is Action.SetBillingCanceled -> onSetBillingCanceled()
     }
 
@@ -126,15 +128,21 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
     }
 
     private fun onSelectPlan(selectedPlan: SelectedPlan) = viewModelScope.launch {
-        mutableSelectedPlan.emit(selectedPlan)
+        mutableSelectedItem.update { Pair(selectedPlan, null) }
     }
 
     private fun onSetPaymentResult(result: BillingResult) = viewModelScope.launch {
-        mutablePaymentResult.emit(result)
+        mutableSelectedItem.update { it.copy(second = result) }
+    }
+
+    private fun onSetGiapPaymentResult(
+        selectedPlan: SelectedPlan,
+        result: BillingResult
+    ) = viewModelScope.launch {
+        mutableSelectedItem.update { Pair(selectedPlan, result) }
     }
 
     private fun onSetBillingCanceled() = viewModelScope.launch {
-        mutableSelectedPlan.emit(null)
-        mutablePaymentResult.emit(null)
+        mutableSelectedItem.update { Pair(null, null) }
     }
 }

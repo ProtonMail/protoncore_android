@@ -232,6 +232,13 @@
             android:visibility="gone"
             tools:text="Select" />
 
+        <ViewStub
+            android:id="@+id/payment_button_stub"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_large"
+            android:layout="@layout/proton_payment_button" />
+
     </LinearLayout>
 
 </merge>

@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentViewModel
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
@@ -43,22 +43,22 @@ class ProtonPaymentButtonTest {
 
     @Test
     fun `initial empty state`() {
-        val viewModel = mockk<ProtonPaymentViewModel>(relaxed = true)
+        val viewModel = mockk<ProtonPaymentButtonViewModel>(relaxed = true)
         val view = makeButton(viewModel, withParams = false)
         paparazzi.snapshot(view)
     }
 
     @Test
     fun `mail plus plan with giap provider`() {
-        val viewModel = mockk<ProtonPaymentViewModel>(relaxed = true)
+        val viewModel = mockk<ProtonPaymentButtonViewModel>(relaxed = true)
         val view = makeButton(viewModel)
         paparazzi.snapshot(view)
     }
 
     @Test
     fun `loading state`() {
-        val viewModel = mockk<ProtonPaymentViewModel>(relaxed = true) {
-            every { buttonStates(1) } returns MutableStateFlow(ProtonPaymentViewModel.ButtonState.Loading).asStateFlow()
+        val viewModel = mockk<ProtonPaymentButtonViewModel>(relaxed = true) {
+            every { buttonStates(1) } returns MutableStateFlow(ProtonPaymentButtonViewModel.ButtonState.Loading).asStateFlow()
         }
         val view = makeButton(viewModel, id = 1)
         paparazzi.snapshot(view)
@@ -66,15 +66,15 @@ class ProtonPaymentButtonTest {
 
     @Test
     fun `disabled state`() {
-        val viewModel = mockk<ProtonPaymentViewModel>(relaxed = true) {
-            every { buttonStates(1) } returns MutableStateFlow(ProtonPaymentViewModel.ButtonState.Disabled)
+        val viewModel = mockk<ProtonPaymentButtonViewModel>(relaxed = true) {
+            every { buttonStates(1) } returns MutableStateFlow(ProtonPaymentButtonViewModel.ButtonState.Disabled)
         }
         val view = makeButton(viewModel, id = 1)
         paparazzi.snapshot(view)
     }
 
     private fun makeButton(
-        viewModel: ProtonPaymentViewModel,
+        viewModel: ProtonPaymentButtonViewModel,
         id: Int? = null,
         withParams: Boolean = true
     ): ProtonPaymentButton {

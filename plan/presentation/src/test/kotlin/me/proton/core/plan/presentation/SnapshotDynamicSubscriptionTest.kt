@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,15 +18,23 @@
 
 package me.proton.core.plan.presentation
 
+import androidx.lifecycle.HasDefaultViewModelProviderFactory
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
+import androidx.lifecycle.setViewTreeViewModelStoreOwner
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import io.mockk.mockkClass
 import me.proton.core.plan.presentation.view.DynamicEntitlementDescriptionView
 import me.proton.core.plan.presentation.view.DynamicEntitlementProgressView
 import me.proton.core.plan.presentation.view.DynamicPlanView
+import me.proton.core.test.kotlin.CoroutinesTest
 import org.junit.Rule
 import org.junit.Test
 
-class SnapshotDynamicSubscriptionTest {
+class SnapshotDynamicSubscriptionTest: CoroutinesTest by CoroutinesTest() {
 
     @get:Rule
     val paparazzi = Paparazzi(
@@ -55,6 +63,10 @@ class SnapshotDynamicSubscriptionTest {
     @Test
     fun dynamicPlanView() {
         val view = DynamicPlanView(paparazzi.context)
+
+        // needed for ProtonPaymentButton and ProtonPaymentViewModel:
+        view.setViewTreeViewModelStoreOwner(FakeViewModelStoreOwner())
+
         view.title = "Proton Free"
         view.description = "Description, not too long, but still 2 lines should be possible."
         view.priceText = "CHF200"
@@ -76,4 +88,13 @@ class SnapshotDynamicSubscriptionTest {
         })
         paparazzi.snapshot(view)
     }
+}
+
+private class FakeViewModelStoreOwner : HasDefaultViewModelProviderFactory, ViewModelStoreOwner {
+    override val defaultViewModelProviderFactory = object : ViewModelProvider.Factory {
+        override fun <T : ViewModel> create(modelClass: Class<T>): T =
+            mockkClass(modelClass.kotlin, relaxed = true)
+    }
+
+    override val viewModelStore: ViewModelStore = ViewModelStore()
 }

@@ -19,6 +19,7 @@
 package me.proton.core.plan.presentation.viewmodel
 
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -27,10 +28,14 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.plan.domain.entity.DynamicPlanService
+import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.entity.DynamicUser
+import me.proton.core.plan.presentation.entity.PlanCurrency
+import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.bundlePlan
 import me.proton.core.plan.presentation.entity.mailPlusPlan
@@ -79,6 +84,7 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @BeforeTest
     fun setUp() {
+        MockKAnnotations.init(this)
         tested = DynamicPlanSelectionViewModel(
             observabilityManager = observabilityManager,
             observeUserId = observeUserId,
@@ -97,7 +103,10 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
             assertIs<State.Loading>(awaitItem())
             val state = awaitItem()
             assertIs<State.Idle>(state)
-            assertEquals(expected = listOf("CHF", "EUR", "USD"), actual = state.planFilters.currencies)
+            assertEquals(
+                expected = listOf("CHF", "EUR", "USD"),
+                actual = state.planFilters.currencies
+            )
             assertEquals(expected = listOf(1, 12), actual = state.planFilters.cycles)
         }
     }
@@ -128,7 +137,10 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
             assertIs<State.Loading>(awaitItem())
             val state = awaitItem()
             assertIs<State.Idle>(state)
-            assertEquals(expected = listOf("CHF", "EUR", "USD"), actual = state.planFilters.currencies)
+            assertEquals(
+                expected = listOf("CHF", "EUR", "USD"),
+                actual = state.planFilters.currencies
+            )
         }
     }
 
@@ -190,6 +202,30 @@ class DynamicPlanSelectionViewModelTest : CoroutinesTest by CoroutinesTest() {
             // Then
             assertIs<State.Loading>(awaitItem())
             assertIs<State.Idle>(awaitItem())
+        }
+    }
+
+    @Test
+    fun performSetGiapBillingResult() = runTest {
+        // Given
+        val selectedPlan = SelectedPlan(
+            planName = "test",
+            planDisplayName = "Test",
+            free = false,
+            cycle = PlanCycle.YEARLY,
+            currency = PlanCurrency.CHF,
+            amount = 499.0,
+            services = DynamicPlanService.Mail.code,
+            type = DynamicPlanType.Primary.code,
+            vendorNames = emptyMap(),
+        )
+        tested.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
+        tested.perform(Action.SetGiapBillingResult(selectedPlan, billingResult))
+        // When
+        tested.state.test {
+            // Then
+            assertIs<State.Loading>(awaitItem())
+            assertIs<State.Billed>(awaitItem())
         }
     }
 }

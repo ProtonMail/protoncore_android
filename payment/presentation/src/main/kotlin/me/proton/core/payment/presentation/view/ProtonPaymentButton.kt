@@ -40,10 +40,10 @@ import me.proton.core.payment.domain.usecase.PaymentProvider.GoogleInAppPurchase
 import me.proton.core.payment.domain.usecase.PaymentProvider.PayPal
 import me.proton.core.payment.presentation.R
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentViewModel
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentViewModel.ButtonState.Disabled
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentViewModel.ButtonState.Idle
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentViewModel.ButtonState.Loading
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState.Disabled
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState.Idle
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState.Loading
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.presentation.ui.view.ProtonProgressButton
 
@@ -111,8 +111,8 @@ public class ProtonPaymentButton @JvmOverloads constructor(
     private var errorEventsObserverJob: Job? = null
     private var eventListener: ProtonPaymentEventListener? = null
     private var stateObserverJob: Job? = null
-    private var state: ProtonPaymentViewModel.ButtonState =
-        ProtonPaymentViewModel.initialButtonState
+    private var state: ProtonPaymentButtonViewModel.ButtonState =
+        ProtonPaymentButtonViewModel.initialButtonState
         set(value) {
             field = value
             onStateChanged()
@@ -122,11 +122,13 @@ public class ProtonPaymentButton @JvmOverloads constructor(
         get() = findViewTreeLifecycleOwner()!!.lifecycle.coroutineScope
 
     @VisibleForTesting
-    internal var testViewModel: ProtonPaymentViewModel? = null
+    internal var testViewModel: ProtonPaymentButtonViewModel? = null
 
     /** A view model can be accessed only after [onAttachedToWindow].*/
-    private val viewModel: ProtonPaymentViewModel by lazy {
-        testViewModel ?: ViewModelProvider(findViewTreeViewModelStoreOwner()!!).get()
+    private val viewModel: ProtonPaymentButtonViewModel by lazy {
+        testViewModel ?: ViewModelProvider(requireNotNull(findViewTreeViewModelStoreOwner()) {
+            "Could not find ViewModelStoreOwner."
+        }).get()
     }
 
     init {

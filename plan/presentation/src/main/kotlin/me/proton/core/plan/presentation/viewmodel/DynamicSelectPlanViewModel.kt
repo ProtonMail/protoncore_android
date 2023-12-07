@@ -66,7 +66,7 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
-    private val mutableSelectedItem = MutableStateFlow<Pair<SelectedPlan, BillingResult?>?>(null)
+    private val mutableSelectedItem = MutableStateFlow<Pair<SelectedPlan?, BillingResult?>>(Pair(null, null))
 
     val state: StateFlow<State> = observeState().stateIn(
         scope = viewModelScope,
@@ -103,9 +103,9 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         mutableSelectedItem.emit(Pair(plan, result))
     }
 
-    private suspend fun observeState(selectedItem: Pair<SelectedPlan, BillingResult?>?) = flow {
+    private suspend fun observeState(selectedItem: Pair<SelectedPlan?, BillingResult?>) = flow {
         emit(State.Loading)
-        val (plan, result) = selectedItem ?: Pair(null, null)
+        val (plan, result) = selectedItem
         when {
             plan != null && result != null -> emit(State.PaidPlanSelected(plan, result))
             plan != null -> emit(State.FreePlanSelected(plan))

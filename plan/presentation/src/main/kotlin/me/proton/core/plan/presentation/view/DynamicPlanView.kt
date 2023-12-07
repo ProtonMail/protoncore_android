@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import androidx.annotation.IdRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
+import me.proton.core.payment.presentation.view.ProtonPaymentButton
 import me.proton.core.plan.presentation.databinding.DynamicPlanViewBinding.inflate
 import me.proton.core.presentation.utils.onClick
 
@@ -132,17 +134,29 @@ class DynamicPlanView @JvmOverloads constructor(
             binding.contentSeparator.isVisible = !renewalText.isNullOrBlank()
         }
 
-    var buttonTextIsVisible: Boolean
+    var contentButtonIsEnabled: Boolean
+        get() = binding.contentButton.isEnabled
+        set(value) {
+            binding.contentButton.isEnabled = value
+        }
+
+    var contentButtonIsVisible: Boolean
         get() = binding.contentButton.isVisible
         set(value) {
             binding.contentButton.isVisible = value
         }
 
-    var buttonText: CharSequence?
+    var contentButtonText: CharSequence?
         get() = binding.contentButton.text
         set(value) {
             binding.contentButton.text = value
         }
+
+    /** Inflates the [ProtonPaymentButton]. Make sure to pass a unique [id]. */
+    fun inflatePaymentButton(@IdRes id: Int): ProtonPaymentButton {
+        binding.paymentButtonStub.inflatedId = id
+        return binding.paymentButtonStub.inflate() as ProtonPaymentButton
+    }
 
     fun setOnButtonClickListener(listener: OnClickListener) {
         binding.contentButton.setOnClickListener(listener)

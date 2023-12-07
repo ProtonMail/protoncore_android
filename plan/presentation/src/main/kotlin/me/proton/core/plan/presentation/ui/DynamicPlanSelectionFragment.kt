@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -26,22 +26,28 @@ import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanSelectionBinding
 import me.proton.core.plan.presentation.entity.DynamicPlanFilters
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
+import me.proton.core.plan.presentation.entity.getSelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.State
 import me.proton.core.plan.presentation.viewmodel.filterByCycle
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.onItemSelected
 import me.proton.core.presentation.utils.viewBinding
 import javax.inject.Inject
@@ -129,6 +135,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
         planList.setOnPlanList { onPlanList(it) }
         planList.setOnPlanSelected { viewModel.perform(Action.SelectPlan(it)) }
+        planList.setOnProtonPaymentResultListener(this::onProtonPaymentResult)
 
         paymentsOrchestrator.onPaymentResult { result ->
             when (result) {
@@ -209,5 +216,59 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private fun onBilled(selectedPlan: SelectedPlan, result: BillingResult) {
         onPlanBilled?.invoke(selectedPlan, result)
+    }
+
+    private fun onProtonPaymentResult(event: ProtonPaymentEvent) {
+        when (event) {
+            is ProtonPaymentEvent.Loading -> Unit
+            is ProtonPaymentEvent.Error.GiapUnredeemed -> onGiapUnredeemed(event)
+            is ProtonPaymentEvent.Error.UserCancelled -> viewModel.perform(Action.SetBillingCanceled)
+            is ProtonPaymentEvent.Error -> view?.errorSnack(R.string.payments_general_error)
+            is ProtonPaymentEvent.GiapSuccess -> onGiapSuccess(event)
+            is ProtonPaymentEvent.StartRegularBillingFlow -> startRegularBillingFlow(
+                event.plan,
+                event.cycle,
+                event.currency
+            )
+        }
+    }
+
+    private fun onGiapSuccess(event: ProtonPaymentEvent.GiapSuccess) {
+        viewModel.perform(
+            Action.SetGiapBillingResult(
+                selectedPlan = event.plan.getSelectedPlan(
+                    resources,
+                    event.cycle,
+                    event.currency
+                ),
+                result = BillingResult(
+                    paySuccess = true,
+                    token = event.token.value,
+                    subscriptionCreated = event.subscriptionCreated,
+                    amount = event.amount,
+                    currency = Currency.valueOf(event.currency),
+                    cycle = SubscriptionCycle.map[event.cycle] ?: SubscriptionCycle.OTHER,
+                    subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                )
+            )
+        )
+    }
+
+    private fun onGiapUnredeemed(event: ProtonPaymentEvent.Error.GiapUnredeemed) {
+        startRegularBillingFlow(
+            event.plan,
+            event.cycle,
+            event.originalCurrency
+        )
+    }
+
+    private fun startRegularBillingFlow(
+        plan: DynamicPlan,
+        cycle: Int,
+        currency: String
+    ) {
+        val selectedPlan =
+            plan.getSelectedPlan(resources = resources, cycle = cycle, currency = currency)
+        viewModel.perform(Action.SelectPlan(selectedPlan))
     }
 }

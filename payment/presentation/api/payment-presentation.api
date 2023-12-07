@@ -38,11 +38,11 @@ public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_ProtonPaymentViewModel_HiltModules_BindsModule {
+public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_ProtonPaymentButtonViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_ProtonPaymentViewModel_HiltModules_KeyModule {
+public class hilt_aggregated_deps/_me_proton_core_payment_presentation_viewmodel_ProtonPaymentButtonViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -879,6 +879,33 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApp
 	public static fun provide ()Ljava/lang/String;
 }
 
+public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel;
+	public static fun newInstance (Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/payment/domain/usecase/GetPreferredPaymentProvider;Lme/proton/core/observability/domain/ObservabilityManager;Ljava/util/Optional;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
 public abstract class me/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent {
 }
 
@@ -901,12 +928,20 @@ public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentEv
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed : me/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error {
-	public fun <init> (Lme/proton/core/payment/domain/entity/GooglePurchase;)V
-	public final fun component1 ()Lme/proton/core/payment/domain/entity/GooglePurchase;
-	public final fun copy (Lme/proton/core/payment/domain/entity/GooglePurchase;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed;
-	public static synthetic fun copy$default (Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed;Lme/proton/core/payment/domain/entity/GooglePurchase;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed;
+	public synthetic fun <init> (ILjava/lang/String;Lme/proton/core/payment/domain/entity/GooglePurchase;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlan;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()I
+	public final fun component2-9Q0vbQY ()Ljava/lang/String;
+	public final fun component3 ()Lme/proton/core/payment/domain/entity/GooglePurchase;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Lme/proton/core/plan/domain/entity/DynamicPlan;
+	public final fun copy-sv3PqTM (ILjava/lang/String;Lme/proton/core/payment/domain/entity/GooglePurchase;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlan;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed;
+	public static synthetic fun copy-sv3PqTM$default (Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed;ILjava/lang/String;Lme/proton/core/payment/domain/entity/GooglePurchase;Ljava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlan;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$Error$GiapUnredeemed;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCycle ()I
+	public final fun getGoogleProductId-9Q0vbQY ()Ljava/lang/String;
 	public final fun getGooglePurchase ()Lme/proton/core/payment/domain/entity/GooglePurchase;
+	public final fun getOriginalCurrency ()Ljava/lang/String;
+	public final fun getPlan ()Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -975,32 +1010,5 @@ public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentEv
 	public final fun getPlan ()Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel;
-	public static fun newInstance (Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/payment/domain/usecase/GetPreferredPaymentProvider;Lme/proton/core/observability/domain/ObservabilityManager;Ljava/util/Optional;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel;
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_HiltModules {
-}
-
-public abstract class me/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_HiltModules$BindsModule {
-	public abstract fun binds (Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel;)Landroidx/lifecycle/ViewModel;
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_HiltModules$KeyModule {
-	public static fun provide ()Ljava/lang/String;
-}
-
-public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
-	public fun <init> ()V
-	public static fun create ()Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentViewModel_HiltModules_KeyModule_ProvideFactory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Ljava/lang/String;
-	public static fun provide ()Ljava/lang/String;
 }
 

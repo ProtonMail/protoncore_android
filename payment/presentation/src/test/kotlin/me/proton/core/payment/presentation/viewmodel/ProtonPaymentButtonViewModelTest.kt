@@ -31,7 +31,7 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.payment.presentation.viewmodel.ProtonPaymentViewModel.ButtonState
+import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
@@ -45,7 +45,7 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
 import kotlin.test.assertTrue
 
-class ProtonPaymentViewModelTest : CoroutinesTest by CoroutinesTest() {
+class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var activityProvider: ActivityProvider
 
@@ -58,12 +58,12 @@ class ProtonPaymentViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var performGiapPurchase: PerformGiapPurchase<Activity>
 
-    private lateinit var tested: ProtonPaymentViewModel
+    private lateinit var tested: ProtonPaymentButtonViewModel
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = ProtonPaymentViewModel(
+        tested = ProtonPaymentButtonViewModel(
             activityProvider,
             getPreferredPaymentProvider,
             observabilityManager,
