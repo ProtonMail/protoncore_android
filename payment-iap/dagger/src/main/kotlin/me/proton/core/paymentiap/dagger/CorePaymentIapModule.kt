@@ -33,11 +33,13 @@ import me.proton.core.paymentiap.data.usecase.FindUnacknowledgedGooglePurchaseIm
 import me.proton.core.paymentiap.data.usecase.GetStorePriceImpl
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
 import me.proton.core.paymentiap.presentation.usecase.LaunchGiapBillingFlowImpl
 import me.proton.core.paymentiap.presentation.usecase.PerformGiapPurchaseImpl
 import me.proton.core.paymentiap.data.usecase.PrepareGiapPurchaseImpl
+import me.proton.core.paymentiap.domain.usecase.ConvertToObservabilityGiapStatusImpl
 import me.proton.core.paymentiap.presentation.usecase.CreatePaymentTokenForGooglePurchaseImpl
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
@@ -75,4 +77,9 @@ public interface CorePaymentIapModule {
 
     @Binds
     public fun bindCreateSubscriptionForGiap(impl: CreatePaymentTokenForGooglePurchaseImpl): CreatePaymentTokenForGooglePurchase
+
+    @Binds
+    public fun bindConvertToObservabilityGiapStatus(
+        impl: ConvertToObservabilityGiapStatusImpl
+    ): ConvertToObservabilityGiapStatus
 }

@@ -35,9 +35,13 @@ import kotlinx.coroutines.yield
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingLaunchBillingTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider.CardPayment
@@ -49,6 +53,7 @@ import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.coroutine.ResultCollector
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import java.util.Optional
 import javax.inject.Inject
@@ -57,6 +62,7 @@ import kotlin.jvm.optionals.getOrNull
 @HiltViewModel
 internal class ProtonPaymentButtonViewModel @Inject constructor(
     private val activityProvider: ActivityProvider,
+    private val convertToObservabilityGiapStatus: Optional<ConvertToObservabilityGiapStatus>,
     private val getPreferredPaymentProvider: GetPreferredPaymentProvider,
     override val observabilityManager: ObservabilityManager,
     private val performGiapPurchase: Optional<PerformGiapPurchase<Activity>>,
@@ -87,13 +93,8 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
     ) = viewModelScope.launchWithResultContext {
         check(buttonStates.none { it.value.value == ButtonState.Loading })
 
-        // TODO
-//        onResultEnqueueObservability("getProductsDetails") { CheckoutGiapBillingProductQueryTotal(toGiapStatus()) }
-//        onResultEnqueueObservability("querySubscriptionPurchases") { CheckoutGiapBillingQuerySubscriptionsTotal(toGiapStatus()) }
-//        onResultEnqueueObservability("launchBillingFlow") { CheckoutGiapBillingLaunchBillingTotal(toGiapStatus()) }
-//        onResultEnqueueObservability("createPaymentToken") { getCreatePaymentTokenObservabilityData(paymentType) }
-//        onResultEnqueueObservability("createOrUpdateSubscription") { getSubscribeObservabilityData(paymentType) }
-//        onResultEnqueueObservability("validateSubscription") { getValidatePlanObservabilityData(paymentType) }
+        val resolvedPaymentProvider = paymentProvider ?: getPreferredPaymentProvider(userId)
+        onResultEnqueueObservabilityEvents(resolvedPaymentProvider)
 
         emitButtonState(ButtonState.Loading, forButton = buttonId)
         emitButtonState(ButtonState.Disabled, exceptButton = buttonId)
@@ -102,7 +103,7 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         flow {
             emit(ProtonPaymentEvent.Loading)
 
-            when (paymentProvider ?: getPreferredPaymentProvider(userId)) {
+            when (resolvedPaymentProvider) {
                 CardPayment ->
                     emit(ProtonPaymentEvent.StartRegularBillingFlow(plan, cycle, currency))
 
@@ -180,6 +181,7 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
             originalCurrency = originalCurrency,
             plan = result.plan
         )
+
         is PerformGiapPurchase.Result.Error.GoogleProductDetailsNotFound -> Error.GoogleProductDetailsNotFound
         is PerformGiapPurchase.Result.Error.PurchaseNotFound -> Error.PurchaseNotFound
         is PerformGiapPurchase.Result.Error.RecoverableBillingError -> Error.RecoverableBillingError
@@ -196,6 +198,30 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         )
 
         null -> error("Missing payment-iap module.")
+    }
+
+    private suspend fun ResultCollector<*>.onResultEnqueueObservabilityEvents(paymentProvider: PaymentProvider?) {
+        convertToObservabilityGiapStatus.getOrNull()?.let { converter ->
+            onResultEnqueueObservability("getProductsDetails") {
+                CheckoutGiapBillingProductQueryTotal(converter(this))
+            }
+            onResultEnqueueObservability("querySubscriptionPurchases") {
+                CheckoutGiapBillingQuerySubscriptionsTotal(converter(this))
+            }
+            onResultEnqueueObservability("launchBillingFlow") {
+                CheckoutGiapBillingLaunchBillingTotal(converter(this))
+            }
+        }
+
+        onResultEnqueueObservability("validateSubscription") {
+            getValidatePlanObservabilityData(paymentProvider)
+        }
+        onResultEnqueueObservability("createPaymentToken") {
+            getCreatePaymentTokenObservabilityData(paymentProvider)
+        }
+        onResultEnqueueObservability("createOrUpdateSubscription") {
+            getSubscribeObservabilityData(paymentProvider)
+        }
     }
 
     sealed class ButtonState {
@@ -223,6 +249,7 @@ public sealed class ProtonPaymentEvent {
             public val originalCurrency: String,
             public val plan: DynamicPlan,
         ) : Error()
+
         public object GoogleProductDetailsNotFound : Error()
         public object PurchaseNotFound : Error()
         public object RecoverableBillingError : Error()

@@ -25,10 +25,20 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.verify
 import kotlinx.coroutines.launch
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingCreatePaymentTokenTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingLaunchBillingTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubscriptionsTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingValidatePlanTotal
+import me.proton.core.observability.domain.metrics.ObservabilityData
+import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState
@@ -36,6 +46,7 @@ import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.util.kotlin.coroutine.result
 import java.util.Optional
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -49,10 +60,12 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var activityProvider: ActivityProvider
 
+    private lateinit var convertToObservabilityGiapStatus: ConvertToObservabilityGiapStatus
+
     @MockK
     private lateinit var getPreferredPaymentProvider: GetPreferredPaymentProvider
 
-    @MockK
+    @MockK(relaxed = true)
     private lateinit var observabilityManager: ObservabilityManager
 
     @MockK
@@ -63,8 +76,10 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+        convertToObservabilityGiapStatus = FakeConvertToObservabilityGiapStatus()
         tested = ProtonPaymentButtonViewModel(
             activityProvider,
+            Optional.of(convertToObservabilityGiapStatus),
             getPreferredPaymentProvider,
             observabilityManager,
             Optional.of(performGiapPurchase)
@@ -199,4 +214,53 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
         )
         assertTrue(button2Events.isEmpty())
     }
+
+    @Test
+    fun `observability events are enqueued`() = coroutinesTest {
+        // GIVEN
+        val plan = mockk<DynamicPlan>()
+        val amount = 499L
+        val cycle = 12
+        val currency = "CHF"
+        val purchase = mockk<GooglePurchase>()
+        val token = ProtonPaymentToken("payment-token")
+
+        every { activityProvider.lastResumed } returns mockk()
+        coEvery { performGiapPurchase(any(), any(), any(), any()) } coAnswers {
+            result("getProductsDetails") { Result.success(Unit) }
+            result("querySubscriptionPurchases") { Result.success(Unit) }
+            result("launchBillingFlow") { Result.success(Unit) }
+            result("validateSubscription") { Result.success(Unit) }
+            result("createPaymentToken") { Result.success(Unit) }
+            result("createOrUpdateSubscription") { Result.success(Unit) }
+
+            PerformGiapPurchase.Result.GiapSuccess(
+                purchase,
+                amount,
+                currency,
+                subscriptionCreated = true,
+                token
+            )
+        }
+
+        // WHEN
+        tested.onPayClicked(1, currency, cycle, PaymentProvider.GoogleInAppPurchase, plan, null)
+            .join()
+
+        // THEN
+        val data = mutableListOf<ObservabilityData>()
+        verify { observabilityManager.enqueue(capture(data), any()) }
+
+        assertTrue(data.any { it is CheckoutGiapBillingProductQueryTotal })
+        assertTrue(data.any { it is CheckoutGiapBillingQuerySubscriptionsTotal })
+        assertTrue(data.any { it is CheckoutGiapBillingLaunchBillingTotal })
+        assertTrue(data.any { it is CheckoutGiapBillingValidatePlanTotal })
+        assertTrue(data.any { it is CheckoutGiapBillingCreatePaymentTokenTotal })
+        assertTrue(data.any { it is CheckoutBillingSubscribeTotal })
+    }
+}
+
+private class FakeConvertToObservabilityGiapStatus : ConvertToObservabilityGiapStatus {
+    var response = GiapStatus.success
+    override fun invoke(result: Result<*>): GiapStatus = response
 }

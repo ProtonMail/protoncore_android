@@ -454,6 +454,10 @@ public abstract interface class me/proton/core/payment/domain/usecase/Acknowledg
 	public abstract fun invoke-vl4Hrws (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/payment/domain/usecase/ConvertToObservabilityGiapStatus {
+	public abstract fun invoke (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+}
+
 public final class me/proton/core/payment/domain/usecase/CreatePaymentToken {
 	public fun <init> (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

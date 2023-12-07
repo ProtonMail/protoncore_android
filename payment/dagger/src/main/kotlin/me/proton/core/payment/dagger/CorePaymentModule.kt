@@ -33,6 +33,7 @@ import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
+import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
@@ -82,6 +83,9 @@ public interface CorePaymentModule {
 
     @BindsOptionalOf
     public fun optionalPrepareGiapPurchase(): PrepareGiapPurchase
+
+    @BindsOptionalOf
+    public fun optionalConvertToObservabilityGiapStatus(): ConvertToObservabilityGiapStatus
 
     public companion object {
         @Provides

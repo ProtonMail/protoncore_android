@@ -19,6 +19,7 @@ public abstract interface class me/proton/core/paymentiap/dagger/CorePaymentIapB
 
 public abstract interface class me/proton/core/paymentiap/dagger/CorePaymentIapModule {
 	public abstract fun bindAcknowledgeGooglePlayPurchase (Lme/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl;)Lme/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase;
+	public abstract fun bindConvertToObservabilityGiapStatus (Lme/proton/core/paymentiap/domain/usecase/ConvertToObservabilityGiapStatusImpl;)Lme/proton/core/payment/domain/usecase/ConvertToObservabilityGiapStatus;
 	public abstract fun bindCreateSubscriptionForGiap (Lme/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl;)Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase;
 	public abstract fun bindFindUnredeemedGooglePurchase (Lme/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl;)Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;
 	public abstract fun bindGetGooglePlanPriceAndCurrency (Lme/proton/core/paymentiap/data/usecase/GetStorePriceImpl;)Lme/proton/core/payment/domain/usecase/GetStorePrice;

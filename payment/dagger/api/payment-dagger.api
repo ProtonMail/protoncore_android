@@ -13,6 +13,7 @@ public abstract interface class me/proton/core/payment/dagger/CorePaymentModule 
 	public static final field Companion Lme/proton/core/payment/dagger/CorePaymentModule$Companion;
 	public abstract fun bindGooglePurchaseRepository (Lme/proton/core/payment/data/repository/GooglePurchaseRepositoryImpl;)Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;
 	public abstract fun optionalAcknowledgeGooglePlayPurchase ()Lme/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase;
+	public abstract fun optionalConvertToObservabilityGiapStatus ()Lme/proton/core/payment/domain/usecase/ConvertToObservabilityGiapStatus;
 	public abstract fun optionalFindUnredeemedGooglePurchase ()Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;
 	public abstract fun optionalGetPlanAndCurrency ()Lme/proton/core/payment/domain/usecase/GetStorePrice;
 	public abstract fun optionalLaunchGiapBillingFlow ()Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;

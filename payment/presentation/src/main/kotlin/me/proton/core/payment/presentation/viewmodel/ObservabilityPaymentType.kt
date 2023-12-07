@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -31,6 +31,7 @@ import me.proton.core.observability.domain.metrics.CheckoutPaymentMethodsValidat
 import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.usecase.PaymentProvider
 
 public fun Result<*>.getCreatePaymentTokenObservabilityData(
     paymentType: PaymentType
@@ -57,4 +58,28 @@ public fun Result<*>.getValidatePlanObservabilityData(
     is PaymentType.GoogleIAP -> CheckoutGiapBillingValidatePlanTotal(toHttpApiStatus())
     is PaymentType.PaymentMethod -> CheckoutPaymentMethodsValidatePlanTotal(toHttpApiStatus())
     is PaymentType.PayPal -> throw NotImplementedError("Paypal not supported.")
+}
+
+public fun Result<*>.getCreatePaymentTokenObservabilityData(
+    paymentProvider: PaymentProvider?
+): ObservabilityData = when (paymentProvider) {
+    PaymentProvider.CardPayment -> CheckoutCardBillingCreatePaymentTokenTotal(this)
+    PaymentProvider.GoogleInAppPurchase -> CheckoutGiapBillingCreatePaymentTokenTotal(this)
+    else -> error("Provider is not supported ($paymentProvider).")
+}
+
+public fun Result<*>.getSubscribeObservabilityData(
+    paymentProvider: PaymentProvider?
+): ObservabilityData = when (paymentProvider) {
+    PaymentProvider.CardPayment -> CheckoutBillingSubscribeTotal(toHttpApiStatus(), proton)
+    PaymentProvider.GoogleInAppPurchase -> CheckoutBillingSubscribeTotal(toHttpApiStatus(), google)
+    else -> error("Provider is not supported ($paymentProvider).")
+}
+
+public fun Result<*>.getValidatePlanObservabilityData(
+    paymentProvider: PaymentProvider?
+): ObservabilityData = when (paymentProvider) {
+    PaymentProvider.CardPayment -> CheckoutCardBillingValidatePlanTotal(toHttpApiStatus())
+    PaymentProvider.GoogleInAppPurchase -> CheckoutGiapBillingValidatePlanTotal(toHttpApiStatus())
+    else -> error("Provider is not supported ($paymentProvider).")
 }

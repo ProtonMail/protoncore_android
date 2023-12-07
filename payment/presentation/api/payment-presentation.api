@@ -780,8 +780,11 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingViewMode
 
 public final class me/proton/core/payment/presentation/viewmodel/ObservabilityPaymentTypeKt {
 	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
 	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
 	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory : dagger/internal/Factory {
@@ -880,11 +883,11 @@ public final class me/proton/core/payment/presentation/viewmodel/PaymentTokenApp
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel;
-	public static fun newInstance (Lme/proton/core/presentation/app/ActivityProvider;Lme/proton/core/payment/domain/usecase/GetPreferredPaymentProvider;Lme/proton/core/observability/domain/ObservabilityManager;Ljava/util/Optional;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel;
+	public static fun newInstance (Lme/proton/core/presentation/app/ActivityProvider;Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetPreferredPaymentProvider;Lme/proton/core/observability/domain/ObservabilityManager;Ljava/util/Optional;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentButtonViewModel_HiltModules {

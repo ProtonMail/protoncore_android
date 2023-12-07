@@ -59,3 +59,8 @@ public final class me/proton/core/paymentiap/domain/entity/GooglePurchaseWrapper
 	public static final fun wrap (Lcom/android/billingclient/api/Purchase;)Lme/proton/core/payment/domain/entity/GooglePurchase;
 }
 
+public final class me/proton/core/paymentiap/domain/usecase/ConvertToObservabilityGiapStatusImpl : me/proton/core/payment/domain/usecase/ConvertToObservabilityGiapStatus {
+	public fun <init> ()V
+	public fun invoke (Ljava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+}
+
