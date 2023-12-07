@@ -77,7 +77,7 @@ open class EventWorker @AssistedInject constructor(
     }
 
     companion object {
-        private const val KEY_INPUT_CONFIG = "config"
+        internal const val KEY_INPUT_CONFIG = "config"
 
         // TODO: Replace by config.id, when Core 18.1.1 is 100% rolled-out.
         fun getRequestTagFor(config: EventManagerConfig) = config.serialize()

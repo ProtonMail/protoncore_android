@@ -20,23 +20,32 @@ package me.proton.core.eventmanager.data.work
 
 import android.content.Context
 import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import androidx.work.impl.utils.futures.SettableFuture
+import io.mockk.Ordering
 import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit4.MockKRule
+import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.data.R
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.presentation.app.AppLifecycleProvider
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import java.util.UUID
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.seconds
 
+@Suppress("MaxLineLength")
 internal class EventWorkerManagerImplTest {
 
     @get:Rule
@@ -54,55 +63,187 @@ internal class EventWorkerManagerImplTest {
     @InjectMockKs
     lateinit var manager: EventWorkerManagerImpl
 
+    private val config = EventManagerConfig.Core(UserId("user-id"))
+    private val future = SettableFuture.create<MutableList<WorkInfo>>()
+
+    private fun createWorkInfo(state: WorkInfo.State) =
+        WorkInfo(UUID.randomUUID(), state, Data.EMPTY, emptyList(), Data.EMPTY, 0)
+
+    @Before
+    fun setup() {
+        every { context.resources } returns mockk {
+            every { getInteger(R.integer.core_feature_event_manager_worker_immediate_minimum_initial_delay_seconds) } returns 0
+            every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds) } returns 1800
+            every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds) } returns 30
+            every { getInteger(R.integer.core_feature_event_manager_worker_backoff_delay_seconds) } returns 30
+            every { getBoolean(R.bool.core_feature_event_manager_worker_requires_storage_not_low) } returns false
+            every { getBoolean(R.bool.core_feature_event_manager_worker_requires_battery_not_low) } returns false
+        }
+        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
+        every { workManager.enqueueUniquePeriodicWork(config.id, any(), any()) } returns mockk()
+        every { workManager.cancelAllWorkByTag(any()) } returns mockk()
+        every { workManager.cancelUniqueWork(any()) } returns mockk()
+        every { appLifecycleProvider.state } returns MutableStateFlow(AppLifecycleProvider.State.Background)
+    }
+
     @Test
     fun `given empty work infos when isRunning then returns false`() = runTest {
-        val config = EventManagerConfig.Core(UserId("user-id"))
-        val future = SettableFuture.create<MutableList<WorkInfo>>()
-        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
-
+        // GIVEN
         future.set(mutableListOf())
-
+        // THEN
         assertFalse(manager.isRunning(config))
     }
 
     @Test
-    fun `given work infos with first running when isRunning then returns true`() = runTest {
-        val config = EventManagerConfig.Core(UserId("user-id"))
-        val future = SettableFuture.create<MutableList<WorkInfo>>()
-        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
+    fun `given empty work infos when isEnqueued then returns false`() = runTest {
+        // GIVEN
+        future.set(mutableListOf())
+        // THEN
+        assertFalse(manager.isEnqueued(config))
+    }
 
+    @Test
+    fun `given work infos with first running when isRunning then returns true`() = runTest {
+        // GIVEN
         future.set(
             mutableListOf(
                 createWorkInfo(WorkInfo.State.RUNNING),
                 createWorkInfo(WorkInfo.State.CANCELLED),
             )
         )
-
+        // THEN
         assertTrue(manager.isRunning(config))
     }
 
     @Test
     fun `given work infos with first not running when isRunning then returns false`() = runTest {
-        val config = EventManagerConfig.Core(UserId("user-id"))
-        val future = SettableFuture.create<MutableList<WorkInfo>>()
-        every { workManager.getWorkInfosForUniqueWork(config.id) } returns future
-
+        // GIVEN
         future.set(
             mutableListOf(
                 createWorkInfo(WorkInfo.State.CANCELLED),
                 createWorkInfo(WorkInfo.State.RUNNING),
             )
         )
-
+        // THEN
         assertFalse(manager.isRunning(config))
     }
 
-    private fun createWorkInfo(state: WorkInfo.State) = WorkInfo(
-        UUID.randomUUID(),
-        state,
-        Data.EMPTY,
-        emptyList(),
-        Data.EMPTY,
-        0
-    )
+    @Test
+    fun returnWhenAlreadyEnqueuedAndNotImmediately() = runTest {
+        // GIVEN
+        future.set(mutableListOf(createWorkInfo(WorkInfo.State.ENQUEUED)))
+        // WHEN
+        manager.enqueue(config, immediately = false)
+        // THEN
+        verify(exactly = 0) {
+            workManager.cancelAllWorkByTag(any())
+            workManager.enqueueUniquePeriodicWork(any(), any(), any())
+        }
+    }
+
+    @Test
+    fun cancelBeforeEnqueuing() = runTest {
+        // GIVEN
+        future.set(mutableListOf())
+        // WHEN
+        manager.enqueue(config, immediately = false)
+        // THEN
+        verify(ordering = Ordering.ORDERED) {
+            workManager.cancelAllWorkByTag(any())
+            workManager.enqueueUniquePeriodicWork(any(), any(), any())
+        }
+    }
+
+    @Test
+    fun enqueueCorrectBackgroundDurations() = runTest {
+        // GIVEN
+        future.set(mutableListOf())
+        every { appLifecycleProvider.state } returns MutableStateFlow(AppLifecycleProvider.State.Background)
+        val expectedIntervalDuration = 1800.seconds.inWholeMilliseconds
+        val expectedInitialDelay = 1800.seconds.inWholeMilliseconds
+        // WHEN
+        manager.enqueue(config, immediately = false)
+        // THEN
+        verify {
+            workManager.enqueueUniquePeriodicWork(config.id, ExistingPeriodicWorkPolicy.REPLACE, match { actual ->
+                actual.workSpec.intervalDuration == expectedIntervalDuration &&
+                    actual.workSpec.initialDelay == expectedInitialDelay
+            })
+        }
+    }
+
+    @Test
+    fun enqueueCorrectForegroundDurations() = runTest {
+        // GIVEN
+        future.set(mutableListOf())
+        every { appLifecycleProvider.state } returns MutableStateFlow(AppLifecycleProvider.State.Foreground)
+        val expectedIntervalDuration = 1800.seconds.inWholeMilliseconds
+        val expectedInitialDelay = 30.seconds.inWholeMilliseconds
+        // WHEN
+        manager.enqueue(config, immediately = false)
+        // THEN
+        verify {
+            workManager.enqueueUniquePeriodicWork(config.id, ExistingPeriodicWorkPolicy.REPLACE, match { actual ->
+                actual.workSpec.intervalDuration == expectedIntervalDuration &&
+                    actual.workSpec.initialDelay == expectedInitialDelay
+            })
+        }
+    }
+
+    @Test
+    fun enqueueCorrectForegroundDurationsWhenImmediately() = runTest {
+        // GIVEN
+        future.set(mutableListOf())
+        every { appLifecycleProvider.state } returns MutableStateFlow(AppLifecycleProvider.State.Foreground)
+        val expectedIntervalDuration = 1800.seconds.inWholeMilliseconds
+        val expectedInitialDelay = 0.seconds.inWholeMilliseconds
+        // WHEN
+        manager.enqueue(config, immediately = true)
+        // THEN
+        verify {
+            workManager.enqueueUniquePeriodicWork(config.id, ExistingPeriodicWorkPolicy.REPLACE, match { actual ->
+                actual.workSpec.intervalDuration == expectedIntervalDuration &&
+                    actual.workSpec.initialDelay == expectedInitialDelay
+            })
+        }
+    }
+
+    @Test
+    fun enqueueCorrectDurationsWhenImmediateMinimumInitialDelayIsBiggerThenOneMinute() = runTest {
+        // GIVEN
+        future.set(mutableListOf())
+        every { context.resources } returns mockk {
+            every { getInteger(R.integer.core_feature_event_manager_worker_immediate_minimum_initial_delay_seconds) } returns 61
+            every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds) } returns 1800
+            every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds) } returns 30
+            every { getInteger(R.integer.core_feature_event_manager_worker_backoff_delay_seconds) } returns 30
+            every { getBoolean(R.bool.core_feature_event_manager_worker_requires_storage_not_low) } returns false
+            every { getBoolean(R.bool.core_feature_event_manager_worker_requires_battery_not_low) } returns false
+        }
+        val expectedIntervalDuration = 1800.seconds.inWholeMilliseconds
+        val expectedInitialDelay = 61.seconds.inWholeMilliseconds
+        // WHEN
+        manager.enqueue(config, immediately = true)
+        // THEN
+        verify {
+            workManager.enqueueUniquePeriodicWork(config.id, ExistingPeriodicWorkPolicy.REPLACE, match { actual ->
+                actual.workSpec.intervalDuration == expectedIntervalDuration &&
+                    actual.workSpec.initialDelay == expectedInitialDelay
+            })
+        }
+    }
+
+    @Test
+    fun cancelCallCancelAllWorkByTagAndCancelUniqueWork() = runTest {
+        // GIVEN
+        val requestTag = EventWorker.getRequestTagFor(config)
+        val uniqueWorkName = config.id
+        // WHEN
+        manager.cancel(config)
+        // THEN
+        verify(ordering = Ordering.ORDERED) {
+            workManager.cancelAllWorkByTag(requestTag)
+            workManager.cancelUniqueWork(uniqueWorkName)
+        }
+    }
 }
