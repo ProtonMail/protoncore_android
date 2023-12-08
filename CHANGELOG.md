@@ -11,6 +11,40 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.2.2] - 2023-12-08
+
+### Chores
+
+- human-verification:
+  - Remove unused layouts and strings for HV2.
+- network:
+  - Upgraded OkHttp to 4.12.0 (Okio 3.6.0).
+
+### Bug Fixes
+
+- auth:
+  - Confirm password tests fix.
+  - Use proper measurement group for product metrics.
+- challenge:
+  - Pass immutable copies to ChallengeFrameDetails.
+- data:
+  - Added Read or Write Mutex for AndroidFileContext.
+- event-manager:
+  - Added Info Logs for EventManagerImpl.
+  - Improve accuracy for immediateMinimumInitialDelay.
+  - Don't enqueue a new EventWorker if already enqueued and not an immediate request.
+  - Added requiresBatteryNotLow/requiresStorageNotLow configuration for background EventWorker.
+- human-verification:
+  - Use proper measurement group for product metrics.
+- network:
+  - Added HTTP 421 as Retryable.
+
+### Internationalization
+
+- Upgrade translations from crowdin (2d0a4dfa).
+- user-settings:
+  - Use "email address" phrase instead of just "email".
+
 ## [18.2.1] - 2023-11-22
 
 ### Bug Fixes
