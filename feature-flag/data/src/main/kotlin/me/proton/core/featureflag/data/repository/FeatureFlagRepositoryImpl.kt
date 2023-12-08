@@ -25,6 +25,7 @@ import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.data.arch.buildProtonStore
@@ -69,8 +70,7 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
 
     private val unleashFeatureMapMutex = Mutex()
     private var unleashFeatureMap = mutableMapOf<UserId?, MutableMap<FeatureId, FeatureFlag>>()
-
-    init { scopeProvider.GlobalIOSupervisedScope.launch { putAllUnleashInMemory() } }
+    private val initJob = scopeProvider.GlobalIOSupervisedScope.launch { putAllUnleashInMemory() }
 
     private suspend fun putAllUnleashInMemory() = unleashFeatureMapMutex.withLock {
         val list = localDataSource.getAll(Scope.Unleash)
@@ -83,7 +83,12 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     override fun getValue(
         userId: UserId?,
         featureId: FeatureId
-    ): Boolean? = unleashFeatureMap[userId]?.get(featureId)?.value
+    ): Boolean? = if (initJob.isCompleted) {
+        unleashFeatureMap[userId]?.get(featureId)?.value
+    } else {
+        runBlocking { initJob.join() } // ~10ms
+        unleashFeatureMap[userId]?.get(featureId)?.value
+    }
 
     override suspend fun getAll(
         userId: UserId?
