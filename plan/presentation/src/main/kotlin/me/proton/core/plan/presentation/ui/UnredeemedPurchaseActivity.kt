@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -102,8 +102,8 @@ class UnredeemedPurchaseActivity :
             .setPositiveButton(R.string.payments_giap_unredeemed_confirm) { _, _ ->
                 viewModel.redeemPurchase(unredeemedPurchase, userId)
             }
-            .setNegativeButton(R.string.presentation_alert_cancel) { _, _ -> }
-            .setOnCancelListener { cancelAndFinish() }
+            .setNegativeButton(R.string.presentation_alert_cancel) { _, _ -> cancelAndFinish() }
+            .setCancelable(false)
             .show()
     }
 
