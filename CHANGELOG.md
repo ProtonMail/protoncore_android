@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.2.3] - 2023-12-11
+
+### Bug Fixes
+
+- feature-flag:
+  - Wait Unleash FeatureFlags initialization if not completed.
+
 ## [18.2.2] - 2023-12-08
 
 ### Chores
