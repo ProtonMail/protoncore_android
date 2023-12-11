@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
@@ -35,6 +36,7 @@ import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
 import me.proton.core.test.kotlin.CoroutinesTest
+import java.util.Optional
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertContentEquals
@@ -53,6 +55,7 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
     private val plans = listOf(dynamicPlan)
 
+    private val converter = mockk<ConvertToObservabilityGiapStatus>(relaxed = true)
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     private val getDynamicPlans = mockk<GetDynamicPlansAdjustedPrices> {
         coEvery { this@mockk.invoke(any()) } returns DynamicPlans(null, plans)
@@ -66,7 +69,7 @@ class DynamicPlanListViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @BeforeTest
     fun setUp() {
-        tested = DynamicPlanListViewModel(observabilityManager, observeUserId, getDynamicPlans)
+        tested = DynamicPlanListViewModel(observabilityManager, observeUserId, getDynamicPlans, Optional.of(converter))
     }
 
     @Test

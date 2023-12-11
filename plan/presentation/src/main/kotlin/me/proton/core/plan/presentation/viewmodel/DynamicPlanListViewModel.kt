@@ -35,6 +35,8 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutGetDynamicPlansTotal
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingProductQueryTotal
+import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.filterBy
 import me.proton.core.plan.domain.usecase.GetDynamicPlansAdjustedPrices
@@ -42,15 +44,19 @@ import me.proton.core.plan.presentation.entity.DynamicPlanFilter
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.ObserveUserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.util.kotlin.coroutine.ResultCollector
 import me.proton.core.util.kotlin.coroutine.flowWithResultContext
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 @Suppress("TooManyFunctions")
 @HiltViewModel
 internal class DynamicPlanListViewModel @Inject constructor(
     override val observabilityManager: ObservabilityManager,
     private val observeUserId: ObserveUserId,
-    private val getDynamicPlans: GetDynamicPlansAdjustedPrices
+    private val getDynamicPlans: GetDynamicPlansAdjustedPrices,
+    private val convertToObservabilityGiapStatus: Optional<ConvertToObservabilityGiapStatus>
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
@@ -95,6 +101,7 @@ internal class DynamicPlanListViewModel @Inject constructor(
 
     private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = flowWithResultContext {
         it.onResultEnqueueObservability("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
+        it.onResultEnqueueGiapBillingProductQueryObservability()
         send(State.Loading)
         val filteredPlans = getDynamicPlans(filter.userId).plans.filterBy(filter.cycle, filter.currency)
         send(State.Success(filteredPlans, filter))
@@ -123,5 +130,13 @@ internal class DynamicPlanListViewModel @Inject constructor(
 
     private fun onSetCurrency(currency: String) = viewModelScope.launch {
         mutablePlanFilter.emit(mutablePlanFilter.value.copy(currency = currency))
+    }
+
+    private suspend fun ResultCollector<*>.onResultEnqueueGiapBillingProductQueryObservability() {
+        convertToObservabilityGiapStatus.getOrNull()?.let { converter ->
+            onResultEnqueueObservability("getProductsDetails") {
+                CheckoutGiapBillingProductQueryTotal(converter(this))
+            }
+        }
     }
 }
