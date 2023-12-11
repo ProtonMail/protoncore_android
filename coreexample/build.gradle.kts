@@ -312,6 +312,7 @@ dependencies {
         `android-test-runner`,
         `hilt-android-testing`,
         `kotlin-test-junit`,
+        `lifecycle-process`,
         `mockk-android`,
         mockWebServer,
         uiautomator
