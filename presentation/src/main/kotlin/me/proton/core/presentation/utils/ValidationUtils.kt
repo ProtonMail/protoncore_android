@@ -21,37 +21,38 @@ package me.proton.core.presentation.utils
 import me.proton.core.presentation.ui.view.ProtonAutoCompleteInput
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.orEmpty
 import java.util.Calendar
 
 fun ProtonInput.validate(validationType: ValidationType = ValidationType.NotBlank) =
-    InputValidationResult(this.text.toString(), validationType)
+    InputValidationResult(this.text.orEmpty(), validationType)
 
 fun ProtonAutoCompleteInput.validate(validationType: ValidationType = ValidationType.NotBlank) =
-    InputValidationResult(this.text.toString(), validationType)
+    InputValidationResult(this.text.orEmpty(), validationType)
 
 fun ProtonInput.validateUsername() =
-    InputValidationResult(this.text.toString(), ValidationType.Username)
+    InputValidationResult(this.text.orEmpty(), ValidationType.Username)
 
 fun ProtonInput.validatePassword() =
-    InputValidationResult(this.text.toString(), ValidationType.Password)
+    InputValidationResult(this.text.orEmpty(), ValidationType.Password)
 
 fun ProtonInput.validatePasswordMinLength() =
-    InputValidationResult(this.text.toString(), ValidationType.PasswordMinLength)
+    InputValidationResult(this.text.orEmpty(), ValidationType.PasswordMinLength)
 
 fun ProtonInput.validatePasswordMatch(confirmPassword: String) =
-    InputValidationResult(this.text.toString(), ValidationType.PasswordMatch, confirmPassword)
+    InputValidationResult(this.text.orEmpty(), ValidationType.PasswordMatch, confirmPassword)
 
 fun ProtonInput.validateEmail() =
-    InputValidationResult(this.text.toString(), ValidationType.Email)
+    InputValidationResult(this.text.orEmpty(), ValidationType.Email)
 
 fun ProtonInput.validateCreditCard() =
-    InputValidationResult(this.text.toString(), ValidationType.CreditCard)
+    InputValidationResult(this.text.orEmpty(), ValidationType.CreditCard)
 
 fun ProtonInput.validateCreditCardCVC() =
-    InputValidationResult(this.text.toString(), ValidationType.CreditCardCVC)
+    InputValidationResult(this.text.orEmpty(), ValidationType.CreditCardCVC)
 
 fun ProtonInput.validateExpirationDate() =
-    InputValidationResult(this.text.toString(), ValidationType.CreditCardExpirationDate)
+    InputValidationResult(this.text.orEmpty(), ValidationType.CreditCardExpirationDate)
 
 enum class ValidationType(val minLong: Int = Int.MIN_VALUE, val maxLong: Int = Int.MAX_VALUE) {
     NotBlank,
@@ -91,9 +92,11 @@ data class InputValidationResult(
             cardType = validateCreditCard()
             cardType != null
         }
+
         ValidationType.CreditCardCVC ->
             validateNotBlankMinLong(minLong = validationType.minLong) &&
                 validateNotBlankMaxLong(maxLong = validationType.maxLong)
+
         ValidationType.CreditCardExpirationDate -> validateCreditCardExpirationDate(Calendar.getInstance())
     }.exhaustive
 

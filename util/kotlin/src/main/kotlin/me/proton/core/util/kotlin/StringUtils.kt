@@ -20,6 +20,9 @@ fun CharSequence.nullIfBlank() = if (isNotBlank()) this else null
 /** @return `null` if receiver [CharSequence] is empty */
 fun CharSequence.nullIfEmpty() = if (isNotEmpty()) this else null
 
+/** @return `` if receiver [CharSequence] is null */
+fun CharSequence?.orEmpty() = if (isNullOrEmpty()) "" else this.toString()
+
 /**
  * `get` operator for call [CharSequence.subSequence].
  * E.g. `charSequence[4, 10]`
