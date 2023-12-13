@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.2.4] - 2023-12-13
+
+### Bug Fixes
+
+- plan:
+  - Finish the `UnredeemedPurchaseActivity` after clicking the Cancel button.
+
 ## [18.2.3] - 2023-12-11
 
 ### Bug Fixes
