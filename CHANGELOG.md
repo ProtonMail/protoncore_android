@@ -11,6 +11,20 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.4.0] - 2023-12-13
+
+### Features
+
+- event-manager:
+  - Allow passing query params to event loop request
+
+    As per API docs, the "Unread counters" for messages and conversations
+    are not returned by default but must be explicitly requested (historical
+    performance reasons on the backend).
+    This allows passing optional query params to set them
+    
+    MAILANDR-1093
+
 ## [18.3.0] - 2023-12-13
 
 ### Features
