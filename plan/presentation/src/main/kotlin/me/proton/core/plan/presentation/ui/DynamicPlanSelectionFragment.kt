@@ -223,6 +223,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
             is ProtonPaymentEvent.Loading -> Unit
             is ProtonPaymentEvent.Error.GiapUnredeemed -> onGiapUnredeemed(event)
             is ProtonPaymentEvent.Error.UserCancelled -> viewModel.perform(Action.SetBillingCanceled)
+            is ProtonPaymentEvent.Error.GoogleProductDetailsNotFound -> view?.errorSnack(R.string.payments_error_google_prices)
             is ProtonPaymentEvent.Error -> view?.errorSnack(R.string.payments_general_error)
             is ProtonPaymentEvent.GiapSuccess -> onGiapSuccess(event)
             is ProtonPaymentEvent.StartRegularBillingFlow -> startRegularBillingFlow(
