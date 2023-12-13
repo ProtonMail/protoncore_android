@@ -137,8 +137,6 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         val result = useCase.invoke(testUserId)
         // THEN
         assertEquals(testPaidSubscription.copy(amount = 100L, currency = "USD"), result)
-        assertNotNull(result)
-        assertEquals(100L, result.amount)
     }
 
     @Test
@@ -164,9 +162,7 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         // WHEN
         val result = useCase.invoke(testUserId)
         // THEN
-        assertEquals(testPaidSubscription.copy(amount = 0L), result)
-        assertNotNull(result)
-        assertEquals(0L, result.amount)
+        assertEquals(testPaidSubscription.copy(amount = null, currency = null), result)
     }
 
     @Test

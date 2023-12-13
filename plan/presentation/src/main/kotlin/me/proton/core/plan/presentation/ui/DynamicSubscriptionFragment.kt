@@ -113,9 +113,9 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         title = subscription.title
         description = subscription.description
         starred = subscription.decorations.filterIsInstance<DynamicDecoration.Starred>().isNotEmpty()
-        val price = subscription.amount?.toDouble() ?: 0.0
+        val price = subscription.amount?.toDouble()
         val currency = subscription.currency ?: userCurrency
-        priceText = price.formatCentsPriceDefaultLocale(currency)
+        priceText = price?.formatCentsPriceDefaultLocale(currency)
         priceCycle = subscription.cycleDescription
         renewalText = when {
             subscription.renew == null -> null

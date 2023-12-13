@@ -50,11 +50,16 @@ class GetDynamicSubscriptionAdjustedPrices @Inject constructor(
 
         // we pass null for userId in the getDynamicPlans because API will omit the paid plans for a paid user
         val plans = plansRepository.getDynamicPlans(null, appStore).plans
-        val plan = plans.firstOrNull { it.name == dynamicSubscription.name } ?: return dynamicSubscription
+        val plan = plans.firstOrNull { it.name == dynamicSubscription.name }
+            ?: return dynamicSubscription.copy(amount = null, currency = null)
 
         val instance = plan.instances[dynamicSubscription.cycleMonths]
-        val productId = instance?.vendors?.get(AppStore.GooglePlay)?.productId ?: return dynamicSubscription
-        val storePrice = getStorePrice.get().invoke(ProductId(productId)) ?: return dynamicSubscription
+        val productId = instance?.vendors?.get(AppStore.GooglePlay)?.productId
+            ?: return dynamicSubscription.copy(amount = null, currency = null)
+
+        val storePrice = getStorePrice.get().invoke(ProductId(productId))
+            ?: return dynamicSubscription.copy(amount = null, currency = null)
+
         return dynamicSubscription.copy(
             amount = storePrice.priceAmountCents.toLong(),
             currency = storePrice.currency,
