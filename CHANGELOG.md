@@ -11,6 +11,33 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.3.0] - 2023-12-13
+
+### Features
+
+- payment:
+  - Add observability metrics for the payment button.
+  - Remove activity reference from GoogleBillingRepository.
+  - Add `ProtonPaymentButton`.
+  - Add use cases for performing a full GIAP flow.
+- plan:
+  - Added Giap Billing Product Query OE.
+  - Integrate ProtonPaymentButton.
+  - Add support for GIAP prices in Dynamic Subscription.
+  - Set GIAP preferred payment provider.
+  - Rebase ProtonPaymentButton.
+  - Add GIAP Adjusted Prices support.
+
+### Bug Fixes
+
+- payment:
+  - After GIAP is billed successfully, keep the `Loading` state of the button.
+
+    For any other event, set all buttons to `Idle`.
+- plan:
+  - Fix error message when Play Store prices are unavailable.
+  - Remove Subscription price and currency if not found for Google managed.
+
 ## [18.2.4] - 2023-12-13
 
 ### Bug Fixes
