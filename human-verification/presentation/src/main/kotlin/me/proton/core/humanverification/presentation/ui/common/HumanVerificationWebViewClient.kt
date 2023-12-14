@@ -117,11 +117,13 @@ class HumanVerificationWebViewClient(
         request: WebResourceRequest,
         extraHeaders: List<Pair<String, String>>,
     ): WebResourceResponse? {
-        // This allows a custom redirection to HumanVerificationApiHost Url from the DoH one
-        // Must be skipped for the internal captcha request
-        val dohHeader = if (!request.url.isLoadCaptchaUrl()) {
+        // This allows a custom redirection to HumanVerificationApiHost Url from the DoH one.
+        // Must be skipped for the internal captcha request and any Proton API requests.
+        val dohHeader = if (request.url.isLoadCaptchaUrl() || request.url.isProtonApiUrl()) {
+            null
+        } else {
             "X-PM-DoH-Host" to verifyAppUrl.toUri().host
-        } else null
+        }
         return overrideRequest(
             request.url.toString(),
             request.method,
@@ -186,6 +188,7 @@ class HumanVerificationWebViewClient(
     }.getOrNull()
 
     private fun Uri.isLoadCaptchaUrl() = path?.endsWith("/core/v4/captcha") == true
+    private fun Uri.isProtonApiUrl() = path?.startsWith("/api/") == true
 
     companion object {
         private const val CSP_HEADER = "content-security-policy"

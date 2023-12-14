@@ -276,6 +276,50 @@ class HumanVerificationWebViewClientTest {
     }
 
     @Test
+    fun `do not add DoH-Host header when loading API url`() {
+        // GIVEN
+        val requestUrl = "${altUrl}/api/core/v4/verification/ownership-email/5uDQxS"
+        val request = mockk<WebResourceRequest> {
+            every { requestHeaders } returns emptyMap()
+            every { method } returns "GET"
+            every { url } returns Uri.parse(requestUrl)
+        }
+
+        every {
+            networkRequestOverrider.overrideRequest(any(), any(), any(), any(), any(), any())
+        } returns NetworkRequestOverrider.Result(
+            mimeType = null,
+            encoding = null,
+            contents = null,
+            httpStatusCode = 200,
+            reasonPhrase = "OK",
+            responseHeaders = mapOf(),
+        )
+
+        every { CookieManager.getInstance() } returns mockk(relaxed = true)
+        every { networkPrefs.activeAltBaseUrl } returns altUrl
+
+        // WHEN
+        val response = tested.shouldInterceptRequest(mockk(), request)
+
+        // THEN
+        assertNotNull(response)
+        assertTrue(response.responseHeaders.isEmpty())
+
+        val responseHeadersSlot = slot<List<Pair<String, String>>>()
+        verify {
+            networkRequestOverrider.overrideRequest(
+                requestUrl,
+                "GET",
+                capture(responseHeadersSlot),
+                acceptSelfSignedCertificates = true,
+                body = null, bodyType = null
+            )
+        }
+        assertTrue(responseHeadersSlot.captured.isEmpty())
+    }
+
+    @Test
     fun `http error`() {
         // GIVEN
         val request = mockk<WebResourceRequest> {
