@@ -1,0 +1,31 @@
+public abstract class me/proton/core/observability/tools/ApiCommand : com/github/ajalt/clikt/core/CliktCommand {
+	public fun <init> ()V
+	protected final fun execute (Ljava/lang/String;)Ljava/lang/String;
+	protected final fun getGrafanaApiKey ()Ljava/lang/String;
+	protected final fun getGrafanaUrl ()Ljava/lang/String;
+	protected final fun search (Ljava/lang/String;)Lkotlinx/serialization/json/JsonArray;
+}
+
+public final class me/proton/core/observability/tools/BaseCommand : com/github/ajalt/clikt/core/NoOpCliktCommand {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/observability/tools/DownloadCommand : me/proton/core/observability/tools/ApiCommand {
+	public fun <init> ()V
+	public fun run ()V
+}
+
+public final class me/proton/core/observability/tools/GenerateCommand : com/github/ajalt/clikt/core/CliktCommand {
+	public fun <init> ()V
+	public fun run ()V
+}
+
+public final class me/proton/core/observability/tools/ObservabilityToolsKt {
+	public static final fun main ([Ljava/lang/String;)V
+}
+
+public final class me/proton/core/observability/tools/SearchCommand : me/proton/core/observability/tools/ApiCommand {
+	public fun <init> ()V
+	public fun run ()V
+}
+

@@ -1,8 +1,5 @@
-import org.gradle.kotlin.dsl.implementation
-import studio.forface.easygradle.dsl.`serialization-json`
-
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,11 +16,16 @@ import studio.forface.easygradle.dsl.`serialization-json`
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import org.gradle.kotlin.dsl.implementation
+import studio.forface.easygradle.dsl.`serialization-json`
+
 plugins {
     id("application")
     id("java")
     alias(libs.plugins.kotlin.gradle)
 }
+
+publishOption.shouldBePublishedAsLib = true
 
 repositories {
     mavenCentral()

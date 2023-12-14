@@ -41,14 +41,14 @@ kotlin {
 }
 
 dependencies {
+    api(project(Module.accountDomain))
+    api(project(Module.kotlinUtil))
     api(`javax-inject`)
     api(`swagger-annotations`)
     implementation(`coroutines-core`)
     implementation(`serialization-core`)
     implementation(`serialization-json`)
-    implementation(project(Module.kotlinUtil))
     implementation(project(Module.networkDomain))
-    implementation(project(Module.accountDomain))
     testImplementation(`coroutines-test`)
     testImplementation(junit)
     testImplementation(`kotlin-test`)

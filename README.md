@@ -180,6 +180,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:observability-dagger                  |
 | me.proton.core:observability-data                    |
 | me.proton.core:observability-domain                  |
+| me.proton.core:observability-tools                   |
 | me.proton.core:payment                               |
 | me.proton.core:payment-dagger                        |
 | me.proton.core:payment-data                          |
