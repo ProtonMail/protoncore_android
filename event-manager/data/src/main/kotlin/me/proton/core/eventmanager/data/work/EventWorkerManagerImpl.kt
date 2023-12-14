@@ -25,6 +25,8 @@ import androidx.work.WorkManager
 import androidx.work.await
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import me.proton.core.eventmanager.data.R
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.LogTag
@@ -33,11 +35,13 @@ import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.presentation.app.AppLifecycleProvider.State.Background
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
+@Singleton
 class EventWorkerManagerImpl @Inject constructor(
     @ApplicationContext
     private val context: Context,
@@ -47,7 +51,10 @@ class EventWorkerManagerImpl @Inject constructor(
 
     private fun getUniqueWorkName(config: EventManagerConfig) = config.id
 
-    override suspend fun enqueue(config: EventManagerConfig, immediately: Boolean) {
+    override suspend fun enqueue(
+        config: EventManagerConfig,
+        immediately: Boolean
+    ): Unit = mutex(config).withLock {
         if (isEnqueued(config) && !immediately) {
             CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager already enqueued: $config")
             return
@@ -88,7 +95,9 @@ class EventWorkerManagerImpl @Inject constructor(
         }
     }
 
-    override suspend fun cancel(config: EventManagerConfig) {
+    override suspend fun cancel(
+        config: EventManagerConfig
+    ) : Unit = mutex(config).withLock {
         val uniqueWorkName = getUniqueWorkName(config)
         val requestTag = EventWorker.getRequestTagFor(config)
         try {
@@ -135,4 +144,12 @@ class EventWorkerManagerImpl @Inject constructor(
     override fun requiresStorageNotLow(): Boolean = context.resources.getBoolean(
         R.bool.core_feature_event_manager_worker_requires_storage_not_low
     )
+
+    private companion object {
+        private val staticMutex: Mutex = Mutex()
+        private val mutexMap: MutableMap<String, Mutex> = mutableMapOf()
+        private suspend fun mutex(config: EventManagerConfig) = staticMutex.withLock {
+            mutexMap.getOrPut(config.id) { Mutex() }
+        }
+    }
 }
