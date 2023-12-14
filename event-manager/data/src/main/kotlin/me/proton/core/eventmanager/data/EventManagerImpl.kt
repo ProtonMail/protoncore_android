@@ -24,8 +24,8 @@ import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChangedBy
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -362,20 +362,13 @@ class EventManagerImpl @AssistedInject constructor(
         }
     }
 
-    // Observe any Account changes.
-    private suspend fun collectAccountChanges() {
-        accountManager.getAccount(config.userId)
-            .distinctUntilChangedBy { it?.state }
-            .onEach { enqueueOrStop(immediately = false, failure = false) }
-            .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
-            .collect()
-    }
-
-    // Observe any Foreground App State changes.
-    private suspend fun collectAppStateChanges() {
-        appLifecycleProvider.state
-            .filter { it == AppLifecycleProvider.State.Foreground }
-            .onEach { enqueueOrStop(immediately = true, failure = false) }
+    // Observe Account & App State changes.
+    private suspend fun collectStateChanges() {
+        combine(
+            accountManager.getAccount(config.userId).distinctUntilChangedBy { it?.state },
+            appLifecycleProvider.state,
+        ) { _, state -> state }
+            .onEach { enqueueOrStop(immediately = it == AppLifecycleProvider.State.Foreground, failure = false) }
             .catch { CoreLogger.e(LogTag.COLLECT_ERROR, it) }
             .collect()
     }
@@ -383,10 +376,7 @@ class EventManagerImpl @AssistedInject constructor(
     private suspend fun internalStart() {
         CoreLogger.i(LogTag.DEFAULT, "EventManager internalStart $config")
         if (isStarted) return
-        observeJob = scopeProvider.GlobalDefaultSupervisedScope.launch {
-            launch { collectAccountChanges() }
-            launch { collectAppStateChanges() }
-        }
+        observeJob = scopeProvider.GlobalDefaultSupervisedScope.launch { collectStateChanges() }
         // Now isStarted === true === observeJob.isActive.
     }
 
