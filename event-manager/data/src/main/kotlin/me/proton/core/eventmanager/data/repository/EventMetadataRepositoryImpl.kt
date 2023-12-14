@@ -54,6 +54,10 @@ open class EventMetadataRepositoryImpl @Inject constructor(
 
     private val eventMetadataDao = db.eventMetadataDao()
 
+    private suspend fun getQueryMap(
+        config: EventManagerConfig
+    ) = eventManagerQueryMapProvider.getOrNull()?.getQueryMap(config).orEmpty()
+
     private suspend fun readResponse(
         config: EventManagerConfig,
         eventId: EventId?
@@ -152,7 +156,7 @@ open class EventMetadataRepositoryImpl @Inject constructor(
         eventId: EventId,
         endpoint: String
     ): EventsResponse = apiProvider.get<EventApi>(config.userId).invoke {
-        val response = getEvents(endpoint, eventId.id, eventManagerQueryMapProvider.getOrNull()?.getQueryMap(config))
+        val response = getEvents(endpoint, eventId.id, getQueryMap(config))
         EventsResponse(response.string())
     }.valueOrThrow
 }
