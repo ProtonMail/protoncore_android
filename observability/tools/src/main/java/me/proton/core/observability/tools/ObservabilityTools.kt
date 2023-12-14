@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -26,6 +26,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper
 import com.github.ajalt.clikt.core.CliktCommand
 import com.github.ajalt.clikt.core.NoOpCliktCommand
 import com.github.ajalt.clikt.core.subcommands
+import com.github.ajalt.clikt.parameters.arguments.argument
 import com.github.ajalt.clikt.parameters.options.option
 import com.github.ajalt.clikt.parameters.options.required
 import com.github.ajalt.clikt.parameters.types.file
@@ -48,6 +49,8 @@ import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
+import kotlin.reflect.KClass
+import kotlin.reflect.full.superclasses
 
 fun main(args: Array<String>) {
     BaseCommand().subcommands(GenerateCommand(), SearchCommand(), DownloadCommand()).main(args)
@@ -57,9 +60,17 @@ class BaseCommand : NoOpCliktCommand()
 
 class GenerateCommand : CliktCommand() {
     private val schemaIdRegex =
-        Regex("^https://proton\\.me/(android_core_\\w+_v\\d+\\.schema\\.json)$")
+        Regex("^https://proton\\.me/(android_[a-z]+_\\w+_v\\d+\\.schema\\.json)$")
 
-    private val outputDir by option().file(
+    private val baseClass by argument(
+        help = "Fully-qualified class name of a sealed class that " +
+                "directly inherits from ${ObservabilityData::class.qualifiedName}."
+    )
+
+    private val outputDir by option(
+        help = "Path (absolute or relative to `observability/tools`) where the JSON files will be written. " +
+                "Existing files are overwritten."
+    ).file(
         canBeDir = true,
         canBeFile = false,
         mustBeReadable = true,
@@ -72,7 +83,12 @@ class GenerateCommand : CliktCommand() {
 
         outputDir.mkdirs()
 
-        ObservabilityData::class.sealedSubclasses.forEach { kClass ->
+        val baseClass = Class.forName(baseClass).kotlin
+        require(baseClass.superclasses.contains(ObservabilityData::class)) {
+            "The class ${baseClass.qualifiedName} should inherit " +
+                    "directly from ${ObservabilityData::class.qualifiedName}."
+        }
+        getAllSubclasses(baseClass, SchemaId::class).forEach { kClass ->
             val schemaId = kClass.java.getSchemaId()
                 ?: error("Class is not annotated with ${SchemaId::class.simpleName} (class: ${kClass.simpleName})")
             val node = generator.generateSchema(kClass.java)
@@ -88,6 +104,17 @@ class GenerateCommand : CliktCommand() {
             val filename = match.groupValues[1]
             val outputFile = File(outputDir, filename)
             outputFile.writeText(jsonSchema)
+        }
+    }
+
+    private fun <T : Any, A : Any> getAllSubclasses(
+        kClass: KClass<T>,
+        annotatedBy: KClass<A>
+    ): List<KClass<out T>> {
+        return when {
+            kClass.isSealed -> kClass.sealedSubclasses.flatMap { getAllSubclasses(it, annotatedBy) }
+            kClass.java.getSchemaId() != null -> listOf(kClass)
+            else -> error("Class is not annotated with ${SchemaId::class.simpleName} (class: ${kClass.simpleName})")
         }
     }
 
