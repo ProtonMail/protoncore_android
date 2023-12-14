@@ -32,7 +32,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 public data class SignupEmailAvailabilityTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1,
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
     public constructor(result: Result<*>) : this(result.toHttpApiStatus())
 }

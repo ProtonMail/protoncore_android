@@ -13,6 +13,6 @@ import me.proton.core.observability.domain.metrics.common.UnlockUserStatus
 public data class LoginEaToIaUnlockUserTotalV1(
     override val Labels: UnlockUserLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: UnlockUserStatus) : this(UnlockUserLabels(status))
 }

@@ -48,7 +48,7 @@ import me.proton.core.observability.domain.metrics.common.toObservabilityAccount
 public data class SignupLoginTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: ApiStatus, type: AccountTypeLabels) : this(LabelsData(status, type))
 
     public constructor(result: Result<*>, accountType: AccountType) : this(

@@ -12,6 +12,6 @@ import me.proton.core.observability.domain.metrics.common.EmptyStatusLabels
 public data class SessionForcedLogoutTotalV1(
     override val Labels: EmptyStatusLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor() : this(EmptyStatusLabels())
 }

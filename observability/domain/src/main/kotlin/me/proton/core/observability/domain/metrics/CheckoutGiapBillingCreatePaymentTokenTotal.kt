@@ -32,7 +32,7 @@ import me.proton.core.observability.domain.metrics.common.toCreatePaymentTokenSt
 public data class CheckoutGiapBillingCreatePaymentTokenTotal(
     override val Labels: CreatePaymentTokenLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: CreatePaymentTokenStatus) : this(CreatePaymentTokenLabels(status))
     public constructor(result: Result<*>) : this(result.toCreatePaymentTokenStatus())
 }

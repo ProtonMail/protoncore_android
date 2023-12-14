@@ -30,4 +30,4 @@ import me.proton.core.observability.domain.metrics.common.EmptyStatusLabels
 public data class CheckoutGiapBillingUnredeemedTotalV1(
     @Required override val Labels: EmptyStatusLabels = EmptyStatusLabels(),
     @Required override val Value: Long = 1
-) : ObservabilityData()
+) : CoreObservabilityData()

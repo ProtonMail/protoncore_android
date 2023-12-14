@@ -29,7 +29,7 @@ import me.proton.core.observability.domain.entity.SchemaId
 public data class LoginSsoIdentityProviderResultTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: Status) : this(LabelsData(status))
 
     @Serializable

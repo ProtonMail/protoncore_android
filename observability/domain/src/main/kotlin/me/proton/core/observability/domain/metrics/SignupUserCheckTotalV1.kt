@@ -31,6 +31,6 @@ import me.proton.core.observability.domain.metrics.common.UserCheckStatus
 public data class SignupUserCheckTotalV1(
     override val Labels: UserCheckLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: UserCheckStatus) : this(UserCheckLabels(status))
 }

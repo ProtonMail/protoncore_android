@@ -29,7 +29,7 @@ import me.proton.core.observability.domain.entity.SchemaId
 public data class HvPageLoadTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: Status, routing: Routing) : this(LabelsData(status, routing))
 
     @Serializable

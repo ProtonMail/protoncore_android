@@ -33,7 +33,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 public data class CheckoutGetDynamicPlansTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: ApiStatus) : this(LabelsData(status))
 
     public constructor(result: Result<*>) : this(result.toGetDynamicPlansApiStatus())

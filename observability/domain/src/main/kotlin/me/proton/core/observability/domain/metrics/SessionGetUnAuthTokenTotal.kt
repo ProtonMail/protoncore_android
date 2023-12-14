@@ -13,6 +13,6 @@ import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 public data class SessionGetUnAuthTokenTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
 }

@@ -71,7 +71,7 @@ public abstract interface annotation class me/proton/core/observability/domain/e
 	public abstract fun id ()Ljava/lang/String;
 }
 
-public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -152,7 +152,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;J)V
@@ -225,7 +225,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoverySc
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData;J)V
@@ -297,7 +297,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutBillingSu
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$Manager;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/CreatePaymentTokenLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -332,7 +332,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutCardBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -366,7 +366,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutCardBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -452,7 +452,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 	public static final fun toGetDynamicPlansApiStatus (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -538,7 +538,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 	public static final fun toGetDynamicSubscriptionApiStatus (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;)V
@@ -622,7 +622,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 	public static final fun toGetSubscriptionApiStatus (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
@@ -656,7 +656,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/CreatePaymentTokenLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -691,7 +691,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
@@ -725,7 +725,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
@@ -759,7 +759,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$LabelsData;J)V
@@ -848,7 +848,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public static final fun toPurchaseGiapStatus (Lme/proton/core/observability/domain/metrics/common/GiapStatus;)Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/GiapLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/GiapLabels;J)V
@@ -882,7 +882,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1$Companion;
 	public fun <init> ()V
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/EmptyStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -916,7 +916,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -950,7 +950,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/CreatePaymentTokenLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -985,7 +985,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -1019,7 +1019,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -1053,7 +1053,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -1087,7 +1087,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/CheckoutScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/CheckoutScreenViewTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$LabelsData;J)V
@@ -1162,7 +1162,18 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$ScreenId;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public abstract class me/proton/core/observability/domain/metrics/CoreObservabilityData : me/proton/core/observability/domain/metrics/ObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/CoreObservabilityData$Companion;
+	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun getDataSerializer ()Lkotlinx/serialization/SerializationStrategy;
+	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CoreObservabilityData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/observability/domain/metrics/CoreObservabilityData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;J)V
@@ -1247,7 +1258,7 @@ public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$S
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvResultTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/HvResultTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/HvResultTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;J)V
@@ -1318,7 +1329,7 @@ public final class me/proton/core/observability/domain/metrics/HvResultTotal$Sta
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
 }
 
-public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;J)V
@@ -1387,7 +1398,7 @@ public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -1468,7 +1479,7 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -1503,7 +1514,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchD
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/UnlockUserLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/UnlockUserLabels;J)V
@@ -1537,7 +1548,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlock
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/UserCheckLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/UserCheckLabels;J)V
@@ -1571,7 +1582,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCh
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/UsernameAvailabilityLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -1606,7 +1617,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserna
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -1687,7 +1698,7 @@ public final class me/proton/core/observability/domain/metrics/LoginObtainSsoCha
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;J)V
@@ -1758,7 +1769,7 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Integer;)V
@@ -1831,7 +1842,7 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
 }
 
-public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;J)V
@@ -1904,21 +1915,20 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 
 public abstract class me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/ObservabilityData$Companion;
-	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> ()V
+	public abstract fun getDataSerializer ()Lkotlinx/serialization/SerializationStrategy;
 	public abstract fun getLabels ()Ljava/lang/Object;
 	public final fun getMetricName ()Ljava/lang/String;
 	public final fun getMetricVersion ()J
 	public abstract fun getValue ()J
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/ObservabilityData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/ObservabilityData$Companion {
 	public final fun getMetricName (Ljava/lang/Class;)Ljava/lang/String;
 	public final fun getMetricVersion (Ljava/lang/Class;)J
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1$Companion;
 	public fun <init> ()V
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/EmptyStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -1952,7 +1962,7 @@ public final class me/proton/core/observability/domain/metrics/SessionForcedLogo
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1$Companion;
 	public fun <init> ()V
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/EmptyStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -1986,7 +1996,7 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -2020,7 +2030,7 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;)V
@@ -2092,7 +2102,7 @@ public final class me/proton/core/observability/domain/metrics/SessionRefreshTok
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$SessionType;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;Lme/proton/core/observability/domain/metrics/common/AccountTypeLabels;)V
@@ -2180,7 +2190,7 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -2215,7 +2225,7 @@ public final class me/proton/core/observability/domain/metrics/SignupEmailAvaila
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupFetchDomainsTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupFetchDomainsTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupFetchDomainsTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/HttpStatusLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V
@@ -2250,7 +2260,7 @@ public final class me/proton/core/observability/domain/metrics/SignupFetchDomain
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupLoginTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupLoginTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupLoginTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;Lme/proton/core/account/domain/entity/AccountType;)V
@@ -2344,7 +2354,7 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData;J)V
@@ -2418,7 +2428,7 @@ public final class me/proton/core/observability/domain/metrics/SignupScreenViewT
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$ScreenId;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/UnlockUserLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/UnlockUserLabels;J)V
@@ -2452,7 +2462,7 @@ public final class me/proton/core/observability/domain/metrics/SignupUnlockUserT
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupUserCheckTotalV1 : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupUserCheckTotalV1 : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/UserCheckLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Lme/proton/core/observability/domain/metrics/common/UserCheckLabels;J)V
@@ -2486,7 +2496,7 @@ public final class me/proton/core/observability/domain/metrics/SignupUserCheckTo
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal : me/proton/core/observability/domain/metrics/ObservabilityData {
+public final class me/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal$Companion;
 	public synthetic fun <init> (ILme/proton/core/observability/domain/metrics/common/UsernameAvailabilityLabels;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/Object;)V

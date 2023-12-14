@@ -27,8 +27,6 @@ import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import java.time.Instant
 import javax.inject.Inject
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.ZERO
 import kotlin.time.Duration.Companion.milliseconds
 
 public class ObservabilityManager @Inject internal constructor(

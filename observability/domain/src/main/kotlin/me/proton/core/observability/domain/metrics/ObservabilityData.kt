@@ -19,13 +19,14 @@
 package me.proton.core.observability.domain.metrics
 
 import io.swagger.v3.oas.annotations.media.Schema
-import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationStrategy
 import me.proton.core.observability.domain.entity.SchemaId
 import java.net.URI
 
 @Suppress("PropertyName", "VariableNaming")
-@Serializable
-public sealed class ObservabilityData {
+public abstract class ObservabilityData {
+    public abstract val dataSerializer: SerializationStrategy<ObservabilityData>
+
     @get:Schema(required = true)
     public abstract val Labels: Any
 

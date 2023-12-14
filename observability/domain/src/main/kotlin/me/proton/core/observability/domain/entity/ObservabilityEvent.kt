@@ -61,6 +61,6 @@ public data class ObservabilityEvent internal constructor(
         name = data.metricName,
         version = data.metricVersion,
         timestamp = timestamp.epochSecond,
-        data = data.serializeToJsonElement()
+        data = data.serializeToJsonElement(data.dataSerializer)
     )
 }

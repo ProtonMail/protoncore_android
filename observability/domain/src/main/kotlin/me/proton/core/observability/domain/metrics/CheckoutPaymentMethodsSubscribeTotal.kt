@@ -31,6 +31,6 @@ import me.proton.core.observability.domain.metrics.common.HttpStatusLabels
 public data class CheckoutPaymentMethodsSubscribeTotal(
     override val Labels: HttpStatusLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: HttpApiStatus) : this(HttpStatusLabels(status))
 }

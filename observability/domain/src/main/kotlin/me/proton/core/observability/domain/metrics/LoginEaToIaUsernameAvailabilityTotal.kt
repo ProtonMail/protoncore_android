@@ -32,7 +32,7 @@ import me.proton.core.observability.domain.metrics.common.toUsernameAvailability
 public data class LoginEaToIaUsernameAvailabilityTotal(
     override val Labels: UsernameAvailabilityLabels,
     @Required override val Value: Long = 1
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: UsernameAvailabilityStatus) : this(UsernameAvailabilityLabels(status))
     public constructor(result: Result<*>) : this(result.toUsernameAvailabilityStatus())
 }

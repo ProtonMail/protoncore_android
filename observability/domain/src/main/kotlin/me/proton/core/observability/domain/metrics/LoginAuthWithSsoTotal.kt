@@ -33,7 +33,7 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 public data class LoginAuthWithSsoTotal(
     override val Labels: StatusLabels,
     @Required override val Value: Long = 1,
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: Status) : this(StatusLabels(status))
     public constructor(result: Result<*>) : this(result.toStatus())
 

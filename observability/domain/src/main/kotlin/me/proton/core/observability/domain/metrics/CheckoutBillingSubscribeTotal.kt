@@ -30,7 +30,7 @@ import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 public data class CheckoutBillingSubscribeTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1,
-) : ObservabilityData() {
+) : CoreObservabilityData() {
     public constructor(status: HttpApiStatus, manager: Manager) : this(LabelsData(status, manager))
 
     @Serializable
