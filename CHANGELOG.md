@@ -11,6 +11,14 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.4.1] - 2023-12-14
+
+### Bug Fixes
+
+- event-manager:
+  - Prevent concurrent use of EventWorkerManager enqueue/cancel.
+  - Fixed null QueryMap if not provided.
+
 ## [18.4.0] - 2023-12-13
 
 ### Features
