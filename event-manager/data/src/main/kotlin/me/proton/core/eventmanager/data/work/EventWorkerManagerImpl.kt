@@ -88,10 +88,10 @@ class EventWorkerManagerImpl @Inject constructor(
         val requestTag = EventWorker.getRequestTagFor(config)
         try {
             // Cancel any previous corresponding config EventWorker.
-            workManager.cancelAllWorkByTag(requestTag)
+            workManager.cancelAllWorkByTag(requestTag).await()
         } finally {
             CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager enqueue: $config")
-            workManager.enqueueUniquePeriodicWork(uniqueWorkName, REPLACE, request)
+            workManager.enqueueUniquePeriodicWork(uniqueWorkName, REPLACE, request).await()
         }
     }
 
@@ -102,10 +102,10 @@ class EventWorkerManagerImpl @Inject constructor(
         val requestTag = EventWorker.getRequestTagFor(config)
         try {
             // Cancel any previous corresponding config EventWorker.
-            workManager.cancelAllWorkByTag(requestTag)
+            workManager.cancelAllWorkByTag(requestTag).await()
         } finally {
             CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager cancel: $config")
-            workManager.cancelUniqueWork(uniqueWorkName)
+            workManager.cancelUniqueWork(uniqueWorkName).await()
         }
     }
 
