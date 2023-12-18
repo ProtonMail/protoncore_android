@@ -33,7 +33,6 @@ import dagger.assisted.AssistedInject
 import me.proton.core.eventmanager.domain.LogTag
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.EventManagerProvider
-import me.proton.core.eventmanager.domain.work.EventWorkerManager
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.deserialize
 import me.proton.core.util.kotlin.serialize
@@ -55,11 +54,9 @@ open class EventWorker @AssistedInject constructor(
         val manager = eventManagerProvider.get(config)
         return runCatching { manager.process() }.fold(
             onSuccess = {
-                CoreLogger.i(LogTag.DEFAULT, "EventWorker onSuccess: $config")
                 Result.success()
             },
             onFailure = {
-                CoreLogger.i(LogTag.DEFAULT, "EventWorker onFailure: $config -> $it")
                 when (it) {
                     is CancellationException -> {
                         Result.failure()
