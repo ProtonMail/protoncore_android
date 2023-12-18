@@ -35,7 +35,7 @@ data class LabelResource(
     @SerialName("Name")
     val name: String, // Max Length 100.
     @SerialName("Path")
-    val path: String,
+    val path: String? = null,
     @SerialName("Type")
     val type: Int,
     @SerialName("Color")
@@ -55,7 +55,7 @@ data class LabelResource(
         parentId = parentId?.let { LabelId(it) },
         name = name,
         type = requireNotNull(LabelType.map[type]),
-        path = path,
+        path = path ?: name,
         color = color,
         order = order,
         isNotified = notify?.toBooleanOrFalse(),
