@@ -97,7 +97,8 @@ internal class SetupProductMetrics @Inject constructor(
                 productDimensions = screenDisplayed.dimensions.toMap(),
                 delegateOwner = resolvedDelegateOwner,
                 lifecycleOwner = lifecycleOwner,
-                savedStateRegistryOwner = savedStateRegistryOwner
+                savedStateRegistryOwner = savedStateRegistryOwner,
+                priority = screenDisplayed.priority
             )
         }
 
@@ -107,7 +108,8 @@ internal class SetupProductMetrics @Inject constructor(
                 productDimensions = screenClosed.dimensions.toMap(),
                 delegateOwner = resolvedDelegateOwner,
                 lifecycleOwner = lifecycleOwner,
-                onBackPressedDispatcherOwner = onBackPressedDispatcherOwner
+                onBackPressedDispatcherOwner = onBackPressedDispatcherOwner,
+                priority = screenClosed.priority
             )
         }
 
@@ -139,7 +141,8 @@ internal class SetupProductMetrics @Inject constructor(
                     measureOnViewClicked(
                         event = viewClicked.event,
                         delegateOwner = resolvedDelegateOwner,
-                        productDimensions = mapOf("item" to viewId)
+                        productDimensions = mapOf("item" to viewId),
+                        priority = viewClicked.priority
                     )
                 }
             })
@@ -162,7 +165,8 @@ internal class SetupProductMetrics @Inject constructor(
                         measureOnViewFocused(
                             event = viewFocused.event,
                             delegateOwner = resolvedDelegateOwner,
-                            productDimensions = mapOf(KEY_ITEM to viewId)
+                            productDimensions = mapOf(KEY_ITEM to viewId),
+                            priority = viewFocused.priority
                         )
                     }
                 }
@@ -184,7 +188,8 @@ internal class SetupProductMetrics @Inject constructor(
             measureOnViewClicked(
                 event = menuItemClicked.event,
                 delegateOwner = resolvedDelegateOwner,
-                productDimensions = mapOf("item" to itemIdName)
+                productDimensions = mapOf("item" to itemIdName),
+                priority = menuItemClicked.priority
             )
             true
         }

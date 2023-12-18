@@ -18,9 +18,12 @@
 
 package me.proton.core.telemetry.presentation.annotation
 
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
+
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
 public annotation class ViewFocused(
     public val event: String,
-    public val viewIds: Array<String>
+    public val viewIds: Array<String>,
+    public val priority: TelemetryPriority = TelemetryPriority.Default
 )

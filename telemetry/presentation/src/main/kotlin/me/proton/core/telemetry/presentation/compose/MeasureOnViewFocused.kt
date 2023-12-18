@@ -19,18 +19,21 @@
 package me.proton.core.telemetry.presentation.compose
 
 import androidx.compose.runtime.Composable
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.measureOnViewFocused
 
 @Composable
 public fun MeasureOnViewFocused(
     event: String,
-    productDimensions: Map<String, String> = emptyMap()
+    productDimensions: Map<String, String> = emptyMap(),
+    priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
 
     measureOnViewFocused(
         event = event,
         delegateOwner = screenMetricsDelegateOwner,
-        productDimensions = productDimensions
+        productDimensions = productDimensions,
+        priority = priority
     )
 }

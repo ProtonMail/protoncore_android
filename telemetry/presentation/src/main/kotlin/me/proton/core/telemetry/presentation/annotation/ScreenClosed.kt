@@ -18,6 +18,8 @@
 
 package me.proton.core.telemetry.presentation.annotation
 
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
+
 /**
  * The annotation can be applied to an activity or a fragment.
  * If applied, the telemetry data will be automatically collected
@@ -31,5 +33,6 @@ package me.proton.core.telemetry.presentation.annotation
 @Target(AnnotationTarget.CLASS)
 public annotation class ScreenClosed(
     public val event: String,
-    public val dimensions: Array<String> = []
+    public val dimensions: Array<String> = [],
+    public val priority: TelemetryPriority = TelemetryPriority.Default
 )

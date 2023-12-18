@@ -16,14 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.telemetry.presentation.annotation
+package me.proton.core.telemetry.domain.entity
 
-import me.proton.core.telemetry.domain.entity.TelemetryPriority
+public enum class TelemetryPriority {
 
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-public annotation class ViewClicked(
-    public val event: String,
-    public val viewIds: Array<String>,
-    public val priority: TelemetryPriority = TelemetryPriority.Default
-)
+    /**
+     * Default, no specific constraint.
+     */
+    Default,
+
+    /**
+     * Metric have to be sent as soon as possible.
+     */
+    Immediate,
+}

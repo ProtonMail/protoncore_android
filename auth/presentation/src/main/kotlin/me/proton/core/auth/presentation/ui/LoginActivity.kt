@@ -53,6 +53,7 @@ import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validateUsername
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
@@ -66,15 +67,23 @@ import javax.inject.Inject
  * Login Activity which allows users to Login to any Proton client application.
  */
 @AndroidEntryPoint
-@ScreenDisplayed(event = "fe.signin.displayed")
-@ScreenClosed(event = "user.signin.closed")
+@ScreenDisplayed(
+    event = "fe.signin.displayed",
+    priority = TelemetryPriority.Immediate
+)
+@ScreenClosed(
+    event = "user.signin.closed",
+    priority = TelemetryPriority.Immediate
+)
 @ViewClicked(
     event = "user.signin.clicked",
-    viewIds = ["signInButton"]
+    viewIds = ["signInButton"],
+    priority = TelemetryPriority.Immediate
 )
 @ViewFocused(
     event = "user.signin.focused",
-    viewIds = ["usernameInput", "passwordInput"]
+    viewIds = ["usernameInput", "passwordInput"],
+    priority = TelemetryPriority.Immediate
 )
 class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), ProductMetricsDelegateOwner {
 

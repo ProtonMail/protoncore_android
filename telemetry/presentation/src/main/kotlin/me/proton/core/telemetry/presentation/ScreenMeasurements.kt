@@ -24,6 +24,7 @@ import androidx.savedstate.SavedStateRegistryOwner
 import me.proton.core.presentation.utils.launchOnBackPressed
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 
 /**
  * Sets up a listener that will be automatically called when
@@ -37,6 +38,7 @@ internal fun measureOnScreenDisplayed(
     delegateOwner: ProductMetricsDelegateOwner,
     lifecycleOwner: LifecycleOwner,
     savedStateRegistryOwner: SavedStateRegistryOwner,
+    priority: TelemetryPriority = TelemetryPriority.Default
 ): () -> Unit = lifecycleOwner.launchOnScreenView(savedStateRegistryOwner.savedStateRegistry) {
     val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
@@ -47,7 +49,8 @@ internal fun measureOnScreenDisplayed(
 
     delegate.telemetryManager.enqueue(
         userId = delegate.userId,
-        event = telemetryEvent
+        event = telemetryEvent,
+        priority = priority
     )
 }
 
@@ -63,6 +66,7 @@ internal fun measureOnScreenClosed(
     delegateOwner: ProductMetricsDelegateOwner,
     lifecycleOwner: LifecycleOwner,
     onBackPressedDispatcherOwner: OnBackPressedDispatcherOwner,
+    priority: TelemetryPriority = TelemetryPriority.Default
 ): () -> Unit =
     lifecycleOwner.launchOnBackPressed(onBackPressedDispatcherOwner.onBackPressedDispatcher) {
         val delegate = delegateOwner.productMetricsDelegate
@@ -74,6 +78,7 @@ internal fun measureOnScreenClosed(
 
         delegate.telemetryManager.enqueue(
             userId = delegate.userId,
-            event = telemetryEvent
+            event = telemetryEvent,
+            priority = priority
         )
     }

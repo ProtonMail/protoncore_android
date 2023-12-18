@@ -35,6 +35,7 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.validatePasswordMatch
 import me.proton.core.presentation.utils.validatePasswordMinLength
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
@@ -46,15 +47,23 @@ import me.proton.core.telemetry.presentation.annotation.ViewFocused
     group = "account.any.signup",
     flow = "mobile_signup_full"
 )
-@ScreenDisplayed(event = "fe.signup_password.displayed")
-@ScreenClosed(event = "user.signup_password.closed")
+@ScreenDisplayed(
+    event = "fe.signup_password.displayed",
+    priority = TelemetryPriority.Immediate
+)
+@ScreenClosed(
+    event = "user.signup_password.closed",
+    priority = TelemetryPriority.Immediate
+)
 @ViewClicked(
     event = "user.signup_password.clicked",
-    viewIds = ["nextButton"]
+    viewIds = ["nextButton"],
+    priority = TelemetryPriority.Immediate
 )
 @ViewFocused(
     event = "user.signup_password.focused",
-    viewIds = ["passwordInput", "confirmPasswordInput"]
+    viewIds = ["passwordInput", "confirmPasswordInput"],
+    priority = TelemetryPriority.Immediate
 )
 class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_password) {
 

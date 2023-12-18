@@ -22,12 +22,14 @@ import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.measureOnScreenClosed
 
 @Composable
 public fun MeasureOnScreenClosed(
     productEvent: String,
-    productDimensions: Map<String, String> = emptyMap()
+    productDimensions: Map<String, String> = emptyMap(),
+    priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val onBackPressedDispatcherOwner = LocalOnBackPressedDispatcherOwner.current ?: return
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
@@ -43,7 +45,8 @@ public fun MeasureOnScreenClosed(
             productDimensions = productDimensions,
             delegateOwner = screenMetricsDelegateOwner,
             lifecycleOwner = lifecycleOwner,
-            onBackPressedDispatcherOwner = onBackPressedDispatcherOwner
+            onBackPressedDispatcherOwner = onBackPressedDispatcherOwner,
+            priority = priority
         )
         onDispose { screenClosedDispose() }
     }

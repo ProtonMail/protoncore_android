@@ -37,18 +37,24 @@ import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.onSuccess
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
-@ProductMetrics(group = "account.any.signup", flow = "mobile_signup_full")
+@ProductMetrics(
+    group = "account.any.signup",
+    flow = "mobile_signup_full"
+)
 @ViewClicked(
-    "user.recovery_method.clicked",
-    viewIds = ["phone_country"]
+    event = "user.recovery_method.clicked",
+    viewIds = ["phone_country"],
+    priority = TelemetryPriority.Immediate
 )
 @ViewFocused(
-    "user.recovery_method.focused",
-    viewIds = ["phone"]
+    event = "user.recovery_method.focused",
+    viewIds = ["phone"],
+    priority = TelemetryPriority.Immediate
 )
 @AndroidEntryPoint
 class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {

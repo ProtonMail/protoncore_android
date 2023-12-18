@@ -31,13 +31,18 @@ import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
-@ProductMetrics(group = "account.any.signup", flow = "mobile_signup_full")
+@ProductMetrics(
+    group = "account.any.signup",
+    flow = "mobile_signup_full"
+)
 @ViewFocused(
-    "user.recovery_method.focused",
-    viewIds = ["email"]
+    event = "user.recovery_method.focused",
+    viewIds = ["email"],
+    priority = TelemetryPriority.Immediate
 )
 class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
 

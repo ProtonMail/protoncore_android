@@ -30,6 +30,7 @@ import me.proton.core.humanverification.presentation.ui.common.REQUEST_KEY
 import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERIFICATION
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
@@ -40,8 +41,14 @@ import javax.inject.Inject
     group = "account.any.signup",
     flow = "mobile_signup_full"
 )
-@ScreenDisplayed(event = "fe.hv.displayed")
-@ScreenClosed(event = "user.hv.closed")
+@ScreenDisplayed(
+    event = "fe.hv.displayed",
+    priority = TelemetryPriority.Immediate
+)
+@ScreenClosed(
+    event = "user.hv.closed",
+    priority = TelemetryPriority.Immediate
+)
 class HumanVerificationActivity : AppCompatActivity() {
 
     @Inject

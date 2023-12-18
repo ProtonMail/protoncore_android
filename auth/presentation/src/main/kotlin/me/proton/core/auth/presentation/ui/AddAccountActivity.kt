@@ -34,6 +34,7 @@ import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
@@ -45,11 +46,18 @@ import javax.inject.Inject
     group = "account.any.signup",
     flow = "mobile_signup_full"
 )
-@ScreenDisplayed(event = "fe.add_account.displayed")
-@ScreenClosed(event = "user.add_account.closed")
+@ScreenDisplayed(
+    event = "fe.add_account.displayed",
+    priority = TelemetryPriority.Immediate
+)
+@ScreenClosed(
+    event = "user.add_account.closed",
+    priority = TelemetryPriority.Immediate
+)
 @ViewClicked(
     event = "user.add_account.clicked",
-    viewIds = ["sign_up", "sign_in"]
+    viewIds = ["sign_up", "sign_in"],
+    priority = TelemetryPriority.Immediate
 )
 class AddAccountActivity :
     ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {

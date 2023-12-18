@@ -22,12 +22,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSavedStateRegistryOwner
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.measureOnScreenDisplayed
 
 @Composable
 public fun MeasureOnScreenDisplayed(
     productEvent: String,
-    productDimensions: Map<String, String> = emptyMap()
+    productDimensions: Map<String, String> = emptyMap(),
+    priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -43,7 +45,8 @@ public fun MeasureOnScreenDisplayed(
             productDimensions = productDimensions,
             delegateOwner = screenMetricsDelegateOwner,
             lifecycleOwner = lifecycleOwner,
-            savedStateRegistryOwner = savedStateRegistryOwner
+            savedStateRegistryOwner = savedStateRegistryOwner,
+            priority = priority
         )
         onDispose { screenDisplayedDispose() }
     }

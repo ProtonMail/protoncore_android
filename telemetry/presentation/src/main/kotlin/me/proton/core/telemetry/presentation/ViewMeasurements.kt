@@ -21,6 +21,7 @@ package me.proton.core.telemetry.presentation
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 
 public fun LifecycleOwner.setupViewMetrics(
     block: () -> Unit
@@ -41,6 +42,7 @@ public fun measureOnViewClicked(
     event: String,
     delegateOwner: ProductMetricsDelegateOwner,
     productDimensions: Map<String, String> = emptyMap(),
+    priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
@@ -51,15 +53,16 @@ public fun measureOnViewClicked(
 
     delegate.telemetryManager.enqueue(
         userId = delegate.userId,
-        event = telemetryEvent
+        event = telemetryEvent,
+        priority = priority
     )
 }
-
 
 public fun measureOnViewFocused(
     event: String,
     delegateOwner: ProductMetricsDelegateOwner,
-    productDimensions: Map<String, String> = emptyMap()
+    productDimensions: Map<String, String> = emptyMap(),
+    priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
@@ -70,6 +73,7 @@ public fun measureOnViewFocused(
 
     delegate.telemetryManager.enqueue(
         userId = delegate.userId,
-        event = telemetryEvent
+        event = telemetryEvent,
+        priority = priority
     )
 }

@@ -34,8 +34,14 @@ public class TelemetryWorkerManagerImpl @Inject constructor(
     }
 
     override fun enqueueOrKeep(userId: UserId?, delay: Duration) {
+        val uniqueName = TelemetryWorker.getUniqueWorkName(userId)
         val request = TelemetryWorker.getRequest(userId, delay)
-        workManager.enqueueUniqueWork(TelemetryWorker.getUniqueWorkName(userId), ExistingWorkPolicy.KEEP, request)
+        workManager.enqueueUniqueWork(uniqueName, ExistingWorkPolicy.KEEP, request)
     }
 
+    override fun enqueueAndReplace(userId: UserId?, delay: Duration) {
+        val uniqueName = TelemetryWorker.getUniqueWorkName(userId)
+        val request = TelemetryWorker.getRequest(userId, delay)
+        workManager.enqueueUniqueWork(uniqueName, ExistingWorkPolicy.REPLACE, request)
+    }
 }

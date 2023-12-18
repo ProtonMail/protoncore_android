@@ -108,6 +108,7 @@ public final class me/proton/core/telemetry/data/usecase/IsTelemetryEnabledImpl_
 public final class me/proton/core/telemetry/data/worker/TelemetryWorkerManagerImpl : me/proton/core/telemetry/domain/TelemetryWorkerManager {
 	public fun <init> (Landroidx/work/WorkManager;)V
 	public fun cancel (Lme/proton/core/domain/entity/UserId;)V
+	public fun enqueueAndReplace-HG0u8IE (Lme/proton/core/domain/entity/UserId;J)V
 	public fun enqueueOrKeep-HG0u8IE (Lme/proton/core/domain/entity/UserId;J)V
 }
 

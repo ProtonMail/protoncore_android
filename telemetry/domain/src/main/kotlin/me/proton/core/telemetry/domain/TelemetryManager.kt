@@ -21,12 +21,14 @@ package me.proton.core.telemetry.domain
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.domain.repository.TelemetryRepository
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.seconds
 
 public class TelemetryManager @Inject internal constructor(
     private val isTelemetryEnabled: IsTelemetryEnabled,
@@ -35,20 +37,33 @@ public class TelemetryManager @Inject internal constructor(
     private val workerManager: TelemetryWorkerManager
 ) {
 
-    /** Enqueues an [event] to be sent at some point in the future.
-     * If telemetry is disabled, the event won't be sent
+    /**
+     * Enqueues an [event] to be sent at some point in the future.
+     *
+     * If telemetry is disabled, the event won't be sent.
      */
-    public fun enqueue(userId: UserId?, event: TelemetryEvent) {
+    public fun enqueue(
+        userId: UserId?,
+        event: TelemetryEvent,
+        priority: TelemetryPriority = TelemetryPriority.Default
+    ) {
         scopeProvider.GlobalIOSupervisedScope.launch {
-            enqueueEvent(userId, event)
+            enqueueEvent(userId, event, priority)
         }
     }
 
-    private suspend fun enqueueEvent(userId: UserId?, event: TelemetryEvent) {
+    private suspend fun enqueueEvent(
+        userId: UserId?,
+        event: TelemetryEvent,
+        priority: TelemetryPriority = TelemetryPriority.Default
+    ) {
         CoreLogger.d(LogTag.ENQUEUE, "$event")
         if (isTelemetryEnabled(userId)) {
             repository.addEvent(userId, event)
-            workerManager.enqueueOrKeep(userId, MAX_DELAY)
+            when (priority) {
+                TelemetryPriority.Immediate -> workerManager.enqueueAndReplace(userId, MIN_DELAY)
+                TelemetryPriority.Default -> workerManager.enqueueOrKeep(userId, MAX_DELAY)
+            }
         } else {
             workerManager.cancel(userId)
             repository.deleteAllEvents(userId)
@@ -56,6 +71,7 @@ public class TelemetryManager @Inject internal constructor(
     }
 
     internal companion object {
+        internal val MIN_DELAY = 1.seconds
         internal val MAX_DELAY = 1.hours
     }
 }

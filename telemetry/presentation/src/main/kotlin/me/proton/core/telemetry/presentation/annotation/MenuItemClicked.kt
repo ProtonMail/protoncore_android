@@ -18,10 +18,13 @@
 
 package me.proton.core.telemetry.presentation.annotation
 
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
+
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)
 public annotation class MenuItemClicked(
     public val event: String,
     public val toolbarId: String,
-    public val itemIds: Array<String>
+    public val itemIds: Array<String>,
+    public val priority: TelemetryPriority = TelemetryPriority.Default
 )

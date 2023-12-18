@@ -22,15 +22,24 @@ import me.proton.core.domain.entity.UserId
 import kotlin.time.Duration
 
 public interface TelemetryWorkerManager {
-    /** Cancels any scheduled workers for a user.
-     * @param userId the user id
+
+    /**
+     * Cancels any scheduled workers for a user.
      */
     public fun cancel(userId: UserId?)
 
-    /** Schedules a worker to send the telemetry events for a user.
-     * If a worker has been previously scheduled but hasn't yet executed,
-     * the existing scheduled worker will be kept.
-     * @param userId the user id
+    /**
+     * Schedules a worker to send the telemetry events for a user.
+     *
+     * If a worker has been previously scheduled but hasn't yet executed, the existing scheduled worker will be kept.
      */
     public fun enqueueOrKeep(userId: UserId?, delay: Duration)
+
+    /**
+     *
+     * Schedules a worker to send the telemetry events for a user.
+     *
+     * If a worker has been previously scheduled but hasn't yet executed, the existing scheduled worker will replaced.
+     */
+    public fun enqueueAndReplace(userId: UserId?, delay: Duration)
 }

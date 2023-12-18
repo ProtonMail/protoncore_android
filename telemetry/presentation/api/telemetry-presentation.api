@@ -61,16 +61,17 @@ public final class me/proton/core/telemetry/presentation/ProductMetricsInitializ
 }
 
 public final class me/proton/core/telemetry/presentation/ViewMeasurementsKt {
-	public static final fun measureOnViewClicked (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;)V
-	public static synthetic fun measureOnViewClicked$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;ILjava/lang/Object;)V
-	public static final fun measureOnViewFocused (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;)V
-	public static synthetic fun measureOnViewFocused$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;ILjava/lang/Object;)V
+	public static final fun measureOnViewClicked (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
+	public static synthetic fun measureOnViewClicked$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
+	public static final fun measureOnViewFocused (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
+	public static synthetic fun measureOnViewFocused$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
 	public static final fun setupViewMetrics (Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function0;)V
 }
 
 public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/MenuItemClicked : java/lang/annotation/Annotation {
 	public abstract fun event ()Ljava/lang/String;
 	public abstract fun itemIds ()[Ljava/lang/String;
+	public abstract fun priority ()Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 	public abstract fun toolbarId ()Ljava/lang/String;
 }
 
@@ -83,20 +84,24 @@ public abstract interface annotation class me/proton/core/telemetry/presentation
 public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/ScreenClosed : java/lang/annotation/Annotation {
 	public abstract fun dimensions ()[Ljava/lang/String;
 	public abstract fun event ()Ljava/lang/String;
+	public abstract fun priority ()Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 }
 
 public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/ScreenDisplayed : java/lang/annotation/Annotation {
 	public abstract fun dimensions ()[Ljava/lang/String;
 	public abstract fun event ()Ljava/lang/String;
+	public abstract fun priority ()Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 }
 
 public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/ViewClicked : java/lang/annotation/Annotation {
 	public abstract fun event ()Ljava/lang/String;
+	public abstract fun priority ()Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 	public abstract fun viewIds ()[Ljava/lang/String;
 }
 
 public abstract interface annotation class me/proton/core/telemetry/presentation/annotation/ViewFocused : java/lang/annotation/Annotation {
 	public abstract fun event ()Ljava/lang/String;
+	public abstract fun priority ()Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 	public abstract fun viewIds ()[Ljava/lang/String;
 }
 
@@ -108,19 +113,19 @@ public final class me/proton/core/telemetry/presentation/compose/LocalProductMet
 }
 
 public final class me/proton/core/telemetry/presentation/compose/MeasureOnScreenClosedKt {
-	public static final fun MeasureOnScreenClosed (Ljava/lang/String;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MeasureOnScreenClosed (Ljava/lang/String;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/telemetry/presentation/compose/MeasureOnScreenDisplayedKt {
-	public static final fun MeasureOnScreenDisplayed (Ljava/lang/String;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MeasureOnScreenDisplayed (Ljava/lang/String;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/telemetry/presentation/compose/MeasureOnViewClickedKt {
-	public static final fun MeasureOnViewClicked (Ljava/lang/String;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MeasureOnViewClicked (Ljava/lang/String;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/telemetry/presentation/compose/MeasureOnViewFocusedKt {
-	public static final fun MeasureOnViewFocused (Ljava/lang/String;Ljava/util/Map;Landroidx/compose/runtime/Composer;II)V
+	public static final fun MeasureOnViewFocused (Ljava/lang/String;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/telemetry/presentation/usecase/SetupProductMetrics_Factory : dagger/internal/Factory {

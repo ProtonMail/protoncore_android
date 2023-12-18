@@ -46,6 +46,7 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.MenuItemClicked
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
@@ -53,22 +54,33 @@ import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.util.kotlin.exhaustive
 
-@ProductMetrics(group = "account.any.signup", flow = "mobile_signup_full")
-@ScreenDisplayed("fe.recovery_method.displayed")
-@ScreenClosed("user.recovery_method.closed")
+@ProductMetrics(
+    group = "account.any.signup",
+    flow = "mobile_signup_full"
+)
+@ScreenDisplayed(
+    event = "fe.recovery_method.displayed",
+    priority = TelemetryPriority.Immediate
+)
+@ScreenClosed(
+    event = "user.recovery_method.closed",
+    priority = TelemetryPriority.Immediate
+)
 @ViewClicked(
-    "user.recovery_method.clicked",
+    event = "user.recovery_method.clicked",
     viewIds = [
         "email",
         "phone",
         "next",
         "terms"
-    ]
+    ],
+    priority = TelemetryPriority.Immediate
 )
 @MenuItemClicked(
-    "user.recovery_method.clicked",
+    event = "user.recovery_method.clicked",
     toolbarId = "toolbar",
-    itemIds = ["skip"]
+    itemIds = ["skip"],
+    priority = TelemetryPriority.Immediate
 )
 @AndroidEntryPoint
 class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery) {

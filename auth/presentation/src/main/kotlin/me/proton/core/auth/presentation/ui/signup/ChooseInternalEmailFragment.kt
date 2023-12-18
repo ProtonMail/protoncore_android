@@ -49,6 +49,7 @@ import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.presentation.utils.viewBinding
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
@@ -62,11 +63,13 @@ import me.proton.core.util.kotlin.exhaustive
 )
 @ViewClicked(
     event = "user.signup.clicked",
-    viewIds = ["nextButton", "switchButton", "domainInput"]
+    viewIds = ["nextButton", "switchButton", "domainInput"],
+    priority = TelemetryPriority.Immediate
 )
 @ViewFocused(
     event = "user.signup.focused",
-    viewIds = ["usernameInput"]
+    viewIds = ["usernameInput"],
+    priority = TelemetryPriority.Immediate
 )
 class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choose_internal_email) {
 

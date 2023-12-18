@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui.signup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import me.proton.core.auth.presentation.R
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 
@@ -29,7 +30,8 @@ import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
     flow = "mobile_signup_full"
 )
 @ScreenDisplayed(
-    event = "fe.create_account.displayed"
+    event = "fe.create_account.displayed",
+    priority = TelemetryPriority.Immediate
 )
 class CreatingUserFragment : SignupFragment(R.layout.fragment_creating_user) {
     override fun onBackPressed() {

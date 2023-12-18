@@ -24,11 +24,13 @@ public final class me/proton/core/telemetry/domain/TelemetryContext$DefaultImpls
 }
 
 public final class me/proton/core/telemetry/domain/TelemetryManager {
-	public final fun enqueue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/telemetry/domain/entity/TelemetryEvent;)V
+	public final fun enqueue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/telemetry/domain/entity/TelemetryEvent;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
+	public static synthetic fun enqueue$default (Lme/proton/core/telemetry/domain/TelemetryManager;Lme/proton/core/domain/entity/UserId;Lme/proton/core/telemetry/domain/entity/TelemetryEvent;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
 }
 
 public abstract interface class me/proton/core/telemetry/domain/TelemetryWorkerManager {
 	public abstract fun cancel (Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun enqueueAndReplace-HG0u8IE (Lme/proton/core/domain/entity/UserId;J)V
 	public abstract fun enqueueOrKeep-HG0u8IE (Lme/proton/core/domain/entity/UserId;J)V
 }
 
@@ -52,6 +54,13 @@ public final class me/proton/core/telemetry/domain/entity/TelemetryEvent {
 	public final fun getValues ()Ljava/util/Map;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/telemetry/domain/entity/TelemetryPriority : java/lang/Enum {
+	public static final field Default Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
+	public static final field Immediate Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
+	public static fun values ()[Lme/proton/core/telemetry/domain/entity/TelemetryPriority;
 }
 
 public abstract interface class me/proton/core/telemetry/domain/repository/TelemetryLocalDataSource {
