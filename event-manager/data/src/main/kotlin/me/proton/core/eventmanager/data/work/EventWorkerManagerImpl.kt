@@ -25,8 +25,6 @@ import androidx.work.WorkManager
 import androidx.work.await
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import me.proton.core.eventmanager.data.R
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.LogTag
@@ -54,7 +52,7 @@ class EventWorkerManagerImpl @Inject constructor(
     override suspend fun enqueue(
         config: EventManagerConfig,
         immediately: Boolean
-    ): Unit = mutex(config).withLock {
+    ) {
         if (isEnqueued(config) && !immediately) {
             CoreLogger.i(LogTag.DEFAULT, "EventWorkerManager already enqueued: $config")
             return
@@ -97,7 +95,7 @@ class EventWorkerManagerImpl @Inject constructor(
 
     override suspend fun cancel(
         config: EventManagerConfig
-    ) : Unit = mutex(config).withLock {
+    ) {
         val uniqueWorkName = getUniqueWorkName(config)
         val requestTag = EventWorker.getRequestTagFor(config)
         try {
@@ -144,12 +142,4 @@ class EventWorkerManagerImpl @Inject constructor(
     override fun requiresStorageNotLow(): Boolean = context.resources.getBoolean(
         R.bool.core_feature_event_manager_worker_requires_storage_not_low
     )
-
-    private companion object {
-        private val staticMutex: Mutex = Mutex()
-        private val mutexMap: MutableMap<String, Mutex> = mutableMapOf()
-        private suspend fun mutex(config: EventManagerConfig) = staticMutex.withLock {
-            mutexMap.getOrPut(config.id) { Mutex() }
-        }
-    }
 }
