@@ -11,6 +11,22 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [18.4.2] - 2023-12-19
+
+### Bug Fixes
+
+- event-manager:
+  - Removed confusing onSuccess/onFailure logs.
+  - Removed Mutex for EventWorkerManager enqueue/cancel (previously introduced).
+  - Await cancel/enqueue Operation.
+  - Fixed potential unneeded duplicate enqueue.
+- human-verification:
+  - Fix loading email verification page under DoH.
+- label:
+  - Fixed parsing issue for null Label path (assuming root folder).
+- telemetry:
+  - Added Telemetry Metrics Priority.
+
 ## [18.4.1] - 2023-12-14
 
 ### Bug Fixes
