@@ -26,6 +26,11 @@ protonBuild {
     apiModeDisabled()
 }
 
+protonCoverage {
+    branchCoveragePercentage.set(95)
+    lineCoveragePercentage.set(100)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 android {

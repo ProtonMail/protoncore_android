@@ -57,15 +57,15 @@ public interface ProtonCoverageExtension {
      */
     public val excludes: ListProperty<KoverReportFilter.() -> Unit>
 
-    /** The minimum branch coverage percentage (0-100) that the project must meet.
+    /** The branch coverage percentage (0-100) that the project must meet (+/- 1%).
      * Use only if you want to override a default value.
      */
-    public val minBranchCoveragePercentage: Property<Int>
+    public val branchCoveragePercentage: Property<Int>
 
-    /** The minimum line coverage percentage (0-100) that the project must meet.
+    /** The line coverage percentage (0-100) that the project must meet (+/- 1%).
      * Use only if you want to override a default value.
      */
-    public val minLineCoveragePercentage: Property<Int>
+    public val lineCoveragePercentage: Property<Int>
 
     /** Explicitly enable Common rules. By default, they are enabled. */
     public val enableCommonRules: Property<Boolean>
@@ -88,16 +88,16 @@ internal fun ProtonCoverageExtension.applyConventionsFrom(other: ProtonCoverageE
     other.enableKotlinSerializationRules.orNull?.let { enableKotlinSerializationRules.convention(it) }
     other.enableRoomDbRules.orNull?.let { enableRoomDbRules.convention(it) }
     other.excludes.orNull?.let { excludes.convention(it) }
-    other.minBranchCoveragePercentage.orNull?.let { minBranchCoveragePercentage.convention(it) }
-    other.minLineCoveragePercentage.orNull?.let { minLineCoveragePercentage.convention(it) }
+    other.branchCoveragePercentage.orNull?.let { branchCoveragePercentage.convention(it) }
+    other.lineCoveragePercentage.orNull?.let { lineCoveragePercentage.convention(it) }
     other.enableCommonRules.orNull?.let { enableCommonRules.convention(it) }
 }
 
 internal fun ProtonCoverageExtension.applyGeneralConventions() {
     disabled.convention(false)
     excludes.convention(emptyList())
-    minBranchCoveragePercentage.convention(DEFAULT_MIN_BRANCH_PERCENTAGE_COVERAGE)
-    minLineCoveragePercentage.convention(DEFAULT_MIN_LINE_PERCENTAGE_COVERAGE)
+    branchCoveragePercentage.convention(DEFAULT_MIN_BRANCH_PERCENTAGE_COVERAGE)
+    lineCoveragePercentage.convention(DEFAULT_MIN_LINE_PERCENTAGE_COVERAGE)
 }
 
 internal fun ProtonCoverageExtension.finalizeValuesOnRead() {
@@ -110,6 +110,6 @@ internal fun ProtonCoverageExtension.finalizeValuesOnRead() {
     enableKotlinSerializationRules.finalizeValueOnRead()
     enableRoomDbRules.finalizeValueOnRead()
     excludes.finalizeValueOnRead()
-    minBranchCoveragePercentage.finalizeValueOnRead()
-    minLineCoveragePercentage.finalizeValueOnRead()
+    branchCoveragePercentage.finalizeValueOnRead()
+    lineCoveragePercentage.finalizeValueOnRead()
 }

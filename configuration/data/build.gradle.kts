@@ -1,7 +1,5 @@
-import studio.forface.easygradle.dsl.*
-
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,6 +16,8 @@ import studio.forface.easygradle.dsl.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import studio.forface.easygradle.dsl.*
+
 plugins {
     protonAndroidLibrary
     protonDagger
@@ -30,8 +30,8 @@ android {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(55)
-    minLineCoveragePercentage.set(74)
+    branchCoveragePercentage.set(56)
+    lineCoveragePercentage.set(74)
 }
 
 dependencies {

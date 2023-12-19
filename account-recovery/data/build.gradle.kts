@@ -26,6 +26,11 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    branchCoveragePercentage.set(100)
+    lineCoveragePercentage.set(96)
+}
+
 android {
     namespace = "me.proton.core.accountrecovery.data"
 }

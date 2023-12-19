@@ -199,16 +199,23 @@ public class ProtonCoveragePlugin : Plugin<Project> {
     }
 
     private fun KoverVerifyReportConfig.applyVerificationConfig(ext: ProtonCoverageExtension) {
-        rule("minBranchCoveragePercentage") {
-            minBound(
-                ext.minBranchCoveragePercentage.get(),
+        // Set up the requirement:
+        // Min coverage percentage must be equal to max coverage (+/- 1).
+        // As a result, the build will fail, if the coverage changes.
+        // This will give us a chance to update the coverage value in build files.
+
+        rule("branchCoveragePercentage") {
+            bound(
+                minValue = ext.branchCoveragePercentage.get() - 1,
+                maxValue = ext.branchCoveragePercentage.get() + 1,
                 MetricType.BRANCH,
                 AggregationType.COVERED_PERCENTAGE
             )
         }
-        rule("minLineCoveragePercentage") {
-            minBound(
-                ext.minLineCoveragePercentage.get(),
+        rule("lineCoveragePercentage") {
+            bound(
+                minValue = ext.lineCoveragePercentage.get() - 1,
+                maxValue = ext.lineCoveragePercentage.get() + 1,
                 MetricType.LINE,
                 AggregationType.COVERED_PERCENTAGE
             )

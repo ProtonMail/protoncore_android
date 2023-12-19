@@ -29,8 +29,8 @@ protonBuild {
 }
 
 protonCoverage {
-    minBranchCoveragePercentage.set(59)
-    minLineCoveragePercentage.set(77)
+    branchCoveragePercentage.set(59)
+    lineCoveragePercentage.set(78)
 }
 
 protonDagger {
