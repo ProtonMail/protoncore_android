@@ -1,6 +1,7 @@
 package me.proton.core.plan.data
 
 import android.content.Context
+import android.util.Log
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager

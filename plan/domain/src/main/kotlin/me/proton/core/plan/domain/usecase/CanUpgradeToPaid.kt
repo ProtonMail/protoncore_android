@@ -27,7 +27,7 @@ import javax.inject.Inject
 
 public class CanUpgradeToPaid @Inject constructor(
     @SupportSignupPaidPlans public val supportPaidPlans: Boolean,
-    private val getPlans: GetPlans,
+    private val getPlans: GetDynamicPlans,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders
 ) {
 
@@ -39,6 +39,6 @@ public class CanUpgradeToPaid @Inject constructor(
             // It's not possible to setup PayPal during signup, from mobile app.
             it != PaymentProvider.PayPal
         }
-        return paymentProviders.isNotEmpty() && getPlans(userId).isNotEmpty()
+        return paymentProviders.isNotEmpty() && getPlans(userId).plans.any { it.instances.isNotEmpty() }
     }
 }

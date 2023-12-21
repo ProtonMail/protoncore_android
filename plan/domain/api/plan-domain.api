@@ -587,7 +587,7 @@ public final class me/proton/core/plan/domain/usecase/CanUpgradeFromMobile {
 }
 
 public final class me/proton/core/plan/domain/usecase/CanUpgradeToPaid {
-	public fun <init> (ZLme/proton/core/plan/domain/usecase/GetPlans;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
+	public fun <init> (ZLme/proton/core/plan/domain/usecase/GetDynamicPlans;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;)V
 	public final fun getSupportPaidPlans ()Z
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/plan/domain/usecase/CanUpgradeToPaid;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;

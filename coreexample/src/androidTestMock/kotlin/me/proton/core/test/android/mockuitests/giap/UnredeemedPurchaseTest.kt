@@ -151,6 +151,10 @@ class UnredeemedPurchaseTest : BaseMockTest {
 
     private fun setupApiMocks() {
         dispatcher.mockFromAssets(
+            "GET", "/payments/v5/plans",
+            "GET/payments/v5/dynamic-plans.json"
+        )
+        dispatcher.mockFromAssets(
             "GET", "/payments/v4/status/google",
             "GET/payments/v4/status/google-iap-only.json"
         )

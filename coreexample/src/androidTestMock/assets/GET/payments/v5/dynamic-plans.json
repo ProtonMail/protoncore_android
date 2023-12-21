@@ -1,0 +1,261 @@
+{
+  "Code": 1000,
+  "DefaultCycle": 12,
+  "Plans": [
+    {
+      "Instances": [
+        {
+          "Cycle": 12,
+          "Description": "Per year",
+          "PeriodEnd": 1736600838,
+          "Price": [
+            {
+              "ID": "W88uo9RJUff3IIfrroHUT9uvyWJJtVaMZE6NA7qBf4DP-kjsCxC5yxthaUM0XMuEC6uVaH0COWGZTT8BD_XjDg==",
+              "Currency": "USD",
+              "Current": 11988,
+              "Default": 11988
+            },
+            {
+              "ID": "4gbJEHDhhIVWJTLVOofIW1lkVzYWLSU9KR5B4NuW1ExeU_R9Dvl6ar8AZOUDiBbOAT0MHSCafhSmu5t1LC3oEA==",
+              "Currency": "EUR",
+              "Current": 11988,
+              "Default": 11988
+            },
+            {
+              "ID": "nNTtf0H8g-PnntRe8rnUGbZpSNr5XpBiE0N3zX8Rjet8Rqy32PX63JJ2PR5cNh5_U2d70QK3TGFco0Tu9dxgmA==",
+              "Currency": "CHF",
+              "Current": 11988,
+              "Default": 11988
+            }
+          ],
+          "Vendors": {
+            "Google": {
+              "ProductID": "giappass_bundle2022_12_renewing",
+              "CustomerID": "cus_google_upNwIGf3zZOtlATqHRQx"
+            }
+          }
+        }
+      ],
+      "ID": "lY2ZCYkVNfl_osze70PRoqzg34MQI64mE3-pLc-yMp_6KXthkV1paUsyS276OdNwucz9zKoWKZL_TgtKxOPb0w==",
+      "ParentMetaPlanID": null,
+      "Type": 1,
+      "Name": "bundle2022",
+      "Title": "Proton Unlimited",
+      "Description": "Comprehensive privacy and security with all Proton services combined.",
+      "Services": 15,
+      "Features": 1,
+      "State": 1,
+      "Offers": [],
+      "Entitlements": [
+        {
+          "Type": "description",
+          "Text": "Unlimited logins and notes",
+          "IconName": "infinite",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Unlimited devices",
+          "IconName": "infinite",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "20 vaults",
+          "IconName": "vault",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Unlimited email aliases",
+          "IconName": "alias",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Integrated 2FA authenticator",
+          "IconName": "lock",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Priority support",
+          "IconName": "shield",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "500 GB storage",
+          "IconName": "storage",
+          "Hint": "Storage space is shared across Proton Mail, Proton Calendar, and Proton Drive"
+        },
+        {
+          "Type": "description",
+          "Text": "15 email addresses",
+          "IconName": "envelope",
+          "Hint": "Create multiple email addresses for your online identities, e.g., JohnShopper@proton.me for shopping accounts, JohnNews@proton.me for
+          news subscription"
+        },
+        {
+          "Type": "description",
+          "Text": "High-speed VPN on 10 devices per user",
+          "IconName": "shield",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "And the Plus features of all other Proton products!",
+          "IconName": "checkmark",
+          "Hint": null
+        }
+      ],
+      "Decorations": [
+        {
+          "Type": "starred",
+          "IconName": "star"
+        }
+      ],
+      "Layout": "default"
+    },
+    {
+      "Instances": [
+        {
+          "Cycle": 12,
+          "Description": "Per year",
+          "PeriodEnd": 1736600838,
+          "Price": [
+            {
+              "ID": "Qf00d6OCakxLcouDAWJpiO1OhFEQUia4yuozZlX4ZCXBhLdVAoB2kX3m-9kAcY4qbM_KI0a4VNRwxN9_2DXf8w==",
+              "Currency": "USD",
+              "Current": 4788,
+              "Default": 4788
+            },
+            {
+              "ID": "qkEIGf2ytYw3sqya4ZdSQRsI-cTjzi7lrLV08vq0p2dLKSNxgEJrqI1qNLGwAvQ1-bRUuOlXvFjXBRC8zL3z_Q==",
+              "Currency": "EUR",
+              "Current": 4788,
+              "Default": 4788
+            },
+            {
+              "ID": "h3CD-DT7rLoAw1vmpcajvIPAl-wwDfXR2MHtWID3wuQURDBKTiGUAwd6E2WBbS44QQKeXImW-axm6X0hAfcVCA==",
+              "Currency": "CHF",
+              "Current": 4788,
+              "Default": 4788
+            }
+          ],
+          "Vendors": {
+            "Google": {
+              "ProductID": "giappass_pass2023_12_renewing",
+              "CustomerID": "cus_google_upNwIGf3zZOtlATqHRQx"
+            }
+          }
+        }
+      ],
+      "ID": "kBZYBzgHWtjW5igU33BXqwVZ66GBdJi4ycXPzZjyUmp840-O2yXyNEO0ayRveZKNnASS_btzUY-WkI_mcvNuOg==",
+      "ParentMetaPlanID": null,
+      "Type": 1,
+      "Name": "pass2023",
+      "Title": "Pass Plus",
+      "Description": "For next-level password management and identity protection.",
+      "Services": 8,
+      "Features": 0,
+      "State": 1,
+      "Offers": [],
+      "Entitlements": [
+        {
+          "Type": "description",
+          "Text": "Unlimited logins and notes",
+          "IconName": "infinite",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Unlimited devices",
+          "IconName": "infinite",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "20 vaults",
+          "IconName": "vault",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Share each vault with up to 10 people",
+          "IconName": "globe",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Unlimited email aliases",
+          "IconName": "alias",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Integrated 2FA authenticator",
+          "IconName": "lock",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Custom fields",
+          "IconName": "pen-square",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Priority support",
+          "IconName": "shield",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "And the free features of all other Proton products!",
+          "IconName": "checkmark",
+          "Hint": null
+        }
+      ],
+      "Decorations": [],
+      "Layout": "default"
+    },
+    {
+      "Instances": [],
+      "Name": null,
+      "Title": "Free",
+      "State": 0,
+      "Type": null,
+      "Layout": "default",
+      "Description": "The no-cost starter account designed to empower everyone with privacy by default.",
+      "Entitlements": [
+        {
+          "Type": "description",
+          "Text": "Up to 1 GB storage",
+          "IconName": "storage",
+          "Hint": "Start with 500 MB and unlock more storage along the way. Storage space is shared across Proton Mail, Proton Calendar, and Proton
+          Drive."
+        },
+        {
+          "Type": "description",
+          "Text": "1 email address",
+          "IconName": "envelope",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "3 personal calendars",
+          "IconName": "calendar-checkmark",
+          "Hint": null
+        },
+        {
+          "Type": "description",
+          "Text": "Free VPN on a single device",
+          "IconName": "shield",
+          "Hint": null
+        }
+      ],
+      "Decorations": []
+    }
+  ]
+}

@@ -56,10 +56,6 @@ public interface CorePlanModule {
 
     @Binds
     @Singleton
-    public fun provideIsDynamicPlanEnabled(impl: IsDynamicPlanEnabledImpl): IsDynamicPlanEnabled
-
-    @Binds
-    @Singleton
     public fun provideIsSplitStorageEnabled(impl: IsSplitStorageEnabledImpl): IsSplitStorageEnabled
 
     @Binds
@@ -77,4 +73,12 @@ public interface CorePlanModule {
 
     @BindsOptionalOf
     public fun optionalCreateSubscriptionForGiap(): CreatePaymentTokenForGooglePurchase
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CorePlansFeaturesModule {
+    @Binds
+    @Singleton
+    public fun provideIsDynamicPlanEnabled(impl: IsDynamicPlanEnabledImpl): IsDynamicPlanEnabled
 }

@@ -684,6 +684,16 @@ public final class me/proton/core/test/android/robots/auth/signup/ChooseUsername
 	public final fun chooseUsernameElementsDisplayed ()V
 }
 
+public final class me/proton/core/test/android/robots/auth/signup/CreatingUserRobot : me/proton/core/test/android/robots/CoreRobot {
+	public fun <init> ()V
+	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/CreatingUserRobot$Verify;
+}
+
+public final class me/proton/core/test/android/robots/auth/signup/CreatingUserRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
+	public fun <init> ()V
+	public final fun creatingUserDisplayed (I)V
+}
+
 public final class me/proton/core/test/android/robots/auth/signup/PasswordSetupRobot : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
 	public final fun confirmPassword (Ljava/lang/String;)Lme/proton/core/test/android/robots/auth/signup/PasswordSetupRobot;

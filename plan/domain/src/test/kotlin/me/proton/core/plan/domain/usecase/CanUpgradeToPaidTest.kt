@@ -21,45 +21,71 @@ package me.proton.core.plan.domain.usecase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.AppStore
+import me.proton.core.domain.type.IntEnum
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlanInstance
+import me.proton.core.plan.domain.entity.DynamicPlanPrice
+import me.proton.core.plan.domain.entity.DynamicPlanState
+import me.proton.core.plan.domain.entity.DynamicPlanType
+import me.proton.core.plan.domain.entity.DynamicPlanVendor
+import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.PlanPricing
 import me.proton.core.plan.domain.usecase.GetPlans
 import org.junit.Before
 import org.junit.Test
+import java.time.Instant
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class CanUpgradeToPaidTest {
     // region mocks
-    private val getPlans: GetPlans = mockk()
+    private val getPlans: GetDynamicPlans = mockk()
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders = mockk()
     // endregion
 
     // region test data
-    val testPlan = Plan(
-        id = "plan-id-1",
-        type = 1,
-        cycle = 1,
-        name = "Plan 1",
-        title = "Plan Title 1",
-        currency = "CHF",
-        amount = 10,
-        maxDomains = 1,
-        maxAddresses = 1,
-        maxCalendars = 1,
-        maxSpace = 1,
-        maxMembers = 1,
-        maxVPN = 1,
-        services = 0,
-        features = 1,
-        quantity = 1,
-        maxTier = 1,
-        enabled = true,
-        pricing = PlanPricing(
-            1, 10, 20
+    private fun instanceFor(cycle: Int, vararg currency: String) = DynamicPlanInstance(
+        cycle = cycle,
+        description = "description-$cycle-$currency",
+        periodEnd = Instant.now(),
+        price = currency.map {
+            DynamicPlanPrice(
+                id = "id-$cycle-$currency",
+                currency = it,
+                current = 100
+            )
+        }.associateBy { it.currency },
+        vendors = mapOf(
+            AppStore.GooglePlay to DynamicPlanVendor(
+                productId = "googlemail_plus_${cycle}_renewing",
+                customerId = "cus_google_fAx9TIdL63UmeYDmUo3l"
+            )
         )
+    )
+
+    private val planFree = DynamicPlan(
+        name = "free",
+        order = 0,
+        state = DynamicPlanState.Available,
+        title = "Free",
+        type = null,
+        instances = emptyMap(), // No instances.
+    )
+
+    private val plan1 = DynamicPlan(
+        name = "test1",
+        order = 0,
+        state = DynamicPlanState.Available,
+        title = "title",
+        type = IntEnum(DynamicPlanType.Primary.code, DynamicPlanType.Primary),
+        instances = mapOf(
+            12 to instanceFor(12, "CHF", "USD", "EUR"),
+            24 to instanceFor(24, "CHF")
+        ),
     )
     // endregion
 
@@ -92,7 +118,7 @@ class CanUpgradeToPaidTest {
     fun `can upgrade returns false when no payment providers available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns emptySet()
-        coEvery { getPlans(any()) } returns listOf(testPlan)
+        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf( plan1))
         // WHEN
         val result = useCase()
         // THEN
@@ -103,7 +129,7 @@ class CanUpgradeToPaidTest {
     fun `can upgrade returns false when only PayPal payment provider is available`() = runTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns setOf(PaymentProvider.PayPal)
-        coEvery { getPlans(any()) } returns listOf(testPlan)
+        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf( plan1))
         // WHEN
         val result = useCase()
         // THEN
@@ -117,7 +143,7 @@ class CanUpgradeToPaidTest {
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
-        coEvery { getPlans(any()) } returns emptyList()
+        coEvery { getPlans(any()) } returns DynamicPlans(12, emptyList())
         // WHEN
         val result = useCase()
         // THEN
@@ -131,7 +157,7 @@ class CanUpgradeToPaidTest {
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
-        coEvery { getPlans(any()) } returns listOf(testPlan)
+        coEvery { getPlans(any()) } returns DynamicPlans(defaultCycle = 12, plans = listOf( plan1))
         // WHEN
         val result = useCase()
         // THEN

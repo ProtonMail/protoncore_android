@@ -21,6 +21,7 @@ package me.proton.core.test.android.robots.plans
 import androidx.core.widget.NestedScrollView
 import androidx.test.espresso.matcher.ViewMatchers
 import me.proton.core.plan.presentation.R
+import me.proton.core.plan.presentation.view.DynamicPlanView
 import me.proton.core.plan.presentation.view.PlanItemView
 import me.proton.core.test.quark.data.BillingCycle
 import me.proton.core.test.quark.data.Currency
@@ -36,8 +37,8 @@ class SelectPlanRobot : CoreRobot() {
      * @return an instance of [SelectPlanRobot]
      */
     fun scrollToPlan(plan: Plan): SelectPlanRobot {
-        view.instanceOf(PlanItemView::class.java)
-            .hasDescendant(view.withId(R.id.planNameText).withText(plan.text))
+        view.instanceOf(DynamicPlanView::class.java)
+            .hasDescendant(view.withId(R.id.title).withText(plan.text))
             .scrollTo()
         return this
     }
@@ -48,7 +49,7 @@ class SelectPlanRobot : CoreRobot() {
      */
     fun toggleExpandPlan(plan: Plan): SelectPlanRobot {
         view
-            .withChild(view.withId(R.id.planNameText).withText(plan.text))
+            .withChild(view.withId(R.id.title).withText(plan.text))
             .scrollToNestedScrollView()
             .click()
         return this
@@ -62,6 +63,18 @@ class SelectPlanRobot : CoreRobot() {
     inline fun <reified T> selectPlan(plan: Plan): T =
         scrollToPlan(plan)
             .clickPlanButtonWithText(plan)
+
+    /**
+     * Clicks 'Select' button on a provided [plan]
+     * @param T next Robot in flow
+     * @return an instance of [T]
+     */
+    inline fun <reified T> selectPlan(buttonText: String): T {
+        view.withText(buttonText)
+            .scrollTo()
+            .click()
+        return T::class.java.newInstance()
+    }
 
     /**
      * Clicks 'Upgrade' button on a provided [plan]
@@ -82,7 +95,7 @@ class SelectPlanRobot : CoreRobot() {
         view.withId(R.id.select)
             .isDescendantOf(
                 view.withId(R.id.planGroup).hasSibling(
-                    view.withText(plan.text)
+                    view.withText("Get " + plan.text)
                 )
             )
             .scrollTo()
@@ -150,12 +163,9 @@ class SelectPlanRobot : CoreRobot() {
         fun canSelectPlan(plan: Plan) {
             scrollToPlan(plan)
 
-            view.withId(R.id.select)
-                .isDescendantOf(
-                    view.withId(R.id.planGroup).hasSibling(
-                        view.withText(plan.text)
-                    )
-                ).checkDisplayed()
+            view.instanceOf(DynamicPlanView::class.java)
+                .hasDescendant(view.withId(R.id.title).withText(plan.text))
+                .checkDisplayed()
         }
 
         fun canUpgradeToPlan(plan: Plan) {

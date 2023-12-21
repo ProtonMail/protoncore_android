@@ -18,13 +18,13 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
-import me.proton.core.test.quark.data.Plan.Dev
+import me.proton.core.auth.R
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
+import me.proton.core.test.android.robots.auth.signup.CreatingUserRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot.RecoveryMethodType
 import me.proton.core.test.android.robots.humanverification.HVRobot
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.util.kotlin.random
@@ -73,11 +73,9 @@ class RecoveryMethodsSetupTests : BaseTest() {
     fun skipRecoveryMethods() {
         val skipRecoveryRobot = recoveryMethodsRobot.skip()
         if (paymentProvidersForSignup().isNotEmpty()) {
-            skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
-                .toggleExpandPlan(Dev)
+            skipRecoveryRobot.skipConfirm<CreatingUserRobot>()
                 .verify {
-                    planDetailsDisplayedInsideRecyclerView(Dev)
-                    canSelectPlan(Dev)
+                    creatingUserDisplayed(R.string.auth_signup_your_account_is_being_setup)
                 }
         } else {
             skipRecoveryRobot.skipConfirm<HVRobot>().verify {
@@ -90,11 +88,9 @@ class RecoveryMethodsSetupTests : BaseTest() {
     fun emptyFieldsTriggerSkip() {
         val skipRecoveryRobot = recoveryMethodsRobot.next<RecoveryMethodsRobot.SkipRecoveryRobot>()
         if (paymentProvidersForSignup().isNotEmpty()) {
-            skipRecoveryRobot.skipConfirm<SelectPlanRobot>()
-                .toggleExpandPlan(Dev)
+            skipRecoveryRobot.skipConfirm<CreatingUserRobot>()
                 .verify {
-                    planDetailsDisplayedInsideRecyclerView(Dev)
-                    canSelectPlan(Dev)
+                    creatingUserDisplayed(R.string.auth_signup_your_account_is_being_setup)
                 }
         } else {
             skipRecoveryRobot.skipConfirm<HVRobot>().verify {
