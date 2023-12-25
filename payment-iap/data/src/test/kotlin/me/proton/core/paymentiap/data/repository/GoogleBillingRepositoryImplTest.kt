@@ -18,6 +18,7 @@
 
 package me.proton.core.paymentiap.data.repository
 
+import android.app.Activity
 import app.cash.turbine.test
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener
 import com.android.billingclient.api.BillingClient
@@ -36,6 +37,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
 import io.mockk.slot
+import io.mockk.spyk
 import io.mockk.unmockkObject
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
@@ -45,6 +47,7 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.toGiapStatus
@@ -238,6 +241,14 @@ internal class GoogleBillingRepositoryImplTest {
             assertEquals(expectedBillingResult, billingResult.unwrap())
             assertEquals(expectedPurchaseList, purchaseList?.map { it.unwrap() })
         }
+    }
+
+    @Test
+    fun `close`() = runTest {
+        val googleBillingRepositorySpy = spyk(tested)
+
+        googleBillingRepositorySpy.close()
+        verify { googleBillingRepositorySpy.destroy() }
     }
 
     private inline fun <reified R> mockClientResult(billingClientMockSetup: BillingClient.() -> R) {

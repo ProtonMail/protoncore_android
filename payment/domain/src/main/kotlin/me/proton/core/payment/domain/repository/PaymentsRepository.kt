@@ -26,9 +26,11 @@ import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 public typealias PlanQuantity = Map<String, Int> // the plan name along with the quantity number
 
+@ExcludeFromCoverage
 public interface PaymentsRepository {
 
     /**

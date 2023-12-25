@@ -48,6 +48,17 @@ public class PaymentsOrchestrator @Inject constructor() {
         paymentOptionsLauncher = registerPaymentOptionsResult(caller)
     }
 
+    /**
+     * Unregister all workflow activity launcher and listener.
+     */
+    public fun unregister() {
+        billingLauncher?.unregister()
+        billingLauncher = null
+        paymentOptionsLauncher?.unregister()
+        paymentOptionsLauncher = null
+    }
+
+
     public fun setOnPaymentResult(block: (result: BillingResult?) -> Unit) {
         onPaymentResultListener = block
     }
@@ -81,7 +92,7 @@ public class PaymentsOrchestrator @Inject constructor() {
         context: ActivityResultCaller
     ): ActivityResultLauncher<BillingInput> =
         context.registerForActivityResult(
-            StartBilling()
+            StartBilling
         ) {
             // for Sign Up the token should be used as a human verification header
             onPaymentResultListener(it)
@@ -91,7 +102,7 @@ public class PaymentsOrchestrator @Inject constructor() {
         caller: ActivityResultCaller
     ): ActivityResultLauncher<PaymentOptionsInput> =
         caller.registerForActivityResult(
-            StartPaymentOptions()
+            StartPaymentOptions
         ) {
             onPaymentResultListener(it?.billing)
         }

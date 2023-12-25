@@ -25,6 +25,7 @@ import me.proton.core.payment.domain.entity.GoogleProductDetails
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 /** Repository for interacting with Google Play Billing Client.
  * Make sure to [destroy] it once you're done. You can use the [use] function to do that automatically.
@@ -70,6 +71,7 @@ public interface GoogleBillingRepository<A: Any> : AutoCloseable {
  *  is using a custom Android ROM with unofficial/fake play services.
  * @property debugMessage The debug message returned by the Google Billing client.
  */
+@ExcludeFromCoverage
 public data class BillingClientError(
     public val responseCode: Int?,
     public val debugMessage: String?

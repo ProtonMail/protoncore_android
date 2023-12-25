@@ -88,6 +88,7 @@ public final class me/proton/core/payment/presentation/PaymentsOrchestrator {
 	public final fun setOnPaymentResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun startBillingWorkFlow (Lme/proton/core/domain/entity/UserId;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;)V
 	public static synthetic fun startBillingWorkFlow$default (Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/domain/entity/UserId;Lme/proton/core/payment/presentation/entity/PlanShortDetails;Ljava/util/List;ILjava/lang/Object;)V
+	public final fun unregister ()V
 }
 
 public final class me/proton/core/payment/presentation/PaymentsOrchestratorKt {

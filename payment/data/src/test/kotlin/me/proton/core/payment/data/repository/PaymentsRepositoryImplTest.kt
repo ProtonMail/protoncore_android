@@ -403,6 +403,27 @@ class PaymentsRepositoryImplTest {
     }
 
     @Test
+    fun `create payment token existing payment method`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        val createTokenResult = PaymentTokenResult.CreatePaymentTokenResult(
+            PaymentTokenStatus.PENDING, "test-approval-url", ProtonPaymentToken("test-token"), "test-return-host"
+        )
+        coEvery { apiManager.invoke<PaymentTokenResult.CreatePaymentTokenResult>(any()) } returns
+            ApiResult.Success(createTokenResult)
+        // WHEN
+        val createPaymentTokenResult = repository.createPaymentToken(
+                sessionUserId = SessionUserId(testUserId),
+                amount = 1L,
+                currency = Currency.EUR,
+                paymentType = PaymentType.PaymentMethod("test-payment-method-id")
+            )
+        // THEN
+        assertNotNull(createPaymentTokenResult)
+        assertEquals(PaymentTokenStatus.PENDING, createPaymentTokenResult.status)
+        assertEquals(ProtonPaymentToken("test-token"), createPaymentTokenResult.token)
+        assertTrue(assertSingleResult("createPaymentToken").isSuccess)    }
+
+    @Test
     fun `payment status success google play`() = runTest(dispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<PaymentStatus>(any()) } returns ApiResult.Success(

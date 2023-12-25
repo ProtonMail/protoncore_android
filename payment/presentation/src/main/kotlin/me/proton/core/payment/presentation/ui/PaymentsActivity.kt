@@ -52,7 +52,7 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
 
     private fun registerForPaymentTokenApproval(): ActivityResultLauncher<PaymentTokenApprovalInput> =
         registerForActivityResult(
-            StartPaymentTokenApproval()
+            StartPaymentTokenApproval
         ) {
             it?.apply {
                 if (!approved) {
@@ -64,7 +64,7 @@ internal abstract class PaymentsActivity<ViewBindingT : ViewBinding>(
 
     private fun registerForNewBilling(): ActivityResultLauncher<BillingInput> =
         registerForActivityResult(
-            StartBilling()
+            StartBilling
         ) {
             onPaymentResult(it)
         }

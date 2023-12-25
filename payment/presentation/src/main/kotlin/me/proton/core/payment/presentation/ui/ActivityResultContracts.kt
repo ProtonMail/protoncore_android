@@ -29,7 +29,7 @@ import me.proton.core.payment.presentation.entity.PaymentTokenApprovalInput
 import me.proton.core.payment.presentation.entity.PaymentTokenApprovalResult
 import me.proton.core.payment.presentation.entity.BillingInput
 
-internal class StartPaymentOptions : ActivityResultContract<PaymentOptionsInput, PaymentOptionsResult?>() {
+internal object StartPaymentOptions : ActivityResultContract<PaymentOptionsInput, PaymentOptionsResult?>() {
     override fun createIntent(context: Context, input: PaymentOptionsInput): Intent =
 
         Intent(context, PaymentOptionsActivity::class.java).apply {
@@ -43,7 +43,7 @@ internal class StartPaymentOptions : ActivityResultContract<PaymentOptionsInput,
 
 }
 
-internal class StartPaymentTokenApproval : ActivityResultContract<PaymentTokenApprovalInput, PaymentTokenApprovalResult?>() {
+internal object StartPaymentTokenApproval : ActivityResultContract<PaymentTokenApprovalInput, PaymentTokenApprovalResult?>() {
     override fun createIntent(context: Context, input: PaymentTokenApprovalInput): Intent =
         Intent(context, PaymentTokenApprovalActivity::class.java).apply {
             putExtra(PaymentTokenApprovalActivity.ARG_INPUT, input)
@@ -55,7 +55,7 @@ internal class StartPaymentTokenApproval : ActivityResultContract<PaymentTokenAp
     }
 }
 
-internal class StartBilling : ActivityResultContract<BillingInput, BillingResult?>() {
+internal object StartBilling : ActivityResultContract<BillingInput, BillingResult?>() {
     override fun createIntent(context: Context, input: BillingInput): Intent =
         Intent(context, BillingActivity::class.java).apply {
             putExtra(BillingActivity.ARG_BILLING_INPUT, input)

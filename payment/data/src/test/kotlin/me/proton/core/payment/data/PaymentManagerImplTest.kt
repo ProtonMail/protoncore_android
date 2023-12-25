@@ -19,6 +19,7 @@
 package me.proton.core.payment.data
 
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -79,6 +80,21 @@ class PaymentManagerImplTest {
 
         // THEN
         assertTrue(actual)
+        coVerify { getAvailablePaymentProviders.invoke(null, false) }
+    }
+
+    @Test
+    fun `isUpgradeAvailable return true for user and refresh if AvailablePaymentProviders isNotEmpty`() = runTest {
+        // GIVEN
+        val userId = UserId("test-user-id")
+        currentPaymentProviders = setOf(PaymentProvider.CardPayment)
+
+        // WHEN
+        val actual = paymentManager.isUpgradeAvailable(userId, true)
+
+        // THEN
+        assertTrue(actual)
+        coVerify { getAvailablePaymentProviders.invoke(userId, true) }
     }
 
     @Test
@@ -91,6 +107,21 @@ class PaymentManagerImplTest {
 
         // THEN
         assertFalse(actual)
+        coVerify { getAvailablePaymentProviders.invoke(null, false) }
+    }
+
+    @Test
+    fun `isUpgradeAvailable return false for user and refresh if AvailablePaymentProviders isEmpty`() = runTest {
+        // GIVEN
+        val userId = UserId("test-user-id")
+        currentPaymentProviders = emptySet()
+
+        // WHEN
+        val actual = paymentManager.isUpgradeAvailable(userId, true)
+
+        // THEN
+        assertFalse(actual)
+        coVerify { getAvailablePaymentProviders.invoke(userId, true) }
     }
 
     @Test

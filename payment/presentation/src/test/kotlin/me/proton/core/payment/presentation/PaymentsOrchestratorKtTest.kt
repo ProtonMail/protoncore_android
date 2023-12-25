@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("me.proton.core.gradle-plugins.global-coverage")
-}
+package me.proton.core.payment.presentation
 
-publishOption.shouldBePublishedAsLib = false
+import io.mockk.mockk
+import io.mockk.verify
+import kotlinx.coroutines.test.runTest
+import org.junit.Test
 
-// Global minimum coverage percentage.
-protonCoverage {
-    branchCoveragePercentage.set(34)
-    lineCoveragePercentage.set(59)
+class PaymentsOrchestratorKtTest {
+
+    @Test
+    fun `onPaymentResult`() = runTest {
+        val orchestrator = mockk<PaymentsOrchestrator>(relaxed = true)
+        orchestrator.onPaymentResult(mockk())
+        verify { orchestrator.setOnPaymentResult(any()) }
+    }
 }
