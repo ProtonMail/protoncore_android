@@ -60,7 +60,7 @@ class LoginTests : BaseTest() {
             .verify {
                 // Error message itself is coming from the server; we cannot reliably check the contents,
                 // given we support multiple languages.
-                errorSnackbarDisplayed("")
+                errorSnackbarDisplayed()
 
                 passwordInputIsEmpty()
                 passwordInputHasError()

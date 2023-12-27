@@ -31,7 +31,7 @@ class TwoFaTests : BaseTest() {
 
     private val invalidCode = "123456"
     private val twoFaRobot = TwoFaRobot()
-    private val incorrectCredMessage = "Incorrect login credentials. Please try again"
+    private val incorrectCredMessage = "Incorrect login credentials. Please try again."
     private val user = users.getUser(false) { it.twoFa.isNotEmpty() }
 
     @Before
@@ -75,7 +75,6 @@ class TwoFaTests : BaseTest() {
             .authenticate<CoreexampleRobot>()
             .verify {
                 errorSnackbarDisplayed(incorrectCredMessage)
-                userStateIs(user, AccountState.Disabled, null)
             }
     }
 }

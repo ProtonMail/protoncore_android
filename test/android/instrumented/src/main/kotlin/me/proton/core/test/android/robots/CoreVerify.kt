@@ -40,6 +40,12 @@ open class CoreVerify : CoreRobot() {
             .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     }
 
+    fun errorSnackbarDisplayed() {
+        view
+            .withSnackbar()
+            .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
+    }
+
     fun inputErrorDisplayed(@StringRes stringRes: Int, scroll: Boolean = false) {
         view
             .withId(R.id.textinput_error)
@@ -47,11 +53,5 @@ open class CoreVerify : CoreRobot() {
             .withText(stringRes)
             .apply { if (scroll) scrollTo() }
             .checkDisplayed()
-    }
-
-    fun snackbarDisplayed(@StringRes stringRes: Int) {
-        view
-            .withSnackbarText(StringUtils.stringFromResource(stringRes))
-            .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     }
 }

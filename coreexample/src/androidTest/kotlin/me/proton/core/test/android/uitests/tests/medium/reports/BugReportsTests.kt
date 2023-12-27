@@ -149,7 +149,7 @@ class BugReportsTests : BaseTest() {
             .send<CoreexampleRobot>()
             .verify {
                 accountSwitcherDisplayed()
-                snackbarDisplayed(R.string.core_report_bug_success)
+                errorSnackbarDisplayed(R.string.core_report_bug_success)
             }
     }
 
@@ -168,7 +168,7 @@ class BugReportsTests : BaseTest() {
 
         CoreexampleRobot().verify {
             accountSwitcherDisplayed()
-            snackbarDisplayed(R.string.core_report_bug_success)
+            errorSnackbarDisplayed(R.string.core_report_bug_success)
         }
     }
 
