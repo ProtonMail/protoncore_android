@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.auth.login.TwoFaRobot
@@ -72,7 +71,7 @@ class TwoFaTests : BaseTest() {
         twoFaRobot
             .setSecondFactorInput(invalidCode)
             .apply { quark.expireSession(username = user.name, expireRefreshToken = true) }
-            .authenticate<CoreexampleRobot>()
+            .authenticate<TwoFaRobot>()
             .verify {
                 errorSnackbarDisplayed(incorrectCredMessage)
             }

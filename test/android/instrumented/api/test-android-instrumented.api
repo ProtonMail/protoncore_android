@@ -421,6 +421,7 @@ public final class me/proton/core/test/android/instrumented/ui/espresso/OnView :
 	public final fun withParentIndex (I)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withResourceName (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withRootMatcher (Lorg/hamcrest/Matcher;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
+	public final fun withSnackbar ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withSnackbarText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withSpinnerText (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun withSubstring (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
@@ -524,11 +525,11 @@ public class me/proton/core/test/android/robots/CoreRobot : me/proton/core/test/
 
 public class me/proton/core/test/android/robots/CoreVerify : me/proton/core/test/android/robots/CoreRobot {
 	public fun <init> ()V
+	public final fun errorSnackbarDisplayed ()V
 	public final fun errorSnackbarDisplayed (I)V
 	public final fun errorSnackbarDisplayed (Ljava/lang/String;)V
 	public final fun inputErrorDisplayed (IZ)V
 	public static synthetic fun inputErrorDisplayed$default (Lme/proton/core/test/android/robots/CoreVerify;IZILjava/lang/Object;)V
-	public final fun snackbarDisplayed (I)V
 }
 
 public abstract interface class me/proton/core/test/android/robots/WithUiDevice {
