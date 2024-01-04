@@ -56,6 +56,7 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     dateFormat = DateFormat.enumOf(dateFormat),
     timeFormat = TimeFormat.enumOf(timeFormat),
     earlyAccess = earlyAccess.toBooleanOrFalse(),
+    deviceRecovery = deviceRecovery.toBooleanOrFalse(),
     telemetry = telemetry.toBooleanOrFalse(),
     crashReports = crashReports.toBooleanOrFalse(),
 )
@@ -92,6 +93,7 @@ internal fun UserSettingsEntity.fromEntity() = UserSettings(
     dateFormat = DateFormat.enumOf(dateFormat),
     timeFormat = TimeFormat.enumOf(timeFormat),
     earlyAccess = earlyAccess,
+    deviceRecovery = deviceRecovery,
     telemetry = telemetry,
     crashReports = crashReports,
 )
@@ -110,6 +112,7 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
     dateFormat = dateFormat?.value,
     timeFormat = timeFormat?.value,
     earlyAccess = earlyAccess,
+    deviceRecovery = deviceRecovery,
     telemetry = telemetry,
     crashReports = crashReports
 )

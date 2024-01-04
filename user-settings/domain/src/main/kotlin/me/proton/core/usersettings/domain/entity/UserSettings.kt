@@ -35,6 +35,7 @@ data class UserSettings(
     val dateFormat: IntEnum<DateFormat>?,
     val timeFormat: IntEnum<TimeFormat>?,
     val earlyAccess: Boolean?,
+    val deviceRecovery: Boolean?,
     val telemetry: Boolean?,
     val crashReports: Boolean?,
 ) {

@@ -125,6 +125,7 @@ class UsersSettingsHandlerTest {
         dateFormat = null,
         timeFormat = null,
         earlyAccess = null,
+        deviceRecovery = null,
         telemetry = null,
         crashReports = crashReports
     )

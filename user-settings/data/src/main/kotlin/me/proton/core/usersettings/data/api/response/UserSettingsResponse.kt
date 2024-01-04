@@ -47,6 +47,8 @@ data class UserSettingsResponse(
     val timeFormat: Int,
     @SerialName("EarlyAccess")
     val earlyAccess: Int,
+    @SerialName("DeviceRecovery")
+    val deviceRecovery: Int,
     @SerialName("Telemetry")
     val telemetry: Int,
     @SerialName("CrashReports")

@@ -81,6 +81,7 @@ class PerformUpdateRecoveryEmailTest {
         timeFormat = UserSettings.TimeFormat.enumOf(2),
         weekStart = UserSettings.WeekStart.enumOf(7),
         earlyAccess = true,
+        deviceRecovery = true,
         telemetry = true,
         crashReports = true
     )

@@ -6,6 +6,12 @@ public final class me/proton/core/usersettings/domain/DeviceSettingsHandlerKt {
 	public static final fun onDeviceSettingsChanged (Lme/proton/core/usersettings/domain/DeviceSettingsHandler;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
 }
 
+public abstract interface class me/proton/core/usersettings/domain/IsDeviceRecoveryEnabled {
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public abstract fun isLocalEnabled ()Z
+	public abstract fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
 public final class me/proton/core/usersettings/domain/LogTag {
 	public static final field DEFAULT Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/usersettings/domain/LogTag;
@@ -155,7 +161,7 @@ public final class me/proton/core/usersettings/domain/entity/TwoFASetting {
 }
 
 public final class me/proton/core/usersettings/domain/entity/UserSettings {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component10 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component11 ()Lme/proton/core/domain/type/IntEnum;
@@ -163,6 +169,7 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun component13 ()Ljava/lang/Boolean;
 	public final fun component14 ()Ljava/lang/Boolean;
 	public final fun component15 ()Ljava/lang/Boolean;
+	public final fun component16 ()Ljava/lang/Boolean;
 	public final fun component2 ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun component3 ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun component4 ()Lme/proton/core/usersettings/domain/entity/PasswordSetting;
@@ -171,12 +178,13 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component9 ()Lme/proton/core/domain/type/IntEnum;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/usersettings/domain/entity/UserSettings;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettings;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettings;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCrashReports ()Ljava/lang/Boolean;
 	public final fun getDateFormat ()Lme/proton/core/domain/type/IntEnum;
 	public final fun getDensity ()Lme/proton/core/domain/type/IntEnum;
+	public final fun getDeviceRecovery ()Ljava/lang/Boolean;
 	public final fun getEarlyAccess ()Ljava/lang/Boolean;
 	public final fun getEmail ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun getLocale ()Ljava/lang/String;

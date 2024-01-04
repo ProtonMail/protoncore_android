@@ -124,6 +124,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_36_37 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_37_38 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_38_39 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_39_40 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_3_4 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_5_6 ()Landroidx/room/migration/Migration;

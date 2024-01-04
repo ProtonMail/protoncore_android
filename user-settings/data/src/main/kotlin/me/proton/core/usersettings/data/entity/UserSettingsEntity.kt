@@ -54,6 +54,7 @@ data class UserSettingsEntity(
     val dateFormat: Int?,
     val timeFormat: Int?,
     val earlyAccess: Boolean?,
+    val deviceRecovery: Boolean?,
     val telemetry: Boolean?,
     val crashReports: Boolean?,
 )

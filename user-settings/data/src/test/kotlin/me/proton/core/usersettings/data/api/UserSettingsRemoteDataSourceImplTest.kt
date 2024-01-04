@@ -117,6 +117,7 @@ class UserSettingsRemoteDataSourceImplTest {
         timeFormat = 2,
         weekStart = 7,
         earlyAccess = 1,
+        deviceRecovery = 1,
         telemetry = 1,
         crashReports = 1
     )
