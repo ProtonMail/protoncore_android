@@ -1,5 +1,6 @@
 package me.proton.core.auth.presentation.viewmodel
 
+import androidx.core.net.toUri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,11 +27,9 @@ import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderPageLoadTotal
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal.Status
-import me.proton.core.presentation.ui.ProtonWebViewActivity
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
-import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,7 +46,7 @@ class LoginSsoViewModel @Inject constructor(
 
     sealed class State {
         object Idle : State()
-        object Processing : State()
+        data class Processing(val cancellable: Boolean = true) : State()
         data class SignInWithSrp(val error: Throwable) : State()
         data class StartToken(val token: String) : State()
         data class AccountSetupResult(
@@ -63,7 +62,7 @@ class LoginSsoViewModel @Inject constructor(
     ) = viewModelScope.launchWithResultContext {
         onResultEnqueueObservability("getAuthInfoSso") { LoginObtainSsoChallengeTokenTotal(this) }
         flow {
-            emit(State.Processing)
+            emit(State.Processing())
             val result = getAuthInfoSso(sessionId = null, email = email)
             emit(State.StartToken(result.ssoChallengeToken))
         }.catchWhen(Throwable::isSwitchToSrp) {
@@ -76,7 +75,7 @@ class LoginSsoViewModel @Inject constructor(
     }
 
     fun onIdentityProviderStarted() {
-        mutableState.tryEmit(State.Processing)
+        mutableState.tryEmit(State.Processing())
     }
 
     fun onIdentityProviderSuccess(
@@ -87,9 +86,10 @@ class LoginSsoViewModel @Inject constructor(
         onResultEnqueueObservability("performLoginSso") { LoginAuthWithSsoTotal(this) }
 
         flow {
-            emit(State.Processing)
+            emit(State.Processing(cancellable = false))
             // Ex: url = "https://app-api.proton.domain/sso/login#token=token&uid=uid"
-            val params = url.toHttpUrl().fragment?.split("&")?.associate { param ->
+            // Ex: url = "proton://app-api.proton.domain/sso/login#token=token&uid=uid"
+            val params = url.toUri().fragment?.split("&")?.associate { param ->
                 val (key, value) = param.split("=")
                 Pair(key, value)
             }
@@ -112,12 +112,14 @@ class LoginSsoViewModel @Inject constructor(
     }
 
     fun onIdentityProviderCancel() {
+        val state = mutableState.value
+        if (state is State.Processing && !state.cancellable) return
         enqueueObservability(LoginSsoIdentityProviderResultTotal(Status.cancel))
         mutableState.tryEmit(State.Idle)
     }
 
-    fun onIdentityProviderPageLoad(result: ProtonWebViewActivity.Result) {
-        observabilityManager.enqueue(LoginSsoIdentityProviderPageLoadTotal(result.pageLoadErrorCode))
+    fun onIdentityProviderPageLoad(errorCode: Int?) {
+        observabilityManager.enqueue(LoginSsoIdentityProviderPageLoadTotal(errorCode))
     }
 
     fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {

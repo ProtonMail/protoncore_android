@@ -27,8 +27,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
+import me.proton.core.auth.data.usecase.IsSsoCustomTabEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoEnabledImpl
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.domain.entity.Product
@@ -43,6 +45,10 @@ public interface CoreAuthModule {
     @Binds
     @Singleton
     public fun provideIsSsoEnabled(impl: IsSsoEnabledImpl): IsSsoEnabled
+
+    @Binds
+    @Singleton
+    public fun provideIsSsoCustomTabEnabled(impl: IsSsoCustomTabEnabledImpl): IsSsoCustomTabEnabled
 
     @Binds
     @Singleton

@@ -18,7 +18,7 @@ public final class me/proton/core/report/domain/entity/BugReport {
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/report/domain/entity/BugReport;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/report/domain/entity/BugReport;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/report/domain/entity/BugReport$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -51,7 +51,7 @@ public final class me/proton/core/report/domain/entity/BugReportExtra {
 	public final fun getIsp ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/report/domain/entity/BugReportExtra$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -99,7 +99,7 @@ public final class me/proton/core/report/domain/entity/BugReportMeta {
 	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/report/domain/entity/BugReportMeta;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/report/domain/entity/BugReportMeta;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/report/domain/entity/BugReportMeta$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

@@ -40,7 +40,7 @@ public final class me/proton/core/label/domain/entity/LabelId {
 	public final fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/domain/entity/LabelId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/domain/entity/LabelId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/domain/entity/LabelId$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

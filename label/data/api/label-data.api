@@ -33,7 +33,7 @@ public final class me/proton/core/label/data/LabelEvent {
 	public final fun getLabel ()Lme/proton/core/label/data/remote/resource/LabelResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/LabelEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/LabelEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/LabelEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -84,7 +84,7 @@ public final class me/proton/core/label/data/LabelsEvents {
 	public final fun getLabels ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/LabelsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/LabelsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/LabelsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -224,7 +224,7 @@ public final class me/proton/core/label/data/remote/request/CreateLabelRequest {
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/remote/request/CreateLabelRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/remote/request/CreateLabelRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/remote/request/CreateLabelRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -267,7 +267,7 @@ public final class me/proton/core/label/data/remote/request/UpdateLabelRequest {
 	public final fun getSticky ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/remote/request/UpdateLabelRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/remote/request/UpdateLabelRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/remote/request/UpdateLabelRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -320,7 +320,7 @@ public final class me/proton/core/label/data/remote/resource/LabelResource {
 	public fun hashCode ()I
 	public final fun toLabel (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/label/domain/entity/Label;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/remote/resource/LabelResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/remote/resource/LabelResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/remote/resource/LabelResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -351,7 +351,7 @@ public final class me/proton/core/label/data/remote/response/GetLabelsResponse {
 	public final fun getLabels ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/remote/response/GetLabelsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/remote/response/GetLabelsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/remote/response/GetLabelsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -382,7 +382,7 @@ public final class me/proton/core/label/data/remote/response/SingleLabelResponse
 	public final fun getLabel ()Lme/proton/core/label/data/remote/resource/LabelResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/label/data/remote/response/SingleLabelResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/label/data/remote/response/SingleLabelResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/label/data/remote/response/SingleLabelResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

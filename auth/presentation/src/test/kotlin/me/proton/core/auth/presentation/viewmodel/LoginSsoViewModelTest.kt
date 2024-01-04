@@ -36,7 +36,6 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderPageLoadTotal
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal
 import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal.Status
-import me.proton.core.presentation.ui.ProtonWebViewActivity
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -158,10 +157,8 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
 
     @Test
     fun `onIdentityProviderPageLoad enqueue pageLoad`() = coroutinesTest {
-        // GIVEN
-        val result = ProtonWebViewActivity.Result.Success("url", pageLoadErrorCode = null)
         // WHEN
-        viewModel.onIdentityProviderPageLoad(result)
+        viewModel.onIdentityProviderPageLoad(null)
         // THEN
         verify { manager.enqueue(LoginSsoIdentityProviderPageLoadTotal(null), any()) }
     }

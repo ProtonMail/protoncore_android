@@ -21,7 +21,7 @@ public final class me/proton/core/contact/data/ContactEmailEvent {
 	public final fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/ContactEmailEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/ContactEmailEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/ContactEmailEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -65,7 +65,7 @@ public final class me/proton/core/contact/data/ContactEmailsEvents {
 	public final fun getContactEmails ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/ContactEmailsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/ContactEmailsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/ContactEmailsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -99,7 +99,7 @@ public final class me/proton/core/contact/data/ContactEvent {
 	public final fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/ContactEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/ContactEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/ContactEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -142,7 +142,7 @@ public final class me/proton/core/contact/data/ContactsEvents {
 	public final fun getContacts ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/ContactsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/ContactsEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/ContactsEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -185,7 +185,7 @@ public final class me/proton/core/contact/data/api/request/CreateContactsRequest
 	public final fun getContacts ()Ljava/util/List;
 	public final fun getLabels ()I
 	public final fun getOverwrite ()I
-	public static final fun write$Self (Lme/proton/core/contact/data/api/request/CreateContactsRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/request/CreateContactsRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/request/CreateContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -216,7 +216,7 @@ public final class me/proton/core/contact/data/api/request/DeleteContactsRequest
 	public final fun getIds ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/request/DeleteContactsRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/request/DeleteContactsRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/request/DeleteContactsRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -251,7 +251,7 @@ public final class me/proton/core/contact/data/api/resource/ContactCardResource 
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactCardResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/resource/ContactCardResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/resource/ContactCardResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -285,7 +285,7 @@ public final class me/proton/core/contact/data/api/resource/ContactCardsResource
 	public final fun getCards ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactCardsResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/resource/ContactCardsResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/resource/ContactCardsResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -332,7 +332,7 @@ public final class me/proton/core/contact/data/api/resource/ContactEmailResource
 	public final fun isProton ()Ljava/lang/Integer;
 	public final fun toContactEmail (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/contact/domain/entity/ContactEmail;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactEmailResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/resource/ContactEmailResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/resource/ContactEmailResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -366,7 +366,7 @@ public final class me/proton/core/contact/data/api/resource/ContactResource {
 	public fun hashCode ()I
 	public final fun toContact (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/contact/domain/entity/Contact;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/resource/ContactResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/resource/ContactResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -402,7 +402,7 @@ public final class me/proton/core/contact/data/api/resource/ContactWithCardsReso
 	public fun hashCode ()I
 	public final fun toContactWithCards (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/contact/domain/entity/ContactWithCards;
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/resource/ContactWithCardsResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -433,7 +433,7 @@ public final class me/proton/core/contact/data/api/resource/ShortContactResource
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/resource/ShortContactResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/resource/ShortContactResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/resource/ShortContactResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -464,7 +464,7 @@ public final class me/proton/core/contact/data/api/response/CreateContactRespons
 	public final fun getResponse ()Lme/proton/core/contact/data/api/response/MutateContactResponse;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/CreateContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/CreateContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/CreateContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -493,7 +493,7 @@ public final class me/proton/core/contact/data/api/response/CreateContactsRespon
 	public final fun getResponses ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/CreateContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/CreateContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/CreateContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -525,7 +525,7 @@ public final class me/proton/core/contact/data/api/response/DeleteContactRespons
 	public final fun getError ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/DeleteContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -556,7 +556,7 @@ public final class me/proton/core/contact/data/api/response/DeleteContactRespons
 	public final fun getResponse ()Lme/proton/core/contact/data/api/response/DeleteContactResponse;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactResponseWrapper;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/DeleteContactResponseWrapper$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -585,7 +585,7 @@ public final class me/proton/core/contact/data/api/response/DeleteContactsRespon
 	public final fun getResponses ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/DeleteContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/DeleteContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -616,7 +616,7 @@ public final class me/proton/core/contact/data/api/response/GetContactEmailsResp
 	public final fun getTotal ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/GetContactEmailsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/GetContactEmailsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -647,7 +647,7 @@ public final class me/proton/core/contact/data/api/response/GetContactResponse {
 	public final fun getContactWithCards ()Lme/proton/core/contact/data/api/resource/ContactWithCardsResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/GetContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/GetContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/GetContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -678,7 +678,7 @@ public final class me/proton/core/contact/data/api/response/GetContactsResponse 
 	public final fun getTotal ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/GetContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/GetContactsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/GetContactsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -709,7 +709,7 @@ public final class me/proton/core/contact/data/api/response/MutateContactRespons
 	public final fun getContact ()Lme/proton/core/contact/data/api/resource/ContactResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/contact/data/api/response/MutateContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/contact/data/api/response/MutateContactResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/contact/data/api/response/MutateContactResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

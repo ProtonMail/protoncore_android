@@ -378,7 +378,7 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 	public final fun getType ()Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Type;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -430,7 +430,7 @@ public final class me/proton/core/humanverification/presentation/ui/hv3/HV3Respo
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/humanverification/presentation/ui/hv3/HV3ResponseMessage$Payload$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

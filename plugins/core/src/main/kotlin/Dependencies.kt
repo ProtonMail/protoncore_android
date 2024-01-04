@@ -23,6 +23,8 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 // region AndroidX
+public val DependencyHandler.`androidx-browser`: Any
+    get() = androidx("browser", "browser") version `androidx-browser version`
 public val DependencyHandler.`androidx-core`: Any
     get() = androidx("core") version `androidx-core version`
 public val DependencyHandler.`core-splashscreen`: Any
@@ -46,9 +48,9 @@ public fun DependencyHandler.compose(
 ): Any = androidx("compose.$module", module, moduleSuffix, version = version)
 
 public val DependencyHandler.`compose-animation`: Any
-    get() = compose("animation")
+    get() = compose("animation", version = `composeAnimation version`)
 public val DependencyHandler.`compose-animation-core`: Any
-    get() = compose("animation", moduleSuffix = "core")
+    get() = compose("animation", moduleSuffix = "core", version = `composeAnimation version`)
 public val DependencyHandler.`compose-compiler`: Any
     get() = compose("compiler")
 public val DependencyHandler.`compose-foundation`: Any
@@ -62,25 +64,25 @@ public val DependencyHandler.`compose-material-icons-core`: Any
 public val DependencyHandler.`compose-material3`: Any
     get() = compose("material3", version = `material3 version`)
 public val DependencyHandler.`compose-runtime`: Any
-    get() = compose("runtime")
+    get() = compose("runtime", version = `composeRuntime version`)
 public val DependencyHandler.`compose-ui`: Any
-    get() = compose("ui")
+    get() = compose("ui", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-graphics`: Any
-    get() = compose("ui", moduleSuffix = "graphics")
+    get() = compose("ui", moduleSuffix = "graphics", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-tooling`: Any
-    get() = compose("ui", "tooling")
+    get() = compose("ui", "tooling", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-tooling-preview`: Any
-    get() = compose("ui", "tooling-preview")
+    get() = compose("ui", "tooling-preview", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-test`: Any
-    get() = compose("ui", "test")
+    get() = compose("ui", "test", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-text`: Any
-    get() = compose("ui", "text")
+    get() = compose("ui", "text", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-test-junit`: Any
-    get() = compose("ui", "test-junit4")
+    get() = compose("ui", "test-junit4", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-test-manifest`: Any
-    get() = compose("ui", "test-manifest")
+    get() = compose("ui", "test-manifest", version = `composeUi version`)
 public val DependencyHandler.`compose-ui-unit`: Any
-    get() = compose("ui", "unit")
+    get() = compose("ui", "unit", version = `composeUi version`)
 // endregion
 
 // Network

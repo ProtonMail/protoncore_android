@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("me.proton.core.gradle-plugins.global-coverage")
-}
+package me.proton.core.auth.domain.usecase
 
-publishOption.shouldBePublishedAsLib = false
-
-// Global minimum coverage percentage.
-protonCoverage {
-    branchCoveragePercentage.set(35)
-    lineCoveragePercentage.set(60)
+/** Checks if SSO Custom Tab is enabled. */
+fun interface IsSsoCustomTabEnabled {
+    operator fun invoke(): Boolean
 }

@@ -48,7 +48,7 @@ public abstract class me/proton/core/eventmanager/domain/EventManagerConfig : me
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public abstract fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
 	public abstract fun getUserId ()Lme/proton/core/domain/entity/UserId;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Calendar : me/proton/core/eventmanager/domain/EventManagerConfig {
@@ -69,7 +69,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Calenda
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Calendar;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Calendar;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Calendar$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -104,7 +104,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Core : 
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Core;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Core;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Core$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -127,7 +127,7 @@ public abstract class me/proton/core/eventmanager/domain/EventManagerConfig$Driv
 	public synthetic fun <init> (ILme/proton/core/eventmanager/domain/EventListener$Type;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public abstract fun getEndpoint ()Ljava/lang/String;
 	public fun getListenerType ()Lme/proton/core/eventmanager/domain/EventListener$Type;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Companion {
@@ -149,7 +149,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$S
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Share$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -182,7 +182,7 @@ public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$V
 	public final fun getVolumeId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/eventmanager/domain/EventManagerConfig$Drive$Volume$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

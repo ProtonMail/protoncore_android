@@ -22,6 +22,7 @@ import me.proton.core.presentation.databinding.ProtonWebviewActivityBinding
 import me.proton.core.presentation.ui.webview.ProtonWebViewClient
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
+import java.io.ByteArrayInputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -82,9 +83,12 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
 
     private fun shouldInterceptRequest(request: WebResourceRequest): WebResourceResponse? {
         val url = request.url.toString()
-        successUrlRegex?.takeIf { url.contains(it) }?.let { onSuccess(url) }
-        errorUrlRegex?.takeIf { url.contains(it) }?.let { onError(url) }
-        return null
+        var match = 0
+        successUrlRegex?.takeIf { url.contains(it) }?.let { onSuccess(url); match++ }
+        errorUrlRegex?.takeIf { url.contains(it) }?.let { onError(url); match++ }
+        return if (match > 0)
+            WebResourceResponse("", "", ByteArrayInputStream(byteArrayOf()))
+        else null
     }
 
     private fun onPageLoadSuccess() = Unit

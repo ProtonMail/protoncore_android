@@ -1525,6 +1525,7 @@ public final class me/proton/core/auth/presentation/ui/LoginSsoActivity : me/pro
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginSsoActivity$Companion;
 	public field baseApiUrl Lokhttp3/HttpUrl;
 	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
+	public field isSsoCustomTabEnabled Lme/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled;
 	public field networkPrefs Lme/proton/core/network/domain/NetworkPrefs;
 	public field sessionProvider Lme/proton/core/network/domain/session/SessionProvider;
 	public fun <init> ()V
@@ -1532,14 +1533,39 @@ public final class me/proton/core/auth/presentation/ui/LoginSsoActivity : me/pro
 	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
 	public final fun getNetworkPrefs ()Lme/proton/core/network/domain/NetworkPrefs;
 	public final fun getSessionProvider ()Lme/proton/core/network/domain/session/SessionProvider;
+	public final fun isSsoCustomTabEnabled ()Lme/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled;
 	public final fun setBaseApiUrl (Lokhttp3/HttpUrl;)V
 	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
 	public final fun setNetworkPrefs (Lme/proton/core/network/domain/NetworkPrefs;)V
 	public final fun setSessionProvider (Lme/proton/core/network/domain/session/SessionProvider;)V
+	public final fun setSsoCustomTabEnabled (Lme/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled;)V
 	public fun showLoading (Z)V
 }
 
 public final class me/proton/core/auth/presentation/ui/LoginSsoActivity$Companion {
+}
+
+public final class me/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract : androidx/activity/result/contract/ActivityResultContract {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract;
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lme/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract$Input;)Landroid/content/Intent;
+	public fun parseResult (ILandroid/content/Intent;)Ljava/lang/Boolean;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract$Input {
+	public fun <init> (Ljava/lang/String;Landroid/os/Bundle;Landroidx/browser/customtabs/CustomTabsSession;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Landroid/os/Bundle;
+	public final fun component3 ()Landroidx/browser/customtabs/CustomTabsSession;
+	public final fun copy (Ljava/lang/String;Landroid/os/Bundle;Landroidx/browser/customtabs/CustomTabsSession;)Lme/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract$Input;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract$Input;Ljava/lang/String;Landroid/os/Bundle;Landroidx/browser/customtabs/CustomTabsSession;ILjava/lang/Object;)Lme/proton/core/auth/presentation/ui/LoginSsoActivity$CustomTabResultContract$Input;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getHeaders ()Landroid/os/Bundle;
+	public final fun getSession ()Landroidx/browser/customtabs/CustomTabsSession;
+	public final fun getUrl ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/LoginSsoActivity_GeneratedInjector {
@@ -1547,10 +1573,11 @@ public abstract interface class me/proton/core/auth/presentation/ui/LoginSsoActi
 }
 
 public final class me/proton/core/auth/presentation/ui/LoginSsoActivity_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
 	public static fun injectBaseApiUrl (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lokhttp3/HttpUrl;)V
 	public static fun injectExtraHeaderProvider (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public static fun injectIsSsoCustomTabEnabled (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;)V
 	public static fun injectNetworkPrefs (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/network/domain/NetworkPrefs;)V
@@ -2199,7 +2226,7 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel 
 	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onIdentityProviderCancel ()V
 	public final fun onIdentityProviderError ()V
-	public final fun onIdentityProviderPageLoad (Lme/proton/core/presentation/ui/ProtonWebViewActivity$Result;)V
+	public final fun onIdentityProviderPageLoad (Ljava/lang/Integer;)V
 	public final fun onIdentityProviderStarted ()V
 	public final fun onIdentityProviderSuccess (Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -2239,7 +2266,16 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing;
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$Processing;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCancellable ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State$SignInWithSrp : me/proton/core/auth/presentation/viewmodel/LoginSsoViewModel$State {

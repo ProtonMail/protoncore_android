@@ -21,7 +21,7 @@ public final class me/proton/core/user/data/UserAddressEvent {
 	public final fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/UserAddressEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/UserAddressEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/UserAddressEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -72,7 +72,7 @@ public final class me/proton/core/user/data/UserAddressEvents {
 	public final fun getAddresses ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/UserAddressEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/UserAddressEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/UserAddressEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -174,7 +174,7 @@ public final class me/proton/core/user/data/UserEvents {
 	public final fun getUser ()Lme/proton/core/key/data/api/response/UserResponse;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/UserEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/UserEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/UserEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -231,7 +231,7 @@ public final class me/proton/core/user/data/UserSpaceEvent {
 	public final fun getUsedSpace ()Ljava/lang/Long;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/UserSpaceEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/UserSpaceEvent;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/UserSpaceEvent$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -308,7 +308,7 @@ public final class me/proton/core/user/data/api/request/ChallengeFrameType {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/ChallengeFrameType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/ChallengeFrameType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/ChallengeFrameType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -339,7 +339,7 @@ public final class me/proton/core/user/data/api/request/CreateAddressRequest {
 	public final fun getDomain ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/CreateAddressRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/CreateAddressRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/CreateAddressRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -377,7 +377,7 @@ public final class me/proton/core/user/data/api/request/CreateExternalUserReques
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/CreateExternalUserRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/CreateExternalUserRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -420,7 +420,7 @@ public final class me/proton/core/user/data/api/request/CreateUserRequest {
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/CreateUserRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/CreateUserRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/CreateUserRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -456,7 +456,7 @@ public final class me/proton/core/user/data/api/request/UnlockPasswordRequest {
 	public final fun getTwoFactorCode ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/UnlockPasswordRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -489,7 +489,7 @@ public final class me/proton/core/user/data/api/request/UnlockRequest {
 	public final fun getSrpSession ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/UnlockRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/UnlockRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/UnlockRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -522,7 +522,7 @@ public final class me/proton/core/user/data/api/request/UpdateAddressRequest {
 	public final fun getSignature ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/UpdateAddressRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/UpdateAddressRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/UpdateAddressRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -551,7 +551,7 @@ public final class me/proton/core/user/data/api/request/UpdateOrderRequest {
 	public final fun getIds ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/request/UpdateOrderRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/request/UpdateOrderRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/request/UpdateOrderRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -580,7 +580,7 @@ public final class me/proton/core/user/data/api/response/AvailableDomainsRespons
 	public final fun getDomains ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/response/AvailableDomainsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/response/AvailableDomainsResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/response/AvailableDomainsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -609,7 +609,7 @@ public final class me/proton/core/user/data/api/response/CreateAddressResponse {
 	public final fun getAddress ()Lme/proton/core/key/data/api/response/AddressResponse;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/user/data/api/response/CreateAddressResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/user/data/api/response/CreateAddressResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/user/data/api/response/CreateAddressResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

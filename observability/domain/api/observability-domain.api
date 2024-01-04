@@ -88,7 +88,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -134,7 +134,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoveryCa
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryCancellationTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -168,7 +168,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoverySc
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -197,7 +197,7 @@ public final class me/proton/core/observability/domain/metrics/AccountRecoverySc
 	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$ScreenId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/AccountRecoveryScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -241,7 +241,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutBillingSu
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -272,7 +272,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutBillingSu
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutBillingSubscribeTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -314,7 +314,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutCardBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingCreatePaymentTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -348,7 +348,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutCardBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutCardBillingValidatePlanTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -383,7 +383,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -430,7 +430,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicPlansTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -469,7 +469,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -516,7 +516,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetDynami
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetDynamicSubscriptionTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -554,7 +554,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -600,7 +600,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscr
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGetSubscriptionTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -638,7 +638,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingAcknowledgeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -673,7 +673,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingCreatePaymentTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -707,7 +707,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingLaunchBillingTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -741,7 +741,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingProductQueryTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -775,7 +775,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -804,7 +804,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -864,7 +864,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingQuerySubscriptionsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -898,7 +898,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingUnredeemedTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -932,7 +932,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutGiapBillingValidatePlanTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -967,7 +967,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsCreatePaymentTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1001,7 +1001,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsGetPaymentMethodsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1035,7 +1035,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsSubscribeTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1069,7 +1069,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMe
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutPaymentMethodsValidatePlanTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1103,7 +1103,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1132,7 +1132,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$ScreenId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1166,7 +1166,7 @@ public abstract class me/proton/core/observability/domain/metrics/CoreObservabil
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CoreObservabilityData$Companion;
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun getDataSerializer ()Lkotlinx/serialization/SerializationStrategy;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/CoreObservabilityData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/CoreObservabilityData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/CoreObservabilityData$Companion {
@@ -1189,7 +1189,7 @@ public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal :
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1220,7 +1220,7 @@ public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$L
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/HvPageLoadTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1274,7 +1274,7 @@ public final class me/proton/core/observability/domain/metrics/HvResultTotal : m
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/HvResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1303,7 +1303,7 @@ public final class me/proton/core/observability/domain/metrics/HvResultTotal$Lab
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/HvResultTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/HvResultTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/HvResultTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1345,7 +1345,7 @@ public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1374,7 +1374,7 @@ public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal
 	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$ScreenId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/HvScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1415,7 +1415,7 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1461,7 +1461,7 @@ public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoT
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginAuthWithSsoTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1496,7 +1496,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchD
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaFetchDomainsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1530,7 +1530,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlock
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaUnlockUserTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1564,7 +1564,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCh
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserCheckTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1599,7 +1599,7 @@ public final class me/proton/core/observability/domain/metrics/LoginEaToIaUserna
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginEaToIaUsernameAvailabilityTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1634,7 +1634,7 @@ public final class me/proton/core/observability/domain/metrics/LoginObtainSsoCha
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1680,7 +1680,7 @@ public final class me/proton/core/observability/domain/metrics/LoginObtainSsoCha
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginObtainSsoChallengeTokenTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1714,7 +1714,7 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1743,7 +1743,7 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1785,7 +1785,7 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1814,7 +1814,7 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1858,7 +1858,7 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1887,7 +1887,7 @@ public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityP
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$Status;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderResultTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1944,7 +1944,7 @@ public final class me/proton/core/observability/domain/metrics/SessionForcedLogo
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SessionForcedLogoutTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -1978,7 +1978,7 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenOpportunisticTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2012,7 +2012,7 @@ public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthT
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SessionGetUnAuthTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2046,7 +2046,7 @@ public final class me/proton/core/observability/domain/metrics/SessionRefreshTok
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2077,7 +2077,7 @@ public final class me/proton/core/observability/domain/metrics/SessionRefreshTok
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SessionRefreshTokenTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2119,7 +2119,7 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2172,7 +2172,7 @@ public final class me/proton/core/observability/domain/metrics/SignupAccountCrea
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupAccountCreationTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2207,7 +2207,7 @@ public final class me/proton/core/observability/domain/metrics/SignupEmailAvaila
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupEmailAvailabilityTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2242,7 +2242,7 @@ public final class me/proton/core/observability/domain/metrics/SignupFetchDomain
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupFetchDomainsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupFetchDomainsTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupFetchDomainsTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2277,7 +2277,7 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal 
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupLoginTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupLoginTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2336,7 +2336,7 @@ public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/SignupLoginTotal$ApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupLoginTotal$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2370,7 +2370,7 @@ public final class me/proton/core/observability/domain/metrics/SignupScreenViewT
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2399,7 +2399,7 @@ public final class me/proton/core/observability/domain/metrics/SignupScreenViewT
 	public final fun getScreen_id ()Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$ScreenId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupScreenViewTotalV1$LabelsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2444,7 +2444,7 @@ public final class me/proton/core/observability/domain/metrics/SignupUnlockUserT
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupUnlockUserTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2478,7 +2478,7 @@ public final class me/proton/core/observability/domain/metrics/SignupUserCheckTo
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupUserCheckTotalV1;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupUserCheckTotalV1$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2513,7 +2513,7 @@ public final class me/proton/core/observability/domain/metrics/SignupUsernameAva
 	public fun getValue ()J
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/SignupUsernameAvailabilityTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2554,7 +2554,7 @@ public final class me/proton/core/observability/domain/metrics/common/CreatePaym
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/CreatePaymentTokenLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/CreatePaymentTokenLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2601,7 +2601,7 @@ public final class me/proton/core/observability/domain/metrics/common/EmptyStatu
 	public static final field Companion Lme/proton/core/observability/domain/metrics/common/EmptyStatusLabels$Companion;
 	public fun <init> ()V
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/EmptyStatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/EmptyStatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/EmptyStatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2630,7 +2630,7 @@ public final class me/proton/core/observability/domain/metrics/common/GiapLabels
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/GiapLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/GiapLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/GiapLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2701,7 +2701,7 @@ public final class me/proton/core/observability/domain/metrics/common/HttpStatus
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/HttpApiStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/HttpStatusLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/HttpStatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2730,7 +2730,7 @@ public final class me/proton/core/observability/domain/metrics/common/UnlockUser
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/UnlockUserStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/UnlockUserLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/UnlockUserLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/UnlockUserLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2769,7 +2769,7 @@ public final class me/proton/core/observability/domain/metrics/common/UserCheckL
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/UserCheckStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/UserCheckLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/UserCheckLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/UserCheckLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -2805,7 +2805,7 @@ public final class me/proton/core/observability/domain/metrics/common/UsernameAv
 	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/observability/domain/metrics/common/UsernameAvailabilityLabels;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/observability/domain/metrics/common/UsernameAvailabilityLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

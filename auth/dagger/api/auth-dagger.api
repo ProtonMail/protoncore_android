@@ -11,6 +11,7 @@ public final class me/proton/core/auth/dagger/BuildConfig {
 
 public abstract interface class me/proton/core/auth/dagger/CoreAuthModule {
 	public static final field Companion Lme/proton/core/auth/dagger/CoreAuthModule$Companion;
+	public abstract fun provideIsSsoCustomTabEnabled (Lme/proton/core/auth/data/usecase/IsSsoCustomTabEnabledImpl;)Lme/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled;
 	public abstract fun provideIsSsoEnabled (Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;)Lme/proton/core/auth/domain/usecase/IsSsoEnabled;
 	public abstract fun provideMissingScopeListener (Lme/proton/core/auth/data/MissingScopeListenerImpl;)Lme/proton/core/network/domain/scopes/MissingScopeListener;
 }

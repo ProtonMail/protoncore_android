@@ -34,7 +34,7 @@ public final class me/proton/core/mailmessage/data/api/request/EmailMessage {
 	public final fun getTo ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailMessage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/EmailMessage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -61,7 +61,7 @@ public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Addr
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailMessage$Address;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailMessage$Address;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Address$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -94,7 +94,7 @@ public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Atta
 	public final fun getMimeType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailMessage$Attachment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailMessage$Attachment;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/EmailMessage$Attachment$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -138,7 +138,7 @@ public final class me/proton/core/mailmessage/data/api/request/EmailPackage {
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailPackage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailPackage;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/EmailPackage$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -170,7 +170,7 @@ public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Addr
 	public final fun getType ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailPackage$Address;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailPackage$Address;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Address$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -205,7 +205,7 @@ public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Key 
 	public final fun getKey ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailPackage$Key;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/EmailPackage$Key;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/EmailPackage$Key$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -241,7 +241,7 @@ public final class me/proton/core/mailmessage/data/api/request/SendDirectRequest
 	public final fun getPackages ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/request/SendDirectRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/request/SendDirectRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/request/SendDirectRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -270,7 +270,7 @@ public final class me/proton/core/mailmessage/data/api/response/SendDirectRespon
 	public final fun getDeliveryTime ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/mailmessage/data/api/response/SendDirectResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/mailmessage/data/api/response/SendDirectResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/mailmessage/data/api/response/SendDirectResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

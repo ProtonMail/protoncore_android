@@ -18,15 +18,31 @@
 
 package me.proton.core.auth.presentation.ui
 
+import android.app.Activity
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Browser
+import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
+import androidx.browser.customtabs.CustomTabsCallback
+import androidx.browser.customtabs.CustomTabsClient
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_OFF
+import androidx.browser.customtabs.CustomTabsServiceConnection
+import androidx.browser.customtabs.CustomTabsSession
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
+import androidx.core.util.Consumer
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginSsoBinding
@@ -39,8 +55,8 @@ import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
+import me.proton.core.presentation.ui.ProtonWebViewActivity
 import me.proton.core.presentation.ui.ProtonWebViewActivity.Companion.ResultContract
-import me.proton.core.presentation.ui.ProtonWebViewActivity.Input
 import me.proton.core.presentation.ui.ProtonWebViewActivity.Result
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -60,6 +76,9 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     lateinit var baseApiUrl: HttpUrl
 
     @Inject
+    lateinit var isSsoCustomTabEnabled: IsSsoCustomTabEnabled
+
+    @Inject
     lateinit var networkPrefs: NetworkPrefs
 
     @Inject
@@ -74,11 +93,12 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
         intent?.extras?.getParcelable(ARG_INPUT)
     }
 
+    // Handling result from WebView.
     private val webViewResultLauncher = registerForActivityResult(ResultContract) { result ->
         when (result) {
             null -> viewModel.onIdentityProviderCancel()
             else -> {
-                viewModel.onIdentityProviderPageLoad(result)
+                viewModel.onIdentityProviderPageLoad(result.pageLoadErrorCode)
                 when (result) {
                     is Result.Cancel -> viewModel.onIdentityProviderCancel()
                     is Result.Error -> viewModel.onIdentityProviderError()
@@ -91,8 +111,55 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
         }
     }
 
+    // Handling result from CustomTabs.
+    private val customTabResultLauncher =
+        registerForActivityResult(CustomTabResultContract) { result ->
+            when (result) {
+                false -> viewModel.onIdentityProviderCancel()
+                else -> Unit
+            }
+        }
+
+    private var onNewIntentCallback: Consumer<Intent> = Consumer<Intent> { intent ->
+        val email = binding.emailInput.text.toString()
+        val url = intent?.data
+        viewModel.onIdentityProviderSuccess(email, url?.toString().orEmpty())
+    }
+    private var customTabClient: CustomTabsClient? = null
+    private var customTabSession: CustomTabsSession? = null
+    private var callback: CustomTabsCallback = object : CustomTabsCallback() {
+        override fun onNavigationEvent(navigationEvent: Int, extras: Bundle?) {
+            when (navigationEvent) {
+                NAVIGATION_ABORTED -> viewModel.onIdentityProviderCancel()
+                NAVIGATION_FAILED -> viewModel.onIdentityProviderError()
+                NAVIGATION_FINISHED -> viewModel.onIdentityProviderPageLoad(null)
+            }
+        }
+    }
+
+    private val connection: CustomTabsServiceConnection = object : CustomTabsServiceConnection() {
+        override fun onCustomTabsServiceConnected(name: ComponentName, client: CustomTabsClient) {
+            customTabClient = client
+            customTabClient?.warmup(0)
+            customTabSession = client.newSession(callback)
+        }
+
+        override fun onServiceDisconnected(name: ComponentName?) {
+            customTabClient = null
+            customTabSession = null
+        }
+    }
+
+    private fun bindCustomTabService(context: Context) {
+        if (customTabClient != null) return
+        val packageName: String = CustomTabsClient.getPackageName(context, null) ?: return
+        CustomTabsClient.bindCustomTabsService(context, packageName, connection)
+        addOnNewIntentListener(onNewIntentCallback)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        bindCustomTabService(this)
         binding.apply {
             setActionBarAuthMenu(toolbar)
             toolbar.setNavigationOnClickListener { finish() }
@@ -155,22 +222,33 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     private fun onStartToken(state: LoginSsoViewModel.State.StartToken) = lifecycleScope.launch {
         val sessionId = requireNotNull(sessionProvider.getSessionId(userId = null))
         val session = requireNotNull(sessionProvider.getSession(sessionId))
-        val extraHeaders = mapOf(
-            UID_HEADER to session.sessionId.id,
-            AUTH_HEADER to "$BEARER_HEADER ${session.accessToken}"
-        )
-        val url = "$baseApiUrl$AUTH_SSO_URL${state.token}"
-        webViewResultLauncher.launch(
-            Input(
-                url = url,
-                successUrlRegex = PREFIX_LOGIN_TOKEN,
-                errorUrlRegex = PREFIX_LOGIN_ERROR,
-                extraHeaders = extraHeaders,
-                javaScriptEnabled = true,
-                domStorageEnabled = true,
-                shouldOpenLinkInBrowser = false
+        val scheme = getString(R.string.core_feature_auth_sso_redirect_scheme)
+        val host = baseApiUrl.toUri().host
+        val url = "$baseApiUrl$AUTH_SSO_URL${state.token}?$REDIRECT_BASE_URL=$scheme://$host"
+        val uidHeader = UID_HEADER to session.sessionId.id
+        val authHeader = AUTH_HEADER to "$BEARER_HEADER ${session.accessToken}"
+
+        if (isSsoCustomTabEnabled() && customTabClient != null) {
+            customTabResultLauncher.launch(
+                CustomTabResultContract.Input(
+                    url = url,
+                    headers = bundleOf(uidHeader, authHeader),
+                    session = customTabSession
+                )
             )
-        )
+        } else {
+            webViewResultLauncher.launch(
+                ProtonWebViewActivity.Input(
+                    url = url,
+                    successUrlRegex = PREFIX_LOGIN_TOKEN,
+                    errorUrlRegex = PREFIX_LOGIN_ERROR,
+                    extraHeaders = mapOf(uidHeader, authHeader),
+                    javaScriptEnabled = true,
+                    domStorageEnabled = true,
+                    shouldOpenLinkInBrowser = false
+                )
+            )
+        }
         viewModel.onScreenView(LoginScreenViewTotal.ScreenId.ssoIdentityProvider)
         viewModel.onIdentityProviderStarted()
     }
@@ -187,6 +265,7 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
     companion object {
         private const val UID_HEADER = "x-pm-uid"
         private const val AUTH_SSO_URL = "auth/sso/"
+        private const val REDIRECT_BASE_URL = "FinalRedirectBaseUrl"
         private const val AUTH_HEADER = "Authorization"
         private const val BEARER_HEADER = "Bearer"
         private const val TOKEN = "token"
@@ -194,5 +273,28 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
         private const val PREFIX_LOGIN_ERROR = "login#error"
         const val ARG_INPUT = "arg.loginSsoInput"
         const val ARG_RESULT = "arg.loginSsoResult"
+    }
+
+    object CustomTabResultContract :
+        ActivityResultContract<CustomTabResultContract.Input, Boolean>() {
+        data class Input(val url: String, val headers: Bundle, val session: CustomTabsSession?)
+
+        override fun createIntent(context: Context, input: Input): Intent =
+            CustomTabsIntent.Builder().apply {
+                input.session?.let { setSession(it) }
+                setShowTitle(false)
+                setBookmarksButtonEnabled(false)
+                setDownloadButtonEnabled(false)
+                setUrlBarHidingEnabled(false)
+                setColorScheme(COLOR_SCHEME_DARK)
+                setShareState(SHARE_STATE_OFF)
+            }.build().apply {
+                intent.putExtra(Browser.EXTRA_HEADERS, input.headers)
+                intent.data = input.url.toUri()
+            }.intent
+
+        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+            return resultCode == Activity.RESULT_OK
+        }
     }
 }

@@ -36,7 +36,7 @@ public final class me/proton/core/notification/data/NotificationEvents {
 	public final fun getNotifications ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/notification/data/NotificationEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/notification/data/NotificationEvents;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/data/NotificationEvents$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -147,7 +147,7 @@ public final class me/proton/core/notification/data/remote/response/Notification
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/notification/data/remote/response/NotificationPayloadResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/notification/data/remote/response/NotificationPayloadResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/data/remote/response/NotificationPayloadResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -182,7 +182,7 @@ public final class me/proton/core/notification/data/remote/response/Notification
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/notification/data/remote/response/NotificationResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/notification/data/remote/response/NotificationResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/notification/data/remote/response/NotificationResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

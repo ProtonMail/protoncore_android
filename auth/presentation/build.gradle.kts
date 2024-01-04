@@ -79,6 +79,7 @@ dependencies {
         project(Module.countryPresentation),
         project(Module.kotlinUtil),
         activity,
+        `androidx-browser`,
         `android-ktx`,
         fragment,
         `lifecycle-runtime`,

@@ -127,7 +127,7 @@ public final class me/proton/core/domain/entity/UserId : me/proton/core/domain/e
 	public fun getId ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/domain/entity/UserId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/domain/entity/UserId;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/domain/entity/UserId$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

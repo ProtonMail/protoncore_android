@@ -16,7 +16,7 @@ public final class me/proton/core/country/data/entity/CountriesDataModel {
 	public final fun getCountries ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/country/data/entity/CountriesDataModel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/country/data/entity/CountriesDataModel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/country/data/entity/CountriesDataModel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -49,7 +49,7 @@ public final class me/proton/core/country/data/entity/CountryDataModel {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/country/data/entity/CountryDataModel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/country/data/entity/CountryDataModel;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/country/data/entity/CountryDataModel$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

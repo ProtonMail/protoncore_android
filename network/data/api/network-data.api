@@ -257,7 +257,7 @@ public final class me/proton/core/network/data/protonApi/Details {
 	public final fun getVerificationToken ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/network/data/protonApi/Details;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/network/data/protonApi/Details;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/network/data/protonApi/Details$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -286,7 +286,7 @@ public final class me/proton/core/network/data/protonApi/GenericResponse {
 	public final fun getCode ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/network/data/protonApi/GenericResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/network/data/protonApi/GenericResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/network/data/protonApi/GenericResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -336,7 +336,7 @@ public final class me/proton/core/network/data/protonApi/ProtonErrorData {
 	public final fun getErrorDescription ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/network/data/protonApi/ProtonErrorData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/network/data/protonApi/ProtonErrorData;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/network/data/protonApi/ProtonErrorData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

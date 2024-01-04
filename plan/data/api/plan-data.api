@@ -42,7 +42,7 @@ public final class me/proton/core/plan/data/api/response/DynamicDecorationResour
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Badge;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Badge$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -75,7 +75,7 @@ public final class me/proton/core/plan/data/api/response/DynamicDecorationResour
 	public final fun getIconName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Starred;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Starred$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -104,7 +104,7 @@ public final class me/proton/core/plan/data/api/response/DynamicDecorationResour
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Unknown;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/plan/data/api/response/DynamicDecorationResource$Unknown;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/plan/data/api/response/DynamicDecorationResource$Unknown$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -156,7 +156,7 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Description;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Description$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -194,7 +194,7 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -223,7 +223,7 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Unknown;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Unknown;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Unknown$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

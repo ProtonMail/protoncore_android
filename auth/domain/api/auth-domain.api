@@ -260,6 +260,10 @@ public final class me/proton/core/auth/domain/usecase/GetAuthInfoSso {
 	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {
+	public abstract fun invoke ()Z
+}
+
 public abstract interface class me/proton/core/auth/domain/usecase/IsSsoEnabled {
 	public abstract fun invoke ()Z
 }

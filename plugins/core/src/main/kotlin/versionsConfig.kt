@@ -70,7 +70,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `android-room version` =                    "2.4.3"
 
     `android-test version` =                    "1.5.0"
-    `robolectric version` =                     "4.10.3"
+    `robolectric version` =                     "4.11.1"
     // endregion
 
     // region Others
@@ -86,11 +86,15 @@ internal fun initVersions(libs: VersionCatalog) {
 
 // region Android
 public const val `android-tools version`: String =             "34.0.0"
+public const val `androidx-browser version`: String =          "1.7.0"
 public const val `androidx-core version`: String =             "1.8.0"
 public const val `core-splashscreen version`: String =         "1.0.0"
 public const val `androidx-collection version`: String =       "1.2.0"
-public const val `compose version`: String =                   "1.4.3"
+public const val `compose version`: String =                   "1.4.7"
+public const val `composeRuntime version`: String =            "1.4.3"
 public const val `composeFoundation version`: String =         "1.4.3"
+public const val `composeAnimation version`: String =          "1.4.3"
+public const val `composeUi version`: String =                 "1.4.3"
 public const val `composeMaterial version`: String =           "1.4.3"
 public const val `coordinatorlayout version`: String =         "1.2.0"
 public const val `googlePlayBilling version`: String =         "5.1.0"

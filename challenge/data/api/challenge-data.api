@@ -70,7 +70,7 @@ public abstract class me/proton/core/challenge/data/frame/ChallengeFrame {
 	public abstract fun getTimezone ()Ljava/lang/String;
 	public abstract fun getTimezoneOffset ()I
 	public abstract fun getVersion ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/challenge/data/frame/ChallengeFrame$Companion {
@@ -108,7 +108,7 @@ public final class me/proton/core/challenge/data/frame/ChallengeFrame$Device : m
 	public fun getVersion ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Device;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/challenge/data/frame/ChallengeFrame$Device$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -170,7 +170,7 @@ public final class me/proton/core/challenge/data/frame/ChallengeFrame$Recovery :
 	public fun getVersion ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Recovery;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/challenge/data/frame/ChallengeFrame$Recovery$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -232,7 +232,7 @@ public final class me/proton/core/challenge/data/frame/ChallengeFrame$Username :
 	public fun getVersion ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/challenge/data/frame/ChallengeFrame$Username;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/challenge/data/frame/ChallengeFrame$Username$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -262,7 +262,7 @@ public final class me/proton/core/challenge/data/frame/FrameType {
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/challenge/data/frame/FrameType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/challenge/data/frame/FrameType;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/challenge/data/frame/FrameType$$serializer : kotlinx/serialization/internal/GeneratedSerializer {

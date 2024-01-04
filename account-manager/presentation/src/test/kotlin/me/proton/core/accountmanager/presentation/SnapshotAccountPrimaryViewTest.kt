@@ -29,10 +29,12 @@ import me.proton.core.accountmanager.presentation.entity.AccountItem
 import me.proton.core.accountmanager.presentation.view.AccountPrimaryView
 import me.proton.core.accountmanager.presentation.viewmodel.AccountSwitcherViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.Rule
 import org.junit.Test
 
-class SnapshotAccountPrimaryViewTest {
+class SnapshotAccountPrimaryViewTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
     @get:Rule
     val paparazzi = Paparazzi(

@@ -137,7 +137,7 @@ public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlag
 	public fun hashCode ()I
 	public final fun isEnabled ()Z
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/request/PutFeatureFlagBody;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/request/PutFeatureFlagBody;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlagBody$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -168,7 +168,7 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloa
 	public final fun getValue ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashPayloadResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -199,7 +199,7 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashToggle
 	public final fun getVariant ()Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashToggleResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashToggleResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -233,7 +233,7 @@ public final class me/proton/core/featureflag/data/remote/resource/UnleashVarian
 	public final fun getPayload ()Lme/proton/core/featureflag/data/remote/resource/UnleashPayloadResource;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/resource/UnleashVariantResource;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/resource/UnleashVariantResource$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
@@ -264,7 +264,7 @@ public final class me/proton/core/featureflag/data/remote/response/GetUnleashTog
 	public final fun getToggles ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
-	public static final fun write$Self (Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+	public static final synthetic fun write$Self (Lme/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
 }
 
 public final class me/proton/core/featureflag/data/remote/response/GetUnleashTogglesResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
