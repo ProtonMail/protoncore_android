@@ -27,8 +27,6 @@ import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.usecase.ValidateServerProof
-import me.proton.core.crypto.common.pgp.Based64Encoded
-import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore

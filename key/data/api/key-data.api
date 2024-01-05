@@ -692,9 +692,9 @@ public final class me/proton/core/key/data/api/response/SingleSignedKeyListRespo
 
 public final class me/proton/core/key/data/api/response/UserKeyResponse {
 	public static final field Companion Lme/proton/core/key/data/api/response/UserKeyResponse$Companion;
-	public synthetic fun <init> (ILjava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V
-	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/String;
@@ -702,8 +702,10 @@ public final class me/proton/core/key/data/api/response/UserKeyResponse {
 	public final fun component5 ()Ljava/lang/String;
 	public final fun component6 ()I
 	public final fun component7 ()I
-	public final fun copy (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;II)Lme/proton/core/key/data/api/response/UserKeyResponse;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/UserKeyResponse;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IIILjava/lang/Object;)Lme/proton/core/key/data/api/response/UserKeyResponse;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;)Lme/proton/core/key/data/api/response/UserKeyResponse;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/UserKeyResponse;Ljava/lang/String;ILjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/UserKeyResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivation ()Ljava/lang/String;
 	public final fun getActive ()I
@@ -711,6 +713,8 @@ public final class me/proton/core/key/data/api/response/UserKeyResponse {
 	public final fun getId ()Ljava/lang/String;
 	public final fun getPrimary ()I
 	public final fun getPrivateKey ()Ljava/lang/String;
+	public final fun getRecoverySecret ()Ljava/lang/String;
+	public final fun getRecoverySecretSignature ()Ljava/lang/String;
 	public final fun getVersion ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

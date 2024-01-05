@@ -19,8 +19,10 @@
 package me.proton.core.user.data
 
 import androidx.test.platform.app.InstrumentationRegistry
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNot
@@ -77,13 +79,23 @@ import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 @Suppress("OptionalUnit")
-class UserManagerImplTests {
+class
+UserManagerImplTests {
 
-    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var sessionProvider: SessionProvider
 
-    private val userApi = mockk<UserApi>(relaxed = true)
-    private val addressApi = mockk<AddressApi>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var apiManagerFactory: ApiManagerFactory
+
+    @MockK(relaxed = true)
+    private lateinit var userApi: UserApi
+
+    @MockK(relaxed = true)
+    private lateinit var addressApi: AddressApi
+
+    @MockK(relaxed = true)
+    private lateinit var keyStoreCrypto: KeyStoreCrypto
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = object : KeyStoreCrypto {
@@ -116,6 +128,7 @@ class UserManagerImplTests {
 
     @Before
     fun setup() {
+        MockKAnnotations.init(this)
         val context = InstrumentationRegistry.getInstrumentation().context
 
         // Build a new fresh in memory Database, for each test.
@@ -142,6 +155,7 @@ class UserManagerImplTests {
             cryptoContext,
             product,
             validateServerProof,
+            keyStoreCrypto,
             scopeProvider
         )
         passphraseRepository = userRepository

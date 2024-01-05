@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 40,
-    "identityHash": "79aaf0081d466c86a9df5a0c28d83f39",
+    "identityHash": "953c7f46be7c35ab5b22528d953ed1a2",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -481,7 +481,7 @@
       },
       {
         "tableName": "UserKeyEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `keyId` TEXT NOT NULL, `version` INTEGER NOT NULL, `privateKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `isUnlockable` INTEGER NOT NULL, `fingerprint` TEXT, `activation` TEXT, `active` INTEGER, PRIMARY KEY(`keyId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `keyId` TEXT NOT NULL, `version` INTEGER NOT NULL, `privateKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `isUnlockable` INTEGER NOT NULL, `fingerprint` TEXT, `activation` TEXT, `active` INTEGER, `recoverySecret` TEXT, `recoverySecretSignature` TEXT, PRIMARY KEY(`keyId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
         "fields": [
           {
             "fieldPath": "userId",
@@ -535,6 +535,18 @@
             "fieldPath": "active",
             "columnName": "active",
             "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "recoverySecret",
+            "columnName": "recoverySecret",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "recoverySecretSignature",
+            "columnName": "recoverySecretSignature",
+            "affinity": "TEXT",
             "notNull": false
           }
         ],
@@ -2737,7 +2749,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79aaf0081d466c86a9df5a0c28d83f39')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '953c7f46be7c35ab5b22528d953ed1a2')"
     ]
   }
 }

@@ -38,6 +38,7 @@ import me.proton.core.push.data.local.db.PushDatabase
 import me.proton.core.telemetry.data.db.TelemetryDatabase
 import me.proton.core.user.data.db.AddressDatabase
 import me.proton.core.user.data.db.UserDatabase
+import me.proton.core.user.data.db.UserKeyDatabase
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 
@@ -286,6 +287,12 @@ object AccountManagerDatabaseMigrations {
     val MIGRATION_39_40 = object : Migration(39, 40) {
         override fun migrate(database: SupportSQLiteDatabase) {
             UserSettingsDatabase.MIGRATION_5.migrate(database)
+        }
+    }
+
+    val MIGRATION_40_41 = object : Migration(40, 41) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            UserKeyDatabase.MIGRATION_0.migrate(database)
         }
     }
 }

@@ -35,6 +35,7 @@ import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
@@ -75,6 +76,7 @@ class UserRepositoryImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val product: Product,
     private val validateServerProof: ValidateServerProof,
+    private val keyStoreCrypto: KeyStoreCrypto,
     scopeProvider: CoroutineScopeProvider
 ) : UserRepository {
 
@@ -105,10 +107,10 @@ class UserRepositoryImpl @Inject constructor(
         map { key -> key.copy(privateKey = key.privateKey.updateIsActive(cryptoContext, passphrase)) }
 
     private suspend fun getUserLocal(userId: UserId): User? =
-        userWithKeysDao.getByUserId(userId)?.toUser()
+        userWithKeysDao.getByUserId(userId)?.toUser(keyStoreCrypto)
 
     private fun observeUserLocal(userId: UserId): Flow<User?> =
-        userWithKeysDao.observeByUserId(userId).map { user -> user?.toUser() }
+        userWithKeysDao.observeByUserId(userId).map { user -> user?.toUser(keyStoreCrypto) }
 
     private suspend fun insertOrUpdate(user: User): Unit =
         db.inTransaction {
@@ -119,7 +121,7 @@ class UserRepositoryImpl @Inject constructor(
             // Insert in Database.
             userDao.insertOrUpdate(user.toEntity(passphrase))
             userKeyDao.deleteAllByUserId(user.userId)
-            userKeyDao.insertOrUpdate(*userKeys.toEntityList().toTypedArray())
+            userKeyDao.insertOrUpdate(*userKeys.toEntityList(keyStoreCrypto).toTypedArray())
             invalidateMemCache(user.userId)
         }
 

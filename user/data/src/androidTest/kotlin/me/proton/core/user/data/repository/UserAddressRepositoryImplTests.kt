@@ -20,9 +20,11 @@ package me.proton.core.user.data.repository
 
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.runBlocking
@@ -82,11 +84,20 @@ import kotlin.test.assertTrue
 
 class UserAddressRepositoryImplTests {
 
-    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val apiManagerFactory = mockk<ApiManagerFactory>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var sessionProvider: SessionProvider
 
-    private val userApi = mockk<UserApi>(relaxed = true)
-    private val addressApi = mockk<AddressApi>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var apiManagerFactory: ApiManagerFactory
+
+    @MockK(relaxed = true)
+    private lateinit var userApi: UserApi
+
+    @MockK(relaxed = true)
+    private lateinit var addressApi: AddressApi
+
+    @MockK(relaxed = true)
+    private lateinit var keyStoreCrypto: KeyStoreCrypto
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = object : KeyStoreCrypto {
@@ -114,6 +125,7 @@ class UserAddressRepositoryImplTests {
 
     @Before
     fun setup() {
+        MockKAnnotations.init(this)
         val context = InstrumentationRegistry.getInstrumentation().context
 
         // Build a new fresh in memory Database, for each test.
@@ -137,6 +149,7 @@ class UserAddressRepositoryImplTests {
             cryptoContext,
             product,
             validateServerProof,
+            keyStoreCrypto,
             scopeProvider
         )
 

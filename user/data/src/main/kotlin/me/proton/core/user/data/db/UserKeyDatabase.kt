@@ -18,9 +18,30 @@
 
 package me.proton.core.user.data.db
 
+import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
+import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.user.data.db.dao.UserKeyDao
 
 interface UserKeyDatabase : Database {
     fun userKeyDao(): UserKeyDao
+
+    companion object {
+        val MIGRATION_0 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserKeyEntity",
+                    column = "recoverySecret",
+                    type = "TEXT"
+                )
+
+                database.addTableColumn(
+                    table = "UserKeyEntity",
+                    column = "recoverySecretSignature",
+                    type = "TEXT"
+                )
+            }
+        }
+    }
 }

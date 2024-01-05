@@ -313,21 +313,25 @@ public final class me/proton/core/user/domain/entity/UserAddressKt {
 }
 
 public final class me/proton/core/user/domain/entity/UserKey : me/proton/core/key/domain/entity/keyholder/KeyHolderPrivateKey {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;)V
-	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()I
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/Boolean;
-	public final fun component5 ()Lme/proton/core/key/domain/entity/key/KeyId;
-	public final fun component6 ()Lme/proton/core/key/domain/entity/key/PrivateKey;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;)Lme/proton/core/user/domain/entity/UserKey;
-	public static synthetic fun copy$default (Lme/proton/core/user/domain/entity/UserKey;Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;ILjava/lang/Object;)Lme/proton/core/user/domain/entity/UserKey;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Lme/proton/core/key/domain/entity/key/KeyId;
+	public final fun component8 ()Lme/proton/core/key/domain/entity/key/PrivateKey;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;)Lme/proton/core/user/domain/entity/UserKey;
+	public static synthetic fun copy$default (Lme/proton/core/user/domain/entity/UserKey;Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;ILjava/lang/Object;)Lme/proton/core/user/domain/entity/UserKey;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivation ()Ljava/lang/String;
 	public final fun getActive ()Ljava/lang/Boolean;
 	public fun getKeyId ()Lme/proton/core/key/domain/entity/key/KeyId;
 	public fun getPrivateKey ()Lme/proton/core/key/domain/entity/key/PrivateKey;
+	public final fun getRecoverySecret ()Ljava/lang/String;
+	public final fun getRecoverySecretSignature ()Ljava/lang/String;
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getVersion ()I
 	public fun hashCode ()I

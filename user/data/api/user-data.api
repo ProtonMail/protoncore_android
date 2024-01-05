@@ -663,7 +663,12 @@ public final class me/proton/core/user/data/db/UserDatabase$Companion {
 }
 
 public abstract interface class me/proton/core/user/data/db/UserKeyDatabase : me/proton/core/data/room/db/Database {
+	public static final field Companion Lme/proton/core/user/data/db/UserKeyDatabase$Companion;
 	public abstract fun userKeyDao ()Lme/proton/core/user/data/db/dao/UserKeyDao;
+}
+
+public final class me/proton/core/user/data/db/UserKeyDatabase$Companion {
+	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/user/data/db/dao/AddressDao : me/proton/core/data/room/db/BaseDao {
@@ -841,9 +846,11 @@ public final class me/proton/core/user/data/entity/UserEntity {
 }
 
 public final class me/proton/core/user/data/entity/UserKeyEntity {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;)V
-	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component10 ()Ljava/lang/String;
+	public final fun component11 ()Ljava/lang/String;
 	public final fun component2 ()Lme/proton/core/key/domain/entity/key/KeyId;
 	public final fun component3 ()I
 	public final fun component4 ()Ljava/lang/String;
@@ -852,14 +859,16 @@ public final class me/proton/core/user/data/entity/UserKeyEntity {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Ljava/lang/String;
 	public final fun component9 ()Ljava/lang/Boolean;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;)Lme/proton/core/user/data/entity/UserKeyEntity;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/UserKeyEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/user/data/entity/UserKeyEntity;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/entity/UserKeyEntity;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/entity/UserKeyEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/String;ZZLjava/lang/String;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/entity/UserKeyEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivation ()Ljava/lang/String;
 	public final fun getActive ()Ljava/lang/Boolean;
 	public final fun getFingerprint ()Ljava/lang/String;
 	public final fun getKeyId ()Lme/proton/core/key/domain/entity/key/KeyId;
 	public final fun getPrivateKey ()Ljava/lang/String;
+	public final fun getRecoverySecret ()Ljava/lang/String;
+	public final fun getRecoverySecretSignature ()Ljava/lang/String;
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getVersion ()I
 	public fun hashCode ()I
@@ -951,7 +960,7 @@ public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/proton/core/user/domain/repository/UserRepository {
-	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun addOnPassphraseChangedListener (Lme/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener;)V
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun checkExternalEmailAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -971,11 +980,11 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/user/data/repository/UserRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/user/data/repository/UserRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/user/data/repository/UserRepositoryImpl;
 }
 
 public final class me/proton/core/user/data/usecase/GenerateSignedKeyList {

@@ -36,5 +36,9 @@ data class UserKeyResponse(
     @SerialName("Primary")
     val primary: Int,
     @SerialName("Active")
-    val active: Int // Boolean
+    val active: Int, // Boolean
+    @SerialName("RecoverySecret")
+    val recoverySecret: String? = null,
+    @SerialName("RecoverySecretSignature")
+    val recoverySecretSignature: String? = null
 )
