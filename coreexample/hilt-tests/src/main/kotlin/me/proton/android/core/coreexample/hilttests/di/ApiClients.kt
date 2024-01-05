@@ -29,7 +29,7 @@ internal val CalendarApiClient = AndroidTestApiClient(
 internal val DriveApiClient = AndroidTestApiClient(
     appName = "android-drive",
     productName = "ProtonDrive",
-    versionName = "1.0.0"
+    versionName = "2.1.0"
 )
 
 internal val MailApiClient = AndroidTestApiClient(

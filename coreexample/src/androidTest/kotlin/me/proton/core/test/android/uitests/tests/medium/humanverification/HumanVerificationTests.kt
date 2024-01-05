@@ -56,7 +56,7 @@ class HumanVerificationTests : BaseTest() {
 
     @Test
     fun email() {
-        val testAddress = "testEmail@example.lt"
+        val testAddress = "testEmail@proton.wtf"
 
         humanVerificationRobot
             .email()

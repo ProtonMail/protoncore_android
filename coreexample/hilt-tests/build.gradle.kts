@@ -16,12 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import configuration.extensions.protonEnvironment
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
+import java.io.FileNotFoundException
+import java.util.Properties
 
 plugins {
     protonAndroidTest
     protonDagger
+    id("me.proton.core.gradle-plugins.environment-config")
 }
 
 protonDagger {
@@ -45,8 +49,19 @@ android {
 
     flavorDimensions.add("env")
     productFlavors {
-        register("dev") { dimension = "env" }
-        register("localProperties") { dimension = "env" }
+        register("dev") {
+            dimension = "env"
+            protonEnvironment {
+                host = "proton.black"
+            }
+        }
+        register("localProperties") {
+            dimension = "env"
+            protonEnvironment {
+                useProxy = true
+                host = getLocalProperties().getProperty("HOST") ?: "proton.black"
+            }
+        }
         register("mock") { dimension = "env" }
         register("prod") { dimension = "env" }
     }
@@ -64,6 +79,7 @@ dependencies {
 
     implementation(
         `android-work-runtime`,
+        `android-work-testing`,
         fusion,
         `hilt-android-testing`,
         `kotlin-test`,
@@ -111,4 +127,14 @@ dependencies {
         project(Module.keyTransparency),
         project(Module.configurationData)
     )
+}
+
+fun getLocalProperties(): Properties {
+    return Properties().apply {
+        try {
+            load(rootDir.resolve("local.properties").inputStream())
+        } catch (e: FileNotFoundException) {
+            logger.warn("No local.properties found")
+        }
+    }
 }

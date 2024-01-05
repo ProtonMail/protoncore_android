@@ -24,6 +24,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.test.fusion.Fusion.view
 import org.hamcrest.CoreMatchers
+import kotlin.time.Duration.Companion.seconds
 
 /** Corresponds to [me.proton.core.auth.presentation.ui.ChooseAddressActivity]. */
 public object ChooseInternalAddressRobot {
@@ -60,6 +61,13 @@ public object ChooseInternalAddressRobot {
             .withCustomMatcher(ViewMatchers.withText(CoreMatchers.not(CoreMatchers.containsString("protonmail"))))
             .withRootMatcher(isPlatformPopup())
             .click()
+    }
+
+    public fun screenIsDisplayed() {
+        view.withText(R.string.auth_create_address_title)
+            .await(interval = 1.seconds, timeout = 60.seconds) {
+                checkIsDisplayed()
+            }
     }
 
     public fun continueButtonIsEnabled() {

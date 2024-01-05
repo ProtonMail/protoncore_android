@@ -51,6 +51,15 @@ import me.proton.core.notification.presentation.usecase.ShowNotificationViewImpl
 
 @Module
 @InstallIn(SingletonComponent::class)
+public interface CoreNotificationFeaturesModule {
+    @Binds
+    public fun bindIsNotificationsEnabled(
+        impl: IsNotificationsEnabledImpl
+    ): IsNotificationsEnabled
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
 public interface CoreNotificationModule {
     @Binds
     public fun bindCancelNotification(impl: CancelNotificationViewImpl): CancelNotificationView
@@ -64,11 +73,6 @@ public interface CoreNotificationModule {
     public fun bindGetNotificationChannelId(
         impl: GetNotificationChannelIdImpl
     ): GetNotificationChannelId
-
-    @Binds
-    public fun bindIsNotificationsEnabled(
-        impl: IsNotificationsEnabledImpl
-    ): IsNotificationsEnabled
 
     @Binds
     public fun bindIsNotificationsPermissionRequestEnabled(

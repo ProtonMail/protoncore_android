@@ -89,6 +89,9 @@ class ChooseInternalEmailRobot : CoreRobot() {
 
         fun domainInputNotDisplayed() =
             view.withId(R.id.domainInput).checkNotDisplayed()
+
+        fun nextButtonEnabled() =
+            view.withId(R.id.nextButton).checkEnabled()
     }
 
     inline fun verify(block: Verify.() -> Unit) = Verify().apply(block)

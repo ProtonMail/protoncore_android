@@ -20,7 +20,7 @@ package me.proton.android.core.coreexample.hilttests.mocks
 
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 
-class AndroidTestApiClient(
+data class AndroidTestApiClient(
     override val appName: String,
     override val productName: String,
     override val versionName: String,

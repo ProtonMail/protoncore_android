@@ -20,11 +20,11 @@ package me.proton.core.auth.test
 
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
-import kotlinx.coroutines.runBlocking
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.signup.SignupActivity
+import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
@@ -32,11 +32,8 @@ import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseExternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseInternalEmailRobot
 import me.proton.core.test.android.robots.auth.signup.PasswordSetupRobot
-import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.humanverification.HVCodeRobot
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.Plan
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import me.proton.core.test.quark.data.User as TestUser
@@ -56,7 +53,7 @@ public interface BaseExternalAccountSignupTests {
         extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
         testUser = TestUser(
             name = "",
-            email = "${TestUser.randomUsername()}@externaldomain.test",
+            email = "${TestUser.randomUsername()}@proton.wtf",
             isExternal = true
         )
         quark.jailUnban()
@@ -75,15 +72,7 @@ public interface BaseExternalAccountSignupTests {
             .apply { verify { passwordSetupElementsDisplayed() } }
             .setAndConfirmPassword<CoreRobot>(testUser.password)
 
-        val paymentProviders = runBlocking { getAvailablePaymentProviders() }
-        if (paymentProviders.isNotEmpty()) {
-            SelectPlanRobot()
-                .toggleExpandPlan(Plan.Free)
-                .selectPlan<CoreRobot>(Plan.Free)
-        }
-
-        SignupFinishedRobot()
-            .verify { signupFinishedDisplayed() }
+        CongratsRobot.uiElementsDisplayed()
     }
 
     @Test
@@ -102,7 +91,10 @@ public interface BaseExternalAccountSignupTests {
     public fun externalSignupNotSupported(): Unit = withSignupActivity(AccountType.Internal) {
         ChooseInternalEmailRobot()
             .apply {
-                verify { domainInputDisplayed() }
+                verify {
+                    domainInputDisplayed()
+                    nextButtonEnabled()
+                }
             }
             .username(testUser.email)
             .next()

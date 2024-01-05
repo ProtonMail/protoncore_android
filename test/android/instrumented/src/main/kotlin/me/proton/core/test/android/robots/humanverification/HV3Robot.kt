@@ -80,7 +80,7 @@ internal class HV3Robot : BaseHVRobot(), WithUiDevice {
 
 internal class HV3CaptchaRobot : BaseHVCaptchaRobot(), WithUiDevice {
     override fun <T> iAmHuman(next: Class<T>): T {
-        findObject(By.text("I am human")).waitForIt().click()
+        findObject(By.text("Next")).waitForIt().click()
         return next.newInstance()
     }
 
@@ -90,7 +90,7 @@ internal class HV3CaptchaRobot : BaseHVCaptchaRobot(), WithUiDevice {
 
     private class Verify : BaseHVCaptchaRobot.Verify, CoreVerify(), WithUiDevice {
         override fun captchaDisplayed() {
-            hasObject(By.text("I am human")).waitForIt()
+            hasObject(By.text("Next")).waitForIt()
         }
     }
 }

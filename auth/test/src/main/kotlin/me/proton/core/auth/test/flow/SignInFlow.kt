@@ -67,6 +67,7 @@ public object SignInFlow {
 
         ChooseInternalAddressRobot
             .apply {
+                screenIsDisplayed()
                 domainInputDisplayed()
                 usernameInputIsFilled(username)
                 continueButtonIsEnabled()

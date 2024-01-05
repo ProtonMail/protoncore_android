@@ -194,6 +194,7 @@ public final class me/proton/core/auth/test/robot/signup/ChooseInternalAddressRo
 	public final fun domainInputDisplayed ()V
 	public final fun fillUsername (Ljava/lang/String;)Lme/proton/core/auth/test/robot/signup/ChooseInternalAddressRobot;
 	public final fun next ()V
+	public final fun screenIsDisplayed ()V
 	public final fun selectAlternativeDomain ()Lme/proton/core/auth/test/robot/signup/ChooseInternalAddressRobot;
 	public final fun selectPrimaryDomain ()Lme/proton/core/auth/test/robot/signup/ChooseInternalAddressRobot;
 	public final fun usernameInputIsEmpty ()V

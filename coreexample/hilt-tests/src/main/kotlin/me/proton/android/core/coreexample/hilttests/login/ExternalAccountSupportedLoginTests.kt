@@ -98,7 +98,7 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
     fun loginWithExternalAccountNoKeys() {
         val testUser = TestUser(
             name = "",
-            email = "${TestUser.randomUsername()}@externaldomain.test",
+            email = "${TestUser.randomUsername()}@proton.wtf",
             isExternal = true
         )
         quark.userCreate(testUser, CreateAddress.NoKey)
@@ -122,7 +122,7 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
             isExternal = false,
             passphrase = mailboxPass
         )
-        val email = "${testUser.name}@externaldomain.test"
+        val email = "${testUser.name}@proton.wtf"
         val createUserResponse = quark.userCreate(
             testUser,
             createAddress = CreateAddress.WithKey()
@@ -152,7 +152,7 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
         // Then add an external address, but without address key (`GenKeysOption.None`).
 
         val username = TestUser.randomUsername()
-        val email = "$username@externaldomain.test"
+        val email = "$username@proton.wtf"
         val testUser = TestUser(
             name = username,
             isExternal = false
@@ -188,8 +188,8 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
 
         val username1 = TestUser.randomUsername()
         val username2 = TestUser.randomUsername()
-        val email1 = "$username1@externaldomain.test"
-        val email2 = "$username2@externaldomain.test"
+        val email1 = "$username1@proton.wtf"
+        val email2 = "$username2@proton.wtf"
         val testUser = TestUser(
             name = TestUser.randomUsername(),
             isExternal = false
@@ -230,7 +230,7 @@ class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, 
         // Then add an external address, with address key (`GenKeysOption.Curve25519`).
 
         val username = TestUser.randomUsername()
-        val email = "$username@externaldomain.test"
+        val email = "$username@proton.wtf"
         val testUser = TestUser(
             name = username,
             isExternal = false

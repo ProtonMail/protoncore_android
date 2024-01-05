@@ -35,7 +35,7 @@ class RecoveryEmailTests : BaseTest() {
     private val recoveryEmailRobot = RecoveryEmailRobot()
 
     companion object {
-        val user: User = quark.userCreate(User(recoveryEmail = "recovery@example.lt")).first
+        val user: User = quark.userCreate(User(recoveryEmail = "recovery@proton.wtf")).first
     }
 
     @Before

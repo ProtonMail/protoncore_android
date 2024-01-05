@@ -29,14 +29,18 @@ import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepositor
 
 @Module
 @InstallIn(SingletonComponent::class)
+public interface CoreAccountRecoveryFeaturesModule {
+    @Binds
+    public fun bindIsAccountRecoveryEnabled(
+        impl: IsAccountRecoveryEnabledImpl
+    ): IsAccountRecoveryEnabled
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
 public interface CoreAccountRecoveryModule {
     @Binds
     public fun bindAccountRecoveryRepository(
         impl: AccountRecoveryRepositoryImpl
     ): AccountRecoveryRepository
-
-    @Binds
-    public fun bindIsAccountRecoveryEnabled(
-        impl: IsAccountRecoveryEnabledImpl
-    ): IsAccountRecoveryEnabled
 }

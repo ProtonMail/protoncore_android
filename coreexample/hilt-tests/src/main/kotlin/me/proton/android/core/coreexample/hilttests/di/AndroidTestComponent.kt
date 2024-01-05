@@ -18,14 +18,23 @@
 
 package me.proton.android.core.coreexample.hilttests.di
 
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.test.core.app.ApplicationProvider
+import androidx.work.Configuration
 import androidx.work.WorkManager
+import androidx.work.testing.SynchronousExecutor
+import androidx.work.testing.WorkManagerTestInitHelper
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import io.mockk.mockk
 import me.proton.android.core.coreexample.di.WorkManagerModule
+import me.proton.core.accountrecovery.dagger.CoreAccountRecoveryFeaturesModule
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.notification.dagger.CoreNotificationFeaturesModule
+import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.v2.QuarkCommand
 import okhttp3.OkHttpClient
@@ -36,13 +45,34 @@ import kotlin.time.toJavaDuration
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [WorkManagerModule::class]
+    replaces = [
+        CoreAccountRecoveryFeaturesModule::class,
+        CoreNotificationFeaturesModule::class,
+        WorkManagerModule::class
+    ]
 )
 object AndroidTestComponent {
+    @Provides
+    @Singleton
+    fun provideIsAccountRecoveryEnabled(): IsAccountRecoveryEnabled = mockk(relaxed = true)
 
     @Provides
     @Singleton
-    fun provideWorkManager(): WorkManager = mockk(relaxed = true)
+    fun provideIsNotificationsEnabled(): IsNotificationsEnabled = mockk(relaxed = true)
+
+    @Provides
+    @Singleton
+    fun provideWorkManager(hiltWorkerFactory: HiltWorkerFactory): WorkManager {
+        val config = Configuration.Builder()
+            .setWorkerFactory(hiltWorkerFactory)
+            .setExecutor(SynchronousExecutor())
+            .build()
+        WorkManagerTestInitHelper.initializeTestWorkManager(
+            ApplicationProvider.getApplicationContext(),
+            config
+        )
+        return WorkManager.getInstance(ApplicationProvider.getApplicationContext())
+    }
 
     @Provides
     @Singleton
@@ -59,7 +89,9 @@ object AndroidTestComponent {
             .readTimeout(timeout)
             .writeTimeout(timeout)
             .build()
-        return QuarkCommand(quarkClient).baseUrl("https://${envConfig.host}/api/internal")
+        return QuarkCommand(quarkClient)
+            .baseUrl("https://${envConfig.host}/api/internal")
+            .proxyToken(envConfig.proxyToken)
     }
 
     @Provides

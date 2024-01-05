@@ -20,27 +20,28 @@ package me.proton.core.test.android.uitests.tests.large.auth
 
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
-import me.proton.core.test.quark.data.Card
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.quark.data.User
+import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
-import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
+import me.proton.core.test.quark.data.Card
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
 import me.proton.core.util.kotlin.random
 import org.junit.Test
 
 class SignupTests : BaseTest(defaultTimeout = 60_000L) {
     @Test
     fun signupFreeWithCaptchaAndRecoveryEmail() {
-        val user = User(recoveryEmail = "${String.random()}@example.lt")
+        val user = User(recoveryEmail = "${String.random()}@proton.wtf")
         val recoveryMethodsRobot = AddAccountRobot()
             .createAccount()
             .chooseInternalEmail()
+            .apply { verify { nextButtonEnabled() } }
             .setUsername(user.name)
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .email(user.recoveryEmail)
@@ -53,8 +54,12 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
 
         hvRobot
             .captcha()
-            .iAmHuman(SignupFinishedRobot::class.java)
-            .startUsingProton<CoreexampleRobot>()
+            .iAmHuman(CoreexampleRobot::class.java)
+        CongratsRobot.apply {
+            uiElementsDisplayed()
+            clickStart()
+        }
+        CoreexampleRobot()
             .apply { verify { userStateIs(user, Ready, Authenticated) } }
             .settingsRecoveryEmail()
             .verify {
@@ -69,6 +74,7 @@ class SignupTests : BaseTest(defaultTimeout = 60_000L) {
         val skipRecoveryRobot = AddAccountRobot()
             .createAccount()
             .chooseInternalEmail()
+            .apply { verify { nextButtonEnabled() } }
             .setUsername(user.name)
             .setAndConfirmPassword<RecoveryMethodsRobot>(user.password)
             .skip()

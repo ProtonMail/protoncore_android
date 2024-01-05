@@ -55,7 +55,9 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
     lateinit var quark: QuarkCommand
 
     @BindValue
-    val apiClient: CoreExampleApiClient = MailApiClient
+    val apiClient: CoreExampleApiClient = MailApiClient.copy(
+        versionName = "3.0.13" // MinExternalAccountsVersion is '>=3.0.14'
+    )
 
     @BindValue
     val appStore: AppStore = AppStore.GooglePlay
@@ -72,11 +74,10 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
     fun prepare() {
         user = User(
             name = "",
-            email = "${User.randomUsername()}@externaldomain.test",
+            email = "${User.randomUsername()}@proton.wtf",
             isExternal = true
         )
         hiltRule.inject()
-        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "false")
     }
 
     @Test
@@ -88,8 +89,10 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
             .username(user.email)
             .password(user.password)
             .signIn<AddAccountRobot>()
-            .apply { verify { unsupportedExternalAccountAlertDisplayed() } }
-            .learnMoreAboutExternalAccountLinking()
-            .verify { unsupportedExternalAccountBrowserLinkOpened() }
+            .verify {
+                // Note: server may return different error,
+                // depending on `BLOCK_EXTERNAL_SIGNIN` env variable.
+                appVersionTooOldForExternalAccounts()
+            }
     }
 }

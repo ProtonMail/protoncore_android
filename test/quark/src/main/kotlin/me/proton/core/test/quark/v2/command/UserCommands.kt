@@ -28,7 +28,7 @@ import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.Response
 
 public const val USERS_CREATE: String = "quark/raw::user:create"
-public const val USERS_CREATE_ADDRESS: String = "quark/user:create:address"
+public const val USERS_CREATE_ADDRESS: String = "quark/raw::user:create:address"
 public const val USERS_EXPIRE_SESSIONS: String = "quark/raw::user:expire:sessions"
 
 public fun QuarkCommand.userCreate(

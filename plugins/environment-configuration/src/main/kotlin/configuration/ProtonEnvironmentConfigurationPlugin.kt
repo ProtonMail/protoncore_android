@@ -20,7 +20,7 @@ package configuration
 import com.android.build.api.dsl.ApplicationBuildType
 import com.android.build.api.dsl.DefaultConfig
 import com.android.build.api.dsl.ProductFlavor
-import com.android.build.gradle.AppExtension
+import com.android.build.gradle.BaseExtension
 import configuration.extensions.environmentConfiguration
 import configuration.extensions.mergeWith
 import configuration.extensions.printEnvironmentConfigDetails
@@ -48,7 +48,7 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
      * @param project The project for which the configurations are being handled.
      */
     private fun handleConfigurations(project: Project) {
-        project.extensions.getByType(AppExtension::class.java).apply {
+        project.extensions.getByType(BaseExtension::class.java).apply {
             buildTypes.all { buildType ->
                 productFlavors.takeIf { it.isNotEmpty() }?.all { flavor ->
                     project.handleFlavorAndBuildType(defaultConfig, flavor, buildType)
@@ -142,7 +142,7 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
 
         project.logger.info("generated ${environmentConfigFile.path}")
 
-        project.extensions.getByType(AppExtension::class.java).sourceSets
+        project.extensions.getByType(BaseExtension::class.java).sourceSets
             .findByName(variantName)
             ?.java?.apply {
                 // avoid duplicate content roots

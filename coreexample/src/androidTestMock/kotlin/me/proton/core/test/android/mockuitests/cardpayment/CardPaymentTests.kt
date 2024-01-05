@@ -23,6 +23,7 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.ui.AddAccountActivity
+import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.payment.presentation.R
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
@@ -34,13 +35,13 @@ import me.proton.core.test.quark.data.Card
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
-import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.payments.ExistingPaymentMethodsRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.android.robots.CoreRobot
 import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
@@ -98,10 +99,10 @@ class CardPaymentTests : BaseMockTest {
                     billingDetailsDisplayed(Plan.MailPlus, "CHF", false)
                 }
             }
-            .payWithCreditCard<SignupFinishedRobot>(Card.default)
-            .verify {
-                signupFinishedDisplayed()
-            }
+            .payWithCreditCard<CoreRobot>(Card.default)
+
+        CongratsRobot
+            .uiElementsDisplayed()
     }
 
     @Test
@@ -149,10 +150,10 @@ class CardPaymentTests : BaseMockTest {
                 }
             }
             .switchPaymentProvider<AddCreditCardRobot>()
-            .payWithCreditCard<SignupFinishedRobot>(Card.default)
-            .verify {
-                signupFinishedDisplayed()
-            }
+            .payWithCreditCard<CoreRobot>(Card.default)
+
+        CongratsRobot
+            .uiElementsDisplayed()
     }
 
     @Test

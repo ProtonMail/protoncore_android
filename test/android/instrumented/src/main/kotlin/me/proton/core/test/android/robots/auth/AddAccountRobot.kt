@@ -52,6 +52,12 @@ class AddAccountRobot : CoreRobot() {
             view.withId(R.id.sign_up).checkDisplayed()
         }
 
+        fun appVersionTooOldForExternalAccounts() {
+            // Text is coming from BE:
+            val text = "Please upgrade to the latest version of the app to sign in"
+            view.withSnackbarText(text).checkDisplayed()
+        }
+
         fun unsupportedExternalAccountAlertDisplayed() {
             view.withText(R.string.auth_login_external_account_unsupported_title)
                 .checkDisplayed()

@@ -22,6 +22,8 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import io.mockk.coEvery
+import io.mockk.mockk
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
@@ -31,6 +33,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
 import org.junit.Rule
@@ -62,6 +65,11 @@ class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests {
 
     @BindValue
     val accountType: AccountType = AccountType.External
+
+    @BindValue
+    val canUpgradeToPaid: CanUpgradeToPaid = mockk {
+        coEvery { this@mockk.invoke(any()) } returns false
+    }
 
     @Inject
     override lateinit var quark: Quark

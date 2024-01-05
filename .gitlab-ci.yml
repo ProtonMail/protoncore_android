@@ -289,6 +289,7 @@ pass-integration-tests:
       --results-dir=$RESULTS_DIR
       --num-flaky-test-attempts=$FLAKY_TEST_RERUN
       --environment-variables listener=me.proton.core.test.android.ToastingRunListener
+      --client-details=matrixLabel="$CI_JOB_NAME $CI_PIPELINE_URL"
       ${EXTRA_OPTIONS}
   after_script:
     - mkdir -p screenshots

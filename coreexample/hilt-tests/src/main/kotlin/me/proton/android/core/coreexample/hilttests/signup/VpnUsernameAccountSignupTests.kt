@@ -24,6 +24,8 @@ import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
+import io.mockk.coEvery
+import io.mockk.mockk
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
@@ -35,6 +37,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
+import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
@@ -65,6 +68,11 @@ class VpnUsernameAccountSignupTests : BaseUsernameAccountSignupTests,
 
     @BindValue
     val accountType: AccountType = AccountType.Username
+
+    @BindValue
+    val canUpgradeToPaid: CanUpgradeToPaid = mockk {
+        coEvery { this@mockk.invoke(any()) } returns false
+    }
 
     @Inject
     override lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders

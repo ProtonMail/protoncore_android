@@ -5,6 +5,7 @@ import me.proton.core.auth.presentation.R
 import me.proton.test.fusion.Fusion.device
 import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.ui.device.OnDevice
+import kotlin.time.Duration.Companion.seconds
 
 /** Corresponds to ProtonWebViewActivity. */
 public object IdentityProviderRobot {
@@ -12,7 +13,7 @@ public object IdentityProviderRobot {
     private val webView = view.withId(R.id.webView)
 
     public fun waitWebViewIsDisplayed(): IdentityProviderRobot = apply {
-        webView.await { checkIsDisplayed() }
+        webView.await(interval = 1.seconds, timeout = 60.seconds) { checkIsDisplayed() }
     }
 
     public fun fillAuth(): IdentityProviderRobot = apply {

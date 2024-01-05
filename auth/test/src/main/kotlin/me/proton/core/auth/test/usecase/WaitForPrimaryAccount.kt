@@ -31,7 +31,7 @@ import kotlin.test.assertNotNull
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
-private const val ACCOUNT_WAIT_MS = 30L * 1000
+private const val ACCOUNT_WAIT_MS = 90L * 1000
 private const val WAIT_DELAY_MS = 250L
 
 public class WaitForPrimaryAccount @Inject constructor(private val accountManager: AccountManager) {

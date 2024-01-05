@@ -18,17 +18,13 @@
 
 package me.proton.core.auth.test
 
-import kotlinx.coroutines.runBlocking
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
-import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
-import me.proton.core.util.kotlin.random
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -47,7 +43,7 @@ public interface BaseUsernameAccountSignupTests {
     @Test
     public fun happyPath() {
         val username = User.randomUsername()
-        val user = User(name = username, recoveryEmail = "$username@${String.random()}.test")
+        val user = User(name = username, recoveryEmail = "$username@proton.wtf")
 
         AddAccountRobot()
             .createAccount()
@@ -57,14 +53,6 @@ public interface BaseUsernameAccountSignupTests {
             .email(user.recoveryEmail)
             .next<CoreRobot>()
 
-        val paymentProviders = runBlocking { getAvailablePaymentProviders() }
-        if (paymentProviders.isNotEmpty()) {
-            SelectPlanRobot()
-                .toggleExpandPlan(Plan.Free)
-                .selectPlan<CoreRobot>(Plan.Free)
-        }
-
-        // plan
         HVRobot()
             .captcha()
             .iAmHuman(CoreRobot::class.java)

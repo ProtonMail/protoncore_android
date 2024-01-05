@@ -18,8 +18,6 @@
 
 package me.proton.core.accountrecovery.test
 
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
@@ -51,7 +49,7 @@ private const val GRACE_PERIOD_NOTIFICATION_TITLE = "Password reset"
  * Note: requires [me.proton.test.fusion.FusionConfig.Compose.testRule] to be initialized.
  */
 public interface MinimalAccountRecoveryNotificationTest {
-    public val accountStateHandler: AccountStateHandler
+    public val accountStateHandler: AccountStateHandler?
     public val apiProvider: ApiProvider
     public val eventManagerProvider: EventManagerProvider
     public val eventMetadataRepository: EventMetadataRepository
@@ -61,7 +59,7 @@ public interface MinimalAccountRecoveryNotificationTest {
 
     /** Optionally, call this in constructor to initialize the Fusion testing library. */
     public fun initFusion(composeTestRule: ComposeTestRule) {
-        FusionConfig.Compose.testRule.set(CustomComposeContentTestRule(composeTestRule))
+        FusionConfig.Compose.testRule.set(composeTestRule)
     }
 
     /** When called, should verify the app is on the home screen for the logged in user. */
@@ -70,7 +68,7 @@ public interface MinimalAccountRecoveryNotificationTest {
     @BeforeTest
     public fun prepare() {
         quark.jailUnban()
-        accountStateHandler.start()
+        accountStateHandler?.start()
     }
 
     @AfterTest
@@ -90,8 +88,6 @@ public interface MinimalAccountRecoveryNotificationTest {
         runBlocking {
             val eventManagerConfig = EventManagerConfig.Core(account.userId)
             val eventManager = eventManagerProvider.get(eventManagerConfig)
-            eventManager.stop()
-            eventManager.start()
             waitForInitialEvents(eventManager)
 
             // Trigger account recovery:
@@ -128,7 +124,9 @@ public interface MinimalAccountRecoveryNotificationTest {
      * we need to loop the event manager manually.
      */
     private suspend fun waitForInitialEvents(eventManager: EventManager) {
-        (1..10).onEach {
+        (1..30).onEach {
+            eventManager.stop()
+            eventManager.start()
             eventManager.process()
 
             // Check if the events are fetched at least once:
@@ -137,8 +135,9 @@ public interface MinimalAccountRecoveryNotificationTest {
                 return
             }
 
-            delay(100)
+            delay(1000)
         }
+        error("Could not receive initial events.")
     }
 
     /**
@@ -146,7 +145,9 @@ public interface MinimalAccountRecoveryNotificationTest {
      * we need to loop the event manager manually.
      */
     private suspend fun waitForNotifications(eventManager: EventManager, userId: UserId) {
-        (1..10).onEach {// limit the iteration number, just in case
+        (1..30).onEach {// limit the iteration number, just in case
+            eventManager.stop()
+            eventManager.start()
             eventManager.process()
 
             // Check if we have some notifications:
@@ -154,15 +155,8 @@ public interface MinimalAccountRecoveryNotificationTest {
                 return
             }
 
-            delay(100)
+            delay(1000)
         }
-    }
-}
-
-// Temporary work-around, until Fusion supports `ComposeTestRule`.
-private class CustomComposeContentTestRule(composeTestRule: ComposeTestRule) :
-    ComposeContentTestRule, ComposeTestRule by composeTestRule {
-    override fun setContent(composable: @Composable () -> Unit) {
-        // no-op
+        error("Could not receive notifications via the event loop.")
     }
 }

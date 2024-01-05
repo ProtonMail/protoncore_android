@@ -125,6 +125,7 @@ public interface BaseConvertExternalToInternalAccountTests {
 
         ChooseInternalAddressRobot
             .apply {
+                screenIsDisplayed()
                 continueButtonIsEnabled()
                 domainInputDisplayed()
                 usernameInputIsEmpty()
@@ -157,6 +158,7 @@ public interface BaseConvertExternalToInternalAccountTests {
 
         ChooseInternalAddressRobot
             .apply {
+                screenIsDisplayed()
                 continueButtonIsEnabled()
             }
             .cancel()

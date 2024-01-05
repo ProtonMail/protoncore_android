@@ -25,14 +25,18 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.test.rule.GrantPermissionRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import io.mockk.every
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.accountmanager.data.AccountStateHandler
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.test.MinimalAccountRecoveryNotificationTest
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
+import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.notification.domain.repository.NotificationRepository
+import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.test.quark.Quark
 import me.proton.test.fusion.FusionConfig
 import org.junit.Rule
@@ -77,9 +81,19 @@ class AccountRecoveryNotificationTest : MinimalAccountRecoveryNotificationTest {
     @Inject
     override lateinit var quark: Quark
 
+    @Inject
+    internal lateinit var isAccountRecoveryEnabled: IsAccountRecoveryEnabled
+
+    @Inject
+    internal lateinit var isNotificationsEnabled: IsNotificationsEnabled
+
     @BeforeTest
     override fun prepare() {
         hiltRule.inject()
+
+        every { isAccountRecoveryEnabled.invoke(any<UserId>()) } returns true
+        every { isNotificationsEnabled.invoke(any<UserId>()) } returns true
+
         super.prepare()
     }
 

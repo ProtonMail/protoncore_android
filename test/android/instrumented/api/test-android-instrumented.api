@@ -582,6 +582,7 @@ public final class me/proton/core/test/android/robots/auth/AddAccountRobot : me/
 public final class me/proton/core/test/android/robots/auth/AddAccountRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
 	public fun <init> ()V
 	public final fun addAccountElementsDisplayed ()V
+	public final fun appVersionTooOldForExternalAccounts ()V
 	public final fun unsupportedExternalAccountAlertDisplayed ()V
 	public final fun unsupportedExternalAccountBrowserLinkOpened ()V
 }
@@ -663,6 +664,7 @@ public final class me/proton/core/test/android/robots/auth/signup/ChooseInternal
 	public final fun domainInputDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun domainInputNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun internalAccountTextsDisplayedCorrectly ()V
+	public final fun nextButtonEnabled ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun suffixDisplayed (Ljava/lang/String;)Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun suffixNotDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
 	public final fun switchToExternalDisplayed ()Lme/proton/core/test/android/instrumented/ui/espresso/OnView;
@@ -723,16 +725,6 @@ public final class me/proton/core/test/android/robots/auth/signup/RecoveryMethod
 	public final fun recoveryDestinationErrorSnackbarDisplayed ()V
 	public final fun recoveryMethodsElementsDisplayed ()V
 	public final fun skipMenuButtonNotDisplayed ()V
-}
-
-public final class me/proton/core/test/android/robots/auth/signup/SignupFinishedRobot : me/proton/core/test/android/robots/CoreRobot {
-	public fun <init> ()V
-	public final fun verify (Lkotlin/jvm/functions/Function1;)Lme/proton/core/test/android/robots/auth/signup/SignupFinishedRobot$Verify;
-}
-
-public final class me/proton/core/test/android/robots/auth/signup/SignupFinishedRobot$Verify : me/proton/core/test/android/robots/CoreVerify {
-	public fun <init> ()V
-	public final fun signupFinishedDisplayed ()V
 }
 
 public final class me/proton/core/test/android/robots/auth/signup/SignupRobot : me/proton/core/test/android/robots/CoreRobot {

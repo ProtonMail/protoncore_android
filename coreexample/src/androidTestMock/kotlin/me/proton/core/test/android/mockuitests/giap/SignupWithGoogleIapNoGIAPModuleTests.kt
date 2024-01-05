@@ -26,16 +26,17 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.auth.presentation.ui.AddAccountActivity
+import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
 import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
+import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
-import me.proton.core.test.android.robots.auth.signup.SignupFinishedRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
@@ -123,10 +124,10 @@ class SignupWithGoogleIapNoGIAPModuleTests {
             .setUsername(testUsername)
             .setAndConfirmPassword<RecoveryMethodsRobot>(testPassword)
             .skip()
-            .skipConfirm<SignupFinishedRobot>()
-            .verify {
-                signupFinishedDisplayed()
-            }
+            .skipConfirm<CoreRobot>()
+
+        CongratsRobot
+            .uiElementsDisplayed()
     }
 
     @Test

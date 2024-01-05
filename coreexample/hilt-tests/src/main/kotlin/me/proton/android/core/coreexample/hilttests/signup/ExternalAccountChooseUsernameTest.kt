@@ -68,15 +68,11 @@ open class ExternalAccountChooseUsernameTest {
     lateinit var quark: QuarkCommand
 
     @BeforeTest
-    fun prepare() {
-        hiltRule.inject()
-    }
-
-    @BeforeTest
     fun setUp() {
+        hiltRule.inject()
         testUser = TestUser(
             name = "",
-            email = "${TestUser.randomUsername()}@externaldomain.test",
+            email = "${TestUser.randomUsername()}@proton.wtf",
             isExternal = true
         )
         quark.jailUnban()
