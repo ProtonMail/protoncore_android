@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">Ajuda</string>
   <string name="human_verification_title">Verificação humana</string>
-  <string name="human_verification_main_subtitle">Para evitar abusos, verifique se é humano utilizando uma das seguintes opções</string>
-  <string name="human_verification_enter_code_subtitle">Introduza o código de verificação enviado para %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Introduza o código de verificação enviado para %s. Se não encontrar o e-mail  na sua caixa de entrada, verifique a pasta de assédio.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Introduza o código de verificação que já tem:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">O seu e-mail só será utilizado para esta verificação única. Se não encontrar o e-mail na sua caixa de entrada, verifique a sua pasta de spam.</string>
-  <string name="human_verification_option_sms">Número de telefone</string>
-  <string name="human_verification_option_sms_subtitle">O seu telefone só será utilizado para esta verificação única.</string>
-  <string name="human_verification_get_verification_code">Obter código de verificação</string>
-  <string name="human_verification_already_have_code">Já tenho um código</string>
-  <string name="human_verification_request_replacement_code">Não recebeu o código?</string>
-  <string name="human_verification_verify">Verificar</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Precisa de ajuda com a verificação humana?</string>
-  <string name="human_verification_code">Código de verificação</string>
-  <string name="human_verification_code_request_new_code_title">Pedir novo código?</string>
-  <string name="human_verification_code_request_new_code_action">Pedir novo código</string>
-  <string name="human_verification_code_request_new_code">Obter um código de substituição enviado para %s.</string>
-  <string name="email">E-mail</string>
-  <string name="email_hint">e-mail@exemplo.pt</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Pedir um convite</string>
   <string name="human_verification_help_manual">Se tiver problemas para criar a conta, solicite um convite e responderemos dentro de 1 dia útil.</string>
   <string name="human_verification_help_website_title">Visite o nosso centro de ajuda.</string>
   <string name="human_verification_help_website">Saiba mais sobre a verificação humana e porque é que a pedimos.</string>
-  <string name="human_verification_sending_failed">Erro no envio do código de verificação. Tente novamente.</string>
-  <string name="human_verification_incorrect_code">Palavra-passe incorreta. Tente novamente.</string>
-  <string name="human_verification_resent_code">Enviámos-lhe outro código.</string>
-  <string name="human_verification_captcha_failed">Falha na verificação CAPTCHA. Tente mais uma vez ou escolha outra opção de verificação.</string>
-  <string name="human_verification_captcha_no_connectivity">Sem ligação. Não é possível carregar o CAPTCHA.</string>
-  <string name="human_verification_action_retry">Tentar novamente</string>
-  <string name="human_verification_method_loading_failed">Não foi possível carregar o método de verificação actual. Se o problema persistir, tente um dos outros métodos, se estiverem disponíveis, ou consulte o ecrã de Ajuda.</string>
 </resources>

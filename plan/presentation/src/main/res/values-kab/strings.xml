@@ -29,8 +29,8 @@
   <string name="plans_subscription">Amultaɣ</string>
   <string name="plans_renewal_date">Aɣawas-ik ad yettwabeddel s wudem awurman deg &lt;/b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Aɣawas-ik ad ifakk deg &lt;/b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Pay monthly</string>
-  <string name="plans_pay_annually">Pay annually</string>
+  <string name="plans_pay_monthly">Xelleṣ s waggur</string>
+  <string name="plans_pay_annually">Axelleṣ s useggas</string>
   <string name="plans_pay_biennially">Pay every 2 years</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Pay for %d month</item>

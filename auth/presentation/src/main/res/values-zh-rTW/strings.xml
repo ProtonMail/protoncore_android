@@ -17,12 +17,12 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">使用 Proton 保護您的隱私</string>
+  <string name="welcome_title">運用 Proton 來保護您的隱私權</string>
   <string name="welcome_subtitle">高階加密把守您的資料隱密。您的資料真實地掌握手中。</string>
   <string name="welcome_subtitle_mail">經加密過的電子信箱，守住來往訊息隱私。您的收件匣真實地掌握手中。</string>
   <string name="welcome_subtitle_mail_alt">隱私權。安全防護。便捷。加密電子信箱提供您個資的完全控管。</string>
   <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。千呼萬喚終於出現讓您可完全信賴的雲端儲存。</string>
-  <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。使用最強大的加密方式上載、同步並分享。</string>
+  <string name="welcome_subtitle_drive_alt">最安全的檔案儲存方式。使用最強大的加密方式上傳、同步並分享。</string>
   <string name="welcome_subtitle_calendar">讓您的生活大事維持隱密、安全且可靠的加密行事曆。</string>
   <string name="welcome_subtitle_calendar_alt">我們的端到端加密行事曆可協助您井然有序地步入正軌，一切都在掌控之中。</string>
   <string name="welcome_subtitle_vpn">極飆速Swiss VPN會透過把您的網際網路連線加密好以保護您的隱私。</string>
@@ -55,8 +55,8 @@
   <string name="auth_help_option_customer_support">客服</string>
   <string name="auth_2fa_title">兩步驟驗證</string>
   <string name="auth_2fa_label">兩步驟代碼</string>
-  <string name="auth_2fa_recovery_code_label">備援代碼</string>
-  <string name="auth_2fa_assistive_text">請輸入 6 位數字代碼</string>
+  <string name="auth_2fa_recovery_code_label">復原代碼</string>
+  <string name="auth_2fa_assistive_text">請輸入 6 位數</string>
   <string name="auth_2fa_recovery_code_assistive_text">輸入一組 8 個字元的復原代碼</string>
   <string name="auth_2fa_action">驗證</string>
   <string name="auth_2fa_use_recovery_code">使用備援代碼</string>
@@ -80,9 +80,9 @@
   <string name="auth_create_address_result_title_username">%1$s@%2$s 將是您的新 Proton Mail 電子信箱位址</string>
   <string name="auth_create_address_result_subtitle">您將會使用此位址登入所有 Proton 服務。</string>
   <string name="auth_create_address_result_recovery_title">您的備援電子郵件位址為：</string>
-  <string name="auth_create_address_create">建立電子信箱位址</string>
-  <string name="auth_create_address_creating">正在建立電子信箱位址</string>
-  <string name="auth_create_address_terms">點擊建立電子郵件位址，即表示您同意 Proton 的<a href="https://proton.me/legal/terms">條款與細則</a>。</string>
+  <string name="auth_create_address_create">創建電子信箱位址</string>
+  <string name="auth_create_address_creating">正在創建電子信箱位址</string>
+  <string name="auth_create_address_terms">點擊創建電子郵件位址，即表示您同意 Proton 的<a href="https://proton.me/legal/terms">條款與細則</a>。</string>
   <string name="auth_create_address_error_credentials">憑證不應為空。</string>
   <string name="auth_create_address_error_no_available_domain">無可用域名。</string>
   <string name="auth_create_address_error_private_key">產生私鑰失敗。</string>
@@ -100,27 +100,27 @@
   <string name="auth_user_check_delinquent_action">支付繳款單</string>
   <string name="auth_account_not_found_error">帳號錯誤</string>
   <string name="auth_one_account_all_services">一組帳號，Proton 服務無限用。</string>
-  <string name="auth_create_account">建立帳號</string>
+  <string name="auth_create_account">創建帳號</string>
   <string name="auth_long_signup">請稍候……</string>
   <string name="auth_long_login">正在登入，請稍候……</string>
   <!-- signup related strings -->
-  <string name="auth_signup_create_account">建立您的 Proton 帳號</string>
+  <string name="auth_signup_create_account">創建您的 Proton 帳號</string>
   <string name="auth_signup_current_email">改為使用您目前的電子信箱位址</string>
   <string name="auth_signup_external_footnote">使用 Proton 位址，您可以使用所有 Proton 服務</string>
   <string name="auth_signup_internal_footnote">您需要 Proton 位址才能使用 Proton Mail 與 Proton Calendar</string>
-  <string name="auth_signup_create_secure_proton_address">取得新的加密電子郵件位址</string>
+  <string name="auth_signup_create_secure_proton_address">取得新的加密電子信箱</string>
   <string name="auth_signup_username">使用者名稱</string>
   <string name="auth_signup_domain">網域</string>
   <string name="auth_signup_email">電子信箱</string>
   <string name="auth_signup_next">下一步</string>
-  <string name="auth_signup_choose_password">建立您的密碼</string>
+  <string name="auth_signup_choose_password">創建您的密碼</string>
   <string name="auth_signup_repeat_password">重複輸入密碼</string>
   <string name="auth_signup_recovery_method_title">設定備援方式（選擇性）</string>
   <string name="auth_signup_recovery_method_title_mandatory">設定備援方法</string>
-  <string name="auth_signup_recovery_method_subtitle">如果您的帳號被鎖定，我們會向此電子郵件地址或電話號碼傳送備援說明。</string>
-  <string name="auth_signup_recovery_method_subtitle_email_only">如果您的帳號被鎖定，我們會向此電子郵件位址傳送備援說明</string>
+  <string name="auth_signup_recovery_method_subtitle">如果您的帳號被鎖定，我們會向此電子信箱或電話號碼傳送復原說明</string>
+  <string name="auth_signup_recovery_method_subtitle_email_only">如果您的帳號被鎖定，我們會向此電子信箱傳送復原說明</string>
   <string name="auth_signup_recovery_method_email">電子信箱</string>
-  <string name="auth_signup_recovery_method_phone">電話</string>
+  <string name="auth_signup_recovery_method_phone">手機</string>
   <string name="auth_signup_recovery_method_email_hint">備援電子郵件</string>
   <string name="auth_signup_recovery_method_phone_hint">備援電話號碼</string>
   <string name="auth_signup_terms_conditions">條款與細則</string>
@@ -141,7 +141,7 @@
   <string name="auth_signup_verification_code">驗證碼</string>
   <string name="auth_signup_enter_code_subtitle">請輸入傳送到 %s 的驗證碼：</string>
   <string name="auth_signup_error_human_verification_failed">真人驗證失敗。</string>
-  <string name="auth_signup_congratulations_subtitle">您的 Proton 帳號已成功建立。\n享受隱私的世界吧。</string>
+  <string name="auth_signup_congratulations_subtitle">您的 Proton 帳號已成功創建。\n享受隱私的世界吧。</string>
   <string name="auth_signup_congratulations">恭喜！</string>
   <string name="auth_signup_start_using_proton">開始使用 Proton</string>
   <string name="auth_signup_start_using_calendar">開始使用 Proton 行事曆</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Δεν ήταν δυνατή η εγγραφή με τον υπάρχοντα τρόπο πληρωμής.</string>
   <string name="payments_error_invalid_session">Μη έγκυρη συνεδρία.</string>
   <string name="payments_no_payment_provider">Δεν βρέθηκε ενεργός πάροχος πληρωμών.</string>
+  <string name="payments_error_google_prices">Πρόβλημα με την ανάκτηση των τιμών του Google Play Store αυτή τη στιγμή.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Διαλέξτε τη μέθοδο πληρωμής σας</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">ΜΜ/ΧΧ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Χώρα</string>
+  <string name="payments_get_plan">Αποκτήστε %s</string>
   <string name="payments_paying_in_process">Πληρώνετε</string>
   <string name="payments_choose_country">Επιλογή χώρας</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Λήξη %3$s/%4$s)</string>

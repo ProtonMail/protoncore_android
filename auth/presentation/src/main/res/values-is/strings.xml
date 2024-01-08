@@ -35,7 +35,7 @@
   <string name="auth_current_login_password">Núverandi lykilorð innskráningar</string>
   <string name="auth_enter_six_digit_code">Settu inn 6-stafa kóðann</string>
   <string name="auth_second_factor_code">Tveggja-þátta kóði</string>
-  <string name="auth_email">Email</string>
+  <string name="auth_email">Tölvupóstur</string>
   <string name="auth_email_username">Notandanafn eða tölvupóstfang</string>
   <string name="auth_account_details">Sláðu inn þínum Proton reikningsupplýsingum.</string>
   <string name="auth_sign_in">Skrá inn</string>
@@ -44,7 +44,7 @@
   <string name="auth_sign_in_with_password">Sign in with a password</string>
   <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
   <string name="auth_sign_in_with_sso">Sign in with SSO</string>
-  <string name="auth_help_label">Help</string>
+  <string name="auth_help_label">Hjálp</string>
   <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
   <string name="auth_login_sso_assistive_text">Please enter your email.</string>
   <string name="auth_help_title">Hvernig getum við aðstoðað?</string>
@@ -101,7 +101,7 @@
   <string name="auth_account_not_found_error">Error with the account</string>
   <string name="auth_one_account_all_services">Einn aðgangur fyrir allar Proton-þjónustur.</string>
   <string name="auth_create_account">Stofna notandaaðgang</string>
-  <string name="auth_long_signup">Please wait…</string>
+  <string name="auth_long_signup">Bíddu aðeins…</string>
   <string name="auth_long_login">Signing in, please wait…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Búa til Proton-notandaaðgang fyrir þig</string>

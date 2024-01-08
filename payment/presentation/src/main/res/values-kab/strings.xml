@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Could not sign up with existing payment method.</string>
   <string name="payments_error_invalid_session">Yir tiɣimit.</string>
   <string name="payments_no_payment_provider">Ulac asaǧǧăw n uxelleṣ urmid i yettwafen.</string>
+  <string name="payments_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Fren tarrayt-ik n uxelleṣ</string>
@@ -51,14 +52,15 @@
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Tamurt</string>
+  <string name="payments_get_plan">Get %s</string>
   <string name="payments_paying_in_process">Axelleṣ</string>
   <string name="payments_choose_country">Fren tamurt</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Ad ifut %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">n/a</string>
-  <string name="payments_billing_monthly">For 1 month</string>
+  <string name="payments_billing_monthly">I 1 wayyur</string>
   <string name="payments_billing_yearly">I 1 n useggas</string>
-  <string name="payments_billing_two_years">For 2 years</string>
+  <string name="payments_billing_two_years">I 2 n yIseggasen</string>
   <string name="payment_use_google_pay_instead">Seqdec Google Pay deg ubdil</string>
   <string name="payment_use_credit_card_instead">Seqdec deg ubdil takarḍa n usmad/debit</string>
   <!-- endregion -->

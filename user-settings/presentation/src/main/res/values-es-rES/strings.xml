@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">Aceptar</string>
   <string name="settings_not_set">No establecido</string>
   <string name="settings_recovery_email_error_no_match">Las nuevas direcciones de correos electrónicos de recuperación no coinciden.</string>
-  <string name="settings_validation_email">El correo electrónico no es válido.</string>
+  <string name="settings_validation_email">La dirección de correo electrónico no es válida.</string>
   <string name="settings_general_error">Se ha producido un error.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Cambiar contraseña</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Nueva contraseña del buzón</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmar nueva contraseña de buzón</string>
   <string name="settings_change_password_error">Se ha producido un error al cambiar la contraseña.</string>
-  <string name="settings_recovery_email_success">Correo electrónico de recuperación actualizado</string>
+  <string name="settings_recovery_email_success">La dirección de correo electrónico de recuperación ha sido actualizada.</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>
   <string name="settings_password_management_login_password_success">Contraseña de inicio de sesión actualizada</string>
   <string name="settings_password_management_mailbox_password_success">Se ha actualizado la contraseña del inicio de sesión</string>

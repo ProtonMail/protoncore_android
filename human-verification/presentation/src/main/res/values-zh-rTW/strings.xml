@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">說明</string>
   <string name="human_verification_title">真人驗證</string>
-  <string name="human_verification_main_subtitle">為了防止濫用，請使用以下的其中一個選項驗證您是人類</string>
-  <string name="human_verification_enter_code_subtitle">輸入從 %s 接收的驗證碼。</string>
-  <string name="human_verification_enter_code_subtitle_email">請輸入傳送到 %s 的驗證碼。若您在收件匣中找不到該電郵，請查看垃圾郵件資料夾。</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">輸入您已有的驗證碼：</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">電郵</string>
-  <string name="human_verification_option_email_subtitle">您的電郵將僅用於此ㄧ次性驗證。若您在收件匣中找到該電郵，請檢查您的垃圾郵件資料夾。</string>
-  <string name="human_verification_option_sms">電話號碼</string>
-  <string name="human_verification_option_sms_subtitle">您的電話號碼只會用於此一次性驗證。</string>
-  <string name="human_verification_get_verification_code">取得驗證碼</string>
-  <string name="human_verification_already_have_code">我已有驗證碼</string>
-  <string name="human_verification_request_replacement_code">尚未收到驗證碼？</string>
-  <string name="human_verification_verify">驗證</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">您需要人工驗證方面的協助嗎？</string>
-  <string name="human_verification_code">驗證碼</string>
-  <string name="human_verification_code_request_new_code_title">申請新驗證碼？</string>
-  <string name="human_verification_code_request_new_code_action">申請新驗證碼</string>
-  <string name="human_verification_code_request_new_code">取得傳送給 %s 的取代驗證碼。</string>
-  <string name="email">電郵</string>
-  <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">申發邀請</string>
-  <string name="human_verification_help_manual">若您在建立帳號時遇上問題，請提出邀請需求，我們會在1個工作天內回覆。</string>
+  <string name="human_verification_help_manual">若您在創建帳號時遇上問題，請提出邀請需求，我們會在1個工作天內回覆。</string>
   <string name="human_verification_help_website_title">造訪我們的說明中心</string>
   <string name="human_verification_help_website">了解更多關於真人驗證的必要性。</string>
-  <string name="human_verification_sending_failed">驗證碼傳送失敗。請再試一次。</string>
-  <string name="human_verification_incorrect_code">驗證碼不正確。請重試。</string>
-  <string name="human_verification_resent_code">我們已經傳送給您另一個驗證碼。</string>
-  <string name="human_verification_captcha_failed">CAPTCHA 驗證失敗。請再試一次或選擇其他驗證選項。</string>
-  <string name="human_verification_captcha_no_connectivity">無連線。無法載入 CAPTCHA。</string>
-  <string name="human_verification_action_retry">重試</string>
-  <string name="human_verification_method_loading_failed">無法載入目前的驗證方式。若問題仍然持續，請嘗試其他的其中一種方法（若它們可以使用的話）或是看看說明畫面。</string>
 </resources>

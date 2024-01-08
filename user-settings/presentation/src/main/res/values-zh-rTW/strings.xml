@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -18,18 +18,18 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">復原電郵</string>
-  <string name="settings_recovery_email_current">目前的備援電子郵件地址</string>
-  <string name="settings_recovery_email_new">新的備援電子郵件地址</string>
-  <string name="settings_recovery_email_confirm">確認備援電子郵件地址</string>
-  <string name="settings_recovery_email_new_hint">請輸入電子郵件地址</string>
-  <string name="settings_recovery_email_confirm_hint">重新輸入電子郵件地址</string>
+  <string name="settings_recovery_email_header">備援電子郵件</string>
+  <string name="settings_recovery_email_current">目前的備援電子郵件位址</string>
+  <string name="settings_recovery_email_new">新的備援電子郵件位址</string>
+  <string name="settings_recovery_email_confirm">確認備援電子郵件位址</string>
+  <string name="settings_recovery_email_new_hint">請輸入電子郵件位址</string>
+  <string name="settings_recovery_email_confirm_hint">重新輸入電子郵件位址</string>
   <string name="settings_save">儲存</string>
   <string name="settings_password_required">輸入您的登入密碼</string>
   <string name="settings_password_required_ok">確定</string>
   <string name="settings_not_set">未設定</string>
-  <string name="settings_recovery_email_error_no_match">新增的復原用電子郵件地址不一致</string>
-  <string name="settings_validation_email">電郵無效。</string>
+  <string name="settings_recovery_email_error_no_match">新增的復原用電子郵件位址不一致</string>
+  <string name="settings_validation_email">電子郵件位址無效.</string>
   <string name="settings_general_error">發生錯誤。</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">變更密碼</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">新的信箱密碼</string>
   <string name="settings_mailbox_password_hint_new_confirm">確認新的信箱密碼</string>
   <string name="settings_change_password_error">發生變更密碼錯誤。</string>
-  <string name="settings_recovery_email_success">已更新復原電郵位址</string>
+  <string name="settings_recovery_email_success">已更新備援電子郵件位址</string>
   <string name="settings_password_management_success">已更新密碼</string>
   <string name="settings_password_management_login_password_success">已更新登入密碼</string>
   <string name="settings_password_management_mailbox_password_success">電子信箱密碼已更新</string>

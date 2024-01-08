@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nenastaveno</string>
   <string name="settings_recovery_email_error_no_match">Nové e-maily pro obnovení se neshodují</string>
-  <string name="settings_validation_email">E-mail je neplatný.</string>
+  <string name="settings_validation_email">E-mailová adresa je neplatná.</string>
   <string name="settings_general_error">Došlo k chybě.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Změnit heslo</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Nové heslo k poštovní schránce</string>
   <string name="settings_mailbox_password_hint_new_confirm">Potvrdit nové heslo poštovní schránky</string>
   <string name="settings_change_password_error">Při změně hesla došlo k chybě.</string>
-  <string name="settings_recovery_email_success">Sekundární e-mail byl aktualizován</string>
+  <string name="settings_recovery_email_success">E-mailová adresa pro obnovení aktualizována</string>
   <string name="settings_password_management_success">Heslo bylo změněno</string>
   <string name="settings_password_management_login_password_success">Přihlašovací heslo bylo aktualizováno</string>
   <string name="settings_password_management_mailbox_password_success">Heslo k e-mailové schránce bylo aktualizováno</string>

@@ -36,8 +36,8 @@
     <item quantity="one">Facturación por %d mes</item>
     <item quantity="other">Facturación por %d meses</item>
   </plurals>
-  <string name="plans_billed_yearly">*Facturado anualmente en %s</string>
-  <string name="plans_billed_monthly">Facturado mensualmente</string>
+  <string name="plans_billed_yearly">*Facturado cada año en %s</string>
+  <string name="plans_billed_monthly">Facturado cada mes</string>
   <string name="plans_billing_monthly">Por 1 mes</string>
   <string name="plans_billing_yearly">Por 1 año</string>
   <string name="plans_billing_two_years">Por 2 años</string>

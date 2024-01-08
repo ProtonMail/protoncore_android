@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Inte inställd</string>
   <string name="settings_recovery_email_error_no_match">Nya e-postadresser för återställning matchar inte</string>
-  <string name="settings_validation_email">E-post är ogiltig.</string>
+  <string name="settings_validation_email">E-postadress är ogiltig.</string>
   <string name="settings_general_error">Ett fel uppstod.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Ändra lösenord</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Nytt lösenord för brevlådan</string>
   <string name="settings_mailbox_password_hint_new_confirm">Bekräfta nytt lösenord för brevlådan</string>
   <string name="settings_change_password_error">Ett fel uppstod vid ändring av lösenord.</string>
-  <string name="settings_recovery_email_success">E-post för återställning uppdaterad</string>
+  <string name="settings_recovery_email_success">E-postadress för återställning uppdaterad</string>
   <string name="settings_password_management_success">Lösenord uppdaterat</string>
   <string name="settings_password_management_login_password_success">Inloggningslösenord uppdaterat</string>
   <string name="settings_password_management_mailbox_password_success">Brevlådans lösenord uppdaterad</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Kunde inte registrera med befintlig betalningsmetod.</string>
   <string name="payments_error_invalid_session">Ogiltig session.</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalningsleverantör hittades.</string>
+  <string name="payments_error_google_prices">Problem att hämta priser i Google Play Butik just nu.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Välj din betalningsmetod</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">MM/ÅÅ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
+  <string name="payments_get_plan">Skaffa %s</string>
   <string name="payments_paying_in_process">Betalar</string>
   <string name="payments_choose_country">Välj land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Upphör %3$s/%4$s)</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">도움말</string>
   <string name="human_verification_title">사람임을 인증</string>
-  <string name="human_verification_main_subtitle">악용을 막기 위해, 다음 중 한 가지를 통해 당신이 사람임을 인증해 주세요.</string>
-  <string name="human_verification_enter_code_subtitle">%s로 전송된 인증 코드를 입력하십시오.</string>
-  <string name="human_verification_enter_code_subtitle_email">%s로 전송된 인증 코드를 입력하세요. 받은 편지함에서 이메일을 찾을 수 없는 경우 스팸 폴더를 확인하세요.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">가지고 있는 인증 코드를 입력하세요:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">이메일</string>
-  <string name="human_verification_option_email_subtitle">당신의 이메일 주소는 일회용 인증에만 사용됩니다. 받은 편지함에서 이메일을 찾을 수 없는 경우 스팸 폴더를 확인하세요.</string>
-  <string name="human_verification_option_sms">전화번호</string>
-  <string name="human_verification_option_sms_subtitle">사용자의 휴대전화 번호는 한 번만 인증에 사용됩니다.</string>
-  <string name="human_verification_get_verification_code">인증 코드 받기</string>
-  <string name="human_verification_already_have_code">이미 코드를 가지고 있습니다</string>
-  <string name="human_verification_request_replacement_code">코드를 받지 못하셨나요?</string>
-  <string name="human_verification_verify">인증</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">사람임을 인증하는 데 도움이 필요하신가요?</string>
-  <string name="human_verification_code">인증 코드</string>
-  <string name="human_verification_code_request_new_code_title">새 코드를 요청할까요?</string>
-  <string name="human_verification_code_request_new_code_action">새 코드 요청하기</string>
-  <string name="human_verification_code_request_new_code">대체 코드를 %s로 보내세요.</string>
-  <string name="email">이메일</string>
-  <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">가입 요청하기</string>
   <string name="human_verification_help_manual">계정을 생성하는데 문제가 있을 경우, 계정 생성 요청을 해 주시면 1영업일 이내에 답변해 드리겠습니다.</string>
   <string name="human_verification_help_website_title">지원 센터에 접속하세요</string>
   <string name="human_verification_help_website">로봇이 아닌가요와 우리가 왜 이 인증을 요구하는지에 대해 더 알아보세요.</string>
-  <string name="human_verification_sending_failed">인증 코드 발송에 실패했습니다. 다시 시도해 주세요.</string>
-  <string name="human_verification_incorrect_code">잘못된 코드입니다. 다시 시도해 주세요.</string>
-  <string name="human_verification_resent_code">다른 코드를 보냈습니다.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA 인증에 실패했습니다. 다시 시도하거나 다른 인증 방법을 사용하세요.</string>
-  <string name="human_verification_captcha_no_connectivity">연결이 없습니다. CAPTCHA를 불러올 수 없습니다.</string>
-  <string name="human_verification_action_retry">재시도</string>
-  <string name="human_verification_method_loading_failed">이 인증 방법을 로드할 수 없습니다. 문제가 계속된다면, 작동하는 다른 방법을 사용하거나 도움말 창을 확인해 보세요.</string>
 </resources>

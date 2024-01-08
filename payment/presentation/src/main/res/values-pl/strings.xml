@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Nie można zarejestrować się z istniejącą metodą płatności.</string>
   <string name="payments_error_invalid_session">Sesja jest nieprawidłowa.</string>
   <string name="payments_no_payment_provider">Aktywny dostawca płatności nie został znaleziony.</string>
+  <string name="payments_error_google_prices">Wystąpił problem podczas pobierania cen z Google Play.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Wybierz metodę płatności</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">MM/RR</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Kraj</string>
+  <string name="payments_get_plan">Wybierz plan %s</string>
   <string name="payments_paying_in_process">Przetwarzanie płatności</string>
   <string name="payments_choose_country">Wybierz kraj</string>
   <string name="payment_cc_list_item">%1$s - %2$s (wygasa %3$s/%4$s)</string>

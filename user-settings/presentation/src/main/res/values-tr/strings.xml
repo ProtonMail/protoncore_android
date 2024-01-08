@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Yeni posta kutusu parolası</string>
   <string name="settings_mailbox_password_hint_new_confirm">Yeni posta kutusu parolası onayı</string>
   <string name="settings_change_password_error">Parola değiştirilirken bir sorun çıktı.</string>
-  <string name="settings_recovery_email_success">Kurtarma e-postası güncellendi</string>
+  <string name="settings_recovery_email_success">Kurtarma e-posta adresi güncellendi</string>
   <string name="settings_password_management_success">Parola güncellendi</string>
   <string name="settings_password_management_login_password_success">Oturum açma parolası güncellendi</string>
   <string name="settings_password_management_mailbox_password_success">Posta kutusu parolası güncellendi</string>

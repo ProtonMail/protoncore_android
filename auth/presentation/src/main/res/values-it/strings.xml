@@ -81,7 +81,7 @@
   <string name="auth_create_address_result_subtitle">Userai questo indirizzo per accedere a tutti i servizi di Proton.</string>
   <string name="auth_create_address_result_recovery_title">Il tuo indirizzo email di recupero è:</string>
   <string name="auth_create_address_create">Crea un indirizzo</string>
-  <string name="auth_create_address_creating">Creazione indirizzo</string>
+  <string name="auth_create_address_creating">Creazione dell\'indirizzo in corso</string>
   <string name="auth_create_address_terms">Cliccando su \"Crea un indirizzo\", accetti i <a href="https://proton.me/legal/terms">Termini e condizioni</a> di Proton.</string>
   <string name="auth_create_address_error_credentials">Le credenziali non devono essere vuote.</string>
   <string name="auth_create_address_error_no_available_domain">Nessun dominio disponibile.</string>
@@ -102,9 +102,9 @@
   <string name="auth_one_account_all_services">Un account per tutti i servizi Proton.</string>
   <string name="auth_create_account">Crea un account</string>
   <string name="auth_long_signup">Attendere prego…</string>
-  <string name="auth_long_login">Accedendo, attendere…</string>
+  <string name="auth_long_login">Accesso in corso</string>
   <!-- signup related strings -->
-  <string name="auth_signup_create_account">Crea il tuo Account Proton</string>
+  <string name="auth_signup_create_account">Crea il tuo account Proton</string>
   <string name="auth_signup_current_email">Usa invece la tua email attuale</string>
   <string name="auth_signup_external_footnote">Con un indirizzo Proton, puoi utilizzare tutti i servizi di Proton</string>
   <string name="auth_signup_internal_footnote">Avrai bisogno di un indirizzo Proton per utilizzare Proton Mail e Proton Calendar</string>
@@ -125,7 +125,7 @@
   <string name="auth_signup_recovery_method_phone_hint">Numero di telefono di recupero</string>
   <string name="auth_signup_terms_conditions">Termini e condizioni</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Cliccando su \"Avanti\", accetti i <annotation link="terms">Termini e condizioni</annotation> di Proton.</string>
-  <string name="auth_signup_skip_recovery_title">Ignorare il metodo di recupero?</string>
+  <string name="auth_signup_skip_recovery_title">Vuoi ignorare il metodo di recupero?</string>
   <string name="auth_signup_skip_recovery_description">Un metodo di recupero ti aiuterà ad accedere al tuo account nel caso in cui dimentichi la password o non riesci ad accedere al tuo account.</string>
   <string name="auth_signup_skip_recovery">Salta</string>
   <string name="auth_signup_set_recovery">Imposta metodo di recupero</string>
@@ -134,7 +134,7 @@
   <string name="auth_signup_error_passwords_do_not_match">Le password non corrispondono.</string>
   <string name="auth_signup_validation_password_length">La password deve essere lunga almeno 8 caratteri.</string>
   <string name="auth_signup_validation_password">La password non può essere vuota.</string>
-  <string name="auth_signup_your_account_is_being_setup">Il tuo account è in fase di creazione…</string>
+  <string name="auth_signup_your_account_is_being_setup">Creazione dell\'account in corso</string>
   <string name="auth_signup_please_wait">Di solito non ci vuole più di un minuto.</string>
   <string name="auth_signup_replacement_code">Non hai ricevuto il codice?</string>
   <string name="auth_signup_verify">Verifica</string>

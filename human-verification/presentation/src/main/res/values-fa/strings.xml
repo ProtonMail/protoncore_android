@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">راهنما</string>
   <string name="human_verification_title">اعتبارسنجی</string>
-  <string name="human_verification_main_subtitle">برای جلوگیری از سوء استفاده، لطفا با استفاده از یکی از روشهای زیر تایید کنید که انسان هستید</string>
-  <string name="human_verification_enter_code_subtitle">کد تاییدی که به %s ارسال شد را وارد نمایید.</string>
-  <string name="human_verification_enter_code_subtitle_email">کد تأییدی که به %s ارسال شد وارد کنید. اگر ایمیل را در صندوق ورودی خود پیدا نمیکنید، لطفاً پوشه هرزنامه خود را بررسی کنید.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">لطفا کد اعتبارسنجی که در حال حاضر دارید وارد کنید:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">ایمیل</string>
-  <string name="human_verification_option_email_subtitle">از ایمیل شما فقط برای این اعتبارسنجی یک-باره استفاده خواهد شد. اگر شما ایمیل دریافتی را در صندوق ورودی خود پیدا نمیکنید، لطف پوشه هرزنامه خود را چک کنید.</string>
-  <string name="human_verification_option_sms">شماره تلفن</string>
-  <string name="human_verification_option_sms_subtitle">از شماره تلفن شما فقط برای این تایید یکبار مصرف استفاده خواهد شد.</string>
-  <string name="human_verification_get_verification_code">دریافت کد تایید</string>
-  <string name="human_verification_already_have_code">من از قبل یک کد دارم</string>
-  <string name="human_verification_request_replacement_code">کد را دریافت نکردید؟</string>
-  <string name="human_verification_verify">تایید</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">برای اعتبارسنجی به کمک نیاز دارید؟</string>
-  <string name="human_verification_code">کد تایید</string>
-  <string name="human_verification_code_request_new_code_title">درخواست کد جدید؟</string>
-  <string name="human_verification_code_request_new_code_action">درخواست کد جدید</string>
-  <string name="human_verification_code_request_new_code">کد جایگزین به %s ارسال شود.</string>
-  <string name="email">رایانامه</string>
-  <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">درخواست دعوتنامه</string>
   <string name="human_verification_help_manual">اگر در ایجاد حساب کاربری خود مشکلی دارید، لطفا یک دعوت‌ نامه درخواست کنید و ما ظرف یک روز کاری پاسخ خواهیم داد.</string>
   <string name="human_verification_help_website_title">از مرکز راهنمایی ما دیدن کنید</string>
   <string name="human_verification_help_website">در مورد اعتبارسنجی و این که چرا ما آن را درخواست میکنیم بیشتر یاد بگیرید.</string>
-  <string name="human_verification_sending_failed">ارسال کد اعتبارسنجی ناموفق بود. لطفا دوباره امتحان کنید.</string>
-  <string name="human_verification_incorrect_code">کد نادرست است. لطفا دوباره امتحان کنید.</string>
-  <string name="human_verification_resent_code">یک کد دیگر برای شما فرستادیم.</string>
-  <string name="human_verification_captcha_failed">اعتبارسنجی CAPTCHA ناموفق بود. لطفا یکبار دیگر امتحان کنید یا روش اعتبارسنجی دیگری انتخاب کنید.</string>
-  <string name="human_verification_captcha_no_connectivity">اتصال برقرار نیست. CAPTCHA بارگیری نشد.</string>
-  <string name="human_verification_action_retry">تلاش مجدد</string>
-  <string name="human_verification_method_loading_failed">نمیتوان روش فعلی اعتبارسنجی را بارگیری کرد. اگر مشکل پابرجا بود، لطفا اگر روش های دیگر در دسترس هستند یکی از آنها را امتحان کنید یا صفحه کمک را چک کنید.</string>
 </resources>

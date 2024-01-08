@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
   <!-- region payment errors -->
   <string name="payments_general_error">發生錯誤。</string>
   <string name="payments_no_connectivity">無法連線以顯示 3DS 確認頁面。</string>
-  <string name="payments_3ds_not_approved">3D 安全驗證已被拒絕。</string>
+  <string name="payments_3ds_not_approved">3D 安全驗證已被婉拒。</string>
   <string name="payments_error_card_name">需要信用卡上的名字。</string>
   <string name="payments_error_card_number">無效的卡號。</string>
   <string name="payments_error_cvc">請輸入正確的安全代碼。</string>
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">無法使用既有的繳款方式註冊。</string>
   <string name="payments_error_invalid_session">無效的工作階段。</string>
   <string name="payments_no_payment_provider">未找到有效的付款提供商。</string>
+  <string name="payments_error_google_prices">目前擷取 Play 商店價格時發生問題。</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">選擇您的繳款方式</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">月月/年年</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">國家</string>
+  <string name="payments_get_plan">取得 %s</string>
   <string name="payments_paying_in_process">正在繳款</string>
   <string name="payments_choose_country">選擇國家</string>
   <string name="payment_cc_list_item">%1$s - %2$s（到期日 %3$s/%4$s）</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Не вдалося зареєструватися за допомогою наявного способу оплати.</string>
   <string name="payments_error_invalid_session">Недійсний сеанс.</string>
   <string name="payments_no_payment_provider">Не знайдено активного обробника платежу.</string>
+  <string name="payments_error_google_prices">Проблема з отриманням цін у Play Маркеті.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Оберіть спосіб оплати</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">ММ/РР</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Країна</string>
+  <string name="payments_get_plan">Отримати %s</string>
   <string name="payments_paying_in_process">Оплата</string>
   <string name="payments_choose_country">Виберіть країну</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Чинна до %3$s/%4$s)</string>

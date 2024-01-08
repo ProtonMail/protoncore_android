@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">存在する支払い手段でサインアップできませんでした。</string>
   <string name="payments_error_invalid_session">無効なセッションです。</string>
   <string name="payments_no_payment_provider">有効な支払い方法が見つかりません。</string>
+  <string name="payments_error_google_prices">現在、Google Play ストアの価格を取得する際に問題が発生しています。</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">支払方法を選択してください</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">国</string>
+  <string name="payments_get_plan">%sを入手</string>
   <string name="payments_paying_in_process">決済中</string>
   <string name="payments_choose_country">国を選択</string>
   <string name="payment_cc_list_item">%1$s - %2$s (期限 %3$s/%4$s)</string>

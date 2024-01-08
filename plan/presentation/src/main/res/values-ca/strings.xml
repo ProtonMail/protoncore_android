@@ -37,7 +37,7 @@
     <item quantity="other">Pagament per %d mesos</item>
   </plurals>
   <string name="plans_billed_yearly">*Facturat anualment a %s</string>
-  <string name="plans_billed_monthly">Facturat mensualment</string>
+  <string name="plans_billed_monthly">Facturat cada mesc</string>
   <string name="plans_billing_monthly">1 mes</string>
   <string name="plans_billing_yearly">1 any</string>
   <string name="plans_billing_two_years">2 anys</string>
@@ -55,7 +55,7 @@
   <string name="plans_manage_your_subscription_other">La seva subscripció no es pot gestionar des de l\'aplicació mòbil.</string>
   <string name="plans_autorenew_subscriptions">Només les subscripcions anuals de renovació automàtica estan disponibles mitjançant aquesta aplicació.</string>
   <string name="plans_can_not_upgrade_from_mobile">No podeu millorar el pla des de l\'aplicació mòbil.</string>
-  <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
+  <string name="plans_no_upgrade_available">No hi ha actualitzacions disponibles actualment.</string>
   <string name="plans_limited_offer">Oferta temporal limitada.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

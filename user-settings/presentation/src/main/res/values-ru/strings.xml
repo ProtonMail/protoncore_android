@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">ОК</string>
   <string name="settings_not_set">Не задано</string>
   <string name="settings_recovery_email_error_no_match">Новые адреса электронной почты для восстановления не совпадают</string>
-  <string name="settings_validation_email">Недопустимый адрес электронной почты.</string>
+  <string name="settings_validation_email">Недействительный адрес эл. почты.</string>
   <string name="settings_general_error">Произошла ошибка.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Изменить пароль</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Новый пароль почтового ящика</string>
   <string name="settings_mailbox_password_hint_new_confirm">Подтвердите новый пароль почтового ящика</string>
   <string name="settings_change_password_error">Произошла ошибка при смене пароля.</string>
-  <string name="settings_recovery_email_success">Обновлен резервный адрес электронной почты</string>
+  <string name="settings_recovery_email_success">Адрес электронной почты для восстановления обновлен</string>
   <string name="settings_password_management_success">Пароль обновлен</string>
   <string name="settings_password_management_login_password_success">Пароль для входа обновлен</string>
   <string name="settings_password_management_mailbox_password_success">Пароль почтового ящика обновлен</string>

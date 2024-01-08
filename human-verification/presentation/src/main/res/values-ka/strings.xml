@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">დახმარება</string>
   <string name="human_verification_title">ადამიანის შემოწმება</string>
-  <string name="human_verification_main_subtitle">არასამართლებრივი გამოყენების თავიდან ასაცილებლად გთხოვთ დაადასტუროთ, რომ ადამიანი ბრძანდებით. ამისთვის აირჩიეთ ერთ-ერთი შემდეგი ვარიანტებიდან</string>
-  <string name="human_verification_enter_code_subtitle">შეიყვანეთ %s-ზე გამოგზავნილი შემოწმების კოდი.</string>
-  <string name="human_verification_enter_code_subtitle_email">შეიყვანეთ შემოწმების კოდი, რომელიც %s-ზე გამოგიგზავნეთ. თუ შეტყობინებას საფოსტო ყუთში ვერ პოულობთ, სპამშიც ჩაიხედეთ.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">შეიყვანეთ გადამოწმების კოდი, რომელიც უკვე გაქვთ:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">ელფოსტა</string>
-  <string name="human_verification_option_email_subtitle">თქვენი ელფოსტა, მხოლოდ, ერთჯერადი შემოწმებისთვის გამოიყენება. თუ ელფოსტა საფოსტო ყუთში ვერ იპოვეთ, სპამის საქაღალდეშიც ჩაიხედეთ.</string>
-  <string name="human_verification_option_sms">ტელეფონის ნომერი</string>
-  <string name="human_verification_option_sms_subtitle">თქვენი ტელეფონის ნომერი, მხოლოდ, ერთხელ, შესამოწმებლად იქნება გამოყენებული.</string>
-  <string name="human_verification_get_verification_code">შემოწმების კოდის მიღება</string>
-  <string name="human_verification_already_have_code">კოდი უკვე მაქვს</string>
-  <string name="human_verification_request_replacement_code">კოდი არ მიგიღიათ?</string>
-  <string name="human_verification_verify">გადამოწმება</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">გჭირდებათ დახმარება ადამიანობის შემოწმებაში?</string>
-  <string name="human_verification_code">შემოწმების კოდი</string>
-  <string name="human_verification_code_request_new_code_title">გამოვითხოვო ახალი კოდი?</string>
-  <string name="human_verification_code_request_new_code_action">ახალი კოდის გამოთხოვა</string>
-  <string name="human_verification_code_request_new_code">მიიღეთ %s-ზე გაგზავნილი შეცვლის კოდი.</string>
-  <string name="email">ელფოსტა</string>
-  <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">მოსაწვევის მოთხოვნა</string>
   <string name="human_verification_help_manual">თუ გექმნებათ ანგარიშის შექმნის პრობლემა, გამოითხოვეთ მოსაწვევი და ჩვენ 1 სამუშაო დღეში გიპასუხებთ.</string>
   <string name="human_verification_help_website_title">ეწვიეთ დახმარების ჩვენს ცენტრს</string>
   <string name="human_verification_help_website">გაიგეთ მეტი ადამიანობის შემოწმებაზე და რატომ გთხოვთ ამას.</string>
-  <string name="human_verification_sending_failed">შემოწმების კოდის გაგზავნის შეცდომა. თავიდან სცადეთ.</string>
-  <string name="human_verification_incorrect_code">კოდი არასწორია. თავიდან სცადეთ.</string>
-  <string name="human_verification_resent_code">გამოგეგზავნათ ახალი კოდი.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA-ის შემოწმების შეცდომა. თავიდან სცადეთ ან აირჩიეთ შემოწმების სხვა მეთოდი.</string>
-  <string name="human_verification_captcha_no_connectivity">მიერთების გარეშე. CAPTCHA ვერ ჩაიტვირთა.</string>
-  <string name="human_verification_action_retry">თავიდან</string>
-  <string name="human_verification_method_loading_failed">შემოწმების მიმდინარე მეთოდის ჩატვირთვის შეცდომა. თუ პრობლემა არ გაქრება, სცადეთ ერთ-ერთი სხვა მეთოდი, თუ ის ხელმისაწვდომია ან დახმარების ეკრანი შეამოწმეთ.</string>
 </resources>

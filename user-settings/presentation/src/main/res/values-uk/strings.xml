@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">Гаразд</string>
   <string name="settings_not_set">Не встановлено</string>
   <string name="settings_recovery_email_error_no_match">Нові адреси е-пошти для відновлення не збігаються</string>
-  <string name="settings_validation_email">Недійсна електронна адреса.</string>
+  <string name="settings_validation_email">Недійсна адреса е-пошти.</string>
   <string name="settings_general_error">Сталася помилка.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Змінити пароль</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Новий пароль поштової скриньки</string>
   <string name="settings_mailbox_password_hint_new_confirm">Підтвердження нового пароля поштової скриньки</string>
   <string name="settings_change_password_error">Сталася помилка зміни пароля.</string>
-  <string name="settings_recovery_email_success">Пошту для відновлення доступу оновлено</string>
+  <string name="settings_recovery_email_success">Адресу е-пошти для відновлення доступу оновлено</string>
   <string name="settings_password_management_success">Пароль оновлено</string>
   <string name="settings_password_management_login_password_success">Пароль входу оновлено</string>
   <string name="settings_password_management_mailbox_password_success">Пароль поштової скриньки оновлено</string>

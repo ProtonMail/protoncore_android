@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -21,13 +21,14 @@
   <string name="payments_general_error">Der opstod en fejl.</string>
   <string name="payments_no_connectivity">Ingen forbindelse til at vise 3DS-bekræftelsesside.</string>
   <string name="payments_3ds_not_approved">3DS-godkendelse er blevet afvist.</string>
-  <string name="payments_error_card_name">Navn på kort påkrævet.</string>
+  <string name="payments_error_card_name">Navn på kort er påkrævet.</string>
   <string name="payments_error_card_number">Ugyldigt kortnummer.</string>
   <string name="payments_error_cvc">Indtast en gyldig sikkerhedskode.</string>
   <string name="payments_error_session">Gyldigt sessions-ID er nødvendigt ved oprettelse af abonnement for en bruger, som er logget ind.</string>
   <string name="payments_error_signup_paymentmethod">Kunne ikke tilmelde med eksisterende betalingsmetode.</string>
   <string name="payments_error_invalid_session">Ugyldig session.</string>
   <string name="payments_no_payment_provider">Ingen aktiv betalingsudbyder fundet.</string>
+  <string name="payments_error_google_prices">Problemer med at hente Google Play Store-priser i øjeblikket.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Vælg din betalingsmetode</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">MM/ÅÅ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
+  <string name="payments_get_plan">Få %s</string>
   <string name="payments_paying_in_process">Betaler</string>
   <string name="payments_choose_country">Vælg land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Udløber %3$s/%4$s)</string>

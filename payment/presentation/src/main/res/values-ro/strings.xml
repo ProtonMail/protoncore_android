@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Nu se poate crea un cont cu metoda de plată existentă.</string>
   <string name="payments_error_invalid_session">Sesiune nevalidă.</string>
   <string name="payments_no_payment_provider">Nu s-a găsit un furnizor de plată activ.</string>
+  <string name="payments_error_google_prices">Problemă la preluarea prețurilor din Magazinul Google Play în acest moment.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Alegeți metoda de plată</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">LL/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Țara</string>
+  <string name="payments_get_plan">Obțineți %s</string>
   <string name="payments_paying_in_process">Se plătește</string>
   <string name="payments_choose_country">Selectare țară</string>
   <string name="payment_cc_list_item">%1$s - %2$s (dată expirare %3$s/%4$s)</string>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nicht festgelegt</string>
   <string name="settings_recovery_email_error_no_match">Neue Wiederherstellungs-E-Mail-Adressen stimmen nicht überein</string>
-  <string name="settings_validation_email">Ungültige E-Mail-Adresse.</string>
+  <string name="settings_validation_email">E-Mail-Adresse ist ungültig.</string>
   <string name="settings_general_error">Ein Fehler ist aufgetreten.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Passwort ändern</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Neues Postfachpasswort</string>
   <string name="settings_mailbox_password_hint_new_confirm">Neues Postfachpasswort bestätigen</string>
   <string name="settings_change_password_error">Das Ändern des Passworts ist fehlgeschlagen.</string>
-  <string name="settings_recovery_email_success">Wiederherstellungs-E-Mail wurde aktualisiert</string>
+  <string name="settings_recovery_email_success">E-Mail-Adresse für die Wiederherstellung aktualisiert</string>
   <string name="settings_password_management_success">Passwort wurde aktualisiert</string>
   <string name="settings_password_management_login_password_success">Anmeldepasswort wurde aktualisiert</string>
   <string name="settings_password_management_mailbox_password_success">Postfach-Passwort wurde aktualisiert</string>

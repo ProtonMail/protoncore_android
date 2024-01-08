@@ -18,10 +18,10 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">El restablecimiento de contraseña ha sido solicitado.</string>
+  <string name="account_recovery_grace_period_info_title">Restablecimiento de contraseña solicitado.</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="one">Se ha solicitado el restablecimiento de la contraseña para <b>%1$s</b>. Puedes cambiar tu contraseña en %2$d hora.\n\nSi no has realizado esta solicitud, cancélala ahora.</item>
-    <item quantity="other">Se ha solicitado el restablecimiento de la contraseña para <b>%1$s</b>. Puedes cambiar tu contraseña en %2$d horas.\n\nSi no has realizado esta solicitud, cancélala ahora.</item>
+    <item quantity="other">Un restablecimiento de contraseña se ha solicitado para <b>%1$s</b>. Podrás cambiar tu contraseña en %2$d horas.\n\nSi tú no has realizado esta solicitud, cancélala ahora.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Cancelar el restablecimiento de contraseña?</string>
@@ -31,15 +31,15 @@
   <string name="account_recovery_cancel_now">Cancelar el restablecimiento de contraseña</string>
   <string name="account_recovery_cancel_back">Regresar</string>
   <!-- Account recovery cancelled -->
-  <string name="account_recovery_cancelled_title">El restablecimiento de contraseña ha sido cancelado</string>
-  <string name="account_recovery_cancelled_subtitle">Si nunca has solicitado el cambio de tu contraseña, tu cuenta podría estar en peligro.\n\nAsegura tu cuenta cambiando tu contraseña.</string>
+  <string name="account_recovery_cancelled_title">Restablecimiento de contraseña cancelado</string>
+  <string name="account_recovery_cancelled_subtitle">Si tú nunca solicitaste un cambio para tu contraseña, tu cuenta podría estar comprometida y en riesgo.\n\nAsegura tu cuenta cambiando tu contraseña.</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">El restablecimiento de contraseña está disponible.</string>
-  <string name="account_recovery_password_started_subtitle">Para restablecer la contraseña, ve al dispositivo y navegador del cual has realizado la solicitud de restablecimiento.\n\nNecesitarás hacer esto antes de %s.\n\nSi no has solicitado restablecer la contraseña, cancela la solicitud ahora.</string>
+  <string name="account_recovery_password_started_title">Restablecimiento de contraseña disponible</string>
+  <string name="account_recovery_password_started_subtitle">Para restablecer la contraseña, regresa al dispositivo y navegador desde el cual realizaste la solicitud de restablecimiento.\n\nNecesitarás hacer esto antes de %s.\n\nSi no has solicitado restablecer la contraseña, cancela el restablecimiento ahora.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">El restablecimiento de contraseña ha expirado.</string>
   <string name="account_recovery_window_ended_subtitle">Tendrás que solicitar un nuevo restablecimiento de contraseña para %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Cancelar la solicitud</string>
-  <string name="account_recovery_dismiss">Entiendo</string>
+  <string name="account_recovery_dismiss">Entendido</string>
 </resources>

@@ -37,7 +37,7 @@
   <string name="auth_second_factor_code">2단계 인증 코드</string>
   <string name="auth_email">이메일</string>
   <string name="auth_email_username">사용자 이름 또는 비밀번호</string>
-  <string name="auth_account_details">Proton 계정 상세 정보를 입력하십시오.</string>
+  <string name="auth_account_details">Proton 계정 상세 정보를 입력하세요.</string>
   <string name="auth_sign_in">로그인</string>
   <string name="auth_sign_in_action">로그인</string>
   <string name="auth_sign_in_sso">조직에 로그인</string>

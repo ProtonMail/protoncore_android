@@ -18,27 +18,27 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">請求重設密碼</string>
+  <string name="account_recovery_grace_period_info_title">密碼重設已被送出</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="other">已請求 <b>%1$s</b> 的密碼重設。您可以在%2$d小時內變更密碼。\n\n若您並未做出此請求，請立刻取消。</item>
+    <item quantity="other"><b>%1$s</b> 的密碼重設已被送出。您可以在%2$d小時內變更密碼。\n\n若您並未作出此要求，請立刻取消。</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">取消密碼重設？</string>
-  <string name="account_recovery_cancel_subtitle">輸入您的密碼以取消。</string>
+  <string name="account_recovery_cancel_subtitle">請輸入您的密碼以便取消。</string>
   <string name="account_recovery_cancel_password_label">目前密碼</string>
   <string name="account_recovery_cancel_password_placeholder">密碼</string>
   <string name="account_recovery_cancel_now">取消密碼重設</string>
   <string name="account_recovery_cancel_back">返回</string>
   <!-- Account recovery cancelled -->
-  <string name="account_recovery_cancelled_title">已取消重設密碼</string>
-  <string name="account_recovery_cancelled_subtitle">若您並未要求變更密碼，您的帳號可能處於風險之中。\n\n透過變更您的密碼來保護您的帳號。</string>
+  <string name="account_recovery_cancelled_title">已取消密碼重設</string>
+  <string name="account_recovery_cancelled_subtitle">若您並未要求更改密碼，您的帳號可能面臨風險。\n\n請更改您的密碼來保護您的帳號。</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">可以重設密碼</string>
-  <string name="account_recovery_password_started_subtitle">要重設密碼，請回到做出您的密碼重設請求的裝置與瀏覽器。\n\n您將必須在 %s 之前做這件事。\n\n若您並未要求重設密碼，請立刻取消重設。</string>
+  <string name="account_recovery_password_started_subtitle">為了重設密碼，請回到您原先做出密碼重設要求的裝置與瀏覽器。\n\n您必須在 %s 之前完成。\n\n若您並未要求重設密碼，請立刻取消重設。</string>
   <!-- Recovery window ended -->
-  <string name="account_recovery_window_ended_title">密碼重設已過期</string>
-  <string name="account_recovery_window_ended_subtitle">您將必須請求 %s 的密碼重設。</string>
+  <string name="account_recovery_window_ended_title">密碼重設要求已過期</string>
+  <string name="account_recovery_window_ended_subtitle">您將需要為 %s 重設密碼。</string>
   <!-- Other -->
-  <string name="account_recovery_cancel">取消請求</string>
+  <string name="account_recovery_cancel">取消要求</string>
   <string name="account_recovery_dismiss">瞭解</string>
 </resources>

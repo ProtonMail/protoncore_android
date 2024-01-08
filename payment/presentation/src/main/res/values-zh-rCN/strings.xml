@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">无法使用现有的支付方式注册。</string>
   <string name="payments_error_invalid_session">无效会话。</string>
   <string name="payments_no_payment_provider">未发现有效支付提供商。</string>
+  <string name="payments_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">请选择您的支付方式</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">国家</string>
+  <string name="payments_get_plan">获得 %s</string>
   <string name="payments_paying_in_process">正在支付</string>
   <string name="payments_choose_country">选择国家</string>
   <string name="payment_cc_list_item">%1$s - %2$s (截止日期 %3$s/%4$s)</string>

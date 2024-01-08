@@ -18,28 +18,29 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">Password reset requested</string>
+  <string name="account_recovery_grace_period_info_title">درخواست بازنشانی رمزعبور ثبت شد</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
     <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
-  <string name="account_recovery_cancel_title">Cancel password reset?</string>
-  <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
+  <string name="account_recovery_cancel_title">بازنشانی رمزعبور لغو شود؟</string>
+  <string name="account_recovery_cancel_subtitle">جهت لغو، رمز عبور خود را وارد کنید.</string>
   <string name="account_recovery_cancel_password_label">گذرواژه کنونی</string>
-  <string name="account_recovery_cancel_password_placeholder">Password</string>
-  <string name="account_recovery_cancel_now">Cancel password reset</string>
-  <string name="account_recovery_cancel_back">Back</string>
+  <string name="account_recovery_cancel_password_placeholder">رمزعبور</string>
+  <string name="account_recovery_cancel_now">لغو بازنشانی رمزعبور</string>
+  <string name="account_recovery_cancel_back">بازگشت</string>
   <!-- Account recovery cancelled -->
-  <string name="account_recovery_cancelled_title">Password reset cancelled</string>
-  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <string name="account_recovery_cancelled_title">بازنشانی رمز عبور لغو شد</string>
+  <string name="account_recovery_cancelled_subtitle">اگر شما درخواست تغییر رمزعبور ثبت نکرده اید، ممکن است حساب شما در خطر باشد!\n\n
+با تغییر رمزعبور خود حساب خود را ایمن کنید.</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">Password reset available</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <string name="account_recovery_password_started_title">بازنشانی رمزعبور دردسترس است.</string>
+  <string name="account_recovery_password_started_subtitle">جهت بازنشانی رمزعبور، به مرورگر دستگاهی که این درخواست را درآن ثبت کردید برگردید.\n\n شما باید تا قبل از %s این کار را انجام دهید. \n\nاگر شما درخواست بازنشانی رمزعبور ثبت نکرده اید، همین الان آن را لغو کنید.</string>
   <!-- Recovery window ended -->
-  <string name="account_recovery_window_ended_title">Password reset expired</string>
-  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <string name="account_recovery_window_ended_title">بازنشانی رمزعبور منقضی شده است.</string>
+  <string name="account_recovery_window_ended_subtitle">شما در %s دیگر میتوانید درخواست جدیدی برای بازنشانی رمزعبور خود ثبت کنید.</string>
   <!-- Other -->
-  <string name="account_recovery_cancel">Cancel request</string>
-  <string name="account_recovery_dismiss">Got it</string>
+  <string name="account_recovery_cancel">لغو درخواست</string>
+  <string name="account_recovery_dismiss">متوجه شدم</string>
 </resources>

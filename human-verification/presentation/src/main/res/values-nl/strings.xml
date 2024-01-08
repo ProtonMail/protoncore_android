@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hulp</string>
   <string name="human_verification_title">Persoonsverificatie</string>
-  <string name="human_verification_main_subtitle">Om misbruik te voorkomen, dient u te verifiëren dat u een mens bent door gebruik te maken van één van de volgende opties</string>
-  <string name="human_verification_enter_code_subtitle">Voer de verificatiecode in die is verzonden naar %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Voer de verificatiecode in die is verzonden naar %s. Als u de e-mail niet in uw inbox vindt, controleer dan uw spam-map.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Voer de verificatiecode in die u al hebt:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">E-mail</string>
-  <string name="human_verification_option_email_subtitle">Uw e-mail zal alleen worden gebruikt voor deze eenmalige verificatie. Als u de e-mail niet in uw inbox aantreft, controleer dan uw spam-map.</string>
-  <string name="human_verification_option_sms">Telefoonnummer</string>
-  <string name="human_verification_option_sms_subtitle">Uw telefoonnummer wordt alleen gebruikt voor deze eenmalige verificatie.</string>
-  <string name="human_verification_get_verification_code">Krijg verificatiecode</string>
-  <string name="human_verification_already_have_code">Ik heb al een code</string>
-  <string name="human_verification_request_replacement_code">Code niet ontvangen?</string>
-  <string name="human_verification_verify">Verifiëren</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Hebt u hulp nodig bij de persoonsverificatie?</string>
-  <string name="human_verification_code">Verificatiecode</string>
-  <string name="human_verification_code_request_new_code_title">Nieuwe code aanvragen?</string>
-  <string name="human_verification_code_request_new_code_action">Nieuwe code aanvragen</string>
-  <string name="human_verification_code_request_new_code">Laat een vervangende code sturen naar %s.</string>
-  <string name="email">E-mail</string>
-  <string name="email_hint">email@voorbeeld.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Uitnodiging aanvragen</string>
   <string name="human_verification_help_manual">Als u problemen ondervindt met het aanmaken van uw account, vraag dan een uitnodiging aan. Wij reageren op uw verzoek binnen 1 werkdag.</string>
   <string name="human_verification_help_website_title">Bezoek ons Helpcentrum</string>
   <string name="human_verification_help_website">Leer meer over menselijke verificatie en waarom we erom vragen.</string>
-  <string name="human_verification_sending_failed">Verificatie code verzending mislukt. Probeer opnieuw.</string>
-  <string name="human_verification_incorrect_code">Onjuiste code. Probeer opnieuw.</string>
-  <string name="human_verification_resent_code">We hebben u een andere code gestuurd.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA verificatie mislukt. Probeer het nog een keer of kies een andere verificatie optie.</string>
-  <string name="human_verification_captcha_no_connectivity">Geen connectiviteit. CAPTCHA kon niet geladen worden.</string>
-  <string name="human_verification_action_retry">Opnieuw proberen</string>
-  <string name="human_verification_method_loading_failed">Kon de huidige verificatiemethode niet laden. Als het probleem aanhoudt, probeer dan één van de andere methodes als ze beschikbaar zijn of controleer het Help-scherm.</string>
 </resources>

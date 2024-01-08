@@ -148,6 +148,6 @@
   <string name="auth_signup_start_using_mail">Započnite koristiti Proton Mail</string>
   <string name="auth_signup_start_using_drive">Započnite koristiti Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Započnite koristiti Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">Započnite koristiti Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
 </resources>

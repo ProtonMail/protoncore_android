@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Ikke indstillet</string>
   <string name="settings_recovery_email_error_no_match">Nye gendannelses-e-mails matcher ikke</string>
-  <string name="settings_validation_email">E-mail er ikke gyldig.</string>
+  <string name="settings_validation_email">E-mailadresse er ugyldig.</string>
   <string name="settings_general_error">Der opstod en fejl.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Skift adgangskode</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Ny postkasseadgangskode</string>
   <string name="settings_mailbox_password_hint_new_confirm">Bekræft ny postkasseadgangskode</string>
   <string name="settings_change_password_error">En fejl opstod ved ændring af adgangskode.</string>
-  <string name="settings_recovery_email_success">E-mail til gendannelse ugyldig</string>
+  <string name="settings_recovery_email_success">E-mail til gendannelse ændret</string>
   <string name="settings_password_management_success">Adgangskode opdateret</string>
   <string name="settings_password_management_login_password_success">Login-adgangskode opdateret</string>
   <string name="settings_password_management_mailbox_password_success">Postkasseadgangskode opdateret</string>

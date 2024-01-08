@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">IH</string>
   <string name="settings_not_set">Ur yettwaslugen</string>
   <string name="settings_recovery_email_error_no_match">Imaylen n tririt imaynuten ur mṣadan ara</string>
-  <string name="settings_validation_email">Imayl d arameɣtu.</string>
+  <string name="settings_validation_email">Tansa imayl mačči d tameɣtut.</string>
   <string name="settings_general_error">Ylla-d neẓri.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Snifel awal uffir</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Awal uffir n tnaka n yimayl amaynut</string>
   <string name="settings_mailbox_password_hint_new_confirm">Sentem awal uffir n tnaka n yimayl amaynut</string>
   <string name="settings_change_password_error">Tella-d tuccḍa deg lawan n usenfel n wawal uffir.</string>
-  <string name="settings_recovery_email_success">Imayl n tririt yettwaleqqem</string>
+  <string name="settings_recovery_email_success">Recovery email address updated</string>
   <string name="settings_password_management_success">Awal uffir yettwaleqqem</string>
   <string name="settings_password_management_login_password_success">Awal uffir n unekcum yettwaleqqem</string>
   <string name="settings_password_management_mailbox_password_success">Awal uffir n tenkult imayl yettwaleqqem</string>

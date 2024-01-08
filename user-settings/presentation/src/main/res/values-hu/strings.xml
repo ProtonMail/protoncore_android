@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nincs beállítva</string>
   <string name="settings_recovery_email_error_no_match">Az új helyreállítási címek nem egyeznek</string>
-  <string name="settings_validation_email">Hibás email cím.</string>
+  <string name="settings_validation_email">Az e-mail cím érvénytelen.</string>
   <string name="settings_general_error">Hiba történt.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Jelszó megváltoztatása</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Új e-mail jelszó</string>
   <string name="settings_mailbox_password_hint_new_confirm">Új e-mail jelszó megerősítése</string>
   <string name="settings_change_password_error">Hiba történt a jelszó megváltoztatása közben.</string>
-  <string name="settings_recovery_email_success">Helyreállító e-mail frissítve</string>
+  <string name="settings_recovery_email_success">Helyreállítási e-mail cím frissítve</string>
   <string name="settings_password_management_success">Jelszó frissítve</string>
   <string name="settings_password_management_login_password_success">Bejelentkezési jelszó frissítve</string>
   <string name="settings_password_management_mailbox_password_success">E-mail titkosítási jelszó frissítve</string>

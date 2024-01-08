@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hilfe</string>
   <string name="human_verification_title">Menschliche Verifizierung</string>
-  <string name="human_verification_main_subtitle">Um Missbrauch zu verhindern, bestätige bitte, dass du ein Mensch bist, indem du eine der folgenden Optionen verwendest</string>
-  <string name="human_verification_enter_code_subtitle">Gib den an „%s” gesendeten Verifizierungscode ein.</string>
-  <string name="human_verification_enter_code_subtitle_email">Gib den an „%s“ gesendeten Verifizierungscode ein. Solltest du die E-Mail nicht in deinem Posteingang vorfinden, überprüfe bitte deinen Spam-Ordner.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Gib den bereits erhaltenen Verifizierungscode ein:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">E-Mail-Adresse</string>
-  <string name="human_verification_option_email_subtitle">Deine E-Mail-Adresse wird nur für diese einmalige Überprüfung verwendet. Wenn du die Nachricht nicht in deinem Posteingang findest, überprüfe bitte auch deinen Spam-Ordner.</string>
-  <string name="human_verification_option_sms">Telefonnummer</string>
-  <string name="human_verification_option_sms_subtitle">Deine Telefonnummer wird nur für diese einmalige Überprüfung verwendet.</string>
-  <string name="human_verification_get_verification_code">Verifizierungscode anfordern</string>
-  <string name="human_verification_already_have_code">Ich habe bereits einen Code</string>
-  <string name="human_verification_request_replacement_code">Code nicht erhalten?</string>
-  <string name="human_verification_verify">Verifizieren</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Benötigst du Hilfe bei der menschlichen Verifizierung?</string>
-  <string name="human_verification_code">Verifizierungscode</string>
-  <string name="human_verification_code_request_new_code_title">Neuen Code anfordern?</string>
-  <string name="human_verification_code_request_new_code_action">Neuen Code anfordern</string>
-  <string name="human_verification_code_request_new_code">Lass dir einen Ersatzcode an „%s“ senden.</string>
-  <string name="email">E-Mail</string>
-  <string name="email_hint">email@beispiel.de</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Einladung anfordern</string>
   <string name="human_verification_help_manual">Wenn du Probleme bei der Erstellung deines Kontos hast, reiche bitte eine Anfrage ein. Wir werden dir innerhalb eines Werktags antworten.</string>
   <string name="human_verification_help_website_title">Besuche unseren Hilfebereich</string>
   <string name="human_verification_help_website">Erfahre mehr über die menschliche Verifizierung und warum wir danach fragen.</string>
-  <string name="human_verification_sending_failed">Das Senden des Verifizierungscodes ist fehlgeschlagen. Bitte versuche es erneut.</string>
-  <string name="human_verification_incorrect_code">Ungültiger Code. Bitte versuche es erneut.</string>
-  <string name="human_verification_resent_code">Wir haben dir einen weiteren Code gesendet.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA-Überprüfung fehlgeschlagen. Bitte versuche es noch einmal oder wähle eine andere Verifizierungsoption.</string>
-  <string name="human_verification_captcha_no_connectivity">Keine Internetverbindung. CAPTCHA konnte nicht geladen werden.</string>
-  <string name="human_verification_action_retry">Wiederholen</string>
-  <string name="human_verification_method_loading_failed">Die aktuelle Überprüfungsmethode konnte nicht geladen werden. Wenn das Problem weiterhin besteht, versuche bitte eine der anderen Methoden, falls diese verfügbar sind, oder schaue in der Hilfe nach.</string>
 </resources>

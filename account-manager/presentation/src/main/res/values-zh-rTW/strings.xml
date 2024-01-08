@@ -22,6 +22,6 @@
   <string name="account_switcher_action_sign_in">登入</string>
   <string name="account_switcher_action_sign_out">登出</string>
   <string name="account_switcher_action_remove">移除</string>
-  <string name="account_list_item_chevron_content_description">開啟帳號切換器</string>
+  <string name="account_list_item_chevron_content_description">開啟帳號切換程式</string>
   <string name="account_view_three_dots_content_description">選項</string>
 </resources>

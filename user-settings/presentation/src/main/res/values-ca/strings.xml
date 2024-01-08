@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Sense definir</string>
   <string name="settings_recovery_email_error_no_match">Els correus electrònics de recuperació nous no coincideixen</string>
-  <string name="settings_validation_email">El correu electrònic no és vàlid.</string>
+  <string name="settings_validation_email">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="settings_general_error">S\'ha produït un error.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Canvia la contrasenya</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Nova contrasenya de la bústia</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmeu la nova contrasenya de la bústia</string>
   <string name="settings_change_password_error">Hi ha hagut un error de canvi de contrasenya.</string>
-  <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació</string>
+  <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
   <string name="settings_password_management_login_password_success">Contrasenya d\'inici de sessió actualitzada</string>
   <string name="settings_password_management_mailbox_password_success">Contrasenya de la bústia actualitzada</string>

@@ -29,7 +29,7 @@
   <string name="account_recovery_cancel_password_label">Núverandi lykilorð</string>
   <string name="account_recovery_cancel_password_placeholder">Password</string>
   <string name="account_recovery_cancel_now">Cancel password reset</string>
-  <string name="account_recovery_cancel_back">Back</string>
+  <string name="account_recovery_cancel_back">Til baka</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">Password reset cancelled</string>
   <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
@@ -40,6 +40,6 @@
   <string name="account_recovery_window_ended_title">Password reset expired</string>
   <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
   <!-- Other -->
-  <string name="account_recovery_cancel">Cancel request</string>
-  <string name="account_recovery_dismiss">Got it</string>
+  <string name="account_recovery_cancel">Hætta við beiðni</string>
+  <string name="account_recovery_dismiss">Náði því</string>
 </resources>

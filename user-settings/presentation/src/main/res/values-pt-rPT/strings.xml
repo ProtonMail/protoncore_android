@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Endereço de recuperação</string>
+  <string name="settings_recovery_email_header">E-mail de recuperação</string>
   <string name="settings_recovery_email_current">Endereço de e-mail de recuperação actual</string>
   <string name="settings_recovery_email_new">Novo endereço de e-mail de recuperação</string>
   <string name="settings_recovery_email_confirm">Confirmar o endereço de e-mail de recuperação</string>
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">Aceitar</string>
   <string name="settings_not_set">Não definido</string>
   <string name="settings_recovery_email_error_no_match">Os novos e-mails de recuperação não correspondem.</string>
-  <string name="settings_validation_email">O e-mail  não é válido.</string>
+  <string name="settings_validation_email">O endereço de email é inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Alterar a palavra-passe</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Nova palavra-passe da caixa de correio</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmar a nova palavra-passe da caixa de correio</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da palavra-passe.</string>
-  <string name="settings_recovery_email_success">E-mail de recuperação actualizado</string>
+  <string name="settings_recovery_email_success">Endereço de e-mail de recuperação alterado</string>
   <string name="settings_password_management_success">Palavra-passe actualizada</string>
   <string name="settings_password_management_login_password_success">Palavra-passe de início de sessão actualizada</string>
   <string name="settings_password_management_mailbox_password_success">A palavra-passe da caixa de correio foi actualizada.</string>

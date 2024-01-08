@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Nesetat</string>
   <string name="settings_recovery_email_error_no_match">Noua adresă de e-mail pentru recuperare nu e identică.</string>
-  <string name="settings_validation_email">E-mail nevalid.</string>
+  <string name="settings_validation_email">Adresa de e-mail nu este validă.</string>
   <string name="settings_general_error">A apărut o eroare.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">Schimbare parolă</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">Parola nouă mesaje</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmare parolă nouă mesaje</string>
   <string name="settings_change_password_error">A apărut o eroare la schimbarea parolei.</string>
-  <string name="settings_recovery_email_success">S-a actualizat adresa de e-mail pentru recuperare</string>
+  <string name="settings_recovery_email_success">Adresă e-mail de recuperare s-a actualizat.</string>
   <string name="settings_password_management_success">Parolă actualizată</string>
   <string name="settings_password_management_login_password_success">Parola de conectare s-a actualizat</string>
   <string name="settings_password_management_mailbox_password_success">Parola pentru mesaje s-a actualizat</string>

@@ -27,26 +27,26 @@
   <string name="welcome_subtitle_calendar_alt">تقویم سرتاسر رمزگذاری شده ما به شما کمک میکند که منظم باشید، در مسیر بمانید، و کنترل در دستتان باشد.</string>
   <string name="welcome_subtitle_vpn">VPN پرسرعت سوئیسی که بوسیله رمزگذاری ارتباط اینترنت شما از حریم خصوصیتان محافظت میکند.</string>
   <string name="welcome_subtitle_vpn_alt">VPN پر سرعت سوئیسی که از حریم خصوصی شما محافظت میکند. حداکثر امنیت، ۱۶۰۰+ سرور، و بدون محدودیت.</string>
-  <string name="welcome_subtitle_pass">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
-  <string name="welcome_subtitle_pass_alt">All your passwords. Securely in one place and protected by the most trusted name in privacy.</string>
+  <string name="welcome_subtitle_pass">تمامی رمزهای عبور شما، به طور ایمن و در یک مکان، توسط معتبرترین نام در حفظ حریم خصوصی محافظت می شود.</string>
+  <string name="welcome_subtitle_pass_alt">تمامی رمزهای عبور شما، به طور ایمن و در یک مکان، توسط معتبرترین نام در حفظ حریم خصوصی محافظت می شود.</string>
   <string name="welcome_privacy_by_default">حریم شخصی به صورت پیشفرص</string>
   <string name="auth_password_label">گذرواژه</string>
   <string name="auth_password_help">گذرواژه باید حداقل ۸ نویسه داشته باشد</string>
   <string name="auth_current_login_password">گذرواژه کنونی</string>
   <string name="auth_enter_six_digit_code">کد 6 رقمی را وارد نمایید</string>
   <string name="auth_second_factor_code">کد دو مرحله‌ای</string>
-  <string name="auth_email">Email</string>
+  <string name="auth_email">پست الکترونیکی</string>
   <string name="auth_email_username">نام کاربری یا ایمیل</string>
   <string name="auth_account_details">اطلاعات حساب پروتون خود را وارد کنید.</string>
   <string name="auth_sign_in">ورود</string>
   <string name="auth_sign_in_action">ورود</string>
-  <string name="auth_sign_in_sso">Sign in to your organization</string>
-  <string name="auth_sign_in_with_password">Sign in with a password</string>
-  <string name="auth_continue_to_proton_vpn">to continue to Proton VPN</string>
-  <string name="auth_sign_in_with_sso">Sign in with SSO</string>
-  <string name="auth_help_label">Help</string>
+  <string name="auth_sign_in_sso">به سازمان خود وارد شوید</string>
+  <string name="auth_sign_in_with_password">ورود با رمزعبور</string>
+  <string name="auth_continue_to_proton_vpn">برای ادامه به Proton VPN</string>
+  <string name="auth_sign_in_with_sso">ورود با احراز هویت یکپارچه</string>
+  <string name="auth_help_label">راهنما</string>
   <string name="auth_login_assistive_text">لطفا ایمیل Proton یا نام کاربری خود را وارد کنید.</string>
-  <string name="auth_login_sso_assistive_text">Please enter your email.</string>
+  <string name="auth_login_sso_assistive_text">لطفا آدرس email خود را وارد کنید.</string>
   <string name="auth_help_title">چه طور می‌توانیم کمک کنیم؟</string>
   <string name="auth_help_option_forgot_username">فراموشی نام کاربری</string>
   <string name="auth_help_option_forgot_password">فراموشی گذرواژه</string>
@@ -75,14 +75,14 @@
   <string name="auth_create_address_title">آدرس Proton نیاز است</string>
   <string name="auth_create_address_subtitle">You need a Proton email address to use Proton Mail and Proton Calendar. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
   <string name="auth_username">نام کاربری</string>
-  <string name="auth_username_next_action">Continue</string>
+  <string name="auth_username_next_action">ادامه</string>
   <string name="auth_create_address_result_title">%s در دسترس است</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s آدرس ایمیل جدید پروتون شما خواهد بود.</string>
-  <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
+  <string name="auth_create_address_result_subtitle">شما از این آدرس برای ورود به حساب کاربری خود در تمامی سرویس های Proton استفاده خواهید کرد.</string>
   <string name="auth_create_address_result_recovery_title">آدرس ایمیل بازیابی شما این است:</string>
   <string name="auth_create_address_create">ایجاد آدرس</string>
   <string name="auth_create_address_creating">در حال ایجاد نشانی</string>
-  <string name="auth_create_address_terms">By clicking Create address, you agree to Proton\'s <a href="https://proton.me/legal/terms">Terms and Conditions</a>.</string>
+  <string name="auth_create_address_terms">با کلیک روی ایجاد آدرس، بدین منظور است که شما با شرایط و ضوابط Proton <a href="https://proton.me/legal/terms"> موافقت میکنید.</a>.</string>
   <string name="auth_create_address_error_credentials">اعتبارنامه‌ها‌ نباید خالی باشند.</string>
   <string name="auth_create_address_error_no_available_domain">دامنه در دسترس نیست.</string>
   <string name="auth_create_address_error_private_key">ساخت کلید خصوصی موفقیت آمیز نبود.</string>
@@ -101,7 +101,7 @@
   <string name="auth_account_not_found_error">خطای مربوط به حساب کاربری</string>
   <string name="auth_one_account_all_services">یک حساب برای همه سرویس های Proton.</string>
   <string name="auth_create_account">ایجاد حساب کاربری</string>
-  <string name="auth_long_signup">Please wait…</string>
+  <string name="auth_long_signup">لطفا شکیبا باشید…</string>
   <string name="auth_long_login">در حال ورود، لطفا شکیبا باشید…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">حساب Proton خود را ایجاد کنید</string>
@@ -148,6 +148,6 @@
   <string name="auth_signup_start_using_mail">شروع به استفاده از Proton Mail کنید</string>
   <string name="auth_signup_start_using_drive">شروع به استفاده از Proton Drive کنید</string>
   <string name="auth_signup_start_using_vpn">شروع به استفاده از Proton VPN کنید</string>
-  <string name="auth_signup_start_using_pass">Start using Proton Pass</string>
+  <string name="auth_signup_start_using_pass">استفاده از Proton Pass را شروع کنید</string>
   <string name="auth_signup_error_validation_recovery_destination">مقصد بازیابی نامعتبر است.</string>
 </resources>

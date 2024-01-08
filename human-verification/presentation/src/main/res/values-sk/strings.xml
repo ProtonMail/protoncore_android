@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">Pomoc</string>
   <string name="human_verification_title">Ľudské overenie</string>
-  <string name="human_verification_main_subtitle">Z dôvodu zabránenia proti zneužitiu prosím overte pomocou jednej z nasledujúcich možností, že ste človek</string>
-  <string name="human_verification_enter_code_subtitle">Zadajte overovací kód, ktorý bol odoslaný na adresu %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Zadajte overovací kód, ktorý bol odoslaný na %s. Ak e-mail nenájdete vo svojej doručenej pošte, skontrolujte priečinok so spamom, prosím.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Zadajte overovací kód, ktorý už máte:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">Email</string>
-  <string name="human_verification_option_email_subtitle">Váš e-mail bude použitý iba na toto jednorazové overenie. Ak e-mail nenájdete vo svojej doručenej pošte, skontrolujte priečinok so spamom, prosím.</string>
-  <string name="human_verification_option_sms">Telefónne číslo</string>
-  <string name="human_verification_option_sms_subtitle">Vaše telefónne číslo bude použité iba pre toto jednorázové overenie.</string>
-  <string name="human_verification_get_verification_code">Odoslať overovací kód</string>
-  <string name="human_verification_already_have_code">Už mám kód</string>
-  <string name="human_verification_request_replacement_code">Nedostali ste kód?</string>
-  <string name="human_verification_verify">Overiť</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Potrebujete pomoc s overením, že nie ste robot?</string>
-  <string name="human_verification_code">Overovací kód</string>
-  <string name="human_verification_code_request_new_code_title">Vyžiadať nový kód?</string>
-  <string name="human_verification_code_request_new_code_action">Vyžiadať nový kód</string>
-  <string name="human_verification_code_request_new_code">Požiadať o zaslanie náhradného kódu na %s.</string>
-  <string name="email">Email</string>
-  <string name="email_hint">email@priklad.sk</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Požiadať o pozvánku</string>
   <string name="human_verification_help_manual">Ak máte problémy s vytvorením účtu, vyžiadajte si pozvánku a my vám odpovieme do 1 pracovného dňa.</string>
   <string name="human_verification_help_website_title">Navštívte naše Centrum pomoci</string>
   <string name="human_verification_help_website">Získajte viac informácií o overovaní človekom a o tom, prečo o to žiadame.</string>
-  <string name="human_verification_sending_failed">Odoslanie overovacieho kódu zlyhalo. Skúste to prosím znovu.</string>
-  <string name="human_verification_incorrect_code">Nesprávny kód! Skúste to prosím znovu.</string>
-  <string name="human_verification_resent_code">Poslali sme vám ďalší kód.</string>
-  <string name="human_verification_captcha_failed">Overenie CAPTCHA zlyhalo. Skúste to ešte raz alebo vyberte inú možnosť overenia.</string>
-  <string name="human_verification_captcha_no_connectivity">Bez pripojenia. Nepodarilo sa načítať obrázok CAPTCHA.</string>
-  <string name="human_verification_action_retry">Skúsiť znova</string>
-  <string name="human_verification_method_loading_failed">Nepodarilo sa načítať aktuálny spôsob overenia. Ak problém pretrváva, skúste jednu z ďalších metód, ak sú k dispozícii, alebo skontrolujte obrazovku Pomocníka.</string>
 </resources>

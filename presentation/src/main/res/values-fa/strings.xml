@@ -30,7 +30,7 @@
   <string name="presentation_alert_ok">تایید</string>
   <string name="presentation_alert_enter">وارد کردن</string>
   <string name="presentation_alert_cancel">لغو</string>
-  <string name="presentation_alert_continue">Continue</string>
+  <string name="presentation_alert_continue">ادامه</string>
   <string name="presentation_alert_submit">ثبت</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">گزارش یک مشکل</string>
@@ -40,7 +40,7 @@
   <!-- Other -->
   <string name="presentation_back">بازگشت</string>
   <string name="presentation_close">بستن</string>
-  <string name="presentation_retry">Retry</string>
+  <string name="presentation_retry">تلاش مجدد</string>
   <string name="presentation_skip">رد شدن</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">اتصال به سرور امکان‌پذیر نیست.</string>

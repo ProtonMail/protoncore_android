@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2021 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -19,17 +19,17 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">رایانامه بازیابی</string>
-  <string name="settings_recovery_email_current">Current recovery email address</string>
-  <string name="settings_recovery_email_new">New recovery email address</string>
-  <string name="settings_recovery_email_confirm">Confirm recovery email address</string>
+  <string name="settings_recovery_email_current">ایمیل بازیابی فعلی</string>
+  <string name="settings_recovery_email_new">ایمیل بازیابی جدید</string>
+  <string name="settings_recovery_email_confirm">تایید ایمیل بازیابی</string>
   <string name="settings_recovery_email_new_hint">آدرس ایمیل را وارد کنید</string>
-  <string name="settings_recovery_email_confirm_hint">Re-enter email address</string>
+  <string name="settings_recovery_email_confirm_hint">آدرس ایمیل را دوباره وارد کنید</string>
   <string name="settings_save">ذخیره</string>
   <string name="settings_password_required">گذرواژه ورود خود را وارد کنید</string>
   <string name="settings_password_required_ok">تایید</string>
   <string name="settings_not_set">تنظیم نشده</string>
-  <string name="settings_recovery_email_error_no_match">New recovery emails do not match</string>
-  <string name="settings_validation_email">ایمیل نامعتبر است.</string>
+  <string name="settings_recovery_email_error_no_match">آدرس ایمیل های بازیابی با یکدیگر مغایرت دارند.</string>
+  <string name="settings_validation_email">رایانشانی نامعتبر است.</string>
   <string name="settings_general_error">خطایی رخ داد.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_change_login_password">تغییر گذرواژه</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">رمز عبور جدید صندوق پستی</string>
   <string name="settings_mailbox_password_hint_new_confirm">تایید گذرواژه جدید صندوق پیام</string>
   <string name="settings_change_password_error">خطایی در تغییر گذرواژه رخ داد.</string>
-  <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
+  <string name="settings_recovery_email_success">Recovery email address updated</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
   <string name="settings_password_management_login_password_success">گذرواژه ورود بروزرسانی شد</string>
   <string name="settings_password_management_mailbox_password_success">گذرواژهٔ صندوق پیام بروزرسانی شد</string>

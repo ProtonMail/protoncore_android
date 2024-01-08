@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -20,39 +20,12 @@
   <!-- base common strings -->
   <string name="human_verification_help">Hjälp</string>
   <string name="human_verification_title">Mänsklig verifiering</string>
-  <string name="human_verification_main_subtitle">För att förhindra missbruk, verifiera att du är människa med hjälp av något av följande alternativ</string>
-  <string name="human_verification_enter_code_subtitle">Ange verifieringskoden som skickades till %s.</string>
-  <string name="human_verification_enter_code_subtitle_email">Ange verifieringskoden som skickades till %s. Om du inte hittar e-postmeddelandet i din inkorg, kontrollera din skräppostmapp.</string>
-  <string name="human_verification_enter_code_subtitle_already_have_code">Ange verifieringskoden som du redan har:</string>
-  <string name="human_verification_option_captcha">CAPTCHA</string>
-  <string name="human_verification_option_email">E-post</string>
-  <string name="human_verification_option_email_subtitle">Din e-post kommer endast att användas för denna engångsverifiering. Om du inte hittar e-postmeddelandet i din inkorg, kontrollera din skräppostmapp.</string>
-  <string name="human_verification_option_sms">Telefonnummer</string>
-  <string name="human_verification_option_sms_subtitle">Ditt telefonnummer kommer endast att användas för denna engångsverifiering.</string>
-  <string name="human_verification_get_verification_code">Skaffa verifieringskod</string>
-  <string name="human_verification_already_have_code">Jag har redan en kod</string>
-  <string name="human_verification_request_replacement_code">Fick du inte koden?</string>
-  <string name="human_verification_verify">Verifiera</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">Behöver du hjälp med mänsklig verifiering?</string>
-  <string name="human_verification_code">Verifieringskod</string>
-  <string name="human_verification_code_request_new_code_title">Begär en ny kod?</string>
-  <string name="human_verification_code_request_new_code_action">Begär ny kod</string>
-  <string name="human_verification_code_request_new_code">Skaffa en ersättningskod skickad till %s.</string>
-  <string name="email">E-post</string>
-  <string name="email_hint">email@example.com</string>
   <string name="sms_hint">XX XXX XX XX</string>
-  <string name="verification_code_hint">XXXXXX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Begär en inbjudan</string>
   <string name="human_verification_help_manual">Om du har problem med att skapa ditt konto, begär en inbjudan så svarar vi inom en arbetsdag.</string>
   <string name="human_verification_help_website_title">Besök vårt hjälpcenter</string>
   <string name="human_verification_help_website">Lär dig mer om mänsklig verifiering och varför vi ber om det.</string>
-  <string name="human_verification_sending_failed">Misslyckades att skicka verifieringskod. Försök igen.</string>
-  <string name="human_verification_incorrect_code">Felaktig kod. Försök igen.</string>
-  <string name="human_verification_resent_code">Vi har skickat en annan kod till dig.</string>
-  <string name="human_verification_captcha_failed">CAPTCHA-verifiering misslyckades. Försök en gång till eller välj ett annat verifieringsalternativ.</string>
-  <string name="human_verification_captcha_no_connectivity">Ingen anslutning. Kunde inte att ladda CAPTCHA.</string>
-  <string name="human_verification_action_retry">Försök igen</string>
-  <string name="human_verification_method_loading_failed">Kunde inte ladda den nuvarande verifieringsmetoden. Om problemet kvarstår, försök med någon av de andra metoderna om de är tillgängliga eller kolla hjälpskärmen.</string>
 </resources>

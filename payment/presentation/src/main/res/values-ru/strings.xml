@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (c) 2020 Proton Technologies AG
-  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
   ~
   ~ ProtonCore is free software: you can redistribute it and/or modify
   ~ it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Не удалось зарегистрироваться с существующим способом оплаты.</string>
   <string name="payments_error_invalid_session">Недействительный сеанс.</string>
   <string name="payments_no_payment_provider">Активный поставщик платежей не найден.</string>
+  <string name="payments_error_google_prices">В настоящее время существует проблема с получением цен в Google Play Store.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Выберите способ оплаты</string>
@@ -51,6 +52,7 @@
   <string name="payments_expiration_date_hint">ММ/ГГ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Страна</string>
+  <string name="payments_get_plan">Получить %s</string>
   <string name="payments_paying_in_process">Производится оплата</string>
   <string name="payments_choose_country">Выберите страну</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Истекает %3$s/%4$s)</string>
