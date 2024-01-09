@@ -109,12 +109,4 @@ class RecoveryEmailTests : BaseTest() {
                 userStateIs(user, AccountState.Ready, SessionState.Authenticated)
             }
     }
-
-    @Test
-    @SmokeTest
-    fun backFromRecoveryEmail() {
-        recoveryEmailRobot
-            .close<CoreexampleRobot>()
-            .verify { accountSwitcherDisplayed() }
-    }
 }

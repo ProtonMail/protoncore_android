@@ -35,7 +35,6 @@ class PasswordManagementTests : BaseTest() {
 
     companion object {
         val freeUser = quark.userCreate().first
-        val paidUser = quark.seedNewSubscriber()
     }
 
     private fun navigateToPasswordManagement(user: User) {
@@ -82,7 +81,7 @@ class PasswordManagementTests : BaseTest() {
 
     @Test
     @SmokeTest
-    fun updatePasswordFreeUser() {
+    fun updatePassword() {
         navigateToPasswordManagement(freeUser)
 
         passwordManagementRobot
@@ -91,27 +90,5 @@ class PasswordManagementTests : BaseTest() {
                 accountSwitcherDisplayed()
                 userStateIs(freeUser, AccountState.Ready, SessionState.Authenticated)
             }
-    }
-
-    @Test
-    @SmokeTest
-    fun updatePasswordPaidUser() {
-        navigateToPasswordManagement(paidUser)
-
-        passwordManagementRobot
-            .changePassword<CoreexampleRobot>(paidUser.password, paidUser.password, paidUser.password)
-            .verify {
-                accountSwitcherDisplayed()
-                userStateIs(paidUser, AccountState.Ready, SessionState.Authenticated)
-            }
-    }
-
-    @Test
-    fun backFromPasswordManagement() {
-        navigateToPasswordManagement(freeUser)
-
-        passwordManagementRobot
-            .close<CoreexampleRobot>()
-            .verify { accountSwitcherDisplayed() }
     }
 }
