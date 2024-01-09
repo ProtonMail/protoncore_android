@@ -374,7 +374,6 @@ class UserSettingsRepositoryImplTest {
         }
     }
 
-
     @Test
     fun markAsStale() = runTest(dispatcherProvider.Main) {
         // WHEN
@@ -389,5 +388,17 @@ class UserSettingsRepositoryImplTest {
         }
     }
 
-
+    @Test
+    fun setRecoverySecret() = runTest(dispatcherProvider.Main) {
+        // WHEN
+        repository.setRecoverySecret(UserId(testUserId))
+        // THEN
+        verify {
+            workManager.enqueueUniqueWork(
+                "setRecoverySecretWork-test-user-id",
+                ExistingWorkPolicy.KEEP,
+                any<OneTimeWorkRequest>()
+            )
+        }
+    }
 }

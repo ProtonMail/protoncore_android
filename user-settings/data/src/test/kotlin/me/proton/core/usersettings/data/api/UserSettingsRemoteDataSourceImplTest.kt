@@ -25,10 +25,12 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.usersettings.data.api.request.SetRecoverySecretRequest
 import me.proton.core.usersettings.data.api.request.UpdateCrashReportsRequest
 import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
 import me.proton.core.usersettings.data.api.response.PasswordResponse
@@ -40,6 +42,7 @@ import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 
 class UserSettingsRemoteDataSourceImplTest {
@@ -102,6 +105,24 @@ class UserSettingsRemoteDataSourceImplTest {
         // THEN
         assertNotNull(response)
         assertEquals(true, response.telemetry)
+    }
+
+    @Test
+    fun setRecoverySecret() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val secret = "secret"
+        val signature = "signature"
+        val request = SetRecoverySecretRequest(secret, signature)
+        coEvery { userSettingsApi.setRecoverySecret(request) } returns GenericResponse(1000)
+
+        // WHEN
+        val response = remoteDataSource.setRecoverySecret(
+            userId = UserId(testUserId),
+            secret = secret,
+            signature = signature
+        )
+        // THEN
+        assertTrue(response)
     }
 
     private val settingsResponse = UserSettingsResponse(

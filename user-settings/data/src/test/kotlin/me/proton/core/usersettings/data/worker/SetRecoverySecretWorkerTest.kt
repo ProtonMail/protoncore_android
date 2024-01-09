@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -30,7 +30,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.usersettings.domain.usecase.GetUserSettings
+import me.proton.core.usersettings.domain.usecase.SetRecoverySecretRemote
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -38,23 +38,22 @@ import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertEquals
 
 @RunWith(RobolectricTestRunner::class)
-class FetchUserSettingsWorkerTest {
-
-    private lateinit var getUserSettings: GetUserSettings
+class SetRecoverySecretWorkerTest {
 
     private lateinit var context: Context
+    private lateinit var setRecoverySecretRemote: SetRecoverySecretRemote
 
     private val userId = UserId("user-id")
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext()
-        getUserSettings = mockk(relaxUnitFun = true)
+        setRecoverySecretRemote = mockk(relaxUnitFun = true)
     }
 
     @Test
     fun success() = runTest {
-        coEvery { getUserSettings(userId, true) } returns mockk()
+        coEvery { setRecoverySecretRemote(userId) } returns Unit
 
         val result = makeWorker(userId).doWork()
 
@@ -63,7 +62,7 @@ class FetchUserSettingsWorkerTest {
 
     @Test
     fun retry() = runTest {
-        coEvery { getUserSettings(userId, true) } throws ApiException(ApiResult.Error.NoInternet())
+        coEvery { setRecoverySecretRemote(userId) } throws ApiException(ApiResult.Error.NoInternet())
 
         val result = makeWorker(userId).doWork()
 
@@ -72,25 +71,24 @@ class FetchUserSettingsWorkerTest {
 
     @Test
     fun failure() = runTest {
-        coEvery { getUserSettings(userId, true) } throws IllegalStateException()
+        coEvery { setRecoverySecretRemote(userId) } throws IllegalStateException()
 
         val result = makeWorker(userId).doWork()
 
         assertEquals(ListenableWorker.Result.failure(), result)
     }
 
-    private fun makeWorker(userId: UserId): FetchUserSettingsWorker =
-        TestListenableWorkerBuilder<FetchUserSettingsWorker>(context)
+    private fun makeWorker(userId: UserId): SetRecoverySecretWorker =
+        TestListenableWorkerBuilder<SetRecoverySecretWorker>(context)
             // hilt is not working for this test
             .setWorkerFactory(object : WorkerFactory() {
                 override fun createWorker(
                     appContext: Context,
                     workerClassName: String,
                     workerParameters: WorkerParameters
-                ) = FetchUserSettingsWorker(appContext, workerParameters, getUserSettings)
+                ) = SetRecoverySecretWorker(appContext, workerParameters, setRecoverySecretRemote)
 
             })
-            .setInputData(FetchUserSettingsWorker.getWorkData(userId))
+            .setInputData(SetRecoverySecretWorker.getWorkData(userId))
             .build()
-
 }

@@ -2,6 +2,10 @@ public class hilt_aggregated_deps/_me_proton_core_usersettings_data_worker_Fetch
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_usersettings_data_worker_SetRecoverySecretWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_usersettings_data_worker_UpdateUserSettingsWorker_HiltModule {
 	public fun <init> ()V
 }
@@ -90,6 +94,7 @@ public abstract interface class me/proton/core/usersettings/data/api/Organizatio
 public final class me/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl : me/proton/core/usersettings/domain/repository/UserSettingsRemoteDataSource {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
 	public fun fetch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun setRecoverySecret (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -102,6 +107,37 @@ public final class me/proton/core/usersettings/data/api/UserSettingsRemoteDataSo
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl;
 	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl;
+}
+
+public final class me/proton/core/usersettings/data/api/request/SetRecoverySecretRequest {
+	public static final field Companion Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest$Companion;
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSecret ()Ljava/lang/String;
+	public final fun getSignature ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public static final fun write$Self (Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest;Lkotlinx/serialization/encoding/CompositeEncoder;Lkotlinx/serialization/descriptors/SerialDescriptor;)V
+}
+
+public final class me/proton/core/usersettings/data/api/request/SetRecoverySecretRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/usersettings/data/api/request/SetRecoverySecretRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/usersettings/data/api/request/SetRecoverySecretRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class me/proton/core/usersettings/data/api/request/SetUsernameRequest {
@@ -971,6 +1007,7 @@ public final class me/proton/core/usersettings/data/repository/UserSettingsRepos
 	public fun getUserSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun markAsStale (Lme/proton/core/domain/entity/UserId;)V
+	public fun setRecoverySecret (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateCrashReports (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1016,6 +1053,37 @@ public final class me/proton/core/usersettings/data/worker/FetchUserSettingsWork
 
 public abstract interface class me/proton/core/usersettings/data/worker/FetchUserSettingsWorker_HiltModule {
 	public abstract fun bind (Lme/proton/core/usersettings/data/worker/FetchUserSettingsWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker : androidx/work/CoroutineWorker {
+	public static final field Companion Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker$Companion;
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/usersettings/domain/usecase/SetRecoverySecretRemote;)V
+	public fun doWork (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getContext ()Landroid/content/Context;
+}
+
+public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker$Companion {
+	public final fun getRequest (Lme/proton/core/domain/entity/UserId;)Landroidx/work/OneTimeWorkRequest;
+}
+
+public abstract interface class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory_Impl : me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker;
+	public static fun create (Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/usersettings/domain/usecase/SetRecoverySecretRemote;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker;
+}
+
+public abstract interface class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 
 public final class me/proton/core/usersettings/data/worker/UpdateUserSettingsWorker : androidx/work/CoroutineWorker {

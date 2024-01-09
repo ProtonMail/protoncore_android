@@ -19,14 +19,11 @@
 package me.proton.core.usersettings.data.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker
+import androidx.work.WorkerFactory
+import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
-import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.called
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -40,42 +37,26 @@ import me.proton.core.usersettings.domain.entity.UserSettingsProperty
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import me.proton.core.usersettings.domain.usecase.UpdateUserSettingsRemote
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
-import javax.inject.Inject
 import kotlin.test.assertEquals
 
-
-@HiltAndroidTest
-@Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 class UpdateUserSettingsWorkerTest {
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
-
-    @Inject
-    internal lateinit var hiltWorkerFactory: HiltWorkerFactory
-
-    @BindValue
-    internal lateinit var updateUserSettingsRemote: UpdateUserSettingsRemote
-
-    @BindValue
-    internal lateinit var repository: UserSettingsRepository
 
     private lateinit var context: Context
+    private lateinit var repository: UserSettingsRepository
+    private lateinit var updateUserSettingsRemote: UpdateUserSettingsRemote
 
     private val userId = UserId("user-id")
     private val property = UserSettingsProperty.CrashReports(true)
 
     @Before
     fun setUp() {
-        hiltRule.inject()
         context = ApplicationProvider.getApplicationContext()
-        updateUserSettingsRemote = mockk(relaxUnitFun = true)
         repository = mockk(relaxUnitFun = true)
+        updateUserSettingsRemote = mockk(relaxUnitFun = true)
     }
 
     @Test
@@ -110,7 +91,15 @@ class UpdateUserSettingsWorkerTest {
 
     private fun makeWorker(userId: UserId, property: UserSettingsProperty): UpdateUserSettingsWorker =
         TestListenableWorkerBuilder<UpdateUserSettingsWorker>(context)
-            .setWorkerFactory(hiltWorkerFactory)
+            // hilt is not working for this test
+            .setWorkerFactory(object : WorkerFactory() {
+                override fun createWorker(
+                    appContext: Context,
+                    workerClassName: String,
+                    workerParameters: WorkerParameters
+                ) = UpdateUserSettingsWorker(appContext, workerParameters, updateUserSettingsRemote, repository)
+
+            })
             .setInputData(UpdateUserSettingsWorker.getWorkData(userId, property.toUserSettingsPropertySerializable()))
             .build()
 

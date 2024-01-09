@@ -19,6 +19,8 @@
 package me.proton.core.usersettings.data.api
 
 import me.proton.core.auth.domain.entity.ServerProof
+import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -30,6 +32,7 @@ import me.proton.core.usersettings.data.api.request.SetUsernameRequest
 import me.proton.core.usersettings.data.api.request.UpdateCrashReportsRequest
 import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
+import me.proton.core.usersettings.data.api.request.SetRecoverySecretRequest
 import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
 import me.proton.core.usersettings.data.extension.fromResponse
@@ -54,6 +57,14 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         username: String
     ): Boolean = apiProvider.get<UserSettingsApi>(userId).invoke {
         setUsername(SetUsernameRequest(username = username)).isSuccess()
+    }.valueOrThrow
+
+    override suspend fun setRecoverySecret(
+        userId: UserId,
+        secret: Based64Encoded,
+        signature: EncryptedSignature
+    ): Boolean = apiProvider.get<UserSettingsApi>(userId).invoke {
+        setRecoverySecret(SetRecoverySecretRequest(secret = secret, signature = signature)).isSuccess()
     }.valueOrThrow
 
     override suspend fun updateRecoveryEmail(

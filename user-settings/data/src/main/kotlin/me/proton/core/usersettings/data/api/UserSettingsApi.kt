@@ -24,17 +24,22 @@ import me.proton.core.usersettings.data.api.request.SetUsernameRequest
 import me.proton.core.usersettings.data.api.request.UpdateCrashReportsRequest
 import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
+import me.proton.core.usersettings.data.api.request.SetRecoverySecretRequest
 import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
 import me.proton.core.usersettings.data.api.response.UpdateUserSettingsResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.PUT
 
 internal interface UserSettingsApi : BaseRetrofitApi {
 
     @PUT("core/v4/settings/username")
     suspend fun setUsername(@Body request: SetUsernameRequest): GenericResponse
+
+    @POST("core/v4/settings/recovery/secret")
+    suspend fun setRecoverySecret(@Body request: SetRecoverySecretRequest): GenericResponse
 
     @PUT("core/v4/settings/email")
     suspend fun updateRecoveryEmail(@Body request: UpdateRecoveryEmailRequest): UpdateUserSettingsResponse

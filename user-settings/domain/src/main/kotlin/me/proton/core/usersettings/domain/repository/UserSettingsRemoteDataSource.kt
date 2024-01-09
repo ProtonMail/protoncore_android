@@ -19,6 +19,8 @@
 package me.proton.core.usersettings.domain.repository
 
 import me.proton.core.auth.domain.entity.ServerProof
+import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -29,6 +31,8 @@ import me.proton.core.usersettings.domain.entity.UserSettingsProperty
 interface UserSettingsRemoteDataSource {
     suspend fun fetch(userId: UserId): UserSettings
     suspend fun setUsername(userId: UserId, username: String): Boolean
+    suspend fun setRecoverySecret(userId: UserId, secret: Based64Encoded, signature: EncryptedSignature): Boolean
+
     suspend fun updateRecoveryEmail(
         sessionUserId: SessionUserId,
         email: String,

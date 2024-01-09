@@ -27,6 +27,8 @@ import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
@@ -36,6 +38,7 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.data.extension.toUserSettingsPropertySerializable
 import me.proton.core.usersettings.data.worker.FetchUserSettingsWorker
+import me.proton.core.usersettings.data.worker.SetRecoverySecretWorker
 import me.proton.core.usersettings.data.worker.UpdateUserSettingsWorker
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.entity.UserSettingsProperty
@@ -69,6 +72,14 @@ class UserSettingsRepositoryImpl @Inject constructor(
 
     override suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean =
         remoteDataSource.setUsername(sessionUserId, username)
+
+    override suspend fun setRecoverySecret(userId: UserId) {
+        workManager.enqueueUniqueWork(
+            "setRecoverySecretWork-${userId.id}",
+            ExistingWorkPolicy.KEEP,
+            SetRecoverySecretWorker.getRequest(userId)
+        )
+    }
 
     override suspend fun updateUserSettings(userSettings: UserSettings) {
         localDataSource.insertOrUpdate(userSettings)
