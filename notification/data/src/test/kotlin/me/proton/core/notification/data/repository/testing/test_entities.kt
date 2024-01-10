@@ -45,7 +45,11 @@ internal fun testUserEntity(userId: UserId) = UserEntity(
     services = 0,
     delinquent = null,
     recovery = null,
-    passphrase = null
+    passphrase = null,
+    maxBaseSpace = null,
+    maxDriveSpace = null,
+    usedBaseSpace = null,
+    usedDriveSpace = null,
 )
 
 internal fun testAccountEntity(userId: UserId) = AccountEntity(

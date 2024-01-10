@@ -50,6 +50,10 @@ fun UserResponse.toUser(): User {
         delinquent = Delinquent.map[delinquent],
         recovery = recovery?.toUserRecovery(),
         keys = keys.map { it.toUserKey(userId) },
+        maxBaseSpace = maxBaseSpace,
+        maxDriveSpace = maxDriveSpace,
+        usedBaseSpace = usedBaseSpace,
+        usedDriveSpace = usedDriveSpace,
     )
 }
 
@@ -71,7 +75,11 @@ internal fun User.toEntity(passphrase: EncryptedByteArray?) = UserEntity(
     services = services,
     delinquent = delinquent?.value,
     recovery = recovery?.toUserRecoveryEntity(),
-    passphrase = passphrase
+    passphrase = passphrase,
+    maxBaseSpace = maxBaseSpace,
+    maxDriveSpace = maxDriveSpace,
+    usedBaseSpace = usedBaseSpace,
+    usedDriveSpace = usedDriveSpace,
 )
 
 internal fun UserEntity.toUser(keys: List<UserKey>) = User(
@@ -91,7 +99,11 @@ internal fun UserEntity.toUser(keys: List<UserKey>) = User(
     services = services,
     delinquent = Delinquent.map[delinquent],
     recovery = recovery?.toUserRecovery(),
-    keys = keys
+    keys = keys,
+    maxBaseSpace = maxBaseSpace,
+    maxDriveSpace = maxDriveSpace,
+    usedBaseSpace = usedBaseSpace,
+    usedDriveSpace = usedDriveSpace,
 )
 
 internal fun UserWithKeys.toUser(keyStoreCrypto: KeyStoreCrypto) =

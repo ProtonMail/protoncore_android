@@ -96,7 +96,11 @@ data class User(
      * @see [UserManager.unlockWithPassphrase]
      * @see [UserManager.lock]
      * */
-    override val keys: List<UserKey>
+    override val keys: List<UserKey>,
+    val maxBaseSpace: Long? = null,
+    val maxDriveSpace: Long? = null,
+    val usedBaseSpace: Long? = null,
+    val usedDriveSpace: Long? = null
 ) : KeyHolder
 
 enum class Delinquent(val value: Int) {

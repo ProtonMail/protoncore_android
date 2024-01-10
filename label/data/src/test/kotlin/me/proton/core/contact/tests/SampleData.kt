@@ -53,7 +53,11 @@ fun UserId.userEntity() = UserEntity(
     services = 0,
     delinquent = null,
     recovery = null,
-    passphrase = null
+    passphrase = null,
+    maxBaseSpace = null,
+    maxDriveSpace = null,
+    usedBaseSpace = null,
+    usedDriveSpace = null,
 )
 
 fun UserId.accountEntity() = AccountEntity(

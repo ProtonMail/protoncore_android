@@ -62,5 +62,13 @@ data class UserResponse(
     @SerialName("AccountRecovery")
     val recovery: UserRecoveryResponse? = null,
     @SerialName("Keys")
-    val keys: List<UserKeyResponse>
+    val keys: List<UserKeyResponse>,
+    @SerialName("MaxBaseSpace")
+    val maxBaseSpace: Long? = null,
+    @SerialName("MaxDriveSpace")
+    val maxDriveSpace: Long? = null,
+    @SerialName("UsedBaseSpace")
+    val usedBaseSpace: Long? = null,
+    @SerialName("UsedDriveSpace")
+    val usedDriveSpace: Long? = null,
 )

@@ -95,5 +95,26 @@ interface UserDatabase : Database, UserKeyDatabase {
                 )
             }
         }
+
+        /**
+         * - Added UserEntity columns: maxBaseSpace, maxDriveSpace, usedBaseSpace, usedDriveSpace.
+         */
+        val MIGRATION_4 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                arrayOf(
+                    "maxBaseSpace",
+                    "maxDriveSpace",
+                    "usedBaseSpace",
+                    "usedDriveSpace"
+                ).forEach { column ->
+                    database.addTableColumn(
+                        table = "UserEntity",
+                        column = column,
+                        type = "INTEGER",
+                        defaultValue = null
+                    )
+                }
+            }
+        }
     }
 }

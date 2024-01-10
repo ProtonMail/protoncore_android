@@ -60,5 +60,9 @@ data class UserEntity(
     val delinquent: Int?,
     @Embedded(prefix = "recovery_")
     val recovery: UserRecoveryEntity?,
-    val passphrase: EncryptedByteArray?
+    val passphrase: EncryptedByteArray?,
+    val maxBaseSpace: Long?,
+    val maxDriveSpace: Long?,
+    val usedBaseSpace: Long?,
+    val usedDriveSpace: Long?
 )
