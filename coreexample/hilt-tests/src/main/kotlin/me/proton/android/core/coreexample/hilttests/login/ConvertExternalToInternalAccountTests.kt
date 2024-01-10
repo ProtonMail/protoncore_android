@@ -9,6 +9,7 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.MailApiClient
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.BaseConvertExternalToInternalAccountTests
 import me.proton.core.auth.test.usecase.WaitForNoPrimaryAccount
@@ -36,6 +37,9 @@ class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccou
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @BindValue
     val apiClient: CoreExampleApiClient = MailApiClient

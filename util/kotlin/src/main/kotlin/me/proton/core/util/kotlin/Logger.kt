@@ -71,11 +71,13 @@ object CoreLogger : Logger {
 
     private var logger: Logger? = null
 
-    fun set(logger: Logger) {
+    fun set(logger: Logger?) {
         this.logger = logger
         LogManager.getLogManager().apply {
             reset()
-            getLogger("").addHandler(LoggingHandler(logger))
+            if (logger != null) {
+                getLogger("").addHandler(LoggingHandler(logger))
+            }
         }
     }
 

@@ -27,6 +27,7 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.MailApiClient
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
@@ -47,6 +48,9 @@ import kotlin.test.Test
 class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java, tries = 1) {
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @Inject
     lateinit var extraHeaderProvider: ExtraHeaderProvider

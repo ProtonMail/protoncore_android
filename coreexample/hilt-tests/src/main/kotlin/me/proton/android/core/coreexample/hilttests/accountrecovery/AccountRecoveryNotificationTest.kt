@@ -27,6 +27,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import me.proton.android.core.coreexample.MainActivity
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.core.accountmanager.data.AccountStateHandler
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
 import me.proton.core.accountrecovery.test.MinimalAccountRecoveryNotificationTest
@@ -54,6 +55,9 @@ class AccountRecoveryNotificationTest : MinimalAccountRecoveryNotificationTest {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @get:Rule(order = 10)
     val composeTestRule: ComposeTestRule = createAndroidComposeRule<MainActivity>().apply {

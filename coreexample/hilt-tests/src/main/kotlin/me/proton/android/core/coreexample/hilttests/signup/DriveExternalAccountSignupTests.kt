@@ -27,6 +27,7 @@ import io.mockk.mockk
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.BaseExternalAccountSignupTests
 import me.proton.core.domain.entity.AppStore
@@ -47,6 +48,9 @@ class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @Inject
     override lateinit var extraHeaderProvider: ExtraHeaderProvider

@@ -28,6 +28,7 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.android.core.coreexample.hilttests.usecase.PerformUiLogin
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
@@ -60,6 +61,9 @@ import me.proton.core.test.quark.data.User as TestUser
 class ExternalAccountSupportedLoginTests : ProtonTest(MainActivity::class.java, tries = 1) {
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @BindValue
     val apiClient: CoreExampleApiClient = DriveApiClient

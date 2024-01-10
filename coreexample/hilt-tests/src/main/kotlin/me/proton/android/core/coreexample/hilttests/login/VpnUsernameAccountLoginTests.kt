@@ -26,6 +26,7 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.VpnApiClient
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.BaseUsernameAccountLoginTests
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
@@ -49,6 +50,9 @@ class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(M
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @BindValue
     val apiClient: CoreExampleApiClient = VpnApiClient

@@ -27,6 +27,7 @@ import dagger.hilt.android.testing.UninstallModules
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.ApplicationModule
 import me.proton.android.core.coreexample.hilttests.di.DriveApiClient
+import me.proton.android.core.coreexample.hilttests.rule.LogsRule
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartSignup
@@ -51,6 +52,9 @@ open class ExternalAccountChooseUsernameTest {
 
     @get:Rule
     val hiltRule = HiltAndroidRule(this)
+
+    @get:Rule
+    val logsRule = LogsRule()
 
     @BindValue
     val apiClient: CoreExampleApiClient = DriveApiClient

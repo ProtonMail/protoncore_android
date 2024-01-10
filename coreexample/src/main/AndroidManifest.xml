@@ -69,7 +69,8 @@
                 tools:node="remove" />
             <meta-data
                 android:name="me.proton.android.core.coreexample.init.StrictModeInitializer"
-                android:value="androidx.startup" />
+                android:value="androidx.startup"
+                tools:node="remove" />
             <meta-data
                 android:name="me.proton.core.plan.presentation.UnredeemedPurchaseInitializer"
                 android:value="androidx.startup"

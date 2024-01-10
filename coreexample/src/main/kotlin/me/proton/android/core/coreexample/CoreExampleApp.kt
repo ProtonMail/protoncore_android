@@ -25,6 +25,7 @@ import me.proton.android.core.coreexample.init.AccountStateHandlerInitializer
 import me.proton.android.core.coreexample.init.EventManagerInitializer
 import me.proton.android.core.coreexample.init.FeatureFlagInitializer
 import me.proton.android.core.coreexample.init.LoggerInitializer
+import me.proton.android.core.coreexample.init.StrictModeInitializer
 import me.proton.android.core.coreexample.init.WorkManagerInitializer
 import me.proton.core.auth.presentation.MissingScopeInitializer
 import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitializer
@@ -51,6 +52,7 @@ class CoreExampleApp : Application() {
             initializeComponent(LoggerInitializer::class.java)
             initializeComponent(FeatureFlagInitializer::class.java)
             initializeComponent(ProductMetricsInitializer::class.java)
+            initializeComponent(StrictModeInitializer::class.java)
         }
     }
 }
