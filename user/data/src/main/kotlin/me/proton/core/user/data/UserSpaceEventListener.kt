@@ -35,6 +35,12 @@ import javax.inject.Singleton
 data class UserSpaceEvent(
     @SerialName("UsedSpace")
     val usedSpace: Long? = null,
+
+    @SerialName("UsedBaseSpace")
+    val usedBaseSpace: Long? = null,
+
+    @SerialName("UsedDriveSpace")
+    val usedDriveSpace: Long? = null,
 )
 
 @Singleton
@@ -58,7 +64,9 @@ open class UserSpaceEventListener @Inject constructor(
     override suspend fun <R> inTransaction(block: suspend () -> R): R = db.inTransaction(block)
 
     override suspend fun onUpdate(config: EventManagerConfig, entities: List<UserSpaceEvent>) {
-        val userSpace = entities.firstOrNull()
-        userSpace?.usedSpace?.let { userRepository.updateUserUsedSpace(config.userId, userSpace.usedSpace) }
+        val event = entities.firstOrNull()
+        event?.usedSpace?.let { userRepository.updateUserUsedSpace(config.userId, it) }
+        event?.usedBaseSpace?.let { userRepository.updateUserUsedBaseSpace(config.userId, it) }
+        event?.usedDriveSpace?.let { userRepository.updateUserUsedDriveSpace(config.userId, it) }
     }
 }

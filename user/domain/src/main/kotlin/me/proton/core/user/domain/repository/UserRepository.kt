@@ -64,6 +64,22 @@ interface UserRepository : PassphraseRepository {
     )
 
     /**
+     * Update a [User.usedBaseSpace] for a [userId], locally.
+     */
+    suspend fun updateUserUsedBaseSpace(
+        userId: UserId,
+        usedBaseSpace: Long,
+    )
+
+    /**
+     * Update a [User.usedDriveSpace] for a [userId], locally.
+     */
+    suspend fun updateUserUsedDriveSpace(
+        userId: UserId,
+        usedDriveSpace: Long,
+    )
+
+    /**
      * Observe [User], using [sessionUserId].
      *
      * @return value emitted from cache/disk, then from fetcher if [refresh] is true.

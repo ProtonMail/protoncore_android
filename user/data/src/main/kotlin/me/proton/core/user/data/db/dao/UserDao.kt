@@ -46,4 +46,10 @@ abstract class UserDao : BaseDao<UserEntity>() {
 
     @Query("UPDATE UserEntity SET usedSpace = :usedSpace WHERE userId = :userId")
     abstract suspend fun setUsedSpace(userId: UserId, usedSpace: Long)
+
+    @Query("UPDATE UserEntity SET usedBaseSpace = :usedBaseSpace WHERE userId = :userId")
+    abstract suspend fun setUsedBaseSpace(userId: UserId, usedBaseSpace: Long)
+
+    @Query("UPDATE UserEntity SET usedDriveSpace = :usedDriveSpace WHERE userId = :userId")
+    abstract suspend fun setUsedDriveSpace(userId: UserId, usedDriveSpace: Long)
 }

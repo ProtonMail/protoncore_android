@@ -134,6 +134,14 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun updateUserUsedSpace(userId: UserId, usedSpace: Long) =
         userDao.setUsedSpace(userId, usedSpace)
 
+    override suspend fun updateUserUsedBaseSpace(userId: UserId, usedBaseSpace: Long) {
+        userDao.setUsedBaseSpace(userId, usedBaseSpace)
+    }
+
+    override suspend fun updateUserUsedDriveSpace(userId: UserId, usedDriveSpace: Long) {
+        userDao.setUsedDriveSpace(userId, usedDriveSpace)
+    }
+
     override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
         store.stream(StoreRequest.cached(sessionUserId, refresh = refresh))
             .map { it.dataOrNull() }
