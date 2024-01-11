@@ -68,7 +68,8 @@ class DynamicEntitlementResourceTest {
                 text = "128 MB on 1GB",
                 current = 128,
                 min = 0,
-                max = 1024
+                max = 1024,
+                tag = "drive"
             ),
             """
                 {
@@ -76,7 +77,8 @@ class DynamicEntitlementResourceTest {
                 "Current": 128,
                 "Min": 0,
                 "Max": 1024,
-                "Type": "progress"
+                "Type": "progress",
+                "Tag": "drive"
                 }
             """.trimIndent().deserialize<DynamicEntitlementResource>()
         )
@@ -119,13 +121,15 @@ class DynamicEntitlementResourceTest {
                 text = "128 MB on 1GB",
                 current = 128,
                 min = 0,
-                max = 1024
+                max = 1024,
+                tag = DynamicEntitlement.Progress.Base
             ),
             DynamicEntitlementResource.Progress(
                 text = "128 MB on 1GB",
                 current = 128,
                 min = 0,
-                max = 1024
+                max = 1024,
+                tag = "base"
             ).toDynamicPlanEntitlement("endpoint")
         )
 

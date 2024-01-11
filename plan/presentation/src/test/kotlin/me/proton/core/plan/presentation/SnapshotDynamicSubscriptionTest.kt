@@ -55,6 +55,7 @@ class SnapshotDynamicSubscriptionTest: CoroutinesTest by CoroutinesTest() {
     @Test
     fun dynamicPlanEntitlementStorageView() {
         val view = DynamicEntitlementProgressView(paparazzi.context)
+        view.tagText = "Mail storage"
         view.text = "50/100"
         view.progress = 50
         paparazzi.snapshot(view)
@@ -78,6 +79,7 @@ class SnapshotDynamicSubscriptionTest: CoroutinesTest by CoroutinesTest() {
         view.isCollapsable = false
         view.starred = true
         view.entitlements.addView(DynamicEntitlementProgressView(paparazzi.context).apply {
+            tagText = "Drive storage"
             text = "50 MB on 100 MB"
             progress = 50
         })

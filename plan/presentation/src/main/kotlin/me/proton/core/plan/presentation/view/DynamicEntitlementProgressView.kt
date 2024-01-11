@@ -21,6 +21,12 @@ class DynamicEntitlementProgressView @JvmOverloads constructor(
 
     private val binding by lazy { inflate(LayoutInflater.from(context), this) }
 
+    var tagText: CharSequence?
+        get() = binding.tagText.text
+        set(value) {
+            binding.tagText.text = value
+        }
+
     var text: CharSequence?
         get() = binding.text.text
         set(value) {

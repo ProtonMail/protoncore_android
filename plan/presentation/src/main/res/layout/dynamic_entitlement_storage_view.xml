@@ -13,14 +13,26 @@
         android:paddingBottom="@dimen/plan_content_item_padding">
 
         <TextView
-            android:id="@+id/text"
+            android:id="@+id/tagText"
             style="@style/Proton.Text.Default"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="start"
-            app:layout_constraintBottom_toTopOf="@id/progress"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBaseline_toBaselineOf="@id/text"
+            app:layout_constraintEnd_toStartOf="@id/text"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Drive storage" />
+
+        <TextView
+            android:id="@+id/text"
+            style="@style/Proton.Text.Caption"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            app:layout_constraintBaseline_toBaselineOf="@id/tagText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tagText"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="162 MB of 3 TB" />
 
@@ -28,14 +40,15 @@
             android:id="@+id/progress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/gap_medium"
             android:layout_marginBottom="@dimen/gap_medium"
-            app:trackThickness="@dimen/gap_small"
-            app:trackCornerRadius="@dimen/default_corner_radius"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text"
             app:trackColor="@color/icon_hint"
+            app:trackCornerRadius="@dimen/default_corner_radius"
+            app:trackThickness="@dimen/gap_small"
             tools:progress="50" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

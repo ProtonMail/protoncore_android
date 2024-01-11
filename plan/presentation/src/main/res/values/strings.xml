@@ -157,4 +157,9 @@
     <string name="one_vault">1 vault</string>
     <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
     <!-- endregion -->
+
+    <!-- region Plan entitlement tags -->
+    <string name="plan_entitlement_tag_base">Mail storage</string>
+    <string name="plan_entitlement_tag_drive">Drive storage</string>
+    <!-- endregion -->
 </resources>

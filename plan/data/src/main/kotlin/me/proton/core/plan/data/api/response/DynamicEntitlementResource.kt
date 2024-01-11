@@ -57,7 +57,10 @@ sealed class DynamicEntitlementResource {
         val min: Long,
 
         @SerialName("Max")
-        val max: Long
+        val max: Long,
+
+        @SerialName("Tag")
+        val tag: String? = null
     ) : DynamicEntitlementResource()
 
     @Serializable
@@ -79,7 +82,8 @@ fun DynamicEntitlementResource.toDynamicPlanEntitlement(iconsEndpoint: String): 
             text = text,
             current = current,
             min = min,
-            max = max
+            max = max,
+            tag = tag
         )
 
         is DynamicEntitlementResource.Unknown -> null

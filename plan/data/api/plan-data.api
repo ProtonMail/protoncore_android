@@ -188,18 +188,21 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 
 public final class me/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress : me/proton/core/plan/data/api/response/DynamicEntitlementResource {
 	public static final field Companion Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress$Companion;
-	public synthetic fun <init> (ILjava/lang/String;JJJLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/lang/String;JJJ)V
+	public synthetic fun <init> (ILjava/lang/String;JJJLjava/lang/String;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;JJJLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;JJJLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()J
 	public final fun component3 ()J
 	public final fun component4 ()J
-	public final fun copy (Ljava/lang/String;JJJ)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
-	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;Ljava/lang/String;JJJILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;JJJLjava/lang/String;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
+	public static synthetic fun copy$default (Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;Ljava/lang/String;JJJLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/data/api/response/DynamicEntitlementResource$Progress;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrent ()J
 	public final fun getMax ()J
 	public final fun getMin ()J
+	public final fun getTag ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

@@ -204,6 +204,7 @@ public final class me/proton/core/plan/presentation/databinding/DynamicEntitleme
 
 public final class me/proton/core/plan/presentation/databinding/DynamicEntitlementStorageViewBinding : androidx/viewbinding/ViewBinding {
 	public final field progress Lcom/google/android/material/progressindicator/LinearProgressIndicator;
+	public final field tagText Landroid/widget/TextView;
 	public final field text Landroid/widget/TextView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/DynamicEntitlementStorageViewBinding;
 	public fun getRoot ()Landroid/view/View;
@@ -1487,10 +1488,12 @@ public final class me/proton/core/plan/presentation/view/DynamicEntitlementProgr
 	public final fun getProgress ()I
 	public final fun getProgressMax ()Ljava/lang/Integer;
 	public final fun getProgressMin ()Ljava/lang/Integer;
+	public final fun getTagText ()Ljava/lang/CharSequence;
 	public final fun getText ()Ljava/lang/CharSequence;
 	public final fun setProgress (I)V
 	public final fun setProgressMax (Ljava/lang/Integer;)V
 	public final fun setProgressMin (Ljava/lang/Integer;)V
+	public final fun setTagText (Ljava/lang/CharSequence;)V
 	public final fun setText (Ljava/lang/CharSequence;)V
 }
 
