@@ -2,16 +2,10 @@ public abstract interface class me/proton/core/plan/domain/ClientPlanFilter {
 	public abstract fun filter ()Lkotlin/jvm/functions/Function1;
 }
 
-public abstract interface class me/proton/core/plan/domain/IsDynamicPlanAdjustedPriceEnabled {
-	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
-	public abstract fun isLocalEnabled ()Z
-	public abstract fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+public abstract interface class me/proton/core/plan/domain/IsDynamicPlanAdjustedPriceEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
 }
 
-public abstract interface class me/proton/core/plan/domain/IsDynamicPlanEnabled {
-	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
-	public abstract fun isLocalEnabled ()Z
-	public abstract fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+public abstract interface class me/proton/core/plan/domain/IsDynamicPlanEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
 }
 
 public abstract interface class me/proton/core/plan/domain/IsSplitStorageEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {

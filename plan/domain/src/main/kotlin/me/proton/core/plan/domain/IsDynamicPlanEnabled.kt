@@ -18,11 +18,6 @@
 
 package me.proton.core.plan.domain
 
-import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
 
-interface IsDynamicPlanEnabled {
-    operator fun invoke(userId: UserId?): Boolean
-
-    fun isLocalEnabled(): Boolean
-    fun isRemoteEnabled(userId: UserId?): Boolean
-}
+interface IsDynamicPlanEnabled: IsFeatureFlagEnabled
