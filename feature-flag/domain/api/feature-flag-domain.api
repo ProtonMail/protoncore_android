@@ -23,6 +23,12 @@ public final class me/proton/core/featureflag/domain/FeatureFlagManager$DefaultI
 	public static synthetic fun refreshAll$default (Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
 }
 
+public abstract interface class me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public abstract fun isLocalEnabled ()Z
+	public abstract fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
 public final class me/proton/core/featureflag/domain/LogTag {
 	public static final field FEATURE_FLAG_NOT_FOUND Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/featureflag/domain/LogTag;

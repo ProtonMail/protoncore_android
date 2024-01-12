@@ -51,6 +51,13 @@ public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter_Fac
 	public static fun newInstance (Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/FeatureFlagRefreshStarter;
 }
 
+public abstract class me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/featureflag/domain/entity/FeatureId;I)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
 public abstract class me/proton/core/featureflag/data/db/FeatureFlagDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 }
