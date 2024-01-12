@@ -11,6 +11,7 @@ public final class me/proton/core/paymentiap/domain/BuildConfig {
 
 public final class me/proton/core/paymentiap/domain/GoogleBillingExtensionsKt {
 	public static final fun firstPriceOrNull (Lcom/android/billingclient/api/ProductDetails;)Lcom/android/billingclient/api/ProductDetails$PricingPhase;
+	public static final fun isRetryable (Lme/proton/core/payment/domain/repository/BillingClientError;)Z
 }
 
 public final class me/proton/core/paymentiap/domain/LogTag {

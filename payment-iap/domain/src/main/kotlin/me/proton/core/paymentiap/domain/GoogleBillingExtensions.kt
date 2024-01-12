@@ -18,7 +18,14 @@
 
 package me.proton.core.paymentiap.domain
 
+import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.ProductDetails
+import me.proton.core.payment.domain.repository.BillingClientError
 
 public fun ProductDetails.firstPriceOrNull(): ProductDetails.PricingPhase? =
     subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)
+
+public fun BillingClientError.isRetryable(): Boolean = when (responseCode) {
+    BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> true
+    else -> false
+}

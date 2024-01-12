@@ -18,12 +18,10 @@
 
 package me.proton.core.paymentiap.data.repository
 
-import android.app.Activity
 import app.cash.turbine.test
 import com.android.billingclient.api.AcknowledgePurchaseResponseListener
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
-import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.ProductDetailsResponseListener
@@ -44,12 +42,10 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
-import me.proton.core.payment.domain.repository.BillingClientError
-import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.entity.unwrap
-import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
@@ -109,6 +105,32 @@ internal class GoogleBillingRepositoryImplTest {
     }
 
     @Test
+    fun `acknowledge a purchase after retry`() = runTest {
+        // GIVEN
+        var callCount = 0
+        val billingClient = mockClientResult {
+            every { acknowledgePurchase(any(), any()) } answers {
+                callCount += 1
+                val listener = invocation.args[1] as AcknowledgePurchaseResponseListener
+                val responseCode = when (callCount) {
+                    1 -> BillingResponseCode.SERVICE_UNAVAILABLE
+                    else -> BillingResponseCode.OK
+                }
+                val result = BillingResult.newBuilder()
+                    .setResponseCode(responseCode)
+                    .build()
+                listener.onAcknowledgePurchaseResponse(result)
+            }
+        }
+
+        // WHEN
+        tested.use { it.acknowledgePurchase(GooglePurchaseToken("token-123")) }
+
+        // THEN
+        verify(exactly = 2) { billingClient.acknowledgePurchase(any(), any()) }
+    }
+
+    @Test
     fun `get product details`() = runTest {
         val productDetails = mockk<ProductDetails>()
         mockClientResult {
@@ -143,7 +165,8 @@ internal class GoogleBillingRepositoryImplTest {
             every { queryProductDetailsAsync(any(), any()) } answers {
                 val listener = invocation.args[1] as ProductDetailsResponseListener
                 listener.onProductDetailsResponse(
-                    BillingResult.newBuilder().setResponseCode(BillingResponseCode.ERROR).setDebugMessage("error")
+                    BillingResult.newBuilder().setResponseCode(BillingResponseCode.ERROR)
+                        .setDebugMessage("error")
                         .build(), listOf()
                 )
             }
@@ -164,13 +187,49 @@ internal class GoogleBillingRepositoryImplTest {
     }
 
     @Test
+    fun `get product details error with retry`() = runTestWithResultContext {
+        // GIVEN
+        mockkObject(CoreLogger)
+
+        var callCount = 0
+        val billingClient = mockClientResult {
+            every { queryProductDetailsAsync(any(), any()) } answers {
+                val listener = invocation.args[1] as ProductDetailsResponseListener
+                callCount += 1
+                if (callCount == 1) {
+                    listener.onProductDetailsResponse(
+                        BillingResult.newBuilder()
+                            .setResponseCode(BillingResponseCode.SERVICE_UNAVAILABLE)
+                            .setDebugMessage("error")
+                            .build(), listOf()
+                    )
+                } else {
+                    listener.onProductDetailsResponse(BillingResult(), listOf())
+                }
+            }
+        }
+
+        // WHEN
+        val result = tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
+
+        // THEN
+        assertTrue(result?.isEmpty() == true)
+        assertTrue(assertSingleResult("getProductsDetails").isSuccess)
+
+        verify(exactly = 2) { billingClient.queryProductDetailsAsync(any(), any()) }
+
+        unmockkObject(CoreLogger)
+    }
+
+    @Test
     fun `get product details no error`() = runTestWithResultContext {
         mockkObject(CoreLogger)
         mockClientResult {
             every { queryProductDetailsAsync(any(), any()) } answers {
                 val listener = invocation.args[1] as ProductDetailsResponseListener
                 listener.onProductDetailsResponse(
-                    BillingResult.newBuilder().setResponseCode(BillingResponseCode.OK).setDebugMessage("no error")
+                    BillingResult.newBuilder().setResponseCode(BillingResponseCode.OK)
+                        .setDebugMessage("no error")
                         .build(), listOf()
                 )
             }
@@ -178,7 +237,7 @@ internal class GoogleBillingRepositoryImplTest {
         val result = tested.use { it.getProductsDetails(listOf(ProductId("plan-name"))) }
         assertTrue(result?.isEmpty() == true)
         assertTrue(assertSingleResult("getProductsDetails").isSuccess)
-        verify(exactly = 0) { CoreLogger.e(LogTag.GIAP_ERROR, any(), any()            ) }
+        verify(exactly = 0) { CoreLogger.e(LogTag.GIAP_ERROR, any(), any()) }
         unmockkObject(CoreLogger)
     }
 
@@ -207,6 +266,42 @@ internal class GoogleBillingRepositoryImplTest {
         val result = tested.use { it.querySubscriptionPurchases() }.map { it.unwrap() }
         assertContentEquals(result, purchaseList)
         assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
+    }
+
+    @Test
+    fun `query subscription purchases after retry`() = runTestWithResultContext {
+        // GIVEN
+        val purchaseList = listOf(mockk<Purchase>())
+        val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
+        var callCount = 0
+        val billingClient = mockClientResult {
+            every { queryPurchasesAsync(any<QueryPurchasesParams>(), any()) } answers {
+                callCount += 1
+                val listener = invocation.args[1] as PurchasesResponseListener
+                if (callCount == 1) {
+                    listener.onQueryPurchasesResponse(
+                        BillingResult.newBuilder()
+                            .setResponseCode(BillingResponseCode.SERVICE_UNAVAILABLE)
+                            .setDebugMessage("error")
+                            .build(),
+                        emptyList()
+                    )
+                } else {
+                    listener.onQueryPurchasesResponse(
+                        purchaseResult.billingResult,
+                        purchaseResult.purchasesList
+                    )
+                }
+            }
+        }
+
+        // WHEN
+        val result = tested.use { it.querySubscriptionPurchases() }.map { it.unwrap() }
+
+        // THEN
+        assertContentEquals(result, purchaseList)
+        assertTrue(assertSingleResult("querySubscriptionPurchases").isSuccess)
+        verify(exactly = 2) { billingClient.queryPurchasesAsync(any<QueryPurchasesParams>(), any()) }
     }
 
     @Test
@@ -251,7 +346,7 @@ internal class GoogleBillingRepositoryImplTest {
         verify { googleBillingRepositorySpy.destroy() }
     }
 
-    private inline fun <reified R> mockClientResult(billingClientMockSetup: BillingClient.() -> R) {
+    private inline fun <reified R> mockClientResult(billingClientMockSetup: BillingClient.() -> R): BillingClient {
         val billingClient = mockk<BillingClient> {
             billingClientMockSetup()
         }
@@ -260,6 +355,7 @@ internal class GoogleBillingRepositoryImplTest {
             val fn = callbackSlot.captured
             fn(billingClient)
         }
+        return billingClient
     }
 }
 

@@ -55,9 +55,11 @@ import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.domain.isRetryable
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.DispatcherProvider
 import me.proton.core.util.kotlin.coroutine.result
+import me.proton.core.util.kotlin.retry
 import javax.inject.Inject
 
 public class GoogleBillingRepositoryImpl @Inject internal constructor(
@@ -84,9 +86,10 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         val params = AcknowledgePurchaseParams.newBuilder()
             .setPurchaseToken(purchaseToken.value)
             .build()
-
-        val result = connectedBillingClient.withClient { it.acknowledgePurchase(params) }
-        result.checkOk()
+        retry(predicate = ::isRetryable) {
+            val result = connectedBillingClient.withClient { it.acknowledgePurchase(params) }
+            result.checkOk()
+        }
     }
 
     override fun destroy() {
@@ -106,8 +109,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         val params = QueryProductDetailsParams.newBuilder()
             .setProductList(products)
             .build()
-        val result = connectedBillingClient.withClient { it.queryProductDetails(params) }
-        result.billingResult.checkOk()
+        val result = retry(predicate = ::isRetryable) {
+            connectedBillingClient
+                .withClient { it.queryProductDetails(params) }
+                .also { it.billingResult.checkOk() }
+        }
         val productDetails = result.productDetailsList
         if (productDetails.isNullOrEmpty()) {
             CoreLogger.i(LogTag.GIAP_ERROR, "Google products not found: $googlePlayPlanNames.")
@@ -123,8 +129,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
 
     override suspend fun querySubscriptionPurchases(): List<GooglePurchase> = result("querySubscriptionPurchases") {
         val params = QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
-        val result = connectedBillingClient.withClient { it.queryPurchasesAsync(params) }
-        result.billingResult.checkOk()
+        val result = retry(predicate = ::isRetryable) {
+            connectedBillingClient
+                .withClient { it.queryPurchasesAsync(params) }
+                .also { it.billingResult.checkOk() }
+        }
         result.purchasesList.map { it.wrap() }
     }
 
@@ -132,6 +141,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         if (responseCode != BillingResponseCode.OK) {
             throw BillingClientError(responseCode, debugMessage)
         }
+    }
+
+    private fun isRetryable(error: Throwable) = when (error) {
+        is BillingClientError -> error.isRetryable()
+        else -> false
     }
 }
 
@@ -164,13 +178,13 @@ internal class ConnectedBillingClient @AssistedInject constructor(
 
     override fun onBillingServiceDisconnected() {
         connectionState.value = BillingClientConnectionState.Error(
-            BillingClient.BillingResponseCode.SERVICE_DISCONNECTED,
+            BillingResponseCode.SERVICE_DISCONNECTED,
             "Service disconnected."
         )
     }
 
     override fun onBillingSetupFinished(billingResult: BillingResult) {
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+        if (billingResult.responseCode == BillingResponseCode.OK) {
             connectionState.value = BillingClientConnectionState.Connected
         } else {
             connectionState.value =
