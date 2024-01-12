@@ -44,6 +44,7 @@ android {
 dependencies {
     api(
         project(Module.domain),
+        project(Module.featureFlagData),
         project(Module.planDomain),
         project(Module.networkData),
         `hilt-android`,

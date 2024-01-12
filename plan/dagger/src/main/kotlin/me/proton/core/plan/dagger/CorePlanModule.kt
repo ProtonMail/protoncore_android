@@ -26,12 +26,14 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.plan.data.IsDynamicPlanAdjustedPriceEnabledImpl
 import me.proton.core.plan.data.IsDynamicPlanEnabledImpl
+import me.proton.core.plan.data.IsSplitStorageEnabledImpl
 import me.proton.core.plan.data.PlanIconsEndpointProviderImpl
 import me.proton.core.plan.data.repository.PlansRepositoryImpl
 import me.proton.core.plan.data.usecase.ObserveUserCurrencyImpl
 import me.proton.core.plan.data.usecase.PerformSubscribeImpl
 import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
+import me.proton.core.plan.domain.IsSplitStorageEnabled
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
@@ -55,6 +57,10 @@ public interface CorePlanModule {
     @Binds
     @Singleton
     public fun provideIsDynamicPlanEnabled(impl: IsDynamicPlanEnabledImpl): IsDynamicPlanEnabled
+
+    @Binds
+    @Singleton
+    public fun provideIsSplitStorageEnabled(impl: IsSplitStorageEnabledImpl): IsSplitStorageEnabled
 
     @Binds
     @Singleton

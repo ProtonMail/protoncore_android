@@ -14,6 +14,9 @@ public abstract interface class me/proton/core/plan/domain/IsDynamicPlanEnabled 
 	public abstract fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
 }
 
+public abstract interface class me/proton/core/plan/domain/IsSplitStorageEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+}
+
 public final class me/proton/core/plan/domain/LogTag {
 	public static final field DEFAULT Ljava/lang/String;
 	public static final field DYN_PLANS_PARSE Ljava/lang/String;

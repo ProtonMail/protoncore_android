@@ -29,6 +29,10 @@ public final class me/proton/core/plan/data/IsDynamicPlanEnabledImpl$Companion {
 	public final fun getFeatureId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
 }
 
+public final class me/proton/core/plan/data/IsSplitStorageEnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/plan/domain/IsSplitStorageEnabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+}
+
 public final class me/proton/core/plan/data/PlanIconsEndpointProviderImpl : me/proton/core/plan/domain/PlanIconsEndpointProvider {
 	public fun <init> (Lokhttp3/HttpUrl;Lme/proton/core/network/domain/NetworkPrefs;)V
 	public fun get ()Ljava/lang/String;
