@@ -144,6 +144,11 @@ public final class me/proton/core/util/kotlin/ProtonCoreConfig : me/proton/core/
 	public final fun setDefaultJsonStringFormat (Lkotlinx/serialization/StringFormat;)V
 }
 
+public final class me/proton/core/util/kotlin/RetryKt {
+	public static final fun retry (IJLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun retry$default (IJLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/util/kotlin/SerializationUtilsKt {
 	public static final fun getJsonSerializer ()Lkotlinx/serialization/json/Json;
 	public static final fun getSerializer ()Lkotlinx/serialization/StringFormat;
