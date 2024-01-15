@@ -28,7 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Не удалось зарегистрироваться с существующим способом оплаты.</string>
   <string name="payments_error_invalid_session">Недействительный сеанс.</string>
   <string name="payments_no_payment_provider">Активный поставщик платежей не найден.</string>
-  <string name="payments_error_google_prices">В настоящее время существует проблема с получением цен в Google Play Store.</string>
+  <string name="payments_error_google_prices">В настоящее время возникает проблема с получением данных о ценах из Google Play Store.</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Выберите способ оплаты</string>

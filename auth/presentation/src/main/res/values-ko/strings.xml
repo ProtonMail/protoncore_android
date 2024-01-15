@@ -18,16 +18,16 @@
   -->
 <resources>
   <string name="welcome_title">Proton으로 개인 정보 보호</string>
-  <string name="welcome_subtitle">암호화가 데이터를 안전하게 보호해줍니다. 당신의 데이터는 온전히 당신의 것이죠.</string>
+  <string name="welcome_subtitle">암호화가 데이터를 안전하게 보호합니다. 당신의 데이터는 온전히 당신의 것이죠.</string>
   <string name="welcome_subtitle_mail">암호화 이메일은 당신의 대화를 안전하게 보호합니다. 당신의 받은 편지함은 온전히 당신의 것이죠.</string>
   <string name="welcome_subtitle_mail_alt">개인 정보. 보안. 편의. 개인 데이터를 완벽하게 보호할 수 있는 암호화된 이메일입니다.</string>
   <string name="welcome_subtitle_drive">클라우드 스토리지의 편리함과 암호화 기술의 보안성. 신뢰할 수 있는 클라우드 스토리지 솔루션입니다.</string>
-  <string name="welcome_subtitle_drive_alt">파일을 안전하게 보관하는 방법. 가장 가능한 암호화를 통해 업로드, 동기화 및 공유하세요.</string>
-  <string name="welcome_subtitle_calendar">암호화 캘린더가 당신의 삶의 이벤트를 안전하게 보호합니다.</string>
+  <string name="welcome_subtitle_drive_alt">파일을 안전하게 보관하는 방법. 가장 강력한 암호화를 통해 업로드, 동기화 및 공유하세요.</string>
+  <string name="welcome_subtitle_calendar">암호화된 캘린더가 당신의 삶의 이벤트를 안전하게 보호합니다.</string>
   <string name="welcome_subtitle_calendar_alt">종단간 암호화 캘린더는 체계적이고, 추적하고, 통제할 수 있도록 도와줍니다.</string>
   <string name="welcome_subtitle_vpn">빠른 속도의 스위스 VPN은 인터넷 연결 암호화를 통해 사생활을 보호해 줍니다.</string>
-  <string name="welcome_subtitle_vpn_alt">스위스 기반 높은 속도의 VPN으로 개인 정보를 보호하세요. 최고의 보안, 1600개 이상 서버, 그리고 제한 없음.</string>
-  <string name="welcome_subtitle_pass">당신의 모든 비밀번호. 한 곳에서 안전하게 보호하고 개인 정보에서 가장 신뢰할 수 있는 이름으로 보호됩니다.</string>
+  <string name="welcome_subtitle_vpn_alt">스위스 기반 높은 속도의 VPN으로 개인 정보를 보호하세요. 최고의 보안, 1600개 이상 서버, 제한 없이.</string>
+  <string name="welcome_subtitle_pass">모든 비밀번호. 가장 안전하게 보관하고 가장 신뢰할 수 있는 개인정보 보호업체의 보호를 받게됩니다.</string>
   <string name="welcome_subtitle_pass_alt">당신의 모든 비밀번호. 한 곳에서 안전하게 보호하고 개인 정보에서 가장 신뢰할 수 있는 이름으로 보호됩니다.</string>
   <string name="welcome_privacy_by_default">기본적으로 보호됩니다</string>
   <string name="auth_password_label">비밀번호</string>
@@ -46,18 +46,18 @@
   <string name="auth_sign_in_with_sso">SSO로 로그인</string>
   <string name="auth_help_label">지원</string>
   <string name="auth_login_assistive_text">Proton 이메일 또는 사용자 이름을 입력해 주세요.</string>
-  <string name="auth_login_sso_assistive_text">이메일을 입력해 주십시오.</string>
+  <string name="auth_login_sso_assistive_text">이메일을 입력해 주세요</string>
   <string name="auth_help_title">어떻게 도와드릴까요?</string>
   <string name="auth_help_option_forgot_username">사용자 이름을 잊었습니다</string>
   <string name="auth_help_option_forgot_password">비밀번호를 잊었습니다</string>
   <string name="auth_help_option_other">다른 로그인 문제</string>
-  <string name="auth_help_other">여전히 도움이 필요한가요? 저희에게 바로 연락주세요.</string>
+  <string name="auth_help_other">여전히 도움이 필요한가요? 저희에게 바로 연락해보세요.</string>
   <string name="auth_help_option_customer_support">고객 지원</string>
   <string name="auth_2fa_title">2단계 인증</string>
   <string name="auth_2fa_label">2단계 인증 코드</string>
   <string name="auth_2fa_recovery_code_label">복구 코드</string>
   <string name="auth_2fa_assistive_text">6자리 인증 코드를 입력하세요.</string>
-  <string name="auth_2fa_recovery_code_assistive_text">여덟 글자의 복구 코드를 입력하세요.</string>
+  <string name="auth_2fa_recovery_code_assistive_text">8자 복구 코드를 입력해주세요.</string>
   <string name="auth_2fa_action">인증</string>
   <string name="auth_2fa_use_recovery_code">복구 코드 사용</string>
   <string name="auth_2fa_use_2fa_code">2단계 인증 코드 사용</string>
@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">자격 증명을 비워둘 수 없습니다.</string>
   <string name="auth_mailbox_empty_credentials">자격 증명을 비워둘 수 없습니다.</string>
   <string name="auth_create_address_title">Proton 주소 필요</string>
-  <string name="auth_create_address_subtitle">Proton 메일 및 Proton 캘린더를 사용하려면 Proton 이메일 주소가 필요합니다. 여전히 %1$s을(를) 사용하여 로그인하고 계정을 복구할 수 있습니다.</string>
+  <string name="auth_create_address_subtitle">Proton Mail과 Proton Calendar를 사용하려면 Proton 이메일 주소가 필요합니다.여전히 %1$s을 사용하여 로그인하고 계정을 복구할 수 있습니다.</string>
   <string name="auth_username">사용자 이름</string>
   <string name="auth_username_next_action">계속</string>
   <string name="auth_create_address_result_title">%s 가능</string>
@@ -89,7 +89,7 @@
   <string name="auth_create_address_error_signed_key_list">키 목록 생성에 실패했습니다.</string>
   <string name="auth_create_address_error_setusername">사용자 이름 연결을 실패했습니다.</string>
   <string name="auth_create_address_error_username_unavailable">선택한 사용자 이름은 사용할 수 없습니다.</string>
-  <string name="auth_mailbox_login_error_no_primary_key">기본 보안 키를 찾을 수 없음.</string>
+  <string name="auth_mailbox_login_error_no_primary_key">기본 보안 키를 찾을 수 없습니다.</string>
   <string name="auth_mailbox_login_error_primary_key_error">기본 보안 키 오류.</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">유효하지 않은 통신 전송.</string>
   <string name="auth_password_chooser_title">비밀번호 변경</string>

@@ -129,7 +129,7 @@
   <string name="auth_signup_skip_recovery_description">Kurtarma yöntemi, parolanızı unuttuğunuzda ya da oturum açamadığınızda hesabınıza erişmenizi sağlar.</string>
   <string name="auth_signup_skip_recovery">Atla</string>
   <string name="auth_signup_set_recovery">Kurtarma yöntemini ayarla</string>
-  <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar gösterilemiyor.</string>
+  <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar görüntülenemiyor.</string>
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>

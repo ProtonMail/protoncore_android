@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">新邮箱密码</string>
   <string name="settings_mailbox_password_hint_new_confirm">确认新邮箱密码</string>
   <string name="settings_change_password_error">密码更改失败。</string>
-  <string name="settings_recovery_email_success">Recovery email address updated</string>
+  <string name="settings_recovery_email_success">密保邮箱地址已更新</string>
   <string name="settings_password_management_success">密码已更改</string>
   <string name="settings_password_management_login_password_success">登录密码已更改</string>
   <string name="settings_password_management_mailbox_password_success">邮箱密码已更改</string>

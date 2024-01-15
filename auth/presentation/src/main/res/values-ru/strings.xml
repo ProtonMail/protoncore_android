@@ -40,13 +40,13 @@
   <string name="auth_account_details">Введите данные вашего аккаунта Proton.</string>
   <string name="auth_sign_in">Войти</string>
   <string name="auth_sign_in_action">Войти</string>
-  <string name="auth_sign_in_sso">Войдите в вашу организацию, </string>
-  <string name="auth_sign_in_with_password">Войдите с паролем, </string>
-  <string name="auth_continue_to_proton_vpn">чтобы перейти в Proton VPN</string>
+  <string name="auth_sign_in_sso">Войдите в вашу организацию</string>
+  <string name="auth_sign_in_with_password">Войти с паролем</string>
+  <string name="auth_continue_to_proton_vpn">чтобы продолжить в Proton VPN</string>
   <string name="auth_sign_in_with_sso">Войти с помощью системы единого входа</string>
-  <string name="auth_help_label">Справка</string>
+  <string name="auth_help_label">Помощь</string>
   <string name="auth_login_assistive_text">Введите ваш адрес электронной почты Proton или имя пользователя.</string>
-  <string name="auth_login_sso_assistive_text">Пожалуйста, введите свою электронную почту.</string>
+  <string name="auth_login_sso_assistive_text">Введите свою электронную почту.</string>
   <string name="auth_help_title">Как мы можем помочь?</string>
   <string name="auth_help_option_forgot_username">Забыли имя пользователя</string>
   <string name="auth_help_option_forgot_password">Забыли пароль</string>
@@ -73,7 +73,7 @@
   <string name="auth_login_empty_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_mailbox_empty_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_title">Требуется адрес Proton</string>
-  <string name="auth_create_address_subtitle">Для использования Proton Mail и Proton Calendar вам потребуется адрес электронной почты Proton. Вы все еще сможете использовать %1$s для входа в систему и восстановления своего аккаунта.</string>
+  <string name="auth_create_address_subtitle">Чтобы использовать Proton Mail и Proton Calendar вам необходим адрес электронной почты Proton. Вы по-прежнему сможете использовать %1$s для входа и восстановления доступа к вашему аккаунту.</string>
   <string name="auth_username">Имя пользователя</string>
   <string name="auth_username_next_action">Продолжить</string>
   <string name="auth_create_address_result_title">%s доступно</string>
@@ -82,7 +82,7 @@
   <string name="auth_create_address_result_recovery_title">Ваш резервный адрес электронной почты:</string>
   <string name="auth_create_address_create">Создать адрес</string>
   <string name="auth_create_address_creating">Создание адреса</string>
-  <string name="auth_create_address_terms">Нажимая кнопку Создать адрес, вы соглашаетесь с <a href="https://proton.me/legal/terms"> условиями Proton</a>.</string>
+  <string name="auth_create_address_terms">Нажимая кнопку Создать адрес, вы соглашаетесь с <a href="https://proton.me/legal/terms">Условиями использования</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Учётные данные не могут быть пустыми.</string>
   <string name="auth_create_address_error_no_available_domain">Нет доступного домена.</string>
   <string name="auth_create_address_error_private_key">Не удалось создать закрытый ключ.</string>
@@ -148,6 +148,6 @@
   <string name="auth_signup_start_using_mail">Начать использовать Proton Mail</string>
   <string name="auth_signup_start_using_drive">Начать использовать Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Начать использовать Proton VPN</string>
-  <string name="auth_signup_start_using_pass">Начать использовать Proton Pass</string>
+  <string name="auth_signup_start_using_pass">Начните использовать Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Место назначения восстановления недействительно.</string>
 </resources>

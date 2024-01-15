@@ -33,7 +33,7 @@
   <string name="account_recovery_cancel_now">Отменить сброс пароля</string>
   <string name="account_recovery_cancel_back">Назад</string>
   <!-- Account recovery cancelled -->
-  <string name="account_recovery_cancelled_title">Сброс пароля отменен</string>
+  <string name="account_recovery_cancelled_title">Сброс пароля отменён</string>
   <string name="account_recovery_cancelled_subtitle">Ваша учетная запись может быть под угрозой.\n\n Защитите ее сменив пароль.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Доступен сброс пароля</string>

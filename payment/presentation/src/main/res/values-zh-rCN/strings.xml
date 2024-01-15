@@ -28,7 +28,7 @@
   <string name="payments_error_signup_paymentmethod">无法使用现有的支付方式注册。</string>
   <string name="payments_error_invalid_session">无效会话。</string>
   <string name="payments_no_payment_provider">未发现有效支付提供商。</string>
-  <string name="payments_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
+  <string name="payments_error_google_prices">目前在检索 Google Play 商店的价格时遇到了问题。</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">请选择您的支付方式</string>

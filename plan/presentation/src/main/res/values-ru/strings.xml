@@ -29,14 +29,14 @@
   <string name="plans_subscription">Подписка</string>
   <string name="plans_renewal_date">Ваш тариф будет автоматически продлен &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Срок действия вашего тарифа истекает &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Платить ежемесячно</string>
-  <string name="plans_pay_annually">Платить ежегодно</string>
-  <string name="plans_pay_biennially">Платить каждые 2 года</string>
+  <string name="plans_pay_monthly">Оплачивать ежемесячно</string>
+  <string name="plans_pay_annually">Оплачивать ежегодно</string>
+  <string name="plans_pay_biennially">Оплачивать каждые 2 года</string>
   <plurals name="plans_pay_other">
-    <item quantity="one">Оплата за %d месяц</item>
-    <item quantity="few">Оплата за %d месяца</item>
-    <item quantity="many">Оплата за %d месяцев</item>
-    <item quantity="other">Оплата за %d месяцев</item>
+    <item quantity="one">Оплатить %d месяц</item>
+    <item quantity="few">Оплатить %d месяца</item>
+    <item quantity="many">Оплатить %d месяцев</item>
+    <item quantity="other">Оплатить %d месяцев</item>
   </plurals>
   <string name="plans_billed_yearly">*Ежегодная оплата %s</string>
   <string name="plans_billed_monthly">Ежемесячная оплата</string>
@@ -93,16 +93,16 @@
     <item quantity="other">#proton_addresses# адресов на пользователя</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d из адресов #proton_addresses#</item>
-    <item quantity="few">%d из адресов #proton_addresses#</item>
-    <item quantity="many">%d из адресов #proton_addresses#</item>
-    <item quantity="other">%d из адресов #proton_addresses#</item>
+    <item quantity="one">%d из #proton_addresses# адреса</item>
+    <item quantity="few">%d из #proton_addresses# адресов</item>
+    <item quantity="many">%d из #proton_addresses# адресов</item>
+    <item quantity="other">%d из #proton_addresses# адресов</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Поддержка пользовательского домена электронной почты #proton_domains#</item>
-    <item quantity="few">Поддержка пользовательских доменов электронной почты #proton_domains#</item>
-    <item quantity="many">Поддержка пользовательских доменов электронной почты #proton_domains#</item>
-    <item quantity="other">Поддержка пользовательских доменов электронной почты #proton_domains#</item>
+    <item quantity="one">Поддержка #proton_domains# пользовательского домена электронной почты</item>
+    <item quantity="few">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
+    <item quantity="many">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
+    <item quantity="other">Поддержка #proton_domains# пользовательских доменов электронной почты</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# личный календарь</item>
@@ -111,10 +111,10 @@
     <item quantity="other">#proton_calendars# личных календарей</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d из календаря #proton_calendars#</item>
-    <item quantity="few">%d из календарей #proton_calendars#</item>
-    <item quantity="many">%d из календарей #proton_calendars#</item>
-    <item quantity="other">%d из календарей #proton_calendars#</item>
+    <item quantity="one">%d из #proton_calendars# календаря</item>
+    <item quantity="few">%d из #proton_calendars# календарей</item>
+    <item quantity="many">%d из #proton_calendars# календарей</item>
+    <item quantity="other">%d из #proton_calendars# календарей</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
     <item quantity="one">Бесплатный VPN на одном устройстве</item>
@@ -176,15 +176,15 @@
   <string name="secure_core" comment="new_plans">Серверы Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor через VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Неограниченное количество логинов и заметок</string>
+  <string name="unlimited_logins_and_notes">Неограниченное количество имен пользователей и заметок</string>
   <string name="unlimited_devices">Неограниченное количество устройств</string>
-  <string name="integrated_2fa_authenticator">Встроенный 2FA аутентификатор</string>
+  <string name="integrated_2fa_authenticator">Интегрированная двухфакторная аутентификация</string>
   <string name="multiple_vaults">Несколько хранилищ</string>
-  <string name="unlimited_email_alias">Неограниченное число псевдонимов Hide-my-email</string>
+  <string name="unlimited_email_alias">Неограниченное количество псевдонимов Hide My Email</string>
   <string name="custom_email_alias_domains">Пользовательские домены для псевдонимов электронной почты</string>
   <string name="multiple_forwarding_mailboxes">Несколько почтовых ящиков для пересылки</string>
   <string name="priority_support">Приоритетная поддержка</string>
   <string name="one_vault">1 хранилище</string>
-  <string name="ten_hide_my_email_aliases">10 Hide-my-email псевдонимов</string>
+  <string name="ten_hide_my_email_aliases">10 псевдонимов Hide My Email</string>
   <!-- endregion -->
 </resources>
