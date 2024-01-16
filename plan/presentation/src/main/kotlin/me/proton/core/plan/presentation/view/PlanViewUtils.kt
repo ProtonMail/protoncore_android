@@ -37,6 +37,12 @@ import java.util.Calendar
 
 const val HUNDRED_PERCENT = 100
 
+/** The min percentage of used storage, when we start showing a warning message. */
+internal const val STORAGE_WARNING_THRESHOLD = 50
+
+/** The min percentage of used storage, when we start showing an error message. */
+internal const val STORAGE_ERROR_THRESHOLD = 80
+
 object LogTag {
     const val PLAN_RESOURCE_ERROR = "core.plan.presentation.resource"
 }

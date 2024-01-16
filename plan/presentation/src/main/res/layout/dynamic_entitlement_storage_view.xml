@@ -15,8 +15,9 @@
         <TextView
             android:id="@+id/tagText"
             style="@style/Proton.Text.Default"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/gap_small"
             android:gravity="start"
             app:layout_constraintBaseline_toBaselineOf="@id/text"
             app:layout_constraintEnd_toStartOf="@id/text"

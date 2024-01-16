@@ -56,8 +56,26 @@ class SnapshotDynamicSubscriptionTest: CoroutinesTest by CoroutinesTest() {
     fun dynamicPlanEntitlementStorageView() {
         val view = DynamicEntitlementProgressView(paparazzi.context)
         view.tagText = "Mail storage"
-        view.text = "50/100"
-        view.progress = 50
+        view.text = "50/500"
+        view.setProgress(max = 500, current = 50)
+        paparazzi.snapshot(view)
+    }
+
+    @Test
+    fun dynamicPlanEntitlementStorageViewWarning() {
+        val view = DynamicEntitlementProgressView(paparazzi.context)
+        view.tagText = "Mail storage"
+        view.text = "250/500"
+        view.setProgress(max = 500, current = 250)
+        paparazzi.snapshot(view)
+    }
+
+    @Test
+    fun dynamicPlanEntitlementStorageViewError() {
+        val view = DynamicEntitlementProgressView(paparazzi.context)
+        view.tagText = "Mail storage"
+        view.text = "400/500"
+        view.setProgress(max = 500, current = 400)
         paparazzi.snapshot(view)
     }
 
@@ -81,7 +99,7 @@ class SnapshotDynamicSubscriptionTest: CoroutinesTest by CoroutinesTest() {
         view.entitlements.addView(DynamicEntitlementProgressView(paparazzi.context).apply {
             tagText = "Drive storage"
             text = "50 MB on 100 MB"
-            progress = 50
+            setProgress(current = 50)
         })
         view.entitlements.addView(DynamicEntitlementDescriptionView(paparazzi.context).apply {
             text = "100MB of free Storage"
