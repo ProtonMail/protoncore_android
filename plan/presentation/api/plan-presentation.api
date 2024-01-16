@@ -310,6 +310,7 @@ public final class me/proton/core/plan/presentation/databinding/FragmentDynamicU
 	public final field progress Landroid/widget/ProgressBar;
 	public final field retry Landroid/widget/Button;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
+	public final field storageFullView Lme/proton/core/plan/presentation/view/StorageNearlyFullCardView;
 	public final field subscription Landroidx/fragment/app/FragmentContainerView;
 	public final field title Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
@@ -429,6 +430,17 @@ public final class me/proton/core/plan/presentation/databinding/ProtonPaymentBut
 	public fun getRoot ()Lme/proton/core/payment/presentation/view/ProtonPaymentButton;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/plan/presentation/databinding/ProtonPaymentButtonBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/plan/presentation/databinding/ProtonPaymentButtonBinding;
+}
+
+public final class me/proton/core/plan/presentation/databinding/StorageNearlyFullBinding : androidx/viewbinding/ViewBinding {
+	public final field actionButton Landroid/widget/Button;
+	public final field barrier Landroidx/constraintlayout/widget/Barrier;
+	public final field bodyView Landroid/widget/TextView;
+	public final field cloudIcon Landroid/widget/ImageView;
+	public final field titleView Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/StorageNearlyFullBinding;
+	public fun getRoot ()Landroid/view/View;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/plan/presentation/databinding/StorageNearlyFullBinding;
 }
 
 public final class me/proton/core/plan/presentation/entity/DynamicPlanFilter {
@@ -1436,6 +1448,20 @@ public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGoogl
 	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
 }
 
+public final class me/proton/core/plan/presentation/usecase/LoadStorageUsageState {
+	public fun <init> (Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/plan/domain/IsSplitStorageEnabled;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/plan/presentation/usecase/LoadStorageUsageState;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/presentation/usecase/LoadStorageUsageState_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/LoadStorageUsageState_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/presentation/usecase/LoadStorageUsageState;
+	public static fun newInstance (Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/plan/domain/IsSplitStorageEnabled;)Lme/proton/core/plan/presentation/usecase/LoadStorageUsageState;
+}
+
 public final class me/proton/core/plan/presentation/usecase/ObserveUserId {
 	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
 	public final fun getUser ()Lme/proton/core/plan/presentation/entity/DynamicUser;
@@ -1457,6 +1483,31 @@ public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
 	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+}
+
+public abstract class me/proton/core/plan/presentation/usecase/StorageUsageState {
+}
+
+public final class me/proton/core/plan/presentation/usecase/StorageUsageState$Full : me/proton/core/plan/presentation/usecase/StorageUsageState {
+	public fun <init> (Lme/proton/core/domain/entity/Product;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/Product;
+	public final fun copy (Lme/proton/core/domain/entity/Product;)Lme/proton/core/plan/presentation/usecase/StorageUsageState$Full;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/usecase/StorageUsageState$Full;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)Lme/proton/core/plan/presentation/usecase/StorageUsageState$Full;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/presentation/usecase/StorageUsageState$NearlyFull : me/proton/core/plan/presentation/usecase/StorageUsageState {
+	public fun <init> (Lme/proton/core/domain/entity/Product;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/Product;
+	public final fun copy (Lme/proton/core/domain/entity/Product;)Lme/proton/core/plan/presentation/usecase/StorageUsageState$NearlyFull;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/usecase/StorageUsageState$NearlyFull;Lme/proton/core/domain/entity/Product;ILjava/lang/Object;)Lme/proton/core/plan/presentation/usecase/StorageUsageState$NearlyFull;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView : androidx/constraintlayout/widget/ConstraintLayout {
@@ -1563,7 +1614,17 @@ public final class me/proton/core/plan/presentation/view/PlanItemView : androidx
 }
 
 public final class me/proton/core/plan/presentation/view/PlanViewUtilsKt {
-	public static final field HUNDRED_PERCENT I
+	public static final field HUNDRED_PERCENT D
+}
+
+public final class me/proton/core/plan/presentation/view/StorageNearlyFullCardView : android/widget/FrameLayout {
+	public fun <init> (Landroid/content/Context;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
+	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
+	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun setOnActionButtonClicked (Lkotlin/jvm/functions/Function0;)V
+	public final fun setStorageFull (Lme/proton/core/domain/entity/Product;)V
+	public final fun setStorageNearlyFull (Lme/proton/core/domain/entity/Product;)V
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/BasePlansViewModelKt {
@@ -1679,11 +1740,11 @@ public final class me/proton/core/plan/presentation/viewmodel/DynamicSubscriptio
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel;
-	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel;
+	public static fun newInstance (Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;Lme/proton/core/plan/domain/usecase/CanUpgradeFromMobile;Lme/proton/core/plan/presentation/usecase/LoadStorageUsageState;)Lme/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel;
 }
 
 public final class me/proton/core/plan/presentation/viewmodel/DynamicUpgradePlanViewModel_HiltModules {

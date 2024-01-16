@@ -44,6 +44,8 @@ import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
+import me.proton.core.plan.presentation.usecase.LoadStorageUsageState
+import me.proton.core.plan.presentation.usecase.StorageUsageState
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
@@ -53,11 +55,12 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val checkUnredeemedGooglePurchase: CheckUnredeemedGooglePurchase,
     private val canUpgradeFromMobile: CanUpgradeFromMobile,
+    private val loadStorageUsageState: LoadStorageUsageState
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
         object Loading : State()
-        object UpgradeAvailable : State()
+        data class UpgradeAvailable(val storageUsageState: StorageUsageState? = null) : State()
         object UpgradeNotAvailable : State()
         data class UnredeemedPurchase(val purchase: UnredeemedGooglePurchase) : State()
         data class Error(val error: Throwable) : State()
@@ -101,7 +104,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     private suspend fun loadUnredeemedPurchase(userId: UserId) = flow {
         emit(State.Loading)
         when (val unredeemedPurchase = checkUnredeemedGooglePurchase.invoke(userId)) {
-            null -> emit(State.UpgradeAvailable)
+            null -> emit(State.UpgradeAvailable(storageUsageState = loadStorageUsageState(userId)))
             else -> emit(State.UnredeemedPurchase(unredeemedPurchase))
         }
     }.catch { emit(State.Error(it)) }

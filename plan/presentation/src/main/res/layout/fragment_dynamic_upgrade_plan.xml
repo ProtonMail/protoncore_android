@@ -53,6 +53,14 @@
             android:paddingEnd="@dimen/default_gap"
             android:paddingBottom="@dimen/double_top_margin">
 
+            <me.proton.core.plan.presentation.view.StorageNearlyFullCardView
+                android:id="@+id/storageFullView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/gap_medium"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/subscription"
                 android:name="me.proton.core.plan.presentation.ui.DynamicSubscriptionFragment"

@@ -34,6 +34,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.usecase.CheckUnredeemedGooglePurchase
+import me.proton.core.plan.presentation.usecase.LoadStorageUsageState
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -68,6 +69,7 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     private val canUpgradeFromMobile = mockk<CanUpgradeFromMobile> {
         coEvery { this@mockk.invoke(any()) } returns true
     }
+    private val loadStorageUsageState = mockk<LoadStorageUsageState>(relaxed = true)
 
     private lateinit var viewModel: DynamicUpgradePlanViewModel
 
@@ -77,7 +79,8 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
             observabilityManager,
             accountManager,
             checkUnredeemedGooglePurchase,
-            canUpgradeFromMobile
+            canUpgradeFromMobile,
+            loadStorageUsageState
         )
     }
 
