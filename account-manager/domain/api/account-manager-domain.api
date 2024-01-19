@@ -44,6 +44,9 @@ public abstract interface class me/proton/core/accountmanager/domain/SessionMana
 	public abstract fun withLock (Lme/proton/core/network/domain/session/SessionId;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+}
+
 public abstract interface class me/proton/core/accountmanager/domain/migrator/AccountMigrator {
 	public abstract fun migrate (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

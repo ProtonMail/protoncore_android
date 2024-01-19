@@ -30,8 +30,10 @@ import me.proton.core.accountmanager.data.AccountMigratorImpl
 import me.proton.core.accountmanager.data.SessionListenerImpl
 import me.proton.core.accountmanager.data.SessionManagerImpl
 import me.proton.core.accountmanager.data.SessionProviderImpl
+import me.proton.core.accountmanager.data.feature.IsCredentialLessEnabledImpl
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.accountmanager.domain.feature.IsCredentialLessEnabled
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -80,4 +82,11 @@ object CoreAccountManagerModuleProvides {
         authRepository = authRepository,
         accountRepository = accountRepository
     ) { SystemClock.elapsedRealtime() }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+interface CoreAccountManagerFeaturesModule {
+    @Binds
+    fun bindIsCredentialLessEnabled(impl: IsCredentialLessEnabledImpl): IsCredentialLessEnabled
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,37 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountmanager.domain.feature
 
-plugins {
-    protonKotlinLibrary
-}
+import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
 
-protonBuild {
-    apiModeDisabled()
-}
-
-protonCoverage {
-    branchCoveragePercentage.set(75)
-    lineCoveragePercentage.set(100)
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-dependencies {
-    api(
-        project(Module.accountDomain),
-        project(Module.domain),
-        project(Module.featureFlagDomain),
-        project(Module.networkDomain),
-        `coroutines-core`
-    )
-
-    testImplementation(
-        project(Module.kotlinTest),
-        `coroutines-test`,
-        junit,
-        `kotlin-test`,
-        mockk
-    )
-}
+interface IsCredentialLessEnabled : IsFeatureFlagEnabled
