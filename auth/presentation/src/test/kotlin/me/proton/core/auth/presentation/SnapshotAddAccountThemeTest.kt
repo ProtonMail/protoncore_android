@@ -34,7 +34,7 @@ class SnapshotAddAccountThemeTest {
 
     @Test
     fun addAccountLayout() {
-        val view = paparazzi.inflate<ScrollView>(R.layout.activity_add_account)
+        val view = paparazzi.inflate<ScrollView>(R.layout.fragment_add_account)
         paparazzi.snapshot(view)
     }
 }

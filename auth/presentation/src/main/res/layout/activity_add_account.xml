@@ -15,101 +15,15 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     android:scrollbars="none">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent" />
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            android:src="?add_account_illustration"
-            app:layout_constraintBottom_toBottomOf="@id/guide_header"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guide_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="@dimen/add_account_header_percent" />
-
-        <ImageView
-            android:id="@+id/logo_text"
-            android:layout_width="@dimen/add_account_icon_size_width"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_large_plus"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guide_header"
-            app:srcCompat="?add_account_icon" />
-
-        <TextView
-            android:id="@+id/subtitle"
-            style="@style/Proton.Text.DefaultSmall.Weak"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/gap_huge"
-            android:layout_marginTop="@dimen/gap_large_plus"
-            android:layout_marginEnd="@dimen/gap_huge"
-            android:gravity="center"
-            android:text="?attr/add_account_subtitle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logo_text" />
-
-        <me.proton.core.presentation.ui.view.ProtonButton
-            android:id="@+id/sign_up"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_large_plus"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:text="@string/auth_create_account"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/subtitle" />
-
-        <me.proton.core.presentation.ui.view.ProtonButton
-            android:id="@+id/sign_in"
-            style="@style/ProtonButton.Borderless.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_medium"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:text="@string/auth_sign_in"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sign_up" />
-
-        <ImageView
-            android:id="@+id/footer"
-            android:layout_width="@dimen/add_account_proton_logo_footer_width"
-            android:layout_height="@dimen/add_account_proton_logo_footer_height"
-            android:layout_marginStart="@dimen/default_horizontal_padding"
-            android:layout_marginTop="@dimen/gap_huge"
-            android:layout_marginEnd="@dimen/default_horizontal_padding"
-            android:layout_marginBottom="@dimen/gap_large_plus"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sign_in"
-            app:layout_constraintVertical_bias="1.0"
-            app:srcCompat="@drawable/logo_proton_footer" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</ScrollView>
+</FrameLayout>

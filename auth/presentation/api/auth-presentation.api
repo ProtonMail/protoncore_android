@@ -14,6 +14,10 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_AddAccoun
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_AddAccountFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_AuthHelpActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -389,15 +393,10 @@ public final class me/proton/core/auth/presentation/databinding/Activity2faBindi
 }
 
 public final class me/proton/core/auth/presentation/databinding/ActivityAddAccountBinding : androidx/viewbinding/ViewBinding {
-	public final field footer Landroid/widget/ImageView;
-	public final field guideHeader Landroidx/constraintlayout/widget/Guideline;
-	public final field logoText Landroid/widget/ImageView;
-	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
-	public final field signUp Lme/proton/core/presentation/ui/view/ProtonButton;
-	public final field subtitle Landroid/widget/TextView;
+	public final field fragmentContainer Landroidx/fragment/app/FragmentContainerView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
-	public fun getRoot ()Landroid/widget/ScrollView;
+	public fun getRoot ()Landroid/widget/FrameLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 }
@@ -554,6 +553,20 @@ public final class me/proton/core/auth/presentation/databinding/DialogEnterPassw
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/FragmentAddAccountBinding : androidx/viewbinding/ViewBinding {
+	public final field footer Landroid/widget/ImageView;
+	public final field guideHeader Landroidx/constraintlayout/widget/Guideline;
+	public final field logoText Landroid/widget/ImageView;
+	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field signUp Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field subtitle Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentAddAccountBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/ScrollView;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentAddAccountBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentAddAccountBinding;
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding : androidx/viewbinding/ViewBinding {
@@ -1319,13 +1332,7 @@ public final class me/proton/core/auth/presentation/ui/AddAccountActivity : me/p
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/AddAccountActivity$Companion;
-	public field accountManager Lme/proton/core/accountmanager/domain/AccountManager;
-	public field authOrchestrator Lme/proton/core/auth/presentation/AuthOrchestrator;
 	public fun <init> ()V
-	public final fun getAccountManager ()Lme/proton/core/accountmanager/domain/AccountManager;
-	public final fun getAuthOrchestrator ()Lme/proton/core/auth/presentation/AuthOrchestrator;
-	public final fun setAccountManager (Lme/proton/core/accountmanager/domain/AccountManager;)V
-	public final fun setAuthOrchestrator (Lme/proton/core/auth/presentation/AuthOrchestrator;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/AddAccountActivity$Companion {
@@ -1335,13 +1342,17 @@ public abstract interface class me/proton/core/auth/presentation/ui/AddAccountAc
 	public abstract fun injectAddAccountActivity (Lme/proton/core/auth/presentation/ui/AddAccountActivity;)V
 }
 
-public final class me/proton/core/auth/presentation/ui/AddAccountActivity_MembersInjector : dagger/MembersInjector {
+public abstract interface class me/proton/core/auth/presentation/ui/AddAccountFragment_GeneratedInjector {
+	public abstract fun injectAddAccountFragment (Lme/proton/core/auth/presentation/ui/AddAccountFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/AddAccountFragment_MembersInjector : dagger/MembersInjector {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
-	public static fun injectAccountManager (Lme/proton/core/auth/presentation/ui/AddAccountActivity;Lme/proton/core/accountmanager/domain/AccountManager;)V
-	public static fun injectAuthOrchestrator (Lme/proton/core/auth/presentation/ui/AddAccountActivity;Lme/proton/core/auth/presentation/AuthOrchestrator;)V
+	public static fun injectAccountManager (Lme/proton/core/auth/presentation/ui/AddAccountFragment;Lme/proton/core/accountmanager/domain/AccountManager;)V
+	public static fun injectAuthOrchestrator (Lme/proton/core/auth/presentation/ui/AddAccountFragment;Lme/proton/core/auth/presentation/AuthOrchestrator;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
-	public fun injectMembers (Lme/proton/core/auth/presentation/ui/AddAccountActivity;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/AddAccountFragment;)V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/AuthActivity : me/proton/core/presentation/ui/ProtonSecureActivity {
