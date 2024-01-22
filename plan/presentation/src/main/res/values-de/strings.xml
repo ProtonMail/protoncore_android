@@ -57,6 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Über die mobile App kann kein Upgrade durchgeführt werden.</string>
   <string name="plans_no_upgrade_available">Derzeit ist kein Upgrade verfügbar.</string>
   <string name="plans_limited_offer">Zeitlich begrenztes Angebot</string>
+  <string name="plans_subscription_base_storage_full_title">Dein E-Mail-Speicherplatz ist voll.</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Dein E-Mail-Speicherplatz ist fast voll.</string>
+  <string name="plans_subscription_drive_storage_full_title">Dein Drive-Speicherplatz ist voll.</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Dein Drive-Speicherplatz ist fast voll.</string>
+  <string name="plans_subscription_storage_get_more">Mehr Speicherplatz erhalten</string>
+  <string name="plans_subscription_storage_full_description">Upgrade dein Abonnement, um dein Konto weiterhin ohne Unterbrechungen nutzen zu können.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# Speicherplatz</item>
@@ -156,5 +162,9 @@
   <string name="priority_support">Priorisierter Support</string>
   <string name="one_vault">1 Tresor</string>
   <string name="ten_hide_my_email_aliases">10 Hide-my-email-Aliasse</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">E-Mail-Speicherplatz</string>
+  <string name="plan_entitlement_tag_drive">Drive-Speicherplatz</string>
   <!-- endregion -->
 </resources>

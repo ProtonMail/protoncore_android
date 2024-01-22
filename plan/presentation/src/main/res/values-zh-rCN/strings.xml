@@ -55,6 +55,12 @@
   <string name="plans_can_not_upgrade_from_mobile">移动端无法升级账户。</string>
   <string name="plans_no_upgrade_available">当前无可用升级。</string>
   <string name="plans_limited_offer">限时优惠</string>
+  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
+  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
+  <string name="plans_subscription_storage_get_more">Get more storage</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 存储空间</item>
@@ -141,5 +147,9 @@
   <string name="priority_support">优先支持</string>
   <string name="one_vault">1 个保险库</string>
   <string name="ten_hide_my_email_aliases">10个 Hide-my-email 别名</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">Mail storage</string>
+  <string name="plan_entitlement_tag_drive">Drive storage</string>
   <!-- endregion -->
 </resources>

@@ -61,6 +61,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Обновление через мобильное приложение невозможно.</string>
   <string name="plans_no_upgrade_available">Обновлений на данный момент нет.</string>
   <string name="plans_limited_offer">Ограниченное предложение</string>
+  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
+  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
+  <string name="plans_subscription_storage_get_more">Get more storage</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# хранилища</item>
@@ -186,5 +192,9 @@
   <string name="priority_support">Приоритетная поддержка</string>
   <string name="one_vault">1 хранилище</string>
   <string name="ten_hide_my_email_aliases">10 псевдонимов Hide My Email</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">Mail storage</string>
+  <string name="plan_entitlement_tag_drive">Drive storage</string>
   <!-- endregion -->
 </resources>

@@ -28,7 +28,7 @@
   <string name="payments_error_signup_paymentmethod">Kon niet aanmelden met bestaande betaalmethode.</string>
   <string name="payments_error_invalid_session">Ongeldige sessie.</string>
   <string name="payments_no_payment_provider">Geen actieve betalingsprovider gevonden.</string>
-  <string name="payments_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
+  <string name="payments_error_google_prices">Op dit moment is er een probleem met het ophalen van de Google Play Store prijzen</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Kies uw betaalmethode</string>
@@ -52,7 +52,7 @@
   <string name="payments_expiration_date_hint">MM/JJ</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Land</string>
-  <string name="payments_get_plan">Get %s</string>
+  <string name="payments_get_plan">Krijg %s</string>
   <string name="payments_paying_in_process">Betalen</string>
   <string name="payments_choose_country">Selecteer land</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Exp %3$s/%4$s)</string>

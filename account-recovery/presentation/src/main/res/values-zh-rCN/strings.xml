@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">请求密码重置</string>
+  <string name="account_recovery_grace_period_info_title">已请求重置密码</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="other"><b>%1$s</b> 已请求重置密码。您可以在 %2$d 小时内更改密码。 \n\n如果您没有提出此请求，请立即取消。</item>
   </plurals>

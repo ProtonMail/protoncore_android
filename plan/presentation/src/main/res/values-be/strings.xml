@@ -61,6 +61,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Вы не можаце змяніць тарыфны план праз мабільную праграму.</string>
   <string name="plans_no_upgrade_available">У цяперашні час паляпшэнні недаступны.</string>
   <string name="plans_limited_offer">Прапанова абмежавана па часе</string>
+  <string name="plans_subscription_base_storage_full_title">Ваша сховішча Mail запоўнена</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Ваша сховішча Mail амаль запоўнена</string>
+  <string name="plans_subscription_drive_storage_full_title">Ваша сховішча Drive запоўнена</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Ваша сховішча Drive амаль запоўнена</string>
+  <string name="plans_subscription_storage_get_more">Атрымаць больш месца ў сховішчы</string>
+  <string name="plans_subscription_storage_full_description">Палепшыце свой тарыфны, каб працягнуць карыстацца сваім уліковым запісам без перапыненняў.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховішча</item>
@@ -186,5 +192,9 @@
   <string name="priority_support">Прыярытэтная падтрымка</string>
   <string name="one_vault">1 сховішча</string>
   <string name="ten_hide_my_email_aliases">10 псеўданімаў Hide-my-email</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">Сховішча Mail</string>
+  <string name="plan_entitlement_tag_drive">Сховішча Drive</string>
   <!-- endregion -->
 </resources>

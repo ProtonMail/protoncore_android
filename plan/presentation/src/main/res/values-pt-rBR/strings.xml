@@ -57,6 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Você não pode fazer upgrade do aplicativo móvel.</string>
   <string name="plans_no_upgrade_available">Não há atualizações disponíveis.</string>
   <string name="plans_limited_offer">Oferta por tempo limitado</string>
+  <string name="plans_subscription_base_storage_full_title">Seu armazenamento do Mail está cheio</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Seu armazenamento do Mail está quase cheio</string>
+  <string name="plans_subscription_drive_storage_full_title">Seu armazenamento do Drive está cheio</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Seu armazenamento do Drive está quase cheio</string>
+  <string name="plans_subscription_storage_get_more">Obter mais armazenamento</string>
+  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# de armazenamento</item>
@@ -156,5 +162,9 @@
   <string name="priority_support">Suporte prioritário</string>
   <string name="one_vault">1 cofre</string>
   <string name="ten_hide_my_email_aliases">10 encaminhamentos do Hide-my-email</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">Armazenamento do Mail</string>
+  <string name="plan_entitlement_tag_drive">Armazenamento do Drive</string>
   <!-- endregion -->
 </resources>

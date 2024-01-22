@@ -22,7 +22,7 @@
   <string name="core_report_bug_subject_field_hint">Subjek</string>
   <string name="core_report_bug_subject_field_required">Beri subjek</string>
   <string name="core_report_bug_description_field_hint">Apa yang salah? Minimum 10 karakter</string>
-  <string name="core_report_bug_description_field_placeholder">Mohon uraikan masalah Anda serinci mungkin. Apabila Anda menjumpai pesan error tertentu, mohon beri tahu kami isi dari pesan error tersebut.</string>
+  <string name="core_report_bug_description_field_placeholder">Mohon uraikan masalah Anda serinci mungkin. Apabila Anda menjumpai pesan kesalahan tertentu, mohon beri tahu kami isi dari pesan tersebut.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="other">Masukkan setidaknya %d karakter</item>
   </plurals>

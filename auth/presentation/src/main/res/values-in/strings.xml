@@ -124,7 +124,7 @@
   <string name="auth_signup_recovery_method_email_hint">Alamat surel pemulihan</string>
   <string name="auth_signup_recovery_method_phone_hint">Nomor telepon pemulihan</string>
   <string name="auth_signup_terms_conditions">Syarat dan Ketentuan</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan mengklik Selanjutnya, Anda setuju dengan <annotation link="terms">Syarat dan Ketentuan</annotation> Proton.</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan mengeklik Selanjutnya, Anda menyatakan diri setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Lewati metode pemulihan?</string>
   <string name="auth_signup_skip_recovery_description">Metode pemulihan akan membantu Anda mengakses akun Anda seandainya lupa dengan kata sandi atau terkunci dari akun Anda.</string>
   <string name="auth_signup_skip_recovery">Lewati</string>

@@ -57,6 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Du kan inte uppgradera från mobilappen.</string>
   <string name="plans_no_upgrade_available">Det finns för närvarande ingen uppdatering tillgänglig.</string>
   <string name="plans_limited_offer">Tidsbegränsat erbjudande</string>
+  <string name="plans_subscription_base_storage_full_title">Ditt lagringsutrymme för Mail är fullt</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Ditt lagringsutrymme för Mail är nästan fullt</string>
+  <string name="plans_subscription_drive_storage_full_title">Ditt lagringsutrymme för Drive är fullt</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Ditt lagringsutrymme för Drive är nästan fullt</string>
+  <string name="plans_subscription_storage_get_more">Skaffa mer lagringsutrymme</string>
+  <string name="plans_subscription_storage_full_description">Uppgradera ditt paket för att fortsätta använda ditt konto utan avbrott.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagringsutrymme</item>
@@ -156,5 +162,9 @@
   <string name="priority_support">Prioriterad support</string>
   <string name="one_vault">1 valv</string>
   <string name="ten_hide_my_email_aliases">10 Hide-my-email-alias</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">Lagringsutrymme för Mail</string>
+  <string name="plan_entitlement_tag_drive">Lagringsutrymme för Drive</string>
   <!-- endregion -->
 </resources>

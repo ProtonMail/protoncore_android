@@ -57,6 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Du kan ikke oppgradere fra mobilappen.</string>
   <string name="plans_no_upgrade_available">Det finnes for øyeblikket ingen tilgjengelige oppgraderinger.</string>
   <string name="plans_limited_offer">Tidsbegrenset tilbud</string>
+  <string name="plans_subscription_base_storage_full_title">E-postlagringen din er full</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">E-postlagringen din er nesten full</string>
+  <string name="plans_subscription_drive_storage_full_title">Drive-lagringen din er full</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Drive-lagringen din er nesten full</string>
+  <string name="plans_subscription_storage_get_more">Få mer lagringskapasitet</string>
+  <string name="plans_subscription_storage_full_description">Oppgrader planen for å fortsette å bruke kontoen din uten avbrudd.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# lagringsplass</item>
@@ -156,5 +162,9 @@
   <string name="priority_support">Prioritert støtte</string>
   <string name="one_vault">1 hvelv</string>
   <string name="ten_hide_my_email_aliases">10 Hide My Email-aliaser</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">E-postlagring</string>
+  <string name="plan_entitlement_tag_drive">Drive-lagring</string>
   <!-- endregion -->
 </resources>

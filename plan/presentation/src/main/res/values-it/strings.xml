@@ -57,6 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Non puoi effettuare l\'upgrade dall\'app mobile.</string>
   <string name="plans_no_upgrade_available">Al momento non è disponibile alcun upgrade.</string>
   <string name="plans_limited_offer">Offerta a tempo limitato</string>
+  <string name="plans_subscription_base_storage_full_title">Il tuo spazio di archiviazione Mail è pieno</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Il tuo spazio di archiviazione Mail è quasi pieno</string>
+  <string name="plans_subscription_drive_storage_full_title">Il tuo spazio di archiviazione Drive è pieno</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Il tuo spazio di archiviazione Drive è quasi pieno</string>
+  <string name="plans_subscription_storage_get_more">Ottieni più spazio di archiviazione</string>
+  <string name="plans_subscription_storage_full_description">Effettua l\'upgrade del tuo piano per continuare a utilizzare il tuo account senza interruzioni.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# di archiviazione</item>
@@ -156,5 +162,9 @@
   <string name="priority_support">Assistenza prioritaria</string>
   <string name="one_vault">1 cassaforte</string>
   <string name="ten_hide_my_email_aliases">10 alias Hide-my-email</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="plan_entitlement_tag_base">Spazio di archiviazione Mail</string>
+  <string name="plan_entitlement_tag_drive">Spazio di archiviazione Drive</string>
   <!-- endregion -->
 </resources>
