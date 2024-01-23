@@ -30,6 +30,10 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_ConfirmPa
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_CredentialLessWelcomeFragment_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_LoginActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -578,6 +582,18 @@ public final class me/proton/core/auth/presentation/databinding/FragmentCreating
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentCreatingUserBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding : androidx/viewbinding/ViewBinding {
+	public final field guestButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field noLogsButton Landroidx/cardview/widget/CardView;
+	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field terms Landroid/widget/TextView;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroid/widget/FrameLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding;
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentRecoveryEmailBinding : androidx/viewbinding/ViewBinding {
@@ -1347,9 +1363,8 @@ public abstract interface class me/proton/core/auth/presentation/ui/AddAccountFr
 }
 
 public final class me/proton/core/auth/presentation/ui/AddAccountFragment_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
-	public static fun injectAccountManager (Lme/proton/core/auth/presentation/ui/AddAccountFragment;Lme/proton/core/accountmanager/domain/AccountManager;)V
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
 	public static fun injectAuthOrchestrator (Lme/proton/core/auth/presentation/ui/AddAccountFragment;Lme/proton/core/auth/presentation/AuthOrchestrator;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/auth/presentation/ui/AddAccountFragment;)V
@@ -1417,6 +1432,18 @@ public final class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity$C
 
 public abstract interface class me/proton/core/auth/presentation/ui/ConfirmPasswordActivity_GeneratedInjector {
 	public abstract fun injectConfirmPasswordActivity (Lme/proton/core/auth/presentation/ui/ConfirmPasswordActivity;)V
+}
+
+public abstract interface class me/proton/core/auth/presentation/ui/CredentialLessWelcomeFragment_GeneratedInjector {
+	public abstract fun injectCredentialLessWelcomeFragment (Lme/proton/core/auth/presentation/ui/CredentialLessWelcomeFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/CredentialLessWelcomeFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectAuthOrchestrator (Lme/proton/core/auth/presentation/ui/CredentialLessWelcomeFragment;Lme/proton/core/auth/presentation/AuthOrchestrator;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/CredentialLessWelcomeFragment;)V
 }
 
 public abstract class me/proton/core/auth/presentation/ui/Hilt_AddAccountActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {

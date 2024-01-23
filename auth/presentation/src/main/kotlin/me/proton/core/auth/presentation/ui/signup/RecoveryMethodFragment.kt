@@ -19,12 +19,7 @@
 package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.view.View
-import androidx.core.text.getSpans
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -37,6 +32,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupRecoveryBinding
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.signup.RecoveryMethodViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
@@ -215,30 +211,10 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
         }
     }
 
-    private fun initTermsAndConditions() = with(binding.terms) {
-        val spannableString = SpannableString(getText(R.string.auth_signup_terms_conditions_full))
-        val annotations = spannableString.getSpans<android.text.Annotation>()
-            .filter { it.key == "link" && it.value == "terms" }
-        val linkIndices = annotations.map { Pair(spannableString.getSpanStart(it), spannableString.getSpanEnd(it)) }
-        val clickableSpan = object : ClickableSpan() {
-            override fun onClick(widget: View) {
-                childFragmentManager.showTermsConditions()
-            }
+    private fun initTermsAndConditions() {
+        binding.terms.setTextWithAnnotatedLink(R.string.auth_signup_terms_conditions_full, "terms") {
+            childFragmentManager.showTermsConditions()
         }
-        if (linkIndices.isNotEmpty()) {
-            linkIndices.forEach { (start, end) ->
-                spannableString.setSpan(
-                    clickableSpan,
-                    start,
-                    end,
-                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-                )
-            }
-        } else {
-            spannableString.setSpan(clickableSpan, 0, spannableString.length, Spanned.SPAN_INCLUSIVE_EXCLUSIVE)
-        }
-        text = spannableString
-        movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun observeProcessingStates() {

@@ -31,8 +31,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(45)
-    lineCoveragePercentage.set(61)
+    branchCoveragePercentage.set(46)
+    lineCoveragePercentage.set(62)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -90,10 +90,12 @@ dependencies {
         project(Module.androidTest),
         project(Module.kotlinTest),
         `android-arch-testing`,
+        `android-test-core`,
         `coroutines-test`,
         junit,
         `kotlin-test`,
         mockk,
+        robolectric,
         turbine
     )
 }

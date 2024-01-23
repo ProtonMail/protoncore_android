@@ -24,4 +24,5 @@
     <string name="contact_support_link">https://proton.me/support/contact</string>
     <string name="login_link">https://account.proton.me/login</string>
     <string name="external_account_help_link">https://proton.me/support/external-accounts</string>
+    <string name="vpn_no_logs_link" translatable="false">https://protonvpn.com/blog/no-logs-audit/</string>
 </resources>
