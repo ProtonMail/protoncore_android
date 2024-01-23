@@ -21,15 +21,20 @@ package me.proton.core.auth.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityAddAccountBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.AddAccountWorkflow
+import me.proton.core.auth.presentation.viewmodel.AddAccountViewModel
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.inTransaction
@@ -47,13 +52,29 @@ class AddAccountActivity :
         )
     }
 
+    private val viewModel by viewModels<AddAccountViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addOnBackPressedCallback { onClose() }
         supportFragmentManager.onAddAccountFragmentResult(this) {
             if (it != null) onSuccess(it.userId, it.workflow)
         }
-        supportFragmentManager.showAddAccountFragment(input)
+        supportFragmentManager.onCredentialLessFragmentResult(this) {
+            if (it != null) onSuccess(it.userId, it.workflow)
+        }
+
+        binding.progressIndicator.isVisible = true
+        lifecycleScope.launch {
+            when (viewModel.getNextScreen()) {
+                AddAccountViewModel.Screen.AddAccountFragment ->
+                    supportFragmentManager.showAddAccountFragment(input)
+
+                AddAccountViewModel.Screen.CredentialLessFragment ->
+                    supportFragmentManager.showCredentialLessFragment(input)
+            }
+            binding.progressIndicator.isVisible = false
+        }
     }
 
     private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {
@@ -78,6 +99,10 @@ private fun FragmentManager.showAddAccountFragment(input: AddAccountInput) = inT
     replace(R.id.fragment_container, AddAccountFragment(input))
 }
 
+private fun FragmentManager.showCredentialLessFragment(input: AddAccountInput) = inTransaction {
+    replace(R.id.fragment_container, CredentialLessWelcomeFragment(input))
+}
+
 private fun FragmentManager.onAddAccountFragmentResult(
     lifecycleOwner: LifecycleOwner,
     block: (AddAccountResult?) -> Unit
@@ -88,6 +113,20 @@ private fun FragmentManager.onAddAccountFragmentResult(
     ) { _, bundle ->
         val result =
             bundle.getParcelable<AddAccountResult>(AddAccountFragment.ARG_ADD_ACCOUNT_RESULT)
+        block(result)
+    }
+}
+
+private fun FragmentManager.onCredentialLessFragmentResult(
+    lifecycleOwner: LifecycleOwner,
+    block: (AddAccountResult?) -> Unit
+) {
+    setFragmentResultListener(
+        CredentialLessWelcomeFragment.CREDENTIAL_LESS_REQUEST_KEY,
+        lifecycleOwner
+    ) { _, bundle ->
+        val result =
+            bundle.getParcelable<AddAccountResult>(CredentialLessWelcomeFragment.ARG_ADD_ACCOUNT_RESULT)
         block(result)
     }
 }

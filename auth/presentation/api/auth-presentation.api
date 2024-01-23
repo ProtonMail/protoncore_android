@@ -86,6 +86,14 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_ui_signup_Te
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_AddAccountViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_AddAccountViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_ChooseAddressViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -398,6 +406,7 @@ public final class me/proton/core/auth/presentation/databinding/Activity2faBindi
 
 public final class me/proton/core/auth/presentation/databinding/ActivityAddAccountBinding : androidx/viewbinding/ViewBinding {
 	public final field fragmentContainer Landroidx/fragment/app/FragmentContainerView;
+	public final field progressIndicator Lcom/google/android/material/progressindicator/CircularProgressIndicator;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/ActivityAddAccountBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroid/widget/FrameLayout;
@@ -2032,6 +2041,33 @@ public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDia
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
 	public static fun injectNetworkPrefs (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/network/domain/NetworkPrefs;)V
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled;)Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {

@@ -93,6 +93,23 @@ public final class me/proton/core/auth/test/MinimalSignInExternalTests$DefaultIm
 	public static fun signInWithSsoHappyPath (Lme/proton/core/auth/test/MinimalSignInExternalTests;)V
 }
 
+public abstract interface class me/proton/core/auth/test/MinimalSignInGuestTests {
+	public abstract fun getIntentsRule ()Landroidx/test/espresso/intent/rule/IntentsRule;
+	public abstract fun opensTermsAndConditionsLink ()V
+	public abstract fun opensVpnNoLogsLink ()V
+	public abstract fun setUp ()V
+	public abstract fun signInWithGuestAccount ()V
+	public abstract fun verifyAfter ()V
+}
+
+public final class me/proton/core/auth/test/MinimalSignInGuestTests$DefaultImpls {
+	public static fun getIntentsRule (Lme/proton/core/auth/test/MinimalSignInGuestTests;)Landroidx/test/espresso/intent/rule/IntentsRule;
+	public static fun opensTermsAndConditionsLink (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
+	public static fun opensVpnNoLogsLink (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
+	public static fun setUp (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
+	public static fun signInWithGuestAccount (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
+}
+
 public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTests {
 	public abstract fun getIntentsRule ()Landroidx/test/espresso/intent/rule/IntentsRule;
 	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
@@ -143,6 +160,16 @@ public final class me/proton/core/auth/test/robot/AddAccountRobot {
 	public final fun clickSignIn ()Lme/proton/core/auth/test/robot/login/LoginRobot;
 	public final fun clickSignUp ()Lme/proton/core/auth/test/robot/signup/SignUpRobot;
 	public final fun uiElementsDisplayed ()V
+}
+
+public final class me/proton/core/auth/test/robot/CredentialLessWelcomeRobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/CredentialLessWelcomeRobot;
+	public final fun clickContinueAsGuest ()V
+	public final fun clickNoLogsLinkButton ()V
+	public final fun clickSignIn ()Lme/proton/core/auth/test/robot/login/LoginRobot;
+	public final fun clickTermsAndConditionsLink ()V
+	public final fun noLogsLinkBrowserOpened ()V
+	public final fun termsAndConditionsOpened ()V
 }
 
 public final class me/proton/core/auth/test/robot/login/IdentityProviderRobot {

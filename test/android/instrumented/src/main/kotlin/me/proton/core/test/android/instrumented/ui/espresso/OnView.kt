@@ -33,7 +33,7 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.DrawerActions
 import androidx.test.espresso.matcher.RootMatchers.DEFAULT
 import androidx.test.espresso.matcher.ViewMatchers
-import me.proton.core.test.android.BetterScrollToAction
+import me.proton.core.test.android.actions.BetterScrollToAction
 import me.proton.core.test.android.NestedScrollViewExtension
 import me.proton.core.test.android.instrumented.ConditionWatcher
 import me.proton.core.test.android.instrumented.ProtonTest.Companion.commandTimeout
@@ -342,7 +342,9 @@ class OnView : ConditionWatcher {
     }
 
     fun scrollTo() = apply {
-        viewInteraction(matches(CoreMatchers.anything())).perform(actionWithAssertions(BetterScrollToAction()))
+        viewInteraction(matches(CoreMatchers.anything())).perform(actionWithAssertions(
+            BetterScrollToAction()
+        ))
     }
 
     fun scrollToNestedScrollView() = apply {

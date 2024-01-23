@@ -12,6 +12,13 @@ public final class me/proton/core/test/android/ProtonHiltTestRunner : androidx/t
 	public fun newApplication (Ljava/lang/ClassLoader;Ljava/lang/String;Landroid/content/Context;)Landroid/app/Application;
 }
 
+public final class me/proton/core/test/android/actions/ClickableSpanClickAction : androidx/test/espresso/ViewAction {
+	public fun <init> ()V
+	public fun getConstraints ()Lorg/hamcrest/Matcher;
+	public fun getDescription ()Ljava/lang/String;
+	public fun perform (Landroidx/test/espresso/UiController;Landroid/view/View;)V
+}
+
 public final class me/proton/core/test/android/instrumented/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z

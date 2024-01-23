@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android
+package me.proton.core.test.android.actions
 
 import android.view.View
 import androidx.core.widget.NestedScrollView
