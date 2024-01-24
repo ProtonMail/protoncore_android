@@ -169,6 +169,7 @@ public final class me/proton/core/accountmanager/data/SessionProviderImpl_Factor
 
 public final class me/proton/core/accountmanager/data/feature/IsCredentialLessEnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun awaitIsRemoteEnabled-Kx4hsE0 (Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/accountmanager/data/feature/IsCredentialLessEnabledImpl_Factory : dagger/internal/Factory {

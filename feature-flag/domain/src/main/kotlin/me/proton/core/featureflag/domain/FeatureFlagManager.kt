@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 
 /**
  * Manager to access [FeatureFlag]s.
@@ -31,6 +32,17 @@ import me.proton.core.featureflag.domain.entity.FeatureId
  * Note: Clients should take care of implementing the logic to fallback to default value.
  */
 public interface FeatureFlagManager {
+
+    /**
+     * Awaits until a non-empty Scope is available locally.
+     *
+     * Note: May suspend indefinitely, if a given scope is never fetched or is empty.
+     */
+    @ExperimentalProtonFeatureFlag
+    public suspend fun awaitNotEmptyScope(
+        userId: UserId? = null,
+        scope: Scope
+    )
 
     /**
      * Get a feature flag value.

@@ -284,7 +284,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     fun featureFlagValuesAreFetchedFromApiWhenNotAllAvailableLocally() = coroutinesTest {
         // Given
         val mutableDbFlow = MutableStateFlow(listOf(enabledFeatureEntity))
-        coEvery { featureFlagDao.observe(userId.withGlobal(), any()) } returns mutableDbFlow
+        coEvery { featureFlagDao.observe(userId.withGlobal(), any<List<String>>()) } returns mutableDbFlow
         coEvery { featuresApi.getFeatureFlags(any()) } returns GetFeaturesResponse(
             resultCode = 1000,
             features = listOf(enabledFeatureApiResponse, disabledFeatureApiResponse)
@@ -326,7 +326,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         )
 
         val mutableDbFlow = MutableStateFlow(emptyList<FeatureFlagEntity>())
-        coEvery { featureFlagDao.observe(userId.withGlobal(), any()) } returns mutableDbFlow
+        coEvery { featureFlagDao.observe(userId.withGlobal(), any<List<String>>()) } returns mutableDbFlow
 
         // When
         val featureIds = setOf(featureId, unknownId)

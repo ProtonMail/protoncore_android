@@ -21,17 +21,26 @@ package me.proton.core.featureflag.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import javax.inject.Inject
+import kotlin.time.Duration
 
 public class FeatureFlagManagerImpl @Inject internal constructor(
     private val repository: FeatureFlagRepository
 ) : FeatureFlagManager {
+
+    @ExperimentalProtonFeatureFlag
+    public override suspend fun awaitNotEmptyScope(
+        userId: UserId?,
+        scope: Scope
+    ): Unit = repository.awaitNotEmptyScope(userId, scope)
 
     @ExperimentalProtonFeatureFlag
     override fun getValue(

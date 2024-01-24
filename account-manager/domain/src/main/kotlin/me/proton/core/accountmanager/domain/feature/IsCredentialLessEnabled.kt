@@ -18,6 +18,20 @@
 
 package me.proton.core.accountmanager.domain.feature
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
-interface IsCredentialLessEnabled : IsFeatureFlagEnabled
+interface IsCredentialLessEnabled : IsFeatureFlagEnabled {
+    suspend fun awaitIsRemoteEnabled(
+        userId: UserId? = null,
+        timeout: Duration? = defaultAwaitTimeout
+    ): Boolean
+
+    @ExcludeFromCoverage
+    private companion object {
+        private val defaultAwaitTimeout = 3.seconds
+    }
+}

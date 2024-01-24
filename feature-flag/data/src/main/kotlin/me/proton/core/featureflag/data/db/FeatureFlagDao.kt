@@ -32,6 +32,9 @@ public abstract class FeatureFlagDao : BaseDao<FeatureFlagEntity>() {
     @Query("SELECT * FROM FeatureFlagEntity WHERE scope = :scope")
     internal abstract suspend fun getAll(scope: Scope): List<FeatureFlagEntity>
 
+    @Query("SELECT * FROM FeatureFlagEntity WHERE scope = :scope AND userId IN (:userIds)")
+    internal abstract fun observe(userIds: List<UserId>, scope: Scope): Flow<List<FeatureFlagEntity>>
+
     @Query("SELECT * FROM FeatureFlagEntity WHERE featureId IN (:featureIds) AND userId IN (:userIds)")
     internal abstract fun observe(userIds: List<UserId>, featureIds: List<String>): Flow<List<FeatureFlagEntity>>
 

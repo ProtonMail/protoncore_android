@@ -19,9 +19,7 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import me.proton.core.accountmanager.domain.feature.IsCredentialLessEnabled
-import me.proton.core.auth.presentation.BuildConfig
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 
@@ -30,10 +28,13 @@ internal class AddAccountViewModel @Inject constructor(
     private val isCredentialLessEnabled: IsCredentialLessEnabled
 ) : ProtonViewModel() {
     suspend fun getNextScreen(): Screen {
-        return if (isCredentialLessEnabled(userId = null)) { // TODO wait until feature flags are fetched
-            Screen.CredentialLessFragment
-        } else {
-            Screen.AddAccountFragment
+        if (!isCredentialLessEnabled.isLocalEnabled()) {
+            return Screen.AddAccountFragment
+        }
+
+        return when (isCredentialLessEnabled.awaitIsRemoteEnabled(userId = null)) {
+            true -> Screen.CredentialLessFragment
+            false -> Screen.AddAccountFragment
         }
     }
 

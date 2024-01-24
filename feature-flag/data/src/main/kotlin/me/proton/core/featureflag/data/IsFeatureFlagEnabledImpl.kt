@@ -30,7 +30,7 @@ import me.proton.core.featureflag.domain.entity.FeatureId
 public abstract class IsFeatureFlagEnabledImpl(
     @ApplicationContext private val context: Context,
     private val featureFlagManager: FeatureFlagManager,
-    private val featureId: FeatureId,
+    protected val featureId: FeatureId,
     @BoolRes private val localFlagId: Int
 ) : IsFeatureFlagEnabled {
     override fun invoke(userId: UserId?): Boolean {

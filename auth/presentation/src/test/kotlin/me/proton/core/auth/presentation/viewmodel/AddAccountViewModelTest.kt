@@ -1,6 +1,7 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
@@ -22,13 +23,21 @@ class AddAccountViewModelTest {
 
     @Test
     fun credentialLessDisabled() = runTest {
-        every { isCredentialLessEnabled(any()) } returns false
+        every { isCredentialLessEnabled.isLocalEnabled() } returns false
         assertEquals(AddAccountViewModel.Screen.AddAccountFragment, tested.getNextScreen())
     }
 
     @Test
-    fun credentialLessEnabled() = runTest {
-        every { isCredentialLessEnabled(any()) } returns true
+    fun credentialLessLocalEnabledRemoteDisabled() = runTest {
+        every { isCredentialLessEnabled.isLocalEnabled() } returns true
+        coEvery { isCredentialLessEnabled.awaitIsRemoteEnabled() } returns false
+        assertEquals(AddAccountViewModel.Screen.AddAccountFragment, tested.getNextScreen())
+    }
+
+    @Test
+    fun credentialLessLocalEnabledRemoteEnabled() = runTest {
+        every { isCredentialLessEnabled.isLocalEnabled() } returns true
+        coEvery { isCredentialLessEnabled.awaitIsRemoteEnabled() } returns true
         assertEquals(AddAccountViewModel.Screen.CredentialLessFragment, tested.getNextScreen())
     }
 }

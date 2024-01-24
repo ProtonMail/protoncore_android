@@ -22,11 +22,18 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 
 /**
  * Repository to access [FeatureFlag]s which are local or remote
  */
 public interface FeatureFlagRepository {
+    /**
+     * Awaits until a non-empty Scope is available locally.
+     *
+     * Note: May suspend indefinitely, if a given scope is never fetched or is empty.
+     */
+    public suspend fun awaitNotEmptyScope(userId: UserId? = null, scope: Scope)
 
     /**
      * Get a feature flag value, synchronously.

@@ -45,6 +45,10 @@ public class FeatureFlagLocalDataSourceImpl @Inject constructor(
         }
     }
 
+    override fun observe(userId: UserId?, scope: Scope): Flow<List<FeatureFlag>> =
+        dao.observe(userId.withGlobal(), scope)
+            .map { list -> list.map { it.toFeatureFlag() } }
+
     override fun observe(userId: UserId?, featureIds: Set<FeatureId>): Flow<List<FeatureFlag>> =
         dao.observe(userId.withGlobal(), featureIds.map { it.id })
             .map { list -> list.sortedBy { flag -> flag.scope.value }.map { it.toFeatureFlag() } }

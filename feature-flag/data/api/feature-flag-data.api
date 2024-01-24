@@ -18,6 +18,7 @@ public final class me/proton/core/featureflag/data/BuildConfig {
 }
 
 public final class me/proton/core/featureflag/data/FeatureFlagManagerImpl : me/proton/core/featureflag/domain/FeatureFlagManager {
+	public fun awaitNotEmptyScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getFreshValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getOrDefault (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Lme/proton/core/featureflag/domain/entity/FeatureFlag;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -53,6 +54,7 @@ public final class me/proton/core/featureflag/data/FeatureFlagRefreshStarter_Fac
 
 public abstract class me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;Lme/proton/core/featureflag/domain/entity/FeatureId;I)V
+	protected final fun getFeatureId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
 	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 	public fun isLocalEnabled ()Z
 	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
@@ -97,6 +99,7 @@ public final class me/proton/core/featureflag/data/local/FeatureFlagLocalDataSou
 	public fun <init> (Lme/proton/core/featureflag/data/db/FeatureFlagDatabase;)V
 	public fun getAll (Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)Lkotlinx/coroutines/flow/Flow;
+	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/Scope;)Lkotlinx/coroutines/flow/Flow;
 	public fun replaceAll (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/Scope;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun upsert (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -358,6 +361,7 @@ public abstract interface class me/proton/core/featureflag/data/remote/worker/Up
 }
 
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository {
+	public fun awaitNotEmptyScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

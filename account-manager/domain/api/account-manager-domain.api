@@ -45,6 +45,11 @@ public abstract interface class me/proton/core/accountmanager/domain/SessionMana
 }
 
 public abstract interface class me/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+	public abstract fun awaitIsRemoteEnabled-Kx4hsE0 (Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled$DefaultImpls {
+	public static synthetic fun awaitIsRemoteEnabled-Kx4hsE0$default (Lme/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled;Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/accountmanager/domain/migrator/AccountMigrator {

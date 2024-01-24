@@ -24,6 +24,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
@@ -97,10 +98,12 @@ class AddAccountActivity :
 
 private fun FragmentManager.showAddAccountFragment(input: AddAccountInput) = inTransaction {
     replace(R.id.fragment_container, AddAccountFragment(input))
+    setTransition(TRANSIT_FRAGMENT_FADE)
 }
 
 private fun FragmentManager.showCredentialLessFragment(input: AddAccountInput) = inTransaction {
     replace(R.id.fragment_container, CredentialLessWelcomeFragment(input))
+    setTransition(TRANSIT_FRAGMENT_FADE)
 }
 
 private fun FragmentManager.onAddAccountFragmentResult(

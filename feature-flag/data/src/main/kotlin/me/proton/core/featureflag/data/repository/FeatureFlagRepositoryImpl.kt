@@ -23,6 +23,8 @@ import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -78,6 +80,10 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
             list.forEach { map.getOrPut(it.userId) { mutableMapOf() }[it.featureId] = it }
             unleashFeatureMap = map
         }
+    }
+
+    public override suspend fun awaitNotEmptyScope(userId: UserId?, scope: Scope) {
+        localDataSource.observe(userId, scope).filter { it.isNotEmpty() }.first()
     }
 
     override fun getValue(

@@ -20,21 +20,36 @@ package me.proton.core.accountmanager.data.feature
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.accountmanager.data.R
 import me.proton.core.accountmanager.domain.feature.IsCredentialLessEnabled
+import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
+import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 import javax.inject.Inject
+import kotlin.time.Duration
 
 @ExcludeFromCoverage
 class IsCredentialLessEnabledImpl @Inject constructor(
     @ApplicationContext context: Context,
-    featureFlagManager: FeatureFlagManager
+    private val featureFlagManager: FeatureFlagManager,
 ) : IsCredentialLessEnabled, IsFeatureFlagEnabledImpl(
     context,
     featureFlagManager,
     FeatureId("CredentialLess"),
     R.bool.core_feature_credential_less_enabled
-)
+) {
+    @OptIn(ExperimentalProtonFeatureFlag::class)
+    override suspend fun awaitIsRemoteEnabled(
+        userId: UserId?,
+        timeout: Duration?
+    ): Boolean = withTimeoutOrNull(timeout ?: Duration.INFINITE) {
+        featureFlagManager.awaitNotEmptyScope(userId, Scope.Unleash)
+    }.run {
+        featureFlagManager.getValue(userId, featureId)
+    }
+}
