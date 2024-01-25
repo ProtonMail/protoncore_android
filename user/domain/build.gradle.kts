@@ -30,7 +30,7 @@ publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
     branchCoveragePercentage.set(78)
-    lineCoveragePercentage.set(32)
+    lineCoveragePercentage.set(38)
 }
 
 dependencies {

@@ -23,5 +23,6 @@ import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
 internal fun KoverReportFilters.commonRules() {
     excludes {
         annotatedBy("me.proton.core.util.kotlin.annotation.ExcludeFromCoverage")
+        classes("*\$DefaultImpls")
     }
 }
