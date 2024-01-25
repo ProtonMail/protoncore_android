@@ -74,6 +74,10 @@ class FakePGPCrypto : PGPCrypto {
         return plainText
     }
 
+    override fun encryptTextWithPassword(text: String, password: ByteArray): EncryptedMessage {
+        TODO("Not yet implemented: encryptTextWithPassword")
+    }
+
     override fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage {
         return encoder.encodeToString(data)
     }
@@ -136,6 +140,10 @@ class FakePGPCrypto : PGPCrypto {
 
     override fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String {
         TODO("Not yet implemented: decryptText")
+    }
+
+    override fun decryptTextWithPassword(message: EncryptedMessage, password: ByteArray): String {
+        TODO("Not yet implemented: decryptTextWithPassword")
     }
 
     override fun decryptData(message: EncryptedMessage, unlockedKey: Unarmored): ByteArray {

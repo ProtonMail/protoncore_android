@@ -319,6 +319,9 @@ open class TestCryptoContext : CryptoContext {
                 decrypted.extractMessage()
             }
 
+        override fun decryptTextWithPassword(message: EncryptedMessage, password: ByteArray): String =
+            "decryptedText"
+
         override fun decryptMimeMessage(
             message: EncryptedMessage,
             unlockedKeys: List<Unarmored>
@@ -360,6 +363,9 @@ open class TestCryptoContext : CryptoContext {
         override fun encryptText(plainText: String, publicKey: Armored): EncryptedMessage =
             "TEXT([$plainText]+$publicKey)"
                 .encryptMessage(publicKey)
+
+        override fun encryptTextWithPassword(text: String, password: ByteArray): EncryptedMessage =
+            "encryptedText"
 
         override fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage =
             "BINARY([${data.fromByteArray()}]+$publicKey)"

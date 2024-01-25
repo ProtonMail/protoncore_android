@@ -606,6 +606,13 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptMessage(PlainMessage(plainText), publicKey)
     }.getOrElse { throw CryptoException("PlainText cannot be encrypted.", it) }
 
+    override fun encryptTextWithPassword(
+        text: String,
+        password: ByteArray
+    ): EncryptedMessage = runCatching {
+        Crypto.encryptMessageWithPassword(PlainMessage(text), password).splitMessage().armored
+    }.getOrElse { throw CryptoException("Text cannot be encrypted with password.", it) }
+
     override fun encryptData(
         data: ByteArray,
         publicKey: Armored
@@ -715,6 +722,13 @@ class GOpenPGPCrypto : PGPCrypto {
         unlockedKey: Unarmored
     ): String = runCatching {
         decryptMessage(message, unlockedKey) { it.string }
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
+
+    override fun decryptTextWithPassword(
+        message: EncryptedMessage,
+        password: ByteArray
+    ): String = runCatching {
+        Crypto.decryptMessageWithPassword(PGPMessage(message), password).string
     }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptMimeMessage(

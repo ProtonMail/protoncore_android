@@ -73,6 +73,15 @@ interface PGPCrypto {
     fun encryptText(plainText: String, publicKey: Armored): EncryptedMessage
 
     /**
+     * Encrypt [text] using [password].
+     *
+     * @throws [CryptoException] if [text] cannot be encrypted.
+     *
+     * @see [decryptTextWithPassword]
+     */
+    fun encryptTextWithPassword(text: String, password: ByteArray): EncryptedMessage
+
+    /**
      * Encrypt [data] using [publicKey].
      *
      * @throws [CryptoException] if [data] cannot be encrypted.
@@ -234,6 +243,15 @@ interface PGPCrypto {
      * @see [encryptText]
      */
     fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String
+
+    /**
+     * Decrypt [message] as [String] using [password].
+     *
+     * @throws [CryptoException] if [message] cannot be decrypted.
+     *
+     * @see [encryptTextWithPassword]
+     */
+    fun decryptTextWithPassword(message: EncryptedMessage, password: ByteArray): String
 
     /**
      * Decrypt a PGP/MIME [message] using [unlockedKeys], and parse the decrypted content.

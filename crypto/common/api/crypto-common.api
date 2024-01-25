@@ -211,6 +211,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun decryptSessionKey ([B[B)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public abstract fun decryptSessionKeyWithPassword ([B[B)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public abstract fun decryptText (Ljava/lang/String;[B)Ljava/lang/String;
+	public abstract fun decryptTextWithPassword (Ljava/lang/String;[B)Ljava/lang/String;
 	public abstract fun encryptAndSignData ([BLjava/lang/String;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public abstract fun encryptAndSignData ([BLme/proton/core/crypto/common/pgp/SessionKey;[BLme/proton/core/crypto/common/pgp/SignatureContext;)[B
 	public abstract fun encryptAndSignDataWithCompression ([BLjava/lang/String;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
@@ -223,6 +224,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun encryptSessionKey (Lme/proton/core/crypto/common/pgp/SessionKey;Ljava/lang/String;)[B
 	public abstract fun encryptSessionKeyWithPassword (Lme/proton/core/crypto/common/pgp/SessionKey;[B)[B
 	public abstract fun encryptText (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
+	public abstract fun encryptTextWithPassword (Ljava/lang/String;[B)Ljava/lang/String;
 	public abstract fun generateNewHashKey ()Lme/proton/core/crypto/common/pgp/HashKey;
 	public abstract fun generateNewKeySalt ()Ljava/lang/String;
 	public abstract fun generateNewPrivateKey (Ljava/lang/String;Ljava/lang/String;[B)Ljava/lang/String;

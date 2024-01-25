@@ -1705,4 +1705,19 @@ internal class GOpenPGPCryptoTest {
         assertEquals(VerificationStatus.Success, verifiedWithContext.status)
         assertEquals(VerificationStatus.BadContext, verifiedWithWrongContext.status)
     }
+
+    @Test
+    fun encryptAndDecryptTextWithPassword() {
+        // Given
+        val text = "Hello world!"
+        val password = "123456".toByteArray()
+
+        // When
+        val encryptedMessage = crypto.encryptTextWithPassword(text, password)
+
+        // Then
+        val decryptedText = crypto.decryptTextWithPassword(encryptedMessage, password)
+        assertEquals(expected = text, actual = decryptedText)
+    }
+
 }
