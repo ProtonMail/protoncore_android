@@ -197,6 +197,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:plan-data                             |
 | me.proton.core:plan-domain                           |
 | me.proton.core:plan-presentation                     |
+| me.proton.core:plan-presentation-compose             |
 | me.proton.core:plan-test                             |
 | me.proton.core:push                                  |
 | me.proton.core:push-dagger                           |

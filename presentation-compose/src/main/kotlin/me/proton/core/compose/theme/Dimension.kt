@@ -32,6 +32,7 @@ object ProtonDimens {
     val ExtraLargeCornerRadius = 12.dp
 
     val DefaultButtonMinHeight = 48.dp
+    val ExtraSmallIconSize = 12.dp
     val SmallIconSize = 16.dp
     val CounterIconSize = 20.dp
     val DefaultIconSize = 24.dp

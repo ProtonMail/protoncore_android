@@ -216,6 +216,7 @@ public object Module {
     public const val planDomain: String = "$plan:plan-domain"
     public const val planData: String = "$plan:plan-data"
     public const val planPresentation: String = "$plan:plan-presentation"
+    public const val planPresentationCompose: String = "$plan:plan-presentation-compose"
     public const val planTest: String = "$plan:plan-test"
 
     public const val push: String = ":push"
