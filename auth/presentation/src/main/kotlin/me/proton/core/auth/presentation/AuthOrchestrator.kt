@@ -40,6 +40,7 @@ import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.StartAddAccount
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
@@ -51,6 +52,7 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import javax.inject.Inject
 
 class AuthOrchestrator @Inject constructor() {
@@ -376,10 +378,14 @@ class AuthOrchestrator @Inject constructor() {
 
     /**
      * Starts the SignUp workflow.
+     * If subscriptionDetails are provided, a new subscription will be created associated with the newly created account.
+     * Note, this flow will take care of creating the subscription, but not plan validation nor token conversion.
      */
-    fun startSignupWorkflow(creatableAccountType: AccountType = AccountType.Internal) {
+    fun startSignupWorkflow(
+        creatableAccountType: AccountType = AccountType.Internal,
+        subscriptionDetails: SubscriptionDetails? = null) {
         checkRegistered(signUpWorkflowLauncher).launch(
-            SignUpInput(creatableAccountType)
+            SignUpInput(creatableAccountType, subscriptionDetails)
         )
     }
 

@@ -36,6 +36,7 @@ import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethodType
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
@@ -49,8 +50,12 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.CookieSessionId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
+import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.utils.InputValidationResult
@@ -528,6 +533,46 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             val errorItem = awaitItem()
             assertTrue(errorItem is SignupViewModel.State.Error.Message)
             assertEquals("create user error", errorItem.message)
+
+            coVerify(exactly = 1) {
+                performCreateExternalUser(
+                    email = testEmail,
+                    password = "encrypted-$testPassword",
+                    referrer = null
+                )
+            }
+        }
+    }
+
+    @Test
+    fun `create External user with payment info success`() = coroutinesTest {
+        // GIVEN
+        viewModel.subscriptionDetails = SubscriptionDetails(
+            planName = "vpnplus",
+            planDisplayName = "VPN Plus",
+            cycle = SubscriptionCycle.YEARLY,
+            billingResult = BillingResult(
+                paySuccess = true,
+                token = "test-token",
+                subscriptionCreated = false,
+                amount = 499,
+                currency = Currency.CHF,
+                cycle = SubscriptionCycle.YEARLY,
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            )
+        )
+        viewModel.currentAccountType = AccountType.External
+        viewModel.externalEmail = testEmail
+        viewModel.setPassword(testPassword)
+        viewModel.state.test {
+            // WHEN
+            viewModel.startCreateUserWorkflow()
+            // THEN
+            assertTrue(awaitItem() is SignupViewModel.State.Idle)
+            assertTrue(awaitItem() is SignupViewModel.State.CreateUserProcessing)
+            val successItem = awaitItem()
+            assertTrue(successItem is SignupViewModel.State.CreateUserSuccess)
+            assertEquals(testUser.userId.id, successItem.userId)
 
             coVerify(exactly = 1) {
                 performCreateExternalUser(

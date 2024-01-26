@@ -105,7 +105,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                 when (input.creatableAccountType) {
                     AccountType.Username -> showUsernameChooser()
                     AccountType.Internal -> showInternalEmailChooser(input.creatableAccountType)
-                    AccountType.External -> showExternalEmailChooser(input.creatableAccountType)
+                    AccountType.External -> showExternalEmailChooser(input.creatableAccountType, input.subscriptionDetails)
                 }
             }
         }

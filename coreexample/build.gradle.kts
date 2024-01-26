@@ -112,8 +112,8 @@ fun setupFlavors(testedExtension: TestedExtension) {
 
         productFlavors.register("dev") {
             dimension = flavorDimensions.env
-            applicationIdSuffix = ".dev"
 
+            applicationIdSuffix = ".dev"
             protonEnvironment {
                 host = "proton.black"
             }

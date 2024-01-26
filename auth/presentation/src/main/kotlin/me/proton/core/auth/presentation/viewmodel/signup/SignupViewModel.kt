@@ -57,9 +57,15 @@ import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
+import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
+import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
@@ -67,6 +73,7 @@ import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.telemetry.domain.TelemetryContext
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.user.domain.entity.createUserType
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.withResultContext
 import javax.inject.Inject
@@ -93,7 +100,9 @@ internal class SignupViewModel @Inject constructor(
     override val productFlow: String = "mobile_signup_full"
     override var userId: UserId?
         get() = savedStateHandle.get<String>(LoginViewModel.STATE_USER_ID)?.let { UserId(it) }
-        set(value) { savedStateHandle[LoginViewModel.STATE_USER_ID] = value?.id }
+        set(value) {
+            savedStateHandle[LoginViewModel.STATE_USER_ID] = value?.id
+        }
 
     private val _state by savedStateHandle.flowState(
         mutableSharedFlow = MutableSharedFlow<State>(replay = 1).apply { tryEmit(State.Idle) },
@@ -113,11 +122,12 @@ internal class SignupViewModel @Inject constructor(
     val state by lazy { _state.asSharedFlow() }
 
     sealed class State : Parcelable {
+
         @Parcelize
         object Idle : State()
 
         @Parcelize
-        object PreloadingPlans: State()
+        object PreloadingPlans : State()
 
         @Parcelize
         data class CreateUserInputReady(
@@ -199,6 +209,7 @@ internal class SignupViewModel @Inject constructor(
                 val password = requireNotNull(_password) { "Password is not set (initialized)." }
                 emitAll(createUser(username, password, domain, currentAccountType))
             }
+
             AccountType.External -> {
                 val email = requireNotNull(externalEmail) { "External email is not set." }
                 val password = requireNotNull(_password) { "Password is not set (initialized)." }
@@ -241,7 +252,7 @@ internal class SignupViewModel @Inject constructor(
                 SignupAccountCreationTotal(this, accountType.toObservabilityAccountType())
             }
             onResultEnqueueTelemetry("createUser") {
-                    toTelemetryEvent("be.signup.create_user", accountType)
+                toTelemetryEvent("be.signup.create_user", accountType)
             }
             performCreateUser(
                 username = username,
@@ -259,7 +270,7 @@ internal class SignupViewModel @Inject constructor(
         emit(State.CreateUserSuccess(userId.id, username, encryptedPassword))
     }
 
-    private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) = flow<State> {
+    private fun createExternalUser(externalEmail: String, encryptedPassword: EncryptedString) = flow {
         val userId = withResultContext {
             onResultEnqueueObservability("createExternalEmailUser") {
                 SignupAccountCreationTotal(this, AccountTypeLabels.external)

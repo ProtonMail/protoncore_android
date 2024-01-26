@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseExternalEmailBinding
+import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
@@ -76,6 +77,10 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     private val creatableAccountType by lazy {
         AccountType.valueOf(requireNotNull(requireArguments().getString(ARG_INPUT_ACCOUNT_TYPE)))
+    }
+
+    private val subscriptionDetails: SubscriptionDetails? by lazy {
+        requireArguments().getParcelable(ARG_INPUT_SUBSCRIPTION_DETAILS)
     }
 
     override fun onBackPressed() {
@@ -141,6 +146,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         showLoading(false)
         binding.nextButton.isEnabled = true
         signupViewModel.currentAccountType = AccountType.External
+        signupViewModel.subscriptionDetails = subscriptionDetails
         signupViewModel.externalEmail = email
         parentFragmentManager.showPasswordChooser()
     }
@@ -160,12 +166,15 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     companion object {
         const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
+        const val ARG_INPUT_SUBSCRIPTION_DETAILS = "arg.subscriptionDetails"
 
         operator fun invoke(
-            creatableAccountType: AccountType
+            creatableAccountType: AccountType,
+            subscriptionDetails: SubscriptionDetails?
         ) = ChooseExternalEmailFragment().apply {
             arguments = bundleOf(
-                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name
+                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name,
+                ARG_INPUT_SUBSCRIPTION_DETAILS to subscriptionDetails
             )
         }
     }
