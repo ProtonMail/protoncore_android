@@ -21,6 +21,7 @@ package me.proton.core.user.domain.extension
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.emailSplit
+import kotlin.math.round
 
 /**
  * Return [User.email] or if null [User.name].
@@ -77,3 +78,21 @@ fun User.isOrganizationUser() = isOrganizationAdmin() || isOrganizationMember()
  * @return true if the user has rights to read subscription data.
  */
 fun User.canReadSubscription() = role == Role.OrganizationAdmin || role == Role.NoOrganization
+
+/** Returns current usage of base (Mail) space 0 - 100 percent. */
+fun User.getUsedBaseSpacePercentage(): Int? = getUsedPercentage(usedBaseSpace, maxBaseSpace)
+
+/** Returns current usage of Drive space 0 - 100 percent. */
+fun User.getUsedDriveSpacePercentage(): Int? = getUsedPercentage(usedDriveSpace, maxDriveSpace)
+
+/** Returns current usage of total space 0 - 100 percent. */
+fun User.getUsedTotalSpacePercentage(): Int = getUsedPercentage(usedSpace, maxSpace)!!
+
+@Suppress("MagicNumber")
+private fun getUsedPercentage(used: Long?, max: Long?): Int? {
+    if (used == null || max == null) return null
+    require(used >= 0)
+    require(max >= 0)
+    require(used <= max)
+    return round(used.toDouble() / max * 100.0).toInt()
+}

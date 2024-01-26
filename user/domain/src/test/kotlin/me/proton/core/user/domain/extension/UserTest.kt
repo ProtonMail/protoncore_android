@@ -25,7 +25,9 @@ import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class UserTest {
@@ -120,5 +122,44 @@ class UserTest {
         assertTrue(user.canReadSubscription())
         assertFalse(userNoName.canReadSubscription())
         assertTrue(userNoKeys.canReadSubscription())
+    }
+
+    @Test
+    fun hasNoBaseOrDriveStoragePercentage() {
+        val user = mockk<User> {
+            every { usedBaseSpace } returns null
+            every { maxBaseSpace } returns null
+            every { usedDriveSpace } returns null
+            every { maxDriveSpace } returns null
+        }
+        assertNull(user.getUsedBaseSpacePercentage())
+        assertNull(user.getUsedDriveSpacePercentage())
+    }
+
+    @Test
+    fun hasStoragePercentage() {
+        val user = mockk<User> {
+            every { usedSpace } returns 1050
+            every { maxSpace } returns 1200
+            every { usedBaseSpace } returns 50
+            every { maxBaseSpace } returns 200
+            every { usedDriveSpace } returns 1000
+            every { maxDriveSpace } returns 1000
+        }
+        assertEquals(88, user.getUsedTotalSpacePercentage())
+        assertEquals(25, user.getUsedBaseSpacePercentage())
+        assertEquals(100, user.getUsedDriveSpacePercentage())
+    }
+
+    @Test
+    fun usedSpaceIsGreaterThanMaxSpace() {
+        val user = mockk<User> {
+            every { usedBaseSpace } returns 300
+            every { maxBaseSpace } returns 200
+            every { usedDriveSpace } returns 1001
+            every { maxDriveSpace } returns 1000
+        }
+        assertFailsWith<IllegalArgumentException> { user.getUsedBaseSpacePercentage() }
+        assertFailsWith<IllegalArgumentException> { user.getUsedDriveSpacePercentage() }
     }
 }

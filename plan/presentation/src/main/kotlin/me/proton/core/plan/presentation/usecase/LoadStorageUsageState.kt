@@ -23,11 +23,11 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.domain.IsSplitStorageEnabled
 import me.proton.core.plan.presentation.view.HUNDRED_PERCENT
 import me.proton.core.plan.presentation.view.STORAGE_ERROR_THRESHOLD
-import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.getUsedBaseSpacePercentage
+import me.proton.core.user.domain.extension.getUsedDriveSpacePercentage
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.usecase.GetUser
 import javax.inject.Inject
-import kotlin.math.round
 
 class LoadStorageUsageState @Inject constructor(
     private val getUser: GetUser,
@@ -53,17 +53,6 @@ class LoadStorageUsageState @Inject constructor(
                     else -> null
                 }
             }
-
-    private fun User.getUsedBaseSpacePercentage(): Double? =
-        getUsedPercentage(usedBaseSpace, maxBaseSpace)
-
-    private fun User.getUsedDriveSpacePercentage(): Double? =
-        getUsedPercentage(usedDriveSpace, maxDriveSpace)
-
-    private fun getUsedPercentage(used: Long?, max: Long?): Double? {
-        if (used == null || max == null) return null
-        return round(used.toDouble() / max * HUNDRED_PERCENT)
-    }
 }
 
 sealed class StorageUsageState {

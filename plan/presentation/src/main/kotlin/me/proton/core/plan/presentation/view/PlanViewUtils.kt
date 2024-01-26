@@ -35,7 +35,7 @@ import java.text.DateFormat
 import java.time.Instant
 import java.util.Calendar
 
-const val HUNDRED_PERCENT = 100.0
+const val HUNDRED_PERCENT = 100
 
 /** The min percentage of used storage, when we start showing a warning message. */
 internal const val STORAGE_WARNING_THRESHOLD = 50
