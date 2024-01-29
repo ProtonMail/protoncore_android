@@ -11,6 +11,71 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [19.0.0] - 2024-01-29
+
+### Breaking Changes
+
+**Features**
+
+- Add new fields into `User` (for storage split).
+
+  MIGRATION: UserDatabase.MIGRATION_4
+
+### Chores
+
+- Updated Copyright Template for 2024.
+- observability:
+  - All Core observability metrics inherit from `CoreObservabilityData`.
+- payment:
+  - Increase unit test coverage.
+- plan:
+  - Refactor some existing feature flags to use `IsFeatureFlagEnabledImpl`.
+
+### Features
+
+- account-manager:
+  - Add feature flag for credential-less.
+- crypto:
+  - Add methods for encrypting and decrypting text with a password.
+  - Added Base64Encoded typealias.
+  - Added generateNewToken extension.
+- feature-flag:
+  - Add generic class for checking local and remote feature flag values.
+- key:
+  - Add recovery secret and recovery secret signature.
+- observability-tools:
+  - Add "base class" argument for JSON generator.
+- plan:
+  - For Free users, show a warning banner if storage is (nearly) full.
+  - Add feature flag for `SplitStorage`.
+  - Update colors of storage entitlement, if storage is nearly full.
+  - Update `DynamicEntitlementProgressView` to support additional tag text for storage split.
+- user:
+  - Add recovery secret and recovery secret signature.
+- user-data:
+  - Add support for storage split in `UserSpaceEventListener`.
+- user-settings:
+  - Added Set Recovery Secret (+Worker).
+  - Add device recovery user settings and FF.
+- util-kotlin:
+  - Added basic Retry extension.
+
+### Bug Fixes
+
+- country:
+  - MA flag color.
+- payment-iap:
+  - Added Billing functions basic retry.
+- plan:
+  - Fix plan UI tests and fix CanUpgradeToPaid conditions.
+
+### Internationalization
+
+- Upgrade translations from crowdin (8a2b1b43).
+- Upgrade translations from crowdin (cf07a5a6).
+- Upgrade translations from crowdin (99a2a2e6).
+- Upgrade translations from crowdin (cde18282).
+
 ## [18.4.2] - 2023-12-19
 
 ### Bug Fixes
