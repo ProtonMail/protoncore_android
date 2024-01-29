@@ -24,6 +24,6 @@ publishOption.shouldBePublishedAsLib = false
 
 // Global minimum coverage percentage.
 protonCoverage {
-    branchCoveragePercentage.set(35)
-    lineCoveragePercentage.set(60)
+    branchCoveragePercentage.set(37)
+    lineCoveragePercentage.set(61)
 }

@@ -26,6 +26,11 @@ plugins {
 
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    branchCoveragePercentage.set(42)
+    lineCoveragePercentage.set(85)
+}
+
 android {
     namespace = "me.proton.core.plan.presentation.compose"
 }
@@ -57,5 +62,13 @@ dependencies {
 
     debugImplementation(
         `compose-ui-tooling`,
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
+        turbine,
     )
 }

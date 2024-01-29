@@ -4,6 +4,7 @@ import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
 
 internal fun KoverReportFilters.androidRules() {
     excludes {
+        annotatedBy("androidx.compose.ui.tooling.preview.Preview")
         classes(
             "*Activity",
             "*Activity\$*",
