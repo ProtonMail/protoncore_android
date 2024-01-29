@@ -36,7 +36,7 @@
   <string name="account_recovery_cancelled_title">Сброс пароля отменён</string>
   <string name="account_recovery_cancelled_subtitle">Если вы не запрашивали смену пароля, ваш аккаунт может быть в опасности.\n\nЗащитите свой аккаунт, сменив пароль.</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">Сброс пароля доступен</string>
+  <string name="account_recovery_password_started_title">Доступен сброс пароля</string>
   <string name="account_recovery_password_started_subtitle">Чтобы сбросить пароль, используйте то же устройство и браузер, с которых вы запрашивали сброс пароля.\n\nЭто необходимо сделать до %s.\n\nЕсли вы не запрашивали сброс пароля, отмените его сейчас.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Истёк срок сброса пароля</string>

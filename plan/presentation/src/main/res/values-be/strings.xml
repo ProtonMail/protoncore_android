@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Ваша сховішча Drive запоўнена</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Ваша сховішча Drive амаль запоўнена</string>
   <string name="plans_subscription_storage_get_more">Атрымаць больш месца ў сховішчы</string>
-  <string name="plans_subscription_storage_full_description">Палепшыце свой тарыфны, каб працягнуць карыстацца сваім уліковым запісам без перапыненняў.</string>
+  <string name="plans_subscription_storage_full_description">Палепшыце свой тарыфны план, каб працягнуць карыстацца сваім уліковым запісам без перапыненняў.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# сховішча</item>

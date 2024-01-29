@@ -61,7 +61,7 @@
   <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
   <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
+  <string name="plans_subscription_storage_get_more">Obter mais espaço de armazenamento</string>
   <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -147,7 +147,7 @@
   <string name="unlimited_folders_labels_filters" comment="new_plans">Pastas, etiquetas e filtros ilimitados</string>
   <string name="highest_vpn_speed" comment="new_plans">Velocidade VPN máxima</string>
   <string name="servers_in_countries" comment="new_plans">Mais de 1500 servidores em 63 países</string>
-  <string name="ad_blocker" comment="new_plans">Bloqueador integrado (NetShield)</string>
+  <string name="ad_blocker" comment="new_plans">Bloqueador de anúncios integrado (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Aceda a serviços de streaming globalmente</string>
   <string name="secure_core" comment="new_plans">Servidores Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
@@ -157,7 +157,7 @@
   <string name="integrated_2fa_authenticator">Autenticador 2FA integrado</string>
   <string name="multiple_vaults">Vários cofres</string>
   <string name="unlimited_email_alias">Aliases ilimitados do Hide-my-email</string>
-  <string name="custom_email_alias_domains">Domínios customizados para encaminhamento de mensagens</string>
+  <string name="custom_email_alias_domains">Domínios personalizados para aliases de e-mail</string>
   <string name="multiple_forwarding_mailboxes">Várias caixas de correio de reencaminhamento</string>
   <string name="priority_support">Apoio ao cliente prioritário</string>
   <string name="one_vault">1 cofre</string>

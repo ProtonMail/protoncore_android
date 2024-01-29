@@ -61,7 +61,7 @@
   <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
   <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
+  <string name="plans_subscription_storage_get_more">További tárhely igénylése</string>
   <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">

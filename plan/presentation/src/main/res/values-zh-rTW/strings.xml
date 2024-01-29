@@ -55,12 +55,12 @@
   <string name="plans_can_not_upgrade_from_mobile">您無法從行動裝置內的應用程式升級。</string>
   <string name="plans_no_upgrade_available">目前沒有可用的升級。</string>
   <string name="plans_limited_offer">限時優惠</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_base_storage_full_title">您的 Mail 儲存空間已滿</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">您的 Mail 儲存空間快滿了</string>
+  <string name="plans_subscription_drive_storage_full_title">您的 Drive 儲存空間已滿</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">您的 Drive 儲存空間快滿了</string>
+  <string name="plans_subscription_storage_get_more">取得更多儲存空間</string>
+  <string name="plans_subscription_storage_full_description">升級您的方案以繼續不間斷地使用您的帳號。</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">#proton_storage# 儲存空間</item>
@@ -149,7 +149,7 @@
   <string name="ten_hide_my_email_aliases">10 個 Hide-my-email 別名</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Mail storage</string>
-  <string name="plan_entitlement_tag_drive">Drive storage</string>
+  <string name="plan_entitlement_tag_base">Mail 儲存空間</string>
+  <string name="plan_entitlement_tag_drive">Drive 儲存空間</string>
   <!-- endregion -->
 </resources>

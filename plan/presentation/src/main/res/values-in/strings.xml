@@ -60,7 +60,7 @@
   <string name="plans_subscription_drive_storage_full_title">Ruang penyimpanan Drive Anda penuh</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Ruang penyimpanan Drive Anda hampir penuh</string>
   <string name="plans_subscription_storage_get_more">Dapatkan ruang penyimpanan tambahan</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Tingkatkan paket Anda untuk terus menggunakan akun Anda tanpa gangguan.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="other">Kuota penyimpanan #proton_storage#</item>

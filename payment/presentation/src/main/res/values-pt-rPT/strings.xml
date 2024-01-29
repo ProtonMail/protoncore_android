@@ -22,11 +22,11 @@
   <string name="payments_no_connectivity">Sem ligação para apresentar a página de confirmação 3DS.</string>
   <string name="payments_3ds_not_approved">A aprovação 3DS foi recusada.</string>
   <string name="payments_error_card_name">É necessário o nome no cartão.</string>
-  <string name="payments_error_card_number">O número de cartão não é válido.</string>
+  <string name="payments_error_card_number">O número de cartão é inválido.</string>
   <string name="payments_error_cvc">Introduza um código de segurança válido.</string>
   <string name="payments_error_session">É necessário um ID de sessão válido para subscrever um utilizador com sessão iniciada.</string>
   <string name="payments_error_signup_paymentmethod">Não foi possível criar uma conta com o método de pagamento existente.</string>
-  <string name="payments_error_invalid_session">A sessão não é válida.</string>
+  <string name="payments_error_invalid_session">A sessão é inválida.</string>
   <string name="payments_no_payment_provider">Não encontramos nenhum meio de pagamento.</string>
   <string name="payments_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
   <!-- endregion -->
@@ -65,10 +65,10 @@
   <string name="payment_use_credit_card_instead">Utilize antes um cartão de crédito/débito</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirmar a actualização da conta</string>
-  <string name="payments_giap_unredeemed_description">O seu pagamento Google Pay foi processado, mas o processo de actualização da conta foi interrompido. Aplicar o pagamento para actualizar a sua conta agora?</string>
+  <string name="payments_giap_unredeemed_title">Confirmar a atualização da conta</string>
+  <string name="payments_giap_unredeemed_description">O seu pagamento Google Pay foi processado, mas o processo de atualização da conta foi interrompido. Aplicar o pagamento para atualizar a sua conta agora?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmar a actualização</string>
   <string name="payments_giap_redeem_success">A sua conta foi actualizada.</string>
-  <string name="payments_giap_redeem_error">Não é possível completar a actualização. Tente novamente mais tarde.</string>
+  <string name="payments_giap_redeem_error">Não é possível completar a atualização. Tente novamente mais tarde.</string>
   <!-- endregion -->
 </resources>

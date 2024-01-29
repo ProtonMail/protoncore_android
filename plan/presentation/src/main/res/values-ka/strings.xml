@@ -57,12 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">მობილური აპლიკაციიდან ტარიფს ვერ შეცვლით.</string>
   <string name="plans_no_upgrade_available">ამჟამად განახლებები არ არის ხელმისაწვდომი.</string>
   <string name="plans_limited_offer">დროში შეზღუდული შეთავაზება</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_base_storage_full_title">თქვენი ელფოსტის საცავი სავსეა</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">თქვენი Mail-ის საცავი თითქმის სავსეა</string>
+  <string name="plans_subscription_drive_storage_full_title">თქვენი Drive-ის საცავი სავსეა</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">თქვენი Drive-ის საცავი თითქმის სავსეა</string>
+  <string name="plans_subscription_storage_get_more">მიიღეთ მეტი საცავი</string>
+  <string name="plans_subscription_storage_full_description">ასწიეთ თქვენი სატარიფო გეგმა, რათა თქვენი ანგარიშის გამოყენება წყვეტების გარეშე შეგეძლოთ.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# საცავი</item>
@@ -164,7 +164,7 @@
   <string name="ten_hide_my_email_aliases">10 მეტსახელი Hide My Email-სთვის</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Mail storage</string>
-  <string name="plan_entitlement_tag_drive">Drive storage</string>
+  <string name="plan_entitlement_tag_base">ელფოსტის საცავი</string>
+  <string name="plan_entitlement_tag_drive">Drive-ის საცავი</string>
   <!-- endregion -->
 </resources>

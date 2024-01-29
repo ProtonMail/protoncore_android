@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Tu almacenamiento de Drive está lleno.</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Tu almacenamiento de Drive está casi lleno.</string>
   <string name="plans_subscription_storage_get_more">Obtener más almacenamiento</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Mejora tu plan para continuar usando tu cuenta sin interrupciones.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# almacenamiento</item>

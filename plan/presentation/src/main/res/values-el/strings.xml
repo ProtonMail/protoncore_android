@@ -57,12 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Δεν γίνεται να αναβαθμίσετε από την εφαρμογή κινητού.</string>
   <string name="plans_no_upgrade_available">Προς το παρόν δεν υπάρχει διαθέσιμη αναβάθμιση.</string>
   <string name="plans_limited_offer">Προσφορά για περιορισμένο διάστημα</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_base_storage_full_title">Ο αποθηκευτικός χώρος του Mail σας είναι γεμάτος</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Ο αποθηκευτικός χώρος του Mail σας είναι σχεδόν γεμάτος</string>
+  <string name="plans_subscription_drive_storage_full_title">Ο αποθηκευτικός χώρος του Drive σας είναι γεμάτος</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Ο αποθηκευτικός χώρος του Drive σας είναι σχεδόν γεμάτος</string>
+  <string name="plans_subscription_storage_get_more">Αποκτήστε περισσότερο χώρο αποθήκευσης</string>
+  <string name="plans_subscription_storage_full_description">Αναβαθμίστε το πλάνο σας για να συνεχίσετε να χρησιμοποιείτε τον λογαριασμό σας χωρίς διακοπές.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# αποθηκευτικό χώρο</item>
@@ -164,7 +164,7 @@
   <string name="ten_hide_my_email_aliases">10 ψευδώνυμα Hide My Email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Mail storage</string>
-  <string name="plan_entitlement_tag_drive">Drive storage</string>
+  <string name="plan_entitlement_tag_base">Αποθήκευση Mail</string>
+  <string name="plan_entitlement_tag_drive">Αποθήκευση Drive</string>
   <!-- endregion -->
 </resources>

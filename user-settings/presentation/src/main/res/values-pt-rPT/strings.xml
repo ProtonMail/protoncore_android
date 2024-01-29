@@ -19,7 +19,7 @@
 <resources>
   <!-- recovery email settings -->
   <string name="settings_recovery_email_header">E-mail de recuperação</string>
-  <string name="settings_recovery_email_current">Endereço de e-mail de recuperação actual</string>
+  <string name="settings_recovery_email_current">Endereço de e-mail de recuperação atual</string>
   <string name="settings_recovery_email_new">Novo endereço de e-mail de recuperação</string>
   <string name="settings_recovery_email_confirm">Confirmar o endereço de e-mail de recuperação</string>
   <string name="settings_recovery_email_new_hint">Introduza o endereço de e-mail</string>

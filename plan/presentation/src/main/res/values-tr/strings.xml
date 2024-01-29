@@ -57,12 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Mobil uygulamadan yükseltme yapamazsınız.</string>
   <string name="plans_no_upgrade_available">Şu anda yayınlanmış bir güncelleme yok.</string>
   <string name="plans_limited_offer">Sınırlı süreli teklif</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_base_storage_full_title">Mail depolama alanınız dolu</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Mail depolama alanınız dolmak üzere</string>
+  <string name="plans_subscription_drive_storage_full_title">Drive depolama alanınız dolu</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Drive depolama alanınız dolmak üzere</string>
+  <string name="plans_subscription_storage_get_more">Daha fazla depolama alanı edinin</string>
+  <string name="plans_subscription_storage_full_description">Hesabınızı herhangi bir kesinti olmadan kullanmayı sürdürmek için tarifenizi yükseltin.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# depolama alanı</item>
@@ -164,7 +164,7 @@
   <string name="ten_hide_my_email_aliases">10 Hide My Email takma adı</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Mail storage</string>
-  <string name="plan_entitlement_tag_drive">Drive storage</string>
+  <string name="plan_entitlement_tag_base">Mail depolama alanı</string>
+  <string name="plan_entitlement_tag_drive">Drive depolama alanı</string>
   <!-- endregion -->
 </resources>
