@@ -16,13 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.accountmanager.data.feature
+package me.proton.core.auth.data.usecase
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withTimeoutOrNull
-import me.proton.core.accountmanager.data.R
-import me.proton.core.accountmanager.domain.feature.IsCredentialLessEnabled
+import me.proton.core.auth.data.R
+import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag

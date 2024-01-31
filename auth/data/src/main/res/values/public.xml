@@ -2,4 +2,5 @@
 <resources>
     <public name="core_feature_auth_sso_enabled" type="bool" />
     <public name="core_feature_auth_sso_custom_tab_enabled" type="bool" />
+    <public name="core_feature_credential_less_enabled" type="bool" />
 </resources>

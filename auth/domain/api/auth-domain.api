@@ -260,6 +260,14 @@ public final class me/proton/core/auth/domain/usecase/GetAuthInfoSso {
 	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/auth/domain/usecase/IsCredentialLessEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+	public abstract fun awaitIsRemoteEnabled-Kx4hsE0 (Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/IsCredentialLessEnabled$DefaultImpls {
+	public static synthetic fun awaitIsRemoteEnabled-Kx4hsE0$default (Lme/proton/core/auth/domain/usecase/IsCredentialLessEnabled;Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {
 	public abstract fun invoke ()Z
 }

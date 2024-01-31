@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.accountmanager.domain.feature
+package me.proton.core.auth.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.IsFeatureFlagEnabled

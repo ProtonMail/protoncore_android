@@ -1,7 +1,3 @@
-public class hilt_aggregated_deps/_me_proton_core_accountmanager_dagger_CoreAccountManagerFeaturesModule {
-	public fun <init> ()V
-}
-
 public class hilt_aggregated_deps/_me_proton_core_accountmanager_dagger_CoreAccountManagerModuleBindings {
 	public fun <init> ()V
 }
@@ -15,10 +11,6 @@ public final class me/proton/core/accountmanager/dagger/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
-}
-
-public abstract interface class me/proton/core/accountmanager/dagger/CoreAccountManagerFeaturesModule {
-	public abstract fun bindIsCredentialLessEnabled (Lme/proton/core/accountmanager/data/feature/IsCredentialLessEnabledImpl;)Lme/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled;
 }
 
 public abstract interface class me/proton/core/accountmanager/dagger/CoreAccountManagerModuleBindings {

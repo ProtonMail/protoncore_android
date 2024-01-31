@@ -2052,7 +2052,7 @@ public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewMode
 	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/feature/IsCredentialLessEnabled;)Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/IsCredentialLessEnabled;)Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules {

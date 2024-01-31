@@ -635,6 +635,19 @@ public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/p
 	public fun validatePhone (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/auth/domain/usecase/IsCredentialLessEnabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun awaitIsRemoteEnabled-Kx4hsE0 (Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl;
+}
+
 public final class me/proton/core/auth/data/usecase/IsSsoCustomTabEnabledImpl : me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 	public fun invoke ()Z

@@ -48,7 +48,6 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.authDomain),
         project(Module.domain),
-        project(Module.featureFlagData),
         project(Module.kotlinUtil),
         project(Module.networkDomain),
         project(Module.userDomain),

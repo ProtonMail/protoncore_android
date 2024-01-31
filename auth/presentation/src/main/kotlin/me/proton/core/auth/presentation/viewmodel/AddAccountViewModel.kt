@@ -19,7 +19,7 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import me.proton.core.accountmanager.domain.feature.IsCredentialLessEnabled
+import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import javax.inject.Inject
 

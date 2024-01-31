@@ -37,7 +37,6 @@ dependencies {
     api(
         project(Module.accountDomain),
         project(Module.domain),
-        project(Module.featureFlagDomain),
         project(Module.networkDomain),
         `coroutines-core`
     )
