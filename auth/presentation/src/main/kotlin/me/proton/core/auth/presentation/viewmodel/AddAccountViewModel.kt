@@ -27,15 +27,9 @@ import javax.inject.Inject
 internal class AddAccountViewModel @Inject constructor(
     private val isCredentialLessEnabled: IsCredentialLessEnabled
 ) : ProtonViewModel() {
-    suspend fun getNextScreen(): Screen {
-        if (!isCredentialLessEnabled.isLocalEnabled()) {
-            return Screen.AddAccountFragment
-        }
-
-        return when (isCredentialLessEnabled.awaitIsRemoteEnabled(userId = null)) {
-            true -> Screen.CredentialLessFragment
-            false -> Screen.AddAccountFragment
-        }
+    suspend fun getNextScreen(): Screen = when (isCredentialLessEnabled()) {
+        true -> Screen.CredentialLessFragment
+        false -> Screen.AddAccountFragment
     }
 
     enum class Screen {

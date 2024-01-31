@@ -260,12 +260,15 @@ public final class me/proton/core/auth/domain/usecase/GetAuthInfoSso {
 	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public abstract interface class me/proton/core/auth/domain/usecase/IsCredentialLessEnabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
-	public abstract fun awaitIsRemoteEnabled-Kx4hsE0 (Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+public abstract interface class me/proton/core/auth/domain/usecase/IsCredentialLessEnabled {
+	public abstract fun awaitIsRemoteDisabled-8Mi8wO0 (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun isLocalEnabled ()Z
 }
 
 public final class me/proton/core/auth/domain/usecase/IsCredentialLessEnabled$DefaultImpls {
-	public static synthetic fun awaitIsRemoteEnabled-Kx4hsE0$default (Lme/proton/core/auth/domain/usecase/IsCredentialLessEnabled;Lme/proton/core/domain/entity/UserId;Lkotlin/time/Duration;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun awaitIsRemoteDisabled-8Mi8wO0$default (Lme/proton/core/auth/domain/usecase/IsCredentialLessEnabled;Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/IsCredentialLessEnabled;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {

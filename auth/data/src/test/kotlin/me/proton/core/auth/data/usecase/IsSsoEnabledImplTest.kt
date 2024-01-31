@@ -1,3 +1,5 @@
+package me.proton.core.auth.data.usecase
+
 import android.content.Context
 import android.content.res.Resources
 import io.mockk.MockKAnnotations
