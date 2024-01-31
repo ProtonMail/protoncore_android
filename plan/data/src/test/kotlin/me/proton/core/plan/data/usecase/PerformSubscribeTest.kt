@@ -21,6 +21,7 @@ package me.proton.core.plan.data.usecase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -34,6 +35,7 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
@@ -335,5 +337,32 @@ class PerformSubscribeTest {
         )
 
         coVerify(exactly = 0) { humanVerificationManager.clearDetails(any()) }
+    }
+
+    @Test
+    fun `optional acknowledge purchase present successful subscription`() = runTest {
+        val acknowledgeGooglePlayPurchase = mockk<AcknowledgeGooglePlayPurchase>(relaxed = true)
+        val acknowledgeGooglePlayPurchaseOptional = mockk<Optional<AcknowledgeGooglePlayPurchase>>(relaxed = true)
+        every { acknowledgeGooglePlayPurchaseOptional.isPresent } returns true
+        every { acknowledgeGooglePlayPurchaseOptional.get() } returns acknowledgeGooglePlayPurchase
+        useCase = PerformSubscribeImpl(
+            acknowledgeGooglePlayPurchaseOptional,
+            repository,
+            humanVerificationManager,
+            clientIdProvider
+        )
+        useCase.invoke(
+            userId = testUserId,
+            amount = 1,
+            currency = Currency.CHF,
+            cycle = SubscriptionCycle.YEARLY,
+            planNames = listOf(testPlanName),
+            codes = null,
+            paymentToken = testPaymentToken,
+            subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+        )
+
+        coVerify(exactly = 1) { humanVerificationManager.clearDetails(any()) }
+        coVerify(exactly = 1) { acknowledgeGooglePlayPurchase.invoke(testPaymentToken) }
     }
 }

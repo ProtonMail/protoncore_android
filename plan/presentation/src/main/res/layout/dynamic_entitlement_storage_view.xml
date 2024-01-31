@@ -25,6 +25,18 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Drive storage" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_marginStart="@dimen/default_margin"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@id/tagText"
+            app:layout_constraintStart_toEndOf="@id/tagText"
+            app:layout_constraintTop_toTopOf="@id/tagText"
+            app:tint="?proton_notification_error"
+            tools:srcCompat="@drawable/ic_proton_exclamation_circle" />
+
         <TextView
             android:id="@+id/text"
             style="@style/Proton.Text.Caption"
@@ -33,7 +45,7 @@
             android:gravity="end"
             app:layout_constraintBaseline_toBaselineOf="@id/tagText"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tagText"
+            app:layout_constraintStart_toEndOf="@id/icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="162 MB of 3 TB" />
 

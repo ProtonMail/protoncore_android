@@ -122,7 +122,9 @@ class DynamicEntitlementResourceTest {
                 current = 128,
                 min = 0,
                 max = 1024,
-                tag = DynamicEntitlement.Progress.Base
+                tag = DynamicEntitlement.Progress.Base,
+                title = "",
+                iconUrl = null
             ),
             DynamicEntitlementResource.Progress(
                 text = "128 MB on 1GB",

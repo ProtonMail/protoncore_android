@@ -9,9 +9,9 @@ import androidx.annotation.StyleRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.getColorStateList
-import androidx.core.content.ContextCompat.getDrawable
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.DynamicEntitlementStorageViewBinding.inflate
+import me.proton.core.plan.presentation.view.EntitlementImageLoader.loadIcon
 
 @Suppress("MagicNumber")
 class DynamicEntitlementProgressView @JvmOverloads constructor(
@@ -34,6 +34,8 @@ class DynamicEntitlementProgressView @JvmOverloads constructor(
         set(value) {
             binding.text.text = value
         }
+
+    var icon: String? = null
 
     var progress: Int
         get() = binding.progress.progress
@@ -86,15 +88,11 @@ class DynamicEntitlementProgressView @JvmOverloads constructor(
     private fun updateTextColors() {
         if (percentage >= STORAGE_ERROR_THRESHOLD) {
             val errorColor = getColor(context, R.color.notification_error)
-            val exclamation =
-                getDrawable(context, R.drawable.ic_proton_exclamation_circle_filled)
-            exclamation?.setTint(errorColor)
-            binding.tagText.setCompoundDrawablesRelativeWithIntrinsicBounds(
-                null,
-                null,
-                exclamation,
-                null
-            )
+
+            icon?.let {
+                binding.icon.loadIcon(it, context)
+            } ?: run { binding.icon.setImageResource(0) }
+
             binding.text.setTextColor(errorColor)
         } else {
             binding.tagText.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, null, null)

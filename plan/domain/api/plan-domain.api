@@ -103,20 +103,24 @@ public final class me/proton/core/plan/domain/entity/DynamicEntitlement$Progress
 	public static final field Base Ljava/lang/String;
 	public static final field Drive Ljava/lang/String;
 	public static final field Tag Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress$Tag;
-	public fun <init> (Ljava/lang/String;JJJLjava/lang/String;)V
+	public fun <init> (Ljava/lang/String;JJJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()J
 	public final fun component3 ()J
 	public final fun component4 ()J
 	public final fun component5 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;JJJLjava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress;
-	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress;Ljava/lang/String;JJJLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;JJJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress;
+	public static synthetic fun copy$default (Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress;Ljava/lang/String;JJJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/plan/domain/entity/DynamicEntitlement$Progress;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCurrent ()J
+	public final fun getIconUrl ()Ljava/lang/String;
 	public final fun getMax ()J
 	public final fun getMin ()J
 	public final fun getTag ()Ljava/lang/String;
 	public final fun getText ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

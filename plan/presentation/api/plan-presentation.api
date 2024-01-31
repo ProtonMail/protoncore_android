@@ -203,6 +203,7 @@ public final class me/proton/core/plan/presentation/databinding/DynamicEntitleme
 }
 
 public final class me/proton/core/plan/presentation/databinding/DynamicEntitlementStorageViewBinding : androidx/viewbinding/ViewBinding {
+	public final field icon Landroidx/appcompat/widget/AppCompatImageView;
 	public final field progress Lcom/google/android/material/progressindicator/LinearProgressIndicator;
 	public final field tagText Landroid/widget/TextView;
 	public final field text Landroid/widget/TextView;
@@ -1511,7 +1512,6 @@ public final class me/proton/core/plan/presentation/usecase/StorageUsageState$Ne
 }
 
 public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView : androidx/constraintlayout/widget/ConstraintLayout {
-	public static final field Companion Lme/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView$Companion;
 	public fun <init> (Landroid/content/Context;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
@@ -1521,9 +1521,6 @@ public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescr
 	public final fun getText ()Ljava/lang/CharSequence;
 	public final fun setIcon (Ljava/lang/Object;)V
 	public final fun setText (Ljava/lang/CharSequence;)V
-}
-
-public final class me/proton/core/plan/presentation/view/DynamicEntitlementDescriptionView$Companion {
 }
 
 public final class me/proton/core/plan/presentation/view/DynamicEntitlementKt {
@@ -1536,11 +1533,13 @@ public final class me/proton/core/plan/presentation/view/DynamicEntitlementProgr
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;II)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getIcon ()Ljava/lang/String;
 	public final fun getProgress ()I
 	public final fun getProgressMax ()I
 	public final fun getProgressMin ()I
 	public final fun getTagText ()Ljava/lang/CharSequence;
 	public final fun getText ()Ljava/lang/CharSequence;
+	public final fun setIcon (Ljava/lang/String;)V
 	public final fun setProgress (III)V
 	public static synthetic fun setProgress$default (Lme/proton/core/plan/presentation/view/DynamicEntitlementProgressView;IIIILjava/lang/Object;)V
 	public final fun setTagText (Ljava/lang/CharSequence;)V

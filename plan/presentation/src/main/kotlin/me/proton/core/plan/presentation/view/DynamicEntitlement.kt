@@ -33,13 +33,9 @@ fun DynamicEntitlement.toView(context: Context) = when (this) {
     }
 
     is DynamicEntitlement.Progress -> DynamicEntitlementProgressView(context).apply {
-        // TODO the tagText will directly come from BE
-        tagText = when (this@toView.tag) {
-            DynamicEntitlement.Progress.Base -> context.getString(R.string.plan_entitlement_tag_base)
-            DynamicEntitlement.Progress.Drive -> context.getString(R.string.plan_entitlement_tag_drive)
-            else -> null
-        }
+        tagText = this@toView.title
         text = this@toView.text
+        icon = this@toView.iconUrl
         setProgress(
             min = this@toView.min.div(1000000).toInt(),
             max = this@toView.max.div(1000000).toInt(),

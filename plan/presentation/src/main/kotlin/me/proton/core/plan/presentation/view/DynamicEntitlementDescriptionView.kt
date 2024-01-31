@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import androidx.annotation.StyleRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import coil.ImageLoader
-import coil.decode.SvgDecoder
-import coil.load
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.DynamicEntitlementDescriptionViewBinding.inflate
+import me.proton.core.plan.presentation.view.EntitlementImageLoader.loadIcon
 import okhttp3.HttpUrl
 import java.io.File
 import java.nio.ByteBuffer
@@ -42,7 +40,9 @@ class DynamicEntitlementDescriptionView @JvmOverloads constructor(
      */
     var icon: Any? = null
         set(value) = with(binding) {
-            icon.load(value, getImageLoader(context)) { fallback(R.drawable.ic_proton_checkmark) }
+            icon.loadIcon(value, context) {
+                it.fallback(R.drawable.ic_proton_checkmark)
+            }
         }
 
     var text: CharSequence?
@@ -50,12 +50,4 @@ class DynamicEntitlementDescriptionView @JvmOverloads constructor(
         set(value) {
             binding.text.text = value
         }
-
-    companion object {
-        private var imageLoader: ImageLoader? = null
-        private fun getImageLoader(context: Context) = imageLoader ?: ImageLoader.Builder(context)
-            .components { add(SvgDecoder.Factory()) }
-            .build()
-            .apply { imageLoader = this }
-    }
 }

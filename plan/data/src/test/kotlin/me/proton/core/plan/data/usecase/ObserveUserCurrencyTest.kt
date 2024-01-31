@@ -86,6 +86,18 @@ class ObserveUserCurrencyTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
+    fun returnCurrenciesForNoUser() = runTest {
+        // Given
+        val currency = "USD"
+        // When
+        tested.invoke(null).test {
+            // Then
+            assertEquals(expected = currency, actual = awaitItem())
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
     fun returnCurrenciesForUser1() = runTest {
         // Given
         val currency = "CHF"

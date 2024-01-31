@@ -165,11 +165,6 @@
     <!-- endregion -->
 
     <!-- region Plan entitlement tags -->
-    <string name="plan_entitlement_tag_base">Mail storage</string>
-    <string name="plan_entitlement_tag_drive">Drive storage</string>
-    <!-- endregion -->
-
-    <!-- region Plan entitlement tags -->
     <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
     <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
     <string name="upgrade_storage_subtitle">Get more storage</string>

@@ -30,7 +30,9 @@ sealed class DynamicEntitlement {
         val current: Long,
         val min: Long,
         val max: Long,
-        val tag: String?
+        val tag: String?,
+        val title: String,
+        val iconUrl: String?
     ) : DynamicEntitlement() {
         companion object Tag {
             const val Base: String = "base"

@@ -60,7 +60,13 @@ sealed class DynamicEntitlementResource {
         val max: Long,
 
         @SerialName("Tag")
-        val tag: String? = null
+        val tag: String? = null,
+
+        @SerialName("Title")
+        val title: String? = null,
+
+        @SerialName("IconName")
+        val iconName: String? = null
     ) : DynamicEntitlementResource()
 
     @Serializable
@@ -83,7 +89,9 @@ fun DynamicEntitlementResource.toDynamicPlanEntitlement(iconsEndpoint: String): 
             current = current,
             min = min,
             max = max,
-            tag = tag
+            tag = tag,
+            title = title ?: "",
+            iconUrl = if (!iconName.isNullOrEmpty()) "$iconsEndpoint/$iconName".replace("//", "/") else null
         )
 
         is DynamicEntitlementResource.Unknown -> null
