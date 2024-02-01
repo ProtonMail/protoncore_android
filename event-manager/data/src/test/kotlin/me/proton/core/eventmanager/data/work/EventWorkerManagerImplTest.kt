@@ -18,6 +18,7 @@
 
 package me.proton.core.eventmanager.data.work
 
+import android.app.usage.UsageStatsManager
 import android.content.Context
 import androidx.work.Data
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -62,6 +63,9 @@ internal class EventWorkerManagerImplTest {
     @MockK
     lateinit var appLifecycleProvider: AppLifecycleProvider
 
+    @MockK
+    lateinit var usageStatsManager: UsageStatsManager
+
     @InjectMockKs
     lateinit var manager: EventWorkerManagerImpl
 
@@ -78,12 +82,14 @@ internal class EventWorkerManagerImplTest {
     fun setup() {
         every { context.resources } returns mockk {
             every { getInteger(R.integer.core_feature_event_manager_worker_immediate_minimum_initial_delay_seconds) } returns 0
+            every { getBoolean(R.bool.core_feature_event_manager_worker_repeat_internal_background_by_bucket) } returns false
             every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds) } returns 1800
             every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds) } returns 30
             every { getInteger(R.integer.core_feature_event_manager_worker_backoff_delay_seconds) } returns 30
             every { getBoolean(R.bool.core_feature_event_manager_worker_requires_storage_not_low) } returns false
             every { getBoolean(R.bool.core_feature_event_manager_worker_requires_battery_not_low) } returns false
         }
+        every { context.getSystemService(Context.USAGE_STATS_SERVICE) } returns usageStatsManager
         every { workManager.getWorkInfosForUniqueWork(config.id) } returns futureWorkInfoList
         every { workManager.enqueueUniquePeriodicWork(config.id, any(), any()) } returns operation
         every { workManager.cancelAllWorkByTag(any()) } returns operation
@@ -221,6 +227,7 @@ internal class EventWorkerManagerImplTest {
         futureWorkInfoList.set(mutableListOf())
         every { context.resources } returns mockk {
             every { getInteger(R.integer.core_feature_event_manager_worker_immediate_minimum_initial_delay_seconds) } returns 61
+            every { getBoolean(R.bool.core_feature_event_manager_worker_repeat_internal_background_by_bucket) } returns false
             every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds) } returns 1800
             every { getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds) } returns 30
             every { getInteger(R.integer.core_feature_event_manager_worker_backoff_delay_seconds) } returns 30

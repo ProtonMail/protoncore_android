@@ -18,7 +18,15 @@
 
 package me.proton.core.eventmanager.data.work
 
+import android.app.usage.UsageStatsManager
+import android.app.usage.UsageStatsManager.STANDBY_BUCKET_ACTIVE
+import android.app.usage.UsageStatsManager.STANDBY_BUCKET_FREQUENT
+import android.app.usage.UsageStatsManager.STANDBY_BUCKET_RARE
+import android.app.usage.UsageStatsManager.STANDBY_BUCKET_RESTRICTED
+import android.app.usage.UsageStatsManager.STANDBY_BUCKET_WORKING_SET
 import android.content.Context
+import android.content.res.Resources
+import android.os.Build
 import androidx.work.ExistingPeriodicWorkPolicy.REPLACE
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
@@ -46,6 +54,10 @@ class EventWorkerManagerImpl @Inject constructor(
     private val workManager: WorkManager,
     private val appLifecycleProvider: AppLifecycleProvider
 ) : EventWorkerManager {
+
+    private val usageStatsManager: UsageStatsManager by lazy {
+        context.getSystemService(Context.USAGE_STATS_SERVICE) as UsageStatsManager
+    }
 
     private fun getUniqueWorkName(config: EventManagerConfig) = config.id
 
@@ -127,9 +139,29 @@ class EventWorkerManagerImpl @Inject constructor(
         R.integer.core_feature_event_manager_worker_repeat_internal_foreground_seconds
     ).toDuration(DurationUnit.SECONDS)
 
-    override fun getRepeatIntervalBackground(): Duration = context.resources.getInteger(
-        R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds
-    ).toDuration(DurationUnit.SECONDS)
+    override fun repeatIntervalBackgroundByAppStandbyBucket(): Boolean = context.resources.getBoolean(
+        R.bool.core_feature_event_manager_worker_repeat_internal_background_by_bucket
+    )
+
+    override fun getRepeatIntervalBackground(): Duration = with(context.resources) {
+        if (repeatIntervalBackgroundByAppStandbyBucket() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            val bucket = usageStatsManager.appStandbyBucket
+            when {
+                bucket < STANDBY_BUCKET_ACTIVE -> exemptedSeconds
+                bucket > STANDBY_BUCKET_RESTRICTED -> restrictedSeconds
+                else -> when (bucket) {
+                    STANDBY_BUCKET_ACTIVE -> activeSeconds
+                    STANDBY_BUCKET_WORKING_SET -> workingSetSeconds
+                    STANDBY_BUCKET_FREQUENT -> frequentSeconds
+                    STANDBY_BUCKET_RARE -> rareSeconds
+                    STANDBY_BUCKET_RESTRICTED -> restrictedSeconds
+                    else -> restrictedSeconds
+                }
+            }
+        } else {
+            backgroundSeconds
+        }
+    }.toDuration(DurationUnit.SECONDS)
 
     override fun getBackoffDelay(): Duration = context.resources.getInteger(
         R.integer.core_feature_event_manager_worker_backoff_delay_seconds
@@ -142,4 +174,12 @@ class EventWorkerManagerImpl @Inject constructor(
     override fun requiresStorageNotLow(): Boolean = context.resources.getBoolean(
         R.bool.core_feature_event_manager_worker_requires_storage_not_low
     )
+
+    private val Resources.backgroundSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_background_seconds)
+    private val Resources.exemptedSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_bucket_exempted_seconds)
+    private val Resources.activeSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_bucket_active_seconds)
+    private val Resources.workingSetSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_bucket_working_set_seconds)
+    private val Resources.frequentSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_bucket_frequent_seconds)
+    private val Resources.rareSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_bucket_rare_seconds)
+    private val Resources.restrictedSeconds get() = getInteger(R.integer.core_feature_event_manager_worker_repeat_internal_bucket_restricted_seconds)
 }

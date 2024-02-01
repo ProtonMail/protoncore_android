@@ -61,6 +61,11 @@ interface EventWorkerManager {
     fun getRepeatIntervalBackground(): Duration
 
     /**
+     * Returns true is background interval should be considering the app standby bucket
+     */
+    fun repeatIntervalBackgroundByAppStandbyBucket(): Boolean
+
+    /**
      * Get backoff delay.
      */
     fun getBackoffDelay(): Duration

@@ -29,7 +29,7 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(59)
+    branchCoveragePercentage.set(60)
     lineCoveragePercentage.set(79)
 }
 
@@ -79,6 +79,7 @@ dependencies {
         project(Module.androidTest),
         junit,
         `kotlin-test`,
-        mockk
+        mockk,
+        robolectric
     )
 }
