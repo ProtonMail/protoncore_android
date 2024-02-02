@@ -24,7 +24,10 @@ class UpgradeStorageInfoTest {
         }
         paparazzi.snapshot {
             WithSidebarColors {
-                UpgradeStorageInfo(viewModel = viewModel)
+                UpgradeStorageInfo(
+                    onUpgradeClicked = {},
+                    viewModel = viewModel
+                )
             }
         }
     }
@@ -48,6 +51,29 @@ class UpgradeStorageInfoTest {
                 UpgradeStorageInfo(
                     onUpgradeClicked = {},
                     title = "Mail storage: 100% full"
+                )
+            }
+        }
+    }
+
+    @Test
+    fun mailStorageUsageIsHighWithDividers() {
+        val viewModel = mockk<UpgradeStorageInfoViewModel> {
+            every { state } returns MutableStateFlow(
+                AccountStorageState.HighStorageUsage.Mail(
+                    85,
+                    UserId("test")
+                )
+            )
+        }
+
+        paparazzi.snapshot {
+            WithSidebarColors {
+                UpgradeStorageInfo(
+                    onUpgradeClicked = {},
+                    viewModel = viewModel,
+                    withBottomDivider = true,
+                    withTopDivider = true
                 )
             }
         }

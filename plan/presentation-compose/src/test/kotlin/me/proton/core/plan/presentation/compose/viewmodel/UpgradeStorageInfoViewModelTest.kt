@@ -4,10 +4,8 @@ import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.verify
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage
 import me.proton.core.test.kotlin.CoroutinesTest
 import kotlin.test.BeforeTest
@@ -17,9 +15,6 @@ import kotlin.test.assertEquals
 class UpgradeStorageInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var shouldUpgradeStorage: ShouldUpgradeStorage
-
-    @MockK(relaxUnitFun = true)
-    private lateinit var plansOrchestrator: PlansOrchestrator
 
     private lateinit var storageUsageFlow: MutableStateFlow<ShouldUpgradeStorage.Result>
 
@@ -32,10 +27,7 @@ class UpgradeStorageInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
         MockKAnnotations.init(this)
         storageUsageFlow = MutableStateFlow(ShouldUpgradeStorage.Result.NoUpgrade)
         every { shouldUpgradeStorage() } returns storageUsageFlow
-        tested = UpgradeStorageInfoViewModel(
-            plansOrchestrator,
-            shouldUpgradeStorage
-        )
+        tested = UpgradeStorageInfoViewModel(shouldUpgradeStorage)
     }
 
     @Test
@@ -57,11 +49,4 @@ class UpgradeStorageInfoViewModelTest : CoroutinesTest by CoroutinesTest() {
             cancelAndIgnoreRemainingEvents()
         }
     }
-
-    @Test
-    fun `upgrade clicked`() {
-        tested.perform(UpgradeStorageInfoViewModel.Action.Upgrade(testUserId))
-        verify { plansOrchestrator.startUpgradeWorkflow(testUserId) }
-    }
-
 }

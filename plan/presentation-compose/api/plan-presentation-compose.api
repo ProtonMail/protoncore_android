@@ -27,8 +27,8 @@ public final class me/proton/core/plan/presentation/compose/component/Composable
 }
 
 public final class me/proton/core/plan/presentation/compose/component/UpgradeStorageInfoKt {
-	public static final fun UpgradeStorageInfo (Landroidx/compose/ui/Modifier;Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel;Landroidx/compose/runtime/Composer;II)V
 	public static final fun UpgradeStorageInfo (Lkotlin/jvm/functions/Function0;Ljava/lang/String;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun UpgradeStorageInfo (Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel;ZZLandroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/plan/presentation/compose/usecase/ObserveStorageUsage {
@@ -160,16 +160,16 @@ public final class me/proton/core/plan/presentation/compose/viewmodel/AccountSto
 
 public final class me/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/plan/presentation/compose/usecase/ShouldUpgradeStorage;)V
+	public fun <init> (Lme/proton/core/plan/presentation/compose/usecase/ShouldUpgradeStorage;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 }
 
 public final class me/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel;
-	public static fun newInstance (Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/plan/presentation/compose/usecase/ShouldUpgradeStorage;)Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel;
+	public static fun newInstance (Lme/proton/core/plan/presentation/compose/usecase/ShouldUpgradeStorage;)Lme/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel;
 }
 
 public final class me/proton/core/plan/presentation/compose/viewmodel/UpgradeStorageInfoViewModel_HiltModules {

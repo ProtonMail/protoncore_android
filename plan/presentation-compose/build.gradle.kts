@@ -27,8 +27,8 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
-    branchCoveragePercentage.set(42)
-    lineCoveragePercentage.set(85)
+    branchCoveragePercentage.set(52)
+    lineCoveragePercentage.set(91)
 }
 
 android {

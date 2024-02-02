@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,10 +48,10 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
+import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.compose.viewmodel.AccountStorageState
 import me.proton.core.plan.presentation.compose.viewmodel.UpgradeStorageInfoViewModel
-import me.proton.core.plan.presentation.compose.viewmodel.UpgradeStorageInfoViewModel.Action
 import me.proton.core.plan.presentation.compose.viewmodel.UpgradeStorageInfoViewModel.Companion.INITIAL_STATE
 
 /** Displays information that storage is (nearly) full.
@@ -60,24 +61,34 @@ import me.proton.core.plan.presentation.compose.viewmodel.UpgradeStorageInfoView
  */
 @Composable
 public fun UpgradeStorageInfo(
+    onUpgradeClicked: (UserId) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: UpgradeStorageInfoViewModel? = hiltViewModelOrNull()
+    viewModel: UpgradeStorageInfoViewModel? = hiltViewModelOrNull(),
+    withTopDivider: Boolean = false,
+    withBottomDivider: Boolean = false,
 ) {
     if (viewModel == null) return
     val state by rememberAsState(flow = viewModel.state, initial = INITIAL_STATE)
     val userId = (state as? AccountStorageState.HighStorageUsage)?.userId
-    val onUpgradeClicked = if (userId != null) {
-        { viewModel.perform(Action.Upgrade(userId)) }
-    } else {
-        { Unit }
-    }
 
     if (state !is AccountStorageState.Hidden) {
-        UpgradeStorageInfo(
-            onUpgradeClicked = onUpgradeClicked,
-            title = state.getTitle(),
-            modifier = modifier
-        )
+        Column {
+            if (withTopDivider) {
+                Divider(color = ProtonTheme.colors.separatorNorm)
+            }
+            UpgradeStorageInfo(
+                onUpgradeClicked = if (userId != null) {
+                    { onUpgradeClicked(userId) }
+                } else {
+                    { Unit }
+                },
+                title = state.getTitle(),
+                modifier = modifier
+            )
+            if (withBottomDivider) {
+                Divider(color = ProtonTheme.colors.separatorNorm)
+            }
+        }
     }
 }
 
@@ -183,7 +194,7 @@ private fun AccountStorageState.getTitle(): String = when (this) {
 @Composable
 internal fun PreviewHidden() {
     ProtonTheme(colors = ProtonColors.Light.sidebarColors!!) {
-        UpgradeStorageInfo()
+        UpgradeStorageInfo(onUpgradeClicked = {})
     }
 }
 

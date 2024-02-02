@@ -26,7 +26,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.entity.UserId
-import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage.Result.DriveStorageUpgrade
 import me.proton.core.plan.presentation.compose.usecase.ShouldUpgradeStorage.Result.MailStorageUpgrade
@@ -39,27 +38,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class UpgradeStorageInfoViewModel @Inject constructor(
-    private val plansOrchestrator: PlansOrchestrator,
     shouldUpgradeStorage: ShouldUpgradeStorage,
 ) : ProtonViewModel() {
     public val state: StateFlow<AccountStorageState> = shouldUpgradeStorage()
         .map { it.toAccountStorageState() }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis), INITIAL_STATE)
 
-    internal fun perform(action: Action) = when (action) {
-        is Action.Upgrade -> onUpgrade(action)
-    }
-
-    private fun onUpgrade(action: Action.Upgrade) {
-        plansOrchestrator.startUpgradeWorkflow(action.userId)
-    }
-
     internal companion object {
         val INITIAL_STATE = Hidden
-    }
-
-    internal sealed class Action {
-        data class Upgrade(val userId: UserId) : Action()
     }
 }
 
