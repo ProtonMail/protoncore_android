@@ -54,6 +54,23 @@ public final class me/proton/core/compose/activity/RememberLauncherKt {
 	public static final fun rememberLauncherWithInput (Ljava/lang/Object;Landroidx/activity/result/contract/ActivityResultContract;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;I)Lme/proton/core/compose/activity/LauncherWithInput;
 }
 
+public final class me/proton/core/compose/component/BoxWithNotificationDotKt {
+	public static final fun BoxWithNotificationDot (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/compose/component/ComposableSingletons$BoxWithNotificationDotKt {
+	public static final field INSTANCE Lme/proton/core/compose/component/ComposableSingletons$BoxWithNotificationDotKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function2;
+	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-4$presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class me/proton/core/compose/component/ComposableSingletons$DeferredCircularProgressIndicatorKt {
 	public static final field INSTANCE Lme/proton/core/compose/component/ComposableSingletons$DeferredCircularProgressIndicatorKt;
 	public static field lambda-1 Lkotlin/jvm/functions/Function2;
@@ -583,6 +600,7 @@ public final class me/proton/core/compose/theme/ProtonDimens {
 	public final fun getListItemHeight-D9Ej5fM ()F
 	public final fun getListItemTextStartPadding-D9Ej5fM ()F
 	public final fun getMediumSpacing-D9Ej5fM ()F
+	public final fun getNotificationDotIconSize-D9Ej5fM ()F
 	public final fun getSmallIconSize-D9Ej5fM ()F
 	public final fun getSmallSpacing-D9Ej5fM ()F
 }

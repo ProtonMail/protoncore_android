@@ -41,4 +41,6 @@ object ProtonDimens {
 
     val ListItemHeight = 48.dp
     val ListItemTextStartPadding = 12.dp
+
+    val NotificationDotIconSize = 8.dp
 }
