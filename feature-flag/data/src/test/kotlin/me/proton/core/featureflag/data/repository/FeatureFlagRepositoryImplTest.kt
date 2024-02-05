@@ -33,6 +33,7 @@ import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.unmockkStatic
 import io.mockk.verify
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.domain.entity.UserId
@@ -66,6 +67,10 @@ import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.FeatureFlagAwaitTotal
+import me.proton.core.observability.domain.metrics.FeatureFlagGetAllTotal
+import me.proton.core.observability.domain.metrics.FeatureFlagGetValueTotal
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -76,6 +81,7 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
@@ -111,6 +117,8 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     private val workManager = mockk<WorkManager>(relaxed = true)
     private val workerManager = mockk<FeatureFlagWorkerManager>(relaxed = true)
 
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+
     private lateinit var apiProvider: ApiProvider
     private lateinit var local: FeatureFlagLocalDataSource
     private lateinit var remote: FeatureFlagRemoteDataSource
@@ -125,6 +133,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             localDataSource = local,
             remoteDataSource = remote,
             workerManager = workerManager,
+            observabilityManager = observabilityManager,
             scopeProvider = TestCoroutineScopeProvider(coroutinesRule.dispatchers)
         )
 
@@ -402,6 +411,9 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val result = repository.getValue(userId, featureId)
         assertNotNull(result)
         assertTrue(result)
+
+        coVerify { observabilityManager.enqueue(FeatureFlagGetValueTotal.Enabled, any()) }
+        coVerify { observabilityManager.enqueue(any<FeatureFlagGetAllTotal>(), any()) }
     }
 
     @Test
@@ -430,6 +442,9 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val result = repository.getValue(userId, featureId)
         assertNotNull(result)
         assertFalse(result)
+
+        coVerify { observabilityManager.enqueue(FeatureFlagGetValueTotal.Disabled, any()) }
+        coVerify { observabilityManager.enqueue(any<FeatureFlagGetAllTotal>(), any()) }
     }
 
     @Test
@@ -449,6 +464,9 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         val result = repository.getValue(userId, featureId)
         assertNull(result)
+
+        coVerify { observabilityManager.enqueue(FeatureFlagGetValueTotal.Unknown, any()) }
+        coVerify { observabilityManager.enqueue(any<FeatureFlagGetAllTotal>(), any()) }
     }
 
     @Test
@@ -466,7 +484,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
                 value = true
             )
         )
-        val list2 =  listOf(
+        val list2 = listOf(
             FeatureFlag(
                 userId = userId2,
                 featureId = featureId,
@@ -545,5 +563,31 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         // Then
         coVerify { workerManager.enqueuePeriodic(userId, true) }
+    }
+
+    @Test
+    fun awaitNotEmptyScopeSuccess() = coroutinesTest {
+        // Given
+        val list = listOf(FeatureFlagEntity(userId, "Feature", Scope.Unleash, defaultValue = false, value = true))
+        coEvery { featureFlagDao.observe(userId.withGlobal(), Scope.Unleash) } returns flowOf(list)
+
+        // When
+        repository.awaitNotEmptyScope(userId = userId, Scope.Unleash)
+
+        // Then
+        coVerify { observabilityManager.enqueue(FeatureFlagAwaitTotal.Success, any()) }
+    }
+
+    @Test
+    fun awaitNotEmptyScopeFailure() = coroutinesTest {
+        // Given
+        coEvery { featureFlagDao.observe(userId.withGlobal(), Scope.Unleash) } throws CancellationException()
+
+        // When
+        assertFailsWith<CancellationException> {
+            repository.awaitNotEmptyScope(userId = userId, Scope.Unleash)
+        }
+        // Then
+        coVerify { observabilityManager.enqueue(FeatureFlagAwaitTotal.Failure, any()) }
     }
 }

@@ -39,6 +39,12 @@ import me.proton.core.featureflag.domain.entity.Scope
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.FeatureFlagAwaitTotal
+import me.proton.core.observability.domain.metrics.FeatureFlagGetAllTotal
+import me.proton.core.observability.domain.metrics.FeatureFlagGetAllTotal.ApiStatus
+import me.proton.core.observability.domain.metrics.FeatureFlagGetValueTotal
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -48,8 +54,9 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     private val localDataSource: FeatureFlagLocalDataSource,
     private val remoteDataSource: FeatureFlagRemoteDataSource,
     private val workerManager: FeatureFlagWorkerManager,
+    override val observabilityManager: ObservabilityManager,
     scopeProvider: CoroutineScopeProvider
-) : FeatureFlagRepository {
+) : FeatureFlagRepository, ObservabilityContext {
 
     private data class StoreKey(val userId: UserId?, val featureIds: Set<FeatureId>)
 
@@ -82,9 +89,13 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         }
     }
 
-    public override suspend fun awaitNotEmptyScope(userId: UserId?, scope: Scope) {
+    public override suspend fun awaitNotEmptyScope(userId: UserId?, scope: Scope): Unit = runCatching {
         localDataSource.observe(userId, scope).filter { it.isNotEmpty() }.first()
-    }
+        Unit
+    }.also {
+        it.onSuccess { enqueueObservability(FeatureFlagAwaitTotal.Success) }
+        it.onFailure { enqueueObservability(FeatureFlagAwaitTotal.Failure) }
+    }.getOrThrow()
 
     override fun getValue(
         userId: UserId?,
@@ -94,14 +105,25 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     } else {
         runBlocking { initJob.join() } // ~10ms
         unleashFeatureMap[userId]?.get(featureId)?.value
+    }.also {
+        when (it) {
+            null -> enqueueObservability(FeatureFlagGetValueTotal.Unknown)
+            true -> enqueueObservability(FeatureFlagGetValueTotal.Enabled)
+            false -> enqueueObservability(FeatureFlagGetValueTotal.Disabled)
+        }
     }
 
     override suspend fun getAll(
         userId: UserId?
-    ): List<FeatureFlag> = remoteDataSource.getAll(userId).also { list ->
+    ): List<FeatureFlag> = runCatching {
+        val list = remoteDataSource.getAll(userId)
         localDataSource.replaceAll(userId, Scope.Unleash, list)
         putAllUnleashInMemory()
-    }
+        return@runCatching list
+    }.also {
+        it.onSuccess { enqueueObservability(FeatureFlagGetAllTotal(ApiStatus.http2xx)) }
+        it.onFailure { throwable -> enqueueObservability(FeatureFlagGetAllTotal(throwable)) }
+    }.getOrThrow()
 
     override fun refreshAllOneTime(
         userId: UserId?

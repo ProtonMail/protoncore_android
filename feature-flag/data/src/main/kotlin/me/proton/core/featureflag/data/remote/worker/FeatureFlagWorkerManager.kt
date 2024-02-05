@@ -7,6 +7,8 @@ import androidx.work.WorkManager
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.R
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.FeatureFlagRefreshRequestTotal
 import javax.inject.Inject
 import kotlin.time.Duration
 import kotlin.time.DurationUnit
@@ -15,7 +17,8 @@ import kotlin.time.toDuration
 public class FeatureFlagWorkerManager @Inject constructor(
     @ApplicationContext
     private val context: Context,
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val obsManager: ObservabilityManager,
 ) {
 
     public fun enqueueOneTime(userId: UserId?) {
@@ -23,7 +26,9 @@ public class FeatureFlagWorkerManager @Inject constructor(
             FetchUnleashTogglesWorker.getOneTimeUniqueWorkName(userId),
             ExistingWorkPolicy.REPLACE,
             FetchUnleashTogglesWorker.getOneTimeWorkRequest(userId)
-        )
+        ).also {
+            obsManager.enqueue(FeatureFlagRefreshRequestTotal.Onetime)
+        }
     }
 
     public fun enqueuePeriodic(userId: UserId?, immediately: Boolean) {
@@ -35,7 +40,9 @@ public class FeatureFlagWorkerManager @Inject constructor(
             FetchUnleashTogglesWorker.getPeriodicUniqueWorkName(userId),
             if (immediately) ExistingPeriodicWorkPolicy.REPLACE else ExistingPeriodicWorkPolicy.KEEP,
             FetchUnleashTogglesWorker.getPeriodicWorkRequest(userId, repeatInterval),
-        )
+        ).also {
+            obsManager.enqueue(FeatureFlagRefreshRequestTotal.Periodic)
+        }
     }
 
     public fun cancel(userId: UserId?) {

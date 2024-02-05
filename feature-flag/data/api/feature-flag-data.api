@@ -286,18 +286,18 @@ public final class me/proton/core/featureflag/data/remote/response/GetUnleashTog
 }
 
 public final class me/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager {
-	public fun <init> (Landroid/content/Context;Landroidx/work/WorkManager;)V
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkManager;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun cancel (Lme/proton/core/domain/entity/UserId;)V
 	public final fun enqueueOneTime (Lme/proton/core/domain/entity/UserId;)V
 	public final fun enqueuePeriodic (Lme/proton/core/domain/entity/UserId;Z)V
 }
 
 public final class me/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;
-	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkManager;)Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkManager;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;
 }
 
 public abstract interface class me/proton/core/featureflag/data/remote/worker/FetchFeatureIdsWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
@@ -360,14 +360,19 @@ public abstract interface class me/proton/core/featureflag/data/remote/worker/Up
 	public abstract fun bind (Lme/proton/core/featureflag/data/remote/worker/UpdateFeatureFlagWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 
-public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository {
+public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRepository, me/proton/core/observability/domain/ObservabilityContext {
 	public fun awaitNotEmptyScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun get (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public fun getValue (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;)Ljava/lang/Boolean;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observe (Lme/proton/core/domain/entity/UserId;Lme/proton/core/featureflag/domain/entity/FeatureId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
 	public fun refreshAllOneTime (Lme/proton/core/domain/entity/UserId;)V
 	public fun refreshAllPeriodic (Lme/proton/core/domain/entity/UserId;Z)V
@@ -375,10 +380,10 @@ public final class me/proton/core/featureflag/data/repository/FeatureFlagReposit
 }
 
 public final class me/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManager;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;
 }
 

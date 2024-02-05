@@ -25,8 +25,8 @@ plugins {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(48)
-    lineCoveragePercentage.set(80)
+    branchCoveragePercentage.set(52)
+    lineCoveragePercentage.set(83)
 }
 
 protonDagger {
@@ -46,6 +46,7 @@ dependencies {
         project(Module.domain),
         project(Module.featureFlagDomain),
         project(Module.accountManagerDomain),
+        project(Module.observabilityDomain),
         project(Module.networkData),
     )
 
