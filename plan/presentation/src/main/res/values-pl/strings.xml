@@ -61,12 +61,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Nie możesz ulepszyć planu za pomocą aplikacji mobilnej.</string>
   <string name="plans_no_upgrade_available">Brak dostępnych aktualizacji.</string>
   <string name="plans_limited_offer">Oferta ograniczona czasowo</string>
-  <string name="plans_subscription_base_storage_full_title">Przestrzeń dyskowa poczty jest pełna</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Przestrzeń dyskowa poczty jest prawie pełna</string>
-  <string name="plans_subscription_drive_storage_full_title">Przestrzeń dyskowa dysku jest pełna</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Przestrzeń dyskowa dysku jest prawie pełna</string>
+  <string name="plans_subscription_base_storage_full_title">Przestrzeń dyskowa Proton Mail jest pełna</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Przestrzeń dyskowa Proton Mail jest prawie pełna</string>
+  <string name="plans_subscription_drive_storage_full_title">Przestrzeń dyskowa Proton Drive jest pełna</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Przestrzeń dyskowa Proton Drive jest prawie pełna</string>
   <string name="plans_subscription_storage_get_more">Uzyskaj więcej przestrzeni dyskowej</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Ulepsz plan, aby używać konta bez ograniczeń.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# przestrzeni dyskowej</item>
@@ -194,7 +194,9 @@
   <string name="ten_hide_my_email_aliases">10 aliasów hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Przestrzeń dyskowa poczty</string>
-  <string name="plan_entitlement_tag_drive">Przestrzeń dyskowa dysku</string>
+  <string name="upgrade_storage_current_drive_storage">Przestrzeń dyskowa Proton Drive: %d%% pełna</string>
+  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Uzyskaj więcej przestrzeni dyskowej</string>
+  <string name="upgrade_storage_cta_button">Ulepsz</string>
   <!-- endregion -->
 </resources>

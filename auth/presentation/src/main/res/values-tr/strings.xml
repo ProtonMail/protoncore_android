@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Proton VPN kullanmaya başlayın</string>
   <string name="auth_signup_start_using_pass">Proton Pass kullanmaya başlayın</string>
   <string name="auth_signup_error_validation_recovery_destination">Kurtarma hedefi geçersiz.</string>
+  <string name="auth_credentialless_vpn_no_logs">Kayıt tutmadığı belgelenmiş VPN</string>
+  <string name="auth_credentialless_vpn_title">Proton VPN hizmetine hoş geldiniz</string>
+  <string name="auth_credentialless_vpn_subtitle">Gizliliğinizi koruyarak gezinin, engellenen içeriğe erişin ve dijital özgürlüğün tadını çıkarın.</string>
+  <string name="auth_credentialless_guest_button">Misafir olarak devam et</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Bu uygulamayı kullanarak <annotation link="terms">Hüküm ve Koşullarımızı</annotation> kabul etmiş sayılırsınız.</string>
 </resources>

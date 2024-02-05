@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">開始使用 Proton VPN</string>
   <string name="auth_signup_start_using_pass">開始使用 Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">復原目標無效。</string>
+  <string name="auth_credentialless_vpn_no_logs">驗證無紀錄的VPN</string>
+  <string name="auth_credentialless_vpn_title">歡迎使用 Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">私密瀏覽、存取被封鎖的內容並享受數位自由。</string>
+  <string name="auth_credentialless_guest_button">以訪客身份繼續</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">使用此應用程式即表示您接受我們的<annotation link="terms">條款與條件</annotation>。</string>
 </resources>

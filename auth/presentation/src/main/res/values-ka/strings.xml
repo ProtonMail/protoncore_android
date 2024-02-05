@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Proton VPN-ის გამოყენების დაწყება</string>
   <string name="auth_signup_start_using_pass">Proton Pass-ის გამოყენების დაწყება</string>
   <string name="auth_signup_error_validation_recovery_destination">აღდგენის დანიშნულება არასწორია.</string>
+  <string name="auth_credentialless_vpn_no_logs">სერტიფიცირებული VPN ჟურნალის გარეშე</string>
+  <string name="auth_credentialless_vpn_title">მოგესალმებით Proton VPN-ში</string>
+  <string name="auth_credentialless_vpn_subtitle">იმუშავეთ ინტერნეტში ინკოგნიტოდ, იქონიეთ წვდომა დაბლოკილ შემცველობასთან და ისიამოვნეთ ციფრული თავისუფლებით.</string>
+  <string name="auth_credentialless_guest_button">გაგრძელება სტუმრის სახელით</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">ამ აპის გამოყენებით თქვენ ეთანხმებით ჩვენს <annotation link="terms">წესებს და პირობებს</annotation></string>
 </resources>

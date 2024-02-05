@@ -160,7 +160,7 @@
   </string-array>
   <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Neograničen broj mapa, oznaka i filtara</string>
-  <string name="highest_vpn_speed" comment="new_plans">Highest VPN speed</string>
+  <string name="highest_vpn_speed" comment="new_plans">Najviša VPN brzina</string>
   <string name="servers_in_countries" comment="new_plans">1500+ servers in 63 countries</string>
   <string name="ad_blocker" comment="new_plans">Ugrađeni bloker oglasa (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Access to streaming services globally</string>
@@ -179,7 +179,9 @@
   <string name="ten_hide_my_email_aliases">10 Hide My Email aliases</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Mail storage</string>
-  <string name="plan_entitlement_tag_drive">Drive storage</string>
+  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Get more storage</string>
+  <string name="upgrade_storage_cta_button">Upgrade</string>
   <!-- endregion -->
 </resources>

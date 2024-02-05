@@ -48,9 +48,9 @@
   <string name="auth_login_assistive_text">Por favor, introduza o seu e-mail Proton ou nome de utilizador.</string>
   <string name="auth_login_sso_assistive_text">Introduza o seu e-mail.</string>
   <string name="auth_help_title">Como podemos ajudar?</string>
-  <string name="auth_help_option_forgot_username">Utilizador esquecido</string>
-  <string name="auth_help_option_forgot_password">Esqueceu-se da palavra-passe</string>
-  <string name="auth_help_option_other">Outros problemas de ligação</string>
+  <string name="auth_help_option_forgot_username">Esqueci-me do nome de utilizador</string>
+  <string name="auth_help_option_forgot_password">Esqueci-me da palavra-passe</string>
+  <string name="auth_help_option_other">Outros problemas de acesso</string>
   <string name="auth_help_other">Ainda precisa de ajuda? Contacte-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Apoio ao cliente</string>
   <string name="auth_2fa_title">Autenticação em dois passos</string>
@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Comece a usar o Proton VPN</string>
   <string name="auth_signup_start_using_pass">Comece a utilizar o Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">O destino de recuperação não é válido.</string>
+  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_credentialless_vpn_title">Bem-vindo à Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
+  <string name="auth_credentialless_guest_button">Continue as guest</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
 </resources>

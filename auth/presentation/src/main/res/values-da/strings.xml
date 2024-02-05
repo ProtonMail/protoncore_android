@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Begynd at bruge Proton VPN</string>
   <string name="auth_signup_start_using_pass">Begynd at bruge Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Gendannelsesdestination er ugyldig.</string>
+  <string name="auth_credentialless_vpn_no_logs">Certificeret VPN uden logning</string>
+  <string name="auth_credentialless_vpn_title">Velkommen til Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Browse privat, få adgang til blokeret indhold, og nyd digital frihed.</string>
+  <string name="auth_credentialless_guest_button">Continue as guest</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
 </resources>

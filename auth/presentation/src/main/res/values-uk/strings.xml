@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Почати роботу з Proton VPN</string>
   <string name="auth_signup_start_using_pass">Почати роботу з Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Спосіб відновлення доступу недійсний.</string>
+  <string name="auth_credentialless_vpn_no_logs">Сертифікована VPN без журналювання</string>
+  <string name="auth_credentialless_vpn_title">Ласкаво просимо до Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Приватний перегляд, доступ до заблокованого вмісту і задоволення від цифрової свободи.</string>
+  <string name="auth_credentialless_guest_button">Continue as guest</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
 </resources>

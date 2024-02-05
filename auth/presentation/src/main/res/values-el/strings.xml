@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Ξεκινήστε να χρησιμοποιείτε το Proton VPN</string>
   <string name="auth_signup_start_using_pass">Ξεκινήστε να χρησιμοποιείτε το Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Ο προορισμός ανάκτησης δεν είναι έγκυρος.</string>
+  <string name="auth_credentialless_vpn_no_logs">Πιστοποιημένο VPN χωρίς αρχεία καταγραφής</string>
+  <string name="auth_credentialless_vpn_title">Καλώς ήρθατε στο Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Περιηγηθείτε ιδιωτικά, αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο και απολαύστε ψηφιακή ελευθερία.</string>
+  <string name="auth_credentialless_guest_button">Συνέχιση ως επισκέπτης</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
 </resources>

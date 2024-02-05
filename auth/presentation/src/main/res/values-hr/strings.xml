@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Započnite koristiti Proton VPN</string>
   <string name="auth_signup_start_using_pass">Započnite koristiti Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Recovery destination is invalid.</string>
+  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_credentialless_vpn_title">Dobrodošli u Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
+  <string name="auth_credentialless_guest_button">Continue as guest</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
 </resources>

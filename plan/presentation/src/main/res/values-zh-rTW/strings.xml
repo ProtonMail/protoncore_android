@@ -149,7 +149,9 @@
   <string name="ten_hide_my_email_aliases">10 個 Hide-my-email 別名</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Mail 儲存空間</string>
-  <string name="plan_entitlement_tag_drive">Drive 儲存空間</string>
+  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Get more storage</string>
+  <string name="upgrade_storage_cta_button">Upgrade</string>
   <!-- endregion -->
 </resources>

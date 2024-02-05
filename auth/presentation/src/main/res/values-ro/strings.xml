@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Începeți să utilizați Proton VPN</string>
   <string name="auth_signup_start_using_pass">Începeți să utilizați Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Destinația pentru recuperare nu este validă.</string>
+  <string name="auth_credentialless_vpn_no_logs">VPN certificat fără jurnalizare</string>
+  <string name="auth_credentialless_vpn_title">Bun venit la Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Navigați în privat, accesați conținutul blocat și bucurați-vă de libertatea digitală.</string>
+  <string name="auth_credentialless_guest_button">Continuare ca vizitator</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Folosind această aplicație sunteți de acord cu <annotation link="terms">Termenii și condițiile</annotation>.</string>
 </resources>

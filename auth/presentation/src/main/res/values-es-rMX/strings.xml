@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Comenzar con Proton VPN</string>
   <string name="auth_signup_start_using_pass">Comenzar con Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">El destino de recuperación es inválido.</string>
+  <string name="auth_credentialless_vpn_no_logs">VPN certificada sin registros</string>
+  <string name="auth_credentialless_vpn_title">Le damos la bienvenida a Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Navegue de forma privada, acceda a contenido bloqueado y disfrute de la libertad digital.</string>
+  <string name="auth_credentialless_guest_button">Continuar como invitado</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Al usar esta aplicación acepta nuestros <annotation link="terms">Términos y Condiciones</annotation>.</string>
 </resources>

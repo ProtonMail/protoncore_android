@@ -179,7 +179,9 @@
   <string name="ten_hide_my_email_aliases">10 aliasuri „Hide My Email”</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Spațiu stocare e-mail</string>
-  <string name="plan_entitlement_tag_drive">Spațiu stocare Drive</string>
+  <string name="upgrade_storage_current_drive_storage">Spațiu Drive: %d%% ocupat</string>
+  <string name="upgrade_storage_current_mail_storage">Spațiu Mail: %d%% ocupat</string>
+  <string name="upgrade_storage_subtitle">Obțineți mai mult spațiu</string>
+  <string name="upgrade_storage_cta_button">Modificare</string>
   <!-- endregion -->
 </resources>

@@ -164,7 +164,9 @@
   <string name="ten_hide_my_email_aliases">10 Hide-my-email-alias</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Lagringsutrymme för Mail</string>
-  <string name="plan_entitlement_tag_drive">Lagringsutrymme för Drive</string>
+  <string name="upgrade_storage_current_drive_storage">Drive lagringsutrymme: %d %% fullt</string>
+  <string name="upgrade_storage_current_mail_storage">Mail lagringsutrymme: %d %% fullt</string>
+  <string name="upgrade_storage_subtitle">Skaffa mer lagringsutrymme</string>
+  <string name="upgrade_storage_cta_button">Uppgradera</string>
   <!-- endregion -->
 </resources>

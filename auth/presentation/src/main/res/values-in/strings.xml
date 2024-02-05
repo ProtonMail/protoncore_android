@@ -84,9 +84,9 @@
   <string name="auth_create_address_creating">Buat alamat</string>
   <string name="auth_create_address_terms">Dengan mengeklik Buat alamat, Anda menyatakan diri setuju dengan <a href="https://proton.me/legal/terms">Syarat dan Ketentuan</a> Proton.</string>
   <string name="auth_create_address_error_credentials">Kredensial tidak boleh kosong.</string>
-  <string name="auth_create_address_error_no_available_domain">Domain tidak tersedia.</string>
-  <string name="auth_create_address_error_private_key">Gagal membuat kunci pribadi.</string>
-  <string name="auth_create_address_error_signed_key_list">Gagal membuat daftar kunci.</string>
+  <string name="auth_create_address_error_no_available_domain">Tidak ada domain yang tersedia.</string>
+  <string name="auth_create_address_error_private_key">Kunci pribadi gagal dihasilkan.</string>
+  <string name="auth_create_address_error_signed_key_list">Daftar kunci gagal dihasilkan.</string>
   <string name="auth_create_address_error_setusername">Gagal mengasosiasikan nama pengguna.</string>
   <string name="auth_create_address_error_username_unavailable">Nama pengguna tidak tersedia.</string>
   <string name="auth_mailbox_login_error_no_primary_key">Kunci Utama tidak ditemukan.</string>
@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Mulai menggunakan Proton VPN</string>
   <string name="auth_signup_start_using_pass">Mulai gunakan Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Destinasi pemulihan tidak valid.</string>
+  <string name="auth_credentialless_vpn_no_logs">VPN yang tersertifikasi tanpa log</string>
+  <string name="auth_credentialless_vpn_title">Selamat datang di Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Jelajahi internet secara privat, akses konten yang diblokir, dan nikmati kebebasan digital.</string>
+  <string name="auth_credentialless_guest_button">Lanjut sebagai tamu</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan menggunakan aplikasi ini, Anda menyatakan diri setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> yang berlaku.</string>
 </resources>

@@ -164,7 +164,9 @@
   <string name="ten_hide_my_email_aliases">10 alias de Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="plan_entitlement_tag_base">Almacenamiento de Mail</string>
-  <string name="plan_entitlement_tag_drive">Almacenamiento de Drive</string>
+  <string name="upgrade_storage_current_drive_storage">Almacenamiento de Drive: %d%% lleno</string>
+  <string name="upgrade_storage_current_mail_storage">Almacenamiento de Mail: %d%% lleno</string>
+  <string name="upgrade_storage_subtitle">Obtener más almacenamiento</string>
+  <string name="upgrade_storage_cta_button">Mejorar</string>
   <!-- endregion -->
 </resources>

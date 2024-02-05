@@ -150,4 +150,9 @@
   <string name="auth_signup_start_using_vpn">Začněte používat Proton VPN</string>
   <string name="auth_signup_start_using_pass">Začněte používat Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Cíl obnovení je neplatný.</string>
+  <string name="auth_credentialless_vpn_no_logs">Certifikovaná síť VPN bez logů</string>
+  <string name="auth_credentialless_vpn_title">Vítejte v Proton VPN</string>
+  <string name="auth_credentialless_vpn_subtitle">Procházejte soukromě, přistupujte k blokovanému obsahu a užívejte si digitální svobody.</string>
+  <string name="auth_credentialless_guest_button">Continue as guest</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
 </resources>
