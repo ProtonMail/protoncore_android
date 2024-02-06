@@ -20,6 +20,7 @@ package me.proton.core.auth.data.api
 
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.AuthInfoRequest
+import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
@@ -57,6 +58,9 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/v4")
     suspend fun performLoginSso(@Body request: LoginSsoRequest): LoginResponse
+
+    @POST("auth/v4/credentialless")
+    suspend fun performLoginLess(@Body request: LoginLessRequest): LoginResponse
 
     @POST("auth/v4/2fa")
     suspend fun performSecondFactor(@Body request: SecondFactorRequest): SecondFactorResponse

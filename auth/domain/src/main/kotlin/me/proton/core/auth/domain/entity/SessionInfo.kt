@@ -25,7 +25,7 @@ import me.proton.core.network.domain.session.SessionId
  * Holds Login/Session data.
  */
 data class SessionInfo(
-    val username: String,
+    val username: String?,
     val accessToken: String,
     val tokenType: String,
     val scopes: List<String>,

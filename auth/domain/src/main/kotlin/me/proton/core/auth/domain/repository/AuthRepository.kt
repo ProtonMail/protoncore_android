@@ -66,6 +66,13 @@ interface AuthRepository {
     ): SessionInfo
 
     /**
+     * Perform credentialless Login to create a session (accessToken, refreshToken, sessionId, ...).
+     */
+    suspend fun performLoginLess(
+        frames: List<ChallengeFrameDetails> = emptyList()
+    ): SessionInfo
+
+    /**
      * Perform Two Factor for the Login process for a given [SessionId].
      */
     suspend fun performSecondFactor(

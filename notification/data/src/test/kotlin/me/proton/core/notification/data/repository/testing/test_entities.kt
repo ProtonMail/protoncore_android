@@ -25,6 +25,7 @@ import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationId
 import me.proton.core.notification.domain.entity.NotificationPayload
 import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.user.domain.entity.Type
 
 internal val testUserId = UserId("test-user-id")
 
@@ -35,6 +36,7 @@ internal fun testUserEntity(userId: UserId) = UserEntity(
     displayName = null,
     currency = "",
     credit = 0,
+    type = Type.Proton.value,
     createdAtUtc = 1000L,
     usedSpace = 0,
     maxSpace = 0,

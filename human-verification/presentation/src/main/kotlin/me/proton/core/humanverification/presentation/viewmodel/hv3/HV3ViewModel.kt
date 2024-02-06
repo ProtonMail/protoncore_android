@@ -64,16 +64,14 @@ class HV3ViewModel @Inject constructor(
         }
 
     suspend fun getHumanVerificationExtraParams() = withContext(backgroundContext) {
-        val userId = accountRepository.getPrimaryUserId()
-            .firstOrNull()
-
-        val settings = userId?.let { getUserSettings(it, refresh = false) }
+        val userId = accountRepository.getPrimaryUserId().firstOrNull()
+        val settings = userId?.let { runCatching { getUserSettings(it, refresh = false) }.getOrNull() }
         val defaultCountry = settings?.locale?.substringAfter("_")
         HV3ExtraParams(
-            settings?.phone?.value,
-            settings?.locale,
-            defaultCountry,
-            product == Product.Vpn
+            recoveryPhone = settings?.phone?.value,
+            locale = settings?.locale,
+            defaultCountry = defaultCountry,
+            useVPNTheme = product == Product.Vpn
         )
     }
 

@@ -45,6 +45,8 @@ data class UserResponse(
     val maxSpace: Long,
     @SerialName("MaxUpload")
     val maxUpload: Long,
+    @SerialName("Type")
+    val type: Int,
     @SerialName("Role")
     val role: Int,
     @SerialName("Private")

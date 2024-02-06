@@ -213,6 +213,7 @@ public abstract interface class me/proton/core/auth/domain/repository/AuthReposi
 	public abstract fun getAuthInfoSso (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getScopes (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun performLoginLess (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performLoginSso (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun randomModulus (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -221,6 +222,10 @@ public abstract interface class me/proton/core/auth/domain/repository/AuthReposi
 	public abstract fun revokeSession (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun validateEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun validatePhone (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/repository/AuthRepository$DefaultImpls {
+	public static synthetic fun performLoginLess$default (Lme/proton/core/auth/domain/repository/AuthRepository;Ljava/util/List;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/testing/LoginTestHelper {
@@ -238,6 +243,11 @@ public final class me/proton/core/auth/domain/usecase/AccountAvailability {
 	public final fun checkUsernameUnauthenticated (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getDomains (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/CreateLoginLessSession {
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLoginLess;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginSession {
@@ -293,6 +303,11 @@ public final class me/proton/core/auth/domain/usecase/LoginChallengeConfig$Compa
 public final class me/proton/core/auth/domain/usecase/PerformLogin {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/LoginChallengeConfig;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/PerformLoginLess {
+	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/PerformLoginSso {
@@ -425,6 +440,11 @@ public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$User
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Success : me/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult {
 	public static final field INSTANCE Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheckResult$Success;
+}
+
+public final class me/proton/core/auth/domain/usecase/PostLoginLessAccountSetup {
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginSsoAccountSetup {

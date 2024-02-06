@@ -26,9 +26,11 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.UserCheckResult
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Delinquent
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.util.kotlin.coroutine.result
@@ -45,11 +47,11 @@ open class DefaultUserCheck @Inject constructor(
     private val userManager: UserManager
 ) : PostLoginAccountSetup.UserCheck {
 
-    private fun errorMessage(@StringRes message: Int) = PostLoginAccountSetup.UserCheckResult.Error(
+    private fun errorMessage(@StringRes message: Int) = UserCheckResult.Error(
         localizedMessage = context.getString(message)
     )
 
-    private fun errorDelinquent() = PostLoginAccountSetup.UserCheckResult.Error(
+    private fun errorDelinquent() = UserCheckResult.Error(
         localizedMessage = context.getString(R.string.auth_user_check_delinquent_error),
         action = UserCheckAction.OpenUrl(
             name = context.getString(R.string.auth_user_check_delinquent_action),
@@ -58,11 +60,12 @@ open class DefaultUserCheck @Inject constructor(
     )
 
     private suspend fun allReadyHaveSubscription(): Boolean =
-        accountManager.getAccounts(AccountState.Ready).first().map { it.userId }.all {
-            userManager.getUser(it).hasSubscription()
-        }
+        accountManager.getAccounts(AccountState.Ready).first()
+            .map { userManager.getUser(it.userId) }
+            .filterNot { it.type == Type.CredentialLess }
+            .all { it.hasSubscription() }
 
-    override suspend fun invoke(user: User): PostLoginAccountSetup.UserCheckResult =
+    override suspend fun invoke(user: User): UserCheckResult =
         result("defaultUserCheck") {
             when {
                 user.delinquent in listOf(
@@ -73,7 +76,7 @@ open class DefaultUserCheck @Inject constructor(
                 !user.hasSubscription() && !allReadyHaveSubscription() ->
                     errorMessage(R.string.auth_user_check_one_free_error)
 
-                else -> PostLoginAccountSetup.UserCheckResult.Success
+                else -> UserCheckResult.Success
             }
         }
 }

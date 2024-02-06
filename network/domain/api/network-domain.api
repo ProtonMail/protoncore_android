@@ -269,6 +269,7 @@ public final class me/proton/core/network/domain/NetworkStatus : java/lang/Enum 
 }
 
 public final class me/proton/core/network/domain/ResponseCodes {
+	public static final field ACCOUNT_CREDENTIALLESS_INVALID I
 	public static final field ACCOUNT_DELETED I
 	public static final field ACCOUNT_DISABLED I
 	public static final field ACCOUNT_FAILED_GENERIC I

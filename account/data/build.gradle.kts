@@ -27,8 +27,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(64)
-    lineCoveragePercentage.set(91)
+    branchCoveragePercentage.set(65)
+    lineCoveragePercentage.set(92)
 }
 
 publishOption.shouldBePublishedAsLib = true

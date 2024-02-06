@@ -16,19 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.auth.data.api.request
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.challenge.data.frame.ChallengeFrame
 
-enum class AddAccountWorkflow {
-    SignIn,
-    SignUp,
-    CredentialLess,
-}
-
-@Parcelize
-data class AddAccountResult(
-    val userId: String,
-    val workflow: AddAccountWorkflow
-) : Parcelable
+@Serializable
+data class LoginLessRequest(
+    @SerialName("Payload")
+    val payload: Map<String, ChallengeFrame?>
+)

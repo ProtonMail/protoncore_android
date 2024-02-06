@@ -46,8 +46,11 @@ public class CancelRecovery @Inject constructor(
         val sessionId = requireNotNull(account.sessionId) {
             "Missing sessionId for user $userId."
         }
+        val username = requireNotNull(account.username) {
+            "Missing username for user $userId."
+        }
         return invoke(
-            username = account.username,
+            username = username,
             password = password,
             sessionId = sessionId,
             userId = userId

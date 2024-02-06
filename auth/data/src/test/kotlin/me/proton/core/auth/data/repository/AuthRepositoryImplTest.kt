@@ -408,6 +408,26 @@ class AuthRepositoryImplTest {
     }
 
     @Test
+    fun `performLoginLess return SessionInfo`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Success(mockk())
+        // WHEN
+        repository.performLoginLess()
+    }
+
+    @Test(expected = ApiException::class)
+    fun `performLoginLess return error`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        coEvery { apiManager.invoke<SessionInfo>(any()) } returns ApiResult.Error.Http(
+            httpCode = 401,
+            message = "test http error",
+            proton = ApiResult.Error.ProtonData(1, "test login error")
+        )
+        // WHEN
+        repository.performLoginLess()
+    }
+
+    @Test
     fun `requestSession success`() = runTest(testDispatcherProvider.Main) {
         // GIVEN
         coEvery { apiManager.invoke<SessionResponse>(any(), any()) } returns ApiResult.Success(

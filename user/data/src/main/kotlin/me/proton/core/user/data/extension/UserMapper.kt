@@ -26,6 +26,7 @@ import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserWithKeys
 import me.proton.core.user.domain.entity.Delinquent
 import me.proton.core.user.domain.entity.Role
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.util.kotlin.toBooleanOrFalse
@@ -43,6 +44,7 @@ fun UserResponse.toUser(): User {
         usedSpace = usedSpace,
         maxSpace = maxSpace,
         maxUpload = maxUpload,
+        type = Type.map[type],
         role = Role.map[role],
         private = private.toBooleanOrFalse(),
         subscribed = subscribed,
@@ -69,6 +71,7 @@ internal fun User.toEntity(passphrase: EncryptedByteArray?) = UserEntity(
     usedSpace = usedSpace,
     maxSpace = maxSpace,
     maxUpload = maxUpload,
+    type = type?.value,
     role = role?.value,
     isPrivate = private,
     subscribed = subscribed,
@@ -93,6 +96,7 @@ internal fun UserEntity.toUser(keys: List<UserKey>) = User(
     maxSpace = maxSpace,
     usedSpace = usedSpace,
     maxUpload = maxUpload,
+    type = Type.map[type],
     role = Role.map[role],
     private = isPrivate,
     subscribed = subscribed,

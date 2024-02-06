@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.auth.domain.usecase
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.repository.AuthRepository
+import javax.inject.Inject
 
-enum class AddAccountWorkflow {
-    SignIn,
-    SignUp,
-    CredentialLess,
+/**
+ * Performs credentialless login.
+ */
+class PerformLoginLess @Inject constructor(
+    private val authRepository: AuthRepository
+) {
+    suspend operator fun invoke(): SessionInfo = authRepository.performLoginLess()
 }
-
-@Parcelize
-data class AddAccountResult(
-    val userId: String,
-    val workflow: AddAccountWorkflow
-) : Parcelable

@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserRecovery
 import org.junit.Before
@@ -43,6 +44,7 @@ class ObserveUserRecoveryStateTest {
         displayName = null,
         currency = "CHF",
         credit = 0,
+        type = Type.Proton,
         createdAtUtc = 1000L,
         usedSpace = 0,
         maxSpace = 100,

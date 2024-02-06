@@ -21,8 +21,13 @@ package me.proton.core.auth.presentation.ui
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentCredentialLessWelcomeBinding
@@ -30,19 +35,27 @@ import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.AddAccountWorkflow
 import me.proton.core.auth.presentation.onLoginResult
+import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.auth.presentation.ui.signup.showTermsConditions
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
+import me.proton.core.auth.presentation.viewmodel.CredentialLessViewModel
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
+import me.proton.core.presentation.utils.SnackbarLength
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.viewBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-// TODO product metrics
 internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_credential_less_welcome) {
+
     @Inject
     lateinit var authOrchestrator: AuthOrchestrator
+
+    private val viewModel by viewModels<CredentialLessViewModel>()
 
     private val binding by viewBinding(FragmentCredentialLessWelcomeBinding::bind)
 
@@ -56,6 +69,14 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
         authOrchestrator.onLoginResult {
             if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn)
         }
+        authOrchestrator.onOnSignUpResult {
+            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignUp)
+        }
+    }
+
+    override fun onDestroy() {
+        authOrchestrator.unregister()
+        super.onDestroy()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,20 +84,109 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
         binding.noLogsButton.onClick {
             requireContext().openBrowserLink(getString(R.string.vpn_no_logs_link))
         }
-        binding.guestButton.onClick {
-            // TODO
+        binding.signInGuest.onClick {
+            viewModel.startLoginLessWorkflow()
         }
         binding.signIn.onClick {
             authOrchestrator.startLoginWorkflow(input.requiredAccountType, input.loginUsername)
         }
+        binding.signUp.onClick {
+            authOrchestrator.startSignupWorkflow(input.creatableAccountType)
+        }
         binding.terms.setTextWithAnnotatedLink(R.string.auth_credentialless_terms, "terms") {
             parentFragmentManager.showTermsConditions()
         }
+
+        viewModel.state.onEach {
+            when (it) {
+                is CredentialLessViewModel.State.Idle -> showLoading(
+                    loading = false
+                )
+
+                is CredentialLessViewModel.State.Processing -> showLoading(
+                    loading = true
+                )
+
+                is CredentialLessViewModel.State.AccountSetupResult -> onAccountSetupResult(
+                    userId = it.userId,
+                    result = it.result
+                )
+
+                is CredentialLessViewModel.State.CredentialLessDisabled -> onCredentialLessDisabled(
+                    message = it.error.getUserMessage(resources),
+                )
+
+                is CredentialLessViewModel.State.Error -> onError(
+                    message = it.error.getUserMessage(resources),
+                )
+            }
+        }.launchInViewLifecycleScope()
     }
 
-    override fun onDestroy() {
-        authOrchestrator.unregister()
-        super.onDestroy()
+    private fun showLoading(loading: Boolean) = with(binding) {
+        if (loading) {
+            signInGuest.setLoading()
+        } else {
+            signInGuest.setIdle()
+        }
+    }
+
+    private fun showError(
+        message: String?,
+        action: String? = null,
+        actionOnClick: (() -> Unit)? = null
+    ) = with(binding) {
+        root.errorSnack(
+            message = message ?: getString(R.string.auth_login_general_error),
+            action = action,
+            actionOnClick = actionOnClick,
+            length = when {
+                action != null && actionOnClick != null -> SnackbarLength.INDEFINITE
+                else -> SnackbarLength.LONG
+            }
+        )
+    }
+
+    private fun onCredentialLessDisabled(message: String?) {
+        showLoading(false)
+        showError(message)
+        binding.signInGuest.isVisible = false
+        binding.signUp.isVisible = true
+    }
+
+    private fun onError(message: String?) {
+        showLoading(false)
+        showError(message)
+    }
+
+    private fun onAccountSetupResult(
+        userId: UserId,
+        result: PostLoginAccountSetup.UserCheckResult
+    ) {
+        when (result) {
+            is PostLoginAccountSetup.UserCheckResult.Error -> onUserCheckFailed(
+                error = result
+            )
+
+            is PostLoginAccountSetup.UserCheckResult.Success -> onSuccess(
+                userId = userId.id,
+                workflow = AddAccountWorkflow.CredentialLess
+            )
+        }
+    }
+
+    private fun onUserCheckFailed(
+        error: PostLoginAccountSetup.UserCheckResult.Error,
+    ) {
+        showLoading(false)
+        when (val action = error.action) {
+            null -> showError(error.localizedMessage)
+            is UserCheckAction.OpenUrl -> showError(
+                message = error.localizedMessage,
+                action = action.name,
+                actionOnClick = { context?.openBrowserLink(action.url) },
+            )
+        }
     }
 
     private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {

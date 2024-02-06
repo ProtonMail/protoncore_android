@@ -22,6 +22,7 @@ import android.content.Context
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
+import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
 import me.proton.core.auth.data.api.request.PhoneValidationRequest
@@ -42,6 +43,7 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.ApiResult
@@ -49,6 +51,7 @@ import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.coroutine.result
+import java.util.UUID
 
 class AuthRepositoryImpl(
     private val provider: ApiProvider,
@@ -102,12 +105,23 @@ class AuthRepositoryImpl(
     override suspend fun performLoginSso(
         email: String,
         token: String
-    ): SessionInfo =
+    ): SessionInfo = result("performLoginSso") {
         provider.get<AuthenticationApi>().invoke {
-        val request = LoginSsoRequest(token)
-        val response = performLoginSso(request)
-        response.toSessionInfo(email)
-    }.valueOrThrow
+            val request = LoginSsoRequest(token)
+            val response = performLoginSso(request)
+            response.toSessionInfo(email)
+        }.valueOrThrow
+    }
+
+    override suspend fun performLoginLess(
+        frames: List<ChallengeFrameDetails>
+    ): SessionInfo = result("performLoginLess") {
+        provider.get<AuthenticationApi>().invoke {
+            val request = LoginLessRequest(getFrameMap(frames))
+            val response = performLoginLess(request)
+            response.toSessionInfo(username = null)
+        }.valueOrThrow
+    }
 
     private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, ChallengeFrame?> {
         val name = "${product.framePrefix()}-0"

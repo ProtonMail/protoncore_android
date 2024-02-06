@@ -78,7 +78,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             emit(State.Error.InvalidAccount)
             return@flow
         }
-        val authInfo = getAuthInfoSrp(requireNotNull(account.sessionId), account.username)
+        val authInfo = getAuthInfoSrp(requireNotNull(account.sessionId), requireNotNull(account.username))
         val isSecondFactorNeeded = when (missingScope) {
             Scope.PASSWORD -> authInfo.secondFactor is SecondFactor.Enabled
             Scope.LOCKED -> false
@@ -101,14 +101,14 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             Scope.PASSWORD -> obtainPasswordScope(
                 userId = account.userId,
                 sessionId = requireNotNull(account.sessionId),
-                username = account.username,
+                username = requireNotNull(account.username),
                 password = password.encrypt(keyStoreCrypto),
                 twoFactorCode = twoFactorCode
             )
             Scope.LOCKED -> obtainLockedScope(
                 userId = account.userId,
                 sessionId = requireNotNull(account.sessionId),
-                username = account.username,
+                username = requireNotNull(account.username),
                 password = password.encrypt(keyStoreCrypto)
             )
         }.exhaustive

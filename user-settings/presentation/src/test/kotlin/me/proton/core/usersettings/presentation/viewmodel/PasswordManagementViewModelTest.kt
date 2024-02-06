@@ -29,6 +29,7 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.PasswordSetting
@@ -94,7 +95,8 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         subscribed = 0,
         delinquent = null,
         recovery = null,
-        keys = emptyList()
+        keys = emptyList(),
+        type = Type.Proton
     )
     // endregion
 

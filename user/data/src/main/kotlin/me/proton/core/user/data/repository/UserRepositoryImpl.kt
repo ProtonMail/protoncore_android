@@ -39,8 +39,6 @@ import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
-import me.proton.core.data.arch.toDataResult
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId

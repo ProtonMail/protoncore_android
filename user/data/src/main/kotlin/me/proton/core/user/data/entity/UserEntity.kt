@@ -52,6 +52,7 @@ data class UserEntity(
     val usedSpace: Long,
     val maxSpace: Long,
     val maxUpload: Long,
+    val type: Int?,
     val role: Int?,
     @ColumnInfo(name = "private")
     val isPrivate: Boolean,

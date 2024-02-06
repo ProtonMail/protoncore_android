@@ -32,6 +32,7 @@ import me.proton.core.contact.domain.entity.ContactId
 import me.proton.core.contact.domain.entity.ContactWithCards
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.user.domain.entity.Type
 
 object User0 {
     val userId = UserId("user0")
@@ -71,6 +72,7 @@ fun UserId.userEntity() = UserEntity(
     displayName = null,
     currency = "EUR",
     credit = 0,
+    type = Type.Proton.value,
     createdAtUtc = 1000L,
     usedSpace = 0,
     maxSpace = 0,

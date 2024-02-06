@@ -33,6 +33,7 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.entity.PasswordSetting
@@ -82,6 +83,7 @@ class PerformUpdateLoginPasswordTest {
         displayName = null,
         currency = "test-curr",
         credit = 0,
+        type = Type.Proton,
         createdAtUtc = 1000L,
         usedSpace = 0,
         maxSpace = 100,

@@ -45,6 +45,8 @@ data class User(
     val currency: String,
     /** Monetary credits. This value is affected by [currency]. */
     val credit: Int,
+    /** User type. */
+    val type: Type?,
     /** Create time in milliseconds since the epoch. */
     val createdAtUtc: Long,
     /** Used space size in Bytes. */
@@ -102,6 +104,17 @@ data class User(
     val usedBaseSpace: Long? = null,
     val usedDriveSpace: Long? = null
 ) : KeyHolder
+
+enum class Type(val value: Int) {
+    Proton(1),
+    Managed(2),
+    External(3),
+    CredentialLess(4);
+
+    companion object {
+        val map = values().associateBy { it.value }
+    }
+}
 
 enum class Delinquent(val value: Int) {
     None(0),

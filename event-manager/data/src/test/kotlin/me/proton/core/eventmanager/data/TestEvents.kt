@@ -92,6 +92,7 @@ object TestEvents {
             "CreateTime": 1000,
             "MaxSpace": 10737418240,
             "MaxUpload": 26214400,
+            "Type": 1,
             "Role": 2,
             "Private": 1,
             "ToMigrate": 1,

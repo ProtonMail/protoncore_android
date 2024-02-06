@@ -25,6 +25,7 @@ import me.proton.core.label.data.local.LabelEntity
 import me.proton.core.label.domain.entity.LabelId
 import me.proton.core.label.domain.entity.LabelType
 import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.user.domain.entity.Type
 
 object User0 {
     val userId = UserId("user0")
@@ -43,6 +44,7 @@ fun UserId.userEntity() = UserEntity(
     displayName = null,
     currency = "EUR",
     credit = 0,
+    type = Type.Proton.value,
     createdAtUtc = 1000L,
     usedSpace = 0,
     maxSpace = 0,

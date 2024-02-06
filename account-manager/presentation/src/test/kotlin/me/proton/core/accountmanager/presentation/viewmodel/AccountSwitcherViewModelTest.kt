@@ -36,7 +36,6 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.User
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -64,26 +63,6 @@ class AccountSwitcherViewModelTest : ArchTest by ArchTest(), CoroutinesTest by C
         sessionId = session1.sessionId,
         sessionState = SessionState.Authenticated,
         details = AccountDetails(null, null)
-    )
-
-    private val user = User(
-        userId = userId,
-        email = null,
-        name = "test-username",
-        displayName = "test-displayname",
-        currency = "test-currency",
-        credit = 0,
-        createdAtUtc = 1000L,
-        usedSpace = 0,
-        maxSpace = 100,
-        maxUpload = 100,
-        role = null,
-        private = true,
-        services = 1,
-        subscribed = 0,
-        delinquent = null,
-        recovery = null,
-        keys = emptyList()
     )
 
     @BeforeTest

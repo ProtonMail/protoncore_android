@@ -44,7 +44,7 @@ import me.proton.core.network.domain.session.SessionId
 )
 data class AccountEntity(
     val userId: UserId,
-    val username: String,
+    val username: String?,
     val email: String?,
     val state: AccountState,
     val sessionId: SessionId?,

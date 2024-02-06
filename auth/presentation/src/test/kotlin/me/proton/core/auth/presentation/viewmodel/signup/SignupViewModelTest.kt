@@ -66,6 +66,7 @@ import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.coroutine.result
@@ -153,7 +154,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         subscribed = 0,
         delinquent = null,
         recovery = null,
-        keys = emptyList()
+        keys = emptyList(),
+        type = Type.Proton
     )
 
     private val usernameTakenError: ApiException

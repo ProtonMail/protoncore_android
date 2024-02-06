@@ -25,7 +25,7 @@ import me.proton.core.auth.domain.entity.SessionInfo
 
 @Parcelize
 data class SessionResult(
-    val username: String,
+    val username: String?,
     val accessToken: String,
     val tokenType: String,
     val scopes: List<String>,

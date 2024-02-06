@@ -110,6 +110,14 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Co
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_CredentialLessViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_CredentialLessViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_LoginSsoViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -594,9 +602,10 @@ public final class me/proton/core/auth/presentation/databinding/FragmentCreating
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding : androidx/viewbinding/ViewBinding {
-	public final field guestButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field noLogsButton Landroidx/cardview/widget/CardView;
 	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field signInGuest Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field signUp Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field terms Landroid/widget/TextView;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
@@ -791,6 +800,7 @@ public final class me/proton/core/auth/presentation/entity/AddAccountResult$Crea
 }
 
 public final class me/proton/core/auth/presentation/entity/AddAccountWorkflow : java/lang/Enum {
+	public static final field CredentialLess Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 	public static final field SignIn Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 	public static final field SignUp Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/AddAccountWorkflow;
@@ -2290,6 +2300,33 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/CredentialLessViewModel;
+	public static fun newInstance (Lme/proton/core/auth/domain/usecase/CreateLoginLessSession;Lme/proton/core/auth/domain/usecase/PostLoginLessAccountSetup;)Lme/proton/core/auth/presentation/viewmodel/CredentialLessViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/CredentialLessViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/CredentialLessViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

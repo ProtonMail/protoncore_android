@@ -147,5 +147,23 @@ interface AccountDatabase : Database {
                 database.execSQL("UPDATE AccountEntity SET state = 'MigrationNeeded' WHERE state = 'Ready'")
             }
         }
+
+        /**
+         * - Added nullability for [AccountEntity.username].
+         */
+        val MIGRATION_7 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.recreateTable(
+                    table = "AccountEntity",
+                    createTable = {
+                        execSQL("CREATE TABLE IF NOT EXISTS `AccountEntity` (`userId` TEXT NOT NULL, `username` TEXT, `email` TEXT, `state` TEXT NOT NULL, `sessionId` TEXT, `sessionState` TEXT, PRIMARY KEY(`userId`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE NO ACTION )")
+                    },
+                    createIndices = {
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_AccountEntity_sessionId` ON `AccountEntity` (`sessionId`)")
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_AccountEntity_userId` ON `AccountEntity` (`userId`)")
+                    }
+                )
+            }
+        }
     }
 }

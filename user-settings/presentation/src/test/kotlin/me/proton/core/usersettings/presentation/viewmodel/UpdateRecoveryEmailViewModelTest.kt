@@ -31,7 +31,6 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
-import me.proton.core.user.domain.entity.User
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
@@ -72,25 +71,6 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         deviceRecovery = true,
         telemetry = true,
         crashReports = true
-    )
-    private val testUser = User(
-        userId = testUserId,
-        email = null,
-        name = testUsername,
-        displayName = null,
-        currency = "test-curr",
-        credit = 0,
-        createdAtUtc = 1000L,
-        usedSpace = 0,
-        maxSpace = 100,
-        maxUpload = 100,
-        role = null,
-        private = true,
-        services = 1,
-        subscribed = 0,
-        delinquent = null,
-        recovery = null,
-        keys = emptyList()
     )
     // endregion
 

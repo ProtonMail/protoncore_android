@@ -50,7 +50,7 @@ class CreateLoginSsoSession @Inject constructor(
         val account = Account(
             username = sessionInfo.username,
             userId = sessionInfo.userId,
-            email = sessionInfo.username.takeIf { it.contains('@') },
+            email = sessionInfo.username.takeIf { it?.contains('@') ?: false },
             sessionId = sessionInfo.sessionId,
             state = AccountState.NotReady,
             sessionState = SessionState.Authenticated,

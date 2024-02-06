@@ -25,6 +25,7 @@ import me.proton.core.push.domain.entity.Push
 import me.proton.core.push.domain.entity.PushId
 import me.proton.core.push.domain.entity.PushObjectType
 import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.user.domain.entity.Type
 
 internal val testUserId = UserId("a")
 
@@ -35,6 +36,7 @@ internal fun testUserEntity(userId: UserId) = UserEntity(
     displayName = null,
     currency = "",
     credit = 0,
+    type = Type.Proton.value,
     createdAtUtc = 1000L,
     usedSpace = 0,
     maxSpace = 0,

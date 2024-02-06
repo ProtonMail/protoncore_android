@@ -41,18 +41,18 @@ data class LoginResponse(
     val refreshToken: String,
     @SerialName("EventID")
     val eventId: String,
-    @SerialName("ServerProof")
-    val serverProof: String? = null,
     @SerialName("LocalID")
     val localId: Int,
+    @SerialName("ServerProof")
+    val serverProof: String? = null,
     @SerialName("PasswordMode")
-    val passwordMode: Int,
+    val passwordMode: Int = 0,
     @SerialName("2FA")
-    val secondFactorInfo: SecondFactorInfoResponse,
+    val secondFactorInfo: SecondFactorInfoResponse? = null,
     @SerialName("TemporaryPassword")
     val temporaryPassword: Int? = null,
 ) {
-    fun toSessionInfo(username: String): SessionInfo = SessionInfo(
+    fun toSessionInfo(username: String? = null): SessionInfo = SessionInfo(
         username = username,
         accessToken = accessToken,
         tokenType = tokenType,
@@ -64,7 +64,7 @@ data class LoginResponse(
         serverProof = serverProof,
         localId = localId,
         passwordMode = passwordMode,
-        secondFactor = secondFactorInfo.toSecondFactor(),
+        secondFactor = secondFactorInfo?.toSecondFactor(),
         temporaryPassword = temporaryPassword?.toBooleanOrFalse() ?: false
     )
 }

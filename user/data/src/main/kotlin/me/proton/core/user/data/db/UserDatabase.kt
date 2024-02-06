@@ -116,5 +116,19 @@ interface UserDatabase : Database, UserKeyDatabase {
                 }
             }
         }
+
+        /**
+         * - Added UserEntity column: type.
+         */
+        val MIGRATION_5 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserEntity",
+                    column = "type",
+                    type = "INTEGER",
+                    defaultValue = null
+                )
+            }
+        }
     }
 }

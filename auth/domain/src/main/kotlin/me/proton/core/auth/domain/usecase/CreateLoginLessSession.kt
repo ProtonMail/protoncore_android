@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -26,31 +26,26 @@ import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.network.domain.session.Session
 import javax.inject.Inject
 
-/** Logs in the user, and creates the session locally. */
-class CreateLoginSession @Inject constructor(
+/**
+ * Create a credentialless Session.
+ *
+ * Note: Next step should be PostLoginLessAccountSetup.
+ */
+class CreateLoginLessSession @Inject constructor(
+    private val requiredAccountType: AccountType,
     private val accountWorkflow: AccountWorkflowHandler,
-    private val performLogin: PerformLogin
+    private val performLoginLess: PerformLoginLess
 ) {
-    suspend operator fun invoke(
-        username: String,
-        encryptedPassword: EncryptedString,
-        requiredAccountType: AccountType
-    ): SessionInfo {
-        val sessionInfo = performLogin.invoke(username, encryptedPassword)
-        handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
+    suspend operator fun invoke(): SessionInfo {
+        val sessionInfo = performLoginLess.invoke()
+        handleSessionInfo(sessionInfo)
         return sessionInfo
     }
 
-    /** Storing the session is mandatory for executing subsequent requests. */
-    private suspend fun handleSessionInfo(
-        requiredAccountType: AccountType,
-        sessionInfo: SessionInfo,
-        password: EncryptedString
-    ) {
+    private suspend fun handleSessionInfo(sessionInfo: SessionInfo) {
         val sessionState = if (sessionInfo.isSecondFactorNeeded) {
             SessionState.SecondFactorNeeded
         } else {
@@ -58,9 +53,9 @@ class CreateLoginSession @Inject constructor(
         }
 
         val account = Account(
-            username = sessionInfo.username,
             userId = sessionInfo.userId,
-            email = sessionInfo.username.takeIf { it?.contains('@') ?: false },
+            username = null,
+            email = null,
             sessionId = sessionInfo.sessionId,
             state = AccountState.NotReady,
             sessionState = sessionState,
@@ -70,7 +65,7 @@ class CreateLoginSession @Inject constructor(
                     requiredAccountType = requiredAccountType,
                     secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
                     twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
-                    password = password
+                    password = null
                 )
             )
         )

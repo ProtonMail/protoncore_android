@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.UserKeyResponse
 import me.proton.core.key.data.api.response.UserResponse
 import me.proton.core.user.domain.entity.Role
+import me.proton.core.user.domain.entity.Type
 
 object TestUsers {
     object User1 {
@@ -43,7 +44,8 @@ object TestUsers {
             delinquent = 0,
             email = "user1@example.com",
             displayName = "user 1 name",
-            keys = listOf(Key1.response, Key2Inactive.response)
+            keys = listOf(Key1.response, Key2Inactive.response),
+            type = Type.Proton.value
         )
 
         object Key1 {
@@ -90,7 +92,8 @@ object TestUsers {
             delinquent = 0,
             email = "user1@example.com",
             displayName = "user 1 name",
-            keys = listOf(Key1.response)
+            keys = listOf(Key1.response),
+            type = Type.Proton.value
         )
 
         object Key1 {

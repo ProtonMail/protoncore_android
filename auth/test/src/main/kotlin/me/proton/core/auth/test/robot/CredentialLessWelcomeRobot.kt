@@ -30,7 +30,7 @@ import me.proton.test.fusion.Fusion.view
 public object CredentialLessWelcomeRobot {
     private val appContext: Context
         get() = ApplicationProvider.getApplicationContext()
-    private val continueAsGuestButton = view.withId(R.id.guest_button)
+    private val continueAsGuestButton = view.withId(R.id.sign_in_guest)
     private val noLogsButton = view.withId(R.id.no_logs_button)
     private val signInButton = view.withId(R.id.sign_in)
 
