@@ -28,6 +28,7 @@ import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
+import me.proton.core.crypto.common.pgp.keyPacket
 import org.junit.Test
 import java.io.File
 import kotlin.test.assertEquals
@@ -232,6 +233,66 @@ internal class GOpenPGPCryptoTest {
 
         decryptData.use {
             assertTrue(data.contentEquals(it.array))
+        }
+    }
+
+    @Test
+    fun decryptEncryptedMessageWhichIsEncryptedToAdditionalKey() {
+        // GIVEN
+        val encrypted =
+            """
+            -----BEGIN PGP MESSAGE-----
+            Version: ProtonMail
+
+            wcBMA7M4YhTWmh7GAQgAxAdgbJWi7MKSMiMg5rOUu6Y6nFJK9pgU5MsrKYqO
+            /hXkkpocWTs4BDL+AXmy86e0C52mwsKJj/cFZ88erFLGMrkG+sVkDFi3fZ7Q
+            dqrqKrzbGg6NubQpCtwGv+KvtFcMfCUWD4jeH/saD4wW9ZAH3Ozu0s/VamIX
+            62VDi+l6TrZIUwsC6Pnyy5O8O1BnOultCjUP4bYApSfQIBDENBVyMVT9pp1/
+            ylfgUSZQCj2vWkbMtMH+SAgBgk+MMYVBTx+Pk1O9lhZdqXhjzEmi58AZMdq7
+            /+CGjJwnySBFCLaHddYfzvVVQEAJngRRl7WA+CVkskMc94w1nwlVeuARuAiy
+            /9LAaQHHE3Wb1en/rqK4IPK0qWaInpVualn6KeORmtnS3Kl2Xynt92Lcckoj
+            37WEdjXDCIhl4JyrldelRmaxBisnW3te4vsukGh87E4jL8oDvIMwHN0bm7KH
+            +kBnlxqrR6N5vZmcjFoU+n9XBYDkoPZ0MZCwCgMi2BbWrQv7zy/o3+35kgms
+            6c3Mwb7nIP15ksysLz884tF6k5cVoLFISL7OMqem1uKM66BgOYJovvRR1Y+v
+            70aQ/G2w7B44mzPBOlzOAzhDQDHtxNft1XT+LH2cjrExd0EzYE+8fpYpOHC0
+            KfHrt6wx/sj/O+e1M9F19UGDIJMFRmlgRIUJCEmpiaZnWjmdajfUpOPd47ac
+            GYmSnoyEOzjf1Lyy0M6w7BHPQgwaF7Ss94EAcsFcfw==
+            =iJT4
+            -----END PGP MESSAGE-----
+            """.trimIndent()
+
+        val expected = "Dear valued customer,\n\n" +
+            "Thank you for subscribing to ProtonMail! Your support will enable us to scale up ProtonMail and continue our mission to bring easy-to-use, encrypted email to people everywhere.\n\n" +
+            "Thank you,\n\n" +
+            "The ProtonMail Team\n"
+
+        crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase).use { unlockedKey1 ->
+            crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase).use { unlockedKey2 ->
+                // WHEN
+                val encryptedMultiKeyMessage = crypto.encryptMessageToAdditionalKey(
+                    encrypted,
+                    unlockedKey2.value,
+                    TestKey.privateKeyPublicKey
+                )
+                val decryptedTextWithKey1 = crypto.decryptText(encryptedMultiKeyMessage, unlockedKey1.value)
+                val decryptedTextWithKey2 = crypto.decryptText(encryptedMultiKeyMessage, unlockedKey2.value)
+
+                val packets = crypto.getEncryptedPackets(encryptedMultiKeyMessage)
+
+                // THEN
+                assertEquals(
+                    expected = 2,
+                    actual = packets.first().numberOfInternalPackets
+                )
+                assertEquals(
+                    expected = expected,
+                    actual = decryptedTextWithKey1
+                )
+                assertEquals(
+                    expected = expected,
+                    actual = decryptedTextWithKey2
+                )
+            }
         }
     }
 

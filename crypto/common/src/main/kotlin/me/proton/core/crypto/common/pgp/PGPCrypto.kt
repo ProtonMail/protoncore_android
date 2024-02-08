@@ -234,6 +234,21 @@ interface PGPCrypto {
     fun encryptSessionKeyWithPassword(sessionKey: SessionKey, password: ByteArray): KeyPacket
 
     /**
+     * Encrypt the encrypted [message] to an additional [publicKey] with the [unlockedKey].
+     * The function internally decrypts the session key with [unlockedKey], encrypts the session key
+     * with [publicKey], and adds the additional key packet to the message.
+     *
+     * @return [EncryptedMessage] that contains an additional key packet encrypted with [publicKey].
+     *
+     * @throws [CryptoException] if [message] cannot be encrypted to the additional key.
+     */
+    fun encryptMessageToAdditionalKey(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored,
+        publicKey: Armored,
+    ): EncryptedMessage
+
+    /**
      * Decrypt [message] as [String] using [unlockedKey].
      *
      * Note: String canonicalization/standardization is applied.

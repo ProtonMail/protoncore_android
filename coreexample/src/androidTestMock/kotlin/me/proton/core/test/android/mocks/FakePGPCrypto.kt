@@ -138,6 +138,14 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: encryptSessionKeyWithPassword")
     }
 
+    override fun encryptMessageToAdditionalKey(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored,
+        publicKey: Armored,
+    ): EncryptedMessage {
+        TODO("Not yet implemented: encryptMessageToAdditionalKey")
+    }
+
     override fun decryptText(message: EncryptedMessage, unlockedKey: Unarmored): String {
         TODO("Not yet implemented: decryptText")
     }

@@ -208,6 +208,17 @@ fun PGPCrypto.encryptAndSignDataWithCompressionOrNull(
 ): EncryptedMessage? = runCatching { encryptAndSignDataWithCompression(data, publicKey, unlockedKey, signatureContext) }.getOrNull()
 
 /**
+ * @return [EncryptedMessage], or `null` if [message] cannot be encrypted to an additional key.
+ *
+ * @see [PGPCrypto.encryptMessageToAdditionalKey]
+ */
+fun PGPCrypto.encryptMessageToAdditionalKeyOrNull(
+    message: EncryptedMessage,
+    unlockedKey: Unarmored,
+    publicKey: Armored,
+): EncryptedMessage? = runCatching { encryptMessageToAdditionalKey(message, unlockedKey, publicKey) }.getOrNull()
+
+/**
  * @return [DataPacket], or `null` if [data] cannot be encrypted and signed.
  *
  * @see [PGPCrypto.encryptAndSignData]

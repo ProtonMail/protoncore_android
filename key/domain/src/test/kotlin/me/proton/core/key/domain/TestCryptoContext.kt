@@ -435,6 +435,13 @@ open class TestCryptoContext : CryptoContext {
         override fun encryptSessionKeyWithPassword(sessionKey: SessionKey, password: ByteArray): KeyPacket =
             sessionKey.key
 
+        override fun encryptMessageToAdditionalKey(
+            message: EncryptedMessage,
+            unlockedKey: Unarmored,
+            publicKey: Armored
+        ): EncryptedMessage =
+            message
+
         override fun decryptAndVerifyText(
             message: EncryptedMessage,
             publicKeys: List<Armored>,

@@ -252,6 +252,21 @@ class GOpenPGPCrypto : PGPCrypto {
         }
     }
 
+    private fun encryptEncryptedMessageToAdditionalKey(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored,
+        publicKey: Armored,
+    ): EncryptedMessage {
+        val pgpSplitMessage = PGPSplitMessage(message)
+        val publicKeyRing = publicKey.keyRing()
+        newKey(unlockedKey).use { key ->
+            newKeyRing(key).use { keyRing ->
+                Helper.encryptPGPMessageToAdditionalKey(pgpSplitMessage, keyRing.value, publicKeyRing)
+                return pgpSplitMessage.armored
+            }
+        }
+    }
+
     // endregion
 
     // region Private Decrypt
@@ -713,6 +728,14 @@ class GOpenPGPCrypto : PGPCrypto {
         return Crypto.encryptSessionKeyWithPassword(internalSessionKey, password)
     }.getOrElse { throw CryptoException("SessionKey cannot be encrypted with password.", it) }
 
+    override fun encryptMessageToAdditionalKey(
+        message: EncryptedMessage,
+        unlockedKey: Unarmored,
+        publicKey: Armored,
+    ): EncryptedMessage = runCatching {
+        encryptEncryptedMessageToAdditionalKey(message, unlockedKey, publicKey)
+    }.getOrElse { throw CryptoException("EncryptedMessage cannot be encrypted to additional key.", it) }
+
     // endregion
 
     // region Public Decrypt
@@ -1092,8 +1115,9 @@ class GOpenPGPCrypto : PGPCrypto {
         message: EncryptedMessage
     ): List<EncryptedPacket> = runCatching {
         val pgpSplitMessage = PGPSplitMessage(message)
+        var numberOfKeyPackets = pgpSplitMessage.getNumberOfKeyPackets().toInt()
         return listOf(
-            EncryptedPacket(pgpSplitMessage.keyPacket, PacketType.Key),
+            EncryptedPacket(pgpSplitMessage.keyPacket, PacketType.Key, numberOfKeyPackets),
             EncryptedPacket(pgpSplitMessage.dataPacket, PacketType.Data)
         )
     }.getOrElse { throw CryptoException("EncryptedFile cannot be extracted from EncryptedMessage.", it) }

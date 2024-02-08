@@ -46,7 +46,8 @@ enum class PacketType {
  */
 data class EncryptedPacket(
     val packet: Unarmored,
-    val type: PacketType
+    val type: PacketType,
+    val numberOfInternalPackets: Int = 1
 ) {
     override fun equals(other: Any?): Boolean =
         this === other || other is EncryptedPacket && type == other.type && packet.contentEquals(other.packet)
