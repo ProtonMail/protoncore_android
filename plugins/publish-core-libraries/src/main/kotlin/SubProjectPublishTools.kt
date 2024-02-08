@@ -1,8 +1,8 @@
-
 import PublishOptionExtension.Companion.setupPublishOptionExtension
+import com.vanniktech.maven.publish.AndroidSingleVariantLibrary
+import com.vanniktech.maven.publish.KotlinJvm
 import com.vanniktech.maven.publish.MavenPublishBaseExtension
 import com.vanniktech.maven.publish.MavenPublishPlugin
-import com.vanniktech.maven.publish.MavenPublishPluginExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
@@ -44,11 +44,18 @@ private fun Project.setupCoordinates(groupName: String, versionName: String) {
     version = versionName
 
     apply<MavenPublishPlugin>()
-    configure<MavenPublishPluginExtension> {
-        // Only sign non snapshot release
-        releaseSigningEnabled = !versionName.contains("SNAPSHOT")
-    }
     configure<MavenPublishBaseExtension> {
+        if (!versionName.contains("SNAPSHOT")) {
+            // Only sign non snapshot release
+            signAllPublications()
+        }
+
+        when {
+            isAndroidLibrary() -> configure(AndroidSingleVariantLibrary("release", publishJavadocJar = false))
+            isKotlinJvmLibrary() -> configure(KotlinJvm())
+            else -> logger.warn("No compatible plugin found in project ${project.path} for publishing")
+        }
+
         pom {
             name.set(artifactId)
             description.set("Proton Core libraries for Android")
@@ -75,6 +82,9 @@ private fun Project.setupCoordinates(groupName: String, versionName: String) {
     }
     ensureReleaseCoordinateDocumented()
 }
+
+private fun Project.isAndroidLibrary(): Boolean = plugins.hasPlugin("com.android.library")
+private fun Project.isKotlinJvmLibrary(): Boolean = plugins.hasPlugin("org.jetbrains.kotlin.jvm")
 
 private fun Project.ensureReleaseCoordinateDocumented() {
     val readmeFile = File(rootDir, "README.md")
