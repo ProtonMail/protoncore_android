@@ -8,7 +8,6 @@ detekt = "1.23.0"
 easyGradle = "2.8"
 gradleNexusPublish = "1.1.0"
 kotlin = "1.8.21"
-kotlinDokka = "1.8.20"
 kotlinCoroutines = "1.6.4"
 kotlinSerialization = "1.4.1"
 kotlinBinaryCompatibilityValidator = "0.13.2"
@@ -38,7 +37,6 @@ detekt-cli = { module = "io.gitlab.arturbosch.detekt:detekt-cli", version.ref = 
 detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 detekt-rules-libraries = { module = "io.gitlab.arturbosch.detekt:detekt-rules-libraries", version.ref = "detekt" }
 
-dokka-gradle = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "kotlinDokka" }
 easyGradle-dsl = { module = "studio.forface.easygradle:dsl", version.ref = "easyGradle" }
 easyGradle-androidDsl = { module = "studio.forface.easygradle:dsl-android", version.ref = "easyGradle" }
 gradleNexus-publish = { module = "io.github.gradle-nexus:publish-plugin", version.ref = "gradleNexusPublish" }

@@ -48,7 +48,6 @@ repositories {
 dependencies {
     implementation(gradleApi())
     implementation(libs.vanniktech.mavenPublish)
-    implementation(libs.dokka.gradle)
     implementation(libs.kotlin.serialization.json)
     implementation(libs.gradleNexus.publish)
 }

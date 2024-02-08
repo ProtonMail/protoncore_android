@@ -6,7 +6,6 @@ import com.vanniktech.maven.publish.MavenPublishPluginExtension
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.dokka.gradle.DokkaPlugin
 import java.io.File
 
 /*
@@ -39,15 +38,10 @@ internal fun Project.setupSubProjectPublishing(groupName: String, versionName: S
     }
 }
 
-private fun Project.setupCoordinates(groupName: String, versionName: String, generateKdoc: Boolean = false) {
+private fun Project.setupCoordinates(groupName: String, versionName: String) {
     group = groupName
     val artifactId = name
     version = versionName
-
-    // Dokka disabled by default
-    // Dokka is slow and consume a lot of resource for not much value in our case as the documentation is read in AS
-    // from sources.
-    if (generateKdoc) apply<DokkaPlugin>()
 
     apply<MavenPublishPlugin>()
     configure<MavenPublishPluginExtension> {

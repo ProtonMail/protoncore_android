@@ -25,7 +25,6 @@ import java.io.ByteArrayOutputStream
  * * `detekt` ( 'me.proton.detekt' plugin )
  * * `multiModuleDetekt` ( 'me.proton.detekt' plugin )
  * * `publishAll` ( 'me.proton.publish-libraries' plugin )
- * * `dokka`
  * * `dependencyUpdates`
  */
 plugins {
@@ -46,7 +45,6 @@ buildscript {
     repositories.google()
 
     dependencies {
-        classpath(libs.dokka.gradle)
         classpath(libs.android.gradle)
         classpath(libs.dagger.hilt.android.gradle)
     }
