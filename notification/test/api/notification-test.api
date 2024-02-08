@@ -14,3 +14,11 @@ public final class me/proton/core/notification/test/deeplink/TestDeeplinkIntentP
 	public fun setPath (Landroid/content/Intent;Ljava/lang/String;)Landroid/content/Intent;
 }
 
+public final class me/proton/core/notification/test/fake/FakeIsNotificationsEnabled : me/proton/core/notification/domain/usecase/IsNotificationsEnabled {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public final fun getEnabled ()Z
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public final fun setEnabled (Z)V
+}
+

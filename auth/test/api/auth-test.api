@@ -141,6 +141,36 @@ public final class me/proton/core/auth/test/MinimalSignUpExternalTests$DefaultIm
 	public static fun signupSwitchToInternalAccountHappyPath (Lme/proton/core/auth/test/MinimalSignUpExternalTests;)V
 }
 
+public final class me/proton/core/auth/test/fake/FakeIsCredentialLessEnabled : me/proton/core/auth/domain/usecase/IsCredentialLessEnabled {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public fun <init> (ZLkotlin/jvm/functions/Function1;)V
+	public fun awaitIsRemoteDisabled-8Mi8wO0 (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getLocalEnabled ()Z
+	public final fun getRemoteEnabled ()Lkotlin/jvm/functions/Function1;
+	public fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun isLocalEnabled ()Z
+	public final fun setLocalEnabled (Z)V
+	public final fun setRemoteEnabled (Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/proton/core/auth/test/fake/FakeIsSsoCustomTabEnabled : me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public final fun getEnabled ()Z
+	public fun invoke ()Z
+	public final fun setEnabled (Z)V
+}
+
+public final class me/proton/core/auth/test/fake/FakeIsSsoEnabled : me/proton/core/auth/domain/usecase/IsSsoEnabled {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getEnabled ()Z
+	public fun invoke ()Z
+	public final fun setEnabled (Z)V
+}
+
 public final class me/proton/core/auth/test/flow/SignInFlow {
 	public static final field INSTANCE Lme/proton/core/auth/test/flow/SignInFlow;
 	public final fun signInExternal (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
