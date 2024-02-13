@@ -167,7 +167,7 @@ private fun UpgradeButton(
         modifier = modifier
     ) {
         Text(
-            color = ProtonTheme.colors.textInverted,
+            color = ProtonTheme.colors.textNorm,
             text = stringResource(id = R.string.upgrade_storage_cta_button)
         )
     }
@@ -215,7 +215,18 @@ internal fun PreviewHighMailUsage() {
     ProtonTheme(colors = ProtonColors.Light.sidebarColors!!) {
         UpgradeStorageInfo(
             onUpgradeClicked = {},
-            title = "Drive storage: 100% full"
+            title = "Mail storage: 100% full"
+        )
+    }
+}
+
+@Preview(name = "Mail storage Dark")
+@Composable
+internal fun PreviewHighMailUsageDarkTheme() {
+    ProtonTheme(colors = ProtonColors.Dark.sidebarColors!!) {
+        UpgradeStorageInfo(
+            onUpgradeClicked = {},
+            title = "Mail storage: 100% full"
         )
     }
 }

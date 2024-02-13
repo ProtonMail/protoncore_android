@@ -45,9 +45,33 @@ class UpgradeStorageInfoTest {
     }
 
     @Test
+    fun driveStorageUsageIsHighDarkTheme() {
+        paparazzi.snapshot {
+            WithSidebarColors(isDark = true) {
+                UpgradeStorageInfo(
+                    onUpgradeClicked = {},
+                    title = "Drive storage: 80% full"
+                )
+            }
+        }
+    }
+
+    @Test
     fun mailStorageUsageIsHigh() {
         paparazzi.snapshot {
             WithSidebarColors {
+                UpgradeStorageInfo(
+                    onUpgradeClicked = {},
+                    title = "Mail storage: 100% full"
+                )
+            }
+        }
+    }
+
+    @Test
+    fun mailStorageUsageIsHighDarkTheme() {
+        paparazzi.snapshot {
+            WithSidebarColors(isDark = true) {
                 UpgradeStorageInfo(
                     onUpgradeClicked = {},
                     title = "Mail storage: 100% full"
@@ -81,8 +105,8 @@ class UpgradeStorageInfoTest {
 }
 
 @Composable
-private fun WithSidebarColors(block: @Composable () -> Unit) {
-    ProtonTheme(colors = ProtonColors.Light.sidebarColors!!) {
+private fun WithSidebarColors(isDark: Boolean = false, block: @Composable () -> Unit) {
+    ProtonTheme(isDark = isDark, colors = ProtonColors.Light.sidebarColors!!) {
         block()
     }
 }

@@ -22,7 +22,6 @@ import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
-import androidx.navigation.NavBackStackEntry
 
 /**
  * Returns an HiltViewModel or null if no valid LocalViewModelStoreOwner is present.
@@ -32,7 +31,7 @@ import androidx.navigation.NavBackStackEntry
 @Composable
 inline fun <reified VM : ViewModel> hiltViewModelOrNull(): VM? {
     return when (LocalViewModelStoreOwner.current) {
-        is NavBackStackEntry -> hiltViewModel()
-        else -> null
+        null -> null
+        else -> hiltViewModel()
     }
 }
