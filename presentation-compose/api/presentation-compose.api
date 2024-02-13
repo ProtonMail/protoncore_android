@@ -599,6 +599,7 @@ public final class me/proton/core/compose/theme/ProtonDimens {
 	public final fun getLargerSpacing-D9Ej5fM ()F
 	public final fun getListItemHeight-D9Ej5fM ()F
 	public final fun getListItemTextStartPadding-D9Ej5fM ()F
+	public final fun getMediumLargeSpacing-D9Ej5fM ()F
 	public final fun getMediumSpacing-D9Ej5fM ()F
 	public final fun getNotificationDotIconSize-D9Ej5fM ()F
 	public final fun getSmallIconSize-D9Ej5fM ()F

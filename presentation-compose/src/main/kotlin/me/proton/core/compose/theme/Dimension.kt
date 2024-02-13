@@ -24,6 +24,7 @@ object ProtonDimens {
     val SmallSpacing = 8.dp
     val DefaultSpacing = 16.dp
     val MediumSpacing = 24.dp
+    val MediumLargeSpacing = 28.dp
     val LargeSpacing = 32.dp
     val LargerSpacing = 40.dp
 

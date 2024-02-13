@@ -19,10 +19,78 @@ public final class me/proton/core/accountmanager/presentation/compose/AccountPri
 	public static final fun rememberAccountPrimaryState (ZLandroidx/compose/runtime/Composer;II)Lme/proton/core/accountmanager/presentation/compose/AccountPrimaryState;
 }
 
+public final class me/proton/core/accountmanager/presentation/compose/AccountSettingsInfoKt {
+	public static final fun AccountSettingsCredentialLess (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsInfo (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsLoggedIn (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class me/proton/core/accountmanager/presentation/compose/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsInfoKt {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsInfoKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function2;
+	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+	public static field lambda-5 Lkotlin/jvm/functions/Function2;
+	public static field lambda-6 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-4$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-5$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-6$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;)V
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+}
+
+public abstract class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
+	public static final field $stable I
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$CredentialLess : me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$CredentialLess;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$CredentialLess;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$CredentialLess;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Hidden : me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Hidden;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn : me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getDisplayName ()Ljava/lang/String;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getShortName ()Ljava/lang/String;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 

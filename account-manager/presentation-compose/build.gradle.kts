@@ -36,18 +36,40 @@ android {
 dependencies {
     api(
         project(Module.accountManagerPresentation),
+        project(Module.accountManagerDomain),
         project(Module.domain),
         `compose-runtime`,
+        `coroutines-core`,
         `compose-ui`,
+        `lifecycle-viewModel`,
     )
 
     implementation(
+        project(Module.presentationCompose),
         project(Module.accountDomain),
 
+        `androidx-navigation-common`,
         // Compose
         `coroutines-core`,
         `hilt-navigation-compose`,
         `lifecycle-viewModel`,
-        `lifecycle-viewModel-compose`
+        `lifecycle-viewModel-compose`,
+        `compose-foundation-layout`,
+        `compose-foundation`,
+        `compose-material`,
+        `compose-material3`,
+        `compose-ui-graphics`,
+        `compose-ui-text`,
+        `compose-ui-tooling-preview`,
+        `compose-ui`,
+        `compose-ui-unit`,
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
+        turbine,
     )
 }

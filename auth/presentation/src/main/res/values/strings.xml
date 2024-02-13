@@ -39,6 +39,7 @@
     <string name="auth_email_username">Username or email</string>
     <string name="auth_account_details">Enter your Proton Account details.</string>
     <string name="auth_sign_in">Sign in</string>
+    <string name="auth_sign_out">Sign out</string>
     <string name="auth_sign_in_action">Sign in</string>
     <string name="auth_sign_in_sso">Sign in to your organization</string>
     <string name="auth_sign_in_with_password">Sign in with a password</string>
@@ -155,4 +156,6 @@
     <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
     <string name="auth_credentialless_guest_button">Continue as guest</string>
     <string name="auth_credentialless_terms"  comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
+    <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+    <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

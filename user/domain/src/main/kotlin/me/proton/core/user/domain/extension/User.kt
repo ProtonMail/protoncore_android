@@ -22,6 +22,8 @@ import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.emailSplit
+import me.proton.core.util.kotlin.takeIfNotBlank
+import java.util.Locale
 import kotlin.math.round
 
 /**
@@ -99,4 +101,11 @@ private fun getUsedPercentage(used: Long?, max: Long?): Int? {
     require(max >= 0)
     require(used <= max)
     return round(used.toDouble() / max * 100.0).toInt()
+}
+
+fun User.getInitials(initialsCount: Int = 2, default: String = "?"): String? {
+    val name = displayName?.takeIfNotBlank() ?: name?.takeIfNotBlank() ?: email
+    return name?.split(" ")
+        ?.take(initialsCount)
+        ?.joinToString("") { it.firstOrNull()?.uppercase(Locale.getDefault()) ?: default }
 }

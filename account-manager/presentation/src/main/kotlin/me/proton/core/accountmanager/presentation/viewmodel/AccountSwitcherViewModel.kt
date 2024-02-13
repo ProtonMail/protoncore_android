@@ -46,6 +46,7 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.getInitials
 import me.proton.core.util.kotlin.takeIfNotBlank
 import java.util.Locale
 import javax.inject.Inject
@@ -96,7 +97,7 @@ class AccountSwitcherViewModel @Inject constructor(
         val initials = user?.displayName?.takeIfNotBlank() ?: user?.email?.takeIfNotBlank() ?: username
         return AccountItem(
             userId = userId,
-            initials = initials?.take(1)?.uppercase(Locale.getDefault()) ?: "?",
+            initials = user?.getInitials(initialsCount = 1) ?: "?",
             name = user?.displayName?.takeIfNotBlank() ?: username ?: "unknown",
             email = user?.email?.takeIfNotBlank() ?: email,
             state = state
