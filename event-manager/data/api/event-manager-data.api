@@ -26,7 +26,8 @@ public abstract interface class me/proton/core/eventmanager/data/EventDeserializ
 	public abstract fun deserializeEventMetadata (Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventsResponse;)Lme/proton/core/eventmanager/domain/entity/EventMetadata;
 	public abstract fun deserializeLatestEventId (Lme/proton/core/eventmanager/domain/entity/EventIdResponse;)Lme/proton/core/eventmanager/domain/entity/EventId;
 	public abstract fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
-	public abstract fun getEndpoint ()Ljava/lang/String;
+	public abstract fun getGetEventsEndpoint ()Ljava/lang/String;
+	public abstract fun getGetLatestEventIdEndpoint ()Ljava/lang/String;
 }
 
 public final class me/proton/core/eventmanager/data/EventManagerConfigProviderImpl : me/proton/core/eventmanager/domain/EventManagerConfigProvider {

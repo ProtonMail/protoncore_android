@@ -34,7 +34,8 @@ import me.proton.core.util.kotlin.deserialize
 
 interface EventDeserializer {
     val config: EventManagerConfig
-    val endpoint: String
+    val getEventsEndpoint: String
+    val getLatestEventIdEndpoint: String
     fun deserializeLatestEventId(response: EventIdResponse): EventId
     fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata
 }
@@ -43,7 +44,8 @@ internal data class CoreEventDeserializer(
     override val config: EventManagerConfig.Core
 ) : EventDeserializer {
 
-    override val endpoint = "core/v4/events"
+    override val getEventsEndpoint = "core/v5/events"
+    override val getLatestEventIdEndpoint = "core/v4/events"
 
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetCoreLatestEventIdResponse>().eventId)
@@ -66,7 +68,8 @@ internal data class CalendarEventDeserializer(
     override val config: EventManagerConfig.Calendar
 ) : EventDeserializer {
 
-    override val endpoint = "calendar/${config.apiVersion}/${config.calendarId}/modelevents"
+    override val getEventsEndpoint = "calendar/${config.apiVersion}/${config.calendarId}/modelevents"
+    override val getLatestEventIdEndpoint = "calendar/${config.apiVersion}/${config.calendarId}/modelevents"
 
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetCalendarLatestEventIdResponse>().eventId)
@@ -89,7 +92,8 @@ internal class DriveEventDeserializer(
     override val config: EventManagerConfig.Drive
 ) : EventDeserializer {
 
-    override val endpoint = config.endpoint
+    override val getEventsEndpoint = config.endpoint
+    override val getLatestEventIdEndpoint = config.endpoint
 
     override fun deserializeLatestEventId(response: EventIdResponse): EventId =
         EventId(response.body.deserialize<GetDriveLatestEventIdResponse>().eventId)

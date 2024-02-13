@@ -427,11 +427,11 @@ class EventManagerImpl @AssistedInject constructor(
     override suspend fun process() = processFirstUncompleted()
 
     override suspend fun getLatestEventId(): EventId =
-        eventMetadataRepository.getLatestEventId(config.userId, deserializer.endpoint)
+        eventMetadataRepository.getLatestEventId(config.userId, deserializer.getLatestEventIdEndpoint)
             .let { deserializer.deserializeLatestEventId(it) }
 
     override suspend fun getEventResponse(eventId: EventId): EventsResponse =
-        eventMetadataRepository.getEvents(config, eventId, deserializer.endpoint)
+        eventMetadataRepository.getEvents(config, eventId, deserializer.getEventsEndpoint)
 
     override suspend fun deserializeEventMetadata(eventId: EventId, response: EventsResponse): EventMetadata =
         deserializer.deserializeEventMetadata(eventId, response)
