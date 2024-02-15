@@ -22,38 +22,38 @@ import android.app.Activity
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.domain.entity.GoogleBillingFlowParams
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.entity.Purchase
+import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanVendor
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result.Error
-import me.proton.core.plan.domain.usecase.PerformSubscribe
-import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.Type
-import me.proton.core.user.domain.extension.isCredentialLess
 import javax.inject.Inject
 
 /**
- * Performs full GIAP flow:
- * - prepare GIAP billing flow
- * - launch GIAP popup
- * - create payment token
- * - create subscription & acknowledge to Google (if userId is present)
+ * Performs minimal needed GIAP flow:
+ * - Prepare GIAP billing.
+ * - Launch GIAP popup.
+ * - Create payment token from Google token.
+ * - Insert new Purchase (next steps handled by PurchaseStateHandler).
  */
 public class PerformGiapPurchaseImpl @Inject constructor(
     private val createPaymentTokenForGooglePurchase: CreatePaymentTokenForGooglePurchase,
     private val launchGiapBillingFlow: LaunchGiapBillingFlow<Activity>,
     private val prepareGiapPurchase: PrepareGiapPurchase,
-    private val performSubscribe: PerformSubscribe,
-    private val userManager: UserManager,
+    private val purchaseRepository: PurchaseRepository,
+    private val sessionProvider: SessionProvider
 ) : PerformGiapPurchase<Activity> {
     override suspend fun invoke(
         activity: Activity,
@@ -64,15 +64,14 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         return try {
             val vendorPlanDetails = plan.findGooglePlanDetails(cycle)
             val googleProductId = ProductId(vendorPlanDetails.productId)
-            val prepareResult =
-                prepareGiapPurchase(vendorPlanDetails.customerId, googleProductId)
+            val prepareResult = prepareGiapPurchase(vendorPlanDetails.customerId, googleProductId)
             onPrepareGiapPurchaseResult(
-                activity,
-                cycle,
-                googleProductId,
-                plan,
-                prepareResult,
-                userId
+                activity = activity,
+                cycle = cycle,
+                googleProductId = googleProductId,
+                plan = plan,
+                prepareResult = prepareResult,
+                userId = userId
             )
         } catch (e: BillingClientError) {
             when (e.responseCode) {
@@ -83,7 +82,6 @@ public class PerformGiapPurchaseImpl @Inject constructor(
                 BillingResponseCode.ERROR,
                 BillingResponseCode.ITEM_ALREADY_OWNED,
                 BillingResponseCode.ITEM_NOT_OWNED -> Error.RecoverableBillingError(e)
-
                 BillingResponseCode.USER_CANCELED -> Error.UserCancelled
                 else -> Error.UnrecoverableBillingError(e)
             }
@@ -107,12 +105,12 @@ public class PerformGiapPurchaseImpl @Inject constructor(
             plan = plan
         )
         is PrepareGiapPurchase.Result.Success -> onPrepareGiapPurchaseSuccess(
-            activity,
-            cycle,
-            googleProductId,
-            prepareResult.params,
-            plan,
-            userId
+            activity = activity,
+            cycle = cycle,
+            googleProductId = googleProductId,
+            params = prepareResult.params,
+            plan = plan,
+            userId = userId
         )
     }
 
@@ -139,11 +137,11 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         is LaunchGiapBillingFlow.Result.Error.EmptyCustomerId -> Error.EmptyCustomerId
         is LaunchGiapBillingFlow.Result.Error.PurchaseNotFound -> Error.PurchaseNotFound
         is LaunchGiapBillingFlow.Result.PurchaseSuccess -> onLaunchGiapBillingSuccess(
-            cycle,
-            googleProductId,
-            plan,
-            launchResult.purchase,
-            userId
+            cycle = cycle,
+            googleProductId = googleProductId,
+            plan = plan,
+            purchase = launchResult.purchase,
+            userId = userId
         )
     }
 
@@ -154,29 +152,33 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         purchase: GooglePurchase,
         userId: UserId?
     ): Result {
-        val createTokenResult =
-            createPaymentTokenForGooglePurchase(cycle, googleProductId, plan, purchase, userId)
+        val createTokenResult = createPaymentTokenForGooglePurchase(
+            cycle = cycle,
+            googleProductId = googleProductId,
+            plan = plan,
+            purchase = purchase,
+            userId = userId
+        )
 
-        val shouldSubscribe = userId != null && !userManager.getUser(userId).isCredentialLess()
-        val subscription = if (shouldSubscribe) {
-            // performSubscribe also acknowledges Google purchase:
-            performSubscribe(
-                userId = userId!!,
-                amount = createTokenResult.amount,
-                currency = createTokenResult.currency,
-                cycle = createTokenResult.cycle,
-                planNames = createTokenResult.planNames,
-                codes = null,
+        purchaseRepository.upsertPurchase(
+            Purchase(
+                sessionId = requireNotNull(sessionProvider.getSessionId(userId)),
+                planName = requireNotNull(plan.name),
+                planCycle = cycle,
+                purchaseState = PurchaseState.Purchased,
+                purchaseFailure = null,
+                paymentProvider = PaymentProvider.GoogleInAppPurchase,
+                paymentOrderId = purchase.orderId,
                 paymentToken = createTokenResult.token,
-                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+                paymentCurrency = createTokenResult.currency,
+                paymentAmount = createTokenResult.amount
             )
-        } else null
+        )
 
         return Result.GiapSuccess(
             purchase = purchase,
             amount = createTokenResult.amount,
             currency = createTokenResult.currency.name,
-            subscriptionCreated = subscription != null,
             token = createTokenResult.token
         )
     }

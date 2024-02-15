@@ -245,7 +245,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
                 result = BillingResult(
                     paySuccess = true,
                     token = event.token.value,
-                    subscriptionCreated = event.subscriptionCreated,
+                    subscriptionCreated = false,
                     amount = event.amount,
                     currency = Currency.valueOf(event.currency),
                     cycle = SubscriptionCycle.map[event.cycle] ?: SubscriptionCycle.OTHER,

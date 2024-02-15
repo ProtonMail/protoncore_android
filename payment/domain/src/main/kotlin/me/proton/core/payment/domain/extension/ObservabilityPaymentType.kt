@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.payment.presentation.viewmodel
+package me.proton.core.payment.domain.extension
 
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal
 import me.proton.core.observability.domain.metrics.CheckoutBillingSubscribeTotal.Manager.google

@@ -17,6 +17,16 @@ public final class me/proton/core/payment/data/ProtonIAPBillingLibraryImpl : me/
 	public fun isAvailable ()Z
 }
 
+public final class me/proton/core/payment/data/PurchaseManagerImpl : me/proton/core/payment/domain/PurchaseManager {
+	public fun <init> (Lme/proton/core/payment/domain/repository/PurchaseRepository;)V
+	public fun addPurchase (Lme/proton/core/payment/domain/entity/Purchase;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observePurchase (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public fun observePurchases ()Lkotlinx/coroutines/flow/Flow;
+	public fun onPurchaseStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+}
+
 public final class me/proton/core/payment/data/api/request/CardDetailsBody {
 	public static final field Companion Lme/proton/core/payment/data/api/request/CardDetailsBody$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
@@ -94,16 +104,28 @@ public final class me/proton/core/payment/data/api/request/IAPDetailsBody$Compan
 public abstract interface class me/proton/core/payment/data/local/db/PaymentDatabase : me/proton/core/data/room/db/Database {
 	public static final field Companion Lme/proton/core/payment/data/local/db/PaymentDatabase$Companion;
 	public abstract fun googlePurchaseDao ()Lme/proton/core/payment/data/local/db/dao/GooglePurchaseDao;
+	public abstract fun purchaseDao ()Lme/proton/core/payment/data/local/db/dao/PurchaseDao;
 }
 
 public final class me/proton/core/payment/data/local/db/PaymentDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/payment/data/local/db/dao/GooglePurchaseDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 	public abstract fun deleteByGooglePurchaseToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun findByPaymentToken (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/payment/data/local/db/dao/PurchaseDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun get (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observe ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observe (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun updatePurchaseState (Ljava/lang/String;Lme/proton/core/payment/domain/entity/PurchaseState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/data/local/entity/GooglePurchaseEntity {
@@ -116,6 +138,36 @@ public final class me/proton/core/payment/data/local/entity/GooglePurchaseEntity
 	public final fun getGooglePurchaseToken ()Ljava/lang/String;
 	public final fun getPaymentToken ()Ljava/lang/String;
 	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/data/local/entity/PurchaseEntity {
+	public fun <init> (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;ILme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/Currency;J)V
+	public final fun component1 ()Lme/proton/core/network/domain/session/SessionId;
+	public final fun component10 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Lme/proton/core/payment/domain/entity/PurchaseState;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8 ()Ljava/lang/String;
+	public final fun component9 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun copy (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;ILme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/Currency;J)Lme/proton/core/payment/data/local/entity/PurchaseEntity;
+	public static synthetic fun copy$default (Lme/proton/core/payment/data/local/entity/PurchaseEntity;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;ILme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/Currency;JILjava/lang/Object;)Lme/proton/core/payment/data/local/entity/PurchaseEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPaymentAmount ()J
+	public final fun getPaymentCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getPaymentOrderId ()Ljava/lang/String;
+	public final fun getPaymentProvider ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun getPaymentToken ()Ljava/lang/String;
+	public final fun getPlanCycle ()I
+	public final fun getPlanName ()Ljava/lang/String;
+	public final fun getPurchaseFailure ()Ljava/lang/String;
+	public final fun getPurchaseState ()Lme/proton/core/payment/domain/entity/PurchaseState;
+	public final fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
+	public fun hashCode ()I
+	public final fun toPurchase ()Lme/proton/core/payment/domain/entity/Purchase;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -132,5 +184,16 @@ public final class me/proton/core/payment/data/repository/PaymentsRepositoryImpl
 	public fun getAvailablePaymentMethods (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPaymentStatus (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPaymentTokenStatus-moyEFhY (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/data/repository/PurchaseRepositoryImpl : me/proton/core/payment/domain/repository/PurchaseRepository {
+	public fun <init> (Lme/proton/core/payment/data/local/db/PaymentDatabase;)V
+	public fun deletePurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observePurchase (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public fun observePurchases ()Lkotlinx/coroutines/flow/Flow;
+	public fun onPurchaseStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+	public fun upsertPurchase (Lme/proton/core/payment/domain/entity/Purchase;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

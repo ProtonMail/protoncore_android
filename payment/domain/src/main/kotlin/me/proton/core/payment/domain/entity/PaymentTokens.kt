@@ -18,8 +18,25 @@
 
 package me.proton.core.payment.domain.entity
 
+import me.proton.core.humanverification.domain.entity.TokenType
+import me.proton.core.network.domain.client.ClientId
+import me.proton.core.network.domain.humanverification.HumanVerificationDetails
+import me.proton.core.network.domain.humanverification.HumanVerificationState
+import me.proton.core.network.domain.humanverification.VerificationMethod
+
 @JvmInline
 public value class GooglePurchaseToken(public val value: String)
 
 @JvmInline
 public value class ProtonPaymentToken(public val value: String)
+
+public fun ProtonPaymentToken.humanVerificationDetails(
+    clientId: ClientId,
+): HumanVerificationDetails = HumanVerificationDetails(
+    clientId = clientId,
+    verificationMethods = listOf(VerificationMethod.PAYMENT),
+    verificationToken = null,
+    state = HumanVerificationState.HumanVerificationSuccess,
+    tokenType = TokenType.PAYMENT.value,
+    tokenCode = value
+)

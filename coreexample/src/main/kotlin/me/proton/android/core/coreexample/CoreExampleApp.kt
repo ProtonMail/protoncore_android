@@ -32,6 +32,8 @@ import me.proton.core.crypto.validator.presentation.init.CryptoValidatorInitiali
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
 import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
+import me.proton.core.paymentiap.presentation.GooglePurchaseHandlerInitializer
+import me.proton.core.plan.presentation.PurchaseHandlerInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 
 @HiltAndroidApp
@@ -43,6 +45,8 @@ class CoreExampleApp : Application() {
             initializeComponent(EventManagerInitializer::class.java)
             initializeComponent(AccountStateHandlerInitializer::class.java)
             initializeComponent(CryptoValidatorInitializer::class.java)
+            initializeComponent(PurchaseHandlerInitializer::class.java)
+            initializeComponent(GooglePurchaseHandlerInitializer::class.java)
             initializeComponent(UnredeemedPurchaseInitializer::class.java)
             initializeComponent(MissingScopeInitializer::class.java)
             initializeComponent(HumanVerificationInitializer::class.java)

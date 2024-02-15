@@ -29,7 +29,7 @@ import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.IsSsoEnabled

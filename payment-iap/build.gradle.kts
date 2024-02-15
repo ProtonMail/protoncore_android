@@ -32,6 +32,8 @@ android {
 dependencies {
     api(
         project(Module.paymentIapDagger),
+        project(Module.paymentIapData),
+        project(Module.paymentIapDomain),
         project(Module.paymentIapPresentation)
     )
 }

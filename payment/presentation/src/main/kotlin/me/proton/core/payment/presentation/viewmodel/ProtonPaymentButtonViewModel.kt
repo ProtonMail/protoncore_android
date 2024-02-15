@@ -41,6 +41,8 @@ import me.proton.core.observability.domain.metrics.CheckoutGiapBillingQuerySubsc
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.extension.getCreatePaymentTokenObservabilityData
+import me.proton.core.payment.domain.extension.getValidatePlanObservabilityData
 import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
@@ -195,7 +197,6 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
             amount = result.amount,
             currency = result.currency,
             cycle = cycle,
-            subscriptionCreated = result.subscriptionCreated,
             token = result.token
         )
 
@@ -220,9 +221,6 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         }
         onResultEnqueueObservability("createPaymentToken") {
             getCreatePaymentTokenObservabilityData(paymentProvider)
-        }
-        onResultEnqueueObservability("createOrUpdateSubscription") {
-            getSubscribeObservabilityData(paymentProvider)
         }
     }
 
@@ -272,7 +270,6 @@ public sealed class ProtonPaymentEvent {
         public val amount: Long,
         public val currency: String,
         public val cycle: Int,
-        public val subscriptionCreated: Boolean,
         public val token: ProtonPaymentToken
     ) : ProtonPaymentEvent()
 }

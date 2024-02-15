@@ -72,6 +72,26 @@ enum class AccountState {
     CreateAddressFailed,
 
     /**
+     * Create an Account is needed (e.g. current account is not enough/supported anymore).
+     *
+     * Note: Usually followed by either [CreateAccountSuccess] or [CreateAccountFailed].
+     *
+     * @see [CreateAccountSuccess]
+     * @see [CreateAccountFailed].
+     */
+    CreateAccountNeeded,
+
+    /**
+     * The account creation has been successful.
+     */
+    CreateAccountSuccess,
+
+    /**
+     * The account creation has failed.
+     */
+    CreateAccountFailed,
+
+    /**
      * Unlock User primary key has failed.
      */
     UnlockFailed,

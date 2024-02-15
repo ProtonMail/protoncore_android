@@ -27,7 +27,7 @@ import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.SessionManager
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId

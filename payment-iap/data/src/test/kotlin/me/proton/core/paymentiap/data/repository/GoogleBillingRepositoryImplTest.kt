@@ -26,6 +26,7 @@ import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.ProductDetailsResponseListener
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState
 import com.android.billingclient.api.PurchasesResponseListener
 import com.android.billingclient.api.PurchasesResult
 import com.android.billingclient.api.PurchasesUpdatedListener
@@ -63,6 +64,17 @@ internal class GoogleBillingRepositoryImplTest {
     private lateinit var factory: FakeConnectedBillingClientFactory
     private lateinit var testDispatcherProvider: TestDispatcherProvider
     private lateinit var tested: GoogleBillingRepositoryImpl
+
+    private fun mockPurchase(): Purchase = mockk<Purchase> {
+        every { accountIdentifiers } returns null
+        every { orderId } returns "orderId"
+        every { packageName } returns "packageName"
+        every { purchaseState } returns PurchaseState.PURCHASED
+        every { purchaseTime } returns 0
+        every { purchaseToken } returns "token"
+        every { products } returns listOf("product1")
+        every { isAcknowledged } returns false
+    }
 
     @BeforeTest
     fun setUp() {
@@ -252,7 +264,7 @@ internal class GoogleBillingRepositoryImplTest {
 
     @Test
     fun `query subscription purchases`() = runTestWithResultContext {
-        val purchaseList = listOf(mockk<Purchase>())
+        val purchaseList = listOf(mockPurchase())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
         mockClientResult {
             every { queryPurchasesAsync(any<QueryPurchasesParams>(), any()) } answers {
@@ -271,7 +283,7 @@ internal class GoogleBillingRepositoryImplTest {
     @Test
     fun `query subscription purchases after retry`() = runTestWithResultContext {
         // GIVEN
-        val purchaseList = listOf(mockk<Purchase>())
+        val purchaseList = listOf(mockPurchase())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
         var callCount = 0
         val billingClient = mockClientResult {
@@ -306,7 +318,7 @@ internal class GoogleBillingRepositoryImplTest {
 
     @Test
     fun `query subscription purchases yielding`() = runTestWithResultContext {
-        val purchaseList = listOf(mockk<Purchase>())
+        val purchaseList = listOf(mockPurchase())
         val purchaseResult = PurchasesResult(BillingResult(), purchaseList)
         mockClientResult {
             every { queryPurchasesAsync(any<QueryPurchasesParams>(), any()) } answers {
@@ -325,7 +337,7 @@ internal class GoogleBillingRepositoryImplTest {
     @Test
     fun `purchase is emitted`() = runTest(testDispatcherProvider.Main) {
         val expectedBillingResult = mockk<BillingResult>()
-        val expectedPurchaseList = listOf<Purchase>(mockk(), mockk())
+        val expectedPurchaseList = listOf(mockPurchase(), mockPurchase())
 
         factory.purchasesUpdatedListener.onPurchasesUpdated(
             expectedBillingResult,

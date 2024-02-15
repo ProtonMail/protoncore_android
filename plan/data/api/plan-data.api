@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_plan_data_worker_SubscribePurchaseWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/plan/data/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -9,17 +13,69 @@ public final class me/proton/core/plan/data/IsDynamicPlanAdjustedPriceEnabledImp
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 }
 
+public final class me/proton/core/plan/data/IsDynamicPlanAdjustedPriceEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/IsDynamicPlanAdjustedPriceEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/IsDynamicPlanAdjustedPriceEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/plan/data/IsDynamicPlanAdjustedPriceEnabledImpl;
+}
+
 public final class me/proton/core/plan/data/IsDynamicPlanEnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/plan/domain/IsDynamicPlanEnabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+}
+
+public final class me/proton/core/plan/data/IsDynamicPlanEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/IsDynamicPlanEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/IsDynamicPlanEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/plan/data/IsDynamicPlanEnabledImpl;
 }
 
 public final class me/proton/core/plan/data/IsSplitStorageEnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/plan/domain/IsSplitStorageEnabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 }
 
+public final class me/proton/core/plan/data/IsSplitStorageEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/IsSplitStorageEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/IsSplitStorageEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/plan/data/IsSplitStorageEnabledImpl;
+}
+
 public final class me/proton/core/plan/data/PlanIconsEndpointProviderImpl : me/proton/core/plan/domain/PlanIconsEndpointProvider {
 	public fun <init> (Lokhttp3/HttpUrl;Lme/proton/core/network/domain/NetworkPrefs;)V
 	public fun get ()Ljava/lang/String;
+}
+
+public final class me/proton/core/plan/data/PlanIconsEndpointProviderImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/PlanIconsEndpointProviderImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/PlanIconsEndpointProviderImpl;
+	public static fun newInstance (Lokhttp3/HttpUrl;Lme/proton/core/network/domain/NetworkPrefs;)Lme/proton/core/plan/data/PlanIconsEndpointProviderImpl;
+}
+
+public final class me/proton/core/plan/data/PurchaseStateHandler {
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/payment/domain/PurchaseManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Landroidx/work/WorkManager;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/plan/data/PurchaseStateHandlerKt {
+	public static final fun onPurchased (Lme/proton/core/plan/data/PurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onPurchased$default (Lme/proton/core/plan/data/PurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onSubscribed (Lme/proton/core/plan/data/PurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onSubscribed$default (Lme/proton/core/plan/data/PurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/plan/data/PurchaseStateHandler_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/PurchaseStateHandler_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/PurchaseStateHandler;
+	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/payment/domain/PurchaseManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Landroidx/work/WorkManager;)Lme/proton/core/plan/data/PurchaseStateHandler;
 }
 
 public abstract class me/proton/core/plan/data/api/response/DynamicDecorationResource {
@@ -252,9 +308,25 @@ public final class me/proton/core/plan/data/repository/PlansRepositoryImpl : me/
 	public fun validateSubscription (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/plan/data/repository/PlansRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/repository/PlansRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/repository/PlansRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;)Lme/proton/core/plan/data/repository/PlansRepositoryImpl;
+}
+
 public final class me/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;
+	public static fun newInstance (Lme/proton/core/user/domain/UserManager;)Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;
 }
 
 public final class me/proton/core/plan/data/usecase/ObserveUserCurrencyImpl : me/proton/core/plan/domain/usecase/ObserveUserCurrency {
@@ -262,8 +334,44 @@ public final class me/proton/core/plan/data/usecase/ObserveUserCurrencyImpl : me
 	public fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }
 
+public final class me/proton/core/plan/data/usecase/ObserveUserCurrencyImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/plan/data/usecase/ObserveUserCurrencyImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/usecase/ObserveUserCurrencyImpl;
+	public static fun newInstance (Lme/proton/core/user/domain/UserManager;)Lme/proton/core/plan/data/usecase/ObserveUserCurrencyImpl;
+}
+
 public final class me/proton/core/plan/data/usecase/PerformSubscribeImpl : me/proton/core/plan/domain/usecase/PerformSubscribe {
 	public fun <init> (Ljava/util/Optional;Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/user/domain/UserManager;)V
 	public fun invoke-uDK3N8w (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/plan/data/usecase/PerformSubscribeImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/usecase/PerformSubscribeImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/plan/data/usecase/PerformSubscribeImpl;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/plan/data/usecase/PerformSubscribeImpl;
+}
+
+public abstract interface class me/proton/core/plan/data/worker/SubscribePurchaseWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/plan/data/worker/SubscribePurchaseWorker_AssistedFactory_Impl : me/proton/core/plan/data/worker/SubscribePurchaseWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/plan/data/worker/SubscribePurchaseWorker;
+	public static fun create (Lme/proton/core/plan/data/worker/SubscribePurchaseWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/plan/data/worker/SubscribePurchaseWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/worker/SubscribePurchaseWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/plan/data/worker/SubscribePurchaseWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/payment/domain/repository/PurchaseRepository;Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/plan/data/worker/SubscribePurchaseWorker;
+}
+
+public abstract interface class me/proton/core/plan/data/worker/SubscribePurchaseWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/plan/data/worker/SubscribePurchaseWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 

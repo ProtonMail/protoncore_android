@@ -38,6 +38,10 @@
                 android:name="me.proton.core.plan.presentation.UnredeemedPurchaseInitializer"
                 android:value="androidx.startup" />
 
+            <meta-data
+                android:name="me.proton.core.plan.presentation.PurchaseHandlerInitializer"
+                android:value="androidx.startup" />
+
         </provider>
     </application>
 </manifest>

@@ -19,7 +19,7 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.accountmanager.domain.SessionManager
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject

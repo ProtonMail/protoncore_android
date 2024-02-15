@@ -25,7 +25,7 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId

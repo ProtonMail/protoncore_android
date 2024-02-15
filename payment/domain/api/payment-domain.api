@@ -20,6 +20,24 @@ public final class me/proton/core/payment/domain/PaymentManager$DefaultImpls {
 	public static synthetic fun isUpgradeAvailable$default (Lme/proton/core/payment/domain/PaymentManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/payment/domain/PurchaseManager {
+	public abstract fun addPurchase (Lme/proton/core/payment/domain/entity/Purchase;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observePurchase (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observePurchases ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun onPurchaseStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/payment/domain/PurchaseManager$DefaultImpls {
+	public static synthetic fun onPurchaseStateChanged$default (Lme/proton/core/payment/domain/PurchaseManager;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
+public final class me/proton/core/payment/domain/PurchaseManagerExtensionsKt {
+	public static final fun onPurchaseState (Lme/proton/core/payment/domain/PurchaseManager;[Lme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Z)Lkotlinx/coroutines/flow/Flow;
+	public static synthetic fun onPurchaseState$default (Lme/proton/core/payment/domain/PurchaseManager;[Lme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
+}
+
 public abstract class me/proton/core/payment/domain/entity/Card {
 	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCountry ()Ljava/lang/String;
@@ -138,7 +156,10 @@ public abstract interface class me/proton/core/payment/domain/entity/GooglePurch
 	public abstract fun getOrderId ()Ljava/lang/String;
 	public abstract fun getPackageName ()Ljava/lang/String;
 	public abstract fun getProductIds ()Ljava/util/List;
+	public abstract fun getPurchaseState ()I
+	public abstract fun getPurchaseTime ()J
 	public abstract fun getPurchaseToken-S53Lrj8 ()Ljava/lang/String;
+	public abstract fun isAcknowledged ()Z
 }
 
 public final class me/proton/core/payment/domain/entity/GooglePurchaseToken {
@@ -259,6 +280,10 @@ public final class me/proton/core/payment/domain/entity/PaymentTokenStatus$Compa
 	public final fun getMap ()Ljava/util/Map;
 }
 
+public final class me/proton/core/payment/domain/entity/PaymentTokensKt {
+	public static final fun humanVerificationDetails-vl4Hrws (Ljava/lang/String;Lme/proton/core/network/domain/client/ClientId;)Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;
+}
+
 public abstract class me/proton/core/payment/domain/entity/PaymentType {
 }
 
@@ -361,6 +386,48 @@ public final class me/proton/core/payment/domain/entity/ProtonPaymentToken {
 	public final synthetic fun unbox-impl ()Ljava/lang/String;
 }
 
+public final class me/proton/core/payment/domain/entity/Purchase {
+	public synthetic fun <init> (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;ILme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/Currency;JLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/network/domain/session/SessionId;
+	public final fun component10 ()J
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()I
+	public final fun component4 ()Lme/proton/core/payment/domain/entity/PurchaseState;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun component7 ()Ljava/lang/String;
+	public final fun component8-oTEqFM4 ()Ljava/lang/String;
+	public final fun component9 ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun copy-qoG7ye8 (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;ILme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/Currency;J)Lme/proton/core/payment/domain/entity/Purchase;
+	public static synthetic fun copy-qoG7ye8$default (Lme/proton/core/payment/domain/entity/Purchase;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;ILme/proton/core/payment/domain/entity/PurchaseState;Ljava/lang/String;Lme/proton/core/payment/domain/usecase/PaymentProvider;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/payment/domain/entity/Currency;JILjava/lang/Object;)Lme/proton/core/payment/domain/entity/Purchase;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPaymentAmount ()J
+	public final fun getPaymentCurrency ()Lme/proton/core/payment/domain/entity/Currency;
+	public final fun getPaymentOrderId ()Ljava/lang/String;
+	public final fun getPaymentProvider ()Lme/proton/core/payment/domain/usecase/PaymentProvider;
+	public final fun getPaymentToken-oTEqFM4 ()Ljava/lang/String;
+	public final fun getPlanCycle ()I
+	public final fun getPlanName ()Ljava/lang/String;
+	public final fun getPurchaseFailure ()Ljava/lang/String;
+	public final fun getPurchaseState ()Lme/proton/core/payment/domain/entity/PurchaseState;
+	public final fun getSessionId ()Lme/proton/core/network/domain/session/SessionId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/entity/PurchaseState : java/lang/Enum {
+	public static final field Acknowledged Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static final field Cancelled Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static final field Deleted Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static final field Failed Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static final field Pending Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static final field Purchased Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static final field Subscribed Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/payment/domain/entity/PurchaseState;
+	public static fun values ()[Lme/proton/core/payment/domain/entity/PurchaseState;
+}
+
 public final class me/proton/core/payment/domain/entity/SubscriptionCycle : java/lang/Enum {
 	public static final field Companion Lme/proton/core/payment/domain/entity/SubscriptionCycle$Companion;
 	public static final field FREE Lme/proton/core/payment/domain/entity/SubscriptionCycle;
@@ -403,6 +470,23 @@ public final class me/proton/core/payment/domain/entity/SubscriptionStatus {
 	public final fun getProration ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/payment/domain/extension/GoogleBillingRepositoryKt {
+	public static final fun findGooglePurchase (Lme/proton/core/payment/domain/repository/GoogleBillingRepository;Lme/proton/core/payment/domain/entity/Purchase;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/extension/ObservabilityPaymentTypeKt {
+	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
+}
+
+public final class me/proton/core/payment/domain/extension/PurchaseRepositoryKt {
+	public static final fun getPurchaseOrNull (Lme/proton/core/payment/domain/repository/PurchaseRepository;Lme/proton/core/payment/domain/entity/PurchaseState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/payment/domain/repository/BillingClientError : java/lang/Throwable {
@@ -451,6 +535,20 @@ public abstract interface class me/proton/core/payment/domain/repository/Payment
 
 public final class me/proton/core/payment/domain/repository/PaymentsRepository$DefaultImpls {
 	public static synthetic fun createPaymentToken$default (Lme/proton/core/payment/domain/repository/PaymentsRepository;Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentType;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/payment/domain/repository/PurchaseRepository {
+	public abstract fun deletePurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPurchase (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observePurchase (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun observePurchases ()Lkotlinx/coroutines/flow/Flow;
+	public abstract fun onPurchaseStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun upsertPurchase (Lme/proton/core/payment/domain/entity/Purchase;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/domain/repository/PurchaseRepository$DefaultImpls {
+	public static synthetic fun onPurchaseStateChanged$default (Lme/proton/core/payment/domain/repository/PurchaseRepository;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public abstract interface class me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {

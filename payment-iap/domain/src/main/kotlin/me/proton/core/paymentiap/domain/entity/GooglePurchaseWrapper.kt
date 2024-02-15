@@ -24,12 +24,14 @@ import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProductId
 
 internal data class GooglePurchaseWrapper(val purchase: Purchase) : GooglePurchase {
-    override val customerId: String? get() = purchase.accountIdentifiers?.obfuscatedAccountId
-    override val orderId: String? get() = purchase.orderId
-    override val packageName: String get() = purchase.packageName
-    override val productIds: List<ProductId>
-        get() = purchase.products.map { ProductId(it) }
-    override val purchaseToken: GooglePurchaseToken get() = GooglePurchaseToken(purchase.purchaseToken)
+    override val customerId: String? = purchase.accountIdentifiers?.obfuscatedAccountId
+    override val orderId: String? = purchase.orderId
+    override val packageName: String = purchase.packageName
+    override val productIds: List<ProductId> = purchase.products.map { ProductId(it) }
+    override val purchaseToken: GooglePurchaseToken = GooglePurchaseToken(purchase.purchaseToken)
+    override val purchaseState: Int = purchase.purchaseState
+    override val purchaseTime: Long = purchase.purchaseTime
+    override val isAcknowledged: Boolean = purchase.isAcknowledged
 }
 
 public fun GooglePurchase.unwrap(): Purchase = (this as GooglePurchaseWrapper).purchase

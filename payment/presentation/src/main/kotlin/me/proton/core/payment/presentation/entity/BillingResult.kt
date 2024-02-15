@@ -31,6 +31,7 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 
 @Parcelize
+@Deprecated("Replaced by Purchase table. See PurchaseManager & PurchaseStateHandler.")
 public data class BillingResult(
     val paySuccess: Boolean,
     val token: String?,
@@ -39,17 +40,4 @@ public data class BillingResult(
     val currency: Currency,
     val cycle: SubscriptionCycle,
     val subscriptionManagement: SubscriptionManagement
-) : Parcelable {
-
-    public companion object {
-        public fun paymentDetails(clientId: ClientId, token: ProtonPaymentToken): HumanVerificationDetails =
-            HumanVerificationDetails(
-                clientId = clientId,
-                verificationMethods = listOf(VerificationMethod.PAYMENT),
-                verificationToken = null,
-                state = HumanVerificationState.HumanVerificationSuccess,
-                tokenType = TokenType.PAYMENT.value,
-                tokenCode = token.value
-            )
-    }
-}
+) : Parcelable

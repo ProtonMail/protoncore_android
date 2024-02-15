@@ -24,4 +24,7 @@ public interface GooglePurchase {
     public val packageName: String
     public val productIds: List<ProductId>
     public val purchaseToken: GooglePurchaseToken
+    public val purchaseState: Int
+    public val purchaseTime: Long
+    public val isAcknowledged: Boolean
 }

@@ -19,23 +19,31 @@
 package me.proton.core.paymentiap.presentation.usecase
 
 import android.app.Activity
+import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
+import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.presentation.entity.mockPurchase
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanInstance
 import me.proton.core.plan.domain.entity.DynamicPlanPrice
@@ -61,8 +69,11 @@ class PerformGiapPurchaseImplTest {
     @MockK
     private lateinit var prepareGiapPurchase: PrepareGiapPurchase
 
-    @MockK
-    private lateinit var performSubscribe: PerformSubscribe
+    @MockK(relaxed = true)
+    private lateinit var purchaseRepository: PurchaseRepository
+
+    @MockK(relaxed = true)
+    private lateinit var sessionProvider: SessionProvider
 
     @MockK(relaxed = true)
     private lateinit var userManager: UserManager
@@ -72,12 +83,15 @@ class PerformGiapPurchaseImplTest {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+
+        coEvery { sessionProvider.getSessionId(any()) } returns SessionId("sessionId")
+
         tested = PerformGiapPurchaseImpl(
             createPaymentTokenForGooglePurchase,
             launchGiapBillingFlow,
             prepareGiapPurchase,
-            performSubscribe,
-            userManager
+            purchaseRepository,
+            sessionProvider
         )
     }
 
@@ -121,7 +135,7 @@ class PerformGiapPurchaseImplTest {
     fun `user cancelled`() = runTest {
         // GIVEN
         val cycle = SubscriptionCycle.YEARLY
-        val purchase = mockk<Purchase>().wrap()
+        val purchase = mockPurchase().wrap()
         val billingClientError =
             BillingClientError(BillingClient.BillingResponseCode.USER_CANCELED, null)
 
@@ -148,7 +162,7 @@ class PerformGiapPurchaseImplTest {
         val amount = 499L
         val currency = Currency.CHF
         val cycle = SubscriptionCycle.YEARLY
-        val purchase = mockk<Purchase>().wrap()
+        val purchase = mockPurchase().wrap()
         val token = ProtonPaymentToken("payment-token")
 
         coEvery { prepareGiapPurchase(any(), any()) } returns
@@ -168,12 +182,12 @@ class PerformGiapPurchaseImplTest {
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = null)
 
         // THEN
+        coVerify { purchaseRepository.upsertPurchase(any()) }
         assertEquals(
             PerformGiapPurchase.Result.GiapSuccess(
                 purchase,
                 amount,
                 currency.name,
-                subscriptionCreated = false,
                 token
             ),
             result
@@ -186,7 +200,7 @@ class PerformGiapPurchaseImplTest {
         val amount = 499L
         val currency = Currency.CHF
         val cycle = SubscriptionCycle.YEARLY
-        val purchase = mockk<Purchase>().wrap()
+        val purchase = mockPurchase().wrap()
         val token = ProtonPaymentToken("payment-token")
 
         coEvery { prepareGiapPurchase(any(), any()) } returns
@@ -201,19 +215,17 @@ class PerformGiapPurchaseImplTest {
                     listOf(TEST_PLAN_NAME),
                     token
                 )
-        coEvery { performSubscribe(any(), any(), any(), any(), any(), any(), any(), any()) } returns
-                mockk()
 
         // WHEN
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = UserId("user-id"))
 
         // THEN
+        coVerify { purchaseRepository.upsertPurchase(any()) }
         assertEquals(
             PerformGiapPurchase.Result.GiapSuccess(
                 purchase,
                 amount,
                 currency.name,
-                subscriptionCreated = true,
                 token
             ),
             result

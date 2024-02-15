@@ -63,12 +63,15 @@ fun Account.isStepNeeded(): Boolean {
     val isAccountStateStepNeeded = when (state) {
         AccountState.MigrationNeeded,
         AccountState.TwoPassModeNeeded,
-        AccountState.CreateAddressNeeded -> true
+        AccountState.CreateAddressNeeded,
+        AccountState.CreateAccountNeeded -> true
         AccountState.NotReady,
         AccountState.TwoPassModeSuccess,
         AccountState.TwoPassModeFailed,
         AccountState.CreateAddressSuccess,
         AccountState.CreateAddressFailed,
+        AccountState.CreateAccountSuccess,
+        AccountState.CreateAccountFailed,
         AccountState.Ready,
         AccountState.Disabled,
         AccountState.UnlockFailed,

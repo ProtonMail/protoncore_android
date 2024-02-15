@@ -18,23 +18,15 @@
 
 package me.proton.core.paymentiap.presentation.usecase
 
-import com.android.billingclient.api.Purchase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import io.mockk.slot
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import me.proton.core.humanverification.domain.HumanVerificationManager
-import me.proton.core.humanverification.domain.entity.TokenType
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.network.domain.humanverification.HumanVerificationDetails
-import me.proton.core.network.domain.humanverification.HumanVerificationState
-import me.proton.core.network.domain.humanverification.VerificationMethod
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
@@ -43,11 +35,11 @@ import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.presentation.entity.mockPurchase
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
-import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -61,17 +53,11 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
     @MockK
     private lateinit var createPaymentToken: CreatePaymentToken
 
-    @MockK(relaxed = true)
-    private lateinit var humanVerificationManager: HumanVerificationManager
-
     @MockK
     private lateinit var observeUserCurrency: ObserveUserCurrency
 
     @MockK
     private lateinit var validateSubscriptionPlan: ValidateSubscriptionPlan
-
-    @MockK
-    private lateinit var userManager: UserManager
 
     private lateinit var tested: CreatePaymentTokenForGooglePurchaseImpl
 
@@ -79,11 +65,8 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = CreatePaymentTokenForGooglePurchaseImpl(
-            clientIdProvider,
             createPaymentToken,
-            humanVerificationManager,
             observeUserCurrency,
-            userManager,
             validateSubscriptionPlan
         )
     }
@@ -96,9 +79,9 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
             every { title } returns "Test plan"
         }
         val testProductId = ProductId("google-product-id")
-        val purchase = mockk<Purchase> {
-            every { products } returns listOf(testProductId.id)
-        }.wrap()
+        val purchase = mockPurchase(
+            products = listOf(testProductId.id)
+        ).wrap()
 
         // WHEN & THEN
         val error = assertFailsWith<IllegalArgumentException> {
@@ -115,9 +98,9 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
             every { title } returns "Test plan"
         }
         val testProductId = ProductId("google-product-id")
-        val purchase = mockk<Purchase> {
-            every { products } returns listOf("unknown-product-id")
-        }.wrap()
+        val purchase = mockPurchase(
+            products = listOf("unknown-product-id")
+        ).wrap()
 
         // WHEN & THEN
         val error = assertFailsWith<IllegalArgumentException> {
@@ -137,15 +120,13 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
         val testPaymentToken = ProtonPaymentToken("payment-token")
         val testProductId = ProductId("google-product-id")
         val plan = mockk<DynamicPlan> { every { name } returns testPlanName }
-        val purchase = mockk<Purchase> {
-            every { products } returns listOf(testProductId.id)
-            every { purchaseToken } returns "purchase-token"
-            every { orderId } returns "order-id"
-            every { packageName } returns "package-name"
-            every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns "customer-id"
-            }
-        }.wrap()
+        val purchase = mockPurchase(
+            products = listOf(testProductId.id),
+            purchaseToken = "purchase-token",
+            orderId = "order-id",
+            packageName = "package-name",
+            accountIdentifiers = mockk { every { obfuscatedAccountId } returns "customer-id" }
+        ).wrap()
 
         coEvery { clientIdProvider.getClientId(any()) } returns testClientId
         coEvery { observeUserCurrency(any()) } returns flowOf(testCurrency.name)
@@ -182,20 +163,6 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
                 testPaymentToken
             ),
             result
-        )
-
-        val hvDetailsSlot = slot<HumanVerificationDetails>()
-        coVerify { humanVerificationManager.addDetails(capture(hvDetailsSlot)) }
-        assertEquals(
-            HumanVerificationDetails(
-                clientId = testClientId,
-                verificationMethods = listOf(VerificationMethod.PAYMENT),
-                verificationToken = null,
-                state = HumanVerificationState.HumanVerificationSuccess,
-                tokenType = TokenType.PAYMENT.value,
-                tokenCode = result.token.value
-            ),
-            hvDetailsSlot.captured
         )
     }
 }

@@ -26,6 +26,9 @@ public fun ProductDetails.firstPriceOrNull(): ProductDetails.PricingPhase? =
     subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)
 
 public fun BillingClientError.isRetryable(): Boolean = when (responseCode) {
+    BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> true
+    BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> true
     BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> true
+    BillingClient.BillingResponseCode.ERROR -> true
     else -> false
 }

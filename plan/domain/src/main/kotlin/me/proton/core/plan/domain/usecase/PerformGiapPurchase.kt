@@ -81,7 +81,6 @@ public interface PerformGiapPurchase<A : Any> {
             public val purchase: GooglePurchase,
             public val amount: Long,
             public val currency: String,
-            public val subscriptionCreated: Boolean,
             public val token: ProtonPaymentToken
         ) : Result()
     }

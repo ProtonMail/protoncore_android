@@ -52,6 +52,7 @@ public interface GoogleBillingRepository<A: Any> : AutoCloseable {
     /**
      * @throws BillingClientError
      */
+    // TODO: Remove from Repository (Activity shouldn't be needed).
     public suspend fun launchBillingFlow(block: suspend (ConnectedBillingClientInterface<A>) -> Unit)
 
     /** Query for active subscriptions.

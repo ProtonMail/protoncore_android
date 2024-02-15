@@ -199,6 +199,9 @@ class AccountRepositoryImpl @Inject constructor(
                 AccountState.CreateAddressNeeded,
                 AccountState.CreateAddressSuccess,
                 AccountState.CreateAddressFailed,
+                AccountState.CreateAccountNeeded,
+                AccountState.CreateAccountSuccess,
+                AccountState.CreateAccountFailed,
                 AccountState.UnlockFailed,
                 AccountState.UserKeyCheckFailed,
                 AccountState.UserAddressKeyCheckFailed -> deleteAccountMetadata(userId)

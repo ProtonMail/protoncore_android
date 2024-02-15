@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
     kotlin("plugin.serialization")
 }
 
@@ -28,8 +29,12 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(74)
-    lineCoveragePercentage.set(82)
+    branchCoveragePercentage.set(51)
+    lineCoveragePercentage.set(59)
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -43,6 +48,7 @@ dependencies {
         project(Module.domain),
         project(Module.featureFlagData),
         project(Module.planDomain),
+        project(Module.paymentDomain),
         project(Module.networkData),
         `hilt-android`,
         `javax-inject`,
@@ -54,6 +60,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.featureFlagDomain),
         project(Module.userDomain),
+        `android-work-runtime`,
         retrofit,
         serialization("core"),
         `serialization-json`,

@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain
+package me.proton.core.accountmanager.domain
 
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
@@ -80,6 +80,21 @@ interface AccountWorkflowHandler {
      * Handle Create Address failure.
      */
     suspend fun handleCreateAddressFailed(userId: UserId)
+
+    /**
+     * Directly sets the account into a [AccountState.CreateAccountNeeded] state.
+     */
+    suspend fun handleCreateAccountNeeded(userId: UserId)
+
+    /**
+     * Handle Create Account success.
+     */
+    suspend fun handleCreateAccountSuccess(userId: UserId)
+
+    /**
+     * Handle Create Account failure.
+     */
+    suspend fun handleCreateAccountFailed(userId: UserId)
 
     /**
      * Handle Unlock failure.

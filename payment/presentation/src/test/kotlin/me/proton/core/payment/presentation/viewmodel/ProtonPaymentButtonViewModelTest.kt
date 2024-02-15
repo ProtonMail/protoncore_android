@@ -173,7 +173,6 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
                     purchase,
                     amount,
                     currency,
-                    subscriptionCreated = true,
                     token
                 )
 
@@ -207,7 +206,6 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
                     amount,
                     currency,
                     cycle,
-                    subscriptionCreated = true,
                     token
                 )
             ),
@@ -287,13 +285,11 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
             result("launchBillingFlow") { Result.success(Unit) }
             result("validateSubscription") { Result.success(Unit) }
             result("createPaymentToken") { Result.success(Unit) }
-            result("createOrUpdateSubscription") { Result.success(Unit) }
 
             PerformGiapPurchase.Result.GiapSuccess(
                 purchase,
                 amount,
                 currency,
-                subscriptionCreated = true,
                 token
             )
         }
@@ -310,8 +306,6 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
         assertTrue(data.any { it is CheckoutGiapBillingQuerySubscriptionsTotal })
         assertTrue(data.any { it is CheckoutGiapBillingLaunchBillingTotal })
         assertTrue(data.any { it is CheckoutGiapBillingValidatePlanTotal })
-        assertTrue(data.any { it is CheckoutGiapBillingCreatePaymentTokenTotal })
-        assertTrue(data.any { it is CheckoutBillingSubscribeTotal })
     }
 
     @Test

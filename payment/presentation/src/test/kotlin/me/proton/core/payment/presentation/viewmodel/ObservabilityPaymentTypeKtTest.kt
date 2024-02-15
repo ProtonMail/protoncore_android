@@ -35,6 +35,9 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.PaymentType
+import me.proton.core.payment.domain.extension.getCreatePaymentTokenObservabilityData
+import me.proton.core.payment.domain.extension.getSubscribeObservabilityData
+import me.proton.core.payment.domain.extension.getValidatePlanObservabilityData
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import kotlin.test.Test
 import kotlin.test.assertEquals

@@ -27,11 +27,15 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.payment.data.PaymentManagerImpl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
+import me.proton.core.payment.data.PurchaseManagerImpl
 import me.proton.core.payment.data.repository.GooglePurchaseRepositoryImpl
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
+import me.proton.core.payment.data.repository.PurchaseRepositoryImpl
 import me.proton.core.payment.domain.PaymentManager
+import me.proton.core.payment.domain.PurchaseManager
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.ConvertToObservabilityGiapStatus
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
@@ -54,6 +58,10 @@ public interface CorePaymentModule {
 
     @Binds
     @Singleton
+    public fun providePurchaseManager(impl: PurchaseManagerImpl): PurchaseManager
+
+    @Binds
+    @Singleton
     public fun providePaymentsRepository(impl: PaymentsRepositoryImpl): PaymentsRepository
 
     @Binds
@@ -61,9 +69,15 @@ public interface CorePaymentModule {
     public fun provideGooglePlayBillingLibrary(impl: ProtonIAPBillingLibraryImpl): ProtonIAPBillingLibrary
 
     @Binds
+    @Singleton
     public fun provideActivePaymentProvider(impl: ActivePaymentProviderImpl): ActivePaymentProvider
 
     @Binds
+    @Singleton
+    public fun providePurchaseRepository(impl: PurchaseRepositoryImpl): PurchaseRepository
+
+    @Binds
+    @Singleton
     public fun bindGooglePurchaseRepository(impl: GooglePurchaseRepositoryImpl): GooglePurchaseRepository
 
     /** Optional binding, provided by payment-iap-dagger. */

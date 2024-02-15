@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_plan_presentation_HiltWrapper_PurchaseHandlerInitializer_PurchaseHandlerInitializerEntryPoint {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_plan_presentation_HiltWrapper_UnredeemedPurchaseInitializer_UnredeemedPurchaseInitializerEntryPoint {
 	public fun <init> ()V
 }
@@ -117,6 +121,9 @@ public final class me/proton/core/plan/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
+public abstract interface class me/proton/core/plan/presentation/HiltWrapper_PurchaseHandlerInitializer_PurchaseHandlerInitializerEntryPoint : me/proton/core/plan/presentation/PurchaseHandlerInitializer$PurchaseHandlerInitializerEntryPoint {
+}
+
 public abstract interface class me/proton/core/plan/presentation/HiltWrapper_UnredeemedPurchaseInitializer_UnredeemedPurchaseInitializerEntryPoint : me/proton/core/plan/presentation/UnredeemedPurchaseInitializer$UnredeemedPurchaseInitializerEntryPoint {
 }
 
@@ -140,6 +147,13 @@ public final class me/proton/core/plan/presentation/PlansOrchestrator_Factory : 
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/PlansOrchestrator;
 	public static fun newInstance (Lme/proton/core/plan/domain/IsDynamicPlanEnabled;)Lme/proton/core/plan/presentation/PlansOrchestrator;
+}
+
+public final class me/proton/core/plan/presentation/PurchaseHandlerInitializer : androidx/startup/Initializer {
+	public fun <init> ()V
+	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
+	public fun create (Landroid/content/Context;)V
+	public fun dependencies ()Ljava/util/List;
 }
 
 public final class me/proton/core/plan/presentation/UnredeemedPurchaseInitializer : androidx/startup/Initializer {

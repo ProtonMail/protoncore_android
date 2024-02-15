@@ -19,9 +19,11 @@
 package me.proton.core.paymentiap.presentation.usecase
 
 import android.app.Activity
+import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState
 import io.mockk.MockKAnnotations
 import io.mockk.coJustRun
 import io.mockk.every
@@ -38,6 +40,7 @@ import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.presentation.entity.mockPurchase
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -117,13 +120,11 @@ class LaunchGiapBillingFlowImplTest {
         // GIVEN
         val responseCode = BillingResponseCode.OK
         val billingResult = makeBillingResult(responseCode)
-        val purchase = mockk<Purchase> {
-            every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns ""
-                every { products } returns listOf(testProductId.id)
-                every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            }
-        }.wrap()
+        val purchase = mockPurchase(
+            accountIdentifiers = mockk { every { obfuscatedAccountId } returns "" },
+            products = listOf(testProductId.id),
+            purchaseState = PurchaseState.PURCHASED
+        ).wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
         coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
@@ -140,11 +141,11 @@ class LaunchGiapBillingFlowImplTest {
         // GIVEN
         val responseCode = BillingResponseCode.OK
         val billingResult = makeBillingResult(responseCode)
-        val purchase = mockk<Purchase> {
-            every { accountIdentifiers } returns null
-            every { products } returns listOf(testProductId.id)
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-        }.wrap()
+        val purchase = mockPurchase(
+            accountIdentifiers = null,
+            products = listOf(testProductId.id),
+            purchaseState = PurchaseState.PURCHASED
+        ).wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
         coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
@@ -161,12 +162,10 @@ class LaunchGiapBillingFlowImplTest {
         // GIVEN
         val responseCode = BillingResponseCode.OK
         val billingResult = makeBillingResult(responseCode)
-        val purchase = mockk<Purchase> {
-            every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns "customer-id"
-                every { products } returns listOf("unknown-product-id")
-            }
-        }.wrap()
+        val purchase = mockPurchase(
+            accountIdentifiers = mockk { every { obfuscatedAccountId } returns "customer-id" },
+            products = listOf("unknown-product-id")
+        ).wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
         coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates
@@ -183,13 +182,11 @@ class LaunchGiapBillingFlowImplTest {
         // GIVEN
         val responseCode = BillingResponseCode.OK
         val billingResult = makeBillingResult(responseCode)
-        val purchase = mockk<Purchase> {
-            every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns "customer-id"
-                every { products } returns listOf(testProductId.id)
-            }
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-        }.wrap()
+        val purchase = mockPurchase(
+            accountIdentifiers = mockk { every { obfuscatedAccountId } returns "customer-id" },
+            products = listOf(testProductId.id),
+            purchaseState = PurchaseState.PURCHASED
+        ).wrap()
         val purchaseUpdates = flowOf(Pair(billingResult, listOf(purchase)))
         coJustRun { googleBillingRepository.launchBillingFlow(any()) }
         every { googleBillingRepository.purchaseUpdated } returns purchaseUpdates

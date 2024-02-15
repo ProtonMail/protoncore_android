@@ -43,10 +43,13 @@ import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
+import me.proton.core.payment.domain.entity.humanVerificationDetails
+import me.proton.core.payment.domain.extension.getCreatePaymentTokenObservabilityData
+import me.proton.core.payment.domain.extension.getSubscribeObservabilityData
+import me.proton.core.payment.domain.extension.getValidatePlanObservabilityData
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.adjustExpirationYear
-import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.payment.presentation.entity.CurrentSubscribedPlanDetails
 import me.proton.core.plan.domain.entity.MASK_MAIL
 import me.proton.core.plan.domain.entity.MASK_VPN
@@ -59,8 +62,6 @@ import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.Type
-import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
@@ -344,7 +345,7 @@ public abstract class BillingCommonViewModel constructor(
             // Subscription will be performed during login, just after create user.
             // Token will be cleared by PerformSubscribe.
             val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
-            humanVerificationManager.addDetails(BillingResult.paymentDetails(clientId = clientId, token = token))
+            humanVerificationManager.addDetails(token.humanVerificationDetails(clientId))
             State.Success.SignUpTokenReady(amount, currency, cycle, token, subscriptionManagement)
         } else {
             State.Success.SubscriptionCreated(

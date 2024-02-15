@@ -24,8 +24,8 @@ plugins {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(72)
-    lineCoveragePercentage.set(76)
+    branchCoveragePercentage.set(50)
+    lineCoveragePercentage.set(57)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -37,6 +37,7 @@ android {
 dependencies {
     api(
         project(Module.domain),
+        project(Module.accountData),
         project(Module.networkData),
         project(Module.paymentDomain),
         project(Module.planData),

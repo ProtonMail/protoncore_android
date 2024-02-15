@@ -1,3 +1,7 @@
+public class hilt_aggregated_deps/_me_proton_core_paymentiap_presentation_HiltWrapper_GooglePurchaseHandlerInitializer_PurchaseHandlerInitializerEntryPoint {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_paymentiap_presentation_ui_BillingIAPFragment_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -15,6 +19,16 @@ public final class me/proton/core/paymentiap/presentation/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/presentation/GooglePurchaseHandlerInitializer : androidx/startup/Initializer {
+	public fun <init> ()V
+	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
+	public fun create (Landroid/content/Context;)V
+	public fun dependencies ()Ljava/util/List;
+}
+
+public abstract interface class me/proton/core/paymentiap/presentation/HiltWrapper_GooglePurchaseHandlerInitializer_PurchaseHandlerInitializerEntryPoint : me/proton/core/paymentiap/presentation/GooglePurchaseHandlerInitializer$PurchaseHandlerInitializerEntryPoint {
 }
 
 public final class me/proton/core/paymentiap/presentation/LogTag {
@@ -121,16 +135,16 @@ public abstract class me/proton/core/paymentiap/presentation/ui/Hilt_BillingIAPF
 }
 
 public final class me/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl : me/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase {
-	public fun <init> (Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/user/domain/UserManager;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)V
+	public fun <init> (Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)V
 	public fun invoke-IKDzvDE (ILjava/lang/String;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl;
-	public static fun newInstance (Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/user/domain/UserManager;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl;
+	public static fun newInstance (Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/paymentiap/presentation/usecase/CreatePaymentTokenForGooglePurchaseImpl;
 }
 
 public final class me/proton/core/paymentiap/presentation/usecase/LaunchGiapBillingFlowImpl : me/proton/core/payment/domain/usecase/LaunchGiapBillingFlow {
@@ -148,7 +162,7 @@ public final class me/proton/core/paymentiap/presentation/usecase/LaunchGiapBill
 }
 
 public final class me/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl : me/proton/core/plan/domain/usecase/PerformGiapPurchase {
-	public fun <init> (Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase;Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;Lme/proton/core/payment/domain/usecase/PrepareGiapPurchase;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/user/domain/UserManager;)V
+	public fun <init> (Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase;Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;Lme/proton/core/payment/domain/usecase/PrepareGiapPurchase;Lme/proton/core/payment/domain/repository/PurchaseRepository;Lme/proton/core/network/domain/session/SessionProvider;)V
 	public fun invoke (Landroid/app/Activity;ILme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;ILme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -158,7 +172,7 @@ public final class me/proton/core/paymentiap/presentation/usecase/PerformGiapPur
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl;
-	public static fun newInstance (Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase;Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;Lme/proton/core/payment/domain/usecase/PrepareGiapPurchase;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl;
+	public static fun newInstance (Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase;Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;Lme/proton/core/payment/domain/usecase/PrepareGiapPurchase;Lme/proton/core/payment/domain/repository/PurchaseRepository;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl;
 }
 
 public final class me/proton/core/paymentiap/presentation/viewmodel/BillingIAPViewModel_Factory : dagger/internal/Factory {

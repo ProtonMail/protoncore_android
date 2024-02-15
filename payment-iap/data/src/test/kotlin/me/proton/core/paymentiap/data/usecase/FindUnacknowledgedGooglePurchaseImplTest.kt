@@ -22,6 +22,7 @@ import android.app.Activity
 import com.android.billingclient.api.AccountIdentifiers
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
@@ -44,6 +45,29 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
     private lateinit var observabilityManager: ObservabilityManager
     private lateinit var tested: FindUnacknowledgedGooglePurchaseImpl
 
+    private fun mockAccountIdentifiers(
+        customerId: String? = null
+    ): AccountIdentifiers = mockk<AccountIdentifiers> {
+        every { this@mockk.obfuscatedAccountId } returns customerId
+    }
+
+    private fun mockPurchase(
+        accountIdentifiers: AccountIdentifiers? = mockAccountIdentifiers(),
+        isAcknowledged: Boolean = false,
+        purchaseTime: Long = 0,
+        purchaseState: Int = PurchaseState.PURCHASED,
+        products: List<String> = listOf("product1")
+    ): Purchase = mockk<Purchase> {
+        every { this@mockk.accountIdentifiers } returns accountIdentifiers
+        every { this@mockk.orderId } returns "orderId"
+        every { this@mockk.packageName } returns "packageName"
+        every { this@mockk.purchaseState } returns purchaseState
+        every { this@mockk.purchaseTime } returns purchaseTime
+        every { this@mockk.purchaseToken } returns "token"
+        every { this@mockk.products } returns products
+        every { this@mockk.isAcknowledged } returns isAcknowledged
+    }
+
     @BeforeTest
     fun setUp() {
         googleBillingRepository = mockk(relaxed = true)
@@ -59,87 +83,85 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
 
     @Test
     fun `acknowledged purchase`() = runTest {
-        val purchase = mockk<Purchase> {
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns true
-        }.wrap()
+        val purchase = mockPurchase(
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = true
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
         assertTrue(tested().isEmpty())
     }
 
     @Test
     fun `unacknowledged purchase`() = runTest {
-        val purchase = mockk<Purchase> {
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns mockAccountIdentifiers()
-        }.wrap()
+        val purchase = mockPurchase(
+            purchaseState= PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = mockAccountIdentifiers()
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
         assertContentEquals(listOf(purchase), tested())
     }
 
     @Test
     fun `unacknowledged purchase with unmatched product`() = runTest {
-        val purchase = mockk<Purchase> {
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns null
-            every { products } returns listOf("product-B")
-        }.wrap()
+        val purchase = mockPurchase(
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = null,
+            products = listOf("product-B")
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
         assertNull(tested.byProduct(ProductId("product-A")))
     }
 
     @Test
     fun `unacknowledged purchase with matched product`() = runTest {
-        val purchase = mockk<Purchase> {
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns null
-            every { products } returns listOf("product-A")
-        }.wrap()
+        val purchase = mockPurchase(
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = null,
+            products = listOf("product-A")
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
         assertEquals(purchase, tested.byProduct(ProductId("product-A")))
     }
 
     @Test
     fun `unacknowledged purchase with unmatched user`() = runTest {
-        val purchase = mockk<Purchase> {
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns mockk {
-                every { obfuscatedAccountId } returns "customer-B"
-            }
-        }.wrap()
+        val purchase = mockPurchase(
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = mockk { every { obfuscatedAccountId } returns "customer-B" }
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
         assertNull(tested.byCustomer("customer-A"))
     }
 
     @Test
     fun `unacknowledged purchase with matched user`() = runTest {
-        val purchase = mockk<Purchase> {
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
-        }.wrap()
+        val purchase = mockPurchase(
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = mockAccountIdentifiers("customer-A")
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(purchase)
         assertEquals(purchase, tested.byCustomer("customer-A"))
     }
 
     @Test
     fun `multiple unacknowledged purchases`() = runTest {
-        val purchaseA = mockk<Purchase> {
-            every { purchaseTime } returns 1200
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
-        }.wrap()
-        val purchaseB = mockk<Purchase> {
-            every { purchaseTime } returns 1300
-            every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-            every { isAcknowledged } returns false
-            every { accountIdentifiers } returns mockAccountIdentifiers("customer-A")
-        }.wrap()
+        val purchaseA = mockPurchase(
+            purchaseTime = 1200,
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = mockAccountIdentifiers("customer-A")
+        ).wrap()
+        val purchaseB = mockPurchase(
+            purchaseTime = 1300,
+            purchaseState = PurchaseState.PURCHASED,
+            isAcknowledged = false,
+            accountIdentifiers = mockAccountIdentifiers("customer-A")
+        ).wrap()
         coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(
             purchaseA,
             purchaseB
@@ -164,7 +186,4 @@ internal class FindUnacknowledgedGooglePurchaseImplTest {
         )
         assertFailsWith<BillingClientError> { tested() }
     }
-
-    private fun mockAccountIdentifiers(customerId: String? = null): AccountIdentifiers =
-        mockk { every { obfuscatedAccountId } returns customerId }
 }

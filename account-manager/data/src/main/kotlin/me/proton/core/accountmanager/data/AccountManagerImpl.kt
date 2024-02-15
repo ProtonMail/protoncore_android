@@ -22,6 +22,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountState.CreateAccountFailed
+import me.proton.core.account.domain.entity.AccountState.CreateAccountNeeded
+import me.proton.core.account.domain.entity.AccountState.CreateAccountSuccess
 import me.proton.core.account.domain.entity.AccountState.CreateAddressFailed
 import me.proton.core.account.domain.entity.AccountState.CreateAddressNeeded
 import me.proton.core.account.domain.entity.AccountState.CreateAddressSuccess
@@ -38,7 +41,7 @@ import me.proton.core.account.domain.entity.isReady
 import me.proton.core.account.domain.entity.isSecondFactorNeeded
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -170,6 +173,18 @@ class AccountManagerImpl @Inject constructor(
 
     override suspend fun handleCreateAddressFailed(userId: UserId) {
         accountRepository.updateAccountState(userId, CreateAddressFailed)
+    }
+
+    override suspend fun handleCreateAccountNeeded(userId: UserId) {
+        accountRepository.updateAccountState(userId, CreateAccountNeeded)
+    }
+
+    override suspend fun handleCreateAccountSuccess(userId: UserId) {
+        accountRepository.updateAccountState(userId, CreateAccountSuccess)
+    }
+
+    override suspend fun handleCreateAccountFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, CreateAccountFailed)
     }
 
     override suspend fun handleUnlockFailed(userId: UserId) {

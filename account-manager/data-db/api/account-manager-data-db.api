@@ -129,6 +129,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_40_41 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_41_42 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_42_43 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_43_44 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_5_6 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_6_7 ()Landroidx/room/migration/Migration;
@@ -167,6 +168,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun publicAddressDao ()Lme/proton/core/key/data/db/PublicAddressDao;
 	public fun publicAddressKeyDao ()Lme/proton/core/key/data/db/PublicAddressKeyDao;
 	public fun publicAddressWithKeysDao ()Lme/proton/core/key/data/db/PublicAddressWithKeysDao;
+	public fun purchaseDao ()Lme/proton/core/payment/data/local/db/dao/PurchaseDao;
 	public fun pushDao ()Lme/proton/core/push/data/local/db/PushDao;
 	public fun selfAuditResultDao ()Lme/proton/core/keytransparency/data/local/SelfAuditResultDao;
 	public fun sessionDao ()Lme/proton/core/account/data/db/SessionDao;
@@ -507,6 +509,25 @@ public final class me/proton/core/payment/data/local/db/dao/GooglePurchaseDao_Im
 	public fun insertOrUpdate ([Lme/proton/core/payment/data/local/entity/GooglePurchaseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/payment/data/local/entity/GooglePurchaseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/payment/data/local/db/dao/PurchaseDao_Impl : me/proton/core/payment/data/local/db/dao/PurchaseDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun delete (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/payment/data/local/entity/PurchaseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun get (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/payment/data/local/entity/PurchaseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/payment/data/local/entity/PurchaseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe ()Lkotlinx/coroutines/flow/Flow;
+	public fun observe (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/payment/data/local/entity/PurchaseEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updatePurchaseState (Ljava/lang/String;Lme/proton/core/payment/domain/entity/PurchaseState;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/push/data/local/db/PushDao_Impl : me/proton/core/push/data/local/db/PushDao {

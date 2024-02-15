@@ -221,7 +221,6 @@ public final class me/proton/core/payment/presentation/entity/BillingInput$Creat
 
 public final class me/proton/core/payment/presentation/entity/BillingResult : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public static final field Companion Lme/proton/core/payment/presentation/entity/BillingResult$Companion;
 	public fun <init> (ZLjava/lang/String;ZJLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;)V
 	public final fun component1 ()Z
 	public final fun component2 ()Ljava/lang/String;
@@ -244,10 +243,6 @@ public final class me/proton/core/payment/presentation/entity/BillingResult : an
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/payment/presentation/entity/BillingResult$Companion {
-	public final fun paymentDetails-58zzsGY (Lme/proton/core/network/domain/client/ClientId;Ljava/lang/String;)Lme/proton/core/network/domain/humanverification/HumanVerificationDetails;
 }
 
 public final class me/proton/core/payment/presentation/entity/BillingResult$Creator : android/os/Parcelable$Creator {
@@ -779,15 +774,6 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingViewMode
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/payment/presentation/viewmodel/ObservabilityPaymentTypeKt {
-	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
-	public static final fun getCreatePaymentTokenObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
-	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
-	public static final fun getSubscribeObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
-	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/entity/PaymentType;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
-	public static final fun getValidatePlanObservabilityData (Ljava/lang/Object;Lme/proton/core/payment/domain/usecase/PaymentProvider;)Lme/proton/core/observability/domain/metrics/ObservabilityData;
-}
-
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory : dagger/internal/Factory {
 	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
@@ -975,23 +961,21 @@ public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentEv
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess : me/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent {
-	public synthetic fun <init> (Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;IZLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;ILjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public final fun component2 ()Lme/proton/core/payment/domain/entity/GooglePurchase;
 	public final fun component3 ()J
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()I
-	public final fun component6 ()Z
-	public final fun component7-LPgRuuE ()Ljava/lang/String;
-	public final fun copy-bDv_sEo (Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;IZLjava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess;
-	public static synthetic fun copy-bDv_sEo$default (Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;IZLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess;
+	public final fun component6-LPgRuuE ()Ljava/lang/String;
+	public final fun copy-xzvsMz0 (Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;ILjava/lang/String;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess;
+	public static synthetic fun copy-xzvsMz0$default (Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/payment/domain/entity/GooglePurchase;JLjava/lang/String;ILjava/lang/String;ILjava/lang/Object;)Lme/proton/core/payment/presentation/viewmodel/ProtonPaymentEvent$GiapSuccess;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAmount ()J
 	public final fun getCurrency ()Ljava/lang/String;
 	public final fun getCycle ()I
 	public final fun getPlan ()Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public final fun getPurchase ()Lme/proton/core/payment/domain/entity/GooglePurchase;
-	public final fun getSubscriptionCreated ()Z
 	public final fun getToken-LPgRuuE ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

@@ -22,8 +22,10 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.payment.data.local.db.dao.GooglePurchaseDao
+import me.proton.core.payment.data.local.db.dao.PurchaseDao
 
 public interface PaymentDatabase : Database {
+    public fun purchaseDao(): PurchaseDao
     public fun googlePurchaseDao(): GooglePurchaseDao
 
     public companion object {
@@ -31,6 +33,16 @@ public interface PaymentDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `GooglePurchaseEntity` (`googlePurchaseToken` TEXT NOT NULL, `paymentToken` TEXT NOT NULL, PRIMARY KEY(`googlePurchaseToken`))")
                 database.execSQL("CREATE UNIQUE INDEX IF NOT EXISTS `index_GooglePurchaseEntity_paymentToken` ON `GooglePurchaseEntity` (`paymentToken`)")
+            }
+        }
+
+        public val MIGRATION_1: DatabaseMigration = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS `PurchaseEntity` (`sessionId` TEXT NOT NULL, `planName` TEXT NOT NULL, `planCycle` INTEGER NOT NULL, `purchaseState` TEXT NOT NULL, `purchaseFailure` TEXT, `paymentProvider` TEXT NOT NULL, `paymentOrderId` TEXT, `paymentToken` TEXT, `paymentCurrency` TEXT NOT NULL, `paymentAmount` INTEGER NOT NULL, PRIMARY KEY(`planName`), FOREIGN KEY(`sessionId`) REFERENCES `SessionEntity`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PurchaseEntity_planName` ON `PurchaseEntity` (`planName`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PurchaseEntity_sessionId` ON `PurchaseEntity` (`sessionId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PurchaseEntity_purchaseState` ON `PurchaseEntity` (`purchaseState`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PurchaseEntity_paymentProvider` ON `PurchaseEntity` (`paymentProvider`)")
             }
         }
     }

@@ -22,7 +22,7 @@ import android.app.Activity
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ProductDetails
-import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
@@ -45,11 +45,11 @@ import me.proton.core.observability.domain.metrics.common.GiapStatus
 import me.proton.core.payment.domain.entity.GoogleBillingResult
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.repository.BillingClientError
+import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
-import me.proton.core.payment.domain.repository.BillingClientError
-import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.presentation.entity.mockPurchase
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -269,7 +269,7 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
                     mockPurchase(
                         accountIdentifiers = mockk { every { obfuscatedAccountId } returns "" },
                         products = listOf(googleProductId),
-                        purchaseState = Purchase.PurchaseState.PURCHASED
+                        purchaseState = PurchaseState.PURCHASED
                     ).wrap()
                 )
             )

@@ -1,6 +1,18 @@
+public class hilt_aggregated_deps/_me_proton_core_paymentiap_data_worker_AcknowledgePurchaseWorker_HiltModule {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/paymentiap/data/BillingClientFactoryImpl : me/proton/core/paymentiap/domain/BillingClientFactory {
 	public fun <init> (Landroid/app/Application;)V
 	public fun invoke (Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lcom/android/billingclient/api/BillingClient;
+}
+
+public final class me/proton/core/paymentiap/data/BillingClientFactoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/BillingClientFactoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/BillingClientFactoryImpl;
+	public static fun newInstance (Landroid/app/Application;)Lme/proton/core/paymentiap/data/BillingClientFactoryImpl;
 }
 
 public final class me/proton/core/paymentiap/data/BuildConfig {
@@ -8,6 +20,38 @@ public final class me/proton/core/paymentiap/data/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public final class me/proton/core/paymentiap/data/GooglePurchaseStateHandler {
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/payment/domain/PurchaseManager;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;Ljavax/inject/Provider;Landroidx/work/WorkManager;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/paymentiap/data/GooglePurchaseStateHandlerKt {
+	public static final fun onGiapAcknowledged (Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGiapAcknowledged$default (Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public static final fun onGiapSubscribed (Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;)Lkotlinx/coroutines/Job;
+	public static synthetic fun onGiapSubscribed$default (Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler;Ljava/lang/String;Lkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/paymentiap/data/GooglePurchaseStateHandler_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler;
+	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/payment/domain/PurchaseManager;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;Ljavax/inject/Provider;Landroidx/work/WorkManager;)Lme/proton/core/paymentiap/data/GooglePurchaseStateHandler;
+}
+
+public final class me/proton/core/paymentiap/data/repository/ConnectedBillingClientFactory_Impl : me/proton/core/paymentiap/data/repository/ConnectedBillingClientFactory {
+	public static fun create (Lme/proton/core/paymentiap/data/repository/ConnectedBillingClient_Factory;)Ljavax/inject/Provider;
+	public fun invoke (Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lme/proton/core/paymentiap/data/repository/ConnectedBillingClient;
+}
+
+public final class me/proton/core/paymentiap/data/repository/ConnectedBillingClient_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/repository/ConnectedBillingClient_Factory;
+	public fun get (Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lme/proton/core/paymentiap/data/repository/ConnectedBillingClient;
+	public static fun newInstance (Lme/proton/core/paymentiap/domain/BillingClientFactory;Lcom/android/billingclient/api/PurchasesUpdatedListener;)Lme/proton/core/paymentiap/data/repository/ConnectedBillingClient;
 }
 
 public final class me/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl : me/proton/core/payment/domain/repository/GoogleBillingRepository {
@@ -18,6 +62,14 @@ public final class me/proton/core/paymentiap/data/repository/GoogleBillingReposi
 	public fun getPurchaseUpdated ()Lkotlinx/coroutines/flow/Flow;
 	public fun launchBillingFlow (Lkotlin/jvm/functions/Function2;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun querySubscriptionPurchases (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/paymentiap/data/repository/ConnectedBillingClientFactory;Lme/proton/core/util/kotlin/DispatcherProvider;)Lme/proton/core/paymentiap/data/repository/GoogleBillingRepositoryImpl;
 }
 
 public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl : me/proton/core/observability/domain/ObservabilityContext, me/proton/core/payment/domain/usecase/AcknowledgeGooglePlayPurchase {
@@ -31,6 +83,14 @@ public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayP
 	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl;
+	public static fun newInstance (Ljavax/inject/Provider;Lme/proton/core/payment/domain/repository/GooglePurchaseRepository;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/paymentiap/data/usecase/AcknowledgeGooglePlayPurchaseImpl;
+}
+
 public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl : me/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase {
 	public fun <init> (Ljavax/inject/Provider;)V
 	public fun byCustomer (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -38,13 +98,57 @@ public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGoog
 	public fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl;
+	public static fun newInstance (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/usecase/FindUnacknowledgedGooglePurchaseImpl;
+}
+
 public final class me/proton/core/paymentiap/data/usecase/GetStorePriceImpl : me/proton/core/payment/domain/usecase/GetStorePrice {
 	public fun <init> (Ljavax/inject/Provider;)V
 	public fun invoke-pLEiLWY (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/paymentiap/data/usecase/GetStorePriceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/usecase/GetStorePriceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/usecase/GetStorePriceImpl;
+	public static fun newInstance (Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/usecase/GetStorePriceImpl;
+}
+
 public final class me/proton/core/paymentiap/data/usecase/PrepareGiapPurchaseImpl : me/proton/core/payment/domain/usecase/PrepareGiapPurchase {
 	public fun <init> (Ljavax/inject/Provider;Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;)V
 	public fun invoke-m4Zr2R0 (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/paymentiap/data/usecase/PrepareGiapPurchaseImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/usecase/PrepareGiapPurchaseImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/paymentiap/data/usecase/PrepareGiapPurchaseImpl;
+	public static fun newInstance (Ljavax/inject/Provider;Lme/proton/core/payment/domain/usecase/FindUnacknowledgedGooglePurchase;)Lme/proton/core/paymentiap/data/usecase/PrepareGiapPurchaseImpl;
+}
+
+public abstract interface class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_AssistedFactory_Impl : me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker;
+	public static fun create (Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/payment/domain/repository/PurchaseRepository;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker;
+}
+
+public abstract interface class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 

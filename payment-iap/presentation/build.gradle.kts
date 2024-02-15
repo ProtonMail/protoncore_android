@@ -50,7 +50,8 @@ dependencies {
         `coroutines-core`,
         `hilt-android`,
         material,
-        recyclerview
+        recyclerview,
+        `startup-runtime`
     )
 
     implementation(
@@ -58,6 +59,7 @@ dependencies {
         project(Module.kotlinUtil),
         project(Module.paymentDomain),
         project(Module.paymentIapDomain),
+        project(Module.paymentIapData),
 
         // Android
         activity,

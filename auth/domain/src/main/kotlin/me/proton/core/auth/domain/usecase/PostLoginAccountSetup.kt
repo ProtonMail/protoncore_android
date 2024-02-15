@@ -20,7 +20,7 @@ package me.proton.core.auth.domain.usecase
 
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.SessionManager
-import me.proton.core.auth.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
@@ -84,6 +84,7 @@ class PostLoginAccountSetup @Inject constructor(
         internalAddressDomain: String? = null
     ): Result {
         // Subscribe to any pending subscription/billing.
+        // TODO: Add If any Purchase in Purchased state for this userId -> use it.
         if (billingDetails != null) {
             runCatching {
                 performSubscribe(

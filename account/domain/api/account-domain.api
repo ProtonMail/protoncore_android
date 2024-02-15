@@ -59,6 +59,9 @@ public final class me/proton/core/account/domain/entity/AccountMetadataDetails {
 }
 
 public final class me/proton/core/account/domain/entity/AccountState : java/lang/Enum {
+	public static final field CreateAccountFailed Lme/proton/core/account/domain/entity/AccountState;
+	public static final field CreateAccountNeeded Lme/proton/core/account/domain/entity/AccountState;
+	public static final field CreateAccountSuccess Lme/proton/core/account/domain/entity/AccountState;
 	public static final field CreateAddressFailed Lme/proton/core/account/domain/entity/AccountState;
 	public static final field CreateAddressNeeded Lme/proton/core/account/domain/entity/AccountState;
 	public static final field CreateAddressSuccess Lme/proton/core/account/domain/entity/AccountState;

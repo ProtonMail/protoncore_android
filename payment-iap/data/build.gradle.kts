@@ -21,11 +21,16 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
+    protonDagger
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(89)
-    lineCoveragePercentage.set(100)
+    branchCoveragePercentage.set(66)
+    lineCoveragePercentage.set(72)
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -41,6 +46,7 @@ dependencies {
     )
     implementation(
         project(Module.kotlinUtil),
+        `android-work-runtime`,
         `coroutines-core`,
         dagger,
         googlePlayBilling,

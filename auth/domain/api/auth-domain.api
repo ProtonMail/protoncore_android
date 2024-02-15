@@ -1,19 +1,3 @@
-public abstract interface class me/proton/core/auth/domain/AccountWorkflowHandler {
-	public abstract fun handleAccountDisabled (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleAccountNotReady (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleAccountReady (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleCreateAddressFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleCreateAddressNeeded (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleCreateAddressSuccess (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleSecondFactorFailed (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleSecondFactorSuccess (Lme/proton/core/network/domain/session/SessionId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleSession (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleTwoPassModeFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleTwoPassModeNeeded (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleTwoPassModeSuccess (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun handleUnlockFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-}
-
 public final class me/proton/core/auth/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/auth/domain/LogTag;
 	public static final field INVALID_SRP_PROOF Ljava/lang/String;
@@ -248,17 +232,17 @@ public final class me/proton/core/auth/domain/usecase/AccountAvailability {
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginLessSession {
-	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLoginLess;)V
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLoginLess;)V
 	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginSession {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLogin;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLogin;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/CreateLoginSsoSession {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLoginSso;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformLoginSso;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -333,7 +317,7 @@ public final class me/proton/core/auth/domain/usecase/PerformSecondFactor {
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
@@ -450,12 +434,12 @@ public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$User
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginLessAccountSetup {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;Lme/proton/core/network/domain/server/ServerClock;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;Lme/proton/core/network/domain/server/ServerClock;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginSsoAccountSetup {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

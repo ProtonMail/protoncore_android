@@ -2114,7 +2114,7 @@ public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewMode
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)V
 	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
@@ -2218,7 +2218,7 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/AccountAvailability;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/usersettings/domain/usecase/SetupUsername;)Lme/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewModel_HiltModules {
@@ -2476,7 +2476,7 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Fac
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/CreateLoginSession;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/auth/domain/usecase/IsSsoEnabled;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/auth/presentation/viewmodel/LoginViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_HiltModules {
@@ -2502,7 +2502,7 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public static final field Companion Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$Companion;
 	public static final field HTTP_ERROR_BAD_REQUEST I
 	public static final field HTTP_ERROR_UNAUTHORIZED I
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun stopSecondFactorFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
@@ -2563,7 +2563,7 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_HiltModules {
@@ -2586,7 +2586,7 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun stopMailboxLoginFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun tryUnlockUser (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;)Lkotlinx/coroutines/Job;
@@ -2630,7 +2630,7 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewMod
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel;
-	public static fun newInstance (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;)Lme/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoPassModeViewModel_HiltModules {

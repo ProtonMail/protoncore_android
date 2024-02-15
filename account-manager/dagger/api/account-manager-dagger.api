@@ -15,7 +15,7 @@ public final class me/proton/core/accountmanager/dagger/BuildConfig {
 
 public abstract interface class me/proton/core/accountmanager/dagger/CoreAccountManagerModuleBindings {
 	public abstract fun bindAccountManager (Lme/proton/core/accountmanager/data/AccountManagerImpl;)Lme/proton/core/accountmanager/domain/AccountManager;
-	public abstract fun bindAccountWorkflowHandler (Lme/proton/core/accountmanager/data/AccountManagerImpl;)Lme/proton/core/auth/domain/AccountWorkflowHandler;
+	public abstract fun bindAccountWorkflowHandler (Lme/proton/core/accountmanager/data/AccountManagerImpl;)Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;
 	public abstract fun provideAccountMigrator (Lme/proton/core/accountmanager/data/AccountMigratorImpl;)Lme/proton/core/accountmanager/domain/migrator/AccountMigrator;
 	public abstract fun provideSessionListener (Lme/proton/core/accountmanager/data/SessionListenerImpl;)Lme/proton/core/network/domain/session/SessionListener;
 	public abstract fun provideSessionProvider (Lme/proton/core/accountmanager/data/SessionProviderImpl;)Lme/proton/core/network/domain/session/SessionProvider;
