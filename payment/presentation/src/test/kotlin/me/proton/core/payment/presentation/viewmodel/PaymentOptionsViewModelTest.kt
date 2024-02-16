@@ -57,6 +57,7 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
+import me.proton.core.user.domain.UserManager
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -76,6 +77,7 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     private val clientIdProvider = mockk<ClientIdProvider>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+    private val userManager = mockk<UserManager>()
     // endregion
 
     // region test data
@@ -152,7 +154,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                     getCountryCode,
                     humanVerificationManager,
                     clientIdProvider,
-                    observabilityManager
+                    observabilityManager,
+                    userManager
                 )
             )
     }
@@ -216,7 +219,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 getCountryCode,
                 humanVerificationManager,
                 clientIdProvider,
-                observabilityManager
+                observabilityManager,
+                userManager
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
 
@@ -253,7 +257,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 getCountryCode,
                 humanVerificationManager,
                 clientIdProvider,
-                observabilityManager
+                observabilityManager,
+                userManager
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
 
@@ -294,7 +299,8 @@ class PaymentOptionsViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
                 getCountryCode,
                 humanVerificationManager,
                 clientIdProvider,
-                observabilityManager
+                observabilityManager,
+                userManager
             )
         coEvery { getAvailablePaymentMethods.invoke(testUserId) } returns emptyList()
 

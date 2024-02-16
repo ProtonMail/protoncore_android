@@ -53,6 +53,7 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
+import me.proton.core.user.domain.UserManager
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -70,6 +71,7 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
     private val getAvailablePaymentProviders = mockk<GetAvailablePaymentProviders>(relaxed = true)
     private val activePaymentProvider = mockk<me.proton.core.payment.presentation.ActivePaymentProvider>(relaxed = true)
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
+    private val userManager = mockk<UserManager>(relaxed = true)
     // endregion
 
     // region test data
@@ -103,7 +105,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             getCountryCode,
             humanVerificationManager,
             clientIdProvider,
-            observabilityManager
+            observabilityManager,
+            userManager
         )
     }
 
@@ -964,7 +967,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             getCountryCode,
             humanVerificationManager,
             clientIdProvider,
-            observabilityManager
+            observabilityManager,
+            userManager
         )
 
         runCurrent()
@@ -989,7 +993,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             getCountryCode,
             humanVerificationManager,
             clientIdProvider,
-            observabilityManager
+            observabilityManager,
+            userManager
         )
 
         runCurrent()
@@ -1015,7 +1020,8 @@ class BillingViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutine
             getCountryCode,
             humanVerificationManager,
             clientIdProvider,
-            observabilityManager
+            observabilityManager,
+            userManager
         )
 
         runCurrent()

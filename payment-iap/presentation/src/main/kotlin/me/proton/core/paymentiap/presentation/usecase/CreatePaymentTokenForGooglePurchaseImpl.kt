@@ -34,6 +34,10 @@ import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.extension.isCredentialLess
+import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import javax.inject.Inject
 
 /**
@@ -47,6 +51,7 @@ public class CreatePaymentTokenForGooglePurchaseImpl @Inject constructor(
     private val createPaymentToken: CreatePaymentToken,
     private val humanVerificationManager: HumanVerificationManager,
     private val observeUserCurrency: ObserveUserCurrency,
+    private val userManager: UserManager,
     private val validateSubscriptionPlan: ValidateSubscriptionPlan
 ) : CreatePaymentTokenForGooglePurchase {
     override suspend fun invoke(
@@ -86,7 +91,7 @@ public class CreatePaymentTokenForGooglePurchaseImpl @Inject constructor(
             "Unexpected status for creating payment token: ${tokenResult.status}."
         }
 
-        if (userId == null) {
+        if (userId.isNullOrCredentialLess(userManager)) {
             val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
             humanVerificationManager.addDetails(
                 BillingResult.paymentDetails(

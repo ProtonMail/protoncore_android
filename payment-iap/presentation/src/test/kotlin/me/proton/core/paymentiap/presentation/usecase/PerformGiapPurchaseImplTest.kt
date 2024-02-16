@@ -45,6 +45,7 @@ import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.user.domain.UserManager
 import java.time.Instant
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -63,6 +64,9 @@ class PerformGiapPurchaseImplTest {
     @MockK
     private lateinit var performSubscribe: PerformSubscribe
 
+    @MockK(relaxed = true)
+    private lateinit var userManager: UserManager
+
     private lateinit var tested: PerformGiapPurchaseImpl
 
     @BeforeTest
@@ -72,7 +76,8 @@ class PerformGiapPurchaseImplTest {
             createPaymentTokenForGooglePurchase,
             launchGiapBillingFlow,
             prepareGiapPurchase,
-            performSubscribe
+            performSubscribe,
+            userManager
         )
     }
 

@@ -19,6 +19,7 @@
 package me.proton.core.user.domain.extension
 
 import me.proton.core.user.domain.entity.Role
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.emailSplit
 import kotlin.math.round
@@ -48,6 +49,9 @@ fun User.hasKeys() = keys.isNotEmpty()
  * @return true if the user have a username (not blank).
  */
 fun User.hasUsername() = !name.isNullOrBlank()
+
+/** @return true if user [type][User.type] is [Type.CredentialLess]. */
+fun User.isCredentialLess() = type == Type.CredentialLess
 
 /**
  * @return true if the user is private, whether the user controls their own keys or not.

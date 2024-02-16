@@ -33,6 +33,7 @@ import me.proton.core.user.domain.entity.Delinquent
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasSubscription
+import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
@@ -62,7 +63,7 @@ open class DefaultUserCheck @Inject constructor(
     private suspend fun allReadyHaveSubscription(): Boolean =
         accountManager.getAccounts(AccountState.Ready).first()
             .map { userManager.getUser(it.userId) }
-            .filterNot { it.type == Type.CredentialLess }
+            .filterNot { it.isCredentialLess() }
             .all { it.hasSubscription() }
 
     override suspend fun invoke(user: User): UserCheckResult =

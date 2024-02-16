@@ -47,6 +47,7 @@ import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -69,6 +70,9 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
     @MockK
     private lateinit var validateSubscriptionPlan: ValidateSubscriptionPlan
 
+    @MockK
+    private lateinit var userManager: UserManager
+
     private lateinit var tested: CreatePaymentTokenForGooglePurchaseImpl
 
     @BeforeTest
@@ -79,6 +83,7 @@ class CreatePaymentTokenForGooglePurchaseImplTest {
             createPaymentToken,
             humanVerificationManager,
             observeUserCurrency,
+            userManager,
             validateSubscriptionPlan
         )
     }

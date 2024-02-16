@@ -36,6 +36,9 @@ import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result.Error
 import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.extension.isCredentialLess
 import javax.inject.Inject
 
 /**
@@ -50,6 +53,7 @@ public class PerformGiapPurchaseImpl @Inject constructor(
     private val launchGiapBillingFlow: LaunchGiapBillingFlow<Activity>,
     private val prepareGiapPurchase: PrepareGiapPurchase,
     private val performSubscribe: PerformSubscribe,
+    private val userManager: UserManager,
 ) : PerformGiapPurchase<Activity> {
     override suspend fun invoke(
         activity: Activity,
@@ -153,10 +157,11 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         val createTokenResult =
             createPaymentTokenForGooglePurchase(cycle, googleProductId, plan, purchase, userId)
 
-        val subscription = if (userId != null) {
+        val shouldSubscribe = userId != null && !userManager.getUser(userId).isCredentialLess()
+        val subscription = if (shouldSubscribe) {
             // performSubscribe also acknowledges Google purchase:
             performSubscribe(
-                userId = userId,
+                userId = userId!!,
                 amount = createTokenResult.amount,
                 currency = createTokenResult.currency,
                 cycle = createTokenResult.cycle,

@@ -53,6 +53,7 @@ import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.GetCurrentSubscription
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.user.domain.UserManager
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.exhaustive
 import javax.inject.Inject
@@ -73,7 +74,8 @@ internal class PaymentOptionsViewModel @Inject constructor(
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
     clientIdProvider: ClientIdProvider,
-    observabilityManager: ObservabilityManager
+    observabilityManager: ObservabilityManager,
+    userManager: UserManager
 ) : BillingCommonViewModel(
     validatePlanSubscription,
     createPaymentToken,
@@ -81,7 +83,8 @@ internal class PaymentOptionsViewModel @Inject constructor(
     getCountry,
     humanVerificationManager,
     clientIdProvider,
-    observabilityManager
+    observabilityManager,
+    userManager
 ) {
 
     // it should be private, but because of a bug in Mockk it was not able to mock a spy. and testing it is important!

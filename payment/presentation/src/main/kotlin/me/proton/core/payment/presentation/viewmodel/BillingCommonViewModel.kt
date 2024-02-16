@@ -58,6 +58,10 @@ import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.extension.isCredentialLess
+import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import me.proton.core.util.kotlin.hasFlag
@@ -66,14 +70,15 @@ import me.proton.core.util.kotlin.hasFlag
  * ViewModel to serve the billing activity or fragment.
  * It's responsibility is to provide payments functionality.
  */
-public abstract class BillingCommonViewModel(
+public abstract class BillingCommonViewModel constructor(
     private val validatePlanSubscription: ValidateSubscriptionPlan,
     private val createPaymentToken: CreatePaymentToken,
     private val performSubscribe: PerformSubscribe,
     private val getCountry: GetCountry,
     private val humanVerificationManager: HumanVerificationManager,
     private val clientIdProvider: ClientIdProvider,
-    override val observabilityManager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager,
+    private val userManager: UserManager,
 ) : ProtonViewModel(), ObservabilityContext {
 
     private val _subscriptionState = MutableStateFlow<State>(State.Idle)
@@ -166,7 +171,7 @@ public abstract class BillingCommonViewModel(
 
         flow {
             emit(State.Processing)
-            val signUp = userId == null
+            val signUp = userId.isNullOrCredentialLess(userManager)
 
             val subscription = validatePlanSubscription(
                 userId = userId,
@@ -334,7 +339,7 @@ public abstract class BillingCommonViewModel(
         token: ProtonPaymentToken,
         subscriptionManagement: SubscriptionManagement
     ): State =
-        if (userId == null) {
+        if (userId.isNullOrCredentialLess(userManager)) {
             // Token will be used during sign up (create user), as part of HumanVerification headers.
             // Subscription will be performed during login, just after create user.
             // Token will be cleared by PerformSubscribe.

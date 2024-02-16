@@ -22,6 +22,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.user.domain.entity.Role
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -39,6 +40,7 @@ class UserTest {
         every { keys } returns listOf(mockk(), mockk())
         every { private } returns true
         every { role } returns Role.OrganizationAdmin
+        every { type } returns Type.Proton
     }
 
     private val userNoName = mockk<User> {
@@ -57,6 +59,10 @@ class UserTest {
         every { keys } returns emptyList()
         every { private } returns false
         every { role } returns Role.NoOrganization
+    }
+
+    private val userCredLess = mockk<User> {
+        every { type } returns Type.CredentialLess
     }
 
     @Test
@@ -161,5 +167,11 @@ class UserTest {
         }
         assertFailsWith<IllegalArgumentException> { user.getUsedBaseSpacePercentage() }
         assertFailsWith<IllegalArgumentException> { user.getUsedDriveSpacePercentage() }
+    }
+
+    @Test
+    fun credentialLessUser() {
+        assertTrue(userCredLess.isCredentialLess())
+        assertFalse(user.isCredentialLess())
     }
 }

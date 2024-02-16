@@ -43,6 +43,7 @@ import me.proton.core.payment.presentation.entity.BillingInput
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
+import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,7 +55,8 @@ public open class BillingViewModel @Inject constructor(
     getCountry: GetCountry,
     humanVerificationManager: HumanVerificationManager,
     clientIdProvider: ClientIdProvider,
-    observabilityManager: ObservabilityManager
+    observabilityManager: ObservabilityManager,
+    userManager: UserManager,
 ) : BillingCommonViewModel(
     validatePlanSubscription,
     createPaymentToken,
@@ -62,7 +64,8 @@ public open class BillingViewModel @Inject constructor(
     getCountry,
     humanVerificationManager,
     clientIdProvider,
-    observabilityManager
+    observabilityManager,
+    userManager
 ) {
     private val _state = MutableStateFlow<State>(State.Idle)
     public val state: StateFlow<State> = _state.asStateFlow()

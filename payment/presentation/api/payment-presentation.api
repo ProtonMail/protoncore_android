@@ -454,7 +454,7 @@ public abstract interface class me/proton/core/payment/presentation/view/ProtonP
 
 public abstract class me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field Companion Lme/proton/core/payment/presentation/viewmodel/BillingCommonViewModel$Companion;
-	public fun <init> (Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/user/domain/UserManager;)V
 	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
@@ -623,7 +623,7 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingCommonVi
 }
 
 public class me/proton/core/payment/presentation/viewmodel/BillingViewModel : me/proton/core/payment/presentation/viewmodel/BillingCommonViewModel {
-	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/user/domain/UserManager;)V
 	public final fun announcePlan ()V
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun getUserInteractionState ()Lkotlinx/coroutines/flow/SharedFlow;
@@ -753,11 +753,11 @@ public final class me/proton/core/payment/presentation/viewmodel/BillingViewMode
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
-	public static fun newInstance (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
+	public static fun newInstance (Lme/proton/core/payment/presentation/ActivePaymentProvider;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/payment/presentation/viewmodel/BillingViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/BillingViewModel_HiltModules {
@@ -789,11 +789,11 @@ public final class me/proton/core/payment/presentation/viewmodel/ObservabilityPa
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentMethods;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/country/domain/usecase/GetCountry;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel;
 }
 
 public final class me/proton/core/payment/presentation/viewmodel/PaymentOptionsViewModel_HiltModules {
