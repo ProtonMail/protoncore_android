@@ -1622,7 +1622,8 @@ public final class me/proton/core/plan/presentation/view/StorageNearlyFullCardVi
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;)V
 	public fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;I)V
 	public synthetic fun <init> (Landroid/content/Context;Landroid/util/AttributeSet;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun setOnActionButtonClicked (Lkotlin/jvm/functions/Function0;)V
+	public final fun onUpgradeAvailable (Lkotlin/jvm/functions/Function0;)V
+	public final fun onUpgradeUnavailable ()V
 	public final fun setStorageFull (Lme/proton/core/domain/entity/Product;)V
 	public final fun setStorageNearlyFull (Lme/proton/core/domain/entity/Product;)V
 }

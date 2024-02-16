@@ -61,7 +61,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     sealed class State {
         object Loading : State()
         data class UpgradeAvailable(val storageUsageState: StorageUsageState? = null) : State()
-        object UpgradeNotAvailable : State()
+        data class UpgradeNotAvailable(val storageUsageState: StorageUsageState? = null) : State()
         data class UnredeemedPurchase(val purchase: UnredeemedGooglePurchase) : State()
         data class Error(val error: Throwable) : State()
     }
@@ -96,7 +96,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     private suspend fun canUpgradeFromMobile(userId: UserId) = flow {
         emit(State.Loading)
         when (canUpgradeFromMobile.invoke(userId)) {
-            false -> emit(State.UpgradeNotAvailable)
+            false -> emit(State.UpgradeNotAvailable(storageUsageState = loadStorageUsageState(userId)))
             else -> emitAll(loadUnredeemedPurchase(userId))
         }
     }.catch { emit(State.Error(it)) }

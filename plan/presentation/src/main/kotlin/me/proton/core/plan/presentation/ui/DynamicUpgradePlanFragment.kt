@@ -105,7 +105,7 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
                 is State.Error -> onError(it.error)
                 is State.UnredeemedPurchase -> onUnredeemedPurchase()
                 is State.UpgradeAvailable -> onUpgradeAvailable(it.storageUsageState)
-                is State.UpgradeNotAvailable -> onUpgradeNotAvailable()
+                is State.UpgradeNotAvailable -> onUpgradeNotAvailable(it.storageUsageState)
             }
         }.launchInViewLifecycleScope()
 
@@ -117,7 +117,6 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
 
         binding.toolbar.setNavigationOnClickListener { onBackClicked?.invoke() }
         binding.retry.onClick { viewModel.perform(Action.Load) }
-        binding.storageFullView.setOnActionButtonClicked { scrollToFirstAvailablePlanForUpgrade() }
 
         planSelectionFragment.setOnPlanList { onPlanList() }
         planSelectionFragment.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
@@ -165,11 +164,14 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         showLoading(false)
         updateStorageUsageState(storageUsageState)
         upgradeAvailable.value = true
+        binding.storageFullView.onUpgradeAvailable { scrollToFirstAvailablePlanForUpgrade() }
     }
 
-    private fun onUpgradeNotAvailable() = with(binding) {
+    private fun onUpgradeNotAvailable(storageUsageState: StorageUsageState?) = with(binding) {
         showLoading(false)
         upgradeAvailable.value = false
+        binding.storageFullView.onUpgradeUnavailable()
+        updateStorageUsageState(storageUsageState)
     }
 
     private fun onError(error: Throwable?) = with(binding) {

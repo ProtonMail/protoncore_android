@@ -57,7 +57,11 @@ class StorageNearlyFullCardView @JvmOverloads constructor(
         }
     }
 
-    fun setOnActionButtonClicked(listener: () -> Unit) {
+    fun onUpgradeAvailable(listener: () -> Unit) {
         binding.actionButton.setOnClickListener { listener() }
+    }
+
+    fun onUpgradeUnavailable() {
+        binding.actionButton.text = context.getString(R.string.plans_can_not_upgrade_from_mobile)
     }
 }

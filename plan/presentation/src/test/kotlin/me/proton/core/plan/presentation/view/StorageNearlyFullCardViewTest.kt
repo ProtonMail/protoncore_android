@@ -46,4 +46,12 @@ class StorageNearlyFullCardViewTest {
         view.setStorageNearlyFull(Product.Mail)
         paparazzi.snapshot(view)
     }
+
+    @Test
+    fun storageNearlyFullUpgradeUnavailable() {
+        val view = StorageNearlyFullCardView(paparazzi.context)
+        view.onUpgradeUnavailable()
+        view.setStorageNearlyFull(Product.Mail)
+        paparazzi.snapshot(view)
+    }
 }
