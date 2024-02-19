@@ -32,6 +32,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.auth.domain.usecase.PerformLogin
+import me.proton.core.auth.domain.usecase.signup.SetCreateAccountSuccess
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
@@ -100,6 +101,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @MockK
     private lateinit var performLogin: PerformLogin
+
+    @MockK(relaxed = true)
+    private lateinit var setCreateAccountSuccess: SetCreateAccountSuccess
 
     @MockK(relaxed = true)
     private lateinit var challengeManager: ChallengeManager
@@ -208,6 +212,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             humanVerificationExternalInput,
             performCreateUser,
             performCreateExternalUser,
+            setCreateAccountSuccess,
             keyStoreCrypto,
             plansOrchestrator,
             paymentsOrchestrator,
@@ -279,6 +284,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     domain = any()
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -316,6 +322,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     domain = any()
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -353,6 +360,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     domain = any()
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -390,6 +398,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     domain = any()
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -428,6 +437,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     domain = any()
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -480,6 +490,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     domain = any()
                 )
             }
+            coVerify(exactly = 0) { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -506,6 +517,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -553,6 +565,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null
                 )
             }
+            coVerify(exactly = 0) { setCreateAccountSuccess.invoke() }
         }
     }
 
@@ -593,6 +606,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                     referrer = null
                 )
             }
+            coVerify { setCreateAccountSuccess.invoke() }
         }
     }
 

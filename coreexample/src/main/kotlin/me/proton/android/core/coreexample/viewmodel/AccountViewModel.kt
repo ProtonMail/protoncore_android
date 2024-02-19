@@ -39,6 +39,8 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
+import me.proton.core.accountmanager.presentation.onAccountCreateAccountFailed
+import me.proton.core.accountmanager.presentation.onAccountCreateAccountNeeded
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
 import me.proton.core.accountmanager.presentation.onAccountMigrationNeeded
@@ -113,6 +115,8 @@ class AccountViewModel @Inject constructor(
                 .onSessionSecondFactorFailed { signIn(username = it.username) }
                 .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
+                .onAccountCreateAccountNeeded { startSignupWorkflow(accountType, cancellable = false) }
+                .onAccountCreateAccountFailed { accountManager.disableAccount(it.userId) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
                 .onAccountMigrationNeeded { context.showToast("MigrationNeeded") }

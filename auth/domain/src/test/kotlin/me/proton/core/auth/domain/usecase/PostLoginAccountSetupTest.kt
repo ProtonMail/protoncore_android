@@ -26,16 +26,23 @@ import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.payment.domain.entity.Currency
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.domain.entity.Purchase
+import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.repository.PlanQuantity
+import me.proton.core.payment.domain.repository.PurchaseRepository
+import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -47,6 +54,8 @@ import kotlin.test.assertTrue
 class PostLoginAccountSetupTest {
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
     private lateinit var performSubscribe: PerformSubscribe
+    private lateinit var purchaseRepository: PurchaseRepository
+    private lateinit var planRepository: PlansRepository
     private lateinit var setupAccountCheck: SetupAccountCheck
     private lateinit var setupInternalAddress: SetupInternalAddress
     private lateinit var setupExternalAddressKeys: SetupExternalAddressKeys
@@ -69,6 +78,7 @@ class PostLoginAccountSetupTest {
     fun setUp() {
         accountWorkflowHandler = mockk()
         performSubscribe = mockk()
+        planRepository = mockk(relaxed = true)
         setupAccountCheck = mockk()
         setupExternalAddressKeys = mockk()
         setupInternalAddress = mockk()
@@ -89,9 +99,15 @@ class PostLoginAccountSetupTest {
             coEvery { refreshScopes(any()) } returns Unit
         }
 
+        purchaseRepository = mockk(relaxed = true) {
+            coEvery { getPurchases() } returns emptyList()
+        }
+
         tested = PostLoginAccountSetup(
             accountWorkflowHandler,
             performSubscribe,
+            purchaseRepository,
+            planRepository,
             setupAccountCheck,
             setupExternalAddressKeys,
             setupInternalAddress,
@@ -243,6 +259,74 @@ class PostLoginAccountSetupTest {
         assertEquals(SubscriptionCycle.YEARLY, cycle.captured)
         assertEquals(listOf("test-plan-name"), planNames.captured)
         assertEquals(ProtonPaymentToken("test-token"), paymentToken.captured)
+    }
+
+    @Test
+    fun `subscription setup with purchase`() = runTest {
+        val sessionInfo = mockSessionInfo()
+        val pendingUserId = UserId("pendingUserId")
+        val pendingSessionId = SessionId("pendingSessionId")
+        val purchase = Purchase(
+            sessionId = pendingSessionId,
+            planName = "test-plan-name",
+            planCycle = 12,
+            purchaseState = PurchaseState.Purchased,
+            purchaseFailure = null,
+            paymentProvider = PaymentProvider.GoogleInAppPurchase,
+            paymentOrderId = "orderId",
+            paymentToken = ProtonPaymentToken("test-token"),
+            paymentCurrency = Currency.EUR,
+            paymentAmount = 99
+        )
+        coEvery { purchaseRepository.getPurchases() } returns listOf(purchase)
+        coEvery { sessionManager.getUserId(pendingSessionId) } returns pendingUserId
+
+        coJustRun { accountWorkflowHandler.handleAccountReady(any()) }
+        coJustRun { accountWorkflowHandler.handleCreateAccountSuccess(any()) }
+        coEvery { setupAccountCheck.invoke(any(), any(), any(), any()) } returns SetupAccountCheck.Result.NoSetupNeeded
+        coEvery { unlockUserPrimaryKey.invoke(any(), any()) } returns UserManager.UnlockResult.Success
+
+        val result = tested.invoke(
+            sessionInfo.userId,
+            testEncryptedPassword,
+            testAccountType,
+            isSecondFactorNeeded = sessionInfo.isSecondFactorNeeded,
+            isTwoPassModeNeeded = sessionInfo.isTwoPassModeNeeded,
+            temporaryPassword = sessionInfo.temporaryPassword,
+            onSetupSuccess = onSetupSuccess
+        )
+
+        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        coVerify(exactly = 1) { onSetupSuccess() }
+
+        val userId = slot<UserId>()
+        val amount = slot<Long>()
+        val currency = slot<Currency>()
+        val cycle = slot<SubscriptionCycle>()
+        val plans = slot<PlanQuantity>()
+        val paymentToken = slot<PaymentTokenEntity>()
+        coVerify {
+            planRepository.createOrUpdateSubscription(
+                capture(userId),
+                capture(amount),
+                capture(currency),
+                capture(paymentToken),
+                codes = null,
+                capture(plans),
+                capture(cycle),
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            )
+        }
+        assertEquals(testUserId, userId.captured)
+        assertEquals(99, amount.captured)
+        assertEquals(Currency.EUR, currency.captured)
+        assertEquals(SubscriptionCycle.YEARLY, cycle.captured)
+        assertEquals(mapOf("test-plan-name" to 1), plans.captured)
+        assertEquals(PaymentTokenEntity(ProtonPaymentToken("test-token")), paymentToken.captured)
+
+        val actualPurchase = slot<Purchase>()
+        coVerify { purchaseRepository.upsertPurchase(capture(actualPurchase)) }
+        assertEquals(PurchaseState.Subscribed, actualPurchase.captured.purchaseState)
     }
 
     @Test

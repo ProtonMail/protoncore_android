@@ -1,6 +1,7 @@
 public final class me/proton/core/auth/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/auth/domain/LogTag;
 	public static final field INVALID_SRP_PROOF Ljava/lang/String;
+	public static final field PERFORM_SUBSCRIBE Ljava/lang/String;
 }
 
 public abstract class me/proton/core/auth/domain/entity/AuthInfo {
@@ -317,7 +318,7 @@ public final class me/proton/core/auth/domain/usecase/PerformSecondFactor {
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/payment/domain/repository/PurchaseRepository;Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/auth/domain/usecase/SetupAccountCheck;Lme/proton/core/auth/domain/usecase/SetupExternalAddressKeys;Lme/proton/core/auth/domain/usecase/SetupInternalAddress;Lme/proton/core/auth/domain/usecase/SetupPrimaryKeys;Lme/proton/core/auth/domain/usecase/UnlockUserPrimaryKey;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public static synthetic fun invoke$default (Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZZZLkotlin/jvm/functions/Function1;Lme/proton/core/auth/domain/entity/BillingDetails;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
@@ -551,6 +552,11 @@ public final class me/proton/core/auth/domain/usecase/signup/PerformCreateExtern
 public final class me/proton/core/auth/domain/usecase/signup/PerformCreateUser {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/srp/SrpCrypto;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Lme/proton/core/auth/domain/usecase/GetPrimaryUser;)V
 	public final fun invoke (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/CreateUserType;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/auth/domain/usecase/signup/SetCreateAccountSuccess {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;)V
+	public final fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/signup/SignupChallengeConfig : me/proton/core/challenge/domain/ChallengeConfig {

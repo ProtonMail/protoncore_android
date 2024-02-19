@@ -19,7 +19,10 @@
 package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
+import androidx.annotation.DrawableRes
 import androidx.annotation.LayoutRes
+import androidx.appcompat.widget.Toolbar
+import androidx.core.content.res.ResourcesCompat
 import com.google.android.material.snackbar.Snackbar
 import me.proton.core.auth.presentation.R
 import me.proton.core.presentation.ui.ProtonSecureFragment
@@ -62,5 +65,12 @@ abstract class SignupFragment : ProtonSecureFragment, UiComponentProductMetricsD
             actionOnClick = actionOnClick,
             length = Snackbar.LENGTH_INDEFINITE,
         )
+    }
+
+    open fun Toolbar.setNavigationIcon(@DrawableRes res: Int, visible: Boolean) {
+        navigationIcon = when {
+            visible ->  ResourcesCompat.getDrawable(resources, res, null)
+            else -> null
+        }
     }
 }

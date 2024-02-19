@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -55,15 +56,22 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupChooseUsernameBinding::bind)
 
+    private val cancellable: Boolean by lazy { requireArguments().getBoolean(ARG_INPUT_CANCELLABLE) }
+
     override fun onBackPressed() {
-        signupViewModel.onFinish()
-        activity?.finish()
+        if (cancellable) {
+            signupViewModel.onFinish()
+            activity?.finish()
+        } else {
+            showError(getString(R.string.auth_signup_error_create_to_continue))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            toolbar.setNavigationIcon(R.drawable.ic_proton_close, cancellable)
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             usernameInput.apply {
@@ -126,6 +134,18 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             nextButton.setLoading()
         } else {
             nextButton.setIdle()
+        }
+    }
+
+    companion object {
+        const val ARG_INPUT_CANCELLABLE = "arg.cancellable"
+
+        operator fun invoke(
+            cancellable: Boolean = true,
+        ) = ChooseUsernameFragment().apply {
+            arguments = bundleOf(
+                ARG_INPUT_CANCELLABLE to cancellable
+            )
         }
     }
 }

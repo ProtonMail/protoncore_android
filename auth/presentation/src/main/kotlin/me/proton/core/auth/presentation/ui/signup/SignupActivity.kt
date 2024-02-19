@@ -103,9 +103,19 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         if (savedInstanceState == null) {
             with(supportFragmentManager) {
                 when (input.creatableAccountType) {
-                    AccountType.Username -> showUsernameChooser()
-                    AccountType.Internal -> showInternalEmailChooser(input.creatableAccountType)
-                    AccountType.External -> showExternalEmailChooser(input.creatableAccountType, input.subscriptionDetails)
+                    AccountType.Username -> showUsernameChooser(
+                        cancellable = input.cancellable
+                    )
+                    AccountType.Internal -> showInternalEmailChooser(
+                        creatableAccountType = input.creatableAccountType,
+                        cancellable = input.cancellable
+                    )
+                    AccountType.External -> showExternalEmailChooser(
+                        creatableAccountType = input.creatableAccountType,
+                        cancellable = input.cancellable,
+                        email = input.email,
+                        subscriptionDetails = input.subscriptionDetails
+                    )
                 }
             }
         }

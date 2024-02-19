@@ -383,9 +383,12 @@ class AuthOrchestrator @Inject constructor() {
      */
     fun startSignupWorkflow(
         creatableAccountType: AccountType = AccountType.Internal,
-        subscriptionDetails: SubscriptionDetails? = null) {
+        cancellable: Boolean = true,
+        email: String? = null,
+        subscriptionDetails: SubscriptionDetails? = null
+    ) {
         checkRegistered(signUpWorkflowLauncher).launch(
-            SignUpInput(creatableAccountType, subscriptionDetails)
+            SignUpInput(creatableAccountType, cancellable, email, subscriptionDetails)
         )
     }
 

@@ -98,6 +98,22 @@ fun AccountManagerObserver.onAccountCreateAddressFailed(
     return this
 }
 
+fun AccountManagerObserver.onAccountCreateAccountNeeded(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.CreateAccountNeeded, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onAccountCreateAccountFailed(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.CreateAccountFailed, initialState, block)
+    return this
+}
+
 fun AccountManagerObserver.onAccountReady(
     initialState: Boolean = true,
     block: suspend (Account) -> Unit

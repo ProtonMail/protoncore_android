@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity.signup
+package me.proton.core.payment.domain.extension
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.payment.domain.entity.Purchase
+import me.proton.core.payment.domain.entity.PurchaseState
+import me.proton.core.payment.domain.repository.PurchaseRepository
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
-@Parcelize
-data class SignUpInput(
-    val creatableAccountType: AccountType,
-    val cancellable: Boolean = true,
-    val email: String? = null,
-    val subscriptionDetails: SubscriptionDetails? = null
-) : Parcelable
+@ExcludeFromCoverage
+public suspend fun PurchaseRepository.getPurchaseOrNull(
+    state: PurchaseState
+): Purchase? = getPurchases().firstOrNull { it.purchaseState == state }

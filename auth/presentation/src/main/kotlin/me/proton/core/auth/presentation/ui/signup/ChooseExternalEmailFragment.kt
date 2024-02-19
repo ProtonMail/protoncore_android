@@ -79,21 +79,35 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         AccountType.valueOf(requireNotNull(requireArguments().getString(ARG_INPUT_ACCOUNT_TYPE)))
     }
 
+    private val cancellable: Boolean by lazy {
+        requireArguments().getBoolean(ARG_INPUT_CANCELLABLE)
+    }
+
+    private val email: String? by lazy {
+        requireArguments().getString(ARG_INPUT_EMAIL)
+    }
+
     private val subscriptionDetails: SubscriptionDetails? by lazy {
         requireArguments().getParcelable(ARG_INPUT_SUBSCRIPTION_DETAILS)
     }
 
     override fun onBackPressed() {
-        signupViewModel.onFinish()
-        activity?.finish()
+        if (cancellable) {
+            signupViewModel.onFinish()
+            activity?.finish()
+        } else {
+            showError(getString(R.string.auth_signup_error_create_to_continue))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            toolbar.setNavigationIcon(R.drawable.ic_proton_close, cancellable)
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
+            emailInput.text = email
             emailInput.apply {
                 setOnFocusLostListener { _, _ ->
                     validateEmail()
@@ -139,7 +153,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     }
 
     private fun onSwitchInternal(username: String? = null, domain: String? = null) {
-        parentFragmentManager.replaceByInternalEmailChooser(creatableAccountType, username, domain)
+        parentFragmentManager.replaceByInternalEmailChooser(creatableAccountType, cancellable, username, domain)
     }
 
     private fun onExternalEmailAvailable(email: String) {
@@ -166,14 +180,20 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     companion object {
         const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
+        const val ARG_INPUT_CANCELLABLE = "arg.cancellable"
         const val ARG_INPUT_SUBSCRIPTION_DETAILS = "arg.subscriptionDetails"
+        const val ARG_INPUT_EMAIL = "arg.email"
 
         operator fun invoke(
             creatableAccountType: AccountType,
-            subscriptionDetails: SubscriptionDetails?
+            cancellable: Boolean = true,
+            email: String? = null,
+            subscriptionDetails: SubscriptionDetails? = null
         ) = ChooseExternalEmailFragment().apply {
             arguments = bundleOf(
                 ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name,
+                ARG_INPUT_CANCELLABLE to cancellable,
+                ARG_INPUT_EMAIL to email,
                 ARG_INPUT_SUBSCRIPTION_DETAILS to subscriptionDetails
             )
         }

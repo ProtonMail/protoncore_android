@@ -58,7 +58,7 @@ abstract class AccountManager(
      *
      * Note: The [Account.state] will be set to [AccountState.Disabled].
      */
-    abstract suspend fun disableAccount(userId: UserId)
+    abstract suspend fun disableAccount(userId: UserId, keepSession: Boolean = false)
 
     /**
      * Flow of persisted [Account] on this device, by userId.

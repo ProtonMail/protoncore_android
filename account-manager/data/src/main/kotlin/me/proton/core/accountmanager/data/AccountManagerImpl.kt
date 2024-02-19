@@ -74,14 +74,14 @@ class AccountManagerImpl @Inject constructor(
         }
     }
 
-    private suspend fun disableAccount(account: Account) {
+    private suspend fun disableAccount(account: Account, keepSession: Boolean) {
         accountRepository.updateAccountState(account.userId, Disabled)
-        account.sessionId?.let { removeSession(it) }
+        account.sessionId?.takeUnless { keepSession }?.let { removeSession(it) }
         userManager.lock(account.userId)
     }
 
-    private suspend fun disableAccount(sessionId: SessionId) {
-        accountRepository.getAccountOrNull(sessionId)?.let { disableAccount(it) }
+    private suspend fun disableAccount(sessionId: SessionId, keepSession: Boolean) {
+        accountRepository.getAccountOrNull(sessionId)?.let { disableAccount(it, keepSession) }
     }
 
     private suspend fun clearSessionDetails(userId: UserId) {
@@ -100,8 +100,8 @@ class AccountManagerImpl @Inject constructor(
         }
     }
 
-    override suspend fun disableAccount(userId: UserId) {
-        accountRepository.getAccountOrNull(userId)?.let { disableAccount(it) }
+    override suspend fun disableAccount(userId: UserId, keepSession: Boolean) {
+        accountRepository.getAccountOrNull(userId)?.let { disableAccount(it, keepSession) }
     }
 
     override fun getAccount(userId: UserId): Flow<Account?> =
@@ -160,7 +160,7 @@ class AccountManagerImpl @Inject constructor(
 
     override suspend fun handleSecondFactorFailed(sessionId: SessionId) {
         accountRepository.updateSessionState(sessionId, SessionState.SecondFactorFailed)
-        disableAccount(sessionId)
+        disableAccount(sessionId, keepSession = false)
     }
 
     override suspend fun handleCreateAddressNeeded(userId: UserId) {
@@ -181,6 +181,7 @@ class AccountManagerImpl @Inject constructor(
 
     override suspend fun handleCreateAccountSuccess(userId: UserId) {
         accountRepository.updateAccountState(userId, CreateAccountSuccess)
+        disableAccount(userId, keepSession = true)
     }
 
     override suspend fun handleCreateAccountFailed(userId: UserId) {

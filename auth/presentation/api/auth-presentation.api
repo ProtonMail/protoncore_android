@@ -226,8 +226,8 @@ public final class me/proton/core/auth/presentation/AuthOrchestrator {
 	public final fun startLoginWorkflow (Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;)V
 	public static synthetic fun startLoginWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun startSecondFactorWorkflow (Lme/proton/core/account/domain/entity/Account;)V
-	public final fun startSignupWorkflow (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)V
-	public static synthetic fun startSignupWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILjava/lang/Object;)V
+	public final fun startSignupWorkflow (Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)V
+	public static synthetic fun startSignupWorkflow$default (Lme/proton/core/auth/presentation/AuthOrchestrator;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILjava/lang/Object;)V
 	public final fun startTwoPassModeWorkflow (Lme/proton/core/account/domain/entity/Account;)V
 	public final fun unregister ()V
 }
@@ -1282,15 +1282,19 @@ public final class me/proton/core/auth/presentation/entity/signup/RecoveryMethod
 
 public final class me/proton/core/auth/presentation/entity/signup/SignUpInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)V
-	public synthetic fun <init> (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)V
+	public synthetic fun <init> (Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/account/domain/entity/AccountType;
-	public final fun component2 ()Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
-	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SignUpInput;Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
+	public final fun component2 ()Z
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
+	public final fun copy (Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/signup/SignUpInput;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/signup/SignUpInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCancellable ()Z
 	public final fun getCreatableAccountType ()Lme/proton/core/account/domain/entity/AccountType;
+	public final fun getEmail ()Ljava/lang/String;
 	public final fun getSubscriptionDetails ()Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1767,6 +1771,8 @@ public final class me/proton/core/auth/presentation/ui/UtilsKt {
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field ARG_INPUT_ACCOUNT_TYPE Ljava/lang/String;
+	public static final field ARG_INPUT_CANCELLABLE Ljava/lang/String;
+	public static final field ARG_INPUT_EMAIL Ljava/lang/String;
 	public static final field ARG_INPUT_SUBSCRIPTION_DETAILS Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment$Companion;
 	public fun <init> ()V
@@ -1776,7 +1782,8 @@ public final class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmai
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment$Companion {
-	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment;
+	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;)Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment;
+	public static synthetic fun invoke$default (Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment$Companion;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Lme/proton/core/auth/presentation/entity/signup/SubscriptionDetails;ILjava/lang/Object;)Lme/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseExternalEmailFragment_GeneratedInjector {
@@ -1785,6 +1792,7 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public static final field ARG_INPUT_ACCOUNT_TYPE Ljava/lang/String;
+	public static final field ARG_INPUT_CANCELLABLE Ljava/lang/String;
 	public static final field ARG_INPUT_DOMAIN Ljava/lang/String;
 	public static final field ARG_INPUT_USERNAME Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment$Companion;
@@ -1795,7 +1803,8 @@ public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmai
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment$Companion {
-	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;
+	public final fun invoke (Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;
+	public static synthetic fun invoke$default (Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment$Companion;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseInternalEmailFragment_GeneratedInjector {
@@ -1813,10 +1822,17 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
+	public static final field ARG_INPUT_CANCELLABLE Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public fun showLoading (Z)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion {
+	public final fun invoke (Z)Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment;
+	public static synthetic fun invoke$default (Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment$Companion;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment_GeneratedInjector {
@@ -2044,6 +2060,7 @@ public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment 
 	public abstract fun onBackPressed ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+	public fun setNavigationIcon (Landroidx/appcompat/widget/Toolbar;IZ)V
 	public fun showError (Ljava/lang/String;)V
 	public fun showIndefiniteError (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun showIndefiniteError$default (Lme/proton/core/auth/presentation/ui/signup/SignupFragment;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V
@@ -2852,11 +2869,11 @@ public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
-	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;Lme/proton/core/auth/domain/usecase/signup/PerformCreateUser;Lme/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/auth/domain/usecase/PerformLogin;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/domain/usecase/CanUpgradeToPaid;Lme/proton/core/plan/domain/IsDynamicPlanEnabled;Lme/proton/core/telemetry/domain/TelemetryManager;Landroidx/lifecycle/SavedStateHandle;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
+	public static fun newInstance (Lme/proton/core/humanverification/domain/HumanVerificationExternalInput;Lme/proton/core/auth/domain/usecase/signup/PerformCreateUser;Lme/proton/core/auth/domain/usecase/signup/PerformCreateExternalEmailUser;Lme/proton/core/auth/domain/usecase/signup/SetCreateAccountSuccess;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/plan/presentation/PlansOrchestrator;Lme/proton/core/payment/presentation/PaymentsOrchestrator;Lme/proton/core/auth/domain/usecase/PerformLogin;Lme/proton/core/challenge/domain/ChallengeManager;Lme/proton/core/auth/domain/usecase/signup/SignupChallengeConfig;Lme/proton/core/observability/domain/ObservabilityManager;Lme/proton/core/plan/domain/usecase/CanUpgradeToPaid;Lme/proton/core/plan/domain/IsDynamicPlanEnabled;Lme/proton/core/telemetry/domain/TelemetryManager;Landroidx/lifecycle/SavedStateHandle;)Lme/proton/core/auth/presentation/viewmodel/signup/SignupViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/signup/SignupViewModel_HiltModules {

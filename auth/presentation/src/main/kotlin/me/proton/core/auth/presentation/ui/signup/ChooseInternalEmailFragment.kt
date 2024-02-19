@@ -83,16 +83,22 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     private val username by lazy { requireArguments().getString(ARG_INPUT_USERNAME) }
     private val domain by lazy { requireArguments().getString(ARG_INPUT_DOMAIN) }
+    private val cancellable: Boolean by lazy { requireArguments().getBoolean(ARG_INPUT_CANCELLABLE) }
 
     override fun onBackPressed() {
-        signupViewModel.onFinish()
-        activity?.finish()
+        if (cancellable) {
+            signupViewModel.onFinish()
+            activity?.finish()
+        } else {
+            showError(getString(R.string.auth_signup_error_create_to_continue))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+            toolbar.setNavigationIcon(R.drawable.ic_proton_close, cancellable)
             toolbar.setNavigationOnClickListener { requireActivity().onBackPressedDispatcher.onBackPressed() }
 
             usernameInput.apply {
@@ -113,6 +119,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                     separatorView.visibility = View.GONE
                     footnoteText.visibility = View.GONE
                 }
+
                 AccountType.External -> {
                     switchButton.visibility = View.VISIBLE
                     separatorView.visibility = View.VISIBLE
@@ -131,7 +138,12 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                     is State.Processing -> showLoading(true)
                     is State.Ready -> onReady(it.username, it.domain, it.domains)
                     is State.Success -> onUsernameAvailable(it.username, it.domain)
-                    is State.Error.DomainsNotAvailable -> onDomainsNotAvailable(it.error.getUserMessage(resources))
+                    is State.Error.DomainsNotAvailable -> onDomainsNotAvailable(
+                        it.error.getUserMessage(
+                            resources
+                        )
+                    )
+
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
             }
@@ -159,7 +171,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     }
 
     private fun onSwitchClicked() {
-        parentFragmentManager.replaceByExternalEmailChooser(creatableAccountType)
+        parentFragmentManager.replaceByExternalEmailChooser(creatableAccountType, cancellable)
     }
 
     private fun onReady(username: String?, domain: String?, domains: List<Domain>) {
@@ -219,18 +231,21 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
 
     companion object {
         const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
+        const val ARG_INPUT_CANCELLABLE = "arg.cancellable"
         const val ARG_INPUT_USERNAME = "arg.username"
         const val ARG_INPUT_DOMAIN = "arg.domain"
 
         operator fun invoke(
             creatableAccountType: AccountType,
-            username: String?,
-            domain: String?
+            cancellable: Boolean = true,
+            username: String? = null,
+            domain: String? = null,
         ) = ChooseInternalEmailFragment().apply {
             arguments = bundleOf(
                 ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name,
+                ARG_INPUT_CANCELLABLE to cancellable,
                 ARG_INPUT_USERNAME to username,
-                ARG_INPUT_DOMAIN to domain
+                ARG_INPUT_DOMAIN to domain,
             )
         }
     }

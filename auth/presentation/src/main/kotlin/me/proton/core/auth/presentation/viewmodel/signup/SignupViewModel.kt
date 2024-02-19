@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
+import me.proton.core.auth.domain.usecase.signup.SetCreateAccountSuccess
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
 import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
@@ -57,15 +58,9 @@ import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
-import me.proton.core.payment.domain.entity.Currency
-import me.proton.core.payment.domain.entity.ProtonPaymentToken
-import me.proton.core.payment.domain.entity.SubscriptionCycle
-import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.plan.domain.IsDynamicPlanEnabled
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
-import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
@@ -73,7 +68,6 @@ import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.telemetry.domain.TelemetryContext
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.user.domain.entity.createUserType
-import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.catchWhen
 import me.proton.core.util.kotlin.coroutine.withResultContext
 import javax.inject.Inject
@@ -83,6 +77,7 @@ internal class SignupViewModel @Inject constructor(
     private val humanVerificationExternalInput: HumanVerificationExternalInput,
     private val performCreateUser: PerformCreateUser,
     private val performCreateExternalEmailUser: PerformCreateExternalEmailUser,
+    private val setCreateAccountSuccess: SetCreateAccountSuccess,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val plansOrchestrator: PlansOrchestrator,
     private val paymentsOrchestrator: PaymentsOrchestrator,
@@ -262,7 +257,7 @@ internal class SignupViewModel @Inject constructor(
                 referrer = null,
                 type = currentAccountType.createUserType(),
                 domain = domain
-            )
+            ).also { setCreateAccountSuccess() }
         }
         emit(State.CreateUserSuccess(result.id, username, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {
@@ -282,7 +277,7 @@ internal class SignupViewModel @Inject constructor(
                 email = externalEmail,
                 password = encryptedPassword,
                 referrer = null
-            )
+            ).also { setCreateAccountSuccess() }
         }
         emit(State.CreateUserSuccess(userId.id, externalEmail, encryptedPassword))
     }.catchWhen(Throwable::userAlreadyExists) {

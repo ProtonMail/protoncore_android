@@ -19,14 +19,24 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
+import me.proton.core.payment.domain.entity.PaymentTokenEntity
+import me.proton.core.payment.domain.entity.PurchaseState
+import me.proton.core.payment.domain.entity.SubscriptionCycle
+import me.proton.core.payment.domain.extension.getPurchaseOrNull
+import me.proton.core.payment.domain.repository.PurchaseRepository
+import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 /**
@@ -35,6 +45,8 @@ import javax.inject.Inject
 class PostLoginAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val performSubscribe: PerformSubscribe,
+    private val purchaseRepository: PurchaseRepository,
+    private val planRepository: PlansRepository,
     private val setupAccountCheck: SetupAccountCheck,
     private val setupExternalAddressKeys: SetupExternalAddressKeys,
     private val setupInternalAddress: SetupInternalAddress,
@@ -83,21 +95,10 @@ class PostLoginAccountSetup @Inject constructor(
         billingDetails: BillingDetails? = null,
         internalAddressDomain: String? = null
     ): Result {
-        // Subscribe to any pending subscription/billing.
-        // TODO: Add If any Purchase in Purchased state for this userId -> use it.
-        if (billingDetails != null) {
-            runCatching {
-                performSubscribe(
-                    userId = userId,
-                    amount = billingDetails.amount,
-                    currency = billingDetails.currency,
-                    cycle = billingDetails.cycle,
-                    planNames = listOf(billingDetails.planName),
-                    paymentToken = billingDetails.token,
-                    subscriptionManagement = billingDetails.subscriptionManagement
-                )
-            }
-        }
+        // Flows not using PurchaseStateHandler pass billingDetails.
+        subscribeAnyPendingBilling(billingDetails, userId)
+        // Flows using PurchaseStateHandler drop a Purchase off.
+        subscribeAnyPendingPurchase(userId)
 
         // If SecondFactorNeeded, we cannot proceed without.
         if (isSecondFactorNeeded) {
@@ -155,6 +156,51 @@ class PostLoginAccountSetup @Inject constructor(
                     onSetupSuccess
                 )
             }
+        }
+    }
+
+    private suspend fun subscribeAnyPendingBilling(
+        billingDetails: BillingDetails?,
+        userId: UserId
+    ) {
+        if (billingDetails != null) runCatching {
+            performSubscribe(
+                userId = userId,
+                amount = billingDetails.amount,
+                currency = billingDetails.currency,
+                cycle = billingDetails.cycle,
+                planNames = listOf(billingDetails.planName),
+                paymentToken = billingDetails.token,
+                subscriptionManagement = billingDetails.subscriptionManagement
+            )
+        }.onFailure {
+            CoreLogger.e(LogTag.PERFORM_SUBSCRIBE, it)
+        }
+    }
+
+    private suspend fun subscribeAnyPendingPurchase(userId: UserId) {
+        val purchase = purchaseRepository.getPurchaseOrNull(PurchaseState.Purchased)
+        if (purchase != null) runCatching {
+            planRepository.createOrUpdateSubscription(
+                sessionUserId = userId,
+                amount = purchase.paymentAmount,
+                currency = purchase.paymentCurrency,
+                payment = PaymentTokenEntity(requireNotNull(purchase.paymentToken)),
+                codes = null,
+                plans = listOf(purchase.planName).associateWith { MAX_PLAN_QUANTITY },
+                cycle = SubscriptionCycle.map[purchase.planCycle] ?: SubscriptionCycle.OTHER,
+                subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
+            )
+        }.onSuccess {
+            purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Subscribed))
+        }.onFailure {
+            CoreLogger.e(LogTag.PERFORM_SUBSCRIBE, it)
+            purchaseRepository.upsertPurchase(
+                purchase.copy(
+                    purchaseFailure = it.localizedMessage,
+                    purchaseState = PurchaseState.Failed
+                )
+            )
         }
     }
 

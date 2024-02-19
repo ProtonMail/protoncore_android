@@ -20,4 +20,5 @@ package me.proton.core.auth.domain
 
 object LogTag {
     const val INVALID_SRP_PROOF = "core.auth.domain.srp.invalid.server.proof"
+    const val PERFORM_SUBSCRIBE = "core.auth.domain.perform.subscribe"
 }
