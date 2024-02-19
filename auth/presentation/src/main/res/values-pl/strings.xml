@@ -154,5 +154,5 @@
   <string name="auth_credentialless_vpn_title">Witaj w Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Przeglądaj prywatnie Internet, uzyskaj dostęp do zablokowanych treści i ciesz się cyfrową wolnością.</string>
   <string name="auth_credentialless_guest_button">Kontynuuj jako gość</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Korzystając z aplikacji, akceptujesz <annotation link="terms">Regulamin</annotation>.</string>
 </resources>

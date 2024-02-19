@@ -51,7 +51,7 @@
   <string name="auth_help_option_forgot_username">ユーザー名をお忘れですか？</string>
   <string name="auth_help_option_forgot_password">パスワードを忘れた</string>
   <string name="auth_help_option_other">その他のサインインに関する問題</string>
-  <string name="auth_help_other">問題が解決しませんか? 直接お問い合わせる。</string>
+  <string name="auth_help_other">問題が解決しませんか？ 私達に直接お問い合わせください。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
   <string name="auth_2fa_title">2 要素認証</string>
   <string name="auth_2fa_label">2 要素認証コード</string>
@@ -150,9 +150,9 @@
   <string name="auth_signup_start_using_vpn">Proton VPN を使い始める</string>
   <string name="auth_signup_start_using_pass">Proton Pass を使い始める</string>
   <string name="auth_signup_error_validation_recovery_destination">リカバリ先が無効です。</string>
-  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_credentialless_vpn_no_logs">認証済みのノーログVPN</string>
   <string name="auth_credentialless_vpn_title">Proton VPNへようこそ</string>
-  <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
-  <string name="auth_credentialless_guest_button">Continue as guest</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_credentialless_vpn_subtitle">プライベートなブラウジング、ブロックされたコンテンツへのアクセス、デジタルの自由を楽しんでください。</string>
+  <string name="auth_credentialless_guest_button">ゲストとして続ける</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">このアプリを使用することで私達の<annotation link="terms">利用規約</annotation>に同意したことになります。</string>
 </resources>

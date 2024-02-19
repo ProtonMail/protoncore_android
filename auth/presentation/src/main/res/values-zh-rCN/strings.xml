@@ -150,9 +150,9 @@
   <string name="auth_signup_start_using_vpn">开始使用 Proton VPN</string>
   <string name="auth_signup_start_using_pass">开始使用 Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">密保方式无效。</string>
-  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_credentialless_vpn_no_logs">经过认证的无日志 VPN</string>
   <string name="auth_credentialless_vpn_title">欢迎使用 Proton VPN</string>
-  <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
-  <string name="auth_credentialless_guest_button">Continue as guest</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_credentialless_vpn_subtitle">私密浏览，访问被屏蔽的内容，享受数字自由。</string>
+  <string name="auth_credentialless_guest_button">以宾客身份继续</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">使用本应用程序即表示您接受我们的<annotation link="terms">服务条款</annotation>。</string>
 </resources>

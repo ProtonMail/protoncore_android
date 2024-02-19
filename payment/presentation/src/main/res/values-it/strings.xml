@@ -21,7 +21,7 @@
   <string name="payments_general_error">Si è verificato un errore.</string>
   <string name="payments_no_connectivity">Nessuna connessione per visualizzare la pagina di conferma del 3DS.</string>
   <string name="payments_3ds_not_approved">L\'approvazione 3DS è stata rifiutata.</string>
-  <string name="payments_error_card_name">Nome sulla carta richiesto.</string>
+  <string name="payments_error_card_name">Nome sulla carta necessario.</string>
   <string name="payments_error_card_number">Numero della carta non valido.</string>
   <string name="payments_error_cvc">Inserisci un codice di sicurezza valido.</string>
   <string name="payments_error_session">È necessario un ID di sessione valido quando si iscrive un utente che ha effettuato l\'accesso.</string>
@@ -32,7 +32,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Scegli il tuo metodo di pagamento</string>
-  <string name="payments_add_credit_debit_card">Aggiungi nuova carta di credito/debito</string>
+  <string name="payments_add_credit_debit_card">Aggiungi una nuova carta di credito/debito</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga con</string>
   <string name="payments_method_icon">Icona del metodo di pagamento.</string>
@@ -53,8 +53,8 @@
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Paese</string>
   <string name="payments_get_plan">Ottieni il piano %s</string>
-  <string name="payments_paying_in_process">Pagamento</string>
-  <string name="payments_choose_country">Seleziona paese</string>
+  <string name="payments_paying_in_process">Pagamento in corso</string>
+  <string name="payments_choose_country">Seleziona il paese</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Scade %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
   <string name="payments_info_not_available">non disponibile</string>

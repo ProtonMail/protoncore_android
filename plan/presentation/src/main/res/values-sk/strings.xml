@@ -61,12 +61,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Z mobilnej aplikácie nie je možné inovovať.</string>
   <string name="plans_no_upgrade_available">Momentálne nie je k dispozícii žiadna inovácia.</string>
   <string name="plans_limited_offer">Časovo limitovaná ponuka</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
+  <string name="plans_subscription_base_storage_full_title">Vaše Mail úložisko je plné</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Vaše Mail úložisko je takmer plné</string>
+  <string name="plans_subscription_drive_storage_full_title">Vaše úložisko Disku je plné</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Vaše úložisko Disku je takmer plné</string>
   <string name="plans_subscription_storage_get_more">Získať viac úložného priestoru</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Ak chcete pokračovať v používaní svojho účtu bez prerušenia, aktualizujte svoj plán.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložisko</item>
@@ -196,7 +196,7 @@
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
   <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Get more storage</string>
+  <string name="upgrade_storage_subtitle">Získať viac úložného priestoru</string>
   <string name="upgrade_storage_cta_button">Upgrade</string>
   <!-- endregion -->
 </resources>

@@ -115,8 +115,8 @@
   <string name="auth_signup_next">Далей</string>
   <string name="auth_signup_choose_password">Стварыць пароль</string>
   <string name="auth_signup_repeat_password">Паўтарыце пароль</string>
-  <string name="auth_signup_recovery_method_title">Задаць метад аднаўлення (неабавязкова)</string>
-  <string name="auth_signup_recovery_method_title_mandatory">Задаць метад аднаўлення</string>
+  <string name="auth_signup_recovery_method_title">Задаць спосаб аднаўлення (неабавязкова)</string>
+  <string name="auth_signup_recovery_method_title_mandatory">Задаць спосаб аднаўлення</string>
   <string name="auth_signup_recovery_method_subtitle">Мы адправім вам інструкцыі для аднаўлення на гэты адрас электроннай пошты або на нумар тэлефона, калі вы не зможаце атрымаць доступ да свайго ўліковага запісу.</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">Мы адправім вам інструкцыі для аднаўлення на гэты адрас электроннай пошты, калі вы не зможаце атрымаць доступ да свайго ўліковага запісу.</string>
   <string name="auth_signup_recovery_method_email">Электронная пошта</string>
@@ -125,10 +125,10 @@
   <string name="auth_signup_recovery_method_phone_hint">Нумар тэлефона для аднаўлення доступу</string>
   <string name="auth_signup_terms_conditions">Умовы выкарыстання</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Націскаючы кнопку \"Далей\", вы пагаджаецеся з <annotation link="terms">Умовамі выкарыстання.</annotation> Proton.</string>
-  <string name="auth_signup_skip_recovery_title">Прапусціць метад аднаўлення?</string>
-  <string name="auth_signup_skip_recovery_description">Метад аднаўлення дапаможа атрымаць доступ да вашага ўліковага запісу ў выпадку, калі вы забудзеце пароль або заблакіруеце ўліковы запіс.</string>
+  <string name="auth_signup_skip_recovery_title">Прапусціць спосаб аднаўлення?</string>
+  <string name="auth_signup_skip_recovery_description">Спосаб аднаўлення дапаможа атрымаць доступ да вашага ўліковага запісу ў выпадку, калі вы забудзеце пароль або заблакіруеце ўліковы запіс.</string>
   <string name="auth_signup_skip_recovery">Прапусціць</string>
-  <string name="auth_signup_set_recovery">Задаць метад аднаўлення</string>
+  <string name="auth_signup_set_recovery">Задаць спосаб аднаўлення</string>
   <string name="auth_signup_no_connectivity">Няма падключэння, каб паказаць умовы выкарыстання.</string>
   <string name="auth_signup_error_username_blank">Поле з імем карыстальніка не можа быць пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі не супадаюць.</string>
@@ -149,7 +149,7 @@
   <string name="auth_signup_start_using_drive">Пачаць выкарыстоўваць Proton Drive</string>
   <string name="auth_signup_start_using_vpn">Пачаць выкарыстоўваць Proton VPN</string>
   <string name="auth_signup_start_using_pass">Пачаць выкарыстоўваць Proton Pass</string>
-  <string name="auth_signup_error_validation_recovery_destination">Памылковы метад аднаўлення доступу.</string>
+  <string name="auth_signup_error_validation_recovery_destination">Памылковы спосаб аднаўлення доступу.</string>
   <string name="auth_credentialless_vpn_no_logs">Сертыфікаваны VPN без журналаў</string>
   <string name="auth_credentialless_vpn_title">Вітаем у Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Прыватны прагляд, доступ да заблакіраванага змесціва і задавальненне ад лічбавай свабоды.</string>

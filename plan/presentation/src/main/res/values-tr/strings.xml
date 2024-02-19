@@ -164,9 +164,9 @@
   <string name="ten_hide_my_email_aliases">10 Hide My Email takma adı</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Get more storage</string>
-  <string name="upgrade_storage_cta_button">Upgrade</string>
+  <string name="upgrade_storage_current_drive_storage">Drive depolama alanı: %%%d dolu</string>
+  <string name="upgrade_storage_current_mail_storage">Mail depolama alanı: %%%d dolu</string>
+  <string name="upgrade_storage_subtitle">Daha fazla depolama alanı edinin</string>
+  <string name="upgrade_storage_cta_button">Yükselt</string>
   <!-- endregion -->
 </resources>

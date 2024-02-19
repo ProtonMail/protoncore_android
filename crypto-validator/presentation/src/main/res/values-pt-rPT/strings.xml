@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="crypto_keystore_error_title">Erro de encriptação</string>
-  <string name="crypto_keystore_error_message">Este dispositivo utiliza uma implementação defeituosa do Android Keystore, que utilizamos para manter os seus dados seguros. Isto significa que os seus dados podem ser comprometidos se um atacante tiver acesso físico a este dispositivo. O que é que gostaria de fazer?</string>
+  <string name="crypto_keystore_error_message">Este dispositivo utiliza uma implementação defeituosa do Android Keystore, que utilizamos para manter os seus dados seguros. Isto significa que os seus dados podem ser comprometidos se um atacante tiver acesso físico a este dispositivo. O que gostaria de fazer?</string>
   <string name="crypto_keystore_error_continue_action">Continuar</string>
   <string name="crypto_keystore_error_more_info_action">Obter mais informação</string>
   <string name="crypto_keystore_error_logout_action">Terminar sessão</string>

@@ -24,8 +24,8 @@
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">por mês</string>
   <string name="plan_price_annually">por ano</string>
-  <string name="plans_current_plan">Plano actual</string>
-  <string name="plans_upgrade_plan">Actualizar o seu plano</string>
+  <string name="plans_current_plan">Plano atual</string>
+  <string name="plans_upgrade_plan">Atualizar o seu plano</string>
   <string name="plans_subscription">Subscrição</string>
   <string name="plans_renewal_date">O seu plano será automaticamente renovado em &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">O seu plano expirará em &lt;b&gt;%s&lt;/b&gt;</string>
@@ -37,7 +37,7 @@
     <item quantity="other">Pagar por %d meses</item>
   </plurals>
   <string name="plans_billed_yearly">*Faturação anual a %s</string>
-  <string name="plans_billed_monthly">Faturação  mensal</string>
+  <string name="plans_billed_monthly">Faturação mensal</string>
   <string name="plans_billing_monthly">Por 1 mês</string>
   <string name="plans_billing_yearly">Por 1 ano</string>
   <string name="plans_billing_two_years">Por 2 anos</string>
@@ -45,8 +45,8 @@
     <item quantity="one">Por %d mês</item>
     <item quantity="other">Por %d meses</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Actualizar o seu plano</string>
-  <string name="plans_proton_for_free">Obtenha Proton gratuitamente</string>
+  <string name="plans_upgrade_your_plan">Atualizar o seu plano</string>
+  <string name="plans_proton_for_free">Obter a Proton gratuitamente</string>
   <string name="plans_get_proton">Obter %s</string>
   <string name="plans_manage_your_subscription">Gere a sua subscrição em <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s de %2$s</string>
@@ -54,7 +54,7 @@
   <string name="plans_manage_your_subscription_google">A sua subscrição é gerida pelo Google Play.</string>
   <string name="plans_manage_your_subscription_other">Não é possível gerir a sua subscrição na aplicação móvel.</string>
   <string name="plans_autorenew_subscriptions">Apenas as subscrições anuais de renovação automática estão disponíveis através desta aplicação.</string>
-  <string name="plans_can_not_upgrade_from_mobile">Não é possível actualizar a partir da aplicação móvel.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Não é possível atualizar a partir da aplicação móvel.</string>
   <string name="plans_no_upgrade_available">Não existe atualização atualmente disponível.</string>
   <string name="plans_limited_offer">Oferta por tempo limitado</string>
   <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
@@ -81,8 +81,8 @@
     <item quantity="other">#proton_addresses# endereços de e-mail</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# endereço/utilizador</item>
-    <item quantity="other">#proton_addresses# endereços/utilizador</item>
+    <item quantity="one">#proton_addresses# endereço / utilizador</item>
+    <item quantity="other">#proton_addresses# endereços / utilizador</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d de #proton_addresses# endereço</item>
@@ -166,7 +166,7 @@
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
   <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Get more storage</string>
+  <string name="upgrade_storage_subtitle">Obter mais espaço de armazenamento</string>
   <string name="upgrade_storage_cta_button">Upgrade</string>
   <!-- endregion -->
 </resources>

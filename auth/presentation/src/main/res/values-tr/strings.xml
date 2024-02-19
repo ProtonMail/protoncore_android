@@ -153,6 +153,6 @@
   <string name="auth_credentialless_vpn_no_logs">Kayıt tutmadığı belgelenmiş VPN</string>
   <string name="auth_credentialless_vpn_title">Proton VPN hizmetine hoş geldiniz</string>
   <string name="auth_credentialless_vpn_subtitle">Gizliliğinizi koruyarak gezinin, engellenen içeriğe erişin ve dijital özgürlüğün tadını çıkarın.</string>
-  <string name="auth_credentialless_guest_button">Misafir olarak devam et</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Bu uygulamayı kullanarak <annotation link="terms">Hüküm ve Koşullarımızı</annotation> kabul etmiş sayılırsınız.</string>
+  <string name="auth_credentialless_guest_button">Konuk olarak ilerle</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Bu uygulamayı kullanarak <annotation link="terms">Hüküm ve Koşullarımızı</annotation> kabul etmiş olursunuz.</string>
 </resources>

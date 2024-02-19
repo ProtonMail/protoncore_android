@@ -25,7 +25,7 @@
   <string name="sms_hint">XX XXX XX XX</string>
   <!-- TODO: update correct strings below -->
   <string name="human_verification_help_manual_title">Richiedi un invito</string>
-  <string name="human_verification_help_manual">Se stai avendo problemi con la creazione del tuo account, chiedi un invito e ti risponderemo entro 1 giorno lavorativo.</string>
+  <string name="human_verification_help_manual">Se stai avendo problemi con la creazione del tuo account, richiedi un invito e ti risponderemo entro 1 giorno lavorativo.</string>
   <string name="human_verification_help_website_title">Visita il nostro Centro Assistenza</string>
   <string name="human_verification_help_website">Scopri di più sulla verifica umana e sul motivo per cui la chiediamo.</string>
 </resources>

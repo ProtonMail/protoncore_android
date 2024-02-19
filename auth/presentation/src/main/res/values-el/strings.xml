@@ -154,5 +154,5 @@
   <string name="auth_credentialless_vpn_title">Καλώς ήρθατε στο Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Περιηγηθείτε ιδιωτικά, αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο και απολαύστε ψηφιακή ελευθερία.</string>
   <string name="auth_credentialless_guest_button">Συνέχιση ως επισκέπτης</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Χρησιμοποιώντας αυτήν την εφαρμογή αποδέχεστε τους <annotation link="terms">Όρους και Προϋποθέσεις</annotation> μας.</string>
 </resources>

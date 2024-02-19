@@ -57,12 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">A mobil alkalmazásból a csomag nem változtatható.</string>
   <string name="plans_no_upgrade_available">Jelenleg nincs elérhető frissítés</string>
   <string name="plans_limited_offer">Korlátozott idejű ajánlat</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
+  <string name="plans_subscription_base_storage_full_title">A levelezési tárhelye megtelt</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">A levelezési tárhelye majdnem megtelt</string>
+  <string name="plans_subscription_drive_storage_full_title">A drive tárhelye megtelt</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">A drive tárhelye majdnem megtelt</string>
   <string name="plans_subscription_storage_get_more">További tárhely igénylése</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Frissítse csomagját, hogy továbbra is megszakítás nélkül használhassa fiókját.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# tárhely</item>
@@ -166,7 +166,7 @@
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
   <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Get more storage</string>
+  <string name="upgrade_storage_subtitle">További tárhely igénylése</string>
   <string name="upgrade_storage_cta_button">Upgrade</string>
   <!-- endregion -->
 </resources>

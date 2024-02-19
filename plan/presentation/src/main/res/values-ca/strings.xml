@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="plans_select_a_plan">Seleccioneu un pla</string>
+  <string name="plans_select_a_plan">Seleccioni un pla</string>
   <string name="plans_select_a_plan_subtitle">Un pla per a tots els serveis de Proton</string>
   <string name="plans_fetching_general_error">S\'ha produït un error al carregar els plans.</string>
   <string name="plans_payment_error">S\'ha produït un error de pagament. Torna-ho a provar més tard o crea un pla gratuït.</string>
@@ -57,12 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">No podeu millorar el pla des de l\'aplicació mòbil.</string>
   <string name="plans_no_upgrade_available">No hi ha actualitzacions disponibles actualment.</string>
   <string name="plans_limited_offer">Oferta temporal limitada.</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
+  <string name="plans_subscription_base_storage_full_title">El seu espai de correu és ple.</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">El seu espai de correu és gairebé ple</string>
+  <string name="plans_subscription_drive_storage_full_title">El seu espai a Drive és ple</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">El seu espai a Drive és gairebé ple</string>
   <string name="plans_subscription_storage_get_more">Aconseguiu més emmagatzematge</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Actualitzi el seu pla per continuar usant el seu compte sense interrupcions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# emmagatzematge</item>
@@ -164,9 +164,9 @@
   <string name="ten_hide_my_email_aliases">10 àlies de Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Get more storage</string>
+  <string name="upgrade_storage_current_drive_storage">Emmagatzematge: %d%% ple</string>
+  <string name="upgrade_storage_current_mail_storage">Espai de correu: %d%% ple</string>
+  <string name="upgrade_storage_subtitle">Aconseguiu més emmagatzematge</string>
   <string name="upgrade_storage_cta_button">Millora</string>
   <!-- endregion -->
 </resources>

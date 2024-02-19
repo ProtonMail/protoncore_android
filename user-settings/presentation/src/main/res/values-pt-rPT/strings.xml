@@ -35,19 +35,19 @@
   <string name="settings_password_management_change_login_password">Alterar a palavra-passe</string>
   <string name="settings_password_management_change_mailbox_password">Alterar a palavra-passe da caixa de correio</string>
   <string name="settings_password_management_header">Gestão de palavras-passe</string>
-  <string name="settings_login_password_hint_current">Palavra passe de início de sessão actual</string>
+  <string name="settings_login_password_hint_current">Palavra passe de início de sessão atual</string>
   <string name="settings_login_password_hint_new">Nova palavra-passe de início</string>
   <string name="settings_login_password_hint_new_confirm">Confirmar nova palavra-passe de início de sessão</string>
   <string name="settings_mailbox_password_hint_new">Nova palavra-passe da caixa de correio</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirmar a nova palavra-passe da caixa de correio</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da palavra-passe.</string>
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação alterado</string>
-  <string name="settings_password_management_success">Palavra-passe actualizada</string>
-  <string name="settings_password_management_login_password_success">Palavra-passe de início de sessão actualizada</string>
-  <string name="settings_password_management_mailbox_password_success">A palavra-passe da caixa de correio foi actualizada.</string>
+  <string name="settings_password_management_success">Palavra-passe atualizada</string>
+  <string name="settings_password_management_login_password_success">Palavra-passe de início de sessão atualizada</string>
+  <string name="settings_password_management_mailbox_password_success">A palavra-passe da caixa de correio foi atualizada.</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">Telemetria anônima</string>
+  <string name="device_settings_telemetry_title">Telemetria anónima</string>
   <string name="device_settings_telemetry_hint">Para melhorar os nossos serviços, por vezes recolhemos dados de utilização anónimos.</string>
-  <string name="device_settings_crashreport_title">Relatórios anônimos de erros</string>
+  <string name="device_settings_crashreport_title">Relatórios anónimos de erros</string>
   <string name="device_settings_crashreport_hint">Se a aplicação não funcionar, será enviado um relatório aos nossos engenheiros com detalhes sobre a causa. Só os utilizaremos para melhorar a aplicação.</string>
 </resources>

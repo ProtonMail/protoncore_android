@@ -153,6 +153,6 @@
   <string name="auth_credentialless_vpn_no_logs">Certificeret VPN uden logning</string>
   <string name="auth_credentialless_vpn_title">Velkommen til Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Browse privat, få adgang til blokeret indhold, og nyd digital frihed.</string>
-  <string name="auth_credentialless_guest_button">Continue as guest</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_credentialless_guest_button">Forsæt som gæst</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved brug af denne applikation accepterer du vores <annotation link="terms">Vilkår og betingelser</annotation>.</string>
 </resources>

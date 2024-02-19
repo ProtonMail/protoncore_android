@@ -18,10 +18,10 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">S\'ha sol·licitat un restabliment de la contrasenya.</string>
+  <string name="account_recovery_grace_period_info_title">Restabliment de contrasenya sol·licitat.</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="one">Ha estat sol·licitat un restabliment de contrasenya per a <b>%1$s</b>. Podrà canviar la seva contrasenya d\'aquí a %2$d hores.\n\nSi no ha estat vostè qui ha fet la sol·licitud, cancel·li-la ara.</item>
+    <item quantity="other">Ha estat sol·licitat un restabliment de contrasenya per a <b>%1$s</b>. Podrà canviar la seva contrasenya d\'aquí a %2$d hores.\n\nSi no ha estat vostè qui ha fet la sol·licitud, cancel·li-la ara.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Cancel·la el restabliment de contrasenya?</string>
@@ -32,13 +32,13 @@
   <string name="account_recovery_cancel_back">Torna</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">S\'ha cancel·lat el restabliment de la contrasenya.</string>
-  <string name="account_recovery_cancelled_subtitle">If you never asked to change your password, your account could be at risk.\n\nSecure your account by changing your password.</string>
+  <string name="account_recovery_cancelled_subtitle">Si no ha sol·licitat mai canviar la seva contrasenya, el seu compte pot estar en risc.\n\n Asseguri el seu compte canviant la contrasenya.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">El restabliment de la contrasenya està disponible.</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+  <string name="account_recovery_password_started_subtitle">Per restablir la seva contrasenya, torni al dispositiu i al navegador des d\'on va sol·licitar el canvi de contrasenya.\n\n Necessitarà fer-ho abans de %s.\n\n Si no ha demanat canviar la contrasenya, cancel·li ara la sol·licitud.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">S\'ha caducat el restabliment de la contrasenya.</string>
-  <string name="account_recovery_window_ended_subtitle">You’ll need to request a new password reset for %s.</string>
+  <string name="account_recovery_window_ended_subtitle">Necessitarà sol·licitar un restabliment de contrasenya per a %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Cancel·la la petició</string>
   <string name="account_recovery_dismiss">Entesos</string>
