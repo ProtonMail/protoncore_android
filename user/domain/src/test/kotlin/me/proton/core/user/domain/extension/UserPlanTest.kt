@@ -43,9 +43,14 @@ class UserPlanTest {
         every { subscribed } returns MASK_VPN
     }
 
-    private val userMailAndVpn = mockk<User> {
-        every { services } returns MASK_MAIL + MASK_VPN
-        every { subscribed } returns MASK_MAIL + MASK_VPN
+    private val userDrive = mockk<User> {
+        every { services } returns MASK_DRIVE
+        every { subscribed } returns MASK_DRIVE
+    }
+
+    private val userMailAndVpnAndDrive = mockk<User> {
+        every { services } returns MASK_MAIL + MASK_VPN + MASK_DRIVE
+        every { subscribed } returns MASK_MAIL + MASK_VPN + MASK_DRIVE
     }
 
     @Test
@@ -53,7 +58,8 @@ class UserPlanTest {
         assertFalse(userNone.hasService())
         assertTrue(userMail.hasService())
         assertTrue(userVpn.hasService())
-        assertTrue(userMailAndVpn.hasService())
+        assertTrue(userDrive.hasService())
+        assertTrue(userMailAndVpnAndDrive.hasService())
     }
 
     @Test
@@ -61,7 +67,8 @@ class UserPlanTest {
         assertFalse(userNone.hasServiceForMail())
         assertTrue(userMail.hasServiceForMail())
         assertFalse(userVpn.hasServiceForMail())
-        assertTrue(userMailAndVpn.hasServiceForMail())
+        assertFalse(userDrive.hasServiceForMail())
+        assertTrue(userMailAndVpnAndDrive.hasServiceForMail())
     }
 
     @Test
@@ -69,7 +76,17 @@ class UserPlanTest {
         assertFalse(userNone.hasServiceForVpn())
         assertFalse(userMail.hasServiceForVpn())
         assertTrue(userVpn.hasServiceForVpn())
-        assertTrue(userMailAndVpn.hasServiceForVpn())
+        assertFalse(userDrive.hasServiceForVpn())
+        assertTrue(userMailAndVpnAndDrive.hasServiceForVpn())
+    }
+
+    @Test
+    fun hasServiceForDrive() = runTest {
+        assertFalse(userNone.hasServiceForDrive())
+        assertFalse(userMail.hasServiceForDrive())
+        assertFalse(userVpn.hasServiceForDrive())
+        assertTrue(userDrive.hasServiceForDrive())
+        assertTrue(userMailAndVpnAndDrive.hasServiceForDrive())
     }
 
     @Test
@@ -77,7 +94,8 @@ class UserPlanTest {
         assertFalse(userNone.hasSubscription())
         assertTrue(userMail.hasSubscription())
         assertTrue(userVpn.hasSubscription())
-        assertTrue(userMailAndVpn.hasSubscription())
+        assertTrue(userDrive.hasSubscription())
+        assertTrue(userMailAndVpnAndDrive.hasSubscription())
     }
 
     @Test
@@ -85,7 +103,8 @@ class UserPlanTest {
         assertFalse(userNone.hasSubscriptionForMail())
         assertTrue(userMail.hasSubscriptionForMail())
         assertFalse(userVpn.hasSubscriptionForMail())
-        assertTrue(userMailAndVpn.hasSubscriptionForMail())
+        assertFalse(userDrive.hasSubscriptionForMail())
+        assertTrue(userMailAndVpnAndDrive.hasSubscriptionForMail())
     }
 
     @Test
@@ -93,6 +112,16 @@ class UserPlanTest {
         assertFalse(userNone.hasSubscriptionForVpn())
         assertFalse(userMail.hasSubscriptionForVpn())
         assertTrue(userVpn.hasSubscriptionForVpn())
-        assertTrue(userMailAndVpn.hasSubscriptionForVpn())
+        assertFalse(userDrive.hasSubscriptionForVpn())
+        assertTrue(userMailAndVpnAndDrive.hasSubscriptionForVpn())
+    }
+
+    @Test
+    fun hasSubscriptionForDrive() = runTest {
+        assertFalse(userNone.hasSubscriptionForDrive())
+        assertFalse(userMail.hasSubscriptionForDrive())
+        assertFalse(userVpn.hasSubscriptionForDrive())
+        assertTrue(userDrive.hasSubscriptionForDrive())
+        assertTrue(userMailAndVpnAndDrive.hasSubscriptionForDrive())
     }
 }

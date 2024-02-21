@@ -460,9 +460,11 @@ public final class me/proton/core/user/domain/extension/UserKt {
 
 public final class me/proton/core/user/domain/extension/UserPlanKt {
 	public static final fun hasService (Lme/proton/core/user/domain/entity/User;)Z
+	public static final fun hasServiceForDrive (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasServiceForMail (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasServiceForVpn (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasSubscription (Lme/proton/core/user/domain/entity/User;)Z
+	public static final fun hasSubscriptionForDrive (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasSubscriptionForMail (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasSubscriptionForVpn (Lme/proton/core/user/domain/entity/User;)Z
 }

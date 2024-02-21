@@ -21,6 +21,7 @@ package me.proton.core.user.domain.extension
 import me.proton.core.user.domain.entity.User
 
 internal const val MASK_MAIL = 1 // 0001
+internal const val MASK_DRIVE = 2 // 0010
 internal const val MASK_VPN = 4 // 0100
 
 private fun User.hasServiceFor(mask: Int): Boolean = mask.and(services) == mask
@@ -31,6 +32,8 @@ fun User.hasSubscription(): Boolean = subscribed > 0
 
 fun User.hasServiceForMail(): Boolean = hasServiceFor(MASK_MAIL)
 fun User.hasServiceForVpn(): Boolean = hasServiceFor(MASK_VPN)
+fun User.hasServiceForDrive(): Boolean = hasServiceFor(MASK_DRIVE)
 
 fun User.hasSubscriptionForMail(): Boolean = hasSubscriptionFor(MASK_MAIL)
 fun User.hasSubscriptionForVpn(): Boolean = hasSubscriptionFor(MASK_VPN)
+fun User.hasSubscriptionForDrive(): Boolean = hasSubscriptionFor(MASK_DRIVE)
