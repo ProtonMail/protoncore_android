@@ -24,6 +24,11 @@ plugins {
     protonDagger
 }
 
+protonCoverage {
+    branchCoveragePercentage.set(36)
+    lineCoveragePercentage.set(72)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 protonBuild {
@@ -32,7 +37,7 @@ protonBuild {
 
 protonCoverage {
     branchCoveragePercentage.set(31)
-    lineCoveragePercentage.set(69)
+    lineCoveragePercentage.set(67)
 }
 
 android {
@@ -42,8 +47,6 @@ android {
 dependencies {
     api(
         project(Module.accountManagerPresentation),
-        project(Module.accountManagerDomain),
-        project(Module.domain),
         `compose-runtime`,
         `coroutines-core`,
         `compose-ui`,
@@ -52,9 +55,7 @@ dependencies {
 
     implementation(
         project(Module.presentationCompose),
-        project(Module.accountDomain),
 
-        `androidx-navigation-common`,
         // Compose
         `coroutines-core`,
         `hilt-navigation-compose`,

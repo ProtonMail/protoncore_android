@@ -55,19 +55,25 @@ public final class me/proton/core/accountmanager/presentation/compose/Composable
 	public final fun getLambda-5$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
-public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/telemetry/presentation/ProductMetricsDelegate {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/telemetry/domain/TelemetryManager;)V
 	public final fun getInitialState ()Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Hidden;
+	public fun getProductDimensions ()Ljava/util/Map;
+	public fun getProductFlow ()Ljava/lang/String;
+	public fun getProductGroup ()Ljava/lang/String;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun getTelemetryManager ()Lme/proton/core/telemetry/domain/TelemetryManager;
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun toTelemetryEvent (Ljava/lang/Object;Ljava/lang/String;Ljava/util/Map;)Lme/proton/core/telemetry/domain/entity/TelemetryEvent;
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_HiltModules {

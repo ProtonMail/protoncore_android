@@ -31,6 +31,8 @@ import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
@@ -42,8 +44,14 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountSettingsViewModel @Inject constructor(
     accountManager: AccountManager,
-    private val userManager: UserManager
-) : ProtonViewModel() {
+    private val userManager: UserManager,
+    override val telemetryManager: TelemetryManager
+) : ProtonViewModel(), ProductMetricsDelegate {
+
+    override val productGroup: String
+        get() = "account.any.signup"
+    override val productFlow: String
+        get() = "mobile_signup_full"
 
     val initialState = AccountSettingsViewState.Hidden
 

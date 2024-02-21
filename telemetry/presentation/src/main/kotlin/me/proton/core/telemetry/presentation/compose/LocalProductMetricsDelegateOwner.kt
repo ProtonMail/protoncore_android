@@ -31,6 +31,6 @@ public object LocalProductMetricsDelegateOwner {
         @Composable
         get() = LocalProductMetricsDelegateOwner.current
 
-    public infix fun provides(value: ProductMetricsDelegateOwner): ProvidedValue<ProductMetricsDelegateOwner?> =
+    public infix fun provides(value: ProductMetricsDelegateOwner?): ProvidedValue<ProductMetricsDelegateOwner?> =
         LocalProductMetricsDelegateOwner.provides(value)
 }

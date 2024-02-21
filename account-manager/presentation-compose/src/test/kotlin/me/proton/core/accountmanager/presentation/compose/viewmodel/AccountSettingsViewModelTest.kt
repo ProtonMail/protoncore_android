@@ -35,6 +35,7 @@ import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
@@ -51,6 +52,8 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var userManager: UserManager
+    @MockK
+    private lateinit var telemetryManager: TelemetryManager
 
     private lateinit var tested: AccountSettingsViewModel
 
@@ -101,7 +104,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         mockkStatic("me.proton.core.accountmanager.domain.AccountManagerExtensionsKt")
         every { accountManager.getPrimaryAccount() } returns flowOf(account)
         coEvery { userManager.observeUser(userId) } returns flowOf(user)
-        tested = AccountSettingsViewModel(accountManager, userManager)
+        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
     }
 
     @After
@@ -132,7 +135,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         // GIVEN
         every { accountManager.getPrimaryAccount() } returns flowOf(account)
         coEvery { userManager.observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
-        tested = AccountSettingsViewModel(accountManager, userManager)
+        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
         // WHEN
         tested.state.test {
             // THEN
@@ -145,16 +148,62 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     }
 
     @Test
+    fun `state managed test`() = coroutinesTest {
+        // GIVEN
+        every { accountManager.getPrimaryAccount() } returns flowOf(account)
+        coEvery { userManager.getUser(userId) } returns user.copy(type = Type.Managed)
+        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        // WHEN
+        tested.state.test {
+            // THEN
+            assertEquals(AccountSettingsViewState.Hidden, awaitItem())
+
+            val loggedInState = AccountSettingsViewState.LoggedIn(
+                userId, "TU", "test username", null
+            )
+            assertEquals(loggedInState, awaitItem())
+            expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `state external test`() = coroutinesTest {
+        // GIVEN
+        every { accountManager.getPrimaryAccount() } returns flowOf(account)
+        coEvery { userManager.getUser(userId) } returns user.copy(type = Type.External)
+        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        // WHEN
+        tested.state.test {
+            // THEN
+            assertEquals(AccountSettingsViewState.Hidden, awaitItem())
+
+            val loggedInState = AccountSettingsViewState.LoggedIn(
+                userId, "TU", "test username", null
+            )
+            assertEquals(loggedInState, awaitItem())
+            expectNoEvents()
+        }
+    }
+
+    @Test
     fun `state null account test`() = coroutinesTest {
         // GIVEN
         every { accountManager.getPrimaryAccount() } returns flowOf(null)
         coEvery { userManager.observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
-        tested = AccountSettingsViewModel(accountManager, userManager)
+        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
         // WHEN
         tested.state.test {
             // THEN
             assertEquals(AccountSettingsViewState.Hidden, awaitItem())
             expectNoEvents()
         }
+    }
+
+    @Test
+    fun `product metrics`() = coroutinesTest {
+        // GIVEN
+        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        assertEquals("mobile_signup_full", tested.productFlow)
+        assertEquals("account.any.signup", tested.productGroup)
     }
 }

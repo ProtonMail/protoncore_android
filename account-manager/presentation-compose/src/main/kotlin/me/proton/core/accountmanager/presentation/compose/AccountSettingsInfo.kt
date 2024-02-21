@@ -40,6 +40,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -61,6 +66,11 @@ import me.proton.core.compose.theme.defaultSmallStrongUnspecified
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.domain.entity.UserId
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
+import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
+import me.proton.core.telemetry.presentation.compose.MeasureOnViewClicked
 
 @Composable
 fun AccountSettingsInfo(
@@ -84,36 +94,68 @@ fun AccountSettingsInfo(
             displayName = "Display Name",
             email = "example@domain.com",
         )
+
         else -> rememberAsState(viewModel.state, viewModel.initialState).value
     }
 
-    when (state) {
-        is AccountSettingsViewState.CredentialLess -> {
-            when (nonLoggedInContent) {
-                null -> AccountSettingsCredentialLess(
-                    modifier = modifier,
-                    onCreateAccountClicked = onSignUpClicked,
-                    onSignInClicked = onSignInClicked,
-                    signUpButtonGone = signUpButtonGone,
-                    signInButtonGone = signInButtonGone,
-                )
-                else -> nonLoggedInContent(state.userId)
+    var isSignUpClicked by remember { mutableStateOf(false) }
+    var isSignInClicked by remember { mutableStateOf(false) }
+
+    val delegate = if (viewModel != null) ProductMetricsDelegateOwner(viewModel) else LocalProductMetricsDelegateOwner.current
+    CompositionLocalProvider(
+        LocalProductMetricsDelegateOwner provides delegate
+    ) {
+        MeasureOnScreenDisplayed("fe.info_account.displayed")
+        MeasureOnScreenClosed("user.info_account.closed")
+
+        when (state) {
+            is AccountSettingsViewState.CredentialLess -> {
+                when (nonLoggedInContent) {
+                    null -> AccountSettingsCredentialLess(
+                        modifier = modifier,
+                        onCreateAccountClicked = {
+                            onSignUpClicked()
+                            isSignUpClicked = true
+                        },
+                        onSignInClicked = {
+                            onSignInClicked()
+                            isSignInClicked = true
+                        },
+                        signUpButtonGone = signUpButtonGone,
+                        signInButtonGone = signInButtonGone,
+                    )
+
+                    else -> nonLoggedInContent(state.userId)
+                }
             }
-        }
-        is AccountSettingsViewState.LoggedIn -> {
-            when (loggedInContent) {
-                null -> AccountSettingsLoggedIn(
-                    modifier = modifier,
-                    onAccountClicked = onAccountClicked,
-                    onSignOutClicked = onSignOutClicked,
-                    state = state,
-                    initialCount = initialCount,
-                    signOutButtonGone = signOutButtonGone,
-                )
-                else -> loggedInContent(state.userId)
+
+            is AccountSettingsViewState.LoggedIn -> {
+                when (loggedInContent) {
+                    null -> AccountSettingsLoggedIn(
+                        modifier = modifier,
+                        onAccountClicked = onAccountClicked,
+                        onSignOutClicked = onSignOutClicked,
+                        state = state,
+                        initialCount = initialCount,
+                        signOutButtonGone = signOutButtonGone,
+                    )
+
+                    else -> loggedInContent(state.userId)
+                }
             }
+
+            is AccountSettingsViewState.Hidden -> return@CompositionLocalProvider
         }
-        is AccountSettingsViewState.Hidden -> return
+
+        if (isSignUpClicked) {
+            MeasureOnViewClicked(event = "user.info_account.clicked", productDimensions = mapOf("item" to "sign_up"))
+            isSignUpClicked = false
+
+        }
+        if (isSignInClicked) {
+            MeasureOnViewClicked(event = "user.info_account.clicked", productDimensions = mapOf("item" to "sign_in"))
+            isSignInClicked = false
+        }
     }
 }
 
