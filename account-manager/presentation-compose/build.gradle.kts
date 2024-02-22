@@ -29,6 +29,11 @@ protonBuild {
     apiModeDisabled()
 }
 
+protonCoverage {
+    branchCoveragePercentage.set(34)
+    lineCoveragePercentage.set(71)
+}
+
 android {
     namespace = "me.proton.core.accountmanager.presentation.compose"
 }
