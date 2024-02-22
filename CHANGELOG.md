@@ -11,6 +11,42 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [20.0.0] - 2024-02-22
+
+### Breaking Changes
+
+**Features**
+
+- Added CredentialLess Support.
+
+  DB Migrations:
+  - UserDatabase.MIGRATION_5: Added User.type.
+  - AccountDatabase.MIGRATION_7: Account.username nullable.
+
+### Chores
+
+- event-manager:
+  - Update endpoint path for getting events to v5.
+- user:
+  - Add user service and subscription check for Drive.
+
+### Features
+
+- account-manager:
+  - Add settings signup/signin view.
+- auth-presentation:
+  - Add product metrics for "Credential-less Add Account" screen.
+- payment:
+  - Add support for payments for credential-less users.
+
+### Bug Fixes
+
+- plan:
+  - Fix get more storage button when payments are not available.
+  - Fix storage split text UI and OptionalViewModel.kt for Mail.
+- plan-presentation:
+  - Remove left-padding from the title in plan entitlement view.
+
 ## [19.1.0] - 2024-02-08
 
 ### Chores
