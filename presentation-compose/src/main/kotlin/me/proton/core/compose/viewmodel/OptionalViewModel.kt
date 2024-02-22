@@ -20,6 +20,7 @@ package me.proton.core.compose.viewmodel
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.HasDefaultViewModelProviderFactory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
@@ -31,7 +32,7 @@ import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 @Composable
 inline fun <reified VM : ViewModel> hiltViewModelOrNull(): VM? {
     return when (LocalViewModelStoreOwner.current) {
-        null -> null
-        else -> hiltViewModel()
+        is HasDefaultViewModelProviderFactory -> hiltViewModel()
+        else -> null
     }
 }
