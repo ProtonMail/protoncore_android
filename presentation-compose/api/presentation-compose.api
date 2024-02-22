@@ -590,6 +590,7 @@ public final class me/proton/core/compose/theme/ProtonDimens {
 	public final fun getDefaultButtonMinHeight-D9Ej5fM ()F
 	public final fun getDefaultCornerRadius-D9Ej5fM ()F
 	public final fun getDefaultIconSize-D9Ej5fM ()F
+	public final fun getDefaultIconSizeLogo-D9Ej5fM ()F
 	public final fun getDefaultSpacing-D9Ej5fM ()F
 	public final fun getExtraLargeCornerRadius-D9Ej5fM ()F
 	public final fun getExtraSmallIconSize-D9Ej5fM ()F

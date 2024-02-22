@@ -18,6 +18,7 @@
 
 package me.proton.core.accountmanager.presentation.compose
 
+import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -34,10 +35,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,7 +48,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewModel
-import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewModel.Companion.INITIAL_STATE
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewState
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
@@ -63,34 +64,55 @@ import me.proton.core.domain.entity.UserId
 
 @Composable
 fun AccountSettingsInfo(
-    modifier: Modifier = Modifier,
     onSignUpClicked: () -> Unit,
     onSignInClicked: () -> Unit,
     onAccountClicked: () -> Unit,
     onSignOutClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    initialCount: Int = 2,
+    signUpButtonGone: Boolean = false,
+    signInButtonGone: Boolean = false,
+    signOutButtonGone: Boolean = false,
+    loggedInContent: (@Composable (UserId) -> Unit)? = null,
+    nonLoggedInContent: (@Composable (UserId?) -> Unit)? = null,
     viewModel: AccountSettingsViewModel? = hiltViewModelOrNull(),
 ) {
-    if (viewModel == null) return
-    val state by rememberAsState(flow = viewModel.state, initial = INITIAL_STATE)
+    val state = when (viewModel) {
+        null -> AccountSettingsViewState.LoggedIn(
+            userId = UserId("userId"),
+            initials = "DU",
+            displayName = "Display Name",
+            email = "example@domain.com",
+        )
+        else -> rememberAsState(viewModel.state, viewModel.initialState).value
+    }
 
     when (state) {
         is AccountSettingsViewState.CredentialLess -> {
-            AccountSettingsCredentialLess(
-                modifier = modifier,
-                onCreateAccountClicked = onSignUpClicked,
-                onSignInClicked = onSignInClicked
-            )
+            when (nonLoggedInContent) {
+                null -> AccountSettingsCredentialLess(
+                    modifier = modifier,
+                    onCreateAccountClicked = onSignUpClicked,
+                    onSignInClicked = onSignInClicked,
+                    signUpButtonGone = signUpButtonGone,
+                    signInButtonGone = signInButtonGone,
+                )
+                else -> nonLoggedInContent(state.userId)
+            }
         }
-
         is AccountSettingsViewState.LoggedIn -> {
-            AccountSettingsLoggedIn(
-                modifier = modifier,
-                onAccountClicked = onAccountClicked,
-                onSignOutClicked = onSignOutClicked,
-                loggedIn = state as AccountSettingsViewState.LoggedIn
-            )
+            when (loggedInContent) {
+                null -> AccountSettingsLoggedIn(
+                    modifier = modifier,
+                    onAccountClicked = onAccountClicked,
+                    onSignOutClicked = onSignOutClicked,
+                    state = state,
+                    initialCount = initialCount,
+                    signOutButtonGone = signOutButtonGone,
+                )
+                else -> loggedInContent(state.userId)
+            }
         }
-
         is AccountSettingsViewState.Hidden -> return
     }
 }
@@ -99,30 +121,47 @@ fun AccountSettingsInfo(
 fun AccountSettingsCredentialLess(
     modifier: Modifier = Modifier,
     onCreateAccountClicked: () -> Unit,
-    onSignInClicked: () -> Unit
+    onSignInClicked: () -> Unit,
+    signUpButtonGone: Boolean = false,
+    signInButtonGone: Boolean = false,
 ) {
-    Column(
-        modifier.padding(
-            horizontal = dimensionResource(id = R.dimen.gap_large),
-            vertical = dimensionResource(id = R.dimen.gap_medium_plus)
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = ProtonTheme.colors.backgroundSecondary,
+            contentColor = ProtonTheme.colors.textNorm,
+        ),
+        modifier = modifier.padding(
+            horizontal = ProtonDimens.DefaultSpacing,
+            vertical = ProtonDimens.DefaultSpacing
         )
     ) {
-        ProductIcons(modifier)
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
-        InfoText(modifier)
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
-        CreateAccountButton(
-            onClick = onCreateAccountClicked,
-            modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally)
-                .fillMaxWidth()
-        )
-        SignInButton(
-            onClick = onSignInClicked,
-            modifier = Modifier
-                .align(alignment = Alignment.CenterHorizontally)
-                .fillMaxWidth()
-        )
+        Column(
+            modifier = Modifier.padding(
+                horizontal = ProtonDimens.DefaultSpacing,
+                vertical = ProtonDimens.DefaultSpacing
+            )
+        ) {
+            ProductIcons()
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
+            InfoText()
+            Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
+            if (!signUpButtonGone) {
+                CreateAccountButton(
+                    onClick = onCreateAccountClicked,
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .fillMaxWidth()
+                )
+            }
+            if (!signInButtonGone) {
+                SignInButton(
+                    onClick = onSignInClicked,
+                    modifier = Modifier
+                        .align(alignment = Alignment.CenterHorizontally)
+                        .fillMaxWidth()
+                )
+            }
+        }
     }
 }
 
@@ -131,13 +170,12 @@ fun AccountSettingsLoggedIn(
     modifier: Modifier = Modifier,
     onAccountClicked: () -> Unit,
     onSignOutClicked: () -> Unit,
-    loggedIn: AccountSettingsViewState.LoggedIn
+    state: AccountSettingsViewState.LoggedIn,
+    initialCount: Int = 2,
+    signOutButtonGone: Boolean = false,
 ) {
     Column(
-        modifier.padding(
-            horizontal = dimensionResource(id = R.dimen.gap_large),
-            vertical = dimensionResource(id = R.dimen.gap_medium_plus)
-        )
+        modifier = modifier
     ) {
         RowWithComposables(
             leadingComposable = {
@@ -149,21 +187,22 @@ fun AccountSettingsLoggedIn(
                         .background(ProtonTheme.colors.brandNorm)
                 ) {
                     Text(
-                        text = loggedIn.shortName ?: "",
+                        text = state.initials?.take(initialCount) ?: "",
                         style = ProtonTheme.typography.defaultNorm
                     )
                 }
             },
-            title = loggedIn.displayName ?: "",
-            subtitle = loggedIn.email,
+            title = state.displayName ?: "",
+            subtitle = state.email,
             onClick = onAccountClicked,
         )
-        RowWithIcon(
-            modifier = modifier,
-            icon = me.proton.core.presentation.R.drawable.ic_proton_arrow_in_to_rectangle,
-            title = stringResource(id = R.string.auth_sign_out),
-            onClick = onSignOutClicked
-        )
+        if (!signOutButtonGone) {
+            RowWithIcon(
+                icon = R.drawable.ic_proton_arrow_in_to_rectangle,
+                title = stringResource(id = R.string.auth_sign_out),
+                onClick = onSignOutClicked
+            )
+        }
     }
 }
 
@@ -172,7 +211,7 @@ private fun RowWithIcon(
     modifier: Modifier = Modifier,
     @DrawableRes icon: Int,
     title: String,
-    onClick: (() -> Unit)? = null
+    onClick: () -> Unit = { }
 ) {
     RowWithComposables(
         leadingComposable = {
@@ -195,27 +234,30 @@ private fun ProductIcons(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.Start,
     ) {
         Image(
             contentDescription = null,
-            modifier = Modifier.size(ProtonDimens.DefaultIconSize),
+            modifier = Modifier.size(ProtonDimens.DefaultIconSizeLogo),
+            painter = painterResource(id = R.drawable.ic_logo_pass_no_bg),
+        )
+        Spacer(Modifier.size(ProtonDimens.ExtraSmallSpacing))
+        Image(
+            contentDescription = null,
+            modifier = Modifier.size(ProtonDimens.DefaultIconSizeLogo),
             painter = painterResource(id = R.drawable.ic_logo_mail_no_bg),
         )
+        Spacer(Modifier.size(ProtonDimens.ExtraSmallSpacing))
         Image(
             contentDescription = null,
-            modifier = Modifier.size(ProtonDimens.DefaultIconSize),
-            painter = painterResource(id = R.drawable.ic_logo_drive_no_bg),
-        )
-        Image(
-            contentDescription = null,
-            modifier = Modifier.size(ProtonDimens.DefaultIconSize),
-            painter = painterResource(id = R.drawable.ic_logo_vpn_no_bg),
-        )
-        Image(
-            contentDescription = null,
-            modifier = Modifier.size(ProtonDimens.DefaultIconSize),
+            modifier = Modifier.size(ProtonDimens.DefaultIconSizeLogo),
             painter = painterResource(id = R.drawable.ic_logo_calendar_no_bg),
+        )
+        Spacer(Modifier.size(ProtonDimens.ExtraSmallSpacing))
+        Image(
+            contentDescription = null,
+            modifier = Modifier.size(ProtonDimens.DefaultIconSizeLogo),
+            painter = painterResource(id = R.drawable.ic_logo_drive_no_bg),
         )
     }
 }
@@ -230,9 +272,9 @@ private fun InfoText(
             style = ProtonTheme.typography.defaultSmallStrongUnspecified,
             text = stringResource(id = R.string.auth_credentialless_settings_title)
         )
-        Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_small)))
+        Spacer(modifier = Modifier.height(ProtonDimens.ExtraSmallSpacing))
         Text(
-            color = ProtonTheme.colors.textNorm,
+            color = ProtonTheme.colors.textWeak,
             style = ProtonTheme.typography.captionNorm,
             text = stringResource(id = R.string.auth_credentialless_settings_subtitle)
         )
@@ -280,21 +322,16 @@ private fun RowWithComposables(
     leadingComposable: @Composable () -> Unit,
     title: String,
     subtitle: String? = null,
-    onClick: (() -> Unit)? = null,
+    onClick: () -> Unit = { },
 ) {
-    var baseModifier = modifier
-        .fillMaxWidth()
-
-    if (onClick != null) {
-        baseModifier = baseModifier
-            .clickable(onClick = onClick)
-
-    }
-    baseModifier =
-        baseModifier.padding(vertical = ProtonDimens.DefaultSpacing, horizontal = ProtonDimens.DefaultSpacing)
-
     Row(
-        modifier = baseModifier,
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(
+                vertical = ProtonDimens.DefaultSpacing,
+                horizontal = ProtonDimens.DefaultSpacing
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
@@ -322,10 +359,25 @@ private fun RowWithComposables(
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
 @Composable
-internal fun PreviewAccountSettingsCredentialLessLight() {
-    ProtonTheme() {
+internal fun PreviewAccountSettingsInfo() {
+    ProtonTheme {
+        AccountSettingsInfo(
+            onSignUpClicked = {},
+            onSignInClicked = {},
+            onAccountClicked = {},
+            onSignOutClicked = {},
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
+@Composable
+internal fun PreviewAccountSettingsCredentialLess() {
+    ProtonTheme {
         AccountSettingsCredentialLess(
             onCreateAccountClicked = {},
             onSignInClicked = {}
@@ -333,42 +385,15 @@ internal fun PreviewAccountSettingsCredentialLessLight() {
     }
 }
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
 @Composable
-internal fun PreviewAccountSettingsCredentialLessDark() {
-    ProtonTheme() {
-        AccountSettingsCredentialLess(
-            onCreateAccountClicked = {},
-            onSignInClicked = {}
-        )
-    }
-}
-
-@Preview
-@Composable
-internal fun PreviewAccountSettingsLoggedInLight() {
-    ProtonTheme() {
+internal fun PreviewAccountSettingsLogged() {
+    ProtonTheme {
         AccountSettingsLoggedIn(
             onAccountClicked = {},
             onSignOutClicked = { },
-            loggedIn = AccountSettingsViewState.LoggedIn(
-                UserId("test-user-id"),
-                "SN",
-                "Display Name",
-                "email@proton.com"
-            )
-        )
-    }
-}
-
-@Preview
-@Composable
-internal fun PreviewAccountSettingsLoggedInDark() {
-    ProtonTheme(isDark = true) {
-        AccountSettingsLoggedIn(
-            onAccountClicked = {},
-            onSignOutClicked = { },
-            loggedIn = AccountSettingsViewState.LoggedIn(
+            state = AccountSettingsViewState.LoggedIn(
                 UserId("test-user-id"),
                 "SN",
                 "Display Name",

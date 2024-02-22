@@ -46,9 +46,9 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.getDisplayName
+import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.extension.getInitials
-import me.proton.core.util.kotlin.takeIfNotBlank
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -93,16 +93,13 @@ class AccountSwitcherViewModel @Inject constructor(
         userManager.observeUser(userId)
             .mapLatest { user -> getAccountItem(user) }
 
-    private fun Account.getAccountItem(user: User?): AccountItem {
-        val initials = user?.displayName?.takeIfNotBlank() ?: user?.email?.takeIfNotBlank() ?: username
-        return AccountItem(
-            userId = userId,
-            initials = user?.getInitials(initialsCount = 1) ?: "?",
-            name = user?.displayName?.takeIfNotBlank() ?: username ?: "unknown",
-            email = user?.email?.takeIfNotBlank() ?: email,
-            state = state
-        )
-    }
+    private fun Account.getAccountItem(user: User?): AccountItem = AccountItem(
+        userId = userId,
+        initials = user?.getInitials(count = 1) ?: "?",
+        name = user?.getDisplayName() ?: "unknown",
+        email = user?.getEmail(),
+        state = state
+    )
 
     private suspend fun getAccountOrNull(userId: UserId): Account? =
         accountManager.getAccount(userId).firstOrNull()

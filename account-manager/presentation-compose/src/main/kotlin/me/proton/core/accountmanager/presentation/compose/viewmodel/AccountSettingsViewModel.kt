@@ -24,7 +24,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.accountmanager.domain.AccountManager
@@ -35,9 +34,9 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.getDisplayName
+import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.extension.getInitials
-import me.proton.core.util.kotlin.takeIfNotBlank
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -45,16 +44,18 @@ class AccountSettingsViewModel @Inject constructor(
     accountManager: AccountManager,
     private val userManager: UserManager
 ) : ProtonViewModel() {
-    val state: StateFlow<AccountSettingsViewState> =
-        accountManager.getPrimaryAccount()
-            .filterNotNull()
-            .map { userManager.getUser(it.userId) }
-            .map { it.toAccountSettingsViewState() }
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis), INITIAL_STATE)
 
-    internal companion object {
-        val INITIAL_STATE = AccountSettingsViewState.Hidden
-    }
+    val initialState = AccountSettingsViewState.Hidden
+
+    val state: StateFlow<AccountSettingsViewState> = accountManager.getPrimaryAccount()
+        .filterNotNull()
+        .flatMapLatest { userManager.observeUser(it.userId) }
+        .map { it.toAccountSettingsViewState() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+            initialValue = initialState
+        )
 }
 
 sealed class AccountSettingsViewState {
@@ -65,17 +66,20 @@ sealed class AccountSettingsViewState {
 
     data class LoggedIn(
         val userId: UserId,
-        val shortName: String?,
+        val initials: String?,
         val displayName: String?,
         val email: String?
     ) : AccountSettingsViewState()
 
 }
 
-private fun User.toAccountSettingsViewState(): AccountSettingsViewState = when (type) {
-    Type.CredentialLess -> AccountSettingsViewState.CredentialLess(userId)
-    Type.Proton,
-    Type.Managed,
-    Type.External,
-    null -> AccountSettingsViewState.LoggedIn(userId, getInitials(), displayName, email)
+private fun User?.toAccountSettingsViewState(): AccountSettingsViewState = when {
+    this == null -> AccountSettingsViewState.Hidden
+    type == Type.CredentialLess -> AccountSettingsViewState.CredentialLess(userId)
+    else -> AccountSettingsViewState.LoggedIn(
+        userId = userId,
+        initials = getInitials(count = 2),
+        displayName = getDisplayName(),
+        email = getEmail()
+    )
 }

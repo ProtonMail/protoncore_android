@@ -45,8 +45,10 @@ import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 
 class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
+
     @MockK
     private lateinit var accountManager: AccountManager
+
     @MockK
     private lateinit var userManager: UserManager
 
@@ -98,7 +100,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         MockKAnnotations.init(this)
         mockkStatic("me.proton.core.accountmanager.domain.AccountManagerExtensionsKt")
         every { accountManager.getPrimaryAccount() } returns flowOf(account)
-        coEvery { userManager.getUser(userId) } returns user
+        coEvery { userManager.observeUser(userId) } returns flowOf(user)
         tested = AccountSettingsViewModel(accountManager, userManager)
     }
 
@@ -115,7 +117,10 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
             assertEquals(AccountSettingsViewState.Hidden, awaitItem())
 
             val loggedInState = AccountSettingsViewState.LoggedIn(
-                userId, "TU", null, null
+                userId = userId,
+                initials = "TU",
+                displayName = "test username",
+                email = null
             )
             assertEquals(loggedInState, awaitItem())
             expectNoEvents()
@@ -126,7 +131,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `state credentialless test`() = coroutinesTest {
         // GIVEN
         every { accountManager.getPrimaryAccount() } returns flowOf(account)
-        coEvery { userManager.getUser(userId) } returns user.copy(type = Type.CredentialLess)
+        coEvery { userManager.observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
         tested = AccountSettingsViewModel(accountManager, userManager)
         // WHEN
         tested.state.test {
@@ -143,7 +148,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun `state null account test`() = coroutinesTest {
         // GIVEN
         every { accountManager.getPrimaryAccount() } returns flowOf(null)
-        coEvery { userManager.getUser(userId) } returns user.copy(type = Type.CredentialLess)
+        coEvery { userManager.observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
         tested = AccountSettingsViewModel(accountManager, userManager)
         // WHEN
         tested.state.test {

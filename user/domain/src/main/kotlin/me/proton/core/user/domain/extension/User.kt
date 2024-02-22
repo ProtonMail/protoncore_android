@@ -103,9 +103,15 @@ private fun getUsedPercentage(used: Long?, max: Long?): Int? {
     return round(used.toDouble() / max * 100.0).toInt()
 }
 
-fun User.getInitials(initialsCount: Int = 2, default: String = "?"): String? {
-    val name = displayName?.takeIfNotBlank() ?: name?.takeIfNotBlank() ?: email
-    return name?.split(" ")
-        ?.take(initialsCount)
-        ?.joinToString("") { it.firstOrNull()?.uppercase(Locale.getDefault()) ?: default }
+fun User.getDisplayName(): String? =
+    displayName?.takeIfNotBlank() ?: name?.takeIfNotBlank() ?: getEmail()
+
+fun User.getEmail(): String? =
+    email?.takeIfNotBlank()
+
+fun User.getInitials(
+    count: Int = 2,
+    default: String = "?"
+): String? = getDisplayName()?.split(" ", ".")?.take(count)?.joinToString("") {
+    it.firstOrNull()?.uppercase(Locale.getDefault()) ?: default
 }

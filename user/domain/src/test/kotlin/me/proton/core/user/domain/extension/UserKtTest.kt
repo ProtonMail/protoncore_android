@@ -19,7 +19,6 @@
 package me.proton.core.user.domain.extension
 
 import me.proton.core.domain.entity.UserId
-import me.proton.core.test.kotlin.assertEquals
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import org.junit.Test
@@ -58,13 +57,13 @@ class UserKtTest {
 
     @Test
     fun getInitialsUserThreeNamesDefaultThree() {
-        val initials = user.copy(name = "Test Username User").getInitials(initialsCount = 3)
+        val initials = user.copy(name = "Test Username User").getInitials(count = 3)
         assertEquals("TUU", initials)
     }
 
     @Test
     fun getInitialsDefaultTwoNamesThreeLetters() {
-        val initials = user.getInitials(initialsCount = 3)
+        val initials = user.getInitials(count = 3)
         assertEquals("TU", initials)
     }
 
@@ -77,12 +76,12 @@ class UserKtTest {
     @Test
     fun getInitialsEmail() {
         val initials = user.copy(name = null, displayName = null, email = "test.email@testemail.org").getInitials()
-        assertEquals("T", initials)
+        assertEquals("TE", initials)
     }
 
     @Test
     fun getInitialsDefaultOneLetter() {
-        val initials = user.getInitials(initialsCount = 1)
+        val initials = user.getInitials(count = 1)
         assertEquals("T", initials)
     }
 

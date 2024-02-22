@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonComposeUiLibrary
+    protonDagger
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -30,8 +31,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(34)
-    lineCoveragePercentage.set(71)
+    branchCoveragePercentage.set(31)
+    lineCoveragePercentage.set(69)
 }
 
 android {

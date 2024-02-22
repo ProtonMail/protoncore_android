@@ -18,8 +18,8 @@
 
 package me.proton.core.accountmanager.presentation.compose
 
-import androidx.compose.runtime.Composable
 import app.cash.paparazzi.Paparazzi
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewModel
@@ -30,13 +30,14 @@ import org.junit.Rule
 import org.junit.Test
 
 class AccountSettingsSignUpTest {
+
     @get:Rule
     val paparazzi = Paparazzi()
 
     @Test
     fun defaultAccountSettingsViewLight() {
         paparazzi.snapshot {
-            WithProtonTheme {
+            ProtonTheme {
                 AccountSettingsCredentialLess(
                     onCreateAccountClicked = {},
                     onSignInClicked = {}
@@ -48,7 +49,7 @@ class AccountSettingsSignUpTest {
     @Test
     fun defaultAccountSettingsViewDark() {
         paparazzi.snapshot {
-            WithProtonTheme(isDark = true) {
+            ProtonTheme(isDark = true) {
                 AccountSettingsCredentialLess(
                     onCreateAccountClicked = {},
                     onSignInClicked = {}
@@ -60,15 +61,15 @@ class AccountSettingsSignUpTest {
     @Test
     fun defaultAccountSettingsInfoLight() {
         paparazzi.snapshot {
-            WithProtonTheme {
+            ProtonTheme {
                 AccountSettingsLoggedIn(
                     onAccountClicked = {},
                     onSignOutClicked = {},
-                    loggedIn = AccountSettingsViewState.LoggedIn(
-                        UserId("test-user-id"),
-                        "SN",
-                        "Display Name",
-                        "email@proton.com"
+                    state = AccountSettingsViewState.LoggedIn(
+                        userId = UserId("test-user-id"),
+                        initials = "SN",
+                        displayName = "Display Name",
+                        email = "email@proton.com"
                     )
                 )
             }
@@ -78,15 +79,15 @@ class AccountSettingsSignUpTest {
     @Test
     fun defaultAccountSettingsInfoDark() {
         paparazzi.snapshot {
-            WithProtonTheme(isDark = true) {
+            ProtonTheme(isDark = true) {
                 AccountSettingsLoggedIn(
                     onAccountClicked = {},
                     onSignOutClicked = {},
-                    loggedIn = AccountSettingsViewState.LoggedIn(
-                        UserId("test-user-id"),
-                        "SN",
-                        "Display Name",
-                        "email@proton.com"
+                    state = AccountSettingsViewState.LoggedIn(
+                        userId = UserId("test-user-id"),
+                        initials = "SN",
+                        displayName = "Display Name",
+                        email = "email@proton.com"
                     )
                 )
             }
@@ -96,12 +97,11 @@ class AccountSettingsSignUpTest {
     @Test
     fun defaultAccountSettingsInfoHidden() {
         val viewModel = mockk<AccountSettingsViewModel> {
-            io.mockk.every { state } returns MutableStateFlow(
-                AccountSettingsViewState.Hidden
-            )
+            every { state } returns MutableStateFlow(AccountSettingsViewState.Hidden)
+            every { initialState } returns AccountSettingsViewState.Hidden
         }
         paparazzi.snapshot {
-            WithProtonTheme(isDark = true) {
+            ProtonTheme(isDark = true) {
                 AccountSettingsInfo(
                     onAccountClicked = {},
                     onSignOutClicked = {},
@@ -111,12 +111,5 @@ class AccountSettingsSignUpTest {
                 )
             }
         }
-    }
-}
-
-@Composable
-private fun WithProtonTheme(isDark: Boolean = false, block: @Composable () -> Unit) {
-    ProtonTheme(isDark = isDark) {
-        block()
     }
 }
