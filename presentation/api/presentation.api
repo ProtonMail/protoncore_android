@@ -164,23 +164,28 @@ public abstract class me/proton/core/presentation/ui/Hilt_ProtonWebViewActivity 
 	protected fun inject ()V
 }
 
-public abstract class me/proton/core/presentation/ui/ProtonActivity : androidx/appcompat/app/AppCompatActivity {
+public abstract class me/proton/core/presentation/ui/ProtonActivity : androidx/appcompat/app/AppCompatActivity, me/proton/core/presentation/utils/OnUiComponentCreatedListener {
 	public fun <init> ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 }
 
-public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : androidx/fragment/app/DialogFragment {
+public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : androidx/fragment/app/DialogFragment, me/proton/core/presentation/utils/OnUiComponentCreatedListener {
 	public fun <init> ()V
 	public fun <init> (I)V
 	protected fun getStyleResource ()Ljava/lang/Integer;
 	protected abstract fun onBackPressed ()V
 	public fun onCreate (Landroid/os/Bundle;)V
 	public final fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 }
 
-public abstract class me/proton/core/presentation/ui/ProtonFragment : androidx/fragment/app/Fragment {
+public abstract class me/proton/core/presentation/ui/ProtonFragment : androidx/fragment/app/Fragment, me/proton/core/presentation/utils/OnUiComponentCreatedListener {
 	public fun <init> ()V
 	public fun <init> (I)V
 	public final fun launchInViewLifecycleScope (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/Job;
+	public fun onCreate (Landroid/os/Bundle;)V
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 }
 
 public abstract class me/proton/core/presentation/ui/ProtonSecureActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
@@ -788,10 +793,6 @@ public final class me/proton/core/presentation/utils/ActivityScreenContentProtec
 	public synthetic fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/presentation/utils/ApplicationExtensionsKt {
-	public static final fun launchOnUiComponentCreated (Landroid/app/Application;Lme/proton/core/presentation/utils/OnUiComponentCreatedListener;)Lkotlin/jvm/functions/Function0;
-}
-
 public final class me/proton/core/presentation/utils/BackPressedExtensionsKt {
 	public static final fun launchOnBackPressed (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcher;Lkotlin/jvm/functions/Function0;)Lkotlin/jvm/functions/Function0;
 }
@@ -909,7 +910,11 @@ public final class me/proton/core/presentation/utils/OnBackPressedCallbacksKt {
 }
 
 public abstract interface class me/proton/core/presentation/utils/OnUiComponentCreatedListener {
-	public abstract fun invoke (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+	public abstract fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+}
+
+public final class me/proton/core/presentation/utils/OnUiComponentCreatedListener$DefaultImpls {
+	public static fun onUiComponentCreated (Lme/proton/core/presentation/utils/OnUiComponentCreatedListener;Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 }
 
 public final class me/proton/core/presentation/utils/ProtectScreenConfiguration {

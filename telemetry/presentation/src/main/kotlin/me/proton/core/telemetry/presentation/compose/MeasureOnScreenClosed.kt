@@ -40,10 +40,13 @@ public fun MeasureOnScreenClosed(
         onBackPressedDispatcherOwner,
         screenMetricsDelegateOwner
     ) {
+        val delegate = requireNotNull(screenMetricsDelegateOwner.productMetricsDelegate) {
+            "ProductMetricsDelegate is not defined."
+        }
         val screenClosedDispose = measureOnScreenClosed(
             event = event,
             dimensions = dimensions,
-            delegateOwner = screenMetricsDelegateOwner,
+            delegate = delegate,
             lifecycleOwner = lifecycleOwner,
             onBackPressedDispatcherOwner = onBackPressedDispatcherOwner,
             priority = priority

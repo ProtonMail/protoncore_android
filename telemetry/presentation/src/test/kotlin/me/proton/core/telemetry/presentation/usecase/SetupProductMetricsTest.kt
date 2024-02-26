@@ -19,12 +19,10 @@
 package me.proton.core.telemetry.presentation.usecase
 
 import android.app.Activity
-import android.app.Application
 import android.view.View
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
-import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.declaringKotlinFile
 import io.mockk.every
@@ -35,12 +33,12 @@ import io.mockk.slot
 import io.mockk.unmockkAll
 import io.mockk.verify
 import me.proton.core.presentation.ui.view.ProtonButton
-import me.proton.core.presentation.utils.OnUiComponentCreatedListener
+import me.proton.core.presentation.ui.view.ProtonMaterialToolbar
 import me.proton.core.presentation.utils.UiComponent
-import me.proton.core.presentation.utils.launchOnUiComponentCreated
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.annotation.MenuItemClicked
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
@@ -65,9 +63,6 @@ class SetupProductMetricsTest {
     internal val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @MockK
-    private lateinit var application: Application
-
-    @MockK
     private lateinit var telemetryManager: TelemetryManager
 
     @MockK
@@ -76,22 +71,18 @@ class SetupProductMetricsTest {
     @MockK
     private lateinit var lifecycleOwner : LifecycleOwner
 
-    private lateinit var onUiComponentCreatedSlot: CapturingSlot<OnUiComponentCreatedListener>
     private lateinit var tested: SetupProductMetrics
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
 
-        mockkStatic(Application::launchOnUiComponentCreated.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnScreenDisplayed.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnScreenClosed.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnViewClicked.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnViewFocused.declaringKotlinFile.qualifiedName!!)
         mockkStatic(LifecycleOwner::setupViewMetrics.declaringKotlinFile.qualifiedName!!)
 
-        onUiComponentCreatedSlot = slot()
-        every { any<Application>().launchOnUiComponentCreated(capture(onUiComponentCreatedSlot)) } returns mockk()
         every { measureOnScreenDisplayed(any(), any(), any(), any(), any()) } returns mockk()
         every { measureOnScreenClosed(any(), any(), any(), any(), any()) } returns mockk()
         every { measureOnViewClicked(any(), any(), any()) } returns mockk()
@@ -100,7 +91,7 @@ class SetupProductMetricsTest {
         every { lifecycleOwner.lifecycle } returns lifecycle
         every { lifecycle.addObserver(any()) } answers {}
 
-        tested = SetupProductMetrics(application, telemetryManager)
+        tested = SetupProductMetrics(telemetryManager)
     }
 
     @AfterTest
@@ -111,8 +102,7 @@ class SetupProductMetricsTest {
     @Test
     fun `ui component with no metrics`() {
         // WHEN
-        tested()
-        onUiComponentCreatedSlot.captured.invoke(
+        tested(
             mockk(),
             mockk(),
             mockk(),
@@ -131,14 +121,8 @@ class SetupProductMetricsTest {
     @Test
     fun `ui component with annotations`() {
         // WHEN
-        tested()
-
-        // THEN
-        verify { application.launchOnUiComponentCreated(any()) }
-
-        // WHEN - simulate creating an activity
         val view = mockk<View>(relaxed = true)
-        onUiComponentCreatedSlot.captured.invoke(
+        tested(
             lifecycleOwner,
             mockk(),
             mockk(),
@@ -150,40 +134,40 @@ class SetupProductMetricsTest {
         )
 
         // THEN
-        val delegateOwnerSlot = slot<ProductMetricsDelegateOwner>()
+        val delegateSlot = slot<ProductMetricsDelegate>()
         verify {
             measureOnScreenDisplayed(
                 event = "screen_displayed",
                 dimensions = mapOf("screen_dimension_displayed" to "sdd"),
-                delegateOwner = capture(delegateOwnerSlot),
+                delegate = capture(delegateSlot),
                 lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = any()
             )
         }
         assertEquals(
             "annotation_group",
-            delegateOwnerSlot.captured.productMetricsDelegate.productGroup
+            delegateSlot.captured.productGroup
         )
         assertEquals(
             "annotation_flow",
-            delegateOwnerSlot.captured.productMetricsDelegate.productFlow
+            delegateSlot.captured.productFlow
         )
         assertEquals(
             mapOf("annotation_dimension" to "ad1"),
-            delegateOwnerSlot.captured.productMetricsDelegate.productDimensions
+            delegateSlot.captured.productDimensions
         )
 
         verify {
             measureOnScreenClosed(
                 event = "screen_closed",
                 dimensions = mapOf("screen_dimension_closed" to "sdc"),
-                delegateOwner = any(),
+                delegate = any(),
                 lifecycleOwner = any(),
                 onBackPressedDispatcherOwner = any()
             )
         }
 
-        verify(exactly = 2) {
+        verify(exactly = 3) {
             lifecycleOwner.setupViewMetrics(any())
         }
     }
@@ -191,12 +175,6 @@ class SetupProductMetricsTest {
     @Test
     fun `ui component with view clicks`() {
         // WHEN
-        tested()
-
-        // THEN
-        verify { application.launchOnUiComponentCreated(any()) }
-
-        // WHEN - simulate creating an activity
         val blockSlot = mutableListOf<() -> Unit>()
         val lifecycleOwner = mockk<LifecycleOwner> {
             every {
@@ -205,40 +183,43 @@ class SetupProductMetricsTest {
         }
 
         val view = mockk<ProtonButton>(relaxed = true)
-        onUiComponentCreatedSlot.captured.invoke(
+        val toolbar = mockk<ProtonMaterialToolbar>(relaxed = true)
+        tested(
             lifecycleOwner,
             mockk(),
             mockk(),
             mockk<UiComponent.UiActivity> {
                 every { value } returns mockk<ActivityWithAnnotations>()
-                every { findViewById<View>(any()) } returns view
-                every { getIdentifier(any()) } returns 1
+
+                every { getIdentifier("view1") } returns 1
+                every { findViewById<View>(1) } returns view
+
+                every { getIdentifier("view2") } returns 2
+                every { findViewById<View>(2) } returns view
+
+                every { getIdentifier("toolbar_id") } returns 3
+                every { findViewById<View>(3) } returns toolbar
+
+                every { getIdentifier("toolbar_item_1") } returns 4
             }
         )
 
         // THEN
         blockSlot[0].invoke()
         blockSlot[1].invoke()
+        blockSlot[2].invoke()
 
-        verify(exactly = 2) {
-            lifecycleOwner.setupViewMetrics(any())
-        }
-
-        verify {
-            view.setOnFocusChangeListener(any())
-        }
-
-        verify {
-            view.setOnClickListener(any())
-        }
+        verify(exactly = 3) { lifecycleOwner.setupViewMetrics(any()) }
+        verify { view.setOnFocusChangeListener(any()) }
+        verify { view.setOnClickListener(any()) }
+        verify { toolbar.setAdditionalOnMenuItemClickListener(any()) }
     }
 
     @Test
     fun `ui component with delegate`() {
         // WHEN
         val delegate = TestProductMetricsDelegate(telemetryManager)
-        tested()
-        onUiComponentCreatedSlot.captured.invoke(
+        tested(
             lifecycleOwner,
             mockk(),
             mockk(),
@@ -252,23 +233,23 @@ class SetupProductMetricsTest {
         )
 
         // THEN
-        val delegateOwnerSlot = slot<ProductMetricsDelegateOwner>()
+        val delegateSlot = slot<ProductMetricsDelegate>()
         verify {
             measureOnScreenDisplayed(
                 event = "screen_displayed",
                 dimensions = mapOf("screen_dimension_displayed" to "sdd"),
-                delegateOwner = capture(delegateOwnerSlot),
+                delegate = capture(delegateSlot),
                 lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = any()
             )
         }
-        assertSame(delegate, delegateOwnerSlot.captured.productMetricsDelegate)
+        assertSame(delegate, delegateSlot.captured)
 
         verify {
             measureOnScreenClosed(
                 event = "screen_closed",
                 dimensions = mapOf("screen_dimension_closed" to "sdc"),
-                delegateOwner = any(),
+                delegate = any(),
                 lifecycleOwner = any(),
                 onBackPressedDispatcherOwner = any()
             )
@@ -277,12 +258,9 @@ class SetupProductMetricsTest {
 
     @Test
     fun `ui component with annotations and delegate`() {
-        // WHEN
-        tested()
-
-        // THEN
         val throwable = assertFailsWith<IllegalStateException> {
-            onUiComponentCreatedSlot.captured.invoke(
+            // WHEN
+            tested(
                 mockk(),
                 mockk(),
                 mockk(),
@@ -295,7 +273,27 @@ class SetupProductMetricsTest {
                 }
             )
         }
+
+        // THEN
         assertTrue(throwable.message!!.startsWith("Cannot use both"))
+    }
+
+    @Test
+    fun `ui component metrics but no product metric config`() {
+        val throwable = assertFailsWith<IllegalStateException> {
+            // WHEN
+            tested(
+                mockk(),
+                mockk(),
+                mockk(),
+                mockk<UiComponent.UiActivity> {
+                    every { value } returns mockk<ActivityWithMetricsWithNoConfig>()
+                }
+            )
+        }
+
+        // THEN
+        assertTrue(throwable.message!!.contains("ActivityWithMetricsWithNoConfig must implement either"))
     }
 
     @Test
@@ -310,6 +308,9 @@ class SetupProductMetricsTest {
 
 private class ActivityWithNoMetrics : Activity()
 
+@ScreenDisplayed("screen_displayed", ["screen_dimension_displayed", "sdd"])
+private class ActivityWithMetricsWithNoConfig : Activity()
+
 @ProductMetrics(
     group = "annotation_group",
     flow = "annotation_flow",
@@ -319,6 +320,7 @@ private class ActivityWithNoMetrics : Activity()
 @ScreenClosed("screen_closed", ["screen_dimension_closed", "sdc"])
 @ViewClicked("view_clicked", ["view1"])
 @ViewFocused("view_focused", ["view2"])
+@MenuItemClicked("item_clicked", "toolbar_id", ["toolbar_item_1"])
 private class ActivityWithAnnotations : Activity()
 
 @ScreenDisplayed("screen_displayed", ["screen_dimension_displayed", "sdd"])

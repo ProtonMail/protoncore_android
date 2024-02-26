@@ -33,7 +33,6 @@ import me.proton.core.humanverification.presentation.HumanVerificationInitialize
 import me.proton.core.keytransparency.presentation.init.KeyTransparencyInitializer
 import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
-import me.proton.core.telemetry.presentation.ProductMetricsInitializer
 
 @HiltAndroidApp
 class CoreExampleApp : Application() {
@@ -51,7 +50,6 @@ class CoreExampleApp : Application() {
             initializeComponent(KeyTransparencyInitializer::class.java)
             initializeComponent(LoggerInitializer::class.java)
             initializeComponent(FeatureFlagInitializer::class.java)
-            initializeComponent(ProductMetricsInitializer::class.java)
             initializeComponent(StrictModeInitializer::class.java)
         }
     }

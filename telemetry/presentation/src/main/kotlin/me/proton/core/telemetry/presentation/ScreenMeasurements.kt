@@ -35,12 +35,11 @@ import me.proton.core.telemetry.domain.entity.TelemetryPriority
 internal fun measureOnScreenDisplayed(
     event: String,
     dimensions: Map<String, String> = emptyMap(),
-    delegateOwner: ProductMetricsDelegateOwner,
+    delegate: ProductMetricsDelegate,
     lifecycleOwner: LifecycleOwner,
     savedStateRegistryOwner: SavedStateRegistryOwner,
     priority: TelemetryPriority = TelemetryPriority.Default
 ): () -> Unit = lifecycleOwner.launchOnScreenView(savedStateRegistryOwner.savedStateRegistry) {
-    val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
         group = delegate.productGroup,
         name = event,
@@ -63,13 +62,12 @@ internal fun measureOnScreenDisplayed(
 internal fun measureOnScreenClosed(
     event: String,
     dimensions: Map<String, String> = emptyMap(),
-    delegateOwner: ProductMetricsDelegateOwner,
+    delegate: ProductMetricsDelegate,
     lifecycleOwner: LifecycleOwner,
     onBackPressedDispatcherOwner: OnBackPressedDispatcherOwner,
     priority: TelemetryPriority = TelemetryPriority.Default
 ): () -> Unit =
     lifecycleOwner.launchOnBackPressed(onBackPressedDispatcherOwner.onBackPressedDispatcher) {
-        val delegate = delegateOwner.productMetricsDelegate
         val telemetryEvent = TelemetryEvent(
             group = delegate.productGroup,
             name = event,

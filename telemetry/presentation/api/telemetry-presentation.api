@@ -1,4 +1,4 @@
-public class hilt_aggregated_deps/_me_proton_core_telemetry_presentation_HiltWrapper_ProductMetricsInitializer_ProductMetricsInitializerEntryPoint {
+public class hilt_aggregated_deps/_me_proton_core_telemetry_presentation_HiltWrapper_ProductMetricsInitializerEntryPoint {
 	public fun <init> ()V
 }
 
@@ -9,7 +9,7 @@ public final class me/proton/core/telemetry/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
-public abstract interface class me/proton/core/telemetry/presentation/HiltWrapper_ProductMetricsInitializer_ProductMetricsInitializerEntryPoint : me/proton/core/telemetry/presentation/ProductMetricsInitializer$ProductMetricsInitializerEntryPoint {
+public abstract interface class me/proton/core/telemetry/presentation/HiltWrapper_ProductMetricsInitializerEntryPoint : me/proton/core/telemetry/presentation/ProductMetricsInitializerEntryPoint {
 }
 
 public abstract interface class me/proton/core/telemetry/presentation/ProductMetricsDelegate {
@@ -48,23 +48,28 @@ public abstract interface class me/proton/core/telemetry/presentation/ProductMet
 	public abstract fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
 }
 
+public final class me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner$DefaultImpls {
+	public static fun getProductMetricsDelegate (Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;)Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
+}
+
 public final class me/proton/core/telemetry/presentation/ProductMetricsDelegateOwnerKt {
 	public static final fun ProductMetricsDelegateOwner (Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;)Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;
 }
 
-public final class me/proton/core/telemetry/presentation/ProductMetricsInitializer : androidx/startup/Initializer {
-	public static final field $stable I
-	public fun <init> ()V
-	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
-	public fun create (Landroid/content/Context;)V
-	public fun dependencies ()Ljava/util/List;
+public abstract interface class me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner : me/proton/core/presentation/utils/OnUiComponentCreatedListener, me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner {
+	public abstract fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+}
+
+public final class me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner$DefaultImpls {
+	public static fun getProductMetricsDelegate (Lme/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner;)Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
+	public static fun onUiComponentCreated (Lme/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner;Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 }
 
 public final class me/proton/core/telemetry/presentation/ViewMeasurementsKt {
-	public static final fun measureOnViewClicked (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
-	public static synthetic fun measureOnViewClicked$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
-	public static final fun measureOnViewFocused (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
-	public static synthetic fun measureOnViewFocused$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegateOwner;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
+	public static final fun measureOnViewClicked (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
+	public static synthetic fun measureOnViewClicked$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
+	public static final fun measureOnViewFocused (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;)V
+	public static synthetic fun measureOnViewFocused$default (Ljava/lang/String;Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;ILjava/lang/Object;)V
 	public static final fun setupViewMetrics (Landroidx/lifecycle/LifecycleOwner;Lkotlin/jvm/functions/Function0;)V
 }
 
@@ -130,11 +135,17 @@ public final class me/proton/core/telemetry/presentation/compose/MeasureOnViewFo
 	public static final fun MeasureOnViewFocused (Ljava/lang/String;Ljava/util/Map;Lme/proton/core/telemetry/domain/entity/TelemetryPriority;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class me/proton/core/telemetry/presentation/usecase/SetupProductMetrics {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/telemetry/domain/TelemetryManager;)V
+	public final fun invoke (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+}
+
 public final class me/proton/core/telemetry/presentation/usecase/SetupProductMetrics_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/telemetry/presentation/usecase/SetupProductMetrics_Factory;
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/telemetry/presentation/usecase/SetupProductMetrics_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/telemetry/presentation/usecase/SetupProductMetrics;
-	public static fun newInstance (Landroid/app/Application;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/telemetry/presentation/usecase/SetupProductMetrics;
+	public static fun newInstance (Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/telemetry/presentation/usecase/SetupProductMetrics;
 }
 

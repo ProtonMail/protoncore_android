@@ -40,11 +40,10 @@ public fun LifecycleOwner.setupViewMetrics(
 
 public fun measureOnViewClicked(
     event: String,
-    delegateOwner: ProductMetricsDelegateOwner,
+    delegate: ProductMetricsDelegate,
     dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
-    val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
         group = delegate.productGroup,
         name = event,
@@ -60,11 +59,10 @@ public fun measureOnViewClicked(
 
 public fun measureOnViewFocused(
     event: String,
-    delegateOwner: ProductMetricsDelegateOwner,
+    delegate: ProductMetricsDelegate,
     dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
-    val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
         group = delegate.productGroup,
         name = event,

@@ -38,6 +38,7 @@ import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.presentation.viewmodel.onSuccess
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
@@ -57,8 +58,7 @@ import me.proton.core.telemetry.presentation.annotation.ViewFocused
     priority = TelemetryPriority.Immediate
 )
 @AndroidEntryPoint
-class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms) {
-
+class RecoverySMSFragment : ProtonFragment(R.layout.fragment_recovery_sms), UiComponentProductMetricsDelegateOwner {
     private val viewModel by viewModels<RecoverySMSViewModel>()
     private val recoveryMethodViewModel: RecoveryMethodViewModel by viewModels({ requireParentFragment() })
     private val binding by viewBinding(FragmentRecoverySmsBinding::bind)

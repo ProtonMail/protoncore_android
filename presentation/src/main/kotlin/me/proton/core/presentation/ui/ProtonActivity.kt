@@ -18,9 +18,17 @@
 
 package me.proton.core.presentation.ui
 
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import me.proton.core.presentation.utils.OnUiComponentCreatedListener
+import me.proton.core.presentation.utils.UiComponent
 
 /**
  * Base Proton Activity from which all project activities should extend.
  */
-abstract class ProtonActivity : AppCompatActivity()
+abstract class ProtonActivity : AppCompatActivity(), OnUiComponentCreatedListener {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onUiComponentCreated(this, this, this, UiComponent.UiActivity(this))
+    }
+}

@@ -36,15 +36,11 @@ class ViewMeasurementsKtTest {
 
     private val telemetryManager = mockk<TelemetryManager>(relaxed = true)
     private val productMetricsDelegate = mockk<ProductMetricsDelegate>(relaxed = true)
-    private val delegateOwner = mockk<ProductMetricsDelegateOwner>(relaxed = true)
-
     private val testUserId = UserId("test-user-id")
 
     @Before
     fun beforeEveryTest() {
         mockkStatic("me.proton.core.telemetry.presentation.ViewMeasurementsKt")
-
-        every { delegateOwner.productMetricsDelegate } returns productMetricsDelegate
         every { productMetricsDelegate.telemetryManager } returns telemetryManager
     }
 
@@ -60,7 +56,7 @@ class ViewMeasurementsKtTest {
         every { productMetricsDelegate.userId } returns testUserId
         every { productMetricsDelegate.productFlow } returns "test-product-flow"
 
-        measureOnViewClicked(testEvent, delegateOwner, testProductDimensions)
+        measureOnViewClicked(testEvent, productMetricsDelegate, testProductDimensions)
 
         val dataSlot = slot<TelemetryEvent>()
         verify(exactly = 1) { telemetryManager.enqueue(testUserId, capture(dataSlot)) }
@@ -75,7 +71,7 @@ class ViewMeasurementsKtTest {
         val testProductDimensions = mapOf(Pair("dimension1", "dim1val1"))
         every { productMetricsDelegate.userId } returns testUserId
 
-        measureOnViewFocused(testEvent, delegateOwner, testProductDimensions)
+        measureOnViewFocused(testEvent, productMetricsDelegate, testProductDimensions)
 
         val dataSlot = slot<TelemetryEvent>()
         verify(exactly = 1) { telemetryManager.enqueue(testUserId, capture(dataSlot)) }

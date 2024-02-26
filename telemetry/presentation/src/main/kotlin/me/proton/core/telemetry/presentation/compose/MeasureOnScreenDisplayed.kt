@@ -40,10 +40,13 @@ public fun MeasureOnScreenDisplayed(
         savedStateRegistryOwner,
         screenMetricsDelegateOwner
     ) {
+        val delegate = requireNotNull(screenMetricsDelegateOwner.productMetricsDelegate) {
+            "ProductMetricsDelegate is not defined."
+        }
         val screenDisplayedDispose = measureOnScreenDisplayed(
             event = event,
             dimensions = dimensions,
-            delegateOwner = screenMetricsDelegateOwner,
+            delegate = delegate,
             lifecycleOwner = lifecycleOwner,
             savedStateRegistryOwner = savedStateRegistryOwner,
             priority = priority

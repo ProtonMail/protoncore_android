@@ -18,7 +18,6 @@
 
 package me.proton.core.telemetry.presentation.usecase
 
-import android.app.Application
 import android.view.View
 import androidx.activity.OnBackPressedDispatcherOwner
 import androidx.annotation.VisibleForTesting
@@ -28,7 +27,6 @@ import me.proton.core.presentation.ui.view.AdditionalOnClickListener
 import me.proton.core.presentation.ui.view.AdditionalOnFocusChangeListener
 import me.proton.core.presentation.ui.view.ProtonMaterialToolbar
 import me.proton.core.presentation.utils.UiComponent
-import me.proton.core.presentation.utils.launchOnUiComponentCreated
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate.Companion.KEY_ITEM
@@ -46,46 +44,47 @@ import me.proton.core.telemetry.presentation.measureOnViewFocused
 import me.proton.core.telemetry.presentation.setupViewMetrics
 import javax.inject.Inject
 
-internal class SetupProductMetrics @Inject constructor(
-    private val application: Application,
+public class SetupProductMetrics @Inject constructor(
     private val telemetryManager: TelemetryManager
 ) {
-    operator fun invoke() {
-        application.launchOnUiComponentCreated(this::onUiComponentCreated)
-    }
-
-    private fun onUiComponentCreated(
+    /**
+     * This method should be invoked for any activity/fragment
+     * that wants to use the product metrics
+     * [annotations][me.proton.core.telemetry.presentation.annotation].
+     * If you don't use the annotations, you don't have to call this.
+     */
+    public operator fun invoke(
         lifecycleOwner: LifecycleOwner,
         onBackPressedDispatcherOwner: OnBackPressedDispatcherOwner,
         savedStateRegistryOwner: SavedStateRegistryOwner,
         component: UiComponent
     ) {
         val delegateOwner = component.value as? ProductMetricsDelegateOwner
+        val delegate = delegateOwner?.productMetricsDelegate
         val productMetrics = component.value.findAnnotation<ProductMetrics>()
         val hasProductMetricsAnnotation = component.value.hasProductMetricsAnnotation()
 
         when {
-            delegateOwner != null && productMetrics != null -> error(
-                "Cannot use both the ${ProductMetricsDelegateOwner::class.simpleName} and " +
+            delegate != null && productMetrics != null -> error(
+                "Cannot use both the ${ProductMetricsDelegate::class.simpleName} and " +
                         "${ProductMetrics::class.simpleName} annotation in ${component.value::class.qualifiedName}."
             )
 
-            delegateOwner == null && productMetrics == null && hasProductMetricsAnnotation -> error(
-                "${component.value::class.qualifiedName} must implement either " +
-                        "${ProductMetricsDelegateOwner::class.simpleName} or " +
-                        "annotate ${ProductMetrics::class.simpleName} annotation."
+            delegate == null && productMetrics == null && hasProductMetricsAnnotation -> error(
+                "${component.value::class.qualifiedName} must implement either implement " +
+                        "${ProductMetricsDelegateOwner::class.simpleName} and " +
+                        "provide a non-null ${ProductMetricsDelegate::class.simpleName}, or " +
+                        "annotate itself with a ${ProductMetrics::class.simpleName} annotation."
             )
 
-            delegateOwner == null && productMetrics == null -> return
+            delegate == null && productMetrics == null -> return
         }
 
-        val resolvedDelegateOwner = when {
-            delegateOwner != null -> delegateOwner
-            productMetrics != null -> ProductMetricsDelegateOwner(
-                AnnotationProductMetricsDelegate(
-                    productMetrics,
-                    telemetryManager
-                )
+        val resolvedDelegate = when {
+            delegate != null -> delegate
+            productMetrics != null -> AnnotationProductMetricsDelegate(
+                productMetrics,
+                telemetryManager
             )
 
             else -> error("Fatal error: both delegateOwner and screenMetrics and null.")
@@ -95,7 +94,7 @@ internal class SetupProductMetrics @Inject constructor(
             measureOnScreenDisplayed(
                 event = screenDisplayed.event,
                 dimensions = screenDisplayed.dimensions.toMap(),
-                delegateOwner = resolvedDelegateOwner,
+                delegate = resolvedDelegate,
                 lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = savedStateRegistryOwner,
                 priority = screenDisplayed.priority
@@ -106,7 +105,7 @@ internal class SetupProductMetrics @Inject constructor(
             measureOnScreenClosed(
                 event = screenClosed.event,
                 dimensions = screenClosed.dimensions.toMap(),
-                delegateOwner = resolvedDelegateOwner,
+                delegate = resolvedDelegate,
                 lifecycleOwner = lifecycleOwner,
                 onBackPressedDispatcherOwner = onBackPressedDispatcherOwner,
                 priority = screenClosed.priority
@@ -114,22 +113,22 @@ internal class SetupProductMetrics @Inject constructor(
         }
 
         component.value.findAnnotation<ViewClicked>()?.let { viewClicked ->
-            setupViewClicked(component, lifecycleOwner, resolvedDelegateOwner, viewClicked)
+            setupViewClicked(component, lifecycleOwner, resolvedDelegate, viewClicked)
         }
 
         component.value.findAnnotation<ViewFocused>()?.let { viewFocused ->
-            setupViewFocused(component, lifecycleOwner, resolvedDelegateOwner, viewFocused)
+            setupViewFocused(component, lifecycleOwner, resolvedDelegate, viewFocused)
         }
 
         component.value.findAnnotation<MenuItemClicked>()?.let { menuItemClicked ->
-            setupMenuItemClicked(component, lifecycleOwner, menuItemClicked, resolvedDelegateOwner)
+            setupMenuItemClicked(component, lifecycleOwner, menuItemClicked, resolvedDelegate)
         }
     }
 
     private fun setupViewClicked(
         component: UiComponent,
         lifecycleOwner: LifecycleOwner,
-        resolvedDelegateOwner: ProductMetricsDelegateOwner,
+        resolvedDelegate: ProductMetricsDelegate,
         viewClicked: ViewClicked
     ) = lifecycleOwner.setupViewMetrics {
         for (viewId in viewClicked.viewIds) {
@@ -140,7 +139,7 @@ internal class SetupProductMetrics @Inject constructor(
                 override fun onClick(p0: View?) {
                     measureOnViewClicked(
                         event = viewClicked.event,
-                        delegateOwner = resolvedDelegateOwner,
+                        delegate = resolvedDelegate,
                         dimensions = mapOf("item" to viewId),
                         priority = viewClicked.priority
                     )
@@ -152,7 +151,7 @@ internal class SetupProductMetrics @Inject constructor(
     private fun setupViewFocused(
         component: UiComponent,
         lifecycleOwner: LifecycleOwner,
-        resolvedDelegateOwner: ProductMetricsDelegateOwner,
+        resolvedDelegate: ProductMetricsDelegate,
         viewFocused: ViewFocused
     ) = lifecycleOwner.setupViewMetrics {
         for (viewId in viewFocused.viewIds) {
@@ -164,7 +163,7 @@ internal class SetupProductMetrics @Inject constructor(
                     if (hasFocus) {
                         measureOnViewFocused(
                             event = viewFocused.event,
-                            delegateOwner = resolvedDelegateOwner,
+                            delegate = resolvedDelegate,
                             dimensions = mapOf(KEY_ITEM to viewId),
                             priority = viewFocused.priority
                         )
@@ -178,7 +177,7 @@ internal class SetupProductMetrics @Inject constructor(
         component: UiComponent,
         lifecycleOwner: LifecycleOwner,
         menuItemClicked: MenuItemClicked,
-        resolvedDelegateOwner: ProductMetricsDelegateOwner
+        resolvedDelegate: ProductMetricsDelegate
     ) = lifecycleOwner.setupViewMetrics {
         val toolbarId = component.getIdentifier(menuItemClicked.toolbarId)
         val toolbar = component.findViewById<View>(toolbarId) as? ProtonMaterialToolbar
@@ -187,7 +186,7 @@ internal class SetupProductMetrics @Inject constructor(
             val itemIdName = itemIds[it.itemId] ?: return@setAdditionalOnMenuItemClickListener false
             measureOnViewClicked(
                 event = menuItemClicked.event,
-                delegateOwner = resolvedDelegateOwner,
+                delegate = resolvedDelegate,
                 dimensions = mapOf("item" to itemIdName),
                 priority = menuItemClicked.priority
             )

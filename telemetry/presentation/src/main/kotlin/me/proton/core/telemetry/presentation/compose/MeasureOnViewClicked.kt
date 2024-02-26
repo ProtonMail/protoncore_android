@@ -30,9 +30,12 @@ public fun MeasureOnViewClicked(
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
+    val delegate = requireNotNull(screenMetricsDelegateOwner.productMetricsDelegate) {
+        "ProductMetricsDelegate is not defined."
+    }
     measureOnViewClicked(
         event = event,
-        delegateOwner = screenMetricsDelegateOwner,
+        delegate = delegate,
         dimensions = dimensions,
         priority = priority
     )

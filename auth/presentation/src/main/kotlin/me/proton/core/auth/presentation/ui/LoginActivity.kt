@@ -55,7 +55,7 @@ import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validateUsername
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
-import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
@@ -85,7 +85,8 @@ import javax.inject.Inject
     viewIds = ["usernameInput", "passwordInput"],
     priority = TelemetryPriority.Immediate
 )
-class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), ProductMetricsDelegateOwner {
+class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate),
+    UiComponentProductMetricsDelegateOwner {
 
     // Additional button appearing when login fails and it's potentially caused by blocking.
     // When product injects null no dedicated button will appear.

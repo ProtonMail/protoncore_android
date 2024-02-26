@@ -35,6 +35,7 @@ import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
@@ -59,7 +60,8 @@ import javax.inject.Inject
     viewIds = ["sign_up", "sign_in"],
     priority = TelemetryPriority.Immediate
 )
-internal class AddAccountFragment : ProtonFragment(R.layout.fragment_add_account) {
+internal class AddAccountFragment : ProtonFragment(R.layout.fragment_add_account),
+    UiComponentProductMetricsDelegateOwner {
     @Inject
     lateinit var authOrchestrator: AuthOrchestrator
 

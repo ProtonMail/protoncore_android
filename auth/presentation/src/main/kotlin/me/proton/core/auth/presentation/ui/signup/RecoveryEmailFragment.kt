@@ -32,6 +32,7 @@ import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onTextChange
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
 
@@ -44,8 +45,7 @@ import me.proton.core.telemetry.presentation.annotation.ViewFocused
     viewIds = ["email"],
     priority = TelemetryPriority.Immediate
 )
-class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email) {
-
+class RecoveryEmailFragment : ProtonFragment(R.layout.fragment_recovery_email), UiComponentProductMetricsDelegateOwner {
     private val recoveryMethodViewModel: RecoveryMethodViewModel by viewModels({ requireParentFragment() })
     private val binding by viewBinding(FragmentRecoveryEmailBinding::bind)
 

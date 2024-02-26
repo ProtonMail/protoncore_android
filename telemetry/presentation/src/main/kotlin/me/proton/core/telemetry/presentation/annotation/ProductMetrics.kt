@@ -20,8 +20,10 @@ package me.proton.core.telemetry.presentation.annotation
 
 /**
  * The annotation can be applied to activities or fragments.
- * It cannot be used, if your activity or fragment
- * also implements [me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner].
+ * NOTE: You activity/fragment should also implement
+ * [me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner] interface.
+ * NOTE: This annotation cannot be used, if your delegate owner
+ * returns a non-null [delegate][me.proton.core.telemetry.presentation.ProductMetricsDelegate].
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS)

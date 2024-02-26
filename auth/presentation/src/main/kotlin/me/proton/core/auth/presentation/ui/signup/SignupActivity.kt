@@ -65,7 +65,7 @@ import me.proton.core.plan.presentation.ui.showPlansSignup
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
-import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.util.kotlin.exhaustive
@@ -81,7 +81,7 @@ import javax.inject.Inject
     priority = TelemetryPriority.Immediate
 )
 class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding::inflate),
-    ProductMetricsDelegateOwner {
+    UiComponentProductMetricsDelegateOwner {
 
     override val productMetricsDelegate: ProductMetricsDelegate get() = signUpViewModel
 

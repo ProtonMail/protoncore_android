@@ -25,7 +25,7 @@ plugins {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(14)
+    branchCoveragePercentage.set(16)
     lineCoveragePercentage.set(51)
 }
 
@@ -42,6 +42,7 @@ dependencies {
         project(Module.networkDomain),
         activity,
         fragment,
+        `lifecycle-common`,
         `startup-runtime`
     )
 

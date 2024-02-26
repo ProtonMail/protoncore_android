@@ -23,11 +23,13 @@ import android.os.Bundle
 import android.view.Window
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.DialogFragment
+import me.proton.core.presentation.utils.OnUiComponentCreatedListener
+import me.proton.core.presentation.utils.UiComponent
 
 /**
  * Base Proton Fragment from which all project fragments should extend.
  */
-abstract class ProtonDialogFragment : DialogFragment {
+abstract class ProtonDialogFragment : DialogFragment, OnUiComponentCreatedListener {
     constructor() : super()
     constructor(@LayoutRes contentLayoutId: Int) : super(contentLayoutId)
 
@@ -40,6 +42,7 @@ abstract class ProtonDialogFragment : DialogFragment {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        onUiComponentCreated(this, requireActivity(), this, UiComponent.UiFragment(this))
         val theme = activity?.componentName?.let {
             activity?.packageManager?.getActivityInfo(it, 0)?.themeResource
         }

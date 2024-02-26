@@ -21,7 +21,6 @@ package me.proton.core.humanverification.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.humanverification.domain.HumanVerificationExternalInput
 import me.proton.core.humanverification.presentation.entity.HumanVerificationInput
@@ -30,7 +29,9 @@ import me.proton.core.humanverification.presentation.ui.common.REQUEST_KEY
 import me.proton.core.humanverification.presentation.ui.common.RESULT_HUMAN_VERIFICATION
 import me.proton.core.humanverification.presentation.utils.HumanVerificationVersion
 import me.proton.core.humanverification.presentation.utils.showHumanVerification
+import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
@@ -49,7 +50,7 @@ import javax.inject.Inject
     event = "user.hv.closed",
     priority = TelemetryPriority.Immediate
 )
-class HumanVerificationActivity : AppCompatActivity() {
+class HumanVerificationActivity : ProtonActivity(), UiComponentProductMetricsDelegateOwner {
 
     @Inject
     lateinit var humanVerificationVersion: HumanVerificationVersion

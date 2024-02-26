@@ -1540,7 +1540,7 @@ public abstract class me/proton/core/auth/presentation/ui/Hilt_TwoPassModeActivi
 	protected fun inject ()V
 }
 
-public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton/core/auth/presentation/ui/AuthActivity, me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner {
+public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton/core/auth/presentation/ui/AuthActivity, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/LoginActivity$Companion;
@@ -1548,6 +1548,7 @@ public final class me/proton/core/auth/presentation/ui/LoginActivity : me/proton
 	public fun <init> ()V
 	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
 	public fun onError (ZLjava/lang/String;Z)V
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 	public fun showLoading (Z)V
 }
 
@@ -1927,8 +1928,10 @@ public abstract class me/proton/core/auth/presentation/ui/signup/Hilt_TermsCondi
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/RecoveryEmailFragment : me/proton/core/presentation/ui/ProtonFragment {
+public final class me/proton/core/auth/presentation/ui/signup/RecoveryEmailFragment : me/proton/core/presentation/ui/ProtonFragment, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
 	public fun <init> ()V
+	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
@@ -1948,8 +1951,10 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Recov
 	public abstract fun injectRecoveryMethodFragment (Lme/proton/core/auth/presentation/ui/signup/RecoveryMethodFragment;)V
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/RecoverySMSFragment : me/proton/core/presentation/ui/ProtonFragment {
+public final class me/proton/core/auth/presentation/ui/signup/RecoverySMSFragment : me/proton/core/presentation/ui/ProtonFragment, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
 	public fun <init> ()V
+	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
@@ -1957,7 +1962,7 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Recov
 	public abstract fun injectRecoverySMSFragment (Lme/proton/core/auth/presentation/ui/signup/RecoverySMSFragment;)V
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/SignupActivity : me/proton/core/auth/presentation/ui/AuthActivity, me/proton/core/telemetry/presentation/ProductMetricsDelegateOwner {
+public final class me/proton/core/auth/presentation/ui/signup/SignupActivity : me/proton/core/auth/presentation/ui/AuthActivity, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/SignupActivity$Companion;
@@ -1965,6 +1970,7 @@ public final class me/proton/core/auth/presentation/ui/signup/SignupActivity : m
 	public fun <init> ()V
 	public final fun getProduct ()Lme/proton/core/domain/entity/Product;
 	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 	public final fun setProduct (Lme/proton/core/domain/entity/Product;)V
 }
 
@@ -2010,11 +2016,13 @@ public final class me/proton/core/auth/presentation/ui/signup/SignupFinishedFrag
 	public static fun injectProduct (Lme/proton/core/auth/presentation/ui/signup/SignupFinishedFragment;Lme/proton/core/domain/entity/Product;)V
 }
 
-public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment : me/proton/core/presentation/ui/ProtonSecureFragment {
+public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment : me/proton/core/presentation/ui/ProtonSecureFragment, me/proton/core/telemetry/presentation/UiComponentProductMetricsDelegateOwner {
 	public fun <init> ()V
 	public fun <init> (I)V
+	public fun getProductMetricsDelegate ()Lme/proton/core/telemetry/presentation/ProductMetricsDelegate;
 	public abstract fun onBackPressed ()V
 	public fun onCreate (Landroid/os/Bundle;)V
+	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
 	public fun showError (Ljava/lang/String;)V
 	public fun showIndefiniteError (Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static synthetic fun showIndefiniteError$default (Lme/proton/core/auth/presentation/ui/signup/SignupFragment;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)V

@@ -65,7 +65,6 @@ class ScreenMeasurementsKtTest {
             telemetryManager = telemetryManager,
             userId = userId
         )
-        val delegateOwner = ProductMetricsDelegateOwner(delegate)
         val blockSlot = slot<suspend () -> Unit>()
         val lifecycleOwner = mockk<LifecycleOwner> {
             every {
@@ -80,7 +79,7 @@ class ScreenMeasurementsKtTest {
         measureOnScreenDisplayed(
             event = "event",
             dimensions = mapOf("extra" to "value"),
-            delegateOwner = delegateOwner,
+            delegate = delegate,
             lifecycleOwner = lifecycleOwner,
             savedStateRegistryOwner = savedStateRegistryOwner
         )
@@ -113,7 +112,6 @@ class ScreenMeasurementsKtTest {
             telemetryManager = telemetryManager,
             userId = userId
         )
-        val delegateOwner = ProductMetricsDelegateOwner(delegate)
         val blockSlot = slot<() -> Unit>()
         val lifecycleOwner = mockk<LifecycleOwner> {
             every {
@@ -128,7 +126,7 @@ class ScreenMeasurementsKtTest {
         measureOnScreenClosed(
             event = "event",
             dimensions = mapOf("extra" to "value"),
-            delegateOwner = delegateOwner,
+            delegate = delegate,
             lifecycleOwner = lifecycleOwner,
             onBackPressedDispatcherOwner = onBackPressedDispatcherOwner
         )
