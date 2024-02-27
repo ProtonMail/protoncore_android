@@ -63,14 +63,9 @@ fun Context.openMarketLink() {
                 Intent.FLAG_ACTIVITY_MULTIPLE_TASK
         )
     }
-    storeIntent.resolveActivity(packageManager)?.let {
-        startActivity(storeIntent)
-    } ?: run {
-        Toast.makeText(
-            this,
-            getString(R.string.presentation_market_missing),
-            Toast.LENGTH_SHORT
-        ).show()
+    when (storeIntent.resolveActivity(packageManager)) {
+        null -> openBrowserLink("https://play.google.com/store/apps/details?id=$packageName")
+        else -> startActivity(storeIntent)
     }
 }
 
