@@ -31,4 +31,6 @@ public class FakeIsAccountRecoveryEnabled(
     public constructor() : this(enabled = false)
 
     override fun invoke(userId: UserId?): Boolean = enabled
+    override fun isLocalEnabled(): Boolean = enabled
+    override fun isRemoteEnabled(userId: UserId?): Boolean = enabled
 }

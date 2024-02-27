@@ -20,4 +20,4 @@ package me.proton.core.accountrecovery.domain
 
 import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
 
-public interface IsAccountRecoveryEnabled : IsFeatureFlagEnabled
+public interface IsAccountRecoveryResetEnabled : IsFeatureFlagEnabled

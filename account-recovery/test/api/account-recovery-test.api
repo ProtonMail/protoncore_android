@@ -32,6 +32,8 @@ public final class me/proton/core/accountrecovery/test/fake/FakeIsAccountRecover
 	public fun <init> (Z)V
 	public final fun getEnabled ()Z
 	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
 	public final fun setEnabled (Z)V
 }
 

@@ -28,7 +28,7 @@ publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
     branchCoveragePercentage.set(100)
-    lineCoveragePercentage.set(96)
+    lineCoveragePercentage.set(97)
 }
 
 android {
@@ -39,6 +39,7 @@ dependencies {
     api(
         project(Module.accountRecoveryDomain),
         project(Module.featureFlagDomain),
+        project(Module.featureFlagData),
         `hilt-android`,
         `javax-inject`
     )
