@@ -29,7 +29,8 @@ public final class me/proton/core/accountmanager/presentation/compose/AccountPri
 
 public final class me/proton/core/accountmanager/presentation/compose/AccountSettingsInfoKt {
 	public static final fun AccountSettingsCredentialLess (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ZZLandroidx/compose/runtime/Composer;II)V
-	public static final fun AccountSettingsInfo (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;IZZZLkotlin/jvm/functions/Function3;Lkotlin/jvm/functions/Function3;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;Landroidx/compose/runtime/Composer;III)V
+	public static final fun AccountSettingsInfo (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;IZZZLme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsInfo (Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/ui/Modifier;IZZZLme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState;Landroidx/compose/runtime/Composer;II)V
 	public static final fun AccountSettingsLoggedIn (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;IZLandroidx/compose/runtime/Composer;II)V
 }
 

@@ -24,11 +24,6 @@ plugins {
     protonDagger
 }
 
-protonCoverage {
-    branchCoveragePercentage.set(36)
-    lineCoveragePercentage.set(72)
-}
-
 publishOption.shouldBePublishedAsLib = true
 
 protonBuild {
@@ -36,8 +31,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(31)
-    lineCoveragePercentage.set(67)
+    branchCoveragePercentage.set(32)
+    lineCoveragePercentage.set(69)
 }
 
 android {

@@ -83,8 +83,6 @@ fun AccountSettingsInfo(
     signUpButtonGone: Boolean = false,
     signInButtonGone: Boolean = false,
     signOutButtonGone: Boolean = false,
-    loggedInContent: (@Composable (UserId) -> Unit)? = null,
-    nonLoggedInContent: (@Composable (UserId?) -> Unit)? = null,
     viewModel: AccountSettingsViewModel? = hiltViewModelOrNull(),
 ) {
     val state = when (viewModel) {
@@ -98,64 +96,78 @@ fun AccountSettingsInfo(
         else -> rememberAsState(viewModel.state, viewModel.initialState).value
     }
 
+    CompositionLocalProvider(
+        LocalProductMetricsDelegateOwner provides viewModel?.let { ProductMetricsDelegateOwner(it) }
+    ) {
+        AccountSettingsInfo(
+            onSignUpClicked = onSignUpClicked,
+            onSignInClicked = onSignInClicked,
+            onAccountClicked = onAccountClicked,
+            onSignOutClicked = onSignOutClicked,
+            modifier = modifier,
+            initialCount = initialCount,
+            signUpButtonGone = signUpButtonGone,
+            signInButtonGone = signInButtonGone,
+            signOutButtonGone = signOutButtonGone,
+            state = state
+        )
+    }
+}
+
+@Composable
+fun AccountSettingsInfo(
+    onSignUpClicked: () -> Unit,
+    onSignInClicked: () -> Unit,
+    onAccountClicked: () -> Unit,
+    onSignOutClicked: () -> Unit,
+    modifier: Modifier = Modifier,
+    initialCount: Int = 2,
+    signUpButtonGone: Boolean = false,
+    signInButtonGone: Boolean = false,
+    signOutButtonGone: Boolean = false,
+    state: AccountSettingsViewState,
+) {
+    MeasureOnScreenDisplayed("fe.info_account.displayed")
+    MeasureOnScreenClosed("user.info_account.closed")
+
     var isSignUpClicked by remember { mutableStateOf(false) }
     var isSignInClicked by remember { mutableStateOf(false) }
 
-    val delegate = if (viewModel != null) ProductMetricsDelegateOwner(viewModel) else LocalProductMetricsDelegateOwner.current
-    CompositionLocalProvider(
-        LocalProductMetricsDelegateOwner provides delegate
-    ) {
-        MeasureOnScreenDisplayed("fe.info_account.displayed")
-        MeasureOnScreenClosed("user.info_account.closed")
+    if (isSignUpClicked) {
+        MeasureOnViewClicked("user.info_account.clicked", mapOf("item" to "sign_up"))
+        isSignUpClicked = false
+    }
 
-        when (state) {
-            is AccountSettingsViewState.CredentialLess -> {
-                when (nonLoggedInContent) {
-                    null -> AccountSettingsCredentialLess(
-                        modifier = modifier,
-                        onCreateAccountClicked = {
-                            onSignUpClicked()
-                            isSignUpClicked = true
-                        },
-                        onSignInClicked = {
-                            onSignInClicked()
-                            isSignInClicked = true
-                        },
-                        signUpButtonGone = signUpButtonGone,
-                        signInButtonGone = signInButtonGone,
-                    )
+    if (isSignInClicked) {
+        MeasureOnViewClicked("user.info_account.clicked", mapOf("item" to "sign_in"))
+        isSignInClicked = false
+    }
 
-                    else -> nonLoggedInContent(state.userId)
-                }
-            }
+    when (state) {
+        is AccountSettingsViewState.CredentialLess -> AccountSettingsCredentialLess(
+            modifier = modifier,
+            onCreateAccountClicked = {
+                onSignUpClicked()
+                isSignUpClicked = true
+            },
+            onSignInClicked = {
+                onSignInClicked()
+                isSignInClicked = true
+            },
+            signUpButtonGone = signUpButtonGone,
+            signInButtonGone = signInButtonGone,
+        )
 
-            is AccountSettingsViewState.LoggedIn -> {
-                when (loggedInContent) {
-                    null -> AccountSettingsLoggedIn(
-                        modifier = modifier,
-                        onAccountClicked = onAccountClicked,
-                        onSignOutClicked = onSignOutClicked,
-                        state = state,
-                        initialCount = initialCount,
-                        signOutButtonGone = signOutButtonGone,
-                    )
+        is AccountSettingsViewState.LoggedIn -> AccountSettingsLoggedIn(
+            modifier = modifier,
+            onAccountClicked = onAccountClicked,
+            onSignOutClicked = onSignOutClicked,
+            state = state,
+            initialCount = initialCount,
+            signOutButtonGone = signOutButtonGone,
+        )
 
-                    else -> loggedInContent(state.userId)
-                }
-            }
-
-            is AccountSettingsViewState.Hidden -> return@CompositionLocalProvider
-        }
-
-        if (isSignUpClicked) {
-            MeasureOnViewClicked(event = "user.info_account.clicked", productDimensions = mapOf("item" to "sign_up"))
-            isSignUpClicked = false
-
-        }
-        if (isSignInClicked) {
-            MeasureOnViewClicked(event = "user.info_account.clicked", productDimensions = mapOf("item" to "sign_in"))
-            isSignInClicked = false
-        }
+        is AccountSettingsViewState.Hidden -> return
     }
 }
 
