@@ -63,7 +63,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `espresso version` =                        "3.5.0"
     `fragment version` =                        "1.6.2"
     `ktx version` =                             "1.9.0"
-    `lifecycle version` =                       "2.6.1"
+    `lifecycle version` =                       "2.7.0"
     `material version` =                        "1.7.0"
     `android-paging version` =                  "3.1.0"
     `android-work version` =                    "2.8.1"

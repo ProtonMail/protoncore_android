@@ -40,7 +40,8 @@ public val DependencyHandler.`hilt-navigation-compose`: Any
     get() = androidx("hilt", moduleSuffix = "navigation-compose") version `hilt-navigation-compose version`
 public val DependencyHandler.`lifecycle-viewModel-compose`: Any
     get() = androidx("lifecycle", moduleSuffix = "viewmodel-compose") version `lifecycle version`
-
+public val DependencyHandler.`lifecycle-runtime-compose`: Any
+    get() = androidx("lifecycle", moduleSuffix = "runtime-compose") version `lifecycle version`
 public fun DependencyHandler.compose(
     module: String,
     moduleSuffix: String? = null,

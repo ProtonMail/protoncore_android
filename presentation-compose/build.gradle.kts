@@ -50,6 +50,7 @@ dependencies {
         `lifecycle-common`,
         `lifecycle-viewModel`,
         `lifecycle-viewModel-compose`,
+        `lifecycle-runtime-compose`,
     )
 
     implementation(

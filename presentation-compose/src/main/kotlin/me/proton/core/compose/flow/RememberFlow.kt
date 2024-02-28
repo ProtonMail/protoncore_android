@@ -24,8 +24,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Merges functionality from Compose [androidx.compose.runtime.remember] and flow's [flowWithLifecycle].
@@ -38,6 +40,13 @@ import kotlinx.coroutines.flow.Flow
  *
  * @see [rememberAsState]
  */
+@Deprecated(
+    message = "Use Flow.collectAsStateWithLifecycle(initialValue) or StateFlow.collectAsStateWithLifecycle()",
+    replaceWith = ReplaceWith(
+        "flow.collectAsStateWithLifecycle()",
+        "androidx.lifecycle.compose.collectAsStateWithLifecycle"
+    )
+)
 @Composable
 fun <T> rememberFlowWithLifecycle(
     flow: Flow<T>,
@@ -58,8 +67,28 @@ fun <T> rememberFlowWithLifecycle(
  * val viewState by rememberAsState(viewModel.viewState, ViewState.initialValue)
  * ```
  */
+@Deprecated(
+    message = "Use Flow.collectAsStateWithLifecycle(initialValue) or StateFlow.collectAsStateWithLifecycle()",
+    replaceWith = ReplaceWith(
+        "flow.collectAsStateWithLifecycle(initial)",
+        "androidx.lifecycle.compose.collectAsStateWithLifecycle"
+    )
+)
 @Composable
 fun <T> rememberAsState(
     flow: Flow<T>,
     initial: T
-): State<T> = rememberFlowWithLifecycle(flow).collectAsState(initial)
+): State<T> = flow.collectAsStateWithLifecycle(initial)
+
+@Deprecated(
+    message = "Use StateFlow.collectAsStateWithLifecycle()",
+    replaceWith = ReplaceWith(
+        "flow.collectAsStateWithLifecycle()",
+        "androidx.lifecycle.compose.collectAsStateWithLifecycle"
+    )
+)
+@Composable
+fun <T> rememberAsState(
+    flow: StateFlow<T>,
+    initial: T
+): State<T> = flow.collectAsStateWithLifecycle()

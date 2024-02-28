@@ -443,6 +443,7 @@ public final class me/proton/core/compose/component/bottomsheet/ModalBottomSheet
 
 public final class me/proton/core/compose/flow/RememberFlowKt {
 	public static final fun rememberAsState (Lkotlinx/coroutines/flow/Flow;Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
+	public static final fun rememberAsState (Lkotlinx/coroutines/flow/StateFlow;Ljava/lang/Object;Landroidx/compose/runtime/Composer;I)Landroidx/compose/runtime/State;
 	public static final fun rememberFlowWithLifecycle (Lkotlinx/coroutines/flow/Flow;Landroidx/lifecycle/Lifecycle;Landroidx/lifecycle/Lifecycle$State;Landroidx/compose/runtime/Composer;II)Lkotlinx/coroutines/flow/Flow;
 }
 
