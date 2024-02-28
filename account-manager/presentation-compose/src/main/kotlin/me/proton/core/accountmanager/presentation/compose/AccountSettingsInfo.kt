@@ -66,6 +66,7 @@ import me.proton.core.compose.theme.defaultSmallStrongUnspecified
 import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.domain.entity.UserId
+import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
@@ -127,19 +128,19 @@ fun AccountSettingsInfo(
     signOutButtonGone: Boolean = false,
     state: AccountSettingsViewState,
 ) {
-    MeasureOnScreenDisplayed("fe.info_account.displayed")
-    MeasureOnScreenClosed("user.info_account.closed")
+    MeasureOnScreenDisplayed("fe.info_account.displayed", priority = Immediate)
+    MeasureOnScreenClosed("user.info_account.closed", priority = Immediate)
 
     var isSignUpClicked by remember { mutableStateOf(false) }
     var isSignInClicked by remember { mutableStateOf(false) }
 
     if (isSignUpClicked) {
-        MeasureOnViewClicked("user.info_account.clicked", mapOf("item" to "sign_up"))
+        MeasureOnViewClicked("user.info_account.clicked", item = "sign_up", Immediate)
         isSignUpClicked = false
     }
 
     if (isSignInClicked) {
-        MeasureOnViewClicked("user.info_account.clicked", mapOf("item" to "sign_in"))
+        MeasureOnViewClicked("user.info_account.clicked", item = "sign_in", Immediate)
         isSignInClicked = false
     }
 

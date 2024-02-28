@@ -20,19 +20,31 @@ package me.proton.core.telemetry.presentation.compose
 
 import androidx.compose.runtime.Composable
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 
 @Composable
 public fun MeasureOnViewClicked(
     event: String,
-    productDimensions: Map<String, String> = emptyMap(),
+    dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
     measureOnViewClicked(
         event = event,
         delegateOwner = screenMetricsDelegateOwner,
-        productDimensions = productDimensions,
+        dimensions = dimensions,
         priority = priority
     )
 }
+
+@Composable
+public fun MeasureOnViewClicked(
+    event: String,
+    item: String,
+    priority: TelemetryPriority = TelemetryPriority.Default
+): Unit = MeasureOnViewClicked(
+    event = event,
+    dimensions = mapOf(ProductMetricsDelegate.KEY_ITEM to item),
+    priority = priority
+)

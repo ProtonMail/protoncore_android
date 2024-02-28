@@ -52,7 +52,6 @@ import me.proton.core.telemetry.presentation.measureOnViewClicked
 import me.proton.core.telemetry.presentation.measureOnViewFocused
 import me.proton.core.telemetry.presentation.setupViewMetrics
 import org.junit.Rule
-import java.util.Collections.list
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -154,8 +153,8 @@ class SetupProductMetricsTest {
         val delegateOwnerSlot = slot<ProductMetricsDelegateOwner>()
         verify {
             measureOnScreenDisplayed(
-                productEvent = "screen_displayed",
-                productDimensions = mapOf("screen_dimension_displayed" to "sdd"),
+                event = "screen_displayed",
+                dimensions = mapOf("screen_dimension_displayed" to "sdd"),
                 delegateOwner = capture(delegateOwnerSlot),
                 lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = any()
@@ -176,8 +175,8 @@ class SetupProductMetricsTest {
 
         verify {
             measureOnScreenClosed(
-                productEvent = "screen_closed",
-                productDimensions = mapOf("screen_dimension_closed" to "sdc"),
+                event = "screen_closed",
+                dimensions = mapOf("screen_dimension_closed" to "sdc"),
                 delegateOwner = any(),
                 lifecycleOwner = any(),
                 onBackPressedDispatcherOwner = any()
@@ -256,8 +255,8 @@ class SetupProductMetricsTest {
         val delegateOwnerSlot = slot<ProductMetricsDelegateOwner>()
         verify {
             measureOnScreenDisplayed(
-                productEvent = "screen_displayed",
-                productDimensions = mapOf("screen_dimension_displayed" to "sdd"),
+                event = "screen_displayed",
+                dimensions = mapOf("screen_dimension_displayed" to "sdd"),
                 delegateOwner = capture(delegateOwnerSlot),
                 lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = any()
@@ -267,8 +266,8 @@ class SetupProductMetricsTest {
 
         verify {
             measureOnScreenClosed(
-                productEvent = "screen_closed",
-                productDimensions = mapOf("screen_dimension_closed" to "sdc"),
+                event = "screen_closed",
+                dimensions = mapOf("screen_dimension_closed" to "sdc"),
                 delegateOwner = any(),
                 lifecycleOwner = any(),
                 onBackPressedDispatcherOwner = any()

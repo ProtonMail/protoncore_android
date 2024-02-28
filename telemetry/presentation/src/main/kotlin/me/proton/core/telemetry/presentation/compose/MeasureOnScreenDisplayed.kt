@@ -27,8 +27,8 @@ import me.proton.core.telemetry.presentation.measureOnScreenDisplayed
 
 @Composable
 public fun MeasureOnScreenDisplayed(
-    productEvent: String,
-    productDimensions: Map<String, String> = emptyMap(),
+    event: String,
+    dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
@@ -41,8 +41,8 @@ public fun MeasureOnScreenDisplayed(
         screenMetricsDelegateOwner
     ) {
         val screenDisplayedDispose = measureOnScreenDisplayed(
-            productEvent = productEvent,
-            productDimensions = productDimensions,
+            event = event,
+            dimensions = dimensions,
             delegateOwner = screenMetricsDelegateOwner,
             lifecycleOwner = lifecycleOwner,
             savedStateRegistryOwner = savedStateRegistryOwner,

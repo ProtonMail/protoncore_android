@@ -93,8 +93,8 @@ internal class SetupProductMetrics @Inject constructor(
 
         component.value.findAnnotation<ScreenDisplayed>()?.let { screenDisplayed ->
             measureOnScreenDisplayed(
-                productEvent = screenDisplayed.event,
-                productDimensions = screenDisplayed.dimensions.toMap(),
+                event = screenDisplayed.event,
+                dimensions = screenDisplayed.dimensions.toMap(),
                 delegateOwner = resolvedDelegateOwner,
                 lifecycleOwner = lifecycleOwner,
                 savedStateRegistryOwner = savedStateRegistryOwner,
@@ -104,8 +104,8 @@ internal class SetupProductMetrics @Inject constructor(
 
         component.value.findAnnotation<ScreenClosed>()?.let { screenClosed ->
             measureOnScreenClosed(
-                productEvent = screenClosed.event,
-                productDimensions = screenClosed.dimensions.toMap(),
+                event = screenClosed.event,
+                dimensions = screenClosed.dimensions.toMap(),
                 delegateOwner = resolvedDelegateOwner,
                 lifecycleOwner = lifecycleOwner,
                 onBackPressedDispatcherOwner = onBackPressedDispatcherOwner,
@@ -141,7 +141,7 @@ internal class SetupProductMetrics @Inject constructor(
                     measureOnViewClicked(
                         event = viewClicked.event,
                         delegateOwner = resolvedDelegateOwner,
-                        productDimensions = mapOf("item" to viewId),
+                        dimensions = mapOf("item" to viewId),
                         priority = viewClicked.priority
                     )
                 }
@@ -165,7 +165,7 @@ internal class SetupProductMetrics @Inject constructor(
                         measureOnViewFocused(
                             event = viewFocused.event,
                             delegateOwner = resolvedDelegateOwner,
-                            productDimensions = mapOf(KEY_ITEM to viewId),
+                            dimensions = mapOf(KEY_ITEM to viewId),
                             priority = viewFocused.priority
                         )
                     }
@@ -188,7 +188,7 @@ internal class SetupProductMetrics @Inject constructor(
             measureOnViewClicked(
                 event = menuItemClicked.event,
                 delegateOwner = resolvedDelegateOwner,
-                productDimensions = mapOf("item" to itemIdName),
+                dimensions = mapOf("item" to itemIdName),
                 priority = menuItemClicked.priority
             )
             true

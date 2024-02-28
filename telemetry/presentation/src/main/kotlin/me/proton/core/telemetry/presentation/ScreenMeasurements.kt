@@ -33,8 +33,8 @@ import me.proton.core.telemetry.domain.entity.TelemetryPriority
  * @return A function that can be optionally called to stop the listener and clean up.
  */
 internal fun measureOnScreenDisplayed(
-    productEvent: String,
-    productDimensions: Map<String, String> = emptyMap(),
+    event: String,
+    dimensions: Map<String, String> = emptyMap(),
     delegateOwner: ProductMetricsDelegateOwner,
     lifecycleOwner: LifecycleOwner,
     savedStateRegistryOwner: SavedStateRegistryOwner,
@@ -43,8 +43,8 @@ internal fun measureOnScreenDisplayed(
     val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
         group = delegate.productGroup,
-        name = productEvent,
-        dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + productDimensions,
+        name = event,
+        dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + dimensions,
     )
 
     delegate.telemetryManager.enqueue(
@@ -61,8 +61,8 @@ internal fun measureOnScreenDisplayed(
  * @return A function that can be optionally called to stop the listener and clean up.
  */
 internal fun measureOnScreenClosed(
-    productEvent: String,
-    productDimensions: Map<String, String> = emptyMap(),
+    event: String,
+    dimensions: Map<String, String> = emptyMap(),
     delegateOwner: ProductMetricsDelegateOwner,
     lifecycleOwner: LifecycleOwner,
     onBackPressedDispatcherOwner: OnBackPressedDispatcherOwner,
@@ -72,8 +72,8 @@ internal fun measureOnScreenClosed(
         val delegate = delegateOwner.productMetricsDelegate
         val telemetryEvent = TelemetryEvent(
             group = delegate.productGroup,
-            name = productEvent,
-            dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + productDimensions,
+            name = event,
+            dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + dimensions,
         )
 
         delegate.telemetryManager.enqueue(

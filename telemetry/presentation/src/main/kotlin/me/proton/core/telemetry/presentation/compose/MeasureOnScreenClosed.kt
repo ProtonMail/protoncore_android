@@ -27,8 +27,8 @@ import me.proton.core.telemetry.presentation.measureOnScreenClosed
 
 @Composable
 public fun MeasureOnScreenClosed(
-    productEvent: String,
-    productDimensions: Map<String, String> = emptyMap(),
+    event: String,
+    dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val onBackPressedDispatcherOwner = LocalOnBackPressedDispatcherOwner.current ?: return
@@ -41,8 +41,8 @@ public fun MeasureOnScreenClosed(
         screenMetricsDelegateOwner
     ) {
         val screenClosedDispose = measureOnScreenClosed(
-            productEvent = productEvent,
-            productDimensions = productDimensions,
+            event = event,
+            dimensions = dimensions,
             delegateOwner = screenMetricsDelegateOwner,
             lifecycleOwner = lifecycleOwner,
             onBackPressedDispatcherOwner = onBackPressedDispatcherOwner,

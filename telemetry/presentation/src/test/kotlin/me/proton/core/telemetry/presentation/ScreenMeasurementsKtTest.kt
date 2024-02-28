@@ -78,8 +78,8 @@ class ScreenMeasurementsKtTest {
 
         // WHEN
         measureOnScreenDisplayed(
-            productEvent = "event",
-            productDimensions = mapOf("extra" to "value"),
+            event = "event",
+            dimensions = mapOf("extra" to "value"),
             delegateOwner = delegateOwner,
             lifecycleOwner = lifecycleOwner,
             savedStateRegistryOwner = savedStateRegistryOwner
@@ -126,8 +126,8 @@ class ScreenMeasurementsKtTest {
 
         // WHEN
         measureOnScreenClosed(
-            productEvent = "event",
-            productDimensions = mapOf("extra" to "value"),
+            event = "event",
+            dimensions = mapOf("extra" to "value"),
             delegateOwner = delegateOwner,
             lifecycleOwner = lifecycleOwner,
             onBackPressedDispatcherOwner = onBackPressedDispatcherOwner

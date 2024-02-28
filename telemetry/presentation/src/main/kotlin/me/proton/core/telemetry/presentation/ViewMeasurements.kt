@@ -41,14 +41,14 @@ public fun LifecycleOwner.setupViewMetrics(
 public fun measureOnViewClicked(
     event: String,
     delegateOwner: ProductMetricsDelegateOwner,
-    productDimensions: Map<String, String> = emptyMap(),
+    dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
         group = delegate.productGroup,
         name = event,
-        dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + productDimensions,
+        dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + dimensions,
     )
 
     delegate.telemetryManager.enqueue(
@@ -61,14 +61,14 @@ public fun measureOnViewClicked(
 public fun measureOnViewFocused(
     event: String,
     delegateOwner: ProductMetricsDelegateOwner,
-    productDimensions: Map<String, String> = emptyMap(),
+    dimensions: Map<String, String> = emptyMap(),
     priority: TelemetryPriority = TelemetryPriority.Default
 ) {
     val delegate = delegateOwner.productMetricsDelegate
     val telemetryEvent = TelemetryEvent(
         group = delegate.productGroup,
         name = event,
-        dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + productDimensions,
+        dimensions = mapOf("flow" to delegate.productFlow) + delegate.productDimensions + dimensions,
     )
 
     delegate.telemetryManager.enqueue(
