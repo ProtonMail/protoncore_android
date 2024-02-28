@@ -51,5 +51,6 @@ public final class me/proton/core/accountrecovery/data/repository/AccountRecover
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/auth/domain/usecase/ValidateServerProof;)V
 	public fun cancelRecoveryAttempt (Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun resetPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun startRecovery (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

@@ -27,6 +27,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 internal interface AccountRecoveryApi : BaseRetrofitApi {
+    @POST("account/v1/recovery/session")
+    suspend fun startRecovery(): GenericResponse
+
     @POST("account/v1/recovery/session/abort")
     suspend fun cancelRecoveryAttempt(@Body request: CancelRecoveryAttemptRequest): CancelRecoveryAttemptResponse
 

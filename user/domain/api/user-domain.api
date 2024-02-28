@@ -567,3 +567,8 @@ public final class me/proton/core/user/domain/usecase/GetUser {
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/user/domain/usecase/ObserveUser {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+

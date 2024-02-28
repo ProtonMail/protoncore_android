@@ -24,6 +24,14 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.Key
 
 public interface AccountRecoveryRepository {
+
+    /**
+     * Start an account recovery process.
+     */
+    public suspend fun startRecovery(
+        userId: UserId
+    )
+
     /**
      * Cancels an existing account recovery attempt for a given [userId].
      * To cancel, we need to perform "inline re-authentication" of the user,

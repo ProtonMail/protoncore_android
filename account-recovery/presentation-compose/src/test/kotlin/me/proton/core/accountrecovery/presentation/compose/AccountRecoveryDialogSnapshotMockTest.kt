@@ -49,6 +49,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DateTimeFormat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -139,8 +140,8 @@ class AccountRecoveryDialogSnapshotMockTest {
         viewModel = spyk(
             AccountRecoveryDialogViewModel(
                 savedStateHandle = savedStateHandle,
-                context = paparazzi.context,
                 clock = clock,
+                dateTimeFormat = DateTimeFormat(paparazzi.context),
                 observeUserRecovery = observeUserRecovery,
                 cancelRecovery = cancelRecovery,
                 keyStoreCrypto = keyStoreCrypto,

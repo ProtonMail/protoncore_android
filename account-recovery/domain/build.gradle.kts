@@ -40,6 +40,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkDomain),
         project(Module.userDomain),
+        project(Module.eventManagerDomain),
         `javax-inject`
     )
 

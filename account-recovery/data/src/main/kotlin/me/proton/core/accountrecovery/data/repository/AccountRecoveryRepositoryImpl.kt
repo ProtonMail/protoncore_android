@@ -39,6 +39,15 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val validateServerProof: ValidateServerProof,
 ) : AccountRecoveryRepository {
+
+    override suspend fun startRecovery(
+        userId: UserId
+    ): Unit = result("account_recovery.start") {
+        apiProvider.get<AccountRecoveryApi>(userId).invoke {
+            startRecovery()
+        }.valueOrThrow
+    }
+
     override suspend fun cancelRecoveryAttempt(
         srpProofs: SrpProofs,
         srpSession: String,

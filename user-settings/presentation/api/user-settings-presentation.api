@@ -38,6 +38,7 @@ public final class me/proton/core/usersettings/presentation/BuildConfig {
 }
 
 public final class me/proton/core/usersettings/presentation/UserSettingsOrchestrator {
+	public static final field $stable I
 	public fun <init> ()V
 	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnUpdateRecoveryEmailResult (Lkotlin/jvm/functions/Function1;)V
@@ -81,6 +82,7 @@ public final class me/proton/core/usersettings/presentation/databinding/Activity
 }
 
 public final class me/proton/core/usersettings/presentation/databinding/FragmentPasswordManagementBinding : androidx/viewbinding/ViewBinding {
+	public final field accountRecoveryInfo Landroidx/compose/ui/platform/ComposeView;
 	public final field confirmNewLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field confirmNewMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field currentLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
@@ -112,6 +114,7 @@ public final class me/proton/core/usersettings/presentation/databinding/Fragment
 }
 
 public final class me/proton/core/usersettings/presentation/entity/PasswordManagementResult : android/os/Parcelable {
+	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Z)V
 	public final fun component1 ()Z
@@ -134,6 +137,7 @@ public final class me/proton/core/usersettings/presentation/entity/PasswordManag
 }
 
 public final class me/proton/core/usersettings/presentation/entity/SettingsInput : android/os/Parcelable {
+	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -157,6 +161,7 @@ public final class me/proton/core/usersettings/presentation/entity/SettingsInput
 }
 
 public final class me/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult : android/os/Parcelable {
+	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Z)V
 	public final fun component1 ()Z
@@ -234,6 +239,7 @@ public abstract class me/proton/core/usersettings/presentation/ui/Hilt_UpdateRec
 }
 
 public final class me/proton/core/usersettings/presentation/ui/PasswordManagementActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
+	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/PasswordManagementActivity$Companion;
@@ -248,6 +254,7 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Pass
 }
 
 public final class me/proton/core/usersettings/presentation/ui/PasswordManagementFragment : me/proton/core/presentation/ui/ProtonSecureFragment {
+	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_UPDATE_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/PasswordManagementFragment$Companion;
@@ -266,6 +273,7 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Pass
 }
 
 public final class me/proton/core/usersettings/presentation/ui/ShowPasswordInput {
+	public static final field $stable I
 	public fun <init> (ZZ)V
 	public final fun component1 ()Z
 	public final fun component2 ()Z
@@ -284,6 +292,7 @@ public final class me/proton/core/usersettings/presentation/ui/ShowPasswordLaunc
 }
 
 public final class me/proton/core/usersettings/presentation/ui/StartPasswordManagement : androidx/activity/result/contract/ActivityResultContract {
+	public static final field $stable I
 	public fun <init> ()V
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/usersettings/presentation/entity/SettingsInput;)Landroid/content/Intent;
@@ -292,6 +301,7 @@ public final class me/proton/core/usersettings/presentation/ui/StartPasswordMana
 }
 
 public final class me/proton/core/usersettings/presentation/ui/StartUpdateRecoveryEmail : androidx/activity/result/contract/ActivityResultContract {
+	public static final field $stable I
 	public fun <init> ()V
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/usersettings/presentation/entity/SettingsInput;)Landroid/content/Intent;
@@ -300,6 +310,7 @@ public final class me/proton/core/usersettings/presentation/ui/StartUpdateRecove
 }
 
 public final class me/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
+	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailActivity$Companion;
@@ -314,6 +325,7 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Upda
 }
 
 public final class me/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailFragment : me/proton/core/presentation/ui/ProtonFragment {
+	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_UPDATE_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailFragment$Companion;
@@ -332,6 +344,7 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Upda
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public static final field $stable I
 	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;Lme/proton/core/usersettings/domain/usecase/PerformResetUserPassword;)V
 	public final fun getSecondFactorEnabled ()Ljava/lang/Boolean;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
@@ -344,12 +357,15 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
+	public static final field $stable I
 	public fun <init> (Ljava/lang/Throwable;)V
 	public final fun component1 ()Ljava/lang/Throwable;
 	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;
@@ -361,18 +377,22 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingMailboxPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingMailboxPassword;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingSinglePassModePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingSinglePassModePassword;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Idle : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Idle;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Mode : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public fun <init> (Z)V
 	public final fun component1 ()Z
 	public final fun copy (Z)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Mode;
@@ -384,9 +404,11 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingLoginPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public fun <init> (Lme/proton/core/usersettings/domain/entity/UserSettings;)V
 	public final fun component1 ()Lme/proton/core/usersettings/domain/entity/UserSettings;
 	public final fun copy (Lme/proton/core/usersettings/domain/entity/UserSettings;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingLoginPassword;
@@ -398,22 +420,27 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingMailboxPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingMailboxPassword;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingSinglePassModePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingSinglePassModePassword;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingLoginPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingLoginPassword;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingMailboxPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingMailboxPassword;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingSinglePassModePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingSinglePassModePassword;
 }
 
@@ -445,6 +472,7 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public static final field $stable I
 	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;)V
 	public final fun getCurrentRecoveryAddress (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun getSecondFactorEnabled ()Ljava/lang/Boolean;
@@ -454,9 +482,11 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 	public fun <init> (Ljava/lang/Throwable;)V
 	public final fun component1 ()Ljava/lang/Throwable;
 	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Error;
@@ -468,14 +498,17 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Idle : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$Idle;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$LoadingCurrent : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$LoadingCurrent;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$LoadingSuccess : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$LoadingSuccess;
@@ -487,10 +520,12 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$UpdatingCurrent : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$UpdatingCurrent;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$UpdatingSuccess : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun copy (Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$UpdatingSuccess;

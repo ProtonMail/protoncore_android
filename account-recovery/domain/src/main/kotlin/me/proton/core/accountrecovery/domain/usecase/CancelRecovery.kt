@@ -27,6 +27,9 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.extension.suspend
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
@@ -34,7 +37,8 @@ public class CancelRecovery @Inject constructor(
     private val accountManager: AccountManager,
     private val accountRecoveryRepository: AccountRecoveryRepository,
     private val authRepository: AuthRepository,
-    private val cryptoContext: CryptoContext
+    private val cryptoContext: CryptoContext,
+    private val eventManagerProvider: EventManagerProvider,
 ) {
     public suspend operator fun invoke(
         password: EncryptedString,
@@ -79,10 +83,12 @@ public class CancelRecovery @Inject constructor(
             )
         }
 
-        return accountRecoveryRepository.cancelRecoveryAttempt(
-            clientProofs,
-            authInfo.srpSession,
-            userId
-        )
+        return eventManagerProvider.suspend(EventManagerConfig.Core(userId)) {
+            accountRecoveryRepository.cancelRecoveryAttempt(
+                clientProofs,
+                authInfo.srpSession,
+                userId
+            )
+        }
     }
 }

@@ -61,6 +61,25 @@ class AccountRecoveryRepositoryImplTest {
     }
 
     @Test
+    fun startRecovery() = runTestWithResultContext {
+        // GIVEN
+        val testUserId = UserId("user-id")
+        val accountRecoveryApi = mockk<AccountRecoveryApi> {
+            coEvery { startRecovery() } returns GenericResponse(ResponseCodes.OK)
+        }
+        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } returns TestApiManager(accountRecoveryApi)
+        every { apiProvider.sessionProvider } returns mockk {
+            coEvery { getSessionId(testUserId) } returns SessionId("session-id")
+        }
+
+        // WHEN
+        tested.startRecovery(testUserId)
+
+        // THEN
+        assertTrue(assertSingleResult("account_recovery.start").isSuccess)
+    }
+
+    @Test
     fun cancellingRecoveryAttempt() = runTestWithResultContext {
         // GIVEN
         val testUserId = UserId("user-id")
@@ -69,8 +88,7 @@ class AccountRecoveryRepositoryImplTest {
             coEvery { cancelRecoveryAttempt(any()) } returns
                     CancelRecoveryAttemptResponse(ResponseCodes.OK, "serverProof")
         }
-        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } returns
-                TestApiManager(accountRecoveryApi)
+        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } returns TestApiManager(accountRecoveryApi)
         every { apiProvider.sessionProvider } returns mockk {
             coEvery { getSessionId(testUserId) } returns SessionId("session-id")
         }
@@ -92,9 +110,7 @@ class AccountRecoveryRepositoryImplTest {
             coEvery { cancelRecoveryAttempt(any()) } returns
                     CancelRecoveryAttemptResponse(ResponseCodes.NOT_ALLOWED, "")
         }
-        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } coAnswers {
-            TestApiManager(accountRecoveryApi)
-        }
+        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } coAnswers { TestApiManager(accountRecoveryApi) }
         every { apiProvider.sessionProvider } returns mockk {
             coEvery { getSessionId(testUserId) } returns SessionId("session-id")
         }

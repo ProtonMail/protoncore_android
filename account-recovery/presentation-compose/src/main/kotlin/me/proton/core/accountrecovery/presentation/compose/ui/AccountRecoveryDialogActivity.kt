@@ -27,21 +27,15 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
-import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.showToast
-import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountRecoveryDialogActivity : ProtonActivity() {
-
-    @Inject
-    lateinit var userSettingsOrchestrator: UserSettingsOrchestrator
 
     private val input: AccountRecoveryDialogInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -51,7 +45,6 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        userSettingsOrchestrator.register(this)
 
         setContent {
             ProtonTheme {
@@ -71,7 +64,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
     }
 
     private fun startPasswordManager(userId: UserId) {
-        userSettingsOrchestrator.startPasswordManagementWorkflow(userId = userId)
+        //startPasswordManagementWorkflow(userId = userId)
         close()
     }
 

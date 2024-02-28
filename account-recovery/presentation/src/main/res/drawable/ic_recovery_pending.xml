@@ -1,0 +1,88 @@
+<!--
+  ~ Copyright (c) 2024 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+  <path
+      android:pathData="M11.995,18.755V13.989C11.995,8.47 16.465,4 21.984,4C27.503,4 31.974,8.47 31.974,13.989V22.637H28.719V13.99C28.719,10.016 25.903,7.198 21.929,7.198C17.956,7.198 15.138,10.016 15.138,13.989V18.755H11.995Z"
+      android:fillColor="#706D6B"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M12,16.25L32,16.25A4,4 0,0 1,36 20.25L36,35A4,4 0,0 1,32 39L12,39A4,4 0,0 1,8 35L8,20.25A4,4 0,0 1,12 16.25z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="22.001"
+          android:startY="16.592"
+          android:endX="22.001"
+          android:endY="38.599"
+          android:type="linear">
+        <item android:offset="0" android:color="#FFFFE26D"/>
+        <item android:offset="1" android:color="#FFFFA16D"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M23.253,27.307C24.07,26.862 24.625,25.996 24.625,25C24.625,23.55 23.45,22.375 22,22.375C20.55,22.375 19.375,23.55 19.375,25C19.375,25.996 19.93,26.862 20.747,27.307L19.667,31.958H24.333L23.253,27.307Z"
+      android:fillColor="#3D3C3A"
+      android:fillType="evenOdd"/>
+  <path
+      android:pathData="M34,26L42,26A6,6 0,0 1,48 32L48,40A6,6 0,0 1,42 46L34,46A6,6 0,0 1,28 40L28,32A6,6 0,0 1,34 26z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="58.417"
+          android:startY="14.125"
+          android:endX="33.208"
+          android:endY="51.625"
+          android:type="linear">
+        <item android:offset="0.217" android:color="#FFFFFFFF"/>
+        <item android:offset="0.622" android:color="#FFE6EAEC"/>
+        <item android:offset="0.937" android:color="#FFABC4CC"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M38,28L38,28A8,8 0,0 1,46 36L46,36A8,8 0,0 1,38 44L38,44A8,8 0,0 1,30 36L30,36A8,8 0,0 1,38 28z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="38"
+          android:startY="28"
+          android:endX="38"
+          android:endY="44"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF8F8F8F"/>
+        <item android:offset="1" android:color="#FF000000"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:pathData="M38,36L40.5,38.948"
+      android:strokeWidth="1.2"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+  <path
+      android:pathData="M38,31V36"
+      android:strokeWidth="1.2"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+</vector>

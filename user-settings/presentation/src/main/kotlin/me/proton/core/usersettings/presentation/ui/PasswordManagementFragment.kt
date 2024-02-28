@@ -20,6 +20,7 @@ package me.proton.core.usersettings.presentation.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -28,6 +29,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
+import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
+import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.ui.view.ProtonInput
@@ -51,6 +55,7 @@ import me.proton.core.util.kotlin.exhaustive
 
 @AndroidEntryPoint
 class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_password_management) {
+
     private val viewModel by viewModels<PasswordManagementViewModel>()
     private val binding by viewBinding(FragmentPasswordManagementBinding::bind)
 
@@ -75,6 +80,10 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
         }
         viewModel.init(userId)
         binding.apply {
+            accountRecoveryInfo.apply {
+                setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+                setContent { AccountRecoveryInfo(onOpenDialog = { onOpenDialog() }) }
+            }
             currentLoginPasswordInput.passwordValidation(false)
             newLoginPasswordInput.passwordValidation()
             confirmNewLoginPasswordInput.passwordValidation()
@@ -124,6 +133,10 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
                     }
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)
+    }
+
+    private fun onOpenDialog() {
+        AccountRecoveryDialogActivity.start(requireContext(), AccountRecoveryDialogInput(userId.id))
     }
 
     private fun resetLoginPasswordInput() = with(binding) {

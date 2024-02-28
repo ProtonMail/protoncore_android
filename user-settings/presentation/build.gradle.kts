@@ -20,7 +20,7 @@ import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
 plugins {
-    protonAndroidUiLibrary
+    protonComposeUiLibrary
     protonDagger
     id("kotlin-parcelize")
 }
@@ -30,14 +30,18 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(28)
-    lineCoveragePercentage.set(53)
+    branchCoveragePercentage.set(32)
+    lineCoveragePercentage.set(65)
 }
 
 publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.usersettings.presentation"
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -47,7 +51,9 @@ dependencies {
         project(Module.domain),
         project(Module.presentation),
         project(Module.userSettingsDomain),
+        project(Module.accountRecoveryPresentationCompose),
         activity,
+        `compose-ui`,
         `constraint-layout`,
         `coroutines-core`,
         `hilt-android`,

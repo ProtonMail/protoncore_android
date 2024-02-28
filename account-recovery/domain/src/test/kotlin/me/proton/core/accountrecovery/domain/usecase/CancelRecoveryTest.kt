@@ -21,6 +21,7 @@ package me.proton.core.accountrecovery.domain.usecase
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coJustRun
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -32,6 +33,9 @@ import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepositor
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.domain.EventManager
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.network.domain.session.SessionId
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -52,6 +56,18 @@ class CancelRecoveryTest {
     @MockK
     private lateinit var cryptoContext: CryptoContext
 
+    private val testConfig = EventManagerConfig.Core(testUserId)
+
+    private val manager = mockk<EventManager> {
+        coEvery { this@mockk.suspend<Unit>(captureLambda()) } coAnswers {
+            lambda<(suspend () -> Unit)>().captured()
+        }
+    }
+
+    private val provider = mockk<EventManagerProvider> {
+        coEvery { this@mockk.get(testConfig) } returns manager
+    }
+
     private lateinit var tested: CancelRecovery
 
     @BeforeTest
@@ -69,7 +85,8 @@ class CancelRecoveryTest {
             accountManager,
             accountRecoveryRepository,
             authRepository,
-            cryptoContext
+            cryptoContext,
+            provider
         )
     }
 
@@ -98,6 +115,7 @@ class CancelRecoveryTest {
             every { username } returns testUsername
         }
         every { accountManager.getAccount(testUserId) } returns flowOf(account)
+
         coEvery { authRepository.getAuthInfoSrp(testSessionId, testUsername) } returns mockk {
             every { version } returns 0
             every { salt } returns "salt"
@@ -118,5 +136,8 @@ class CancelRecoveryTest {
 
         // WHEN
         tested("password", testUserId)
+
+        // THEN
+        coVerify { manager.suspend(any()) }
     }
 }
