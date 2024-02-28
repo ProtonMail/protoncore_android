@@ -11,6 +11,49 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [21.0.0] - 2024-02-28
+
+### Library Upgrades
+
+- Kotlin 1.9.22.
+- Kotlin Coroutine 1.8.0 (1.7.3).
+- Kotlin Serialization 1.6.3.
+- Android Target API 34.
+- Android Gradle Plugin 8.2.2.
+- Compose 1.6.2 (compiler 1.5.10) -> BOM 2024.02.01.
+- Dagger 2.49.
+- Hilt 1.2.0 (KSP) -> Hilt Navigation Compose 1.2.0.
+- Room 2.6.1.
+- Work 2.8.1.
+
+### Chores
+
+- Updated Paparazzi snapshots.
+- plan: Enable local flag for storage split.
+
+### Features
+
+- account-manager: Add product metrics to settings signup/signin view.
+- auth: Setup product metrics for each activity/fragment that needs them.
+- crypto: Add API to encrypt a pgp message to an addtional key.
+- gopenpgp: Update to gopenpgp v2.7.5-proton.
+- presentation: Added fallback to openMarketLink (open in browser).
+- telemetry: Setup product metrics for each activity/fragment that needs them.
+
+### Bug Fixes
+
+- AccountSettingsInfo fixes, refactor and adaptations.
+- presentation-compose: hiltViewModelOrNull now use HasDefaultViewModelProviderFactory.
+
+### Internationalization
+
+- Upgrade translations from crowdin (5e52a7a8).
+
+### Refactoring
+
+- account-manager-presentation-compose: Added AccountSettingsInfo state function.
+- telemetry: Aligning ProductMetrics functions parameters name.
+
 ## [20.0.0] - 2024-02-22
 
 ### Breaking Changes
