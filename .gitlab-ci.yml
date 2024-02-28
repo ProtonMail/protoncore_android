@@ -356,7 +356,6 @@ uitest:hilt-tests:
   variables:
     TEST_APK: "coreexample/hilt-tests/build/outputs/apk/localProperties/debug/coreexample-hilt-tests-localProperties-debug.apk"
     TEST_TARGET: "package me.proton.android.core.coreexample.hilttests"
-    FLAKY_TEST_RERUN: "1"
     DEVICE_MODEL: "Pixel2.arm,version=28"
     DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
