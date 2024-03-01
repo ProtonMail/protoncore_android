@@ -19,6 +19,7 @@
 package me.proton.core.featureflag.dagger
 
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
@@ -27,6 +28,7 @@ import me.proton.core.featureflag.data.local.FeatureFlagLocalDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.repository.FeatureFlagRepositoryImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
+import me.proton.core.featureflag.domain.repository.FeatureFlagContextProvider
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
@@ -51,4 +53,7 @@ internal abstract class CoreFeatureFlagModule {
     @Binds
     @Singleton
     abstract fun bindManager(featureFlagManagerImpl: FeatureFlagManagerImpl): FeatureFlagManager
+
+    @BindsOptionalOf
+    abstract fun optionalFeatureFlagContextProvider(): FeatureFlagContextProvider
 }

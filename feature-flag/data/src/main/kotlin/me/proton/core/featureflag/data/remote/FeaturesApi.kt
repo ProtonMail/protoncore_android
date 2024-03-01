@@ -28,11 +28,14 @@ import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
+import retrofit2.http.QueryMap
 
 internal interface FeaturesApi : BaseRetrofitApi {
 
     @GET("feature/v2/frontend")
-    suspend fun getUnleashToggles(): GetUnleashTogglesResponse
+    suspend fun getUnleashToggles(
+        @QueryMap contextProperties: Map<String, String>
+    ): GetUnleashTogglesResponse
 
     /**
      * @param code can be a single featureId or a comma-separated list of featureIds (eg. "feature1,feature2,[...]")

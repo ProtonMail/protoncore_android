@@ -83,6 +83,10 @@ public final class me/proton/core/featureflag/domain/entity/Scope : java/lang/En
 	public static fun values ()[Lme/proton/core/featureflag/domain/entity/Scope;
 }
 
+public abstract interface class me/proton/core/featureflag/domain/repository/FeatureFlagContextProvider {
+	public abstract fun invoke (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource {
 	public abstract fun getAll (Lme/proton/core/featureflag/domain/entity/Scope;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observe (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)Lkotlinx/coroutines/flow/Flow;

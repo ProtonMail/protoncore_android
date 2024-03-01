@@ -114,7 +114,7 @@ public final class me/proton/core/featureflag/data/local/FeatureFlagLocalDataSou
 }
 
 public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl : me/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroidx/work/WorkManager;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroidx/work/WorkManager;Ljava/util/Optional;)V
 	public fun get (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun prefetch (Lme/proton/core/domain/entity/UserId;Ljava/util/Set;)V
@@ -122,11 +122,11 @@ public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataS
 }
 
 public final class me/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;
-	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Landroidx/work/WorkManager;)Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Landroidx/work/WorkManager;Ljava/util/Optional;)Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;
 }
 
 public final class me/proton/core/featureflag/data/remote/request/PutFeatureFlagBody {

@@ -21,27 +21,32 @@ package me.proton.core.featureflag.data.remote
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.remote.resource.UnleashToggleResource
 import me.proton.core.featureflag.data.remote.response.toFeatureFlag
 import me.proton.core.featureflag.domain.LogTag
 import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
+import me.proton.core.featureflag.domain.repository.FeatureFlagContextProvider
 import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.util.kotlin.CoreLogger
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider,
-    private val workManager: WorkManager
+    private val workManager: WorkManager,
+    private val featureFlagContextProvider: Optional<FeatureFlagContextProvider>,
 ) : FeatureFlagRemoteDataSource {
 
-    override suspend fun getAll(userId: UserId?): List<FeatureFlag> =
-        apiProvider.get<FeaturesApi>(userId).invoke {
-            getUnleashToggles().toggles.map { it.toFeatureFlag(userId) }
+    override suspend fun getAll(userId: UserId?): List<FeatureFlag> {
+        val contextProperties = featureFlagContextProvider.getOrNull()?.invoke() ?: emptyMap()
+        return apiProvider.get<FeaturesApi>(userId).invoke {
+            getUnleashToggles(contextProperties).toggles.map { it.toFeatureFlag(userId) }
         }.valueOrThrow
+    }
 
     override suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag> =
         apiProvider.get<FeaturesApi>(userId).invoke {

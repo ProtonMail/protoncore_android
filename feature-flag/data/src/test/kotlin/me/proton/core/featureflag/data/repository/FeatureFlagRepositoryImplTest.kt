@@ -46,6 +46,7 @@ import me.proton.core.featureflag.data.local.withGlobal
 import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
+import me.proton.core.featureflag.data.remote.response.GetUnleashTogglesResponse
 import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
@@ -66,6 +67,8 @@ import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.GenericResponse
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.FeatureFlagAwaitTotal
@@ -80,6 +83,7 @@ import org.junit.After
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -120,6 +124,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
 
     private lateinit var apiProvider: ApiProvider
+    private lateinit var featureFlagContextProvider: TestFeatureFlagContextProvider
     private lateinit var local: FeatureFlagLocalDataSource
     private lateinit var remote: FeatureFlagRemoteDataSource
     private lateinit var repository: FeatureFlagRepository
@@ -127,8 +132,9 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
     @Before
     fun setUp() {
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, coroutinesRule.dispatchers)
+        featureFlagContextProvider = TestFeatureFlagContextProvider()
         local = spyk(FeatureFlagLocalDataSourceImpl(database))
-        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider, workManager))
+        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider, workManager, Optional.of(featureFlagContextProvider)))
         repository = FeatureFlagRepositoryImpl(
             localDataSource = local,
             remoteDataSource = remote,
@@ -589,5 +595,20 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         }
         // Then
         coVerify { observabilityManager.enqueue(FeatureFlagAwaitTotal.Failure, any()) }
+    }
+
+    @Test
+    fun contextPropertiesIncludedInApiRequest() = coroutinesTest {
+        // Given
+        val properties = mapOf("customProperty" to "propertyValue")
+        featureFlagContextProvider.properties = properties
+        val emptyUnleashResponse = GetUnleashTogglesResponse(ResponseCodes.OK, emptyList())
+        coEvery { featuresApi.getUnleashToggles(any()) } returns emptyUnleashResponse
+
+        // When
+        repository.getAll()
+
+        // Then
+        coVerify { featuresApi.getUnleashToggles(properties) }
     }
 }

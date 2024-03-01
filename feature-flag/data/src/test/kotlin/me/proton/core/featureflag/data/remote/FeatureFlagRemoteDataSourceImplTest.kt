@@ -29,10 +29,13 @@ import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
 import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
+import me.proton.core.featureflag.data.repository.TestFeatureFlagContextProvider
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData
+import me.proton.core.featureflag.domain.repository.FeatureFlagContextProvider
 import me.proton.core.network.data.ApiProvider
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertEquals
 
 class FeatureFlagRemoteDataSourceImplTest {
@@ -43,7 +46,7 @@ class FeatureFlagRemoteDataSourceImplTest {
     }
     private val apiProvider: ApiProvider = mockk()
 
-    private val remoteDataSource = FeatureFlagRemoteDataSourceImpl(apiProvider, workManager)
+    private val remoteDataSource = FeatureFlagRemoteDataSourceImpl(apiProvider, workManager, Optional.empty())
 
     @Test
     fun `update enqueues worker to update on remote`() = runTest {
