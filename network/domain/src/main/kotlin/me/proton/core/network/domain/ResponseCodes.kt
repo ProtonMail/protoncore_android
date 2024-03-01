@@ -40,6 +40,8 @@ object ResponseCodes {
     const val AUTH_SWITCH_TO_SRP = 8101
     const val HUMAN_VERIFICATION_REQUIRED = 9001
     const val DEVICE_VERIFICATION_REQUIRED = 9002 // new error code for device verification
+    const val SCOPE_REAUTH_LOCKED = 9101
+    const val SCOPE_REAUTH_PASSWORD = 9102
     const val ACCOUNT_FAILED_GENERIC = 10_001
     const val ACCOUNT_DELETED = 10_002
     const val ACCOUNT_DISABLED = 10_003

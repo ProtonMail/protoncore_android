@@ -59,7 +59,10 @@ fun ApiResult.Error.ProtonData.parseDetails(errorCode: Int, details: Details?): 
         ResponseCodes.DEVICE_VERIFICATION_REQUIRED -> {
             deviceVerification = details?.toDeviceVerificationEntity()
         }
-        HttpResponseCodes.HTTP_FORBIDDEN -> {
+        ResponseCodes.SCOPE_REAUTH_LOCKED -> {
+            missingScopes = details?.toMissingScopes()
+        }
+        ResponseCodes.SCOPE_REAUTH_PASSWORD -> {
             missingScopes = details?.toMissingScopes()
         }
     }
