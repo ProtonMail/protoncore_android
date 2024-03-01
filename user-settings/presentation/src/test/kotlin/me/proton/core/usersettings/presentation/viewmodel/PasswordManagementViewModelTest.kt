@@ -37,6 +37,7 @@ import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
+import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
 import org.junit.Before
@@ -50,6 +51,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     private val getUserSettingsUseCase = mockk<GetUserSettings>()
     private val performUpdateLoginPassword = mockk<PerformUpdateLoginPassword>()
     private val performUpdateMailboxPassword = mockk<PerformUpdateUserPassword>()
+    private val performResetUserPassword = mockk<PerformResetUserPassword>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
     private val userRepository = mockk<UserRepository>(relaxed = true)
     // endregion
@@ -111,7 +113,8 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                 keyStoreCrypto,
                 getUserSettingsUseCase,
                 performUpdateLoginPassword,
-                performUpdateMailboxPassword
+                performUpdateMailboxPassword,
+                performResetUserPassword
             )
     }
 

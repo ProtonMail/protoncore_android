@@ -24,12 +24,17 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
 import io.mockk.mockk
+import kotlinx.coroutines.test.runTest
 import me.proton.core.accountrecovery.data.api.AccountRecoveryApi
 import me.proton.core.accountrecovery.data.api.response.CancelRecoveryAttemptResponse
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.Key
+import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.test.android.api.TestApiManager
@@ -37,6 +42,7 @@ import me.proton.core.test.kotlin.runTestWithResultContext
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFails
+import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
 class AccountRecoveryRepositoryImplTest {
@@ -101,5 +107,87 @@ class AccountRecoveryRepositoryImplTest {
 
         // THEN
         assertTrue(assertSingleResult("account_recovery.cancellation").isFailure)
+    }
+
+    @Test
+    fun `reset password no org admin and no keys success`() = runTestWithResultContext {
+        // GIVEN
+        val testUserId = UserId("user-id")
+        val accountRecoveryApi = mockk<AccountRecoveryApi> {
+            coEvery { resetPassword(any()) } returns
+                GenericResponse(ResponseCodes.OK)
+        }
+        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } returns
+            TestApiManager(accountRecoveryApi)
+        every { apiProvider.sessionProvider } returns mockk {
+            coEvery { getSessionId(testUserId) } returns SessionId("session-id")
+        }
+        // WHEN & THEN
+        val result = tested.resetPassword(
+            sessionUserId = testUserId,
+            keySalt = "test-key-salt",
+            organizationKey = null,
+            userKeys = null,
+            auth = null
+        )
+
+        assertTrue(result)
+    }
+
+    @Test
+    fun `reset password returns false`() = runTestWithResultContext {
+        // GIVEN
+        val testUserId = UserId("user-id")
+        val accountRecoveryApi = mockk<AccountRecoveryApi> {
+            coEvery { resetPassword(any()) } returns
+                GenericResponse(ResponseCodes.ACCOUNT_FAILED_GENERIC)
+        }
+        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } returns
+            TestApiManager(accountRecoveryApi)
+        every { apiProvider.sessionProvider } returns mockk {
+            coEvery { getSessionId(testUserId) } returns SessionId("session-id")
+        }
+        // WHEN & THEN
+        val result = tested.resetPassword(
+            sessionUserId = testUserId,
+            keySalt = "test-key-salt",
+            organizationKey = null,
+            userKeys = null,
+            auth = null
+        )
+
+        assertFalse(result)
+    }
+
+    @Test
+    fun `reset password org admin and keys`() = runTestWithResultContext {
+        // GIVEN
+        val testUserId = UserId("user-id")
+        val accountRecoveryApi = mockk<AccountRecoveryApi> {
+            coEvery { resetPassword(any()) } returns
+                GenericResponse(ResponseCodes.OK)
+        }
+        coEvery { apiProvider.get(AccountRecoveryApi::class, any()) } returns
+            TestApiManager(accountRecoveryApi)
+        every { apiProvider.sessionProvider } returns mockk {
+            coEvery { getSessionId(testUserId) } returns SessionId("session-id")
+        }
+        // WHEN & THEN
+        val result = tested.resetPassword(
+            sessionUserId = testUserId,
+            keySalt = "test-key-salt",
+            organizationKey = "test-org-key",
+            userKeys = listOf(
+                Key(keyId = KeyId("test-key-id-1"), privateKey = "test-private-key-armored")
+            ),
+            auth = Auth(
+                version = 1,
+                modulusId = "test-modulus-id",
+                salt = "test-salt",
+                verifier = "test-verifier"
+            )
+        )
+
+        assertTrue(result)
     }
 }

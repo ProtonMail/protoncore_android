@@ -30,8 +30,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(32)
-    lineCoveragePercentage.set(34)
+    branchCoveragePercentage.set(34)
+    lineCoveragePercentage.set(35)
 }
 
 android {
@@ -52,6 +52,8 @@ dependencies {
         project(Module.keyDomain),
         project(Module.networkData),
         project(Module.userDomain),
+        project(Module.userSettingsDomain),
+        project(Module.accountRecoveryDomain),
         `javax-inject`,
         `serialization-core`,
         retrofit
@@ -86,6 +88,7 @@ dependencies {
         project(Module.cryptoAndroid),
         project(Module.gopenpgp),
         project(Module.userSettings),
+        project(Module.accountRecoveryDomain),
         project(Module.contact),
         project(Module.eventManager),
         project(Module.kotlinTest),

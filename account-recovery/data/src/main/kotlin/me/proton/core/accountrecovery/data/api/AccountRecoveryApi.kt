@@ -19,12 +19,17 @@
 package me.proton.core.accountrecovery.data.api
 
 import me.proton.core.accountrecovery.data.api.request.CancelRecoveryAttemptRequest
+import me.proton.core.accountrecovery.data.api.request.ResetPasswordRequest
 import me.proton.core.accountrecovery.data.api.response.CancelRecoveryAttemptResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 internal interface AccountRecoveryApi : BaseRetrofitApi {
     @POST("account/v1/recovery/session/abort")
     suspend fun cancelRecoveryAttempt(@Body request: CancelRecoveryAttemptRequest): CancelRecoveryAttemptResponse
+
+    @POST("account/v4/recovery/session/consume")
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): GenericResponse
 }

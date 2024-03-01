@@ -18,8 +18,10 @@
 
 package me.proton.core.accountrecovery.domain.repository
 
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.Key
 
 public interface AccountRecoveryRepository {
     /**
@@ -33,4 +35,12 @@ public interface AccountRecoveryRepository {
         srpSession: String,
         userId: UserId
     )
+
+    public suspend fun resetPassword(
+        sessionUserId: UserId,
+        keySalt: String,
+        organizationKey: String?,
+        userKeys: List<Key>?,
+        auth: Auth?
+    ): Boolean
 }

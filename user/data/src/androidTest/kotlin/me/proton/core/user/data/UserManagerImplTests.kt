@@ -35,6 +35,7 @@ import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
@@ -71,6 +72,7 @@ import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
 import org.junit.After
@@ -101,6 +103,12 @@ UserManagerImplTests {
 
     @MockK(relaxed = true)
     private lateinit var keyStoreCrypto: KeyStoreCrypto
+
+    @MockK(relaxed = true)
+    private lateinit var organizationRepository: OrganizationRepository
+
+    @MockK(relaxed = true)
+    private lateinit var accountRecoveryRepository: AccountRecoveryRepository
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = object : KeyStoreCrypto {
@@ -191,6 +199,8 @@ UserManagerImplTests {
             passphraseRepository,
             keySaltRepository,
             privateKeyRepository,
+            organizationRepository,
+            accountRecoveryRepository,
             userAddressKeySecretProvider,
             cryptoContext,
             generateSignedKeyList,

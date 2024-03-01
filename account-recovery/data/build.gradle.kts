@@ -40,6 +40,7 @@ dependencies {
         project(Module.accountRecoveryDomain),
         project(Module.featureFlagDomain),
         project(Module.featureFlagData),
+        project(Module.keyData),
         `hilt-android`,
         `javax-inject`
     )

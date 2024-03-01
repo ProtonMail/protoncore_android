@@ -28,6 +28,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
@@ -141,6 +142,16 @@ interface UserManager {
         srpSession: String,
         auth: Auth?,
         orgPrivateKey: Armored?
+    ): Boolean
+
+    /**
+     * Reset user password for account recovery purposes.
+     * Note: if the user is on 2FA or 2 pass mode it will be converted to 1 pass mode and no 2FA.
+     */
+    suspend fun resetPassword(
+        sessionUserId: SessionUserId,
+        newPassword: EncryptedString,
+        auth: Auth?
     ): Boolean
 
     /**

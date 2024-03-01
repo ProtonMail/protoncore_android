@@ -19,6 +19,7 @@
 package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -32,6 +33,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
+import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.primary
@@ -50,6 +52,8 @@ import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -61,6 +65,8 @@ class UserManagerImpl @Inject constructor(
     private val passphraseRepository: PassphraseRepository,
     private val keySaltRepository: KeySaltRepository,
     private val privateKeyRepository: PrivateKeyRepository,
+    private val organizationRepository: OrganizationRepository,
+    private val accountRecoveryRepository: AccountRecoveryRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
     private val cryptoContext: CryptoContext,
     private val generateSignedKeyList: GenerateSignedKeyList,
@@ -179,15 +185,8 @@ class UserManagerImpl @Inject constructor(
                     organizationKey = updatedOrgPrivateKey
                 )
 
-                // Lock, refresh and unlock.
-                lock(userId)
+                refreshUser(userId, newPassphrase)
 
-                // Refresh User and Addresses.
-                userAddressRepository.getAddresses(userId, refresh = true)
-                userRepository.getUser(userId, refresh = true)
-
-                // Unlock.
-                unlockWithPassphrase(userId, newPassphrase.encrypt(keyStore))
                 return result
             }
         }
@@ -285,5 +284,51 @@ class UserManagerImpl @Inject constructor(
 
             return user
         }
+    }
+
+    override suspend fun resetPassword(
+        sessionUserId: SessionUserId,
+        newPassword: EncryptedString,
+        auth: Auth?
+    ): Boolean =
+        newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
+            val keySalt = pgp.generateNewKeySalt()
+
+            pgp.getPassphrase(decryptedNewPassword.array, keySalt).use { newPassphrase ->
+                val addresses = userAddressRepository.getAddresses(sessionUserId, refresh = true)
+                val user = userRepository.getUser(sessionUserId, refresh = true)
+                val isUserMigrated = addresses.hasMigratedKey()
+
+                val organizationKeys = if (user.isOrganizationAdmin())
+                    organizationRepository.getOrganizationKeys(sessionUserId, refresh = true)
+                else null
+
+                val updatedUserKeys = user.keys.takeIf { isUserMigrated }
+                    ?.mapNotNull { it.updatePrivateKeyPassphraseOrNull(cryptoContext, newPassphrase.array) }
+
+                val result = accountRecoveryRepository.resetPassword(
+                    sessionUserId = sessionUserId,
+                    auth = auth,
+                    keySalt = keySalt,
+                    userKeys = updatedUserKeys,
+                    organizationKey = organizationKeys?.privateKey?.takeIfNotEmpty()
+                )
+
+                refreshUser(sessionUserId, newPassphrase)
+
+                return result
+            }
+        }
+
+    private suspend fun refreshUser(userId: UserId, newPassphrase: PlainByteArray) {
+        // Lock, refresh and unlock.
+        lock(userId)
+
+        // Refresh User and Addresses.
+        userAddressRepository.getAddresses(userId, refresh = true)
+        userRepository.getUser(userId, refresh = true)
+
+        // Unlock.
+        unlockWithPassphrase(userId, newPassphrase.encrypt(keyStore))
     }
 }

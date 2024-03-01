@@ -25,6 +25,7 @@ import io.mockk.mockkStatic
 import io.mockk.spyk
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
+import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -58,6 +59,7 @@ import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -74,6 +76,8 @@ class UserManagerPasswordTests {
     private val passphraseRepository: PassphraseRepository = mockk(relaxed = true)
     private val keySaltRepository: KeySaltRepositoryImpl = mockk(relaxed = true)
     private val privateKeyRepository: PrivateKeyRepository = mockk(relaxed = true)
+    private val organizationRepository: OrganizationRepository = mockk(relaxed = true)
+    private val accountRecoveryRepository: AccountRecoveryRepository = mockk(relaxed = true)
     private val generateSignedKeyList: GenerateSignedKeyList = mockk()
     private val signedKeyListChangeListener: SignedKeyListChangeListener = mockk()
     // endregion
@@ -154,6 +158,8 @@ class UserManagerPasswordTests {
             passphraseRepository,
             keySaltRepository,
             privateKeyRepository,
+            organizationRepository,
+            accountRecoveryRepository,
             userAddressKeySecretProvider,
             cryptoContext,
             generateSignedKeyList,
@@ -188,6 +194,7 @@ class UserManagerPasswordTests {
 
         val userKey1 = mockk<UserKey>(relaxed = true)
         every { userKey1.updatePrivateKeyPassphraseOrNull(any(), any()) } returns null
+        coEvery { organizationRepository.getOrganizationKeys(any(), any()) } returns mockk(relaxed = true)
 
         val mockedUser = mockk<User>(relaxed = true).also {
             every { it.keys } returns listOf(userKey1)

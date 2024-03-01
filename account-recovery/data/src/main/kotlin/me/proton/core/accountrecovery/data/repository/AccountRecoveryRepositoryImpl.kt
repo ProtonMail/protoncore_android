@@ -20,12 +20,18 @@ package me.proton.core.accountrecovery.data.repository
 
 import me.proton.core.accountrecovery.data.api.AccountRecoveryApi
 import me.proton.core.accountrecovery.data.api.request.CancelRecoveryAttemptRequest
+import me.proton.core.accountrecovery.data.api.request.ResetPasswordRequest
 import me.proton.core.accountrecovery.data.api.response.isSuccess
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.data.api.request.AuthRequest
+import me.proton.core.key.data.api.request.PrivateKeyRequest
+import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
@@ -54,4 +60,23 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
             require(response.isSuccess())
         }.valueOrThrow
     }
+
+    override suspend fun resetPassword(
+        sessionUserId: UserId,
+        keySalt: String,
+        organizationKey: String?,
+        userKeys: List<Key>?,
+        auth: Auth?
+    ): Boolean =
+        apiProvider.get<AccountRecoveryApi>(sessionUserId).invoke {
+            val request = ResetPasswordRequest(
+                keySalt = keySalt,
+                organizationKey = organizationKey,
+                userKeys = userKeys?.map {
+                    PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
+                },
+                auth = if (auth != null) AuthRequest.from(auth) else null
+            )
+            resetPassword(request).isSuccess()
+        }.valueOrThrow
 }

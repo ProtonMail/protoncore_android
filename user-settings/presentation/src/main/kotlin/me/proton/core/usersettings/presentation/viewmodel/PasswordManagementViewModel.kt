@@ -32,6 +32,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
+import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
 import javax.inject.Inject
@@ -41,7 +42,8 @@ class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val getUserSettings: GetUserSettings,
     private val performUpdateLoginPassword: PerformUpdateLoginPassword,
-    private val performUpdateUserPassword: PerformUpdateUserPassword
+    private val performUpdateUserPassword: PerformUpdateUserPassword,
+    private val performResetUserPassword: PerformResetUserPassword
 ) : ProtonViewModel() {
 
     private val _state = MutableStateFlow<State>(State.Idle)
