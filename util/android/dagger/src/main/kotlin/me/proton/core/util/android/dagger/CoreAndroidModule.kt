@@ -18,18 +18,22 @@
 
 package me.proton.core.util.android.dagger
 
+import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.presentation.app.AppLifecycleObserver
 import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DateTimeFormat
+import me.proton.core.util.android.datetime.DurationFormat
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.DefaultCoroutineScopeProvider
 import me.proton.core.util.kotlin.DefaultDispatcherProvider
 import me.proton.core.util.kotlin.DispatcherProvider
-import java.time.Clock
 import javax.inject.Singleton
 import kotlin.time.TimeSource
 
@@ -51,10 +55,22 @@ public abstract class CoreAndroidModule {
     public companion object {
         @Provides
         @UtcClock
-        internal fun provideClock(): Clock = Clock.systemUTC()
+        internal fun provideClock(): Clock = Clock.systemUtc()
 
         @Provides
         @Monotonic
         internal fun provideMonotonicTimeSource(): TimeSource = TimeSource.Monotonic
+
+        @Provides
+        @Singleton
+        internal fun provideDataTimeFormat(
+            @ApplicationContext context: Context
+        ): DateTimeFormat = DateTimeFormat(context)
+
+        @Provides
+        @Singleton
+        internal fun provideDurationFormat(
+            @ApplicationContext context: Context
+        ): DurationFormat = DurationFormat(context)
     }
 }

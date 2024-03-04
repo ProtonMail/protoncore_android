@@ -238,6 +238,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:user-settings-presentation            |
 | me.proton.core:user-settings-presentation-compose    |
 | me.proton.core:util-android-dagger                   |
+| me.proton.core:util-android-datetime                 |
 | me.proton.core:util-android-shared-preferences       |
 | me.proton.core:util-android-strict-mode              |
 | me.proton.core:util-android-work-manager             |
