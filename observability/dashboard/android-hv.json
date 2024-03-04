@@ -14,8 +14,7 @@
                 "target": {
                     "limit": 100,
                     "matchAny": false,
-                    "tags": [
-                    ],
+                    "tags": [],
                     "type": "dashboard"
                 },
                 "type": "dashboard"
@@ -26,8 +25,7 @@
     "fiscalYearStartMonth": 0,
     "graphTooltip": 2,
     "id": 342,
-    "links": [
-    ],
+    "links": [],
     "liveNow": false,
     "panels": [
         {
@@ -39,8 +37,7 @@
                 "y": 0
             },
             "id": 4,
-            "panels": [
-            ],
+            "panels": [],
             "title": "Screen views",
             "type": "row"
         },
@@ -85,8 +82,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -101,8 +97,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 9,
@@ -113,8 +108,7 @@
             "id": 2,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -150,8 +144,7 @@
                 "y": 10
             },
             "id": 8,
-            "panels": [
-            ],
+            "panels": [],
             "title": "HV Results",
             "type": "row"
         },
@@ -198,8 +191,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -214,8 +206,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -226,8 +217,7 @@
             "id": 9,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -333,8 +323,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -349,8 +338,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -361,8 +349,7 @@
             "id": 6,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -430,8 +417,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -446,8 +432,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -458,8 +443,7 @@
             "id": 10,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -496,8 +480,7 @@
                 "y": 19
             },
             "id": 12,
-            "panels": [
-            ],
+            "panels": [],
             "title": "HV Page load",
             "type": "row"
         },
@@ -544,8 +527,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -560,8 +542,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -572,8 +553,7 @@
             "id": 18,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -666,8 +646,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -682,8 +661,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -694,8 +672,7 @@
             "id": 14,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -762,8 +739,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -778,8 +754,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -790,8 +765,7 @@
             "id": 16,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -862,8 +836,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -878,8 +851,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -890,8 +862,7 @@
             "id": 19,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -984,8 +955,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1000,8 +970,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1012,8 +981,7 @@
             "id": 20,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1081,8 +1049,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1097,8 +1064,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1109,8 +1075,7 @@
             "id": 21,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1142,8 +1107,7 @@
     "refresh": "5m",
     "schemaVersion": 38,
     "style": "dark",
-    "tags": [
-    ],
+    "tags": [],
     "templating": {
         "list": [
             {
@@ -1246,8 +1210,7 @@
         "from": "now-7d",
         "to": "now"
     },
-    "timepicker": {
-    },
+    "timepicker": {},
     "timezone": "",
     "title": "Android / HV",
     "uid": "xY-mRl1Vz",

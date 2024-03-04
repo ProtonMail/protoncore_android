@@ -14,8 +14,7 @@
                 "target": {
                     "limit": 100,
                     "matchAny": false,
-                    "tags": [
-                    ],
+                    "tags": [],
                     "type": "dashboard"
                 },
                 "type": "dashboard"
@@ -26,8 +25,7 @@
     "fiscalYearStartMonth": 0,
     "graphTooltip": 2,
     "id": 343,
-    "links": [
-    ],
+    "links": [],
     "liveNow": false,
     "panels": [
         {
@@ -37,8 +35,7 @@
             },
             "fieldConfig": {
                 "defaults": {
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "max": 100,
                     "min": 0,
                     "thresholds": {
@@ -64,8 +61,7 @@
                     },
                     "unit": "percent"
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 5,
@@ -77,8 +73,7 @@
             "options": {
                 "orientation": "auto",
                 "reduceOptions": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "fields": "/^Mean$/",
                     "values": true
                 },
@@ -252,8 +247,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -268,8 +262,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -280,8 +273,7 @@
             "id": 2,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -317,8 +309,7 @@
                 "y": 13
             },
             "id": 8,
-            "panels": [
-            ],
+            "panels": [],
             "title": "Screen: Choose username/email",
             "type": "row"
         },
@@ -368,8 +359,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -384,8 +374,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -396,8 +385,7 @@
             "id": 37,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -489,8 +477,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -505,8 +492,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -517,8 +503,7 @@
             "id": 4,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -585,8 +570,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -601,8 +585,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -613,8 +596,7 @@
             "id": 10,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -687,8 +669,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -703,8 +684,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -715,8 +695,7 @@
             "id": 41,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -808,8 +787,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -824,8 +802,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -836,8 +813,7 @@
             "id": 12,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -904,8 +880,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -920,8 +895,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -932,8 +906,7 @@
             "id": 14,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1001,8 +974,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1017,8 +989,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1029,8 +1000,7 @@
             "id": 42,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1098,8 +1068,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1114,8 +1083,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1126,8 +1094,7 @@
             "id": 43,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1164,8 +1131,7 @@
                 "y": 38
             },
             "id": 16,
-            "panels": [
-            ],
+            "panels": [],
             "title": "Screen: Creating an account",
             "type": "row"
         },
@@ -1210,8 +1176,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1226,8 +1191,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1238,8 +1202,7 @@
             "id": 38,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1313,8 +1276,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1329,8 +1291,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1341,8 +1302,7 @@
             "id": 34,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1434,8 +1394,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1450,8 +1409,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1462,8 +1420,7 @@
             "id": 18,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1530,8 +1487,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1546,8 +1502,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1558,8 +1513,7 @@
             "id": 20,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1626,8 +1580,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1642,8 +1595,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1654,8 +1606,7 @@
             "id": 39,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1724,8 +1675,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1740,8 +1690,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1752,8 +1701,7 @@
             "id": 36,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1844,8 +1792,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1860,8 +1807,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1872,8 +1818,7 @@
             "id": 22,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -1940,8 +1885,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -1956,8 +1900,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -1968,8 +1911,7 @@
             "id": 24,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -2036,8 +1978,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -2052,8 +1993,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -2064,8 +2004,7 @@
             "id": 26,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -2133,8 +2072,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -2149,8 +2087,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -2161,8 +2098,7 @@
             "id": 28,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -2229,8 +2165,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -2245,8 +2180,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -2257,8 +2191,7 @@
             "id": 30,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -2325,8 +2258,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -2341,8 +2273,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 8,
@@ -2353,8 +2284,7 @@
             "id": 32,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -2385,8 +2315,7 @@
     "refresh": "1m",
     "schemaVersion": 38,
     "style": "dark",
-    "tags": [
-    ],
+    "tags": [],
     "templating": {
         "list": [
             {
@@ -2489,8 +2418,7 @@
         "from": "now-7d",
         "to": "now"
     },
-    "timepicker": {
-    },
+    "timepicker": {},
     "timezone": "",
     "title": "Android / Sign-up",
     "uid": "nccm8bJVk",

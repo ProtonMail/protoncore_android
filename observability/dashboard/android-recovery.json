@@ -14,8 +14,7 @@
                 "target": {
                     "limit": 100,
                     "matchAny": false,
-                    "tags": [
-                    ],
+                    "tags": [],
                     "type": "dashboard"
                 },
                 "type": "dashboard"
@@ -26,8 +25,7 @@
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": 564,
-    "links": [
-    ],
+    "links": [],
     "liveNow": false,
     "panels": [
         {
@@ -71,8 +69,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -87,8 +84,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 9,
@@ -99,8 +95,7 @@
             "id": 2,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -170,8 +165,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -186,8 +180,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 9,
@@ -198,8 +191,7 @@
             "id": 4,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -290,8 +282,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -306,8 +297,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 9,
@@ -318,8 +308,7 @@
             "id": 6,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -386,8 +375,7 @@
                             "mode": "off"
                         }
                     },
-                    "mappings": [
-                    ],
+                    "mappings": [],
                     "thresholds": {
                         "mode": "absolute",
                         "steps": [
@@ -402,8 +390,7 @@
                         ]
                     }
                 },
-                "overrides": [
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 9,
@@ -414,8 +401,7 @@
             "id": 8,
             "options": {
                 "legend": {
-                    "calcs": [
-                    ],
+                    "calcs": [],
                     "displayMode": "list",
                     "placement": "bottom",
                     "showLegend": true
@@ -446,8 +432,7 @@
     "refresh": "1m",
     "schemaVersion": 38,
     "style": "dark",
-    "tags": [
-    ],
+    "tags": [],
     "templating": {
         "list": [
             {
@@ -550,8 +535,7 @@
         "from": "now-7d",
         "to": "now"
     },
-    "timepicker": {
-    },
+    "timepicker": {},
     "timezone": "",
     "title": "Android / Recovery",
     "uid": "fwrsXJX4z",
