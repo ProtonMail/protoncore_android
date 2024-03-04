@@ -21,6 +21,7 @@ package me.proton.core.user.data.repository
 import androidx.test.platform.app.InstrumentationRegistry
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -63,8 +64,10 @@ import me.proton.core.user.data.TestSessionListener
 import me.proton.core.user.data.TestUsers
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
+import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
@@ -618,5 +621,43 @@ class UserRepositoryImplTests {
         // THEN
         val result = assertSingleResult("checkExternalEmailAvailable")
         assertTrue(result.isSuccess)
+    }
+
+    @Test
+    fun credentialLessUserIsFetchedLocally() = runTest {
+        // GIVEN
+        val userId = TestUsers.User1.id
+        db.userWithKeysDao().insertOrUpdate(
+            UserEntity(
+                userId = userId,
+                email = null,
+                name = null,
+                displayName = null,
+                currency = "CHF",
+                credit = 0,
+                createdAtUtc = 0,
+                usedSpace = 0,
+                maxSpace = 0,
+                maxUpload = 0,
+                type = Type.CredentialLess.value,
+                role = null,
+                isPrivate = true,
+                subscribed = 0,
+                services = 0,
+                delinquent = null,
+                recovery = null,
+                passphrase = null,
+                maxBaseSpace = null,
+                maxDriveSpace = null,
+                usedBaseSpace = null,
+                usedDriveSpace = null,
+            )
+        )
+
+        // WHEN
+        userRepository.getUser(userId, refresh = true)
+
+        // THEN
+        coVerify(exactly = 0) { userApi.getUsers() }
     }
 }

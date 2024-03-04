@@ -29,7 +29,7 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(56)
+    branchCoveragePercentage.set(62)
     lineCoveragePercentage.set(81)
 }
 

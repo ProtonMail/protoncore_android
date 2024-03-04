@@ -57,8 +57,10 @@ import me.proton.core.user.data.extension.toEntity
 import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
+import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
@@ -87,7 +89,8 @@ class UserRepositoryImpl @Inject constructor(
 
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            provider.get<UserApi>(userId).invoke {
+            val credentialLessUser = getUserLocal(userId)?.takeIf { it.isCredentialLess() }
+            credentialLessUser ?: provider.get<UserApi>(userId).invoke {
                 getUsers().user.toUser()
             }.valueOrThrow
         },

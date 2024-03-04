@@ -25,6 +25,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
@@ -40,6 +41,8 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.data.api.UserSettingsApi
 import me.proton.core.usersettings.data.api.UserSettingsRemoteDataSourceImpl
 import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
@@ -51,6 +54,9 @@ import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.db.UserSettingsLocalDataSourceImpl
 import me.proton.core.usersettings.data.db.dao.UserSettingsDao
+import me.proton.core.usersettings.data.entity.PasswordEntity
+import me.proton.core.usersettings.data.entity.UserSettingsEntity
+import me.proton.core.usersettings.data.extension.fromEntity
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
 import org.junit.Before
@@ -72,6 +78,11 @@ class UserSettingsRepositoryImplTest {
     private val db = mockk<UserSettingsDatabase>(relaxed = true)
     private val userSettingsDao = mockk<UserSettingsDao>(relaxed = true)
     private val workManager = mockk<WorkManager>(relaxed = true)
+    private val userRepository = mockk<UserRepository> {
+        coEvery { getUser(any(), any()) } returns mockk {
+            every { type } returns Type.Proton
+        }
+    }
     // endregion
 
     // region test data
@@ -101,7 +112,7 @@ class UserSettingsRepositoryImplTest {
 
         repository = UserSettingsRepositoryImpl(
             localDataSource = UserSettingsLocalDataSourceImpl(db),
-            remoteDataSource = UserSettingsRemoteDataSourceImpl(apiProvider),
+            remoteDataSource = UserSettingsRemoteDataSourceImpl(apiProvider, userRepository),
             validateServerProof = validateServerProof,
             workManager = workManager,
             scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
@@ -400,5 +411,47 @@ class UserSettingsRepositoryImplTest {
                 any<OneTimeWorkRequest>()
             )
         }
+    }
+
+    @Test
+    fun localObjectIsReturnedForCredentialLess() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val userSettingsEntity = UserSettingsEntity(
+            userId = UserId(testUserId),
+            email = null,
+            phone = null,
+            password = PasswordEntity(null, null),
+            twoFA = null,
+            news = null,
+            locale = null,
+            logAuth = null,
+            density = null,
+            weekStart = null,
+            dateFormat = null,
+            timeFormat = null,
+            earlyAccess = null,
+            deviceRecovery = null,
+            telemetry = null,
+            crashReports = null,
+        )
+        every { userSettingsDao.observeByUserId(any()) } returns flowOf(userSettingsEntity)
+
+        coEvery { userRepository.getUser(any(), any()) } returns mockk {
+            every { type } returns Type.CredentialLess
+        }
+
+        // WHEN
+        val result = repository.getUserSettings(sessionUserId = UserId(testUserId), refresh = true)
+
+        // THEN
+        coVerify(exactly = 0) { userSettingsApi.getUserSettings() }
+        verify { userSettingsDao.observeByUserId(any()) }
+
+        val userSettingsEntitySlot = slot<UserSettingsEntity>()
+        coVerify { userSettingsDao.insertOrUpdate(capture(userSettingsEntitySlot)) }
+        assertEquals(userSettingsEntity, userSettingsEntitySlot.captured)
+
+        assertNotNull(result)
+        assertEquals(userSettingsEntity.fromEntity(), result)
     }
 }

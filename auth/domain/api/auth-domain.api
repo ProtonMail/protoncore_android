@@ -450,7 +450,7 @@ public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup$User
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginLessAccountSetup {
-	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;)V
+	public fun <init> (Lme/proton/core/auth/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup$UserCheck;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountmanager/domain/SessionManager;Lme/proton/core/network/domain/server/ServerClock;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

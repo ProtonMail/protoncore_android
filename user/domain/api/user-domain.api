@@ -468,6 +468,9 @@ public final class me/proton/core/user/domain/extension/UserKt {
 }
 
 public final class me/proton/core/user/domain/extension/UserPlanKt {
+	public static final field USER_SERVICE_MASK_DRIVE I
+	public static final field USER_SERVICE_MASK_MAIL I
+	public static final field USER_SERVICE_MASK_VPN I
 	public static final fun hasService (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasServiceForDrive (Lme/proton/core/user/domain/entity/User;)Z
 	public static final fun hasServiceForMail (Lme/proton/core/user/domain/entity/User;)Z

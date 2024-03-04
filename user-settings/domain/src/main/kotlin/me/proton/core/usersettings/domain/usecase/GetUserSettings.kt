@@ -18,13 +18,25 @@
 
 package me.proton.core.usersettings.domain.usecase
 
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
 class GetUserSettings @Inject constructor(
+    private val accountRepository: AccountRepository,
     private val userSettingsRepository: UserSettingsRepository
 ) {
+    suspend operator fun invoke(
+        sessionId: SessionId,
+        refresh: Boolean
+    ): UserSettings {
+        val account = requireNotNull(accountRepository.getAccountOrNull(sessionId))
+        return invoke(account.userId, refresh)
+    }
+
     suspend operator fun invoke(
         sessionUserId: SessionUserId,
         refresh: Boolean

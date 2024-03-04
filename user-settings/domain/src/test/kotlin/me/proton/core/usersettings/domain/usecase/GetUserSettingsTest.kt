@@ -19,11 +19,15 @@
 package me.proton.core.usersettings.domain.usecase
 
 import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.UserSettings
@@ -36,10 +40,12 @@ import kotlin.test.assertNotNull
 
 class GetUserSettingsTest {
     // region mocks
-    private val repository = mockk<UserSettingsRepository>(relaxed = true)
+    private val accountRepository = mockk<AccountRepository>()
+    private val userSettingsRepository = mockk<UserSettingsRepository>(relaxed = true)
     // endregion
 
     // region test data
+    private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
     private val testUserSettingsResponse = UserSettings(
         userId = testUserId,
@@ -59,18 +65,19 @@ class GetUserSettingsTest {
         telemetry = true,
         crashReports = true
     )
+
     // endregion
     private lateinit var useCase: GetUserSettings
 
     @Before
     fun beforeEveryTest() {
-        useCase = GetUserSettings(repository)
+        useCase = GetUserSettings(accountRepository, userSettingsRepository)
     }
 
     @Test
     fun `get user settings returns success`() = runTest {
         // GIVEN
-        coEvery { repository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
+        coEvery { userSettingsRepository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
         // WHEN
         val result = useCase.invoke(testUserId, refresh = true)
         // THEN
@@ -83,7 +90,7 @@ class GetUserSettingsTest {
     @Test
     fun `get user settings returns error`() = runTest {
         // GIVEN
-        coEvery { repository.getUserSettings(testUserId, any()) } throws ApiException(
+        coEvery { userSettingsRepository.getUserSettings(testUserId, any()) } throws ApiException(
             ApiResult.Error.Connection(
                 false,
                 RuntimeException("Test error")
@@ -96,5 +103,24 @@ class GetUserSettingsTest {
         // THEN
         assertNotNull(throwable)
         assertEquals("Test error", throwable.message)
+    }
+
+    @Test
+    fun `get user settings from sessionId`() = runTest {
+        // GIVEN
+        coEvery { accountRepository.getAccountOrNull(testSessionId) } returns mockk {
+            every { userId } returns testUserId
+        }
+        coEvery { userSettingsRepository.getUserSettings(testUserId, any()) } returns testUserSettingsResponse
+
+        // WHEN
+        val result = useCase.invoke(testSessionId, refresh = true)
+
+        // THEN
+        coVerify { accountRepository.getAccountOrNull(testSessionId) }
+        assertEquals(testUserSettingsResponse, result)
+        val email = result.email
+        assertNotNull(email)
+        assertEquals("test-email", email.value)
     }
 }

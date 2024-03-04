@@ -90,7 +90,7 @@ public abstract interface class me/proton/core/usersettings/data/api/Organizatio
 }
 
 public final class me/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl : me/proton/core/usersettings/domain/repository/UserSettingsRemoteDataSource {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;)V
 	public fun fetch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setRecoverySecret (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -100,11 +100,11 @@ public final class me/proton/core/usersettings/data/api/UserSettingsRemoteDataSo
 }
 
 public final class me/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl;
-	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;)Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl;
 }
 
 public final class me/proton/core/usersettings/data/api/request/SetRecoverySecretRequest {

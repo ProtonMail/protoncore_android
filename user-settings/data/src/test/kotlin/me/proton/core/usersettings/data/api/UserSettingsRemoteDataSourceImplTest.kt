@@ -18,9 +18,10 @@
 
 package me.proton.core.usersettings.data.api
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
-import io.mockk.mockk
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiManagerFactory
@@ -30,6 +31,7 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.data.api.request.SetRecoverySecretRequest
 import me.proton.core.usersettings.data.api.request.UpdateCrashReportsRequest
 import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
@@ -49,20 +51,33 @@ class UserSettingsRemoteDataSourceImplTest {
 
     private val dispatcherProvider = TestDispatcherProvider()
 
-    private val sessionProvider = mockk<SessionProvider>(relaxed = true)
-    private val userSettingsApi = mockk<UserSettingsApi>(relaxed = true)
+    @MockK(relaxed = true)
+    private lateinit var apiFactory: ApiManagerFactory
 
-    private val apiFactory = mockk<ApiManagerFactory>(relaxed = true)
-    private val apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
+    @MockK(relaxed = true)
+    private lateinit var sessionProvider: SessionProvider
+
+    @MockK
+    private lateinit var userRepository: UserRepository
+
+    @MockK(relaxed = true)
+    private lateinit var userSettingsApi: UserSettingsApi
+
+    private lateinit var apiProvider: ApiProvider
 
     private val testSessionId = "test-session-id"
     private val testUserId = "test-user-id"
 
-    private val remoteDataSource = UserSettingsRemoteDataSourceImpl(apiProvider)
+    private lateinit var remoteDataSource: UserSettingsRemoteDataSourceImpl
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
+
         // GIVEN
+        apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
+        remoteDataSource = UserSettingsRemoteDataSourceImpl(apiProvider, userRepository)
+
         coEvery { sessionProvider.getSessionId(any()) } returns SessionId(testSessionId)
         every { apiFactory.create(any(), interfaceClass = UserSettingsApi::class) } returns TestApiManager(
             userSettingsApi

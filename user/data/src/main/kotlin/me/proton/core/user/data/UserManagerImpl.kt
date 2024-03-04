@@ -29,7 +29,6 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock

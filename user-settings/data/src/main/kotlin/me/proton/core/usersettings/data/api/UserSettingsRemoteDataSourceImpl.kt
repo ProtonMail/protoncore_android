@@ -28,15 +28,18 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
+import me.proton.core.user.domain.extension.isCredentialLess
+import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.usersettings.data.api.request.SetRecoverySecretRequest
 import me.proton.core.usersettings.data.api.request.SetUsernameRequest
 import me.proton.core.usersettings.data.api.request.UpdateCrashReportsRequest
 import me.proton.core.usersettings.data.api.request.UpdateLoginPasswordRequest
 import me.proton.core.usersettings.data.api.request.UpdateRecoveryEmailRequest
-import me.proton.core.usersettings.data.api.request.SetRecoverySecretRequest
 import me.proton.core.usersettings.data.api.request.UpdateTelemetryRequest
 import me.proton.core.usersettings.data.api.response.SingleUserSettingsResponse
 import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toUserSettings
+import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.entity.UserSettingsProperty
 import me.proton.core.usersettings.domain.repository.UserSettingsRemoteDataSource
@@ -45,12 +48,17 @@ import me.proton.core.util.kotlin.toInt
 import javax.inject.Inject
 
 class UserSettingsRemoteDataSourceImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val userRepository: UserRepository
 ) : UserSettingsRemoteDataSource {
 
-    override suspend fun fetch(userId: UserId) = apiProvider.get<UserSettingsApi>(userId).invoke {
-        getUserSettings().settings.fromResponse(userId)
-    }.valueOrThrow
+    override suspend fun fetch(userId: UserId): UserSettings =
+        when (userRepository.getUser(userId).isCredentialLess()) {
+            true -> makeUserSettingsForCredentialLess(userId)
+            false -> apiProvider.get<UserSettingsApi>(userId).invoke {
+                getUserSettings().settings.fromResponse(userId)
+            }.valueOrThrow
+        }
 
     override suspend fun setUsername(
         userId: UserId,
@@ -120,4 +128,23 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         is UserSettingsProperty.CrashReports -> updateCrashReports(UpdateCrashReportsRequest(property.value.toInt()))
         is UserSettingsProperty.Telemetry -> updateTelemetry(UpdateTelemetryRequest(property.value.toInt()))
     }.exhaustive
+
+    private fun makeUserSettingsForCredentialLess(userId: UserId) = UserSettings(
+        userId = userId,
+        email = null,
+        phone = null,
+        password = PasswordSetting(null, null),
+        twoFA = null,
+        news = null,
+        locale = null,
+        logAuth = null,
+        density = null,
+        weekStart = null,
+        dateFormat = null,
+        timeFormat = null,
+        earlyAccess = null,
+        deviceRecovery = null,
+        telemetry = null,
+        crashReports = null,
+    )
 }

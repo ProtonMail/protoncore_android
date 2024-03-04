@@ -21,7 +21,11 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.server.ServerClock
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.USER_SERVICE_MASK_VPN
 import javax.inject.Inject
 
 class PostLoginLessAccountSetup @Inject constructor(
@@ -29,14 +33,18 @@ class PostLoginLessAccountSetup @Inject constructor(
     private val userCheck: PostLoginAccountSetup.UserCheck,
     private val userManager: UserManager,
     private val sessionManager: SessionManager,
+    private val serverClock: ServerClock,
 ) {
     suspend operator fun invoke(
         userId: UserId,
     ): PostLoginAccountSetup.UserCheckResult {
         // Refresh scopes.
         sessionManager.refreshScopes(checkNotNull(sessionManager.getSessionId(userId)))
-        // First get the User to invoke UserCheck.
-        val user = userManager.getUser(userId, refresh = true)
+
+        // First, create the User to invoke UserCheck.
+        val user = makeUser(userId)
+        userManager.addUser(user, emptyList())
+
         val userCheckResult = userCheck.invoke(user)
         when (userCheckResult) {
             is PostLoginAccountSetup.UserCheckResult.Error -> {
@@ -50,4 +58,29 @@ class PostLoginLessAccountSetup @Inject constructor(
         }
         return userCheckResult
     }
+
+    private fun makeUser(userId: UserId): User = User(
+        userId = userId,
+        email = null,
+        name = null,
+        displayName = null,
+        currency = "",
+        credit = 0,
+        type = Type.CredentialLess,
+        createdAtUtc = serverClock.getCurrentTimeUTC().toEpochMilli(),
+        usedSpace = 0,
+        maxSpace = 0,
+        maxUpload = 0,
+        role = null,
+        private = true,
+        services = USER_SERVICE_MASK_VPN,
+        subscribed = 0,
+        delinquent = null,
+        recovery = null,
+        keys = emptyList(),
+        maxBaseSpace = 0,
+        maxDriveSpace = 0,
+        usedBaseSpace = 0,
+        usedDriveSpace = 0,
+    )
 }

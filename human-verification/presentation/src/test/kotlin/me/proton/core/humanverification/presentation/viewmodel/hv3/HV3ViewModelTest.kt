@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.humanverification.domain.HumanVerificationWorkflowHandler
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -122,7 +123,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             every { locale } returns "en_US"
             every { phone } returns RecoverySetting("123456789", 0, false, false)
         }
-        coEvery { getSettings.invoke(any(), any()) } returns settingsMock
+        coEvery { getSettings.invoke(any<SessionUserId>(), any()) } returns settingsMock
         val params = viewModel.getHumanVerificationExtraParams()
         assertNotNull(params)
         assertEquals("US", params?.defaultCountry)
@@ -146,7 +147,7 @@ class HV3ViewModelTest : CoroutinesTest by UnconfinedCoroutinesTest() {
             every { locale } returns "en_US"
             every { phone } returns RecoverySetting("123456789", 0, false, false)
         }
-        coEvery { getSettings.invoke(any(), any()) } returns settingsMock
+        coEvery { getSettings.invoke(any<SessionUserId>(), any()) } returns settingsMock
         val params = viewModel.getHumanVerificationExtraParams()
         assertEquals(true, params?.useVPNTheme)
     }

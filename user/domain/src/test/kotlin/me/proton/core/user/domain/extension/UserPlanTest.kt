@@ -34,23 +34,23 @@ class UserPlanTest {
     }
 
     private val userMail = mockk<User> {
-        every { services } returns MASK_MAIL
-        every { subscribed } returns MASK_MAIL
+        every { services } returns USER_SERVICE_MASK_MAIL
+        every { subscribed } returns USER_SERVICE_MASK_MAIL
     }
 
     private val userVpn = mockk<User> {
-        every { services } returns MASK_VPN
-        every { subscribed } returns MASK_VPN
+        every { services } returns USER_SERVICE_MASK_VPN
+        every { subscribed } returns USER_SERVICE_MASK_VPN
     }
 
     private val userDrive = mockk<User> {
-        every { services } returns MASK_DRIVE
-        every { subscribed } returns MASK_DRIVE
+        every { services } returns USER_SERVICE_MASK_DRIVE
+        every { subscribed } returns USER_SERVICE_MASK_DRIVE
     }
 
     private val userMailAndVpnAndDrive = mockk<User> {
-        every { services } returns MASK_MAIL + MASK_VPN + MASK_DRIVE
-        every { subscribed } returns MASK_MAIL + MASK_VPN + MASK_DRIVE
+        every { services } returns USER_SERVICE_MASK_MAIL + USER_SERVICE_MASK_VPN + USER_SERVICE_MASK_DRIVE
+        every { subscribed } returns USER_SERVICE_MASK_MAIL + USER_SERVICE_MASK_VPN + USER_SERVICE_MASK_DRIVE
     }
 
     @Test

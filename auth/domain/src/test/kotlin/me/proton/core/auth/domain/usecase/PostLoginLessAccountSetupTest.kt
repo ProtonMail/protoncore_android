@@ -23,16 +23,21 @@ import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.server.ServerClock
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.isCredentialLess
 import org.junit.Before
 import org.junit.Test
+import java.time.Instant
+import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 class PostLoginLessAccountSetupTest {
@@ -42,6 +47,7 @@ class PostLoginLessAccountSetupTest {
     private lateinit var sessionManager: SessionManager
     private lateinit var user: User
     private lateinit var sessionId: SessionId
+    private lateinit var serverClock: ServerClock
 
     private lateinit var tested: PostLoginLessAccountSetup
 
@@ -57,18 +63,23 @@ class PostLoginLessAccountSetupTest {
             coEvery { this@mockk.invoke(any()) } returns PostLoginAccountSetup.UserCheckResult.Success
         }
         userManager = mockk {
+            coJustRun { addUser(any(), any()) }
             coEvery { getUser(any(), any()) } returns user
         }
         sessionManager = mockk {
             coEvery { getSessionId(any()) } returns sessionId
             coEvery { refreshScopes(any()) } returns Unit
         }
+        serverClock = mockk {
+            every { getCurrentTimeUTC() } returns Instant.ofEpochMilli(1)
+        }
 
         tested = PostLoginLessAccountSetup(
             accountWorkflowHandler,
             userCheck,
             userManager,
-            sessionManager
+            sessionManager,
+            serverClock
         )
     }
 
@@ -96,6 +107,12 @@ class PostLoginLessAccountSetupTest {
         val result = tested.invoke(sessionInfo.userId)
         assertTrue(result is PostLoginAccountSetup.UserCheckResult.Success)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
+
+        val userSlot = slot<User>()
+        coVerify { userManager.addUser(capture(userSlot), emptyList()) }
+        assertEquals(sessionInfo.userId, userSlot.captured.userId)
+        assertEquals(1L, userSlot.captured.createdAtUtc)
+        assertTrue { userSlot.captured.isCredentialLess() }
     }
 
     private fun mockSessionInfo(
