@@ -37,8 +37,9 @@
   <string name="auth_second_factor_code">Kode Dua Faktor</string>
   <string name="auth_email">Surel</string>
   <string name="auth_email_username">Nama pengguna atau surel</string>
-  <string name="auth_account_details">Masukkan detail Akun Proton Anda.</string>
+  <string name="auth_account_details">Masukkan rincian Akun Proton Anda.</string>
   <string name="auth_sign_in">Masuk</string>
+  <string name="auth_sign_out">Keluar</string>
   <string name="auth_sign_in_action">Masuk</string>
   <string name="auth_sign_in_sso">Masuk ke organisasi Anda</string>
   <string name="auth_sign_in_with_password">Masuk dengan kata sandi</string>
@@ -61,7 +62,7 @@
   <string name="auth_2fa_action">Autentikasi</string>
   <string name="auth_2fa_use_recovery_code">Gunakan kode pemulihan</string>
   <string name="auth_2fa_use_2fa_code">Gunakan kode dua faktor</string>
-  <string name="auth_2fa_error_empty_code">Masukkan kode 6 digit.</string>
+  <string name="auth_2fa_error_empty_code">Masukkan kode 6 digit yang Anda miliki.</string>
   <string name="auth_mailbox_title">Buka kunci kotak surat Anda</string>
   <string name="auth_mailbox_password_label">Kata sandi kotak surat</string>
   <string name="auth_mailbox_unlock_action">Membuka kunci</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Jelajahi internet secara privat, akses konten yang diblokir, dan nikmati kebebasan digital.</string>
   <string name="auth_credentialless_guest_button">Lanjut sebagai tamu</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan menggunakan aplikasi ini, Anda menyatakan diri setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> yang berlaku.</string>
+  <string name="auth_credentialless_settings_title">Berpindahlah ke privasi.</string>
+  <string name="auth_credentialless_settings_subtitle">Dapatkan pengelola kata sandi, Mail dan Calendar yang terenkripsi, serta penyimpanan cloud sebesar 1 GB secara cuma-cuma dengan Akun Proton.</string>
 </resources>

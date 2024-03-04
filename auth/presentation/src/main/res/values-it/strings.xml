@@ -31,14 +31,15 @@
   <string name="welcome_subtitle_pass_alt">Tutte le tue password. Al sicuro in un unico posto e protette dal nome più attendibile nella privacy.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Password</string>
-  <string name="auth_password_help">La password deve contenere almeno 8 caratteri</string>
+  <string name="auth_password_help">Inserisci una password lunga almeno 8 caratteri</string>
   <string name="auth_current_login_password">Password di accesso attuale</string>
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice del secondo fattore</string>
   <string name="auth_email">Email</string>
   <string name="auth_email_username">Nome utente o email</string>
-  <string name="auth_account_details">Inserisci i dettagli del tuo account Proton.</string>
+  <string name="auth_account_details">Inserisci le credenziali del tuo account Proton.</string>
   <string name="auth_sign_in">Accedi</string>
+  <string name="auth_sign_out">Disconnetti</string>
   <string name="auth_sign_in_action">Accedi</string>
   <string name="auth_sign_in_sso">Accedi alla tua organizzazione</string>
   <string name="auth_sign_in_with_password">Accedi con una password</string>
@@ -130,10 +131,10 @@
   <string name="auth_signup_skip_recovery">Ignora</string>
   <string name="auth_signup_set_recovery">Imposta un metodo di recupero</string>
   <string name="auth_signup_no_connectivity">Nessuna connessione per visualizzare Termini e condizioni.</string>
-  <string name="auth_signup_error_username_blank">Il nome utente non può essere vuoto.</string>
-  <string name="auth_signup_error_passwords_do_not_match">Le password non corrispondono.</string>
-  <string name="auth_signup_validation_password_length">La password deve essere lunga almeno 8 caratteri.</string>
-  <string name="auth_signup_validation_password">La password non può essere vuota.</string>
+  <string name="auth_signup_error_username_blank">Nome utente necessario</string>
+  <string name="auth_signup_error_passwords_do_not_match">Password non corrispondente</string>
+  <string name="auth_signup_validation_password_length">Inserisci una password lunga almeno 8 caratteri</string>
+  <string name="auth_signup_validation_password">Inserisci la password di accesso attuale</string>
   <string name="auth_signup_your_account_is_being_setup">Creazione dell\'account in corso</string>
   <string name="auth_signup_please_wait">Di solito non ci vuole più di un minuto.</string>
   <string name="auth_signup_replacement_code">Non hai ricevuto il codice?</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Naviga privatamente, accedi ai contenuti bloccati e approfitta della libertà digitale.</string>
   <string name="auth_credentialless_guest_button">Continua come ospite</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Utilizzando questa app accetti i nostri <annotation link="terms">Termini e condizioni</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Passa al mondo della privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Ottieni gratuitamente un gestore di password, email, calendari e 1 GB di spazio di archiviazione cloud crittografato con un account Proton.</string>
 </resources>

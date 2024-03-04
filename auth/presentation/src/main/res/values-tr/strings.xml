@@ -24,7 +24,7 @@
   <string name="welcome_subtitle_drive">Bulut depolamanın rahatlığı ve şifreleme teknolojisinin güvenliği. Sonunda güvenebileceğiniz bir bulut depolama çözümü var.</string>
   <string name="welcome_subtitle_drive_alt">Dosyalarınızı saklamanın en güvenli yolu. Güncel en güçlü şifreleme ile dosyalarınızı yükleyin, eşitleyin ve paylaşın.</string>
   <string name="welcome_subtitle_calendar">Hayatınızdaki etkinlikleri gizli, emniyetli ve güvenli tutan şifrelenmiş takvim.</string>
-  <string name="welcome_subtitle_calendar_alt">Uçtan uca şifrelenmiş takvimimiz, kontrolü size bırakarak planlarınızı uygulamanıza yardımcı olur.</string>
+  <string name="welcome_subtitle_calendar_alt">Uçtan uca şifrelenmiş takvimimiz, kontrolü size vererek planlarınızı uygulamanıza yardımcı olur.</string>
   <string name="welcome_subtitle_vpn">İnternet bağlantınızı şifreleyerek gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN.</string>
   <string name="welcome_subtitle_vpn_alt">Gizliliğinizi koruyan yüksek hızlı İsviçre\'li VPN. En yüksek güvenlik, 1.600 üzerinde sunucu ve sınırlamasız.</string>
   <string name="welcome_subtitle_pass">Tüm parolalarınız. Tek bir yerde güvenli bir şekilde ve gizliliğin en güvenilir adı tarafından korunuyor.</string>
@@ -39,6 +39,7 @@
   <string name="auth_email_username">Kullanıcı adı ya da e-posta</string>
   <string name="auth_account_details">Proton hesabınızın bilgilerini yazın.</string>
   <string name="auth_sign_in">Oturum aç</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">Oturum aç</string>
   <string name="auth_sign_in_sso">Kuruluşunuzda oturum açın</string>
   <string name="auth_sign_in_with_password">Parola ile oturum açın</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Gizliliğinizi koruyarak gezinin, engellenen içeriğe erişin ve dijital özgürlüğün tadını çıkarın.</string>
   <string name="auth_credentialless_guest_button">Konuk olarak ilerle</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Bu uygulamayı kullanarak <annotation link="terms">Hüküm ve Koşullarımızı</annotation> kabul etmiş olursunuz.</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

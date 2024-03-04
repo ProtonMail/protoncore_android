@@ -19,10 +19,10 @@
 <resources>
   <string name="plans_select_a_plan">یک طرح انتخاب کنید</string>
   <string name="plans_select_a_plan_subtitle">یک طرح سرویس برای همه سرویس‌های Proton</string>
-  <string name="plans_fetching_general_error">خطای در واکشی طرح سرویس ها رخ داد.</string>
+  <string name="plans_fetching_general_error">خطای در دریافت طرح سرویس ها رخ داد.</string>
   <string name="plans_payment_error">خطایی در پرداخت رخ داد. لطفا بعدا دوباره امتحان کنید یا یک طرح سرویس رایگان ایجاد کنید.</string>
   <string name="plans_free_name">Free</string>
-  <string name="plan_price_monthly">هر ماه</string>
+  <string name="plan_price_monthly">در ماه</string>
   <string name="plan_price_annually">در سال</string>
   <string name="plans_current_plan">طرح کنونی</string>
   <string name="plans_upgrade_plan">طرح خود را ارتقا دهید</string>
@@ -34,7 +34,7 @@
   <string name="plans_pay_biennially">هر 2 سال یک بار پرداخت کنید</string>
   <plurals name="plans_pay_other">
     <item quantity="one">پرداخت برای %d ماه</item>
-    <item quantity="other">Pay for %d months</item>
+    <item quantity="other">پرداخت برای %d ماه</item>
   </plurals>
   <string name="plans_billed_yearly">صورتحساب سالانه به مقدار %s</string>
   <string name="plans_billed_monthly">صورتحساب ماهانه</string>
@@ -50,18 +50,18 @@
   <string name="plans_get_proton">%s را دریافت کنید</string>
   <string name="plans_manage_your_subscription">اشتراک خود را در <a href="https://account.proton.me">account.proton.me</a> مدیریت کنید</string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s از %2$s</string>
-  <string name="plans_payments_info_not_available">در دسترس/ نیست</string>
-  <string name="plans_manage_your_subscription_google">اشتراک شما توسط Google Play مدیریت میشود.</string>
+  <string name="plans_payments_info_not_available">در دسترس نیست</string>
+  <string name="plans_manage_your_subscription_google">اشتراک شما توسط Google Play مدیریت می شود.</string>
   <string name="plans_manage_your_subscription_other">نمیتوان اشتراک را از داخل برنامه موبایل مدیریت کرد.</string>
   <string name="plans_autorenew_subscriptions">Only auto-renewing annual subscriptions are available via this app.</string>
-  <string name="plans_can_not_upgrade_from_mobile">شما از طریق نرم‌افزار مبایل امکان ارتقا دادن ندارید.</string>
+  <string name="plans_can_not_upgrade_from_mobile">شما از طریق نرم‌افزار موبایل امکان ارتقا دادن را ندارید.</string>
   <string name="plans_no_upgrade_available">There is currently no upgrade available.</string>
   <string name="plans_limited_offer">Limited time offer</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
-  <string name="plans_subscription_storage_get_more">Get more storage</string>
+  <string name="plans_subscription_base_storage_full_title">فضای ذخیره سازی ایمیل شما پر شده است</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">فضای ذخیره‌سازی ایمیل شما تقریبا پر شده است</string>
+  <string name="plans_subscription_drive_storage_full_title">فضای ذخیره سازی درایو شما پر شده است</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">فضای ذخیره‌سازی درایو شما تقریبا پر شده است</string>
+  <string name="plans_subscription_storage_get_more">دریافت حافظه بیشتر</string>
   <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
@@ -81,8 +81,8 @@
     <item quantity="other">#proton_addresses# آدرس ایمیل</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
-    <item quantity="one">#proton_addresses# address / user</item>
-    <item quantity="other">#proton_addresses# addresses / user</item>
+    <item quantity="one">#proton_addresses# آدرس/کاربر</item>
+    <item quantity="other">#proton_addresses# آدرس/کاربر</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
     <item quantity="one">%d از #proton_addresses# آدرس</item>
@@ -124,7 +124,7 @@
   <string name="plan_id_vpnbasic_countries">۶۳ کشور</string>
   <string name="plan_id_vpnbasic_high_speed">سرعت بالا</string>
   <string name="plan_id_vpnplus_adblock">مسدودکننده آگهی (NetShield)</string>
-  <string name="plan_id_vpnplus_streaming">پشتیبانی از سرویس استریم</string>
+  <string name="plan_id_vpnplus_streaming">پشتیبانی از استریم کردن</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">۶۳ کشور</string>
   <string name="plan_id_vpnplus_highest_speed">بالاترین سرعت</string>
@@ -154,19 +154,19 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">ورودها و یادداشت‌های نامحدود</string>
   <string name="unlimited_devices">دستگاه های نامحدود</string>
-  <string name="integrated_2fa_authenticator">Integrated 2FA authenticator</string>
-  <string name="multiple_vaults">Multiple vaults</string>
-  <string name="unlimited_email_alias">Unlimited Hide My Email aliases</string>
-  <string name="custom_email_alias_domains">Custom domains for email aliases</string>
+  <string name="integrated_2fa_authenticator">احراز هویت دو عاملی یکپارچه</string>
+  <string name="multiple_vaults">چندین گاوصندوق</string>
+  <string name="unlimited_email_alias">پنهان سازی نامحدود نام مستعار</string>
+  <string name="custom_email_alias_domains">دامنه دلخواه برای نام مستعار ایمیل</string>
   <string name="multiple_forwarding_mailboxes">Multiple forwarding mailboxes</string>
   <string name="priority_support">اولویت پشتیبانی</string>
-  <string name="one_vault">1 vault</string>
+  <string name="one_vault">۱ گاوصندوق</string>
   <string name="ten_hide_my_email_aliases">۱۰ پنهان‌سازی نام‌های مستعار ایمیل</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Get more storage</string>
-  <string name="upgrade_storage_cta_button">Upgrade</string>
+  <string name="upgrade_storage_current_drive_storage">حافظه درایو: %d%% پر</string>
+  <string name="upgrade_storage_current_mail_storage">حافظه ایمیل : %d%% پر</string>
+  <string name="upgrade_storage_subtitle">دریافت حافظه بیشتر</string>
+  <string name="upgrade_storage_cta_button">ارتقا</string>
   <!-- endregion -->
 </resources>

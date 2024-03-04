@@ -24,11 +24,11 @@
   <string name="payments_error_card_name">نام روی کارت الزامی است.</string>
   <string name="payments_error_card_number">شماره کارت نامعتبر.</string>
   <string name="payments_error_cvc">لطفا کد امنیتی معتبر وارد کنید.</string>
-  <string name="payments_error_session">Valid session ID is needed when subscribing a signed-in user.</string>
+  <string name="payments_error_session">هنگام تهیه اشتراک برای یک کاربر وارد شده، شناسه نشست معتبر ضروری است.</string>
   <string name="payments_error_signup_paymentmethod">با روش پرداخت فعلی نمی توان ثبت‌نام کرد.</string>
   <string name="payments_error_invalid_session">نشست نامعتبر.</string>
   <string name="payments_no_payment_provider">هیچ ارائه دهنده سیستم پرداخت فعالی یافت نشد.</string>
-  <string name="payments_error_google_prices">Problem retrieving Google Play Store prices at the moment.</string>
+  <string name="payments_error_google_prices">مشکل در دریافت قیمت های Google Play Store</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">روش پرداخت خود را انتخاب کنید</string>
@@ -36,8 +36,8 @@
   <string name="payments_pay" comment="Example: Pay 5EUR">پرداخت %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">پرداخت با</string>
   <string name="payments_method_icon">آیکون روش پرداخت.</string>
-  <string name="payments_method_surcharge">*خرید از طریق این روش پرداخت منجر به اضافه بها میشود.</string>
-  <string name="payments_method_terms_conditions">خرید از طریق Google Play به این معناست که شما شرایط و ضوابط Google Play را قبول میکنید و پرداخت مکرر با Google را تایید میکنید.</string>
+  <string name="payments_method_surcharge">*خرید از طریق این روش پرداخت منجر به اضافه بها می شود.</string>
+  <string name="payments_method_terms_conditions">خرید از طریق Google Play به این معناست که شما شرایط و ضوابط Google Play را قبول می کنید و پرداخت مکرر با Google را تایید می کنید.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">ادامه</string>
   <!-- endregion -->
@@ -52,12 +52,12 @@
   <string name="payments_expiration_date_hint">ماه/سال</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">کشور</string>
-  <string name="payments_get_plan">Get %s</string>
+  <string name="payments_get_plan">دریافت %s</string>
   <string name="payments_paying_in_process">در حال پرداخت</string>
   <string name="payments_choose_country">انتخاب کشور</string>
-  <string name="payment_cc_list_item">%1$s - %2$s (مثال %3$s/%4$s)</string>
+  <string name="payment_cc_list_item">%1$s - %2$s (تاریخ انقضاء %3$s/%4$s)</string>
   <string name="payment_paypal_list_item">PayPal</string>
-  <string name="payments_info_not_available">در دسترس/ نیست</string>
+  <string name="payments_info_not_available">در دسترس نیست</string>
   <string name="payments_billing_monthly">برای ۱ ماه</string>
   <string name="payments_billing_yearly">برای ۱ سال</string>
   <string name="payments_billing_two_years">برای ۲ سال</string>
@@ -66,7 +66,7 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">تایید ارتقا حساب کاربری</string>
-  <string name="payments_giap_unredeemed_description">پرداخت از طریق Google Play با موفقیت انجام شد، اما پروسه ارتقا حساب کاربری مختل شد. پرداخت خود را برای ارتقا حساب کاربری خود همین حالا اعمال میکنید؟</string>
+  <string name="payments_giap_unredeemed_description">پرداخت از طریق Google Play با موفقیت انجام شد، اما پروسه ارتقا حساب کاربری مختل شد. پرداخت خود را برای ارتقا حساب کاربری خود همین حالا اعمال می کنید؟</string>
   <string name="payments_giap_unredeemed_confirm">تأیید ارتقا</string>
   <string name="payments_giap_redeem_success">حساب کاربری شما با موفقیت ارتقا یافت</string>
   <string name="payments_giap_redeem_error">ارتقا حساب کاربری کامل نشد. لطفا بعدا دوباره امتحان کنید.</string>

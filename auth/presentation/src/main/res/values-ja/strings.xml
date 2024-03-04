@@ -39,6 +39,7 @@
   <string name="auth_email_username">ユーザー名またはメールアドレス</string>
   <string name="auth_account_details">Proton アカウントの詳細を入力してください。</string>
   <string name="auth_sign_in">サインイン</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">サインイン</string>
   <string name="auth_sign_in_sso">組織にサインインする</string>
   <string name="auth_sign_in_with_password">パスワードを使ってサインインする</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">プライベートなブラウジング、ブロックされたコンテンツへのアクセス、デジタルの自由を楽しんでください。</string>
   <string name="auth_credentialless_guest_button">ゲストとして続ける</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">このアプリを使用することで私達の<annotation link="terms">利用規約</annotation>に同意したことになります。</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

@@ -19,7 +19,7 @@
 <resources>
   <!-- base common strings -->
   <string name="human_verification_help">راهنما</string>
-  <string name="human_verification_title">اعتبارسنجی</string>
+  <string name="human_verification_title">تأیید انسان بودن</string>
   <!-- To verify the entered code - action -->
   <string name="human_verification_help_title">برای اعتبارسنجی به کمک نیاز دارید؟</string>
   <string name="sms_hint">XX XXX XX XX</string>
@@ -27,5 +27,5 @@
   <string name="human_verification_help_manual_title">درخواست دعوتنامه</string>
   <string name="human_verification_help_manual">اگر در ایجاد حساب کاربری خود مشکلی دارید، لطفا یک دعوت‌ نامه درخواست کنید و ما ظرف یک روز کاری پاسخ خواهیم داد.</string>
   <string name="human_verification_help_website_title">از مرکز راهنمایی ما دیدن کنید</string>
-  <string name="human_verification_help_website">در مورد اعتبارسنجی و این که چرا ما آن را درخواست میکنیم بیشتر یاد بگیرید.</string>
+  <string name="human_verification_help_website">در مورد اعتبارسنجی و این که چرا ما آن را درخواست می کنیم بیشتر یاد بگیرید.</string>
 </resources>

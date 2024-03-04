@@ -26,7 +26,7 @@
   <string name="settings_recovery_email_confirm_hint">Повторно введіть адресу е-пошти</string>
   <string name="settings_save">Зберегти</string>
   <string name="settings_password_required">Введіть свій пароль входу</string>
-  <string name="settings_password_required_ok">Гаразд</string>
+  <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Не встановлено</string>
   <string name="settings_recovery_email_error_no_match">Нові адреси е-пошти для відновлення не збігаються</string>
   <string name="settings_validation_email">Недійсна адреса е-пошти.</string>

@@ -39,6 +39,7 @@
   <string name="auth_email_username">使用者名稱或電子信箱</string>
   <string name="auth_account_details">輸入您的 Proton 帳號詳細資料。</string>
   <string name="auth_sign_in">登入</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">登入</string>
   <string name="auth_sign_in_sso">登入您的組織</string>
   <string name="auth_sign_in_with_password">使用密碼登入</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">私密瀏覽、存取被封鎖的內容並享受數位自由。</string>
   <string name="auth_credentialless_guest_button">以訪客身份繼續</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">使用此應用程式即表示您接受我們的<annotation link="terms">條款與條件</annotation>。</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

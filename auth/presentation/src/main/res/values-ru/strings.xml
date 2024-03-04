@@ -39,6 +39,7 @@
   <string name="auth_email_username">Имя пользователя или эл. почта</string>
   <string name="auth_account_details">Введите данные вашего аккаунта Proton.</string>
   <string name="auth_sign_in">Войти</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">Войти</string>
   <string name="auth_sign_in_sso">Войдите в вашу организацию</string>
   <string name="auth_sign_in_with_password">Войти с паролем</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Просматривайте сайты в приватно, получайте доступ к заблокированному содержимому и пользуйтесь цифровой свободой.</string>
   <string name="auth_credentialless_guest_button">Продолжить без регистрации</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Используя это приложение, вы принимаете наши <annotation link="terms">Условия использования</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

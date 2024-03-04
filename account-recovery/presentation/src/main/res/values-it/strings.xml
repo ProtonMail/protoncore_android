@@ -25,7 +25,7 @@
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Annullare la reimpostazione della password?</string>
-  <string name="account_recovery_cancel_subtitle">Inserisci la tua password per annullare.</string>
+  <string name="account_recovery_cancel_subtitle">Inserisci la password per annullare.</string>
   <string name="account_recovery_cancel_password_label">Password attuale</string>
   <string name="account_recovery_cancel_password_placeholder">Password</string>
   <string name="account_recovery_cancel_now">Annulla la reimpostazione della password</string>

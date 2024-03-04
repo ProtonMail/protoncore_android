@@ -52,7 +52,7 @@
   <string name="payments_expiration_date_hint">MM/AA</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">País</string>
-  <string name="payments_get_plan">Get %s</string>
+  <string name="payments_get_plan">Obter %s</string>
   <string name="payments_paying_in_process">Pagamento</string>
   <string name="payments_choose_country">Selecione o país</string>
   <string name="payment_cc_list_item">%1$s - %2$s (exp %3$s/%4$s)</string>

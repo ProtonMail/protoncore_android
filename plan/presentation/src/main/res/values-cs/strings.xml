@@ -61,12 +61,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Není možné navýšit tarif pomocí mobilní aplikace.</string>
   <string name="plans_no_upgrade_available">V současnosti není k dispozici žádné navýšení.</string>
   <string name="plans_limited_offer">Časově omezená nabídka</string>
-  <string name="plans_subscription_base_storage_full_title">Vaše úložiště je plné</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Vaše Mail úložiště je téměř plné</string>
-  <string name="plans_subscription_drive_storage_full_title">Vaše úložiště je plné</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Vaše Mail úložiště je téměř plné</string>
+  <string name="plans_subscription_base_storage_full_title">Vaše úložiště Mail je plné</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Vaše úložiště Mail je téměř plné</string>
+  <string name="plans_subscription_drive_storage_full_title">Vaše úložiště Drive je plné</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Vaše úložiště Drive je téměř plné</string>
   <string name="plans_subscription_storage_get_more">Získat více úložného prostoru</string>
-  <string name="plans_subscription_storage_full_description">Upgradujte svůj tarif a pokračujte v používání účtu bez přerušení.</string>
+  <string name="plans_subscription_storage_full_description">Navyšte svůj tarif abyste mohli pokračovat v používání účtu bez přerušení.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# úložiště</item>

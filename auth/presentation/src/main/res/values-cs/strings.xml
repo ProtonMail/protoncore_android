@@ -39,6 +39,7 @@
   <string name="auth_email_username">Uživatelské jméno nebo e-mail</string>
   <string name="auth_account_details">Zadejte údaje Vašeho účtu Proton.</string>
   <string name="auth_sign_in">Přihlásit se</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">Přihlásit se</string>
   <string name="auth_sign_in_sso">Přihlaste se ke své organizaci</string>
   <string name="auth_sign_in_with_password">Přihlásit se pomocí hesla</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Procházejte soukromě, přistupujte k blokovanému obsahu a užívejte si digitální svobody.</string>
   <string name="auth_credentialless_guest_button">Pokračovat jako host</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Používáním této aplikace souhlasíte s našimi <annotation link="terms">smluvními podmínkami užívání</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

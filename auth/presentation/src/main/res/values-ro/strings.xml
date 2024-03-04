@@ -39,6 +39,7 @@
   <string name="auth_email_username">Utilizator sau e-mail</string>
   <string name="auth_account_details">Introduceți detaliile contului Proton.</string>
   <string name="auth_sign_in">Autentificare</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">Autentificare</string>
   <string name="auth_sign_in_sso">Autentificare la organizație</string>
   <string name="auth_sign_in_with_password">Autentificare cu e-mail și parolă</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Navigați în privat, accesați conținutul blocat și bucurați-vă de libertatea digitală.</string>
   <string name="auth_credentialless_guest_button">Continuare ca vizitator</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Folosind această aplicație sunteți de acord cu <annotation link="terms">Termenii și condițiile</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

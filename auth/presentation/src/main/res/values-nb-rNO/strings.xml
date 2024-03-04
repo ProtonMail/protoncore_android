@@ -39,6 +39,7 @@
   <string name="auth_email_username">Brukernavn eller e-post</string>
   <string name="auth_account_details">Skriv inn Proton-kontoopplysningene dine.</string>
   <string name="auth_sign_in">Logg på</string>
+  <string name="auth_sign_out">Logg av</string>
   <string name="auth_sign_in_action">Logg på</string>
   <string name="auth_sign_in_sso">Logg på din organisasjon</string>
   <string name="auth_sign_in_with_password">Logg på med et passord</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Surf privat, få tilgang til blokkert innhold og nyt digital frihet.</string>
   <string name="auth_credentialless_guest_button">Fortsett som gjest</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved å bruke denne appen godtar du våre <annotation link="terms">vilkår og betingelser</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Gjør overgangen til personvern.</string>
+  <string name="auth_credentialless_settings_subtitle">Få en passordbehandler, kryptert e-post og kalender og 1 GB skylagring gratis med en Proton-konto.</string>
 </resources>

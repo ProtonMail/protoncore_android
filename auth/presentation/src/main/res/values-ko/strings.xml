@@ -39,6 +39,7 @@
   <string name="auth_email_username">사용자 이름 또는 비밀번호</string>
   <string name="auth_account_details">Proton 계정 상세 정보를 입력하세요.</string>
   <string name="auth_sign_in">로그인</string>
+  <string name="auth_sign_out">로그아웃</string>
   <string name="auth_sign_in_action">로그인</string>
   <string name="auth_sign_in_sso">조직에 로그인</string>
   <string name="auth_sign_in_with_password">비밀번호로 로그인</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">브라우징은 은밀하게, 막힌 컨텐츠는 열리게, 디지털 자유를 그렇게 누리십시오.</string>
   <string name="auth_credentialless_guest_button">게스트로 계속하기</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">앱 사용시 <annotation link="terms">이용 약관</annotation>에 동의하는 것으로 간주됩니다.</string>
+  <string name="auth_credentialless_settings_title">프라이버시를 향한 첫 걸음.</string>
+  <string name="auth_credentialless_settings_subtitle">Proton 계정으로 비밀번호 관리자, 암호화된 메일 및 캘린더, 1 GB 클라우드 스토리지를 무료로 사용할 수 있습니다.</string>
 </resources>

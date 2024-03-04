@@ -39,6 +39,7 @@
   <string name="auth_email_username">Nazwa użytkownika lub adres e-mail</string>
   <string name="auth_account_details">Wpisz szczegóły konta Proton.</string>
   <string name="auth_sign_in">Zaloguj się</string>
+  <string name="auth_sign_out">Wyloguj</string>
   <string name="auth_sign_in_action">Zaloguj się</string>
   <string name="auth_sign_in_sso">Zaloguj się do organizacji</string>
   <string name="auth_sign_in_with_password">Zaloguj się za pomocą hasła</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Przeglądaj prywatnie Internet, uzyskaj dostęp do zablokowanych treści i ciesz się cyfrową wolnością.</string>
   <string name="auth_credentialless_guest_button">Kontynuuj jako gość</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Korzystając z aplikacji, akceptujesz <annotation link="terms">Regulamin</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Przejdź do prywatności.</string>
+  <string name="auth_credentialless_settings_subtitle">Konto Proton zapewnia darmowy menadżer haseł, szyfrowaną pocztę, kalendarz oraz 1 GB przestrzeni dyskowej w chmurze.</string>
 </resources>

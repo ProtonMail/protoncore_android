@@ -17,5 +17,5 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="countries_search">搜索国家</string>
+  <string name="countries_search">搜索国家/地区</string>
 </resources>

@@ -39,6 +39,7 @@
   <string name="auth_email_username">Імя карыстальніка або адрас электроннай пошты</string>
   <string name="auth_account_details">Увядзіце звесткі ўліковага запісу Proton.</string>
   <string name="auth_sign_in">Увайсці</string>
+  <string name="auth_sign_out">Выхад</string>
   <string name="auth_sign_in_action">Увайсці</string>
   <string name="auth_sign_in_sso">Увайсці ў сваю арганізацыю</string>
   <string name="auth_sign_in_with_password">Увайсці з паролем</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Прыватны прагляд, доступ да заблакіраванага змесціва і задавальненне ад лічбавай свабоды.</string>
   <string name="auth_credentialless_guest_button">Працягнуць як госць</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Выкарыстоўваючы гэту праграму вы прымаеце нашы <annotation link="terms">Умовы выкарыстання</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Зрабіце крок да прыватнасці.</string>
+  <string name="auth_credentialless_settings_subtitle">Бясплатна атрымайце менеджар пароляў, зашыфраваную пошту, каляндар і 1 ГБ прасторы ў воблачным сховішчы з уліковым запісам Proton.</string>
 </resources>

@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="crypto_keystore_error_title">加密程序错误</string>
+  <string name="crypto_keystore_error_title">加密失败</string>
   <string name="crypto_keystore_error_message">此设备使用了存在缺陷的 Android 密钥库，而我们需要利用该组件保障您的数据安全。这意味着如果攻击者能够以物理手段得到此设备，您的数据就有可能被窃取。您要如何操作？</string>
   <string name="crypto_keystore_error_continue_action">继续</string>
   <string name="crypto_keystore_error_more_info_action">了解详细信息</string>

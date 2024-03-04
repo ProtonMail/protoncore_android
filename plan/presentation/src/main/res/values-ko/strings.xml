@@ -93,7 +93,7 @@
     <item quantity="other">#proton_vpn#개 기기에서 고속 VPN</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="other">#proton_vpn# 빠른 속도의 VPN 연결</item>
+    <item quantity="other"> 빠른 속도의 VPN 연결 #proton_vpn#대</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="other">#proton_users#명의 사용자</item>

@@ -27,7 +27,7 @@
   <string name="presentation_authenticate">Автентифікація</string>
   <string name="presentation_signin_to_continue">Увійдіть для продовження</string>
   <string name="presentation_alert_title">Попередження</string>
-  <string name="presentation_alert_ok">Гаразд</string>
+  <string name="presentation_alert_ok">OK</string>
   <string name="presentation_alert_enter">Ввести</string>
   <string name="presentation_alert_cancel">Скасувати</string>
   <string name="presentation_alert_continue">Продовжити</string>

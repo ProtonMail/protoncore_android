@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">رایانامه بازیابی</string>
+  <string name="settings_recovery_email_header">ایمیل بازیابی</string>
   <string name="settings_recovery_email_current">ایمیل بازیابی فعلی</string>
   <string name="settings_recovery_email_new">ایمیل بازیابی جدید</string>
   <string name="settings_recovery_email_confirm">تایید ایمیل بازیابی</string>
@@ -41,7 +41,7 @@
   <string name="settings_mailbox_password_hint_new">رمز عبور جدید صندوق پستی</string>
   <string name="settings_mailbox_password_hint_new_confirm">تایید گذرواژه جدید صندوق پیام</string>
   <string name="settings_change_password_error">خطایی در تغییر گذرواژه رخ داد.</string>
-  <string name="settings_recovery_email_success">Recovery email address updated</string>
+  <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
   <string name="settings_password_management_login_password_success">گذرواژه ورود بروزرسانی شد</string>
   <string name="settings_password_management_mailbox_password_success">گذرواژهٔ صندوق پیام بروزرسانی شد</string>

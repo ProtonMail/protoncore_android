@@ -39,6 +39,7 @@
   <string name="auth_email_username">Nom d\'usuari o correu electrònic</string>
   <string name="auth_account_details">Introduïu la informació del vostre compte de Proton.</string>
   <string name="auth_sign_in">Inicia la sessió</string>
+  <string name="auth_sign_out">Tanca la sessió</string>
   <string name="auth_sign_in_action">Inicia la sessió</string>
   <string name="auth_sign_in_sso">Inicieu la sessió a la vostra organització</string>
   <string name="auth_sign_in_with_password">Incicieu la sessió amb una contrasenya</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Navegui en privat, accedeixi a continguts bloquejats i gaudeixi de la llibertat digital.</string>
   <string name="auth_credentialless_guest_button">Continueu com a convidat</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilitzar aquesta aplicació, vostè accepta els nostres <annotation link="terms">Termes i condicions</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

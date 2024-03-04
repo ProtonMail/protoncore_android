@@ -19,7 +19,7 @@
 <resources>
   <string name="welcome_title">Beskyt dit privatliv med Proton</string>
   <string name="welcome_subtitle">Kryptering holder dine data private. Dine data tilhører kun dig.</string>
-  <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke er helt din egen.</string>
+  <string name="welcome_subtitle_mail">Krypteret e-mail, der holder dine samtaler private. Din indbakke tilhører kun dig.</string>
   <string name="welcome_subtitle_mail_alt">Privatliv. Sikkerhed. Bekvemmelighed. Krypteret e-mail, der giver dig fuld kontrol over dine personlige data.</string>
   <string name="welcome_subtitle_drive">Bekvemmeligheden ved lagring i skyen og sikkerheden ved krypteringsteknologi. Endelig en lagringsløsning i skyen, du kan stole på.</string>
   <string name="welcome_subtitle_drive_alt">Den sikreste måde at opbevare dine filer på. Upload, synkroniser og del dine filer med den stærkeste kryptering, der findes.</string>
@@ -39,6 +39,7 @@
   <string name="auth_email_username">Brugernavn eller e-mail</string>
   <string name="auth_account_details">Indtast oplysninger om din Proton-konto.</string>
   <string name="auth_sign_in">Log ind</string>
+  <string name="auth_sign_out">Log ud</string>
   <string name="auth_sign_in_action">Log ind</string>
   <string name="auth_sign_in_sso">Log ind med din organisation</string>
   <string name="auth_sign_in_with_password">Log ind med en adgangskode</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Browse privat, få adgang til blokeret indhold, og nyd digital frihed.</string>
   <string name="auth_credentialless_guest_button">Forsæt som gæst</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved brug af denne applikation accepterer du vores <annotation link="terms">Vilkår og betingelser</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Flyt til privatlivets fred.</string>
+  <string name="auth_credentialless_settings_subtitle">Få en adgangskode administrator, krypteret Mail, Kalender og 1 GB skylager gratis med en Proton-konto.</string>
 </resources>

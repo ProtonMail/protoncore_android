@@ -39,6 +39,7 @@
   <string name="auth_email_username">Nome de usuário ou e-mail</string>
   <string name="auth_account_details">Insira os detalhes de sua conta Proton.</string>
   <string name="auth_sign_in">Iniciar sessão</string>
+  <string name="auth_sign_out">Encerrar sessão</string>
   <string name="auth_sign_in_action">Iniciar sessão</string>
   <string name="auth_sign_in_sso">Iniciar sessão na sua organização</string>
   <string name="auth_sign_in_with_password">Iniciar sessão com senha</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Navegue com privacidade, acesse conteúdo bloqueado e desfrute da liberdade digital.</string>
   <string name="auth_credentialless_guest_button">Continuar como convidado</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao usar este aplicativo você aceita nossos <annotation link="terms">Termos e Condições</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Mude-se para a privacidade.</string>
+  <string name="auth_credentialless_settings_subtitle">Obtenha um gerenciador de senhas, Mail e Calendar criptografados e 1 GB de armazenamento em nuvem gratuitos com uma conta Proton.</string>
 </resources>

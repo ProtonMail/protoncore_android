@@ -39,6 +39,7 @@
   <string name="auth_email_username">Όνομα χρήστη ή email</string>
   <string name="auth_account_details">Εισαγάγετε τα στοιχεία του λογαριασμού σας Proton.</string>
   <string name="auth_sign_in">Είσοδος</string>
+  <string name="auth_sign_out">Sign out</string>
   <string name="auth_sign_in_action">Είσοδος</string>
   <string name="auth_sign_in_sso">Συνδεθήτε στον οργανισμό σας</string>
   <string name="auth_sign_in_with_password">Σύνδεση με κωδικό</string>
@@ -155,4 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Περιηγηθείτε ιδιωτικά, αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο και απολαύστε ψηφιακή ελευθερία.</string>
   <string name="auth_credentialless_guest_button">Συνέχιση ως επισκέπτης</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Χρησιμοποιώντας αυτήν την εφαρμογή αποδέχεστε τους <annotation link="terms">Όρους και Προϋποθέσεις</annotation> μας.</string>
+  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>
