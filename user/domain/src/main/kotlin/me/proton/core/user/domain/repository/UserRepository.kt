@@ -26,6 +26,7 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
@@ -101,6 +102,8 @@ interface UserRepository : PassphraseRepository {
 
     /**
      * Create new [User], remotely. Used during signup.
+     * @param sessionUserId Must be non-null, if creating an account from credential-less account;
+     *  otherwise should be null.
      */
     suspend fun createUser(
         username: String,
@@ -111,11 +114,14 @@ interface UserRepository : PassphraseRepository {
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>
+        frames: List<ChallengeFrameDetails>,
+        sessionUserId: SessionUserId? = null
     ): User
 
     /**
      * Create new [User], remotely. Used during signup.
+     * @param sessionUserId Must be non-null, if creating an account from credential-less account;
+     *  otherwise should be null.
      */
     suspend fun createExternalEmailUser(
         email: String,
@@ -123,7 +129,8 @@ interface UserRepository : PassphraseRepository {
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>
+        frames: List<ChallengeFrameDetails>,
+        sessionUserId: SessionUserId? = null
     ): User
 
     /**

@@ -19,6 +19,7 @@
 package me.proton.core.auth.domain.usecase.signup
 
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.challenge.domain.useFlow
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -28,6 +29,7 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -38,6 +40,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
+    private val getPrimaryUser: GetPrimaryUser
 ) {
 
     suspend operator fun invoke(
@@ -48,6 +51,7 @@ class PerformCreateExternalEmailUser @Inject constructor(
         require(email.isNotBlank()) { "Email must not be empty." }
 
         val modulus = authRepository.randomModulus(null)
+        val userId = getPrimaryUser().takeIf { it?.isCredentialLess() == true }?.userId
 
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val auth = srpCrypto.calculatePasswordVerifier(
@@ -63,7 +67,8 @@ class PerformCreateExternalEmailUser @Inject constructor(
                     referrer = referrer,
                     type = CreateUserType.Normal,
                     auth = auth,
-                    frames = frames
+                    frames = frames,
+                    sessionUserId = userId
                 ).userId
             }
         }

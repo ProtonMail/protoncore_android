@@ -30,6 +30,7 @@ import io.mockk.spyk
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.auth.domain.usecase.PerformLogin
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
@@ -123,6 +124,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @MockK(relaxed = true)
     private lateinit var isDynamicPlanEnabled: IsDynamicPlanEnabled
+
+    @MockK(relaxed = true)
+    private lateinit var getPrimaryUser: GetPrimaryUser
     // endregion
 
     private lateinit var performCreateUser: PerformCreateUser
@@ -183,7 +187,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 srpCrypto,
                 keyStoreCrypto,
                 challengeManager,
-                signupChallengeConfig
+                signupChallengeConfig,
+                getPrimaryUser
             )
         )
 
@@ -194,7 +199,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 srpCrypto,
                 keyStoreCrypto,
                 challengeManager,
-                signupChallengeConfig
+                signupChallengeConfig,
+                getPrimaryUser
             )
         )
 
@@ -228,7 +234,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = any(),
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } returns testUser
 
@@ -239,7 +246,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 type = any(),
                 referrer = null,
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } returns testUser
     }
@@ -436,7 +444,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = null,
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -510,7 +519,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = null,
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -598,7 +608,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = null,
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } throws usernameTakenError
 
@@ -650,7 +661,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = null,
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } throws usernameTakenError
 
@@ -702,7 +714,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = any(),
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } coAnswers {
             result("createUser") { testUser }
@@ -734,7 +747,8 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
                 referrer = any(),
                 type = any(),
                 auth = any(),
-                frames = any()
+                frames = any(),
+                sessionUserId = any()
             )
         } coAnswers {
             result("createExternalEmailUser") { testUser }

@@ -46,6 +46,7 @@ import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.key.domain.extension.updateIsActive
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.data.api.UserApi
 import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
@@ -160,9 +161,10 @@ class UserRepositoryImpl @Inject constructor(
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>
+        frames: List<ChallengeFrameDetails>,
+        sessionUserId: SessionUserId?
     ): User = result("createUser") {
-        provider.get<UserApi>().invoke {
+        provider.get<UserApi>(sessionUserId).invoke {
             val request = CreateUserRequest(
                 username,
                 recoveryEmail,
@@ -186,9 +188,10 @@ class UserRepositoryImpl @Inject constructor(
         referrer: String?,
         type: CreateUserType,
         auth: Auth,
-        frames: List<ChallengeFrameDetails>
+        frames: List<ChallengeFrameDetails>,
+        sessionUserId: SessionUserId?
     ): User = result("createExternalEmailUser") {
-        provider.get<UserApi>().invoke {
+        provider.get<UserApi>(sessionUserId).invoke {
             val request = CreateExternalUserRequest(
                 email,
                 referrer,

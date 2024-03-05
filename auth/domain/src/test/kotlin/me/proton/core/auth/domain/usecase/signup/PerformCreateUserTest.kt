@@ -18,14 +18,17 @@
 
 package me.proton.core.auth.domain.usecase.signup
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.challenge.domain.ChallengeManager
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -34,6 +37,8 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
@@ -49,6 +54,9 @@ class PerformCreateUserTest {
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     private val challengeManager = mockk<ChallengeManager>(relaxed = true)
+
+    @MockK(relaxed = true)
+    private lateinit var getPrimaryUser: GetPrimaryUser
     // endregion
 
     // region test data
@@ -74,13 +82,16 @@ class PerformCreateUserTest {
     @Before
     fun beforeEveryTest() {
         // GIVEN
+        MockKAnnotations.init(this)
+
         useCase = PerformCreateUser(
             authRepository,
             userRepository,
             srpCrypto,
             keyStoreCrypto,
             challengeManager,
-            signupChallengeConfig
+            signupChallengeConfig,
+            getPrimaryUser
         )
         coEvery {
             srpCrypto.calculatePasswordVerifier(testUsername, any(), any(), any())
@@ -136,12 +147,50 @@ class PerformCreateUserTest {
                 null,
                 capture(typeSlot),
                 any(),
-                frames = emptyList()
+                frames = emptyList(),
+                sessionUserId = null
             )
         }
         assertEquals(testUsername, usernameSlot.captured)
         assertEquals("encrypted-$testPassword", passwordSlot.captured)
         assertEquals(CreateUserType.Normal, typeSlot.captured)
+    }
+
+    @Test
+    fun `create user from credential-less`() = runTest {
+        // GIVEN
+        coEvery { challengeManager.getFramesByFlowName("signup") } returns emptyList()
+        coEvery { getPrimaryUser() } returns mockk<User> {
+            every { userId } returns testUserId
+            every { type } returns Type.CredentialLess
+        }
+
+        // WHEN
+        useCase.invoke(
+            testUsername,
+            domain = "proton.me",
+            keyStoreCrypto.encrypt(testPassword),
+            recoveryEmail = null,
+            recoveryPhone = null,
+            referrer = null,
+            type = CreateUserType.Normal,
+        )
+
+        // THEN
+        coVerify(exactly = 1) {
+            userRepository.createUser(
+                any(),
+                any(),
+                any(),
+                null,
+                null,
+                null,
+                any(),
+                any(),
+                frames = emptyList(),
+                sessionUserId = testUserId // userId of credential-less is passed
+            )
+        }
     }
 
     @Test
@@ -184,7 +233,8 @@ class PerformCreateUserTest {
                 null,
                 capture(typeSlot),
                 any(),
-                frames = emptyList()
+                frames = emptyList(),
+                sessionUserId = null
             )
         }
         assertEquals(testUsername, usernameSlot.captured)
@@ -233,7 +283,8 @@ class PerformCreateUserTest {
                 null,
                 capture(typeSlot),
                 any(),
-                frames = emptyList()
+                frames = emptyList(),
+                sessionUserId = null
             )
         }
         assertEquals(testUsername, usernameSlot.captured)
@@ -268,7 +319,7 @@ class PerformCreateUserTest {
         val apiException = mockk<ApiException>()
 
         coEvery {
-            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
+            userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any(), any())
         } throws apiException
 
         val result = assertFailsWith(ApiException::class) {
