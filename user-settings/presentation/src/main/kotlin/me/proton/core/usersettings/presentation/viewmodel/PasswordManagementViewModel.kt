@@ -20,136 +20,191 @@ package me.proton.core.usersettings.presentation.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.flow.stateIn
+import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.GetUserSettings
-import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
+import me.proton.core.user.domain.entity.UserRecovery
+import me.proton.core.user.domain.usecase.ObserveUser
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
+import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
 import javax.inject.Inject
 
 @HiltViewModel
 class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val getUserSettings: GetUserSettings,
+    private val observeUser: ObserveUser,
+    private val observeUserSettings: ObserveUserSettings,
     private val performUpdateLoginPassword: PerformUpdateLoginPassword,
     private val performUpdateUserPassword: PerformUpdateUserPassword,
     private val performResetUserPassword: PerformResetUserPassword
 ) : ProtonViewModel() {
 
-    private val _state = MutableStateFlow<State>(State.Idle)
+    private var pendingUpdate: Action.UpdatePassword? = null
 
-    val state = _state.asStateFlow()
+    private val currentAction = MutableStateFlow<Action?>(null)
+    private val currentUserId = MutableStateFlow<UserId?>(null)
 
-    private var twoPasswordMode: Boolean? = null
-    var secondFactorEnabled: Boolean? = null
+    private val currentUser = currentUserId.filterNotNull().flatMapLatest {
+        observeUser(it)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-    sealed class State {
-        object Idle : State()
-        data class Mode(val twoPasswordMode: Boolean) : State()
-        object UpdatingLoginPassword : State()
-        object UpdatingMailboxPassword : State()
-        object UpdatingSinglePassModePassword : State()
-        sealed class Success : State() {
-            data class UpdatingLoginPassword(val settings: UserSettings) : State()
-            object UpdatingMailboxPassword : State()
-            object UpdatingSinglePassModePassword : State()
-        }
+    private val currentUserSettings = currentUserId.filterNotNull().flatMapLatest {
+        observeUserSettings(it).mapSuccessValueOrNull()
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
-        sealed class Error : State() {
-            data class General(val error: Throwable) : Error()
-            object UpdatingMailboxPassword : Error()
-            object UpdatingSinglePassModePassword : Error()
+    private fun observeState(userId: UserId): Flow<State> = combine(
+        currentUser.filterNotNull(),
+        currentUserSettings.filterNotNull()
+    ) { user, settings ->
+        State.ChangePassword(
+            userId = user.userId,
+            loginPasswordAvailable = true,
+            mailboxPasswordAvailable = settings.password.mode == 2,
+            twoFactorEnabled = settings.twoFA?.enabled ?: false,
+            userRecoveryState = user.recovery?.state?.enum
+        )
+    }.onStart {
+        currentUserId.emit(userId)
+    }
+
+    private fun updatePassword(action: Action.UpdatePassword): Flow<State> = when {
+        pendingUpdate == null && userSettings?.twoFA?.enabled == true ->
+            flowOf(State.TwoFactorNeeded).also { pendingUpdate = action }
+
+        else -> when (action.type) {
+            PasswordType.Login -> updateLoginPassword(action)
+            PasswordType.Mailbox -> updateMailboxPassword(action)
+            PasswordType.Both -> updateBothPassword(action)
         }
     }
 
-    fun init(userId: UserId) = flow {
-        val currentSettings = getUserSettings(userId, refresh = true)
-        twoPasswordMode = currentSettings.password.mode == 2
-        secondFactorEnabled = currentSettings.twoFA?.enabled ?: false
-        emit(State.Mode(twoPasswordMode!!))
-    }.catch { error ->
-        _state.tryEmit(State.Error.General(error))
-    }.onEach { state ->
-        _state.tryEmit(state)
-    }.launchIn(viewModelScope)
-
-    /**
-     * Updates the login password for two password mode users.
-     */
-    fun updateLoginPassword(
-        userId: UserId,
-        password: String,
-        newPassword: String,
-        secondFactorCode: String = ""
-    ) = flow {
-        if (twoPasswordMode == false) {
-            updateMailboxPassword(userId, password, newPassword, secondFactorCode)
-            return@flow
-        }
-        emit(State.UpdatingLoginPassword)
-        val encryptedPassword = password.encrypt(keyStoreCrypto)
-        val encryptedNewPassword = newPassword.encrypt(keyStoreCrypto)
-
-        val result = performUpdateLoginPassword(
-            userId = userId,
+    private fun updateLoginPassword(action: Action.UpdatePassword): Flow<State> = flow {
+        emit(State.UpdatingPassword)
+        val encryptedPassword = action.password.encrypt(keyStoreCrypto)
+        val encryptedNewPassword = action.newPassword.encrypt(keyStoreCrypto)
+        performUpdateLoginPassword(
+            userId = action.userId,
             password = encryptedPassword,
             newPassword = encryptedNewPassword,
-            secondFactorCode = secondFactorCode
+            secondFactorCode = action.secondFactorCode
         )
-        emit(State.Success.UpdatingLoginPassword(result))
-    }.catch { error ->
-        _state.tryEmit(State.Error.General(error))
-    }.onEach { state ->
-        _state.tryEmit(state)
-    }.launchIn(viewModelScope)
+        emit(State.Success)
+    }
 
-    /**
-     * Updates the mailbox password for two password mode users.
-     */
-    fun updateMailboxPassword(
-        userId: UserId,
-        loginPassword: String,
-        newMailboxPassword: String,
-        secondFactorCode: String = ""
-    ) = flow {
-        emit(if (twoPasswordMode == true) State.UpdatingMailboxPassword else State.UpdatingSinglePassModePassword)
-        val encryptedLoginPassword = loginPassword.encrypt(keyStoreCrypto)
-        val encryptedNewMailboxPassword = newMailboxPassword.encrypt(keyStoreCrypto)
-        val result = performUpdateUserPassword.invoke(
-            twoPasswordMode = twoPasswordMode!!,
-            userId = userId,
+    private fun updateMailboxPassword(action: Action.UpdatePassword): Flow<State> = flow {
+        emit(State.UpdatingPassword)
+        val encryptedLoginPassword = action.password.encrypt(keyStoreCrypto)
+        val encryptedNewMailboxPassword = action.newPassword.encrypt(keyStoreCrypto)
+        performUpdateUserPassword.invoke(
+            twoPasswordMode = true,
+            userId = action.userId,
             loginPassword = encryptedLoginPassword,
             newPassword = encryptedNewMailboxPassword,
-            secondFactorCode = secondFactorCode
+            secondFactorCode = action.secondFactorCode
         )
-        if (result) {
-            emit(
-                if (twoPasswordMode == true)
-                    State.Success.UpdatingMailboxPassword
-                else
-                    State.Success.UpdatingSinglePassModePassword
-            )
-        } else {
-            emit(
-                if (twoPasswordMode == true)
-                    State.Error.UpdatingMailboxPassword
-                else
-                    State.Error.UpdatingSinglePassModePassword
-            )
+        emit(State.Success)
+    }
+
+    private fun updateBothPassword(action: Action.UpdatePassword): Flow<State> = flow {
+        emit(State.UpdatingPassword)
+        val encryptedLoginPassword = action.password.encrypt(keyStoreCrypto)
+        val encryptedNewMailboxPassword = action.newPassword.encrypt(keyStoreCrypto)
+        performUpdateUserPassword.invoke(
+            twoPasswordMode = false,
+            userId = action.userId,
+            loginPassword = encryptedLoginPassword,
+            newPassword = encryptedNewMailboxPassword,
+            secondFactorCode = action.secondFactorCode
+        )
+        emit(State.Success)
+    }
+
+    private fun setTwoFactor(action: Action.SetTwoFactor): Flow<State> {
+        val passwordAction = requireNotNull(pendingUpdate?.copy(secondFactorCode = action.code))
+        return updatePassword(passwordAction)
+    }
+
+    private fun cancelTwoFactor(action: Action.CancelTwoFactor): Flow<State> {
+        pendingUpdate = null
+        return observeState(action.userId)
+    }
+
+    fun perform(action: Action) = currentAction.tryEmit(action)
+
+    val userSettings get() = currentUserSettings.value
+
+    val state = currentAction.flatMapLatest { action ->
+        when (action) {
+            is Action.ObserveState -> observeState(action.userId)
+            is Action.UpdatePassword -> updatePassword(action)
+            is Action.SetTwoFactor -> setTwoFactor(action)
+            is Action.CancelTwoFactor -> cancelTwoFactor(action)
+            null -> flowOf(State.Idle)
         }
-    }.catch { error ->
-        _state.tryEmit(State.Error.General(error))
-    }.onEach { state ->
-        _state.tryEmit(state)
-    }.launchIn(viewModelScope)
+    }.retryWhen { cause, _ ->
+        emit(State.Error(cause))
+        perform(Action.ObserveState(requireNotNull(currentUserId.value)))
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+        initialValue = State.Loading
+    )
+
+    sealed class State {
+        data object Idle : State()
+        data object Loading : State()
+        data class ChangePassword(
+            val userId: UserId,
+            val loginPasswordAvailable: Boolean,
+            val mailboxPasswordAvailable: Boolean,
+            val twoFactorEnabled: Boolean,
+            val userRecoveryState: UserRecovery.State? = null
+        ) : State()
+
+        data object TwoFactorNeeded : State()
+        data object UpdatingPassword : State()
+        data object Success : State()
+        data class Error(val error: Throwable) : State()
+    }
+
+    sealed class Action(open val userId: UserId) {
+        data class ObserveState(
+            override val userId: UserId
+        ) : Action(userId)
+
+        data class UpdatePassword(
+            override val userId: UserId,
+            val type: PasswordType,
+            val password: String,
+            val newPassword: String,
+            val secondFactorCode: String = ""
+        ) : Action(userId)
+
+        data class SetTwoFactor(
+            override val userId: UserId,
+            val code: String
+        ) : Action(userId)
+
+        data class CancelTwoFactor(
+            override val userId: UserId,
+        ) : Action(userId)
+    }
+
+    enum class PasswordType { Both, Login, Mailbox }
 }

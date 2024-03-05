@@ -102,6 +102,8 @@ class PasswordAnd2FADialog : DialogFragment() {
                 getButton(AlertDialog.BUTTON_NEGATIVE).apply {
                     isAllCaps = false
                     onClick {
+                        parentFragmentManager.setFragmentResult(KEY_PASS_2FA_SET, bundleOf())
+
                         dismissAllowingStateLoss()
                     }
                 }

@@ -345,103 +345,161 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Upda
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;Lme/proton/core/usersettings/domain/usecase/PerformResetUserPassword;)V
-	public final fun getSecondFactorEnabled ()Ljava/lang/Boolean;
+	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun init (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
-	public final fun setSecondFactorEnabled (Ljava/lang/Boolean;)V
-	public final fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
-	public static synthetic fun updateLoginPassword$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
-	public final fun updateMailboxPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
-	public static synthetic fun updateMailboxPassword$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun getUserSettings ()Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public final fun perform (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action;)Z
+}
+
+public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
+	public static final field $stable I
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$CancelTwoFactor : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$CancelTwoFactor;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$CancelTwoFactor;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$CancelTwoFactor;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$ObserveState : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$ObserveState;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$ObserveState;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$ObserveState;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getNewPassword ()Ljava/lang/String;
+	public final fun getPassword ()Ljava/lang/String;
+	public final fun getSecondFactorCode ()Ljava/lang/String;
+	public final fun getType ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
+	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType : java/lang/Enum {
+	public static final field Both Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
+	public static final field Login Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
+	public static final field Mailbox Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
+	public static fun values ()[Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
 }
 
-public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()Z
+	public final fun component3 ()Z
+	public final fun component4 ()Z
+	public final fun component5 ()Lme/proton/core/user/domain/entity/UserRecovery$State;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getLoginPasswordAvailable ()Z
+	public final fun getMailboxPasswordAvailable ()Z
+	public final fun getTwoFactorEnabled ()Z
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public final fun getUserRecoveryState ()Lme/proton/core/user/domain/entity/UserRecovery$State;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/Throwable;)V
 	public final fun component1 ()Ljava/lang/Throwable;
-	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$General;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getError ()Ljava/lang/Throwable;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingMailboxPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingMailboxPassword;
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingSinglePassModePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Error$UpdatingSinglePassModePassword;
-}
-
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Idle : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Idle;
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Mode : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
-	public static final field $stable I
-	public fun <init> (Z)V
-	public final fun component1 ()Z
-	public final fun copy (Z)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Mode;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Mode;ZILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Mode;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getTwoPasswordMode ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Loading : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingLoginPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
-	public static final field $stable I
-	public fun <init> (Lme/proton/core/usersettings/domain/entity/UserSettings;)V
-	public final fun component1 ()Lme/proton/core/usersettings/domain/entity/UserSettings;
-	public final fun copy (Lme/proton/core/usersettings/domain/entity/UserSettings;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingLoginPassword;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingLoginPassword;Lme/proton/core/usersettings/domain/entity/UserSettings;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingLoginPassword;
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Loading;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getSettings ()Lme/proton/core/usersettings/domain/entity/UserSettings;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingMailboxPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingMailboxPassword;
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingSinglePassModePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$TwoFactorNeeded : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Success$UpdatingSinglePassModePassword;
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$TwoFactorNeeded;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingLoginPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
+public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingLoginPassword;
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingMailboxPassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingMailboxPassword;
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingSinglePassModePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingSinglePassModePassword;
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$UpdatingPassword;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_Factory : dagger/internal/Factory {
@@ -449,7 +507,7 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
-	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;Lme/proton/core/usersettings/domain/usecase/PerformResetUserPassword;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
+	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_HiltModules {
