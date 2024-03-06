@@ -32,6 +32,9 @@ import io.mockk.mockk
 import io.mockk.spyk
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flowOf
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
@@ -40,7 +43,10 @@ import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountReco
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.Session
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.usecase.GetUser
 import org.junit.Before
 import org.junit.Rule
@@ -51,6 +57,15 @@ import java.time.Instant
 class AccountRecoveryDialogSnapshotMockTest {
     private val testUserEmail = "user@email.test"
     private val testUserId = UserId("test-user-id")
+    private val testSessionId = SessionId("test-session-id")
+
+    private val testSession = Session.Authenticated(
+        testUserId,
+        testSessionId,
+        "test-access-token",
+        "test-refresh-token",
+        emptyList()
+    )
 
     private lateinit var clockValue: Instant
 
@@ -72,6 +87,15 @@ class AccountRecoveryDialogSnapshotMockTest {
 
     @MockK
     private lateinit var observabilityManager: ObservabilityManager
+
+    @MockK
+    private lateinit var accountManager: AccountManager
+
+    @MockK
+    private lateinit var userManager: UserManager
+
+    @MockK
+    private lateinit var isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled
 
     @get:Rule
     val paparazzi = Paparazzi(
@@ -101,6 +125,20 @@ class AccountRecoveryDialogSnapshotMockTest {
             every { email } returns testUserEmail
         }
 
+        coEvery { accountManager.getSessions() } returns flowOf(
+            listOf(testSession)
+        )
+
+        coEvery { userManager.observeUser(any(), any()) } returns flowOf(
+            mockk {
+                every { userId } returns testUserId
+                every { email } returns testUserEmail
+                every { recovery } returns mockk {
+                    every { sessionId } returns SessionId("test-different-session-id")
+                }
+            }
+        )
+
         viewModel = spyk(
             AccountRecoveryViewModel(
                 savedStateHandle = savedStateHandle,
@@ -109,7 +147,10 @@ class AccountRecoveryDialogSnapshotMockTest {
                 cancelRecovery = cancelRecovery,
                 keyStoreCrypto = keyStoreCrypto,
                 observabilityManager = observabilityManager,
-                getUser = getUser
+                getUser = getUser,
+                accountManager = accountManager,
+                userManager = userManager,
+                isAccountRecoveryResetEnabled = isAccountRecoveryResetEnabled
             )
         )
     }
@@ -121,7 +162,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -138,7 +180,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -152,7 +195,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -166,7 +210,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -174,7 +219,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryDialogRecoveryWindowTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
                 endDate = "16 Aug"
             )
         ).asStateFlow()
@@ -182,7 +227,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -190,7 +236,7 @@ class AccountRecoveryDialogSnapshotMockTest {
     @Test
     fun baseAccountRecoveryDialogPasswordChangeWindowTest() {
         every { viewModel.state } returns MutableStateFlow(
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
                 endDate = "16 Aug"
             )
         ).asStateFlow()
@@ -198,7 +244,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -212,7 +259,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -226,7 +274,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -240,7 +289,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -254,7 +304,8 @@ class AccountRecoveryDialogSnapshotMockTest {
             AccountRecoveryDialog(
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }
@@ -269,7 +320,8 @@ class AccountRecoveryDialogSnapshotMockTest {
                 modifier = Modifier.padding(end = ProtonDimens.DefaultSpacing),
                 viewModel = viewModel,
                 onClosed = {},
-                onError = {}
+                onError = {},
+                onStartPasswordManager = {}
             )
         }
     }

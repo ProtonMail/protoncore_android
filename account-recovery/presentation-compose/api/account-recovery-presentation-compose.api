@@ -45,12 +45,13 @@ public final class me/proton/core/accountrecovery/presentation/compose/LogTag {
 public final class me/proton/core/accountrecovery/presentation/compose/dialog/AccountRecoveryDialogKt {
 	public static final fun AccountRecoveryAlertDialogCancellationHappenedPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogChangePasswordPreview (Landroidx/compose/runtime/Composer;I)V
+	public static final fun AccountRecoveryAlertDialogChangePasswordSelfInitiatedPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogGracePeriodPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogGracePeriodProcessingPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogLoadingPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryAlertDialogRecoveryEndedPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun AccountRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
-	public static final fun AccountRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/dialog/ComposableSingletons$AccountRecoveryDialogKt {
@@ -63,6 +64,7 @@ public final class me/proton/core/accountrecovery/presentation/compose/dialog/Co
 	public static field lambda-6 Lkotlin/jvm/functions/Function2;
 	public static field lambda-7 Lkotlin/jvm/functions/Function2;
 	public static field lambda-8 Lkotlin/jvm/functions/Function2;
+	public static field lambda-9 Lkotlin/jvm/functions/Function2;
 	public fun <init> ()V
 	public final fun getLambda-1$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-2$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
@@ -72,6 +74,7 @@ public final class me/proton/core/accountrecovery/presentation/compose/dialog/Co
 	public final fun getLambda-6$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-7$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 	public final fun getLambda-8$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-9$account_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/entity/AccountRecoveryDialogInput : android/os/Parcelable {
@@ -101,7 +104,10 @@ public final class me/proton/core/accountrecovery/presentation/compose/ui/Accoun
 	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity$Companion;
+	public field userSettingsOrchestrator Lme/proton/core/usersettings/presentation/UserSettingsOrchestrator;
 	public fun <init> ()V
+	public final fun getUserSettingsOrchestrator ()Lme/proton/core/usersettings/presentation/UserSettingsOrchestrator;
+	public final fun setUserSettingsOrchestrator (Lme/proton/core/usersettings/presentation/UserSettingsOrchestrator;)V
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity$Companion {
@@ -111,6 +117,14 @@ public final class me/proton/core/accountrecovery/presentation/compose/ui/Accoun
 
 public abstract interface class me/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity_GeneratedInjector {
 	public abstract fun injectAccountRecoveryDialogActivity (Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity;)V
+	public static fun injectUserSettingsOrchestrator (Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity;Lme/proton/core/usersettings/presentation/UserSettingsOrchestrator;)V
 }
 
 public abstract class me/proton/core/accountrecovery/presentation/compose/ui/Hilt_AccountRecoveryDialogActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -126,7 +140,7 @@ public abstract class me/proton/core/accountrecovery/presentation/compose/ui/Hil
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field $stable I
-	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Ljava/time/Clock;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/accountmanager/domain/AccountManager;Ljava/time/Clock;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun getInitialState ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Loading;
@@ -218,17 +232,38 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened {
+public abstract class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened {
+	public static final field $stable I
+}
+
+public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$OtherDeviceInitiated : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted {
 	public static final field $stable I
 	public fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lkotlin/jvm/functions/Function0;
-	public final fun copy (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted;
-	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted;
+	public final fun copy (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$OtherDeviceInitiated;
+	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$OtherDeviceInitiated;Ljava/lang/String;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$OtherDeviceInitiated;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEndDate ()Ljava/lang/String;
 	public final fun getOnShowCancellationForm ()Lkotlin/jvm/functions/Function0;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$SelfInitiated : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)V
+	public synthetic fun <init> (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Lkotlin/jvm/functions/Function0;
+	public final fun component3 ()Lkotlin/jvm/functions/Function0;
+	public final fun copy (Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$SelfInitiated;
+	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$SelfInitiated;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;ILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$Opened$PasswordChangePeriodStarted$SelfInitiated;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEndDate ()Ljava/lang/String;
+	public final fun getOnShowCancellationForm ()Lkotlin/jvm/functions/Function0;
+	public final fun getOnShowPasswordChangeForm ()Lkotlin/jvm/functions/Function0;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -245,12 +280,24 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$StartPasswordManager : me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/domain/entity/UserId;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$StartPasswordManager;
+	public static synthetic fun copy$default (Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$StartPasswordManager;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel$State$StartPasswordManager;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Ljava/time/Clock;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/accountmanager/domain/AccountManager;Ljava/time/Clock;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel;
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryViewModel_HiltModules {

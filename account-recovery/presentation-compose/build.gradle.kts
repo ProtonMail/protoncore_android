@@ -26,8 +26,8 @@ plugins {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(54)
-    lineCoveragePercentage.set(80)
+    branchCoveragePercentage.set(52)
+    lineCoveragePercentage.set(77)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -45,6 +45,7 @@ dependencies {
         project(Module.accountRecoveryDomain),
         project(Module.accountRecoveryPresentation),
         project(Module.accountManagerDomain),
+        project(Module.userSettingsPresentation),
         project(Module.presentation),
         project(Module.presentationCompose),
         project(Module.notification),

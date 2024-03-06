@@ -39,6 +39,7 @@
     <!-- Password change period -->
     <string name="account_recovery_password_started_title">Password reset available</string>
     <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device and browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
+    <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the reset now.</string>
 
     <!-- Recovery window ended -->
     <string name="account_recovery_window_ended_title">Password reset expired</string>
@@ -47,4 +48,5 @@
     <!-- Other -->
     <string name="account_recovery_cancel">Cancel request</string>
     <string name="account_recovery_dismiss">Got it</string>
+    <string name="account_recovery_reset">Reset Password</string>
 </resources>

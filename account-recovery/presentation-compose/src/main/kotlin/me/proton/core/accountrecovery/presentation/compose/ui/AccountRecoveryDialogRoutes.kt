@@ -41,7 +41,8 @@ internal object Route {
 internal fun NavGraphBuilder.addAccountRecoveryDialog(
     userId: UserId,
     onClosed: (Boolean) -> Unit,
-    onError: (Throwable?) -> Unit
+    onError: (Throwable?) -> Unit,
+    onStartPasswordManager: (UserId) -> Unit
 ) {
     dialog(
         route = Route.Recovery.Deeplink,
@@ -59,7 +60,8 @@ internal fun NavGraphBuilder.addAccountRecoveryDialog(
     ) {
         AccountRecoveryDialog(
             onClosed = { onClosed(it) },
-            onError = { onError(it) }
+            onError = { onError(it) },
+            onStartPasswordManager = { onStartPasswordManager(it) }
         )
     }
 }

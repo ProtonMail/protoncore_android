@@ -135,7 +135,18 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedPasswordChangeStartedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+                state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
+                    endDate = "16 Aug"
+                )
+            )
+        }
+    }
+
+    @Test
+    fun accountRecoveryStateOpenedPasswordChangeStartedSelfInitiatedTest() {
+        paparazzi.snapshot {
+            AccountRecoveryDialog(
+                state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.SelfInitiated(
                     endDate = "16 Aug"
                 )
             )

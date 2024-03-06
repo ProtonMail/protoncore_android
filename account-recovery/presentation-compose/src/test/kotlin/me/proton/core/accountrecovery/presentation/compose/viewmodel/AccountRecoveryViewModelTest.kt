@@ -30,6 +30,9 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
+import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.domain.getPrimaryAccount
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
@@ -39,14 +42,17 @@ import me.proton.core.domain.type.IntEnum
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.AccountRecoveryCancellationTotal
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
 import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
@@ -64,6 +70,15 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
     CoroutinesTest by CoroutinesTest() {
     private val testUserEmail = "user@email.test"
     private val testUserId = UserId("test-user-id")
+    private val testSessionId = SessionId("test-session-id")
+
+    private val testSession = Session.Authenticated(
+        testUserId,
+        testSessionId,
+        "test-access-token",
+        "test-refresh-token",
+        emptyList()
+    )
 
     private lateinit var clockValue: Instant
 
@@ -86,6 +101,15 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
     @MockK
     private lateinit var observabilityManager: ObservabilityManager
 
+    @MockK
+    private lateinit var accountManager: AccountManager
+
+    @MockK
+    private lateinit var userManager: UserManager
+
+    @MockK
+    private lateinit var isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled
+
     private lateinit var viewModel: AccountRecoveryViewModel
 
     @Before
@@ -107,13 +131,30 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             every { email } returns testUserEmail
         }
 
+        coEvery { accountManager.getSessions() } returns flowOf(
+            listOf(testSession)
+        )
+
+        coEvery { userManager.observeUser(any(), any()) } returns flowOf(
+            mockk {
+                every { userId } returns testUserId
+                every { email } returns testUserEmail
+                every { recovery } returns mockk {
+                    every { sessionId } returns SessionId("test-different-session-id")
+                }
+            }
+        )
+
         viewModel = AccountRecoveryViewModel(
             savedStateHandle,
+            accountManager,
             clock,
             observeUserRecovery,
             cancelRecovery,
             getUser,
             keyStoreCrypto,
+            userManager,
+            isAccountRecoveryResetEnabled,
             observabilityManager
         )
     }
@@ -424,7 +465,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         )
         assertEquals(
             AccountRecoveryScreenViewTotal.ScreenId.passwordChangeInfo,
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
                 endDate = ""
             ).toScreenId()
         )

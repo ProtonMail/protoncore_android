@@ -22,6 +22,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.core.view.ContentInfoCompat.Flags
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
@@ -42,6 +43,8 @@ class StartPasswordManagement : ActivityResultContract<SettingsInput, PasswordMa
     override fun createIntent(context: Context, input: SettingsInput): Intent =
         Intent(context, PasswordManagementActivity::class.java).apply {
             putExtra(PasswordManagementActivity.ARG_INPUT, input)
+            addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            // TODO: check/test it after MR 1549 is merged
         }
 
     override fun parseResult(resultCode: Int, intent: Intent?): PasswordManagementResult? {

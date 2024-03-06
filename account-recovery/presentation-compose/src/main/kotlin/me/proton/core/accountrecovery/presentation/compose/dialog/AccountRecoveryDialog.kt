@@ -46,6 +46,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Closed
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.StartPasswordManager
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Error
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Loading
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Opened
@@ -57,6 +58,7 @@ import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
 import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonDimens.DefaultSpacing
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.StringBox
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.util.kotlin.exhaustive
@@ -68,6 +70,7 @@ internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
     viewModel: AccountRecoveryViewModel = hiltViewModel(),
+    onStartPasswordManager: (UserId) -> Unit,
     onClosed: (Boolean) -> Unit,
     onError: (Throwable?) -> Unit
 ) {
@@ -88,6 +91,7 @@ fun AccountRecoveryDialog(
             is Loading -> Unit
             is Closed -> onClosed(current.hasCancelledSuccessfully)
             is Error -> onError(current.throwable)
+            is StartPasswordManager -> onStartPasswordManager(current.userId)
             is Opened -> Unit
         }
     }
@@ -107,7 +111,8 @@ fun AccountRecoveryDialog(
 ) {
     when (state) {
         is Error,
-        is Closed -> Unit
+        is Closed,
+        is StartPasswordManager -> Unit
 
         is Loading -> {
             AccountRecoveryDialog(
@@ -133,14 +138,25 @@ fun AccountRecoveryDialog(
                 onDismiss = onDismiss
             )
 
-        is Opened.PasswordChangePeriodStarted ->
+        is Opened.PasswordChangePeriodStarted.OtherDeviceInitiated -> {
             AccountRecoveryPasswordPeriodStartedDialog(
                 modifier = modifier,
                 endDate = state.endDate,
                 onShowCancellationForm = state.onShowCancellationForm,
                 onDismiss = onDismiss
             )
+        }
 
+        is Opened.PasswordChangePeriodStarted.SelfInitiated -> {
+            AccountRecoveryPasswordPeriodStartedSelfInitiatedDialog(
+                modifier = modifier,
+                endDate = state.endDate,
+                onShowResetForm = state.onShowPasswordChangeForm,
+                onShowCancellationForm = state.onShowPasswordChangeForm,
+                onDismiss = onDismiss
+            )
+        }
+        
         is Opened.CancelPasswordReset -> {
             AccountRecoveryCancellationForm(
                 modifier = modifier,
@@ -245,6 +261,29 @@ internal fun AccountRecoveryPasswordPeriodStartedDialog(
 }
 
 @Composable
+internal fun AccountRecoveryPasswordPeriodStartedSelfInitiatedDialog(
+    modifier: Modifier = Modifier,
+    endDate: String,
+    onShowResetForm: () -> Unit = {},
+    onShowCancellationForm: () -> Unit = {},
+    onDismiss: () -> Unit = {}
+) {
+    AccountRecoveryDialog(
+        modifier = modifier,
+        title = stringResource(id = R.string.account_recovery_password_started_title),
+        subtitle = stringResource(
+            id = R.string.account_recovery_password_started_self_initiated_subtitle,
+            endDate
+        ),
+        actionText = stringResource(id = R.string.account_recovery_reset),
+        onAction = onShowResetForm,
+        dismissText = stringResource(id = R.string.account_recovery_cancel),
+        onDismiss = onDismiss,
+        onDismissButton = onShowCancellationForm
+    )
+}
+
+@Composable
 internal fun AccountRecoveryWindowEndedDialog(
     modifier: Modifier = Modifier,
     email: String,
@@ -274,6 +313,7 @@ private fun AccountRecoveryDialog(
     onAction: (() -> Unit)? = null,
     dismissText: String? = null,
     onDismiss: () -> Unit = { },
+    onDismissButton: () -> Unit = onDismiss,
     password: MutableState<String>? = null,
     passwordError: StringBox? = null
 ) {
@@ -320,7 +360,7 @@ private fun AccountRecoveryDialog(
         dismissButton = {
             if (!dismissText.isNullOrEmpty()) {
                 ProtonAlertDialogButton(
-                    onClick = onDismiss,
+                    onClick = onDismissButton,
                     title = dismissText
                 )
             }
@@ -388,7 +428,19 @@ fun AccountRecoveryAlertDialogGracePeriodProcessingPreview() {
 fun AccountRecoveryAlertDialogChangePasswordPreview() {
     ProtonTheme {
         AccountRecoveryDialog(
-            state = Opened.PasswordChangePeriodStarted(endDate = "16 Aug"),
+            state = Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(endDate = "16 Aug"),
+            onDismiss = { }
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+fun AccountRecoveryAlertDialogChangePasswordSelfInitiatedPreview() {
+    ProtonTheme {
+        AccountRecoveryDialog(
+            state = Opened.PasswordChangePeriodStarted.SelfInitiated(endDate = "16 Aug"),
             onDismiss = { }
         )
     }

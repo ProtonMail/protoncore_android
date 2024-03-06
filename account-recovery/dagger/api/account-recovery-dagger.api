@@ -15,6 +15,7 @@ public final class me/proton/core/accountrecovery/dagger/BuildConfig {
 
 public abstract interface class me/proton/core/accountrecovery/dagger/CoreAccountRecoveryFeaturesModule {
 	public abstract fun bindIsAccountRecoveryEnabled (Lme/proton/core/accountrecovery/data/IsAccountRecoveryEnabledImpl;)Lme/proton/core/accountrecovery/domain/IsAccountRecoveryEnabled;
+	public abstract fun bindIsAccountRecoveryResetEnabled (Lme/proton/core/accountrecovery/data/IsAccountRecoveryResetEnabledImpl;)Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;
 }
 
 public abstract interface class me/proton/core/accountrecovery/dagger/CoreAccountRecoveryModule {

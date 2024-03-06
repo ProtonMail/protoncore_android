@@ -32,6 +32,7 @@ import io.mockk.mockk
 import me.proton.android.core.coreexample.di.WorkManagerModule
 import me.proton.core.accountrecovery.dagger.CoreAccountRecoveryFeaturesModule
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.notification.dagger.CoreNotificationFeaturesModule
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
@@ -55,6 +56,10 @@ object AndroidTestComponent {
     @Provides
     @Singleton
     fun provideIsAccountRecoveryEnabled(): IsAccountRecoveryEnabled = mockk(relaxed = true)
+
+    @Provides
+    @Singleton
+    fun provideIsAccountRecoveryResetEnabled(): IsAccountRecoveryResetEnabled = mockk(relaxed = true)
 
     @Provides
     @Singleton

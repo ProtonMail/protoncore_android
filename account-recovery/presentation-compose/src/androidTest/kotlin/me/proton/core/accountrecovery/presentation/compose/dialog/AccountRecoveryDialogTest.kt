@@ -339,7 +339,7 @@ class AccountRecoveryDialogTest {
         var btnCancelRecovery = ""
         var txtTitle = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
             endDate = "16 Aug"
         )
         every { viewModel.state } returns MutableStateFlow(state).asStateFlow()
@@ -374,7 +374,7 @@ class AccountRecoveryDialogTest {
         val idOk = R.string.account_recovery_cancel
         var btnOk = ""
 
-        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted(
+        val state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
             endDate = "16 Aug",
             onShowCancellationForm = { viewModel.showCancellationForm() }
         )

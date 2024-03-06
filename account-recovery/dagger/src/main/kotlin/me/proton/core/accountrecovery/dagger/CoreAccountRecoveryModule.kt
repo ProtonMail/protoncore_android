@@ -23,8 +23,10 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.accountrecovery.data.IsAccountRecoveryEnabledImpl
+import me.proton.core.accountrecovery.data.IsAccountRecoveryResetEnabledImpl
 import me.proton.core.accountrecovery.data.repository.AccountRecoveryRepositoryImpl
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryEnabled
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
 
 @Module
@@ -34,6 +36,11 @@ public interface CoreAccountRecoveryFeaturesModule {
     public fun bindIsAccountRecoveryEnabled(
         impl: IsAccountRecoveryEnabledImpl
     ): IsAccountRecoveryEnabled
+
+    @Binds
+    public fun bindIsAccountRecoveryResetEnabled(
+        impl: IsAccountRecoveryResetEnabledImpl
+    ): IsAccountRecoveryResetEnabled
 }
 
 @Module
