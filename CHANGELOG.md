@@ -11,6 +11,23 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [21.1.0] - 2024-03-06
+
+### Features
+
+- account-recovery:
+  - Added IsAccountRecoveryResetEnabled FF.
+- feature-flags:
+  - Allow custom context for flags.
+
+    A FeatureFlagContextProvider is added that can be used by clients to
+    provide custom context properties when fetching feature flags.
+
+### Bug Fixes
+
+- network:
+  - Fixed Missing Scope error codes (scopes: locked/password).
+
 ## [21.0.0] - 2024-02-28
 
 ### Library Upgrades
