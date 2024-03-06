@@ -45,9 +45,7 @@ class UsersSettingsHandler @Inject constructor(
         merge: suspend (List<UserSettings?>) -> T,
         block: suspend (T) -> Unit,
     ) = accountManager.getAccounts(AccountState.Ready).map { accounts ->
-        accounts.map { account ->
-            observeUserSettings(account.userId).mapSuccessValueOrNull()
-        }
+        accounts.map { account -> observeUserSettings(account.userId) }
     }.flatMapLatest { usersSettingsFlow ->
         combine(usersSettingsFlow) { usersSettings ->
             merge(usersSettings.toList())

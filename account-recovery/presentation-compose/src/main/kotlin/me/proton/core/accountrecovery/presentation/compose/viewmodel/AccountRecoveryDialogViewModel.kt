@@ -25,20 +25,20 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.SharingStarted.Companion.Eagerly
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
-import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.accountrecovery.presentation.compose.LogTag
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
@@ -55,14 +55,14 @@ import me.proton.core.observability.domain.metrics.AccountRecoveryCancellationTo
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal
 import me.proton.core.observability.domain.metrics.AccountRecoveryScreenViewTotal.ScreenId
 import me.proton.core.presentation.utils.StringBox
-import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.user.domain.entity.UserRecovery.State.Cancelled
 import me.proton.core.user.domain.entity.UserRecovery.State.Expired
 import me.proton.core.user.domain.entity.UserRecovery.State.Grace
 import me.proton.core.user.domain.entity.UserRecovery.State.Insecure
 import me.proton.core.user.domain.entity.UserRecovery.State.None
-import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.util.android.dagger.UtcClock
 import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DateTimeFormat
@@ -78,33 +78,25 @@ import kotlin.time.Duration.Companion.seconds
 @HiltViewModel
 class AccountRecoveryDialogViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    accountManager: AccountManager,
     @UtcClock private val clock: Clock,
     private val dateTimeFormat: DateTimeFormat,
+    private val observeUser: ObserveUser,
     private val observeUserRecovery: ObserveUserRecovery,
+    private val observeSelfInitiated: ObserveUserRecoverySelfInitiated,
     private val cancelRecovery: CancelRecovery,
-    private val getUser: GetUser,
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val userManager: UserManager,
     private val isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled,
     override val observabilityManager: ObservabilityManager
 ) : ViewModel(), ObservabilityContext {
 
     private val userId = UserId(requireNotNull(savedStateHandle.get<String>(Arg.UserId)))
+    private fun User.getEmail(): String = email ?: name ?: displayName ?: ""
 
     private val ackFlow = MutableStateFlow(false)
     private val cancellationFlow = MutableStateFlow(CancellationState())
     private val shouldShowCancellationForm = MutableStateFlow(false)
     private val shouldShowRecoveryReset = MutableStateFlow(false)
-    private val selfInitiated = userManager.observeUser(userId)
-        .combine(accountManager.getSessions()) { user, sessions ->
-            sessions.find { it.sessionId == user?.recovery?.sessionId } != null
-        }
-        .shareIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
-            replay = 1
-        ).distinctUntilChanged()
+    private val selfInitiated = observeSelfInitiated(userId).stateIn(viewModelScope, Eagerly, null)
 
     val initialState = State.Loading
 
@@ -141,23 +133,25 @@ class AccountRecoveryDialogViewModel @Inject constructor(
     }
 
     private fun observeState() = combine(
+        observeUser(userId).filterNotNull(),
         observeUserRecovery(userId),
         cancellationFlow,
         shouldShowCancellationForm,
-        selfInitiated
-    ) { userRecovery, cancellationState, showCancellationForm, selfInitiated ->
+        selfInitiated.filterNotNull()
+    ) { user, userRecovery, cancellationState, showCancellationForm, selfInitiated ->
         when (userRecovery?.state?.enum) {
             null, None -> State.Closed()
-            Grace -> onGracePeriod(cancellationState, showCancellationForm, userRecovery)
+            Grace -> onGracePeriod(cancellationState, showCancellationForm, user, userRecovery)
             Cancelled -> State.Opened.CancellationHappened
             Insecure -> onInsecurePeriod(cancellationState, showCancellationForm, userRecovery, selfInitiated)
-            Expired -> State.Opened.RecoveryEnded(email = getUserEmail())
+            Expired -> State.Opened.RecoveryEnded(email = user.getEmail())
         }
     }
 
-    private suspend fun onGracePeriod(
+    private fun onGracePeriod(
         cancellationState: CancellationState,
         showCancellationForm: Boolean,
+        user: User,
         userRecovery: UserRecovery
     ): State = when (showCancellationForm) {
         true -> cancellationState.toViewModelState(
@@ -166,7 +160,7 @@ class AccountRecoveryDialogViewModel @Inject constructor(
         )
 
         false -> State.Opened.GracePeriodStarted(
-            email = getUserEmail(),
+            email = user.getEmail(),
             remainingHours = (userRecovery.endTime - clock.currentEpochSeconds()).seconds.toHoursCeil().toInt(),
             onShowCancellationForm = { showCancellationForm() }
         )
@@ -196,13 +190,7 @@ class AccountRecoveryDialogViewModel @Inject constructor(
                     onShowCancellationForm = { showCancellationForm() }
                 )
             }
-
         }
-    }
-
-    private suspend fun getUserEmail(): String {
-        val user = getUser(userId, refresh = false)
-        return user.email ?: user.name ?: user.displayName ?: ""
     }
 
     @VisibleForTesting
@@ -251,13 +239,13 @@ class AccountRecoveryDialogViewModel @Inject constructor(
                 data class OtherDeviceInitiated(
                     val endDate: String, // formatted day, e.g. "16 Aug"
                     val onShowCancellationForm: () -> Unit = {}
-                ): PasswordChangePeriodStarted()
+                ) : PasswordChangePeriodStarted()
 
                 data class SelfInitiated(
                     val endDate: String, // formatted day, e.g. "16 Aug"
                     val onShowPasswordChangeForm: () -> Unit = {},
                     val onShowCancellationForm: () -> Unit = {}
-                ): PasswordChangePeriodStarted()
+                ) : PasswordChangePeriodStarted()
             }
 
             data class CancelPasswordReset(

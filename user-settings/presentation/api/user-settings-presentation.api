@@ -37,15 +37,15 @@ public final class me/proton/core/usersettings/presentation/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/usersettings/presentation/UserSettingsOrchestrator {
+public final class me/proton/core/usersettings/presentation/UserSettingsOrchestrator : me/proton/core/accountmanager/presentation/AccountManagerOrchestrator {
 	public static final field $stable I
 	public fun <init> ()V
-	public final fun register (Landroidx/activity/result/ActivityResultCaller;)V
+	public fun register (Landroidx/activity/result/ActivityResultCaller;)V
 	public final fun setOnUpdateRecoveryEmailResult (Lkotlin/jvm/functions/Function1;)V
 	public final fun setPasswordManagementResult (Lkotlin/jvm/functions/Function1;)V
-	public final fun startPasswordManagementWorkflow (Lme/proton/core/domain/entity/UserId;)V
-	public final fun startUpdateRecoveryEmailWorkflow (Lme/proton/core/domain/entity/UserId;)V
-	public final fun unregister ()V
+	public fun startPasswordManagementWorkflow (Lme/proton/core/domain/entity/UserId;)V
+	public fun startUpdateRecoveryEmailWorkflow (Lme/proton/core/domain/entity/UserId;)V
+	public fun unregister ()V
 }
 
 public final class me/proton/core/usersettings/presentation/UserSettingsOrchestratorKt {
@@ -87,13 +87,15 @@ public final class me/proton/core/usersettings/presentation/databinding/Fragment
 	public final field confirmNewMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field currentLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field currentMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
-	public final field loginPasswordGroup Landroidx/constraintlayout/widget/Group;
-	public final field mailboxPasswordGroup Landroidx/constraintlayout/widget/Group;
+	public final field dontKnowYourCurrentPassword Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field loginPasswordGroup Landroid/widget/LinearLayout;
+	public final field mailboxPasswordGroup Landroid/widget/LinearLayout;
 	public final field newLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field newMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field progress Landroid/widget/ProgressBar;
 	public final field saveLoginPasswordButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field saveMailboxPasswordButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field tabLayout Lcom/google/android/material/tabs/TabLayout;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/usersettings/presentation/databinding/FragmentPasswordManagementBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -253,7 +255,7 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Pass
 	public abstract fun injectPasswordManagementActivity (Lme/proton/core/usersettings/presentation/ui/PasswordManagementActivity;)V
 }
 
-public final class me/proton/core/usersettings/presentation/ui/PasswordManagementFragment : me/proton/core/presentation/ui/ProtonSecureFragment {
+public final class me/proton/core/usersettings/presentation/ui/PasswordManagementFragment : me/proton/core/presentation/ui/ProtonSecureFragment, com/google/android/material/tabs/TabLayout$OnTabSelectedListener {
 	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_UPDATE_RESULT Ljava/lang/String;
@@ -261,6 +263,9 @@ public final class me/proton/core/usersettings/presentation/ui/PasswordManagemen
 	public static final field KEY_UPDATE_RESULT Ljava/lang/String;
 	public fun <init> ()V
 	public fun onCreate (Landroid/os/Bundle;)V
+	public fun onTabReselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public fun onTabSelected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public fun onTabUnselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
@@ -345,9 +350,8 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Upda
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)V
+	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecoverySelfInitiated;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;Lme/proton/core/usersettings/domain/usecase/PerformResetUserPassword;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun getUserSettings ()Lme/proton/core/usersettings/domain/entity/UserSettings;
 	public final fun perform (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action;)Z
 }
 
@@ -431,18 +435,24 @@ public abstract class me/proton/core/usersettings/presentation/viewmodel/Passwor
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;)V
-	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;ZZZZZZLme/proton/core/user/domain/entity/UserRecovery$State;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;ZZZZZZLme/proton/core/user/domain/entity/UserRecovery$State;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Z
 	public final fun component3 ()Z
 	public final fun component4 ()Z
-	public final fun component5 ()Lme/proton/core/user/domain/entity/UserRecovery$State;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;Lme/proton/core/domain/entity/UserId;ZZZLme/proton/core/user/domain/entity/UserRecovery$State;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;
+	public final fun component5 ()Z
+	public final fun component6 ()Z
+	public final fun component7 ()Z
+	public final fun component8 ()Lme/proton/core/user/domain/entity/UserRecovery$State;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;ZZZZZZLme/proton/core/user/domain/entity/UserRecovery$State;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;Lme/proton/core/domain/entity/UserId;ZZZZZZLme/proton/core/user/domain/entity/UserRecovery$State;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$ChangePassword;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCurrentLoginPasswordNeeded ()Z
 	public final fun getLoginPasswordAvailable ()Z
 	public final fun getMailboxPasswordAvailable ()Z
+	public final fun getRecoveryResetAvailable ()Z
+	public final fun getRecoveryResetEnabled ()Z
 	public final fun getTwoFactorEnabled ()Z
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getUserRecoveryState ()Lme/proton/core/user/domain/entity/UserRecovery$State;
@@ -465,14 +475,6 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Idle : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
 	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Idle;
-	public fun equals (Ljava/lang/Object;)Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Loading : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State {
-	public static final field $stable I
-	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$State$Loading;
 	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -503,11 +505,11 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
-	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
+	public static fun newInstance (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecoverySelfInitiated;Lme/proton/core/usersettings/domain/usecase/PerformUpdateLoginPassword;Lme/proton/core/usersettings/domain/usecase/PerformUpdateUserPassword;Lme/proton/core/usersettings/domain/usecase/PerformResetUserPassword;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel_HiltModules {

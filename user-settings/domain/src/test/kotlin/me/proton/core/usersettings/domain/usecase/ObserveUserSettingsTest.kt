@@ -49,6 +49,6 @@ class ObserveUserSettingsTest {
 
         val result = observeUserSettings(userId).first()
 
-        assertEquals(DataResult.Success(ResponseSource.Local, userSettings), result)
+        assertEquals(userSettings, result)
     }
 }

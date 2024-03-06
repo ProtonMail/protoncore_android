@@ -152,7 +152,7 @@ fun AccountRecoveryDialog(
                 modifier = modifier,
                 endDate = state.endDate,
                 onShowResetForm = state.onShowPasswordChangeForm,
-                onShowCancellationForm = state.onShowPasswordChangeForm,
+                onShowCancellationForm = state.onShowCancellationForm,
                 onDismiss = onDismiss
             )
         }

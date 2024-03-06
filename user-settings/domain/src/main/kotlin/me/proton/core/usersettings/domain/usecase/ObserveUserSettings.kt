@@ -18,6 +18,7 @@
 
 package me.proton.core.usersettings.domain.usecase
 
+import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
@@ -25,5 +26,5 @@ import javax.inject.Inject
 class ObserveUserSettings @Inject constructor(
     private val repository: UserSettingsRepository,
 ) {
-    operator fun invoke(userId: UserId) = repository.getUserSettingsFlow(userId)
+    operator fun invoke(userId: UserId) = repository.getUserSettingsFlow(userId).mapSuccessValueOrNull()
 }

@@ -23,6 +23,10 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.android.ArchTest
@@ -32,28 +36,36 @@ import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
-import me.proton.core.usersettings.domain.usecase.GetUserSettings
-import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
+import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
+import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.Action.ObserveState
+import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.Action.UpdatePassword
+import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType.Both
+import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType.Login
+import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType.Mailbox
+import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.State
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
 import kotlin.test.assertTrue
 
 class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
-    private val getUserSettingsUseCase = mockk<GetUserSettings>()
+    private val observeUserRecovery = mockk<ObserveUserRecovery>()
+    private val observeUserSettings = mockk<ObserveUserSettings>()
+    private val observeUserRecoverySelfInitiated = mockk<ObserveUserRecoverySelfInitiated>()
     private val performUpdateLoginPassword = mockk<PerformUpdateLoginPassword>()
     private val performUpdateMailboxPassword = mockk<PerformUpdateUserPassword>()
     private val performResetUserPassword = mockk<PerformResetUserPassword>()
+    private val isAccountRecoveryResetEnabled = mockk<IsAccountRecoveryResetEnabled>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
-    private val userRepository = mockk<UserRepository>(relaxed = true)
     // endregion
 
     // region test data
@@ -106,49 +118,60 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
 
     @Before
     fun beforeEveryTest() {
-        coEvery { userRepository.getUser(any()) } returns testUser
-        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse
+        coEvery { isAccountRecoveryResetEnabled.invoke(testUserId) } returns false
+        coEvery { observeUserRecovery.invoke(testUserId) } returns flowOf(testUser.recovery)
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(testUserSettingsResponse)
+        coEvery { observeUserRecoverySelfInitiated.invoke(testUserId) } returns flowOf(false)
         viewModel =
             PasswordManagementViewModel(
                 keyStoreCrypto,
-                getUserSettingsUseCase,
+                observeUserRecovery,
+                observeUserSettings,
+                observeUserRecoverySelfInitiated,
                 performUpdateLoginPassword,
                 performUpdateMailboxPassword,
-                performResetUserPassword
+                performResetUserPassword,
+                isAccountRecoveryResetEnabled
             )
     }
 
     @Test
     fun `get current settings 2 Pass handled correctly`() = coroutinesTest {
-        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null),
-            password = PasswordSetting(mode = 2, expirationTime = null)
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
+            testUserSettingsResponse.copy(
+                twoFA = TwoFASetting(true, 1, null),
+                password = PasswordSetting(mode = 2, expirationTime = null)
+            )
         )
         viewModel.state.test {
             // WHEN
-            viewModel.init(testUserId)
+            viewModel.perform(ObserveState(testUserId))
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            assertIs<State.Idle>(awaitItem())
             val result = awaitItem()
-            assertTrue(result is PasswordManagementViewModel.State.Mode)
-            assertTrue(result.twoPasswordMode)
+            assertTrue(result is State.ChangePassword)
+            assertTrue(result.mailboxPasswordAvailable)
+            assertTrue(result.twoFactorEnabled)
         }
     }
 
     @Test
     fun `get current settings 1 Pass handled correctly`() = coroutinesTest {
-        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null),
-            password = PasswordSetting(mode = 1, expirationTime = null)
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
+            testUserSettingsResponse.copy(
+                twoFA = TwoFASetting(true, 1, null),
+                password = PasswordSetting(mode = 1, expirationTime = null)
+            )
         )
         viewModel.state.test {
             // WHEN
-            viewModel.init(testUserId)
+            viewModel.perform(ObserveState(testUserId))
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
+            assertIs<State.Idle>(awaitItem())
             val result = awaitItem()
-            assertTrue(result is PasswordManagementViewModel.State.Mode)
-            assertFalse(result.twoPasswordMode)
+            assertTrue(result is State.ChangePassword)
+            assertFalse(result.mailboxPasswordAvailable)
+            assertTrue(result.twoFactorEnabled)
         }
     }
 
@@ -159,29 +182,35 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         every { keyStoreCrypto.decrypt("encrypted-test-new-password") } returns testNewPassword
         every { keyStoreCrypto.encrypt(testNewPassword) } returns "encrypted-test-new-password"
 
-        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null),
-            password = PasswordSetting(mode = 1, expirationTime = null)
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
+            testUserSettingsResponse.copy(
+                twoFA = TwoFASetting(false, 1, null),
+                password = PasswordSetting(mode = 1, expirationTime = null)
+            )
         )
 
-        coEvery { performUpdateLoginPassword.invoke(testUserId, any(), any(), any()) } returns testUserSettingsResponse
+        coEvery { performUpdateMailboxPassword.invoke(any(), testUserId, any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
-            viewModel.updateLoginPassword(testUserId, testPassword, testNewPassword)
+            viewModel.perform(ObserveState(testUserId))
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.ChangePassword>(awaitItem())
+
+            viewModel.perform(UpdatePassword(testUserId, Login, testPassword, testNewPassword))
+
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingLoginPassword>(awaitItem())
+            assertIs<State.UpdatingPassword>(awaitItem())
             val result = awaitItem()
-            assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingLoginPassword)
-            assertNotNull(result.settings)
+            assertTrue(result is State.Success)
 
             coVerify(exactly = 1) {
-                performUpdateLoginPassword(
+                performUpdateMailboxPassword.invoke(
                     userId = testUserId,
-                    password = "encrypted-test-password",
+                    loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
-                    secondFactorCode = ""
+                    secondFactorCode = "",
+                    twoPasswordMode = false
                 )
             }
         }
@@ -197,23 +226,27 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         val testLoginPassword = testPassword
         val testNewMailboxPassword = testNewPassword
 
-        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null),
-            password = PasswordSetting(mode = 2, expirationTime = null)
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
+            testUserSettingsResponse.copy(
+                twoFA = TwoFASetting(false, 1, null),
+                password = PasswordSetting(mode = 2, expirationTime = null)
+            )
         )
 
         coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
-            viewModel.init(testUserId)
-            viewModel.updateMailboxPassword(testUserId, testLoginPassword, testNewMailboxPassword)
+            viewModel.perform(ObserveState(testUserId))
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.ChangePassword>(awaitItem())
+
+            viewModel.perform(UpdatePassword(testUserId, Mailbox, testLoginPassword, testNewMailboxPassword))
+
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
-            assertIs<PasswordManagementViewModel.State.Mode>(awaitItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingMailboxPassword>(awaitItem())
+            assertIs<State.UpdatingPassword>(awaitItem())
             val result = awaitItem()
-            assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingMailboxPassword)
+            assertTrue(result is State.Success)
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
@@ -237,23 +270,27 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         val testLoginPassword = testPassword
         val testNewMailboxPassword = testNewPassword
 
-        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
-            twoFA = TwoFASetting(true, 1, null),
-            password = PasswordSetting(mode = 1, expirationTime = null)
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
+            testUserSettingsResponse.copy(
+                twoFA = TwoFASetting(false, 0, null),
+                password = PasswordSetting(mode = 1, expirationTime = null)
+            )
         )
 
         coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
-            viewModel.init(testUserId)
-            viewModel.updateMailboxPassword(testUserId, testLoginPassword, testNewMailboxPassword)
+            viewModel.perform(ObserveState(testUserId))
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.ChangePassword>(awaitItem())
+
+            viewModel.perform(UpdatePassword(testUserId, Both, testLoginPassword, testNewMailboxPassword))
+
             // THEN
-            assertIs<PasswordManagementViewModel.State.Idle>(awaitItem())
-            assertIs<PasswordManagementViewModel.State.Mode>(awaitItem())
-            assertIs<PasswordManagementViewModel.State.UpdatingSinglePassModePassword>(awaitItem())
+            assertIs<State.UpdatingPassword>(awaitItem())
             val result = awaitItem()
-            assertTrue(result is PasswordManagementViewModel.State.Success.UpdatingSinglePassModePassword)
+            assertTrue(result is State.Success)
 
             coVerify(exactly = 1) {
                 performUpdateMailboxPassword(
@@ -264,6 +301,36 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     twoPasswordMode = false
                 )
             }
+        }
+    }
+
+    @Test
+    fun `update password with two factor handled correctly`() = coroutinesTest {
+        every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
+        every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
+        every { keyStoreCrypto.decrypt("encrypted-test-new-password") } returns testNewPassword
+        every { keyStoreCrypto.encrypt(testNewPassword) } returns "encrypted-test-new-password"
+
+        val testLoginPassword = testPassword
+        val testNewMailboxPassword = testNewPassword
+
+        coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
+            testUserSettingsResponse.copy(
+                twoFA = TwoFASetting(true, 0, null),
+                password = PasswordSetting(mode = 1, expirationTime = null)
+            )
+        )
+
+        flowTest(viewModel.state) {
+            // WHEN
+            viewModel.perform(ObserveState(testUserId))
+            assertIs<State.Idle>(awaitItem())
+            assertIs<State.ChangePassword>(awaitItem())
+
+            viewModel.perform(UpdatePassword(testUserId, Mailbox, testLoginPassword, testNewMailboxPassword))
+
+            // THEN
+            assertIs<State.TwoFactorNeeded>(awaitItem())
         }
     }
 }

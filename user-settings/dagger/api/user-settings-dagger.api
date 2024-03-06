@@ -45,6 +45,7 @@ public final class me/proton/core/usersettings/dagger/CoreDeviceSettingsModule_P
 }
 
 public abstract interface class me/proton/core/usersettings/dagger/CoreUserSettingsModule {
+	public abstract fun provideAccountManagerOrchestrator (Lme/proton/core/usersettings/presentation/UserSettingsOrchestrator;)Lme/proton/core/accountmanager/presentation/AccountManagerOrchestrator;
 	public abstract fun provideOrganizationRepository (Lme/proton/core/usersettings/data/repository/OrganizationRepositoryImpl;)Lme/proton/core/usersettings/domain/repository/OrganizationRepository;
 	public abstract fun provideUserSettingsLocalDataSource (Lme/proton/core/usersettings/data/db/UserSettingsLocalDataSourceImpl;)Lme/proton/core/usersettings/domain/repository/UserSettingsLocalDataSource;
 	public abstract fun provideUserSettingsRemoteDataSource (Lme/proton/core/usersettings/data/api/UserSettingsRemoteDataSourceImpl;)Lme/proton/core/usersettings/domain/repository/UserSettingsRemoteDataSource;

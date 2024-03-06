@@ -27,8 +27,6 @@ import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
-import me.proton.core.domain.arch.DataResult
-import me.proton.core.domain.arch.ResponseSource
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.kotlin.coroutineScopeProvider
 import me.proton.core.usersettings.domain.entity.PasswordSetting
@@ -54,24 +52,12 @@ class UsersSettingsHandlerTest {
         every { observeUserSettings(any()) } answers {
             when (val userId = arg<UserId>(0)) {
                 UserId("user-1") -> flowOf(
-                    DataResult.Success(
-                        source = ResponseSource.Local,
-                        value = userSettings(userId, true)
-                    )
+                    userSettings(userId, true)
                 )
 
                 UserId("user-2") -> flowOf(
-                    DataResult.Processing(
-                        source = ResponseSource.Local,
-                    ),
-                    DataResult.Success(
-                        source = ResponseSource.Local,
-                        value = userSettings(userId, true)
-                    ),
-                    DataResult.Success(
-                        source = ResponseSource.Local,
-                        value = userSettings(userId, false)
-                    )
+                    userSettings(userId, true),
+                    userSettings(userId, false)
                 )
 
                 else -> flowOf()
@@ -94,7 +80,6 @@ class UsersSettingsHandlerTest {
 
         assertEquals(
             listOf(
-                true, // true + processing
                 true, // true + true
                 false // true + false
             ), crashReports

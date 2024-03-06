@@ -55,7 +55,6 @@ class UserSettingsViewModel @Inject constructor(
     val state: StateFlow<State> = primaryUserId
         .filterNotNull()
         .flatMapLatest { observeUserSettings(it) }
-        .mapSuccessValueOrNull()
         .filterNotNull()
         .map { userSettings ->
             State(

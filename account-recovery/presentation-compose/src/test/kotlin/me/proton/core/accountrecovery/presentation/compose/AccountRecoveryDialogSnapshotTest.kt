@@ -27,7 +27,8 @@ import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecover
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryGracePeriodDialog
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryPasswordPeriodStartedDialog
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryWindowEndedDialog
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State.Opened.PasswordChangePeriodStarted
 import me.proton.core.presentation.utils.StringBox
 import org.junit.Rule
 import org.junit.Test
@@ -90,7 +91,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateErrorTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Error(Throwable("test"))
+                state = State.Error(Throwable("test"))
             )
         }
     }
@@ -99,7 +100,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateLoadingTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Loading
+                state = State.Loading
             )
         }
     }
@@ -108,7 +109,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateClosedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Closed()
+                state = State.Closed()
             )
         }
     }
@@ -117,7 +118,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedRecoveryEndedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Opened.RecoveryEnded(email = "user@email.test")
+                state = State.Opened.RecoveryEnded(email = "user@email.test")
             )
         }
     }
@@ -126,7 +127,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedCancellationHappenedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Opened.CancellationHappened
+                state = State.Opened.CancellationHappened
             )
         }
     }
@@ -135,7 +136,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedPasswordChangeStartedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
+                state = PasswordChangePeriodStarted.OtherDeviceInitiated(
                     endDate = "16 Aug"
                 )
             )
@@ -146,7 +147,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedPasswordChangeStartedSelfInitiatedTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.SelfInitiated(
+                state = PasswordChangePeriodStarted.SelfInitiated(
                     endDate = "16 Aug"
                 )
             )
@@ -157,7 +158,7 @@ class AccountRecoveryDialogSnapshotTest {
     fun accountRecoveryStateOpenedGracePeriodStartedProcessingTest() {
         paparazzi.snapshot {
             AccountRecoveryDialog(
-                state = AccountRecoveryDialogViewModel.State.Opened.CancelPasswordReset(
+                state = State.Opened.CancelPasswordReset(
                     processing = true
                 )
             )

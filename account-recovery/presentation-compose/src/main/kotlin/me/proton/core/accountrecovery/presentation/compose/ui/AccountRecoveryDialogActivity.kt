@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.accountmanager.presentation.AccountManagerOrchestrator
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.compose.theme.ProtonTheme
@@ -33,9 +34,13 @@ import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.showToast
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountRecoveryDialogActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var accountManagerOrchestrator: AccountManagerOrchestrator
 
     private val input: AccountRecoveryDialogInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -43,8 +48,14 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
 
     private val userId by lazy { UserId(input.userId) }
 
+    override fun onDestroy() {
+        accountManagerOrchestrator.unregister()
+        super.onDestroy()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        accountManagerOrchestrator.register(this)
 
         setContent {
             ProtonTheme {
@@ -64,7 +75,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
     }
 
     private fun startPasswordManager(userId: UserId) {
-        //startPasswordManagementWorkflow(userId = userId)
+        accountManagerOrchestrator.startPasswordManagementWorkflow(userId)
         close()
     }
 

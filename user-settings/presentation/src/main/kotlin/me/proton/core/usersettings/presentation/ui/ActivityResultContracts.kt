@@ -44,7 +44,6 @@ class StartPasswordManagement : ActivityResultContract<SettingsInput, PasswordMa
         Intent(context, PasswordManagementActivity::class.java).apply {
             putExtra(PasswordManagementActivity.ARG_INPUT, input)
             addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            // TODO: check/test it after MR 1549 is merged
         }
 
     override fun parseResult(resultCode: Int, intent: Intent?): PasswordManagementResult? {

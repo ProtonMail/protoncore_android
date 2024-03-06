@@ -37,6 +37,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
 import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel
@@ -47,7 +48,7 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DateTimeFormat
 import org.junit.Before
@@ -73,14 +74,17 @@ class AccountRecoveryDialogSnapshotMockTest {
 
     private lateinit var savedStateHandle: SavedStateHandle
 
+    @MockK
+    private lateinit var observeUser: ObserveUser
+
     @MockK(relaxed = true)
     private lateinit var observeUserRecovery: ObserveUserRecovery
 
+    @MockK
+    private lateinit var observeSelfInitiated: ObserveUserRecoverySelfInitiated
+
     @MockK(relaxed = true)
     private lateinit var cancelRecovery: CancelRecovery
-
-    @MockK
-    private lateinit var getUser: GetUser
 
     @MockK
     private lateinit var keyStoreCrypto: KeyStoreCrypto
@@ -118,10 +122,12 @@ class AccountRecoveryDialogSnapshotMockTest {
         }
         MockKAnnotations.init(this)
 
-        coEvery { getUser.invoke(any(), any()) } returns mockk {
+        coEvery { observeUser.invoke(any()) } returns flowOf(mockk {
             every { userId } returns testUserId
             every { email } returns testUserEmail
-        }
+        })
+
+        coEvery { observeSelfInitiated.invoke(any()) } returns flowOf(false)
 
         coEvery { accountManager.getSessions() } returns flowOf(
             listOf(testSession)
@@ -142,13 +148,12 @@ class AccountRecoveryDialogSnapshotMockTest {
                 savedStateHandle = savedStateHandle,
                 clock = clock,
                 dateTimeFormat = DateTimeFormat(paparazzi.context),
+                observeUser = observeUser,
                 observeUserRecovery = observeUserRecovery,
+                observeSelfInitiated = observeSelfInitiated,
                 cancelRecovery = cancelRecovery,
                 keyStoreCrypto = keyStoreCrypto,
                 observabilityManager = observabilityManager,
-                getUser = getUser,
-                accountManager = accountManager,
-                userManager = userManager,
                 isAccountRecoveryResetEnabled = isAccountRecoveryResetEnabled
             )
         )

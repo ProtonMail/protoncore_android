@@ -48,6 +48,13 @@ public final class me/proton/core/accountmanager/presentation/AccountManagerObse
 	public static synthetic fun onUserKeyCheckFailed$default (Lme/proton/core/accountmanager/presentation/AccountManagerObserver;ZLkotlin/jvm/functions/Function2;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/AccountManagerObserver;
 }
 
+public abstract interface class me/proton/core/accountmanager/presentation/AccountManagerOrchestrator {
+	public abstract fun register (Landroidx/activity/result/ActivityResultCaller;)V
+	public abstract fun startPasswordManagementWorkflow (Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun startUpdateRecoveryEmailWorkflow (Lme/proton/core/domain/entity/UserId;)V
+	public abstract fun unregister ()V
+}
+
 public final class me/proton/core/accountmanager/presentation/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z

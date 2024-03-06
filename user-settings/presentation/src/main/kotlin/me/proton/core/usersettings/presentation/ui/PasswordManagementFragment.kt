@@ -18,6 +18,7 @@
 
 package me.proton.core.usersettings.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.compose.ui.platform.ViewCompositionStrategy
@@ -26,6 +27,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
@@ -57,7 +59,9 @@ import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementView
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType
 
 @AndroidEntryPoint
-class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_password_management) {
+class PasswordManagementFragment :
+    ProtonSecureFragment(R.layout.fragment_password_management),
+    TabLayout.OnTabSelectedListener {
 
     private val viewModel by viewModels<PasswordManagementViewModel>()
     private val binding by viewBinding(FragmentPasswordManagementBinding::bind)
@@ -85,20 +89,23 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
         binding.apply {
             accountRecoveryInfo.apply {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                setContent { AccountRecoveryInfo(onOpenDialog = { onOpenDialog() }) }
+                setContent { AccountRecoveryInfo(onOpenDialog = { onOpenDialog() }, expanded = false) }
             }
+            tabLayout.addOnTabSelectedListener(this@PasswordManagementFragment)
             currentLoginPasswordInput.passwordValidation(false)
             newLoginPasswordInput.passwordValidation()
             confirmNewLoginPasswordInput.passwordValidation()
             currentMailboxPasswordInput.passwordValidation(false)
             newMailboxPasswordInput.passwordValidation()
             confirmNewMailboxPasswordInput.passwordValidation()
-
             saveLoginPasswordButton.onClick {
                 onSaveLoginPasswordClicked()
             }
             saveMailboxPasswordButton.onClick {
                 onSaveMailboxPasswordClicked()
+            }
+            dontKnowYourCurrentPassword.onClick {
+                // TODO: Start Recovery Reset Screen.
             }
         }
 
@@ -116,11 +123,17 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
             .onEach {
                 when (it) {
                     is PasswordManagementViewModel.State.Idle -> Unit
-                    is PasswordManagementViewModel.State.Loading -> Unit
                     is PasswordManagementViewModel.State.ChangePassword -> {
                         binding.progress.visibility = View.GONE
-                        binding.loginPasswordGroup.isVisible = it.loginPasswordAvailable
-                        binding.mailboxPasswordGroup.isVisible = it.mailboxPasswordAvailable
+                        binding.accountRecoveryInfo.isVisible = it.recoveryResetEnabled
+
+                        binding.tabLayout.isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
+                        binding.loginPasswordGroup.isVisible = binding.tabLayout.selectedTabPosition == 0
+                        binding.mailboxPasswordGroup.isVisible = binding.tabLayout.selectedTabPosition == 1
+
+                        binding.dontKnowYourCurrentPassword.isVisible = it.recoveryResetAvailable
+                        binding.currentLoginPasswordInput.isVisible = it.currentLoginPasswordNeeded
+                        binding.currentMailboxPasswordInput.isVisible = it.currentLoginPasswordNeeded
                     }
 
                     is PasswordManagementViewModel.State.UpdatingPassword -> {
@@ -131,6 +144,7 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
                     is PasswordManagementViewModel.State.TwoFactorNeeded -> {
                         twoFactorLauncher.show(ShowPasswordInput(showPassword = false, showTwoFA = true))
                     }
+
                     is PasswordManagementViewModel.State.Success -> {
                         resetLoginPasswordInput()
                         resetMailboxPasswordInput()
@@ -143,7 +157,9 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
     }
 
     private fun onOpenDialog() {
-        AccountRecoveryDialogActivity.start(requireContext(), AccountRecoveryDialogInput(userId.id))
+        val intent = AccountRecoveryDialogActivity.getIntent(requireContext(), AccountRecoveryDialogInput(userId.id))
+        intent.flags = intent.flags and Intent.FLAG_ACTIVITY_NEW_TASK.inv()
+        activity?.startActivity(intent)
     }
 
     private fun resetLoginPasswordInput() = with(binding) {
@@ -162,9 +178,13 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
 
     private fun onSaveLoginPasswordClicked() = with(binding) {
         hideKeyboard()
-        currentLoginPasswordInput.validatePassword()
-            .onFailure { currentLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
-            .onSuccess { onLoginPasswordValidationSuccess() }
+        if (currentLoginPasswordInput.isVisible) {
+            currentLoginPasswordInput.validatePassword()
+                .onFailure { currentLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
+                .onSuccess { onLoginPasswordValidationSuccess() }
+        } else {
+            onLoginPasswordValidationSuccess()
+        }
     }
 
     private fun onLoginPasswordValidationSuccess() = with(binding) {
@@ -184,7 +204,7 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
         viewModel.perform(
             Action.UpdatePassword(
                 userId = userId,
-                type = if (viewModel.userSettings?.password?.mode == 2) PasswordType.Login else PasswordType.Both,
+                type = PasswordType.Login,
                 password = currentLoginPasswordInput.text.toString(),
                 newPassword = confirmedPassword
             )
@@ -193,9 +213,13 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
 
     private fun onSaveMailboxPasswordClicked() = with(binding) {
         hideKeyboard()
-        currentMailboxPasswordInput.validatePassword()
-            .onFailure { currentMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
-            .onSuccess { onMailboxPasswordValidationSuccess() }
+        if (currentMailboxPasswordInput.isVisible) {
+            currentMailboxPasswordInput.validatePassword()
+                .onFailure { currentMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
+                .onSuccess { onMailboxPasswordValidationSuccess() }
+        } else {
+            onMailboxPasswordValidationSuccess()
+        }
     }
 
     private fun onMailboxPasswordValidationSuccess() = with(binding) {
@@ -265,6 +289,23 @@ class PasswordManagementFragment : ProtonSecureFragment(R.layout.fragment_passwo
             message = message ?: getString(R.string.settings_general_error)
         )
     }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        when (tab?.position) {
+            0 -> {
+                binding.loginPasswordGroup.isVisible = true
+                binding.mailboxPasswordGroup.isVisible = false
+            }
+
+            1 -> {
+                binding.loginPasswordGroup.isVisible = false
+                binding.mailboxPasswordGroup.isVisible = true
+            }
+        }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
+    override fun onTabReselected(tab: TabLayout.Tab?) {}
 
     companion object {
         const val KEY_UPDATE_RESULT = "key.update_result"

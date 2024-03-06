@@ -20,6 +20,11 @@ public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserReco
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }
 
+public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserRecoverySelfInitiated {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+}
+
 public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserRecoveryState {
 	public fun <init> (Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;

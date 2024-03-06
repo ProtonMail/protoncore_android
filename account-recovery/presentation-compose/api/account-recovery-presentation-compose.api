@@ -112,7 +112,10 @@ public final class me/proton/core/accountrecovery/presentation/compose/ui/Accoun
 	public static final field $stable I
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity$Companion;
+	public field accountManagerOrchestrator Lme/proton/core/accountmanager/presentation/AccountManagerOrchestrator;
 	public fun <init> ()V
+	public final fun getAccountManagerOrchestrator ()Lme/proton/core/accountmanager/presentation/AccountManagerOrchestrator;
+	public final fun setAccountManagerOrchestrator (Lme/proton/core/accountmanager/presentation/AccountManagerOrchestrator;)V
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity$Companion {
@@ -122,6 +125,14 @@ public final class me/proton/core/accountrecovery/presentation/compose/ui/Accoun
 
 public abstract interface class me/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity_GeneratedInjector {
 	public abstract fun injectAccountRecoveryDialogActivity (Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity;)V
+}
+
+public final class me/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectAccountManagerOrchestrator (Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity;Lme/proton/core/accountmanager/presentation/AccountManagerOrchestrator;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/accountrecovery/presentation/compose/ui/AccountRecoveryDialogActivity;)V
 }
 
 public abstract class me/proton/core/accountrecovery/presentation/compose/ui/Hilt_AccountRecoveryDialogActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -161,7 +172,7 @@ public final class me/proton/core/accountrecovery/presentation/compose/view/Comp
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field $stable I
-	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/android/datetime/Clock;Lme/proton/core/util/android/datetime/DateTimeFormat;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/util/android/datetime/Clock;Lme/proton/core/util/android/datetime/DateTimeFormat;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecoverySelfInitiated;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
 	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun getInitialState ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel$State$Loading;
@@ -314,11 +325,11 @@ public final class me/proton/core/accountrecovery/presentation/compose/viewmodel
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel;
-	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/android/datetime/Clock;Lme/proton/core/util/android/datetime/DateTimeFormat;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/user/domain/usecase/GetUser;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/user/domain/UserManager;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/util/android/datetime/Clock;Lme/proton/core/util/android/datetime/DateTimeFormat;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecovery;Lme/proton/core/accountrecovery/domain/usecase/ObserveUserRecoverySelfInitiated;Lme/proton/core/accountrecovery/domain/usecase/CancelRecovery;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/accountrecovery/domain/IsAccountRecoveryResetEnabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel;
 }
 
 public final class me/proton/core/accountrecovery/presentation/compose/viewmodel/AccountRecoveryDialogViewModel_HiltModules {

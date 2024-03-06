@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,27 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.accountmanager.presentation
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import androidx.activity.result.ActivityResultCaller
+import me.proton.core.domain.entity.UserId
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.usersettings.dagger"
-}
-
-dependencies {
-    api(
-        project(Module.userSettingsData),
-        project(Module.userSettingsDomain),
-        project(Module.accountManagerPresentation),
-    )
-
-    implementation(
-        project(Module.userSettingsPresentation),
-    )
+interface AccountManagerOrchestrator {
+    fun register(caller: ActivityResultCaller)
+    fun unregister()
+    fun startPasswordManagementWorkflow(userId: UserId)
+    fun startUpdateRecoveryEmailWorkflow(userId: UserId)
 }

@@ -21,6 +21,7 @@ package me.proton.core.usersettings.presentation
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
+import me.proton.core.accountmanager.presentation.AccountManagerOrchestrator
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
@@ -29,7 +30,7 @@ import me.proton.core.usersettings.presentation.ui.StartPasswordManagement
 import me.proton.core.usersettings.presentation.ui.StartUpdateRecoveryEmail
 import javax.inject.Inject
 
-class UserSettingsOrchestrator @Inject constructor() {
+class UserSettingsOrchestrator @Inject constructor() : AccountManagerOrchestrator {
 
     private var updateRecoveryEmailLauncher: ActivityResultLauncher<SettingsInput>? = null
     private var passwordManagementLauncher: ActivityResultLauncher<SettingsInput>? = null
@@ -68,7 +69,7 @@ class UserSettingsOrchestrator @Inject constructor() {
      *
      * Note: This function have to be called [ComponentActivity.onCreate]] before [ComponentActivity.onResume].
      */
-    fun register(caller: ActivityResultCaller) {
+    override fun register(caller: ActivityResultCaller) {
         updateRecoveryEmailLauncher = registerUpdateRecoveryEmailResult(caller)
         passwordManagementLauncher = registerPasswordManagementResult(caller)
     }
@@ -76,7 +77,7 @@ class UserSettingsOrchestrator @Inject constructor() {
     /**
      * Unregister all workflow activity launcher and listener.
      */
-    fun unregister() {
+    override fun unregister() {
         updateRecoveryEmailLauncher?.unregister()
         updateRecoveryEmailLauncher = null
         passwordManagementLauncher?.unregister()
@@ -91,7 +92,7 @@ class UserSettingsOrchestrator @Inject constructor() {
      *
      * @see [onUpdateRecoveryEmailResult]
      */
-    fun startUpdateRecoveryEmailWorkflow(userId: UserId) {
+    override fun startUpdateRecoveryEmailWorkflow(userId: UserId) {
         checkRegistered(updateRecoveryEmailLauncher).launch(
             SettingsInput(userId.id)
         )
@@ -102,7 +103,7 @@ class UserSettingsOrchestrator @Inject constructor() {
      *
      * @see [onPasswordManagementResult]
      */
-    fun startPasswordManagementWorkflow(userId: UserId) {
+    override fun startPasswordManagementWorkflow(userId: UserId) {
         checkRegistered(passwordManagementLauncher).launch(
             SettingsInput(userId.id)
         )

@@ -31,14 +31,15 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.flow.stateIn
+import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.domain.arch.mapSuccessValueOrNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.UserRecovery
-import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
@@ -48,11 +49,13 @@ import javax.inject.Inject
 @HiltViewModel
 class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
-    private val observeUser: ObserveUser,
+    private val observeUserRecovery: ObserveUserRecovery,
     private val observeUserSettings: ObserveUserSettings,
+    private val observeUserRecoverySelfInitiated: ObserveUserRecoverySelfInitiated,
     private val performUpdateLoginPassword: PerformUpdateLoginPassword,
     private val performUpdateUserPassword: PerformUpdateUserPassword,
-    private val performResetUserPassword: PerformResetUserPassword
+    private val performResetPassword: PerformResetUserPassword,
+    private val isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled,
 ) : ProtonViewModel() {
 
     private var pendingUpdate: Action.UpdatePassword? = null
@@ -60,35 +63,52 @@ class PasswordManagementViewModel @Inject constructor(
     private val currentAction = MutableStateFlow<Action?>(null)
     private val currentUserId = MutableStateFlow<UserId?>(null)
 
-    private val currentUser = currentUserId.filterNotNull().flatMapLatest {
-        observeUser(it)
+    private val currentUserRecovery = currentUserId.filterNotNull().flatMapLatest {
+        observeUserRecovery(it)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private val currentUserSettings = currentUserId.filterNotNull().flatMapLatest {
-        observeUserSettings(it).mapSuccessValueOrNull()
+        observeUserSettings(it)
     }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
+    private val currentSelfInitiated = currentUserId.filterNotNull().flatMapLatest {
+        observeUserRecoverySelfInitiated(it)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
     private fun observeState(userId: UserId): Flow<State> = combine(
-        currentUser.filterNotNull(),
-        currentUserSettings.filterNotNull()
-    ) { user, settings ->
+        currentUserRecovery,
+        currentUserSettings,
+        currentSelfInitiated
+    ) { _, _, _ ->
         State.ChangePassword(
-            userId = user.userId,
+            userId = userId,
             loginPasswordAvailable = true,
-            mailboxPasswordAvailable = settings.password.mode == 2,
-            twoFactorEnabled = settings.twoFA?.enabled ?: false,
-            userRecoveryState = user.recovery?.state?.enum
+            mailboxPasswordAvailable = isMailboxPassword,
+            recoveryResetAvailable = isRecoveryResetEnabled && isRecoveryAvailable,
+            recoveryResetEnabled = isRecoveryResetEnabled,
+            currentLoginPasswordNeeded = !isRecoveryResetEnabled || !isRecoveryInsecure || !isSelfInitiated,
+            twoFactorEnabled = isTwoFactorEnabled,
+            userRecoveryState = userRecovery?.state?.enum
         )
     }.onStart {
         currentUserId.emit(userId)
     }
 
     private fun updatePassword(action: Action.UpdatePassword): Flow<State> = when {
-        pendingUpdate == null && userSettings?.twoFA?.enabled == true ->
-            flowOf(State.TwoFactorNeeded).also { pendingUpdate = action }
+        pendingUpdate == null && userSettings?.twoFA?.enabled == true -> {
+            pendingUpdate = action
+            flowOf(State.TwoFactorNeeded)
+        }
+
+        isRecoveryResetEnabled && isRecoveryInsecure && isSelfInitiated -> {
+            resetPassword(action)
+        }
 
         else -> when (action.type) {
-            PasswordType.Login -> updateLoginPassword(action)
+            PasswordType.Login -> when (isMailboxPassword) {
+                true -> updateLoginPassword(action)
+                false -> updateBothPassword(action)
+            }
             PasswordType.Mailbox -> updateMailboxPassword(action)
             PasswordType.Both -> updateBothPassword(action)
         }
@@ -135,6 +155,16 @@ class PasswordManagementViewModel @Inject constructor(
         emit(State.Success)
     }
 
+    private fun resetPassword(action: Action.UpdatePassword): Flow<State> = flow {
+        emit(State.UpdatingPassword)
+        val encryptedNewPassword = action.newPassword.encrypt(keyStoreCrypto)
+        performResetPassword(
+            userId = action.userId,
+            newPassword = encryptedNewPassword,
+        )
+        emit(State.Success)
+    }
+
     private fun setTwoFactor(action: Action.SetTwoFactor): Flow<State> {
         val passwordAction = requireNotNull(pendingUpdate?.copy(secondFactorCode = action.code))
         return updatePassword(passwordAction)
@@ -145,9 +175,23 @@ class PasswordManagementViewModel @Inject constructor(
         return observeState(action.userId)
     }
 
+    private val userRecovery get() = currentUserRecovery.value
+    private val userSettings get() = currentUserSettings.value
+    private val isSelfInitiated get() = currentSelfInitiated.value
+    private val isMailboxPassword get() = userSettings?.password?.mode == 2
+    private val isTwoFactorEnabled get() = userSettings?.twoFA?.enabled ?: false
+    private val isRecoveryResetEnabled get() = isAccountRecoveryResetEnabled(currentUserId.value)
+    private val isRecoveryInsecure get() = userRecovery?.state?.enum == UserRecovery.State.Insecure
+    private val isRecoveryAvailable
+        get() = when (userRecovery?.state?.enum) {
+            null -> true
+            UserRecovery.State.None -> true
+            UserRecovery.State.Expired -> true
+            else -> false
+        }
+
     fun perform(action: Action) = currentAction.tryEmit(action)
 
-    val userSettings get() = currentUserSettings.value
 
     val state = currentAction.flatMapLatest { action ->
         when (action) {
@@ -163,16 +207,18 @@ class PasswordManagementViewModel @Inject constructor(
     }.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
-        initialValue = State.Loading
+        initialValue = State.Idle
     )
 
     sealed class State {
         data object Idle : State()
-        data object Loading : State()
         data class ChangePassword(
             val userId: UserId,
             val loginPasswordAvailable: Boolean,
             val mailboxPasswordAvailable: Boolean,
+            val recoveryResetAvailable: Boolean,
+            val recoveryResetEnabled: Boolean,
+            val currentLoginPasswordNeeded: Boolean,
             val twoFactorEnabled: Boolean,
             val userRecoveryState: UserRecovery.State? = null
         ) : State()

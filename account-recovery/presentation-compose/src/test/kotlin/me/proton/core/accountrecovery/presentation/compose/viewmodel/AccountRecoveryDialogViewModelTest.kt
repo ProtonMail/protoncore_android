@@ -36,6 +36,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
+import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.accountrecovery.presentation.compose.ui.Arg
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
@@ -52,7 +53,7 @@ import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserRecovery
-import me.proton.core.user.domain.usecase.GetUser
+import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.kotlin.coroutine.result
@@ -95,7 +96,10 @@ internal class AccountRecoveryDialogViewModelTest : ArchTest by ArchTest(), Coro
     private lateinit var cancelRecovery: CancelRecovery
 
     @MockK
-    private lateinit var getUser: GetUser
+    private lateinit var observeUser: ObserveUser
+
+    @MockK
+    private lateinit var observeSelfInitiated: ObserveUserRecoverySelfInitiated
 
     @MockK
     private lateinit var keyStoreCrypto: KeyStoreCrypto
@@ -129,10 +133,12 @@ internal class AccountRecoveryDialogViewModelTest : ArchTest by ArchTest(), Coro
         every { keyStoreCrypto.encrypt(any<String>()) } answers { firstArg() }
         every { keyStoreCrypto.encrypt(any<String>()) } answers { firstArg() }
         coJustRun { cancelRecovery.invoke(any(), testUserId) }
-        coEvery { getUser.invoke(any(), any()) } returns mockk {
+        coEvery { observeUser.invoke(any()) } returns flowOf(mockk {
             every { userId } returns testUserId
             every { email } returns testUserEmail
-        }
+        })
+
+        coEvery { observeSelfInitiated.invoke(any()) } returns flowOf(false)
 
         coEvery { accountManager.getSessions() } returns flowOf(
             listOf(testSession)
@@ -150,15 +156,14 @@ internal class AccountRecoveryDialogViewModelTest : ArchTest by ArchTest(), Coro
 
         viewModel = AccountRecoveryDialogViewModel(
             savedStateHandle = savedStateHandle,
-            accountManager,
             clock = clock,
             dateTimeFormat = DateTimeFormat(context),
+            observeUser = observeUser,
             observeUserRecovery = observeUserRecovery,
+            observeSelfInitiated = observeSelfInitiated,
             cancelRecovery = cancelRecovery,
-            getUser = getUser,
             keyStoreCrypto = keyStoreCrypto,
-            userManager,
-            isAccountRecoveryResetEnabled,
+            isAccountRecoveryResetEnabled = isAccountRecoveryResetEnabled,
             observabilityManager = observabilityManager
         )
     }
