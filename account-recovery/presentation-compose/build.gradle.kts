@@ -50,6 +50,7 @@ dependencies {
         project(Module.presentationCompose),
         project(Module.notification),
         project(Module.kotlinUtil),
+        project(Module.androidUtilDatetime),
         `compose-foundation`,
         `compose-foundation-layout`,
         `compose-material`,
@@ -100,6 +101,7 @@ dependencies {
         junit,
         `kotlin-test`,
         mockk,
+        robolectric,
         turbine
     )
 }

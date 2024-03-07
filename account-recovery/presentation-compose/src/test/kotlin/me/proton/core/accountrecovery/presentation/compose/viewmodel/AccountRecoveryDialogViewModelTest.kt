@@ -18,7 +18,9 @@
 
 package me.proton.core.accountrecovery.presentation.compose.viewmodel
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
+import androidx.test.core.app.ApplicationProvider
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -31,7 +33,6 @@ import io.mockk.verify
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.CancelRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
@@ -52,22 +53,24 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.user.domain.usecase.GetUser
-import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
+import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
-import java.time.Clock
-import java.time.Duration
-import java.time.Instant
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
+import kotlin.time.Duration.Companion.hours
 
-internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
-    CoroutinesTest by CoroutinesTest() {
+@RunWith(RobolectricTestRunner::class)
+internal class AccountRecoveryDialogViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
+
     private val testUserEmail = "user@email.test"
     private val testUserId = UserId("test-user-id")
     private val testSessionId = SessionId("test-session-id")
@@ -80,7 +83,9 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         emptyList()
     )
 
-    private lateinit var clockValue: Instant
+    private val context = ApplicationProvider.getApplicationContext<Application>()
+
+    private var clockValue: Long = 1709828123000
 
     private lateinit var clock: Clock
 
@@ -110,14 +115,12 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
     @MockK
     private lateinit var isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled
 
-    private lateinit var viewModel: AccountRecoveryViewModel
+    private lateinit var viewModel: AccountRecoveryDialogViewModel
 
     @Before
     fun beforeEveryTest() {
-        clockValue = Instant.now()
-        clock = mockk {
-            every { instant() } returns clockValue
-        }
+        clock = Clock.fixed(clockValue)
+
         savedStateHandle = mockk {
             every { this@mockk.get<String>(Arg.UserId) } returns testUserId.id
         }
@@ -145,17 +148,18 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             }
         )
 
-        viewModel = AccountRecoveryViewModel(
-            savedStateHandle,
+        viewModel = AccountRecoveryDialogViewModel(
+            savedStateHandle = savedStateHandle,
             accountManager,
-            clock,
-            observeUserRecovery,
-            cancelRecovery,
-            getUser,
-            keyStoreCrypto,
+            clock = clock,
+            dateTimeFormat = DateTimeFormat(context),
+            observeUserRecovery = observeUserRecovery,
+            cancelRecovery = cancelRecovery,
+            getUser = getUser,
+            keyStoreCrypto = keyStoreCrypto,
             userManager,
             isAccountRecoveryResetEnabled,
-            observabilityManager
+            observabilityManager = observabilityManager
         )
     }
 
@@ -167,8 +171,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         )
         viewModel.state.test {
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Opened>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Opened>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -182,8 +186,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         )
         viewModel.state.test {
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Opened.CancellationHappened>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Opened.CancellationHappened>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -198,8 +202,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
 
         viewModel.state.test {
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Opened.RecoveryEnded>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Opened.RecoveryEnded>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -214,8 +218,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
 
         viewModel.state.test {
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Opened.PasswordChangePeriodStarted>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -229,8 +233,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         )
         viewModel.state.test {
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Closed>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Closed>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -242,7 +246,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         viewModel.state.test {
             // THEN
             delay(500)
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
             cancelAndIgnoreRemainingEvents()
         }
     }
@@ -255,13 +259,13 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         )
 
         viewModel.state.test {
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
 
             // WHEN
             viewModel.showCancellationForm()
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Opened.CancelPasswordReset>(
+            assertIs<AccountRecoveryDialogViewModel.State.Opened.CancelPasswordReset>(
                 awaitItem()
             ).let {
                 assertNull(it.passwordError)
@@ -272,7 +276,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             viewModel.startAccountRecoveryCancel("password")
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Closed>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Closed>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -319,9 +323,9 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             viewModel.startAccountRecoveryCancel("password")
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
             val event = awaitItem()
-            assertTrue(event is AccountRecoveryViewModel.State.Error)
+            assertTrue(event is AccountRecoveryDialogViewModel.State.Error)
             assertNotNull(event.throwable)
             cancelAndIgnoreRemainingEvents()
         }
@@ -347,9 +351,9 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             viewModel.startAccountRecoveryCancel("invalid-password")
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
             val event = awaitItem()
-            assertTrue(event is AccountRecoveryViewModel.State.Opened.CancelPasswordReset)
+            assertTrue(event is AccountRecoveryDialogViewModel.State.Opened.CancelPasswordReset)
             assertNotNull(event.passwordError)
             cancelAndIgnoreRemainingEvents()
         }
@@ -368,8 +372,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             viewModel.startAccountRecoveryCancel("")
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Opened.CancelPasswordReset>(
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Opened.CancelPasswordReset>(
                 awaitItem()
             ).let {
                 assertNotNull(it.passwordError)
@@ -391,8 +395,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
         )
         viewModel.state.test {
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Error>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Error>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -406,8 +410,8 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             viewModel.userAcknowledged()
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
-            assertIs<AccountRecoveryViewModel.State.Closed>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Closed>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -424,7 +428,7 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
             viewModel.startAccountRecoveryCancel("password")
 
             // THEN
-            assertIs<AccountRecoveryViewModel.State.Loading>(awaitItem())
+            assertIs<AccountRecoveryDialogViewModel.State.Loading>(awaitItem())
 
             cancelAndIgnoreRemainingEvents()
         }
@@ -449,36 +453,36 @@ internal class AccountRecoveryViewModelTest : ArchTest by ArchTest(),
 
     @Test
     fun `converting state to screenId is correct`() {
-        assertNull(AccountRecoveryViewModel.State.Closed().toScreenId())
-        assertNull(AccountRecoveryViewModel.State.Error(null).toScreenId())
-        assertNull(AccountRecoveryViewModel.State.Loading.toScreenId())
+        assertNull(AccountRecoveryDialogViewModel.State.Closed().toScreenId())
+        assertNull(AccountRecoveryDialogViewModel.State.Error(null).toScreenId())
+        assertNull(AccountRecoveryDialogViewModel.State.Loading.toScreenId())
         assertEquals(
             AccountRecoveryScreenViewTotal.ScreenId.recoveryCancelledInfo,
-            AccountRecoveryViewModel.State.Opened.CancellationHappened.toScreenId()
+            AccountRecoveryDialogViewModel.State.Opened.CancellationHappened.toScreenId()
         )
         assertEquals(
             AccountRecoveryScreenViewTotal.ScreenId.gracePeriodInfo,
-            AccountRecoveryViewModel.State.Opened.GracePeriodStarted(
+            AccountRecoveryDialogViewModel.State.Opened.GracePeriodStarted(
                 email = "user@email.test",
                 remainingHours = 24
             ).toScreenId()
         )
         assertEquals(
             AccountRecoveryScreenViewTotal.ScreenId.passwordChangeInfo,
-            AccountRecoveryViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
+            AccountRecoveryDialogViewModel.State.Opened.PasswordChangePeriodStarted.OtherDeviceInitiated(
                 endDate = ""
             ).toScreenId()
         )
         assertEquals(
             AccountRecoveryScreenViewTotal.ScreenId.recoveryExpiredInfo,
-            AccountRecoveryViewModel.State.Opened.RecoveryEnded("").toScreenId()
+            AccountRecoveryDialogViewModel.State.Opened.RecoveryEnded("").toScreenId()
         )
     }
 
     private fun makeUserRecovery(state: UserRecovery.State): UserRecovery = UserRecovery(
         state = IntEnum(state.value, state),
-        startTime = clock.instant().epochSecond,
-        endTime = (clock.instant() + Duration.ofHours(24)).epochSecond,
+        startTime = clock.currentEpochSeconds(),
+        endTime = clock.currentEpochSeconds() + 24.hours.inWholeSeconds,
         sessionId = SessionId("session_id"),
         reason = null
     )

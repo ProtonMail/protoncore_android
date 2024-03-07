@@ -44,12 +44,12 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import me.proton.core.accountrecovery.presentation.compose.R
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Closed
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.StartPasswordManager
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Error
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Loading
-import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryViewModel.State.Opened
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State.Closed
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State.StartPasswordManager
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State.Error
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State.Loading
+import me.proton.core.accountrecovery.presentation.compose.viewmodel.AccountRecoveryDialogViewModel.State.Opened
 import me.proton.core.compose.component.DeferredCircularProgressIndicator
 import me.proton.core.compose.component.ProtonAlertDialog
 import me.proton.core.compose.component.ProtonAlertDialogButton
@@ -69,7 +69,7 @@ internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 @Composable
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
-    viewModel: AccountRecoveryViewModel = hiltViewModel(),
+    viewModel: AccountRecoveryDialogViewModel = hiltViewModel(),
     onStartPasswordManager: (UserId) -> Unit,
     onClosed: (Boolean) -> Unit,
     onError: (Throwable?) -> Unit
@@ -106,7 +106,7 @@ fun AccountRecoveryDialog(
 @Composable
 fun AccountRecoveryDialog(
     modifier: Modifier = Modifier,
-    state: AccountRecoveryViewModel.State,
+    state: AccountRecoveryDialogViewModel.State,
     onDismiss: () -> Unit = {},
 ) {
     when (state) {
@@ -156,7 +156,7 @@ fun AccountRecoveryDialog(
                 onDismiss = onDismiss
             )
         }
-        
+
         is Opened.CancelPasswordReset -> {
             AccountRecoveryCancellationForm(
                 modifier = modifier,
