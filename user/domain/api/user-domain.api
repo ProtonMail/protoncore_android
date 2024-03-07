@@ -518,6 +518,25 @@ public final class me/proton/core/user/domain/repository/UserAddressRepository$D
 	public static synthetic fun updateAddress$default (Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/domain/entity/UserId;Lme/proton/core/user/domain/entity/AddressId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
+public abstract interface class me/proton/core/user/domain/repository/UserLocalDataSource {
+	public abstract fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun observe (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public abstract fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateUserUsedBaseSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateUserUsedDriveSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun updateUserUsedSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun upsert (Lme/proton/core/user/domain/entity/User;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/domain/repository/UserLocalDataSource$DefaultImpls {
+	public static synthetic fun upsert$default (Lme/proton/core/user/domain/repository/UserLocalDataSource;Lme/proton/core/user/domain/entity/User;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
+public abstract interface class me/proton/core/user/domain/repository/UserRemoteDataSource {
+	public abstract fun fetch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract interface class me/proton/core/user/domain/repository/UserRepository : me/proton/core/user/domain/repository/PassphraseRepository {
 	public abstract fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun checkExternalEmailAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

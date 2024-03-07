@@ -383,6 +383,8 @@ androidTest:key-transparency-data:
   variables:
     TEST_APK: "key-transparency/data/build/outputs/apk/androidTest/debug/key-transparency-data-debug-androidTest.apk"
     TEST_TARGET: "package me.proton.core.keytransparency.data"
+    DEVICE_MODEL: "Pixel2.arm,version=28"
+    DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
   extends: .firebase-tests-common
 
 androidTest:coreexample-migration:

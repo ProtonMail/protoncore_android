@@ -949,8 +949,41 @@ public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl
 	public static fun newInstance (Lme/proton/core/user/data/db/AddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/user/data/repository/UserAddressRepositoryImpl;
 }
 
+public final class me/proton/core/user/data/repository/UserLocalDataSourceImpl : me/proton/core/user/domain/repository/UserLocalDataSource {
+	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
+	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun observe (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
+	public fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateUserUsedBaseSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateUserUsedDriveSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateUserUsedSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun upsert (Lme/proton/core/user/domain/entity/User;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/repository/UserLocalDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserLocalDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/data/repository/UserLocalDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/user/data/repository/UserLocalDataSourceImpl;
+}
+
+public final class me/proton/core/user/data/repository/UserRemoteDataSourceImpl : me/proton/core/user/domain/repository/UserRemoteDataSource {
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserLocalDataSource;)V
+	public fun fetch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/user/data/repository/UserRemoteDataSourceImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRemoteDataSourceImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/user/data/repository/UserRemoteDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/user/domain/repository/UserLocalDataSource;)Lme/proton/core/user/data/repository/UserRemoteDataSourceImpl;
+}
+
 public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/proton/core/user/domain/repository/UserRepository {
-	public fun <init> (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/user/domain/repository/UserLocalDataSource;Lme/proton/core/user/domain/repository/UserRemoteDataSource;)V
 	public fun addOnPassphraseChangedListener (Lme/proton/core/user/domain/repository/PassphraseRepository$OnPassphraseChangedListener;)V
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun checkExternalEmailAvailable (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -972,11 +1005,11 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 }
 
 public final class me/proton/core/user/data/repository/UserRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/user/data/repository/UserRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/user/data/repository/UserRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/user/domain/repository/UserLocalDataSource;Lme/proton/core/user/domain/repository/UserRemoteDataSource;)Lme/proton/core/user/data/repository/UserRepositoryImpl;
 }
 
 public final class me/proton/core/user/data/usecase/GenerateSignedKeyList {

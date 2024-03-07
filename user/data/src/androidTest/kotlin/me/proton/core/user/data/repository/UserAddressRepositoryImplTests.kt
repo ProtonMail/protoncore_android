@@ -72,10 +72,13 @@ import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.core.user.domain.repository.UserLocalDataSource
+import me.proton.core.user.domain.repository.UserRemoteDataSource
 import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mock
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -117,6 +120,8 @@ class UserAddressRepositoryImplTests {
     private lateinit var db: AccountManagerDatabase
     private lateinit var addressWithKeysDao: AddressWithKeysDao
     private lateinit var userRepository: UserRepository
+    private lateinit var userLocalDataSource: UserLocalDataSource
+    private lateinit var userRemoteDataSource: UserRemoteDataSource
     private lateinit var userAddressRepository: UserAddressRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
@@ -142,15 +147,16 @@ class UserAddressRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
+        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db, keyStoreCrypto)
+        userRemoteDataSource = UserRemoteDataSourceImpl(apiProvider, userLocalDataSource)
         userRepository = UserRepositoryImpl(
-            db,
             apiProvider,
             context,
-            cryptoContext,
             product,
             validateServerProof,
-            keyStoreCrypto,
-            scopeProvider
+            scopeProvider,
+            userLocalDataSource,
+            userRemoteDataSource
         )
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(

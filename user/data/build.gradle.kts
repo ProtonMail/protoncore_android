@@ -30,8 +30,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(25)
-    lineCoveragePercentage.set(19)
+    branchCoveragePercentage.set(32)
+    lineCoveragePercentage.set(34)
 }
 
 android {
@@ -100,5 +100,6 @@ dependencies {
         junit,
         `kotlin-test`,
         mockk,
+        turbine,
     )
 }

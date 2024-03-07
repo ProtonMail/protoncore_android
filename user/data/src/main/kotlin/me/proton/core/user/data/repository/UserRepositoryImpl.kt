@@ -32,10 +32,8 @@ import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
-import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
@@ -43,7 +41,6 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.request.AuthRequest
-import me.proton.core.key.domain.extension.updateIsActive
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.session.SessionId
@@ -52,16 +49,12 @@ import me.proton.core.user.data.api.request.CreateExternalUserRequest
 import me.proton.core.user.data.api.request.CreateUserRequest
 import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
-import me.proton.core.user.data.db.UserDatabase
-import me.proton.core.user.data.extension.toEntity
-import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.CreateUserType
-import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.entity.UserKey
-import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.user.domain.repository.UserLocalDataSource
+import me.proton.core.user.domain.repository.UserRemoteDataSource
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.coroutine.result
@@ -71,31 +64,23 @@ import javax.inject.Singleton
 @Singleton
 @Suppress("TooManyFunctions")
 class UserRepositoryImpl @Inject constructor(
-    private val db: UserDatabase,
     private val provider: ApiProvider,
     @ApplicationContext private val context: Context,
-    private val cryptoContext: CryptoContext,
     private val product: Product,
     private val validateServerProof: ValidateServerProof,
-    private val keyStoreCrypto: KeyStoreCrypto,
-    scopeProvider: CoroutineScopeProvider
+    scopeProvider: CoroutineScopeProvider,
+    private val userLocalDataSource: UserLocalDataSource,
+    private val userRemoteDataSource: UserRemoteDataSource
 ) : UserRepository {
 
     private val onPassphraseChangedListeners = mutableSetOf<PassphraseRepository.OnPassphraseChangedListener>()
 
-    private val userDao = db.userDao()
-    private val userKeyDao = db.userKeyDao()
-    private val userWithKeysDao = db.userWithKeysDao()
-
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            val credentialLessUser = getUserLocal(userId)?.takeIf { it.isCredentialLess() }
-            credentialLessUser ?: provider.get<UserApi>(userId).invoke {
-                getUsers().user.toUser()
-            }.valueOrThrow
+            userRemoteDataSource.fetch(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
-            reader = { userId -> observeUserLocal(userId) },
+            reader = { userId -> userLocalDataSource.observe(userId) },
             writer = { _, input -> insertOrUpdate(input) },
             delete = null, // Not used.
             deleteAll = null // Not used.
@@ -105,27 +90,11 @@ class UserRepositoryImpl @Inject constructor(
     private suspend fun invalidateMemCache(userId: UserId) =
         store.clear(userId)
 
-    private fun List<UserKey>.updateIsActive(passphrase: EncryptedByteArray?): List<UserKey> =
-        map { key -> key.copy(privateKey = key.privateKey.updateIsActive(cryptoContext, passphrase)) }
-
-    private suspend fun getUserLocal(userId: UserId): User? =
-        userWithKeysDao.getByUserId(userId)?.toUser(keyStoreCrypto)
-
-    private fun observeUserLocal(userId: UserId): Flow<User?> =
-        userWithKeysDao.observeByUserId(userId).map { user -> user?.toUser(keyStoreCrypto) }
-
-    private suspend fun insertOrUpdate(user: User): Unit =
-        db.inTransaction {
-            // Get current passphrase -> don't overwrite passphrase.
-            val passphrase = userDao.getPassphrase(user.userId)
-            // Update isActive and passphrase.
-            val userKeys = user.keys.updateIsActive(passphrase)
-            // Insert in Database.
-            userDao.insertOrUpdate(user.toEntity(passphrase))
-            userKeyDao.deleteAllByUserId(user.userId)
-            userKeyDao.insertOrUpdate(*userKeys.toEntityList(keyStoreCrypto).toTypedArray())
+    private suspend fun insertOrUpdate(user: User) {
+        userLocalDataSource.upsert(user) {
             invalidateMemCache(user.userId)
         }
+    }
 
     override suspend fun addUser(user: User): Unit =
         insertOrUpdate(user)
@@ -134,14 +103,14 @@ class UserRepositoryImpl @Inject constructor(
         insertOrUpdate(user)
 
     override suspend fun updateUserUsedSpace(userId: UserId, usedSpace: Long) =
-        userDao.setUsedSpace(userId, usedSpace)
+        userLocalDataSource.updateUserUsedBaseSpace(userId, usedSpace)
 
     override suspend fun updateUserUsedBaseSpace(userId: UserId, usedBaseSpace: Long) {
-        userDao.setUsedBaseSpace(userId, usedBaseSpace)
+        userLocalDataSource.updateUserUsedBaseSpace(userId, usedBaseSpace)
     }
 
     override suspend fun updateUserUsedDriveSpace(userId: UserId, usedDriveSpace: Long) {
-        userDao.setUsedDriveSpace(userId, usedDriveSpace)
+        userLocalDataSource.updateUserUsedDriveSpace(userId, usedDriveSpace)
     }
 
     override fun observeUser(sessionUserId: SessionUserId, refresh: Boolean): Flow<User?> =
@@ -267,20 +236,18 @@ class UserRepositoryImpl @Inject constructor(
     private suspend fun internalSetPassphrase(
         userId: UserId,
         passphrase: EncryptedByteArray?
-    ): Unit =
-        db.inTransaction {
-            if (passphrase != getPassphrase(userId)) {
-                userDao.setPassphrase(userId, passphrase)
-                insertOrUpdate(requireNotNull(getUserLocal(userId)))
-                onPassphraseChangedListeners.forEach { it.onPassphraseChanged(userId) }
-            }
+    ) {
+        userLocalDataSource.setPassphrase(userId, passphrase) {
+            invalidateMemCache(userId)
+            onPassphraseChangedListeners.forEach { it.onPassphraseChanged(userId) }
         }
+    }
 
     override suspend fun setPassphrase(userId: UserId, passphrase: EncryptedByteArray) =
         internalSetPassphrase(userId, passphrase)
 
     override suspend fun getPassphrase(userId: UserId): EncryptedByteArray? =
-        userDao.getPassphrase(userId)
+        userLocalDataSource.getPassphrase(userId)
 
     override suspend fun clearPassphrase(userId: UserId) =
         internalSetPassphrase(userId, null)

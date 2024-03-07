@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("me.proton.core.gradle-plugins.global-coverage")
-}
+package me.proton.core.user.domain.repository
 
-publishOption.shouldBePublishedAsLib = false
+import me.proton.core.domain.entity.UserId
+import me.proton.core.user.domain.entity.User
 
-// Global minimum coverage percentage.
-protonCoverage {
-    branchCoveragePercentage.set(37)
-    lineCoveragePercentage.set(62)
+interface UserRemoteDataSource {
+    suspend fun fetch(userId: UserId): User
 }
