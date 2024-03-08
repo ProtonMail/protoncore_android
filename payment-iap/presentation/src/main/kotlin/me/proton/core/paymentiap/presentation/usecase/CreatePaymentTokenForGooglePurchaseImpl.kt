@@ -35,8 +35,6 @@ import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.entity.Type
-import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import javax.inject.Inject
 

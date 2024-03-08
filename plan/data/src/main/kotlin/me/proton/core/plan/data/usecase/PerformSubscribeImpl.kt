@@ -31,6 +31,8 @@ import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import java.util.Optional
 import javax.inject.Inject
 
@@ -38,7 +40,8 @@ public class PerformSubscribeImpl @Inject constructor(
     private val acknowledgeGooglePlayPurchase: Optional<AcknowledgeGooglePlayPurchase>,
     private val plansRepository: PlansRepository,
     private val humanVerificationManager: HumanVerificationManager,
-    private val clientIdProvider: ClientIdProvider
+    private val clientIdProvider: ClientIdProvider,
+    private val userManager: UserManager,
 ) : PerformSubscribe {
     /**
      * @param codes optional an array of [String] coupon or gift codes used for discounts.
@@ -58,6 +61,9 @@ public class PerformSubscribeImpl @Inject constructor(
         require(planNames.isNotEmpty())
         require(paymentToken != null || amount <= 0) {
             "Payment Token must be supplied when the amount is bigger than zero. Otherwise it should be null."
+        }
+        require(!userId.isNullOrCredentialLess(userManager)) {
+            "Cannot subscribe with a credential-less user."
         }
         val subscription = plansRepository.createOrUpdateSubscription(
             sessionUserId = userId,

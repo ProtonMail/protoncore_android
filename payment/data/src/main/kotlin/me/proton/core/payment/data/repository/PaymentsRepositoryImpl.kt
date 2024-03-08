@@ -35,11 +35,13 @@ import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.repository.PaymentsRepository
+import me.proton.core.plan.data.usecase.GetSessionUserIdForPaymentApi
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 public class PaymentsRepositoryImpl @Inject constructor(
-    private val apiProvider: ApiProvider
+    private val apiProvider: ApiProvider,
+    private val getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi,
 ) : PaymentsRepository {
 
     override suspend fun createPaymentToken(
@@ -98,7 +100,7 @@ public class PaymentsRepositoryImpl @Inject constructor(
                 paymentMethodId = paymentType.paymentMethodId
             )
         }
-        apiProvider.get<PaymentsApi>(sessionUserId).invoke {
+        apiProvider.get<PaymentsApi>(getSessionUserIdForPaymentApi(sessionUserId)).invoke {
             createPaymentToken(request).toCreatePaymentTokenResult()
         }.valueOrThrow
     }

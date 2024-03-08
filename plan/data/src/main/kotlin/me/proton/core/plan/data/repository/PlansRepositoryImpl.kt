@@ -32,6 +32,7 @@ import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.data.api.request.CheckSubscription
 import me.proton.core.plan.data.api.request.CreateSubscription
 import me.proton.core.plan.data.api.response.toDynamicPlan
+import me.proton.core.plan.data.usecase.GetSessionUserIdForPaymentApi
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlans
@@ -48,7 +49,8 @@ import kotlin.time.Duration.Companion.minutes
 @Singleton
 class PlansRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
-    private val endpointProvider: PlanIconsEndpointProvider
+    private val endpointProvider: PlanIconsEndpointProvider,
+    private val getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi,
 ) : PlansRepository {
 
     private val dynamicPlansCache =
@@ -105,7 +107,7 @@ class PlansRepositoryImpl @Inject constructor(
         currency: Currency,
         cycle: SubscriptionCycle
     ): SubscriptionStatus = result("validateSubscription") {
-        apiProvider.get<PlansApi>(sessionUserId).invoke {
+        apiProvider.get<PlansApi>(getSessionUserIdForPaymentApi(sessionUserId)).invoke {
             validateSubscription(
                 CheckSubscription(codes, plans, currency.name, cycle.value)
             ).toSubscriptionStatus()

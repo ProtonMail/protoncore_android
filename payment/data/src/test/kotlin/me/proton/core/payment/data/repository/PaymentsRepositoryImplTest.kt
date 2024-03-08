@@ -18,8 +18,10 @@
 
 package me.proton.core.payment.data.repository
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
@@ -44,6 +46,7 @@ import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.plan.data.usecase.GetSessionUserIdForPaymentApi
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.runTestWithResultContext
@@ -62,6 +65,9 @@ class PaymentsRepositoryImplTest {
     private val apiManager = mockk<ApiManager<PaymentsApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: PaymentsRepositoryImpl
+
+    @MockK
+    private lateinit var getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi
     // endregion
 
     // region test data
@@ -81,7 +87,9 @@ class PaymentsRepositoryImplTest {
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
         // GIVEN
+        coEvery { getSessionUserIdForPaymentApi(any()) } answers { firstArg() }
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
         every {
@@ -95,7 +103,7 @@ class PaymentsRepositoryImplTest {
                 interfaceClass = PaymentsApi::class
             )
         } returns apiManager
-        repository = PaymentsRepositoryImpl(apiProvider)
+        repository = PaymentsRepositoryImpl(apiProvider, getSessionUserIdForPaymentApi)
     }
 
     @Test

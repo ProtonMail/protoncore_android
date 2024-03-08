@@ -30,7 +30,6 @@ import me.proton.core.humanverification.domain.HumanVerificationManager
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.client.ClientIdProvider
-import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
@@ -40,6 +39,8 @@ import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.plan.domain.usecase.PerformSubscribe
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
 import org.junit.Before
 import org.junit.Test
 import java.util.Optional
@@ -59,7 +60,7 @@ class PerformSubscribeTest {
     private lateinit var clientIdProvider: ClientIdProvider
 
     @MockK(relaxed = true)
-    private lateinit var observabilityManager: ObservabilityManager
+    private lateinit var userManager: UserManager
     // endregion
 
     // region test data
@@ -94,7 +95,8 @@ class PerformSubscribeTest {
             Optional.empty(),
             repository,
             humanVerificationManager,
-            clientIdProvider
+            clientIdProvider,
+            userManager
         )
         coEvery {
             repository.createOrUpdateSubscription(
@@ -349,7 +351,8 @@ class PerformSubscribeTest {
             acknowledgeGooglePlayPurchaseOptional,
             repository,
             humanVerificationManager,
-            clientIdProvider
+            clientIdProvider,
+            userManager
         )
         useCase.invoke(
             userId = testUserId,
@@ -364,5 +367,29 @@ class PerformSubscribeTest {
 
         coVerify(exactly = 1) { humanVerificationManager.clearDetails(any()) }
         coVerify(exactly = 1) { acknowledgeGooglePlayPurchase.invoke(testPaymentToken) }
+    }
+
+    @Test
+    fun `fails if called with credential-less user`() = runTest {
+        // GIVEN
+        coEvery { userManager.getUser(any()) } returns mockk {
+            every { type } returns Type.CredentialLess
+        }
+
+        // THEN
+        val throwable = assertFailsWith<IllegalArgumentException> {
+            // WHEN
+            useCase.invoke(
+                userId = testUserId,
+                amount = 1,
+                currency = Currency.CHF,
+                cycle = SubscriptionCycle.YEARLY,
+                planNames = listOf(testPlanName),
+                codes = null,
+                paymentToken = testPaymentToken,
+                subscriptionManagement = SubscriptionManagement.PROTON_MANAGED
+            )
+        }
+        assertEquals("Cannot subscribe with a credential-less user.", throwable.message)
     }
 }

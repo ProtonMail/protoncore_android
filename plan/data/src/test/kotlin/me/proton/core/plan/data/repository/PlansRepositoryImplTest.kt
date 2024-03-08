@@ -18,8 +18,10 @@
 
 package me.proton.core.plan.data.repository
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
@@ -40,6 +42,7 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.data.entity.dynamicSubscription
+import me.proton.core.plan.data.usecase.GetSessionUserIdForPaymentApi
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanState
@@ -73,6 +76,9 @@ class PlansRepositoryImplTest {
     private val apiManager = mockk<ApiManager<PlansApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: PlansRepositoryImpl
+
+    @MockK
+    private lateinit var getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi
     // endregion
 
     // region test data
@@ -84,7 +90,9 @@ class PlansRepositoryImplTest {
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
         // GIVEN
+        coEvery { getSessionUserIdForPaymentApi(any()) } answers { firstArg() }
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every {
@@ -98,7 +106,7 @@ class PlansRepositoryImplTest {
                 interfaceClass = PlansApi::class
             )
         } returns apiManager
-        repository = PlansRepositoryImpl(apiProvider, endpointProvider)
+        repository = PlansRepositoryImpl(apiProvider, endpointProvider, getSessionUserIdForPaymentApi)
     }
 
     @Test

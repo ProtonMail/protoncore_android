@@ -23,7 +23,6 @@ import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
-import me.proton.core.payment.domain.repository.PaymentsRepository
 import me.proton.core.plan.domain.repository.PlansRepository
 import javax.inject.Inject
 

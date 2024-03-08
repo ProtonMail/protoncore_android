@@ -242,7 +242,7 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 }
 
 public final class me/proton/core/plan/data/repository/PlansRepositoryImpl : me/proton/core/plan/domain/repository/PlansRepository {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;)V
 	public fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getDynamicPlans (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getDynamicSubscriptions (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -252,13 +252,18 @@ public final class me/proton/core/plan/data/repository/PlansRepositoryImpl : me/
 	public fun validateSubscription (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi {
+	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/plan/data/usecase/ObserveUserCurrencyImpl : me/proton/core/plan/domain/usecase/ObserveUserCurrency {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;)V
 	public fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public final class me/proton/core/plan/data/usecase/PerformSubscribeImpl : me/proton/core/plan/domain/usecase/PerformSubscribe {
-	public fun <init> (Ljava/util/Optional;Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;)V
+	public fun <init> (Ljava/util/Optional;Lme/proton/core/plan/domain/repository/PlansRepository;Lme/proton/core/humanverification/domain/HumanVerificationManager;Lme/proton/core/network/domain/client/ClientIdProvider;Lme/proton/core/user/domain/UserManager;)V
 	public fun invoke-uDK3N8w (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

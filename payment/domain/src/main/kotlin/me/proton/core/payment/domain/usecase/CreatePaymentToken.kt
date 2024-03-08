@@ -37,7 +37,12 @@ public class CreatePaymentToken @Inject constructor(
         paymentType: PaymentType
     ): PaymentTokenResult.CreatePaymentTokenResult {
         require(amount >= 0)
-        return paymentsRepository.createPaymentToken(userId, amount, currency, paymentType).also {
+        return paymentsRepository.createPaymentToken(
+            sessionUserId = userId,
+            amount = amount,
+            currency = currency,
+            paymentType = paymentType
+        ).also {
             when (paymentType) {
                 is PaymentType.GoogleIAP -> googlePurchaseRepository.updateGooglePurchase(
                     googlePurchaseToken = paymentType.purchaseToken,
