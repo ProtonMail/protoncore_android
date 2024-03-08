@@ -37,6 +37,8 @@ public open class ContentResolverConfigManager(
         cursor.columnNames.associateWith { columnName ->
             cursor.retrieveValue(columnName)
         }
+    }?.takeIf {
+        it.isNotEmpty()
     }
 
     @Synchronized

@@ -35,7 +35,11 @@ protonCoverage {
 }
 
 dependencies {
-    implementation(project(Module.networkData))
+    implementation(
+        project(Module.networkData),
+        datastore,
+        datastorePreferences,
+    )
 
     testImplementation(junit, mockk)
 }
