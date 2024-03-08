@@ -226,6 +226,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:test-android-instrumented             |
 | me.proton.core:test-kotlin                           |
 | me.proton.core:test-quark                            |
+| me.proton.core:test-rule                             |
 | me.proton.core:user                                  |
 | me.proton.core:user-dagger                           |
 | me.proton.core:user-data                             |

@@ -1,5 +1,8 @@
+import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
+
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,26 +19,35 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-
 plugins {
     protonAndroidLibrary
     protonDagger
+    kotlin("plugin.serialization")
 }
 
+protonCoverage.disabled.set(true)
 publishOption.shouldBePublishedAsLib = true
 
 android {
-    namespace = "me.proton.core.configuration.data"
-}
-
-protonCoverage {
-    branchCoveragePercentage.set(56)
-    lineCoveragePercentage.set(74)
+    namespace = "me.proton.core.test.rule"
 }
 
 dependencies {
-    implementation(project(Module.networkData))
-
-    testImplementation(junit, mockk)
+    implementation(
+        project(Module.configurationData),
+        project(Module.configurationDaggerContentResolver),
+        project(Module.quark),
+        project(Module.authDomain),
+        project(Module.authPresentation),
+        `coroutines-android`,
+        okhttp,
+        junit,
+        `hilt-android-testing`,
+        `android-ktx`,
+        `serialization-json`,
+        `androidx-test-monitor`,
+        `android-test-runner`,
+        `compose-ui-test-junit`,
+        `junit-ktx`
+    )
 }

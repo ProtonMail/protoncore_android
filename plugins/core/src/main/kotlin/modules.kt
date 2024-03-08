@@ -38,6 +38,7 @@ public object Module {
     public const val androidTest: String = "$test:test-android"
     public const val androidInstrumentedTest: String = "$androidTest:test-android-instrumented"
     public const val quark: String = "$test:test-quark"
+    public const val testRule: String = "$test:test-rule"
     // endregion
 
     // region Shared
