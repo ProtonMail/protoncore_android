@@ -152,9 +152,9 @@
   <string name="auth_signup_start_using_pass">Commencez à utiliser Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">La destination de récupération n\'est pas valide.</string>
   <string name="auth_credentialless_vpn_no_logs">Le VPN qui n\'enregistre pas vos activités.</string>
-  <string name="auth_credentialless_vpn_title">Bienvenue sur Proton VPN</string>
+  <string name="auth_credentialless_vpn_title">Nous vous souhaitons la bienvenue sur Proton VPN.</string>
   <string name="auth_credentialless_vpn_subtitle">Naviguez en toute confidentialité, accédez aux contenus bloqués et profitez de la liberté numérique.</string>
-  <string name="auth_credentialless_guest_button">Continuer en tant qu\'invité</string>
+  <string name="auth_credentialless_guest_button">Continuer comme invité</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilisant cette application, vous acceptez nos <annotation link="terms">conditions générales</annotation>.</string>
   <string name="auth_credentialless_settings_title">Faites le pas vers le respect de la vie privée.</string>
   <string name="auth_credentialless_settings_subtitle">Obtenez un gestionnaire de mots de passe, une boîte mail et un calendrier chiffrés, ainsi que 1 Go de stockage cloud gratuitement avec un compte Proton.</string>

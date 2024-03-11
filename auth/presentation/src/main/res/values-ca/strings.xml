@@ -19,16 +19,16 @@
 <resources>
   <string name="welcome_title">Protegiu la vostra privadesa amb Proton</string>
   <string name="welcome_subtitle">El xifratge manté privades les vostres dades. Les vostres dades us pertanyen.</string>
-  <string name="welcome_subtitle_mail">El correu electrònic xifrat manté en privat les vostres converses. La vostra safata d\'entrada us pertany.</string>
+  <string name="welcome_subtitle_mail">El correu electrònic xifrat que manté en privat les vostres converses. La vostra safata d\'entrada realment us pertany.</string>
   <string name="welcome_subtitle_mail_alt">Privadesa. Seguretat. Comoditat. Correu electrònic xifrat que us ofereix un control complet sobre les dades personals.</string>
   <string name="welcome_subtitle_drive">La comoditat de l\'emmagatzematge al núvol i la seguretat de la tecnologia del xifratge. Per fi una solució d\'emmagatzematge al núvol en la qual podeu confiar.</string>
   <string name="welcome_subtitle_drive_alt">La manera més segura d\'emmagatzemar fitxers. Pugeu-ne, sincronitzeu i compartiu amb el xifratge més potent disponible.</string>
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_subtitle_calendar_alt">El nostre calendari xifrat d\'extrem a extrem us ajuda a mantenir-vos organitzat, al dia i en control.</string>
-  <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privadesa xifrant la vostra connexió a Internet.</string>
-  <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que us protegeix la privadesa. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
-  <string name="welcome_subtitle_pass">Totes les teves contrasenyes. De forma segura en un sol lloc i protegit pel nom més fiable en la privadesa.</string>
-  <string name="welcome_subtitle_pass_alt">Totes les teves contrasenyes. De forma segura en un sol lloc i protegit pel nom més fiable en la privadesa.</string>
+  <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat mitjançant el xifratge de la vostra connexió a Internet.</string>
+  <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
+  <string name="welcome_subtitle_pass">Manteniu les vostres contrasenyes segures, en un sol lloc i protegides per l\'empresa més fiable en privacitat.</string>
+  <string name="welcome_subtitle_pass_alt">Manteniu les vostres contrasenyes segures, en un sol lloc i protegides per l\'empresa més fiable en privacitat.</string>
   <string name="welcome_privacy_by_default">Privadesa per defecte</string>
   <string name="auth_password_label">Contrasenya</string>
   <string name="auth_password_help">La contrasenya ha de tenir com a mínim 8 caràcters</string>
@@ -42,17 +42,17 @@
   <string name="auth_sign_out">Tanca la sessió</string>
   <string name="auth_sign_in_action">Inicia la sessió</string>
   <string name="auth_sign_in_sso">Inicieu la sessió a la vostra organització</string>
-  <string name="auth_sign_in_with_password">Incicieu la sessió amb una contrasenya</string>
+  <string name="auth_sign_in_with_password">Inicieu la sessió amb una contrasenya</string>
   <string name="auth_continue_to_proton_vpn">per a continuar a Proton VPN</string>
   <string name="auth_sign_in_with_sso">Inicia la sessió amb SSO</string>
   <string name="auth_help_label">Ajuda</string>
   <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>
-  <string name="auth_login_sso_assistive_text">Introduïu la vostra adreça electrònica.</string>
+  <string name="auth_login_sso_assistive_text">Introduïu el vostre correu electrònic.</string>
   <string name="auth_help_title">Com us podem ajudar?</string>
   <string name="auth_help_option_forgot_username">Nom d\'usuari oblidat</string>
-  <string name="auth_help_option_forgot_password">Contrasenya oblidada</string>
+  <string name="auth_help_option_forgot_password">He oblidat la contrasenya</string>
   <string name="auth_help_option_other">Altres problemes d\'inici de sessió</string>
-  <string name="auth_help_other">Encara necessiteu ajuda? Contacteu-nos directament.</string>
+  <string name="auth_help_other">Encara necessiteu ajuda? Contacteu amb nosaltres directament.</string>
   <string name="auth_help_option_customer_support">Atenció al client</string>
   <string name="auth_2fa_title">Autenticació de dos factors</string>
   <string name="auth_2fa_label">Codi de dos factors</string>
@@ -66,20 +66,20 @@
   <string name="auth_mailbox_title">Desbloquegeu la vostra bústia de correu</string>
   <string name="auth_mailbox_password_label">Contrasenya de la bústia de correu</string>
   <string name="auth_mailbox_unlock_action">Desbloqueja</string>
-  <string name="auth_forgot_password">Contrasenya oblidada</string>
+  <string name="auth_forgot_password">He oblidat la contrasenya</string>
   <string name="auth_login_general_error">S\'ha produït un error.</string>
-  <string name="auth_login_external_account_unsupported_title">Es requereix l\'adreça del Proton</string>
-  <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton enllaçada a aquest compte a la configuració web de Proton.</string>
+  <string name="auth_login_external_account_unsupported_title">Es requereix una adreça de Proton</string>
+  <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton enllaçada amb aquest compte a les preferències de la web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
   <string name="auth_login_empty_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_mailbox_empty_credentials">Les credencials no poden estar buides.</string>
-  <string name="auth_create_address_title">Es requereix l\'adreça del Proton</string>
-  <string name="auth_create_address_subtitle">Necessiteu un correu de Proton per fer servir Proton Mail i Proton Calendar. Podreu seguir fent servir %1$s per iniciar sessió, i per recuperar el compte.</string>
+  <string name="auth_create_address_title">Es requereix una adreça de Proton</string>
+  <string name="auth_create_address_subtitle">Necessiteu una adreça de correu electrònic de Proton per a fer servir Proton Mail i Proton Calendar. Podreu seguir fent servir %1$s per a iniciar la sessió i per a recuperar el compte.</string>
   <string name="auth_username">Nom d\'usuari</string>
-  <string name="auth_username_next_action">Continuar</string>
+  <string name="auth_username_next_action">Continua</string>
   <string name="auth_create_address_result_title">%s està disponible</string>
-  <string name="auth_create_address_result_title_username">%1$s@%2$s serà la vostra nova adreça de correu de Proton Mail.</string>
-  <string name="auth_create_address_result_subtitle">Utilitzareu aquesta adreça per iniciar sessió a tots els serveis de Proton.</string>
+  <string name="auth_create_address_result_title_username">%1$s@%2$s serà la vostra nova adreça de correu electrònic de Proton Mail.</string>
+  <string name="auth_create_address_result_subtitle">Utilitzareu aquesta adreça per a iniciar la sessió a tots els serveis de Proton.</string>
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">S\'està creant l\'adreça</string>
@@ -129,9 +129,9 @@
   <string name="auth_signup_skip_recovery_title">Voleu ometre el mètode de recuperació?</string>
   <string name="auth_signup_skip_recovery_description">Un mètode de recuperació us ajudarà a accedir al vostre compte si oblideu la contrasenya o no podeu entrar al compte.</string>
   <string name="auth_signup_skip_recovery">Omet</string>
-  <string name="auth_signup_set_recovery">Establir un mètode de recuperació</string>
+  <string name="auth_signup_set_recovery">Estableix un mètode de recuperació</string>
   <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>
-  <string name="auth_signup_error_username_blank">El nom d\'usuari no pot ser blanc.</string>
+  <string name="auth_signup_error_username_blank">El nom d\'usuari no pot estar en blanc.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les contrasenyes no coincideixen.</string>
   <string name="auth_signup_validation_password_length">La contrasenya ha de tenir almenys 8 caràcters.</string>
   <string name="auth_signup_validation_password">La contrasenya no pot ser buida.</string>
@@ -141,8 +141,8 @@
   <string name="auth_signup_verify">Verifica</string>
   <string name="auth_signup_verification_code">Codi de verificació</string>
   <string name="auth_signup_enter_code_subtitle">Introduïu el codi de verificació que s’ha enviat a %s:</string>
-  <string name="auth_signup_error_human_verification_failed">Error amb la verificació humana</string>
-  <string name="auth_signup_congratulations_subtitle">El compte de Proton s\'ha creat correctament.\nGaudiu del món de la privadesa.</string>
+  <string name="auth_signup_error_human_verification_failed">La verificació humana ha fallat.</string>
+  <string name="auth_signup_congratulations_subtitle">S\'ha creat el vostre compte de Proton.\nGaudiu del món de la privacitat.</string>
   <string name="auth_signup_congratulations">Enhorabona!</string>
   <string name="auth_signup_start_using_proton">Comenceu a utilitzar Proton</string>
   <string name="auth_signup_start_using_calendar">Comenceu a utilitzar Proton Calendar</string>
@@ -153,9 +153,9 @@
   <string name="auth_signup_error_validation_recovery_destination">La destinació de recuperació és invàlida.</string>
   <string name="auth_credentialless_vpn_no_logs">VPN certificada sense registres</string>
   <string name="auth_credentialless_vpn_title">Us donem la benvinguda a Proton VPN</string>
-  <string name="auth_credentialless_vpn_subtitle">Navegui en privat, accedeixi a continguts bloquejats i gaudeixi de la llibertat digital.</string>
+  <string name="auth_credentialless_vpn_subtitle">Navegueu privadament, accediu a continguts bloquejats i gaudiu de llibertat digital.</string>
   <string name="auth_credentialless_guest_button">Continueu com a convidat</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilitzar aquesta aplicació, vostè accepta els nostres <annotation link="terms">Termes i condicions</annotation>.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilitzar aquesta aplicació, accepteu els nostres <annotation link="terms">termes i condicions</annotation>.</string>
   <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
   <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

@@ -21,7 +21,7 @@
   <string name="account_switcher_action_add_account">Afegeix un compte</string>
   <string name="account_switcher_action_sign_in">Inicia la sessió</string>
   <string name="account_switcher_action_sign_out">Tanca la sessió</string>
-  <string name="account_switcher_action_remove">Eliminar</string>
+  <string name="account_switcher_action_remove">Esborra</string>
   <string name="account_list_item_chevron_content_description">Obrir el commutador de comptes</string>
   <string name="account_view_three_dots_content_description">Opcions</string>
 </resources>

@@ -19,8 +19,8 @@
 <resources>
   <string name="crypto_keystore_error_title">Error de xifratge</string>
   <string name="crypto_keystore_error_message">Aquest dispositiu utilitza una implementació errònia del Magatzem de claus Android, que utilitzem per mantenir les dades segures. Això significa que les vostres dades poden ser compromeses si un atacant obté accés físic al vostre dispositiu. Què voleu fer?</string>
-  <string name="crypto_keystore_error_continue_action">Continuar</string>
-  <string name="crypto_keystore_error_more_info_action">Obtenir més informació</string>
+  <string name="crypto_keystore_error_continue_action">Continua</string>
+  <string name="crypto_keystore_error_more_info_action">Obteniu més informació</string>
   <string name="crypto_keystore_error_logout_action">Tanca la sessió</string>
-  <string name="crypto_keystore_error_exit_action">Sortir</string>
+  <string name="crypto_keystore_error_exit_action">Surt</string>
 </resources>

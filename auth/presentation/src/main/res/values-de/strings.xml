@@ -156,6 +156,6 @@
   <string name="auth_credentialless_vpn_subtitle">Surfe privat, greife auf gesperrte Inhalte zu und genieße digitale Freiheit.</string>
   <string name="auth_credentialless_guest_button">Als Gast fortfahren</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Durch das Verwenden dieser App akzeptierst du unsere <annotation link="terms">Nutzungsbedingungen</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_title">Wage den Schritt zur Privatsphäre.</string>
   <string name="auth_credentialless_settings_subtitle">Mit einem Proton-Konto erhältst du einen Passwortmanager, verschlüsselte E-Mails und Kalender sowie 1 GB Cloud-Speicher kostenlos.</string>
 </resources>

@@ -19,16 +19,16 @@
 <resources>
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">No es troba cap navegador per obrir aquest enllaç.</string>
-  <string name="presentation_force_update_title">Actualització necessària</string>
-  <string name="presentation_force_update_message">Aquesta versió de l\'aplicació ja no està suportada, si us plau actualitzeu-la per continuar-la utilitzant.</string>
+  <string name="presentation_force_update_title">Es requereix una actualització</string>
+  <string name="presentation_force_update_message">Aquesta versió de l\'aplicació ja no està suportada. Actualitzeu-la per continuar utilitzant-la.</string>
   <string name="presentation_force_update_learn_more">Més informació</string>
   <string name="presentation_force_update_update">Actualitza</string>
-  <string name="presentation_market_missing">No es troba l\'aplicació de botiga instal·lada al dispositiu. Aneu a la botiga i actualitzeu l\'aplicació.</string>
+  <string name="presentation_market_missing">No es troba l\'aplicació al dispositiu. Aneu a la botiga d\'aplicacions per a instal·lar-la.</string>
   <string name="presentation_authenticate">Autentica</string>
-  <string name="presentation_signin_to_continue">Inicieu sessió per continuar</string>
+  <string name="presentation_signin_to_continue">Inicieu la sessió per a continuar</string>
   <string name="presentation_alert_title">Alerta</string>
-  <string name="presentation_alert_ok">OK</string>
-  <string name="presentation_alert_enter">Entrar</string>
+  <string name="presentation_alert_ok">D\'acord</string>
+  <string name="presentation_alert_enter">Introdueix</string>
   <string name="presentation_alert_cancel">Cancel·la</string>
   <string name="presentation_alert_continue">Continua</string>
   <string name="presentation_alert_submit">Envia</string>
@@ -40,7 +40,7 @@
   <!-- Other -->
   <string name="presentation_back">Torna</string>
   <string name="presentation_close">Tanca</string>
-  <string name="presentation_retry">Reintenta</string>
+  <string name="presentation_retry">Torna a provar</string>
   <string name="presentation_skip">Omet</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">No s\'ha pogut connectar al servidor.</string>
