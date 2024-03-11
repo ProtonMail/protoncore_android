@@ -51,6 +51,7 @@ import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.paymentiap.presentation.entity.mockPurchase
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.util.kotlin.coroutine.result
 import kotlin.test.BeforeTest
@@ -264,13 +265,13 @@ class BillingIAPViewModelTest : CoroutinesTest by CoroutinesTest() {
                     .build()
                     .wrap(),
 
-                listOf(mockk<Purchase> {
-                    every { accountIdentifiers } returns mockk {
-                        every { obfuscatedAccountId } returns "" // empty clientId
-                    }
-                    every { products } returns listOf(googleProductId)
-                    every { purchaseState } returns Purchase.PurchaseState.PURCHASED
-                }.wrap())
+                listOf(
+                    mockPurchase(
+                        accountIdentifiers = mockk { every { obfuscatedAccountId } returns "" },
+                        products = listOf(googleProductId),
+                        purchaseState = Purchase.PurchaseState.PURCHASED
+                    ).wrap()
+                )
             )
         )
 

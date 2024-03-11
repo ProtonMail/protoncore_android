@@ -308,6 +308,9 @@ internal class BillingIAPViewModel @Inject constructor(
         val productId = requireNotNull(purchase.products.firstOrNull()) {
             "The purchase should contain a product ID."
         }
+        val orderId = requireNotNull(purchase.orderId) {
+            "The purchase should contain order ID."
+        }
 
         return if (purchaseCustomerId.isEmpty()) {
             State.Error.ProductPurchaseError.IncorrectCustomerId
@@ -315,7 +318,7 @@ internal class BillingIAPViewModel @Inject constructor(
             State.Success.PurchaseSuccess(
                 productId = productId,
                 purchaseToken = GooglePurchaseToken(purchase.purchaseToken),
-                orderID = purchase.orderId,
+                orderID = orderId,
                 customerId = purchaseCustomerId,
                 billingInput = billingInput
             )

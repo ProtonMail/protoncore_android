@@ -79,7 +79,7 @@ public class CreatePaymentTokenForGooglePurchaseImpl @Inject constructor(
             paymentType = PaymentType.GoogleIAP(
                 productId = googleProductId.id,
                 purchaseToken = purchase.purchaseToken,
-                orderId = purchase.orderId,
+                orderId = requireNotNull(purchase.orderId),
                 packageName = purchase.packageName,
                 customerId = requireNotNull(purchase.customerId)
             )

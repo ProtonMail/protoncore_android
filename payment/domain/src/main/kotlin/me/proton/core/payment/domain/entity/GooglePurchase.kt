@@ -20,7 +20,7 @@ package me.proton.core.payment.domain.entity
 
 public interface GooglePurchase {
     public val customerId: String?
-    public val orderId: String
+    public val orderId: String?
     public val packageName: String
     public val productIds: List<ProductId>
     public val purchaseToken: GooglePurchaseToken

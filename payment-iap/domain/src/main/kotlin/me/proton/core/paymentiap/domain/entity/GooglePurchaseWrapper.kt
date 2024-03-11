@@ -25,7 +25,7 @@ import me.proton.core.payment.domain.entity.ProductId
 
 internal data class GooglePurchaseWrapper(val purchase: Purchase) : GooglePurchase {
     override val customerId: String? get() = purchase.accountIdentifiers?.obfuscatedAccountId
-    override val orderId: String get() = purchase.orderId
+    override val orderId: String? get() = purchase.orderId
     override val packageName: String get() = purchase.packageName
     override val productIds: List<ProductId>
         get() = purchase.products.map { ProductId(it) }

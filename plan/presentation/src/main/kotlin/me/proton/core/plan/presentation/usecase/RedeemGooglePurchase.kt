@@ -77,7 +77,7 @@ internal class RedeemGooglePurchase @Inject constructor(
             paymentType = PaymentType.GoogleIAP(
                 productId = googlePurchase.productIds.first().id,
                 purchaseToken = googlePurchase.purchaseToken,
-                orderId = googlePurchase.orderId,
+                orderId = requireNotNull(googlePurchase.orderId),
                 packageName = googlePurchase.packageName,
                 customerId = requireNotNull(googlePurchase.customerId)
             )
