@@ -136,7 +136,7 @@ class UnredeemedPurchaseTest : BaseMockTest {
             every { orderId } returns "order-id"
             every { packageName } returns "package-name"
             every { purchaseTime } returns 0
-            every { products } returns listOf("googlemail_mail2022_12_renewing")
+            every { products } returns listOf("giappass_pass2023_12_renewing")
             every { purchaseState } returns Purchase.PurchaseState.PURCHASED
             every { purchaseToken } returns "google-purchase-token"
         }
@@ -159,8 +159,8 @@ class UnredeemedPurchaseTest : BaseMockTest {
             "GET/payments/v4/status/google-iap-only.json"
         )
         dispatcher.mockFromAssets(
-            "GET", "/payments/v4/subscription",
-            "GET/payments/v4/subscription-none.json", 422
+            "GET", "/payments/v5/subscription",
+            "GET/payments/v5/subscription-free.json"
         )
         dispatcher.mockFromAssets(
             "GET", "/core/v4/users",
@@ -172,7 +172,7 @@ class UnredeemedPurchaseTest : BaseMockTest {
         )
         dispatcher.mockFromAssets(
             "POST", "/payments/v4/subscription",
-            "POST/payments/v4/subscription-mail-plus-proton-managed.json"
+            "POST/payments/v4/subscription-pass-plus-google-managed.json"
         )
     }
 }

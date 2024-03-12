@@ -996,15 +996,15 @@ public final class me/proton/core/plan/presentation/entity/SubscriptionManagemen
 }
 
 public final class me/proton/core/plan/presentation/entity/UnredeemedGooglePurchase {
-	public fun <init> (Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/plan/domain/entity/Plan;Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;)V
+	public fun <init> (Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;)V
 	public final fun component1 ()Lme/proton/core/payment/domain/entity/GooglePurchase;
-	public final fun component2 ()Lme/proton/core/plan/domain/entity/Plan;
+	public final fun component2 ()Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public final fun component3 ()Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;
-	public final fun copy (Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/plan/domain/entity/Plan;Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;)Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchase;
-	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchase;Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/plan/domain/entity/Plan;Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;ILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchase;
+	public final fun copy (Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;)Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchase;
+	public static synthetic fun copy$default (Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchase;Lme/proton/core/payment/domain/entity/GooglePurchase;Lme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;ILjava/lang/Object;)Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchase;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getGooglePurchase ()Lme/proton/core/payment/domain/entity/GooglePurchase;
-	public final fun getPurchasedPlan ()Lme/proton/core/plan/domain/entity/Plan;
+	public final fun getPurchasedPlan ()Lme/proton/core/plan/domain/entity/DynamicPlan;
 	public final fun getStatus ()Lme/proton/core/plan/presentation/entity/UnredeemedGooglePurchaseStatus;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1458,7 +1458,7 @@ public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGoogl
 	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetCurrentSubscription;Lme/proton/core/plan/domain/usecase/GetPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
 }
 
 public final class me/proton/core/plan/presentation/usecase/LoadStorageUsageState {
@@ -1491,11 +1491,11 @@ public final class me/proton/core/plan/presentation/usecase/ObserveUserId_Factor
 }
 
 public final class me/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
+	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/CreatePaymentToken;Lme/proton/core/plan/domain/usecase/ObserveUserCurrency;Lme/proton/core/plan/domain/usecase/PerformSubscribe;Lme/proton/core/plan/domain/usecase/ValidateSubscriptionPlan;)Lme/proton/core/plan/presentation/usecase/RedeemGooglePurchase;
 }
 
 public abstract class me/proton/core/plan/presentation/usecase/StorageUsageState {

@@ -1,0 +1,49 @@
+{
+  "Code": 1000,
+  "Subscriptions": [
+    {
+      "Cycle": null,
+      "CycleDescription": null,
+      "Currency": null,
+      "Amount": null,
+      "Offer": null,
+      "Title": "Proton Free",
+      "Description": "Current plan",
+      "Name": null,
+      "Entitlements": [
+        {
+          "Type": "description",
+          "Text": "Unlimited logins and notes",
+          "IconName": "infinite"
+        },
+        {
+          "Type": "description",
+          "Text": "Unlimited devices",
+          "IconName": "infinite"
+        },
+        {
+          "Type": "description",
+          "Text": "10 hide-my-email aliases",
+          "IconName": "alias"
+        },
+        {
+          "Type": "description",
+          "Text": "2 vaults",
+          "IconName": "vault"
+        },
+        {
+          "Type": "description",
+          "Text": "Share each vault with up to 3 people",
+          "IconName": "globe"
+        },
+        {
+          "Type": "description",
+          "IconName": "checkmark",
+          "Text": "And the free features of all other Proton products!"
+        }
+      ],
+      "Decorations": []
+    }
+  ],
+  "UpcomingSubscriptions": []
+}

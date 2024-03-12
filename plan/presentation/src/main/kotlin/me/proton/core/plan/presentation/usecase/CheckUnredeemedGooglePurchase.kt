@@ -24,11 +24,11 @@ import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.plan.domain.entity.Plan
-import me.proton.core.plan.domain.entity.Subscription
+import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
-import me.proton.core.plan.domain.usecase.GetCurrentSubscription
-import me.proton.core.plan.domain.usecase.GetPlans
+import me.proton.core.plan.domain.usecase.GetDynamicPlans
+import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import java.util.Optional
@@ -39,8 +39,8 @@ import kotlin.jvm.optionals.getOrNull
 internal class CheckUnredeemedGooglePurchase @Inject constructor(
     private val findUnacknowledgedGooglePurchase: Optional<FindUnacknowledgedGooglePurchase>,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
-    private val getCurrentSubscription: GetCurrentSubscription,
-    private val getPlans: GetPlans
+    private val getCurrentSubscription: GetDynamicSubscription,
+    private val getPlans: GetDynamicPlans
 ) {
     /** Returns the latest unredeemed Google purchase for a given [user][userId].
      * May return `null` if it was not possible to fetch some data (network error).
@@ -59,16 +59,16 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
         if (PaymentProvider.GoogleInAppPurchase !in getAvailablePaymentProviders()) return null
 
         val subscription = getCurrentSubscription(userId)
-        val subscriptionCustomerId = subscription?.customerId
+        val subscriptionCustomerId = subscription.customerId
         val googlePurchases = if (subscriptionCustomerId != null) {
             listOfNotNull(findUnacknowledgedGooglePurchase.byCustomer(subscriptionCustomerId))
         } else {
             findUnacknowledgedGooglePurchase()
         }
         val googlePurchase = googlePurchases.firstOrNull() ?: return null
-        val purchasedPlan = googlePurchase.findCorrespondingPlan(userId) ?: return null
+        val purchasedPlan = googlePurchase.findCorrespondingPlan() ?: return null
 
-        val status = if (subscription == null) {
+        val status = if (subscription.name == null) {
             UnredeemedGooglePurchaseStatus.NotSubscribed
         } else if (subscription.matchesGooglePurchase(googlePurchase, purchasedPlan)) {
             UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged
@@ -81,18 +81,23 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
         return status?.let { UnredeemedGooglePurchase(googlePurchase, purchasedPlan, it) }
     }
 
-    private suspend fun GooglePurchase.findCorrespondingPlan(userId: UserId): Plan? {
-        return getPlans(userId).find { plan ->
-            productIds.all { id ->
-                plan.vendors[AppStore.GooglePlay]?.names?.values?.contains(id.id) == true
-            }
+    private suspend fun GooglePurchase.findCorrespondingPlan(): DynamicPlan? {
+        val googleProductIds = productIds.map { it.id }
+        return getPlans(null).plans.find { plan ->
+            plan.instances.values.find { it.vendors[AppStore.GooglePlay]?.productId in googleProductIds } != null
         }
     }
 
-    private fun Subscription.matchesGooglePurchase(googlePurchase: GooglePurchase, purchasedPlan: Plan): Boolean {
+    private fun DynamicSubscription.matchesGooglePurchase(
+        googlePurchase: GooglePurchase,
+        purchasedPlan: DynamicPlan
+    ): Boolean {
+        val cycle = cycleMonths ?: return false
+        val googleProductIds = googlePurchase.productIds.map { it.id }
+        val planInstance = purchasedPlan.instances[cycle]
         return external == SubscriptionManagement.GOOGLE_MANAGED &&
                 customerId == googlePurchase.customerId &&
-                purchasedPlan.name in plans.map { it.name } &&
-                purchasedPlan.cycle == cycle
+                purchasedPlan.name == name &&
+                planInstance?.vendors?.get(AppStore.GooglePlay)?.productId in googleProductIds
     }
 }

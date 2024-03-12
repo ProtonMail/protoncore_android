@@ -18,18 +18,20 @@
 
 package me.proton.core.plan.presentation.usecase
 
+import kotlinx.coroutines.flow.first
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.usecase.AcknowledgeGooglePlayPurchase
 import me.proton.core.payment.domain.usecase.CreatePaymentToken
-import me.proton.core.plan.domain.entity.Plan
+import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
-import me.proton.core.plan.presentation.entity.PlanCurrency
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
 import java.util.Optional
@@ -38,18 +40,20 @@ import javax.inject.Inject
 internal class RedeemGooglePurchase @Inject constructor(
     private val acknowledgeGooglePlayPurchaseOptional: Optional<AcknowledgeGooglePlayPurchase>,
     private val createPaymentToken: CreatePaymentToken,
+    private val observeUserCurrency: ObserveUserCurrency,
     private val performSubscribe: PerformSubscribe,
     private val validateSubscriptionPlan: ValidateSubscriptionPlan
 ) {
     suspend operator fun invoke(
         googlePurchase: GooglePurchase,
-        purchasedPlan: Plan,
+        purchasedPlan: DynamicPlan,
         purchaseStatus: UnredeemedGooglePurchaseStatus,
         userId: UserId
     ) {
         when (purchaseStatus) {
             UnredeemedGooglePurchaseStatus.NotSubscribed ->
                 createSubscriptionAndAcknowledge(googlePurchase, purchasedPlan, userId)
+
             UnredeemedGooglePurchaseStatus.SubscribedButNotAcknowledged ->
                 acknowledgeGooglePlayPurchaseOptional.getOrNull()?.invoke(googlePurchase.purchaseToken)
         }
@@ -57,17 +61,23 @@ internal class RedeemGooglePurchase @Inject constructor(
 
     private suspend fun createSubscriptionAndAcknowledge(
         googlePurchase: GooglePurchase,
-        purchasedPlan: Plan,
+        purchasedPlan: DynamicPlan,
         userId: UserId
     ) {
-        val currency = PlanCurrency.valueOf(purchasedPlan.currency!!)
-        val planCycle = getPlanCycleForPurchase(googlePurchase, purchasedPlan)
-        val planNames = listOf(purchasedPlan.name)
+        val productId = googlePurchase.productIds.first().id
+        val planInstance = requireNotNull(
+            purchasedPlan.instances.values.find { it.vendors[AppStore.GooglePlay]?.productId == productId }
+        ) {
+            "Could not find corresponding plan instance for googleProductId=$productId."
+        }
+        val currency = Currency.valueOf(observeUserCurrency(userId).first())
+        val planCycle = requireNotNull(PlanCycle.map[planInstance.cycle])
+        val planNames = listOf(purchasedPlan.name!!)
         val subscriptionStatus = validateSubscriptionPlan(
             userId = userId,
             codes = null,
             plans = planNames,
-            currency = currency.toSubscriptionCurrency(),
+            currency = currency,
             cycle = planCycle.toSubscriptionCycle()
         )
         val tokenResult = createPaymentToken(
@@ -95,13 +105,6 @@ internal class RedeemGooglePurchase @Inject constructor(
             paymentToken = tokenResult.token,
             subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
         )
-    }
-
-    private fun getPlanCycleForPurchase(googlePurchase: GooglePurchase, purchasedPlan: Plan): PlanCycle {
-        val googleProductIds = googlePurchase.productIds.map { it.id }
-        val planVendorData = requireNotNull(purchasedPlan.vendors[AppStore.GooglePlay])
-        val (planDuration, _) = planVendorData.names.entries.first { it.value in googleProductIds }
-        return requireNotNull(PlanCycle.map[planDuration.months])
     }
 
     private fun <T : Any> Optional<T>.getOrNull(): T? = if (isPresent) get() else null
