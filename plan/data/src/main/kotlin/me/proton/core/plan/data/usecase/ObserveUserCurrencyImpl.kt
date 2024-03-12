@@ -35,9 +35,9 @@ class ObserveUserCurrencyImpl @Inject constructor(
     private val userManager: UserManager
 ) : ObserveUserCurrency {
     @VisibleForTesting
-    internal val localCurrency = Locale.getDefault().takeIf { it.country.isNotEmpty() }?.let {
-        Currency.getInstance(it).currencyCode
-    }
+    internal val localCurrency = Locale.getDefault().takeIf { it.country.isNotEmpty() }?.runCatching {
+        Currency.getInstance(this).currencyCode
+    }?.getOrNull()
 
     @VisibleForTesting
     internal val defaultCurrency =

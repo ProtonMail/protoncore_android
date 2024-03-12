@@ -22,16 +22,21 @@ import app.cash.turbine.test
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkStatic
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.user.domain.UserManager
+import java.lang.IllegalArgumentException
+import java.util.Currency
 import java.util.Locale
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertNull
 
 class ObserveUserCurrencyTest : CoroutinesTest by CoroutinesTest() {
 
@@ -78,6 +83,23 @@ class ObserveUserCurrencyTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun localCurrencyIsUSD() = runTest {
         assertEquals(expected = "USD", actual = tested.localCurrency)
+    }
+
+    @Test
+    fun localCurrencyIsEUR() = runTest {
+        Locale.setDefault(Locale.ITALY)
+        val testedNonUsLocale = ObserveUserCurrencyImpl(userManager)
+        assertEquals(expected = "EUR", actual = testedNonUsLocale.localCurrency)
+    }
+
+    @Test
+    fun unknownLocaleNotThrowingException() = runTest {
+        mockkStatic(Currency::class)
+        every { Currency.getInstance(any() as Locale) } throws IllegalArgumentException("test")
+        val testedNonUsLocale = ObserveUserCurrencyImpl(userManager)
+        assertNull(testedNonUsLocale.localCurrency)
+        assertEquals(expected = "USD", actual = testedNonUsLocale.defaultCurrency)
+        unmockkStatic(Currency::class)
     }
 
     @Test
