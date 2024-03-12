@@ -56,6 +56,7 @@ public data class CheckoutGiapBillingPurchaseTotal(
         notFound,
         statusNull,
         cancellation,
+        networkError,
         unknown
     }
 }
@@ -77,5 +78,6 @@ public fun GiapStatus.toPurchaseGiapStatus(): CheckoutGiapBillingPurchaseTotal.P
         GiapStatus.notFound -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.notFound
         GiapStatus.statusNull -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.statusNull
         GiapStatus.cancellation -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.cancellation
+        GiapStatus.networkError -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.networkError
         GiapStatus.unknown -> CheckoutGiapBillingPurchaseTotal.PurchaseStatus.unknown
     }

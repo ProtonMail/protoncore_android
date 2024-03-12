@@ -798,6 +798,7 @@ public final class me/proton/core/observability/domain/metrics/CheckoutGiapBilli
 	public static final field itemAlreadyOwned Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field itemNotOwned Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field itemUnavailable Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
+	public static final field networkError Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field notFound Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field serviceDisconnected Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
 	public static final field serviceTimeout Lme/proton/core/observability/domain/metrics/CheckoutGiapBillingPurchaseTotal$PurchaseStatus;
@@ -2834,6 +2835,7 @@ public final class me/proton/core/observability/domain/metrics/common/GiapStatus
 	public static final field itemAlreadyOwned Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field itemNotOwned Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field itemUnavailable Lme/proton/core/observability/domain/metrics/common/GiapStatus;
+	public static final field networkError Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field notFound Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field serviceDisconnected Lme/proton/core/observability/domain/metrics/common/GiapStatus;
 	public static final field serviceTimeout Lme/proton/core/observability/domain/metrics/common/GiapStatus;

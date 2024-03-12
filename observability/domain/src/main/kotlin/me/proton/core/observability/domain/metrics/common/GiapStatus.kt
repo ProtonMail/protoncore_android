@@ -35,5 +35,6 @@ public enum class GiapStatus {
     notFound,
     statusNull,
     cancellation,
+    networkError,
     unknown
 }

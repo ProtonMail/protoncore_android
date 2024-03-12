@@ -61,6 +61,7 @@ private fun Int?.toGiapStatus() = when (this) {
     BillingClient.BillingResponseCode.ITEM_NOT_OWNED -> GiapStatus.itemNotOwned
     BillingClient.BillingResponseCode.ITEM_UNAVAILABLE -> GiapStatus.itemUnavailable
     BillingClient.BillingResponseCode.USER_CANCELED -> GiapStatus.userCanceled
+    BillingClient.BillingResponseCode.NETWORK_ERROR -> GiapStatus.networkError
     null -> GiapStatus.statusNull
     else -> GiapStatus.unknown
 }
