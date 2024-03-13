@@ -40,8 +40,10 @@ import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.AccountRecoveryStartTotal
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.usecase.ObserveUser
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -77,10 +79,12 @@ class PasswordResetDialogViewModel @Inject constructor(
         emitAll(currentUser.filterNotNull().mapLatest { State.Ready(it.getEmail()) })
     }
 
-    private fun requestReset(): Flow<State> = flow {
-        emit(State.Loading(currentUser.value?.getEmail()))
+    private suspend fun requestReset(): Flow<State> = flowWithResultContext {
+        it.onResultEnqueueObservability("account_recovery.start") { AccountRecoveryStartTotal(this) }
+
+        send(State.Loading(currentUser.value?.getEmail()))
         startRecovery(userId)
-        emit(State.ResetRequested)
+        send(State.ResetRequested)
     }
 
     fun perform(action: Action) = currentAction.tryEmit(action)

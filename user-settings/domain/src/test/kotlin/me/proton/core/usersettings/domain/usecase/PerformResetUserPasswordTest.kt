@@ -36,7 +36,6 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import org.junit.Before
@@ -50,7 +49,6 @@ class PerformResetUserPasswordTest {
     private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
-    private val userAddressRepository = mockk<UserAddressRepository>(relaxed = true)
     private val organizationRepository = mockk<OrganizationRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
@@ -140,7 +138,6 @@ class PerformResetUserPasswordTest {
             accountRepository = accountRepository,
             authRepository = authRepository,
             userRepository = userRepository,
-            userAddressRepository = userAddressRepository
         )
     }
 

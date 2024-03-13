@@ -25,16 +25,9 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
-import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.hasMigratedKey
-import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.extension.nameNotNull
-import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
-import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
 
 class PerformResetUserPassword @Inject constructor(
@@ -42,8 +35,7 @@ class PerformResetUserPassword @Inject constructor(
     private val userManager: UserManager,
     private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
-    private val userRepository: UserRepository,
-    private val userAddressRepository: UserAddressRepository
+    private val userRepository: UserRepository
 ) {
     private val keyStore = context.keyStoreCrypto
     private val srp = context.srpCrypto

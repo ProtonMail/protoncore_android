@@ -76,7 +76,7 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
         organizationKey: String?,
         userKeys: List<Key>?,
         auth: Auth?
-    ): Boolean =
+    ): Boolean = result("account_recovery.reset") {
         apiProvider.get<AccountRecoveryApi>(sessionUserId).invoke {
             val request = ResetPasswordRequest(
                 keySalt = keySalt,
@@ -88,4 +88,5 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
             )
             resetPassword(request).isSuccess()
         }.valueOrThrow
+    }
 }

@@ -44,6 +44,11 @@ public interface AccountRecoveryRepository {
         userId: UserId
     )
 
+    /**
+     * Reset the password without using old password, during account recovery process.
+     *
+     * Note: Old data cannot be decrypted without old password. 2FA will be disabled.
+     */
     public suspend fun resetPassword(
         sessionUserId: UserId,
         keySalt: String,

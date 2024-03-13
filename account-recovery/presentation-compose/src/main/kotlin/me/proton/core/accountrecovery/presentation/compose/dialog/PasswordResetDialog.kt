@@ -103,12 +103,6 @@ private fun PasswordResetDialog(
         title = stringResource(R.string.account_recovery_reset_dialog_title),
         text = {
             Column {
-                Icon(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    painter = painterResource(id = R.drawable.recovery_reset),
-                    contentDescription = stringResource(R.string.account_recovery_reset_dialog_title),
-                    tint = Color.Unspecified
-                )
                 Spacer(modifier = Modifier.size(ProtonDimens.DefaultSpacing))
                 ProtonAlertDialogText(
                     stringResource(R.string.account_recovery_reset_dialog_text, email)
