@@ -342,17 +342,17 @@ fun ProtonTypography.overlineStrong(enabled: Boolean = true): TextStyle = overli
 
 @Immutable
 data class ProtonTypography(
-    internal val headline: TextStyle,
-    internal val subheadline: TextStyle,
-    internal val body1Regular: TextStyle,
-    internal val body1Medium: TextStyle,
-    internal val body1Bold: TextStyle,
-    internal val body2Regular: TextStyle,
-    internal val body2Medium: TextStyle,
-    internal val captionRegular: TextStyle,
-    internal val captionMedium: TextStyle,
-    internal val overlineRegular: TextStyle,
-    internal val overlineMedium: TextStyle,
+    val headline: TextStyle,
+    val subheadline: TextStyle,
+    val body1Regular: TextStyle,
+    val body1Medium: TextStyle,
+    val body1Bold: TextStyle,
+    val body2Regular: TextStyle,
+    val body2Medium: TextStyle,
+    val captionRegular: TextStyle,
+    val captionMedium: TextStyle,
+    val overlineRegular: TextStyle,
+    val overlineMedium: TextStyle,
 ) {
 
     constructor(
