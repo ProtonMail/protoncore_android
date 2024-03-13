@@ -31,7 +31,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -55,7 +54,8 @@ fun AccountRecoveryInfo(
     modifier: Modifier = Modifier,
     viewModel: AccountRecoveryInfoViewModel? = hiltViewModelOrNull(),
     onOpenDialog: () -> Unit = { },
-    expanded: Boolean = true,
+    quickAction: Boolean = true,
+    expanded: Boolean = false,
 ) {
     val state = when (viewModel) {
         null -> AccountRecoveryInfoViewState.None
@@ -66,6 +66,7 @@ fun AccountRecoveryInfo(
         modifier = modifier,
         state = state,
         onOpenDialog = onOpenDialog,
+        quickAction = quickAction,
         expanded = expanded
     )
 }
@@ -75,7 +76,8 @@ fun AccountRecoveryInfo(
     modifier: Modifier = Modifier,
     state: AccountRecoveryInfoViewState,
     onOpenDialog: () -> Unit = { },
-    expanded: Boolean = true
+    quickAction: Boolean = true,
+    expanded: Boolean = false
 ) {
     when (state) {
         is AccountRecoveryInfoViewState.None -> Unit
@@ -83,6 +85,7 @@ fun AccountRecoveryInfo(
             modifier = modifier,
             state = state,
             onOpenDialog = onOpenDialog,
+            quickAction = quickAction,
             expanded = expanded
         )
     }
@@ -93,15 +96,28 @@ fun AccountRecoveryInfo(
     modifier: Modifier = Modifier,
     state: AccountRecoveryInfoViewState.Recovery,
     onOpenDialog: () -> Unit = { },
-    expanded: Boolean = true
+    quickAction: Boolean = true,
+    expanded: Boolean = false
 ) {
     when (state.recoveryState) {
         null -> return
         UserRecovery.State.None -> return
         UserRecovery.State.Expired -> return
-        UserRecovery.State.Grace -> AccountRecoveryInfoGrace(modifier, state, onOpenDialog, expanded)
+        UserRecovery.State.Grace -> AccountRecoveryInfoGrace(
+            modifier = modifier,
+            state = state,
+            onOpenDialog = onOpenDialog,
+            expanded = expanded
+        )
+
         UserRecovery.State.Cancelled -> AccountRecoveryInfoCancelled(modifier, state, expanded)
-        UserRecovery.State.Insecure -> AccountRecoveryInfoInsecure(modifier, state, onOpenDialog, expanded)
+        UserRecovery.State.Insecure -> AccountRecoveryInfoInsecure(
+            modifier = modifier,
+            state = state,
+            onOpenDialog = onOpenDialog,
+            quickAction = quickAction,
+            expanded = expanded
+        )
     }
 }
 
@@ -110,16 +126,22 @@ fun AccountRecoveryInfoGrace(
     modifier: Modifier = Modifier,
     state: AccountRecoveryInfoViewState.Recovery,
     onOpenDialog: () -> Unit = { },
-    expanded: Boolean = true,
+    quickAction: Boolean = true,
+    expanded: Boolean = false,
 ) {
     AccountRecoveryInfo(
         modifier = modifier,
         title = stringResource(R.string.account_recovery_info_grace_title),
-        subtitle = stringResource(R.string.account_recovery_info_grace_subtitle, state.durationUntilEnd),
+        subtitle = stringResource(
+            R.string.account_recovery_info_grace_subtitle,
+            state.durationUntilEnd
+        ),
         icon = R.drawable.ic_recovery_pending,
         description = stringResource(R.string.account_recovery_info_grace_description),
         onAction = onOpenDialog,
         action = stringResource(R.string.account_recovery_cancel),
+        onCardClick = onOpenDialog,
+        quickAction = quickAction,
         expanded = expanded
     )
 }
@@ -128,14 +150,19 @@ fun AccountRecoveryInfoGrace(
 fun AccountRecoveryInfoCancelled(
     modifier: Modifier = Modifier,
     state: AccountRecoveryInfoViewState.Recovery,
-    expanded: Boolean = true,
+    quickAction: Boolean = true,
+    expanded: Boolean = false,
 ) {
     AccountRecoveryInfo(
         modifier = modifier,
         title = stringResource(R.string.account_recovery_info_cancelled_title),
-        subtitle = stringResource(R.string.account_recovery_info_cancelled_subtitle, state.startDate),
+        subtitle = stringResource(
+            R.string.account_recovery_info_cancelled_subtitle,
+            state.startDate
+        ),
         icon = R.drawable.ic_recovery_cancelled,
         description = stringResource(R.string.account_recovery_info_cancelled_description),
+        quickAction = quickAction,
         expanded = expanded
     )
 }
@@ -145,7 +172,8 @@ fun AccountRecoveryInfoInsecure(
     modifier: Modifier = Modifier,
     state: AccountRecoveryInfoViewState.Recovery,
     onOpenDialog: () -> Unit = { },
-    expanded: Boolean = true,
+    quickAction: Boolean = true,
+    expanded: Boolean = false,
 ) {
     AccountRecoveryInfo(
         modifier = modifier,
@@ -155,6 +183,8 @@ fun AccountRecoveryInfoInsecure(
         description = stringResource(R.string.account_recovery_info_insecure_description),
         onAction = onOpenDialog,
         action = stringResource(R.string.account_recovery_cancel),
+        onCardClick = onOpenDialog,
+        quickAction = quickAction,
         expanded = expanded
     )
 }
@@ -169,19 +199,19 @@ fun AccountRecoveryInfo(
     description: String,
     onAction: () -> Unit = { },
     action: String? = null,
+    onCardClick: () -> Unit = { },
+    quickAction: Boolean = true,
     expanded: Boolean = true,
 ) {
     Column(modifier = modifier) {
         Card(
-            onClick = { if (expanded) Unit else onAction() },
+            onClick = { onCardClick() },
             backgroundColor = ProtonTheme.colors.backgroundSecondary,
             shape = ProtonTheme.shapes.medium
         ) {
             Row(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
                 Icon(
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .size(ProtonDimens.DefaultIconWithPadding),
+                    modifier = Modifier.size(ProtonDimens.DefaultIconWithPadding),
                     contentDescription = title,
                     painter = painterResource(icon),
                     tint = Color.Companion.Unspecified
@@ -198,16 +228,10 @@ fun AccountRecoveryInfo(
                         textAlign = TextAlign.Left,
                         style = ProtonTheme.typography.defaultWeak
                     )
-                }
-                if (!expanded && action != null) {
-                    Icon(
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .size(ProtonDimens.DefaultIconSize),
-                        contentDescription = title,
-                        painter = painterResource(R.drawable.ic_proton_chevron_right),
-                        tint = ProtonTheme.colors.interactionStrongNorm
-                    )
+                    if (!expanded && action != null && quickAction) {
+                        Spacer(modifier = Modifier.padding(vertical = ProtonDimens.SmallSpacing))
+                        Text(text = action, color = ProtonTheme.colors.interactionNorm)
+                    }
                 }
             }
         }
@@ -294,6 +318,24 @@ internal fun AccountRecoveryInfoCancelledNoDescriptionPreview() {
                 durationUntilEnd = "48 hours",
             ),
             expanded = false
+        )
+    }
+}
+
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+internal fun AccountRecoveryInfoExpandedPreview() {
+    ProtonTheme {
+        AccountRecoveryInfoGrace(
+            state = AccountRecoveryInfoViewState.Recovery(
+                recoveryState = UserRecovery.State.Grace,
+                startDate = "12 August",
+                endDate = "14 August",
+                durationUntilEnd = "48 hours",
+            ),
+            quickAction = false,
+            expanded = true
         )
     }
 }

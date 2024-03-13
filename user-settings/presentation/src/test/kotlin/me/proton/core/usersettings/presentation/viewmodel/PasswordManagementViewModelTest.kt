@@ -29,6 +29,7 @@ import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs
@@ -65,6 +66,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     private val performUpdateMailboxPassword = mockk<PerformUpdateUserPassword>()
     private val performResetUserPassword = mockk<PerformResetUserPassword>()
     private val isAccountRecoveryResetEnabled = mockk<IsAccountRecoveryResetEnabled>()
+    private val observabilityManager = mockk<ObservabilityManager>()
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
     // endregion
 
@@ -131,7 +133,8 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                 performUpdateLoginPassword,
                 performUpdateMailboxPassword,
                 performResetUserPassword,
-                isAccountRecoveryResetEnabled
+                isAccountRecoveryResetEnabled,
+                observabilityManager
             )
     }
 

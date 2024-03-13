@@ -30,3 +30,8 @@ public final class me/proton/core/accountrecovery/domain/usecase/ObserveUserReco
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 }
 
+public final class me/proton/core/accountrecovery/domain/usecase/StartRecovery {
+	public fun <init> (Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;Lme/proton/core/eventmanager/domain/EventManagerProvider;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+

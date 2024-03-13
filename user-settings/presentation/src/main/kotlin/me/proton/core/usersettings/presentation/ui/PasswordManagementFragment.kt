@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
+import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonSecureFragment
@@ -105,7 +106,7 @@ class PasswordManagementFragment :
                 onSaveMailboxPasswordClicked()
             }
             dontKnowYourCurrentPassword.onClick {
-                // TODO: Start Recovery Reset Screen.
+                PasswordResetDialogActivity.start(requireContext(), userId)
             }
         }
 

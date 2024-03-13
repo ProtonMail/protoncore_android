@@ -389,7 +389,7 @@ public final class me/proton/core/usersettings/domain/usecase/ObserveUserSetting
 }
 
 public final class me/proton/core/usersettings/domain/usecase/PerformResetUserPassword {
-	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/domain/UserManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;)V
+	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/domain/UserManager;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

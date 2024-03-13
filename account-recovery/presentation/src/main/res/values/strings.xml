@@ -48,7 +48,7 @@
     <!-- Other -->
     <string name="account_recovery_cancel">Cancel request</string>
     <string name="account_recovery_dismiss">Got it</string>
-    <string name="account_recovery_reset">Reset Password</string>
+    <string name="account_recovery_reset">Reset password</string>
 
     <!-- Account Recovery Info -->
     <string name="account_recovery_info_grace_title">Password reset requested</string>
@@ -62,5 +62,13 @@
     <string name="account_recovery_info_insecure_title">Password reset available</string>
     <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
     <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+
+    <!-- Password Reset Dialog -->
+    <string name="account_recovery_reset_dialog_title">Reset Password</string>
+    <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+    <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
+    <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
+    <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+    <string name="account_recovery_reset_dialog_action_request_reset_success">Password reset requested</string>
 
 </resources>

@@ -25,6 +25,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.dialog
 import androidx.navigation.navArgument
 import me.proton.core.accountrecovery.presentation.compose.dialog.AccountRecoveryDialog
+import me.proton.core.accountrecovery.presentation.compose.dialog.PasswordResetDialog
 import me.proton.core.domain.entity.UserId
 
 internal object Arg {
@@ -35,6 +36,11 @@ internal object Route {
     object Recovery {
         const val Deeplink = "users/{${Arg.UserId}}/recovery"
         fun get(userId: UserId) = "users/${userId.id}/recovery"
+    }
+
+    object Reset {
+        const val Deeplink = "users/{${Arg.UserId}}/recovery/reset"
+        fun get(userId: UserId) = "users/${userId.id}/recovery/reset"
     }
 }
 
@@ -62,6 +68,36 @@ internal fun NavGraphBuilder.addAccountRecoveryDialog(
             onClosed = { onClosed(it) },
             onError = { onError(it) },
             onStartPasswordManager = { onStartPasswordManager(it) }
+        )
+    }
+}
+
+internal fun NavGraphBuilder.addPasswordResetDialog(
+    userId: UserId,
+    onRecoveryMethod: () -> Unit = { },
+    onDismiss: () -> Unit = { },
+    onError: (Throwable) -> Unit = { },
+    onSuccess: () -> Unit = { }
+) {
+    dialog(
+        route = Route.Reset.Deeplink,
+        arguments = listOf(
+            navArgument(Arg.UserId) {
+                type = NavType.StringType
+                defaultValue = userId.id
+            },
+        ),
+        dialogProperties = DialogProperties(
+            dismissOnBackPress = true,
+            dismissOnClickOutside = true,
+            securePolicy = SecureFlagPolicy.SecureOn
+        )
+    ) {
+        PasswordResetDialog(
+            onRecoveryMethod = onRecoveryMethod,
+            onDismiss = onDismiss,
+            onError = onError,
+            onSuccess = onSuccess,
         )
     }
 }

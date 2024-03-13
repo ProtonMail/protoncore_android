@@ -23,5 +23,11 @@
             android:name="me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity"
             android:autoRemoveFromRecents="true"
             android:theme="@style/ProtonTheme.Transparent" />
+
+        <activity
+            android:name="me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity"
+            android:autoRemoveFromRecents="true"
+            android:theme="@style/ProtonTheme.Transparent" />
+
     </application>
 </manifest>
