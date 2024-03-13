@@ -89,4 +89,21 @@ class TelemetryManagerTest {
         coVerify(exactly = 1) { telemetryRepository.addEvent(userId, event) }
         verify(exactly = 1) { workerManager.enqueueOrKeep(userId, TelemetryManager.MAX_DELAY) }
     }
+
+    @Test
+    fun sendExceptionHappened() = runTest {
+        coEvery { isTelemetryEnabled(userId) } returns true
+        val event = TelemetryEvent(group = "group", name = "first")
+        coEvery { telemetryRepository.addEvent(userId, event) } throws Exception("Test")
+
+        // WHEN
+        tested.enqueueEvent(userId, event)
+
+        // THEN
+        coVerify(exactly = 0) { telemetryRepository.deleteAllEvents(userId) }
+        verify(exactly = 0) { workerManager.cancel(userId) }
+
+        coVerify(exactly = 1) { telemetryRepository.addEvent(userId, event) }
+        verify(exactly = 0) { workerManager.enqueueOrKeep(userId, TelemetryManager.MAX_DELAY) }
+    }
 }

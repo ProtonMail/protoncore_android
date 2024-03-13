@@ -18,6 +18,7 @@
 
 package me.proton.core.telemetry.domain
 
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
@@ -26,6 +27,7 @@ import me.proton.core.telemetry.domain.repository.TelemetryRepository
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.Duration.Companion.seconds
@@ -52,21 +54,26 @@ public class TelemetryManager @Inject internal constructor(
         }
     }
 
-    private suspend fun enqueueEvent(
+    @VisibleForTesting
+    internal suspend fun enqueueEvent(
         userId: UserId?,
         event: TelemetryEvent,
         priority: TelemetryPriority = TelemetryPriority.Default
     ) {
         CoreLogger.d(LogTag.ENQUEUE, "$event")
-        if (isTelemetryEnabled(userId)) {
-            repository.addEvent(userId, event)
-            when (priority) {
-                TelemetryPriority.Immediate -> workerManager.enqueueAndReplace(userId, MIN_DELAY)
-                TelemetryPriority.Default -> workerManager.enqueueOrKeep(userId, MAX_DELAY)
+        runCatching {
+            if (isTelemetryEnabled(userId)) {
+                repository.addEvent(userId, event)
+                when (priority) {
+                    TelemetryPriority.Immediate -> workerManager.enqueueAndReplace(userId, MIN_DELAY)
+                    TelemetryPriority.Default -> workerManager.enqueueOrKeep(userId, MAX_DELAY)
+                }
+            } else {
+                workerManager.cancel(userId)
+                repository.deleteAllEvents(userId)
             }
-        } else {
-            workerManager.cancel(userId)
-            repository.deleteAllEvents(userId)
+        }.onFailure {
+            CoreLogger.e(LogTag.ENQUEUE, it)
         }
     }
 
