@@ -20,6 +20,7 @@ package me.proton.core.plan.data.repository
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
@@ -57,6 +58,8 @@ import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertContentEquals
@@ -73,12 +76,17 @@ class PlansRepositoryImplTest {
     }
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val apiFactory = mockk<ApiManagerFactory>(relaxed = true)
-    private val apiManager = mockk<ApiManager<PlansApi>>(relaxed = true)
     private lateinit var apiProvider: ApiProvider
     private lateinit var repository: PlansRepositoryImpl
 
+    @MockK(relaxed = true)
+    private lateinit var apiManager: ApiManager<PlansApi>
+
     @MockK
     private lateinit var getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi
+
+    @MockK
+    private lateinit var userManager: UserManager
     // endregion
 
     // region test data
@@ -106,7 +114,10 @@ class PlansRepositoryImplTest {
                 interfaceClass = PlansApi::class
             )
         } returns apiManager
-        repository = PlansRepositoryImpl(apiProvider, endpointProvider, getSessionUserIdForPaymentApi)
+        coEvery { userManager.getUser(any(), any()) } returns mockk {
+            every { type } returns Type.Proton
+        }
+        repository = PlansRepositoryImpl(apiProvider, endpointProvider, getSessionUserIdForPaymentApi, userManager)
     }
 
     @Test
@@ -179,9 +190,11 @@ class PlansRepositoryImplTest {
                     1, 10, 20
                 ),
                 offers = listOf(
-                    PlanOffer("test-offer", 1000, 2000, PlanOfferPricing(
-                        1, 10, 20
-                    ))
+                    PlanOffer(
+                        "test-offer", 1000, 2000, PlanOfferPricing(
+                            1, 10, 20
+                        )
+                    )
                 )
             )
         )
@@ -462,5 +475,24 @@ class PlansRepositoryImplTest {
         assertNotNull(error)
         assertEquals(1, error.proton?.code)
         assertTrue(assertSingleResult("createOrUpdateSubscription").isFailure)
+    }
+
+    @Test
+    fun `fetch subscription for credential-less user`() = runTestWithResultContext(dispatcherProvider.Main) {
+        // GIVEN
+        coEvery { userManager.getUser(any(), any()) } returns mockk {
+            every { type } returns Type.CredentialLess
+        }
+
+        // WHEN
+        val result = repository.getDynamicSubscriptions(SessionUserId(testUserId))
+
+        // THEN
+        assertEquals(1, result.size)
+        assertEquals(
+            DynamicSubscription(name = null, title = "", description = ""),
+            result.first()
+        )
+        coVerify(exactly = 0) { apiManager.invoke<PlansApi>(any()) }
     }
 }

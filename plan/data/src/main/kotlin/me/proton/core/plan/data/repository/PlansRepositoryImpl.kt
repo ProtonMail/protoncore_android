@@ -41,6 +41,8 @@ import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isNullOrCredentialLess
 import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -51,6 +53,7 @@ class PlansRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val endpointProvider: PlanIconsEndpointProvider,
     private val getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi,
+    private val userManager: UserManager
 ) : PlansRepository {
 
     private val dynamicPlansCache =
@@ -120,10 +123,14 @@ class PlansRepositoryImpl @Inject constructor(
         }.valueOrThrow
 
     override suspend fun getDynamicSubscriptions(sessionUserId: SessionUserId): List<DynamicSubscription> =
-        result("getDynamicSubscriptions") {
-            apiProvider.get<PlansApi>(sessionUserId).invoke {
-                getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
-            }.onParseErrorLog(me.proton.core.payment.domain.LogTag.DYN_SUB_PARSE).valueOrThrow
+        if (sessionUserId.isNullOrCredentialLess(userManager)) {
+            listOf(DynamicSubscription(name = null, title = "", description = ""))
+        } else {
+            result("getDynamicSubscriptions") {
+                apiProvider.get<PlansApi>(sessionUserId).invoke {
+                    getDynamicSubscriptions().subscriptions.map { it.toDynamicSubscription(endpointProvider.get()) }
+                }.onParseErrorLog(me.proton.core.payment.domain.LogTag.DYN_SUB_PARSE).valueOrThrow
+            }
         }
 
     override suspend fun createOrUpdateSubscription(

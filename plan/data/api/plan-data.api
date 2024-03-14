@@ -298,7 +298,7 @@ public final class me/proton/core/plan/data/api/response/DynamicEntitlementResou
 }
 
 public final class me/proton/core/plan/data/repository/PlansRepositoryImpl : me/proton/core/plan/domain/repository/PlansRepository {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;Lme/proton/core/user/domain/UserManager;)V
 	public fun createOrUpdateSubscription (Lme/proton/core/domain/entity/UserId;JLme/proton/core/payment/domain/entity/Currency;Lme/proton/core/payment/domain/entity/PaymentTokenEntity;Ljava/util/List;Ljava/util/Map;Lme/proton/core/payment/domain/entity/SubscriptionCycle;Lme/proton/core/plan/domain/entity/SubscriptionManagement;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getDynamicPlans (Lme/proton/core/domain/entity/UserId;Lme/proton/core/domain/entity/AppStore;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getDynamicSubscriptions (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -309,11 +309,11 @@ public final class me/proton/core/plan/data/repository/PlansRepositoryImpl : me/
 }
 
 public final class me/proton/core/plan/data/repository/PlansRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/repository/PlansRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/data/repository/PlansRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/data/repository/PlansRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;)Lme/proton/core/plan/data/repository/PlansRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/plan/domain/PlanIconsEndpointProvider;Lme/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/plan/data/repository/PlansRepositoryImpl;
 }
 
 public final class me/proton/core/plan/data/usecase/GetSessionUserIdForPaymentApi {
