@@ -11,6 +11,64 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [21.2.0] - 2024-03-14
+
+### Chores
+
+- observability:
+  - Add new label value `GiapStatus.networkError`.
+- payment:
+  - Upgrade Google Play Billing library from 5.1.0 to 6.2.0.
+- presentation:
+  - Update ic_proton_servers* icons.
+  - Update flags for Mauritania and Bangladesh.
+
+### Features
+
+- Added test rules package.
+- account-recovery:
+  - Adapt password reset available dialog.
+- key:
+  - Add reset user password.
+- plan:
+  - Fix unknown locale currency crash.
+- user-settings:
+  - Add reset user password.
+
+### Bug Fixes
+
+- Fix config manager not returning null on empty config.
+- auth:
+  - Pass sessionId of credential-less user when creating a regular account.
+- payment:
+  - Do not use credential-less userId for payments.
+- plan:
+  - Use dynamic-plans endpoint for unredeemed Google purchases.
+  - Do not use credential-less userId for payments.
+- telemetry:
+  - Fix FK exception for TelemetryManager enqueue.
+- user:
+  - Avoid calling some API endpoints for credential-less users.
+  - Pass sessionId of credential-less user when creating a regular account.
+- user-settings:
+  - Avoid calling some API endpoints for credential-less users.
+
+### Internationalization
+
+- Upgrade translations from crowdin (59063970).
+- Upgrade translations from crowdin (985d1cdd).
+
+### Refactoring
+
+- user:
+  - Add local and remote data sources for user repository.
+
+### Theming
+
+- Make base typography styles public.
+
+  This allows using the same style naming as in designs.
+
 ## [21.1.0] - 2024-03-06
 
 ### Features
