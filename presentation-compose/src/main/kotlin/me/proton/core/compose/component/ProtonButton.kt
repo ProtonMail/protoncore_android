@@ -17,6 +17,7 @@
  */
 package me.proton.core.compose.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -334,12 +335,8 @@ private fun ProtonButtonContent(
 private val LoadingIndicatorSize = 14.dp
 private val LoadingIndicatorStroke = 1.dp
 
-@Preview(
-    widthDp = 640,
-    showBackground = true,
-    backgroundColor = android.graphics.Color.WHITE.toLong()
-)
-@Suppress("unused")
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
 @Composable
 private fun PreviewProtonSolidButton() {
     PreviewHelper { enabled, contained, loading ->
@@ -354,12 +351,8 @@ private fun PreviewProtonSolidButton() {
     }
 }
 
-@Preview(
-    widthDp = 640,
-    showBackground = true,
-    backgroundColor = android.graphics.Color.WHITE.toLong()
-)
-@Suppress("unused")
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
 @Composable
 private fun PreviewProtonOutlinedButton() {
     PreviewHelper { enabled, contained, loading ->
@@ -374,12 +367,8 @@ private fun PreviewProtonOutlinedButton() {
     }
 }
 
-@Preview(
-    widthDp = 640,
-    showBackground = true,
-    backgroundColor = android.graphics.Color.WHITE.toLong()
-)
-@Suppress("unused")
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
 @Composable
 private fun PreviewProtonTextButton() {
     PreviewHelper { enabled, contained, loading ->
@@ -394,12 +383,8 @@ private fun PreviewProtonTextButton() {
     }
 }
 
-@Preview(
-    widthDp = 640,
-    showBackground = true,
-    backgroundColor = android.graphics.Color.WHITE.toLong()
-)
-@Suppress("unused")
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
+@Preview(widthDp = 640, uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = false)
 @Composable
 private fun PreviewProtonSecondaryButton() {
     PreviewHelper { enabled, _, loading ->

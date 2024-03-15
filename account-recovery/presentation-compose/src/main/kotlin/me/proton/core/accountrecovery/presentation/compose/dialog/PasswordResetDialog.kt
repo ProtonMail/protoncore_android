@@ -6,10 +6,10 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -88,7 +88,6 @@ fun PasswordResetDialog(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun PasswordResetDialog(
     modifier: Modifier = Modifier,
@@ -110,8 +109,10 @@ private fun PasswordResetDialog(
                 Spacer(modifier = Modifier.size(ProtonDimens.LargeSpacing))
                 Card(
                     onClick = onRecoveryMethod,
-                    backgroundColor = ProtonTheme.colors.backgroundSecondary,
-                    shape = ProtonTheme.shapes.medium
+                    colors = CardDefaults.cardColors(
+                        containerColor = ProtonTheme.colors.backgroundSecondary,
+                        contentColor = ProtonTheme.colors.textNorm,
+                    ),
                 ) {
                     Column(
                         modifier = Modifier.padding(ProtonDimens.SmallSpacing),

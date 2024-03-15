@@ -34,7 +34,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -48,6 +47,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -56,7 +56,6 @@ import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSetti
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewState
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
-import me.proton.core.compose.component.protonButtonColors
 import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
@@ -342,15 +341,13 @@ private fun CreateAccountButton(
     modifier: Modifier = Modifier
 ) {
     ProtonSolidButton(
-        colors = ButtonDefaults.protonButtonColors(
-            backgroundColor = ProtonTheme.colors.interactionNorm
-        ),
         onClick = onClick,
         modifier = modifier
     ) {
         Text(
-            color = ProtonTheme.colors.textNorm,
-            text = stringResource(id = R.string.auth_create_account)
+            text = stringResource(id = R.string.auth_create_account),
+            // TODO: Remove after CP-7603.
+            color = Color.White
         )
     }
 }
@@ -365,8 +362,9 @@ private fun SignInButton(
         modifier = modifier
     ) {
         Text(
-            color = ProtonTheme.colors.textNorm,
-            text = stringResource(id = R.string.auth_sign_in)
+            text = stringResource(id = R.string.auth_sign_in),
+            // TODO: Remove after CP-7603.
+            color = ProtonTheme.colors.interactionNorm
         )
     }
 }

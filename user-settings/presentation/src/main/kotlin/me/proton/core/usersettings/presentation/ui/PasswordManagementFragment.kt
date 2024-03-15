@@ -36,6 +36,7 @@ import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecover
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.ui.view.ProtonInput
@@ -90,7 +91,11 @@ class PasswordManagementFragment :
         binding.apply {
             accountRecoveryInfo.apply {
                 setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
-                setContent { AccountRecoveryInfo(onOpenDialog = { onOpenDialog() }, expanded = false) }
+                setContent {
+                    ProtonTheme {
+                        AccountRecoveryInfo(onOpenDialog = { onOpenDialog() }, expanded = false)
+                    }
+                }
             }
             tabLayout.addOnTabSelectedListener(this@PasswordManagementFragment)
             currentLoginPasswordInput.passwordValidation(false)

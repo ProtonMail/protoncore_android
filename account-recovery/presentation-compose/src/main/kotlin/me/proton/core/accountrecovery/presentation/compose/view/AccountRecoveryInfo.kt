@@ -26,10 +26,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Card
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -189,7 +189,6 @@ fun AccountRecoveryInfoInsecure(
     )
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AccountRecoveryInfo(
     modifier: Modifier = Modifier,
@@ -205,9 +204,11 @@ fun AccountRecoveryInfo(
 ) {
     Column(modifier = modifier) {
         Card(
-            onClick = { onCardClick() },
-            backgroundColor = ProtonTheme.colors.backgroundSecondary,
-            shape = ProtonTheme.shapes.medium
+            onClick = onCardClick,
+            colors = CardDefaults.cardColors(
+                containerColor = ProtonTheme.colors.backgroundSecondary,
+                contentColor = ProtonTheme.colors.textNorm,
+            )
         ) {
             Row(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
                 Icon(
