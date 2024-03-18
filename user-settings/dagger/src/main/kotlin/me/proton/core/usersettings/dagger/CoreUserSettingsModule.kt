@@ -55,6 +55,5 @@ public interface CoreUserSettingsModule {
     public fun provideUserSettingsRemoteDataSource(impl: UserSettingsRemoteDataSourceImpl): UserSettingsRemoteDataSource
 
     @Binds
-    @Singleton
     public fun provideAccountManagerOrchestrator(impl: UserSettingsOrchestrator): AccountManagerOrchestrator
 }

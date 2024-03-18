@@ -86,13 +86,7 @@ fun AccountSettingsInfo(
     viewModel: AccountSettingsViewModel? = hiltViewModelOrNull(),
 ) {
     val state = when (viewModel) {
-        null -> AccountSettingsViewState.LoggedIn(
-            userId = UserId("userId"),
-            initials = "DU",
-            displayName = "Display Name",
-            email = "example@domain.com",
-        )
-
+        null -> AccountSettingsViewState.Null
         else -> rememberAsState(viewModel.state, viewModel.initialState).value
     }
 
@@ -446,12 +440,7 @@ internal fun PreviewAccountSettingsLogged() {
         AccountSettingsLoggedIn(
             onAccountClicked = {},
             onSignOutClicked = { },
-            state = AccountSettingsViewState.LoggedIn(
-                UserId("test-user-id"),
-                "SN",
-                "Display Name",
-                "email@proton.com"
-            )
+            state = AccountSettingsViewState.Null
         )
     }
 }

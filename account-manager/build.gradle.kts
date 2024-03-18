@@ -51,6 +51,7 @@ dependencies {
     api(
         project(Module.accountManagerDagger),
         project(Module.accountManagerPresentation),
+        project(Module.accountManagerPresentationCompose),
         project(Module.accountManagerDomain),
         project(Module.accountManagerData)
     )

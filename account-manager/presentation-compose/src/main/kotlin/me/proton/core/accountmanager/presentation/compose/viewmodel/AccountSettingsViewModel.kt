@@ -22,30 +22,33 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.entity.UserRecovery
 import me.proton.core.user.domain.extension.getDisplayName
 import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.extension.getInitials
+import me.proton.core.user.domain.usecase.ObserveUser
+import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import javax.inject.Inject
 
 @HiltViewModel
 class AccountSettingsViewModel @Inject constructor(
     accountManager: AccountManager,
-    private val userManager: UserManager,
-    override val telemetryManager: TelemetryManager
+    private val observeUser: ObserveUser,
+    private val observeUserSettings: ObserveUserSettings,
+    override val telemetryManager: TelemetryManager,
 ) : ProtonViewModel(), ProductMetricsDelegate {
 
     override val productGroup: String
@@ -55,11 +58,16 @@ class AccountSettingsViewModel @Inject constructor(
 
     val initialState = AccountSettingsViewState.Hidden
 
-    val state: StateFlow<AccountSettingsViewState> = accountManager.getPrimaryAccount()
+    val state: StateFlow<AccountSettingsViewState> = accountManager.getPrimaryUserId()
         .filterNotNull()
-        .flatMapLatest { userManager.observeUser(it.userId) }
-        .map { it.toAccountSettingsViewState() }
-        .stateIn(
+        .flatMapLatest { userId ->
+            combine(
+                observeUser(userId),
+                observeUserSettings(userId)
+            ) { user, settings ->
+                user.toAccountSettingsViewState(settings)
+            }
+        }.stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
             initialValue = initialState
@@ -67,27 +75,41 @@ class AccountSettingsViewModel @Inject constructor(
 }
 
 sealed class AccountSettingsViewState {
-    object Hidden : AccountSettingsViewState()
+    data object Hidden : AccountSettingsViewState()
     data class CredentialLess(
         val userId: UserId
     ) : AccountSettingsViewState()
 
     data class LoggedIn(
         val userId: UserId,
-        val initials: String?,
-        val displayName: String?,
-        val email: String?
+        val initials: String? = null,
+        val displayName: String? = null,
+        val email: String? = null,
+        val recoveryState: UserRecovery.State? = null,
+        val recoveryEmail: String? = null
     ) : AccountSettingsViewState()
 
+    companion object {
+        val Null = LoggedIn(
+            userId = UserId("userId"),
+            initials = "DU",
+            displayName = "Display Name",
+            email = "example@proton.me",
+            recoveryState = UserRecovery.State.Grace,
+            recoveryEmail = "example@domain.com",
+        )
+    }
 }
 
-private fun User?.toAccountSettingsViewState(): AccountSettingsViewState = when {
+private fun User?.toAccountSettingsViewState(settings: UserSettings?): AccountSettingsViewState = when {
     this == null -> AccountSettingsViewState.Hidden
     type == Type.CredentialLess -> AccountSettingsViewState.CredentialLess(userId)
     else -> AccountSettingsViewState.LoggedIn(
         userId = userId,
         initials = getInitials(count = 2),
         displayName = getDisplayName(),
-        email = getEmail()
+        email = getEmail(),
+        recoveryState = recovery?.state?.enum,
+        recoveryEmail = settings?.email?.value
     )
 }

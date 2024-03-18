@@ -25,11 +25,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewModel
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewState
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.UserId
 import org.junit.Rule
 import org.junit.Test
 
-class AccountSettingsSignUpTest {
+class AccountSettingsInfoSnapshotTest {
 
     @get:Rule
     val paparazzi = Paparazzi()
@@ -65,12 +64,7 @@ class AccountSettingsSignUpTest {
                 AccountSettingsLoggedIn(
                     onAccountClicked = {},
                     onSignOutClicked = {},
-                    state = AccountSettingsViewState.LoggedIn(
-                        userId = UserId("test-user-id"),
-                        initials = "SN",
-                        displayName = "Display Name",
-                        email = "email@proton.com"
-                    )
+                    state = AccountSettingsViewState.Null
                 )
             }
         }
@@ -83,12 +77,7 @@ class AccountSettingsSignUpTest {
                 AccountSettingsLoggedIn(
                     onAccountClicked = {},
                     onSignOutClicked = {},
-                    state = AccountSettingsViewState.LoggedIn(
-                        userId = UserId("test-user-id"),
-                        initials = "SN",
-                        displayName = "Display Name",
-                        email = "email@proton.com"
-                    )
+                    state = AccountSettingsViewState.Null
                 )
             }
         }

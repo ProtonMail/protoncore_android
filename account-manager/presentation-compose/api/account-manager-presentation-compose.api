@@ -34,6 +34,23 @@ public final class me/proton/core/accountmanager/presentation/compose/AccountSet
 	public static final fun AccountSettingsLoggedIn (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;IZLandroidx/compose/runtime/Composer;II)V
 }
 
+public final class me/proton/core/accountmanager/presentation/compose/AccountSettingsItemKt {
+	public static final fun AccountSettingsItem (Landroidx/compose/ui/Modifier;Ljava/lang/String;Ljava/lang/String;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsItem (Landroidx/compose/ui/Modifier;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsItem (Landroidx/compose/ui/Modifier;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/AccountSettingsListKt {
+	public static final fun AccountSettingsList (Landroidx/compose/ui/Modifier;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsList (Landroidx/compose/ui/Modifier;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsList (Landroidx/compose/ui/Modifier;Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+	public static final fun AccountSettingsListHeader (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/AccountSettingsScreenKt {
+	public static final fun AccountSettingsScreen (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class me/proton/core/accountmanager/presentation/compose/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
@@ -56,9 +73,56 @@ public final class me/proton/core/accountmanager/presentation/compose/Composable
 	public final fun getLambda-5$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class me/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsItemKt {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsItemKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsListKt {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsListKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-10 Lkotlin/jvm/functions/Function3;
+	public static field lambda-11 Lkotlin/jvm/functions/Function3;
+	public static field lambda-12 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function3;
+	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+	public static field lambda-5 Lkotlin/jvm/functions/Function3;
+	public static field lambda-6 Lkotlin/jvm/functions/Function2;
+	public static field lambda-7 Lkotlin/jvm/functions/Function2;
+	public static field lambda-8 Lkotlin/jvm/functions/Function3;
+	public static field lambda-9 Lkotlin/jvm/functions/Function3;
+	public fun <init> ()V
+	public final fun getLambda-1$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-10$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-11$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-12$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-4$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-5$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-6$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-7$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-8$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-9$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsScreenKt {
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/ComposableSingletons$AccountSettingsScreenKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-2$account_manager_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/telemetry/presentation/ProductMetricsDelegate {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/telemetry/domain/TelemetryManager;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/telemetry/domain/TelemetryManager;)V
 	public final fun getInitialState ()Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Hidden;
 	public fun getProductDimensions ()Ljava/util/Map;
 	public fun getProductFlow ()Ljava/lang/String;
@@ -70,11 +134,11 @@ public final class me/proton/core/accountmanager/presentation/compose/viewmodel/
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;Lme/proton/core/telemetry/domain/TelemetryManager;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel;
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel_HiltModules {
@@ -98,6 +162,11 @@ public final class me/proton/core/accountmanager/presentation/compose/viewmodel/
 
 public abstract class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
 	public static final field $stable I
+	public static final field Companion Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Companion;
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Companion {
+	public final fun getNull ()Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$CredentialLess : me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
@@ -115,21 +184,29 @@ public final class me/proton/core/accountmanager/presentation/compose/viewmodel/
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Hidden : me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
 	public static final field $stable I
 	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$Hidden;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn : me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/UserRecovery$State;Ljava/lang/String;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/UserRecovery$State;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
-	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
+	public final fun component5 ()Lme/proton/core/user/domain/entity/UserRecovery$State;
+	public final fun component6 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/UserRecovery$State;Ljava/lang/String;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/UserRecovery$State;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewState$LoggedIn;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDisplayName ()Ljava/lang/String;
 	public final fun getEmail ()Ljava/lang/String;
 	public final fun getInitials ()Ljava/lang/String;
+	public final fun getRecoveryEmail ()Ljava/lang/String;
+	public final fun getRecoveryState ()Lme/proton/core/user/domain/entity/UserRecovery$State;
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;

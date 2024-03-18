@@ -26,20 +26,16 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountDetails
-import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.Session
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.test.kotlin.CoroutinesTest
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.usecase.ObserveUser
+import me.proton.core.usersettings.domain.entity.PasswordSetting
+import me.proton.core.usersettings.domain.entity.UserSettings
+import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import org.junit.After
 import org.junit.Test
 import kotlin.test.BeforeTest
@@ -51,31 +47,17 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var accountManager: AccountManager
 
     @MockK
-    private lateinit var userManager: UserManager
+    private lateinit var observeUser: ObserveUser
+
+    @MockK
+    private lateinit var observeUserSettings: ObserveUserSettings
+
     @MockK
     private lateinit var telemetryManager: TelemetryManager
 
     private lateinit var tested: AccountSettingsViewModel
 
     private val userId = UserId("test-user-id")
-
-    private val session = Session.Authenticated(
-        userId = userId,
-        sessionId = SessionId("session"),
-        accessToken = "accessToken",
-        refreshToken = "refreshToken",
-        scopes = listOf("full", "calendar", "mail")
-    )
-
-    private val account = Account(
-        userId = userId,
-        username = "username",
-        email = "test@example.com",
-        state = AccountState.Ready,
-        sessionId = session.sessionId,
-        sessionState = SessionState.Authenticated,
-        details = AccountDetails(null, null)
-    )
 
     private val user = User(
         userId = userId,
@@ -98,13 +80,38 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         type = Type.Proton
     )
 
+    private val userSettings = UserSettings(
+        userId = userId,
+        email = null,
+        phone = null,
+        password = PasswordSetting(1, null),
+        twoFA = null,
+        news = null,
+        locale = null,
+        logAuth = null,
+        density = null,
+        weekStart = null,
+        dateFormat = null,
+        timeFormat = null,
+        earlyAccess = null,
+        deviceRecovery = null,
+        telemetry = null,
+        crashReports = null,
+    )
+
     @BeforeTest
     fun beforeEveryTest() {
         MockKAnnotations.init(this)
         mockkStatic("me.proton.core.accountmanager.domain.AccountManagerExtensionsKt")
-        every { accountManager.getPrimaryAccount() } returns flowOf(account)
-        coEvery { userManager.observeUser(userId) } returns flowOf(user)
-        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        every { accountManager.getPrimaryUserId() } returns flowOf(userId)
+        coEvery { observeUser(userId) } returns flowOf(user)
+        coEvery { observeUserSettings(userId) } returns flowOf(userSettings)
+        tested = AccountSettingsViewModel(
+            accountManager = accountManager,
+            observeUser = observeUser,
+            observeUserSettings = observeUserSettings,
+            telemetryManager = telemetryManager
+        )
     }
 
     @After
@@ -133,9 +140,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `state credentialless test`() = coroutinesTest {
         // GIVEN
-        every { accountManager.getPrimaryAccount() } returns flowOf(account)
-        coEvery { userManager.observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
-        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        coEvery { observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
         // WHEN
         tested.state.test {
             // THEN
@@ -150,16 +155,17 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `state managed test`() = coroutinesTest {
         // GIVEN
-        every { accountManager.getPrimaryAccount() } returns flowOf(account)
-        coEvery { userManager.getUser(userId) } returns user.copy(type = Type.Managed)
-        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        coEvery { observeUser(userId) } returns flowOf(user.copy(type = Type.Managed))
         // WHEN
         tested.state.test {
             // THEN
             assertEquals(AccountSettingsViewState.Hidden, awaitItem())
 
             val loggedInState = AccountSettingsViewState.LoggedIn(
-                userId, "TU", "test username", null
+                userId = userId,
+                initials = "TU",
+                displayName = "test username",
+                email = null
             )
             assertEquals(loggedInState, awaitItem())
             expectNoEvents()
@@ -169,16 +175,17 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `state external test`() = coroutinesTest {
         // GIVEN
-        every { accountManager.getPrimaryAccount() } returns flowOf(account)
-        coEvery { userManager.getUser(userId) } returns user.copy(type = Type.External)
-        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        coEvery { observeUser(userId) } returns flowOf(user.copy(type = Type.External))
         // WHEN
         tested.state.test {
             // THEN
             assertEquals(AccountSettingsViewState.Hidden, awaitItem())
 
             val loggedInState = AccountSettingsViewState.LoggedIn(
-                userId, "TU", "test username", null
+                userId = userId,
+                initials = "TU",
+                displayName = "test username",
+                email = null
             )
             assertEquals(loggedInState, awaitItem())
             expectNoEvents()
@@ -188,9 +195,8 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `state null account test`() = coroutinesTest {
         // GIVEN
-        every { accountManager.getPrimaryAccount() } returns flowOf(null)
-        coEvery { userManager.observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
-        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
+        every { accountManager.getPrimaryUserId() } returns flowOf(null)
+        coEvery { observeUser(userId) } returns flowOf(user.copy(type = Type.CredentialLess))
         // WHEN
         tested.state.test {
             // THEN
@@ -202,7 +208,6 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `product metrics`() = coroutinesTest {
         // GIVEN
-        tested = AccountSettingsViewModel(accountManager, userManager, telemetryManager)
         assertEquals("mobile_signup_full", tested.productFlow)
         assertEquals("account.any.signup", tested.productGroup)
     }
