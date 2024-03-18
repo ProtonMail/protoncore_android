@@ -32,6 +32,8 @@
   <string name="settings_validation_email">Endereço de e-mail inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Senha de início de sessão</string>
+  <string name="settings_password_management_tab_mailbox_password">Senha da caixa de correio</string>
   <string name="settings_password_management_change_login_password">Alterar a senha</string>
   <string name="settings_password_management_change_mailbox_password">Alterar senha da caixa de correio</string>
   <string name="settings_password_management_header">Gerenciamento de senhas</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Senha atualizada</string>
   <string name="settings_password_management_login_password_success">Senha de início de sessão atualizada</string>
   <string name="settings_password_management_mailbox_password_success">Senha da caixa de correio atualizada</string>
+  <string name="settings_password_management_start_recovery">Não sabe sua senha atual?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anônima</string>
   <string name="device_settings_telemetry_hint">Para melhorar nossos serviços, às vezes coletamos dados de uso anônimos.</string>

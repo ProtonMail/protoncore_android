@@ -37,11 +37,30 @@
   <string name="account_recovery_cancelled_subtitle">Калі вы ніколі не запытвалі змену пароля, ваш уліковы запіс можа быць у небяспецы.\n\nАбараніце свой уліковы запіс змяніўшы пароль у ім.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Даступна скіданне пароля</string>
-  <string name="account_recovery_password_started_subtitle">Каб скінуць свой пароль, вярніцеся да прылады і браўзера з якіх вы рабілі адпаведны запыт.\n\nВам неабходна будзе зрабіць гэта да таго, як %s.\n\nКалі вы не запытвалі скіданне пароля, скасуйце дадзеную аперацыю.</string>
+  <string name="account_recovery_password_started_subtitle">Каб скінуць свой пароль, вярніцеся да прылады, праграмы або браўзера з якіх вы рабілі адпаведны запыт.\n\nВам неабходна будзе зрабіць гэта да %s.\n\nКалі вы не запытвалі скіданне пароля, скасуйце запыт.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Цяпер вы можаце скінуць свой пароль.\n\nВам неабходна будзе зрабіць гэта да %s.\n\nКалі вы не запытвалі скіданне пароля, скасуйце запыт.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Скід пароля пратэрмінаваны</string>
   <string name="account_recovery_window_ended_subtitle">Вам неабходна запытаць новы скід пароля для %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Скасаваць запыт</string>
   <string name="account_recovery_dismiss">Зразумела</string>
+  <string name="account_recovery_reset">Скінуць пароль</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Запыт на скіданне пароля</string>
+  <string name="account_recovery_info_grace_subtitle">Вы можаце скінуць свой пароль у %1s</string>
+  <string name="account_recovery_info_grace_description">Каб пераканацца што менавіта вы спрабуеце скінуць свой пароль, мы пачакаем 72 гадзіны перад тым, як ухваліць запыт.\n\nКалі вы не запытвалі скіданне пароля, скасуйце запыт.</string>
+  <string name="account_recovery_info_cancelled_title">Скіданне пароля скасавана</string>
+  <string name="account_recovery_info_cancelled_subtitle">Запыт на скід пароля быў зроблены %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Калі вы не можаце распазнаць гэты запыт, то гэта можа азначаць, што нехта яшчэ мог атрымаць доступ да вашага ўліковага запісу Proton.\n\nПаклапаціцеся пра бяспеку свайго ўліковага запісу.</string>
+  <string name="account_recovery_info_insecure_title">Даступна скіданне пароля</string>
+  <string name="account_recovery_info_insecure_subtitle">Цяпер вы можаце скінуць свой пароль. Гэта аперацыя будзе даступна да %1s.</string>
+  <string name="account_recovery_info_insecure_description">Не рабілі гэты запыт?\n\nКалі вы не запытвалі скіданне пароля, скасуйце запыт.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Скінуць пароль?</string>
+  <string name="account_recovery_reset_dialog_text">"У мэтах бяспекі, вам давядзецца чакаць 72 гадзіны перад тым, як вы зможаце змяніць свой пароль для %1s.\n\nКалі ў вас наладжаны метад аднаўлення паспрабуйце скарыстацца спачатку ім. Гэта дазволіць адразу змяніць ваш пароль."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Запытаць скіданне пароля</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Скарыстацца спосабам аднаўлення</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Змяніць пароль у вэб-браўзеры не чакаючы завяршэння перыяду бяспекі.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Запыт на скіданне пароля</string>
 </resources>

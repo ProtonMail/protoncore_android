@@ -48,4 +48,25 @@
   <string name="presentation_connectivity_issues">连接问题</string>
   <string name="presentation_field_required">此项必须填写。</string>
   <string name="presentation_error_general">出错了。</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="other">%d days</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="other">%d hours</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="other">%d minutes</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="other">%d seconds</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="other">%d milliseconds</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="other">%d microseconds</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="other">%d nanoseconds</item>
+  </plurals>
 </resources>

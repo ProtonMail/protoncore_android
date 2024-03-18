@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Omitir</string>
   <string name="auth_signup_set_recovery">Establecer método de recuperación</string>
   <string name="auth_signup_no_connectivity">No hay conexión para mostrar los términos y condiciones.</string>
+  <string name="auth_signup_error_create_to_continue">Cree una cuenta para continuar</string>
   <string name="auth_signup_error_username_blank">El nombre de usuario no puede estar en blanco.</string>
   <string name="auth_signup_error_passwords_do_not_match">Las contraseñas no coinciden.</string>
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>

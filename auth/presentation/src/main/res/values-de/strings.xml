@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Überspringen</string>
   <string name="auth_signup_set_recovery">Wiederherstellungsmethode festlegen</string>
   <string name="auth_signup_no_connectivity">Fehlende Verbindung zum Anzeigen der Allgemeinen Geschäftsbedingungen.</string>
+  <string name="auth_signup_error_create_to_continue">Bitte erstelle ein Konto, um fortzufahren.</string>
   <string name="auth_signup_error_username_blank">Bitte Benutzername eingeben</string>
   <string name="auth_signup_error_passwords_do_not_match">Passwörter stimmen nicht überein</string>
   <string name="auth_signup_validation_password_length">Das Passwort sollte mindestens 8 Zeichen lang sein.</string>

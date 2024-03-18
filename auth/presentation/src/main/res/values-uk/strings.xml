@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Пропустити</string>
   <string name="auth_signup_set_recovery">Налаштувати спосіб відновлення</string>
   <string name="auth_signup_no_connectivity">Немає з\'єднання, щоб показати Умови та положення.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">Поле з ім\'ям користувача не повинно бути порожнім.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі відрізняються.</string>
   <string name="auth_signup_validation_password_length">Пароль повинен містити принаймні 8 символів.</string>

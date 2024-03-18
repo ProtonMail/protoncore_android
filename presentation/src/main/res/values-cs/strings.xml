@@ -48,4 +48,46 @@
   <string name="presentation_connectivity_issues">Chyba připojení</string>
   <string name="presentation_field_required">Toto pole je povinné.</string>
   <string name="presentation_error_general">Došlo k chybě.</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="one">%d den</item>
+    <item quantity="few">%d dny</item>
+    <item quantity="many">%d dnů</item>
+    <item quantity="other">%d dnů</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="one">%d hodina</item>
+    <item quantity="few">%d hodiny</item>
+    <item quantity="many">%d hodin</item>
+    <item quantity="other">%d hodin</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="one">%d minuta</item>
+    <item quantity="few">%d minuty</item>
+    <item quantity="many">%d minut</item>
+    <item quantity="other">%d minut</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="one">%d sekunda</item>
+    <item quantity="few">%d sekundy</item>
+    <item quantity="many">%d sekund</item>
+    <item quantity="other">%d sekund</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="one">%d milisekunda</item>
+    <item quantity="few">%d milisekundy</item>
+    <item quantity="many">%d milisekund</item>
+    <item quantity="other">%d milisekund</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="one">%d mikrosekunda</item>
+    <item quantity="few">%d mikrosekundy</item>
+    <item quantity="many">%d mikrosekund</item>
+    <item quantity="other">%d mikrosekund</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="one">%d nanosekunda</item>
+    <item quantity="few">%d nanosekundy</item>
+    <item quantity="many">%d nanosekund</item>
+    <item quantity="other">%d nanosekund</item>
+  </plurals>
 </resources>

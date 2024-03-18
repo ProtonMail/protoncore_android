@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">A drive tárhelye megtelt</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">A drive tárhelye majdnem megtelt</string>
   <string name="plans_subscription_storage_get_more">További tárhely igénylése</string>
-  <string name="plans_subscription_storage_full_description">Frissítse csomagját, hogy továbbra is megszakítás nélkül használhassa fiókját.</string>
+  <string name="plans_subscription_storage_full_description">Váltson nagyobb csomagra, hogy továbbra is megszakítás nélkül használhassa fiókját.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# tárhely</item>
@@ -164,9 +164,9 @@
   <string name="ten_hide_my_email_aliases">10 Hide My Email álnév</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
+  <string name="upgrade_storage_current_drive_storage">Drive tárhely: %d%% tele</string>
+  <string name="upgrade_storage_current_mail_storage">E-mail tárhely: %d%% tele</string>
   <string name="upgrade_storage_subtitle">További tárhely igénylése</string>
-  <string name="upgrade_storage_cta_button">Upgrade</string>
+  <string name="upgrade_storage_cta_button">Váltás nagyobb csomagra</string>
   <!-- endregion -->
 </resources>

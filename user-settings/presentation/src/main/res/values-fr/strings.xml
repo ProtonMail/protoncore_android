@@ -32,6 +32,8 @@
   <string name="settings_validation_email">L\'adresse e-mail n\'est pas valide.</string>
   <string name="settings_general_error">Une erreur s’est produite.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Mot de passe de connexion</string>
+  <string name="settings_password_management_tab_mailbox_password">Mot de passe de la messagerie</string>
   <string name="settings_password_management_change_login_password">Changer le mot de passe</string>
   <string name="settings_password_management_change_mailbox_password">Modifier le mot de passe de la messagerie</string>
   <string name="settings_password_management_header">Gestion des mots de passe</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Le mot de passe a été mis à jour.</string>
   <string name="settings_password_management_login_password_success">Le mot de passe de connexion a été mis à jour.</string>
   <string name="settings_password_management_mailbox_password_success">Le mot de passe de la messagerie a été mis à jour.</string>
+  <string name="settings_password_management_start_recovery">Vous ne connaissez pas votre mot de passe actuel ?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Données d\'utilisation anonymisées</string>
   <string name="device_settings_telemetry_hint">Pour améliorer nos services, nous collectons parfois des données d\'utilisation anonymisées.</string>

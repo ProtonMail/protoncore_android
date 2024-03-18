@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">رد شدن</string>
   <string name="auth_signup_set_recovery">تعیین روش بازیابی</string>
   <string name="auth_signup_no_connectivity">اتصال برای نمایش شرایط و ضوابط برقرار نیست.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">نام کاربری نباید خالی باشد.</string>
   <string name="auth_signup_error_passwords_do_not_match">گذرواژه‌ها مطابقت ندارند.</string>
   <string name="auth_signup_validation_password_length">گذرواژه باید حداقل ۸ نویسه داشته باشد.</string>

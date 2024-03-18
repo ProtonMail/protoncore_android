@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">건너뛰기</string>
   <string name="auth_signup_set_recovery">복구 방법 설정</string>
   <string name="auth_signup_no_connectivity">이용 약관을 표시할 연결 없음.</string>
+  <string name="auth_signup_error_create_to_continue">계속하려면 가입해주세요</string>
   <string name="auth_signup_error_username_blank">사용자 이름은 비울 수 없습니다.</string>
   <string name="auth_signup_error_passwords_do_not_match">비밀번호가 일치하지 않습니다.</string>
   <string name="auth_signup_validation_password_length">비밀번호는 8글자 이상이어야 합니다.</string>

@@ -35,11 +35,30 @@
   <string name="account_recovery_cancelled_subtitle">Si tú nunca solicitaste un cambio para tu contraseña, tu cuenta podría estar comprometida y en riesgo.\n\nAsegura tu cuenta cambiando tu contraseña.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Restablecimiento de contraseña disponible</string>
-  <string name="account_recovery_password_started_subtitle">Para restablecer la contraseña, regresa al dispositivo y navegador desde el cual realizaste la solicitud de restablecimiento.\n\nNecesitarás hacer esto antes de %s.\n\nSi no has solicitado restablecer la contraseña, cancela el restablecimiento ahora.</string>
+  <string name="account_recovery_password_started_subtitle">Para restablecer la contraseña, ve al dispositivo, aplicación o navegador del cual has realizado la solicitud de restablecimiento.\n\nNecesitarás hacer esto antes de %s.\n\nSi no has solicitado restablecer tu contraseña, cancela la solicitud ahora.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Ahora puedes restablecer tu contraseña.\n\nNecesitarás hacer esto antes de %s.\n\nSi no has solicitado restablecer tu contraseña, cancélala ahora.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">El restablecimiento de contraseña ha expirado.</string>
   <string name="account_recovery_window_ended_subtitle">Tendrás que solicitar un nuevo restablecimiento de contraseña para %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Cancelar la solicitud</string>
   <string name="account_recovery_dismiss">Entendido</string>
+  <string name="account_recovery_reset">Reset password</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Se ha solicitado un restablecimiento de contraseña.</string>
+  <string name="account_recovery_info_grace_subtitle">Puedes restablecer su contraseña en %1s.</string>
+  <string name="account_recovery_info_grace_description">Para asegurarte de que realmente eres tú quien intenta restablecer tu contraseña, esperamos 72 horas antes de aprobar las solicitudes.\n\nSi no has solicitado restablecer tu contraseña, cancela esta solicitud ahora.</string>
+  <string name="account_recovery_info_cancelled_title">El restablecimiento de contraseña ha sido cancelado.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Una solicitud de restablecimiento de contraseña se ha realizado el %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Si no reconoces esta solicitud, puede que alguien más tenga acceso a tu cuenta de Proton.\n\nAsegura tu cuenta ahora.</string>
+  <string name="account_recovery_info_insecure_title">El restablecimiento de contraseña está disponible.</string>
+  <string name="account_recovery_info_insecure_subtitle">Ahora puedes restablecer tu contraseña. El restablecimiento de contraseña está disponible hasta %1s.</string>
+  <string name="account_recovery_info_insecure_description">¿No has realizado esta solicitud?\n\nSi no has solicitado restablecer tu contraseña, cancélala ahora.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Reset Password?</string>
+  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Password reset requested</string>
 </resources>

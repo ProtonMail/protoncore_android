@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Παράλειψη</string>
   <string name="auth_signup_set_recovery">Ορισμός μεθόδου ανάκτησης</string>
   <string name="auth_signup_no_connectivity">Δεν υπάρχει συνδεσιμότητα για την εμφάνιση των Όρων και Προϋποθέσεων.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">Το Όνομα Χρήστη δεν πρέπει να είναι κενό.</string>
   <string name="auth_signup_error_passwords_do_not_match">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
   <string name="auth_signup_validation_password_length">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>

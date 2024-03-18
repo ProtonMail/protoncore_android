@@ -48,4 +48,25 @@
   <string name="presentation_connectivity_issues">Masalah pada sambungan</string>
   <string name="presentation_field_required">Kolom ini wajib diisi.</string>
   <string name="presentation_error_general">Terdapat suatu kesalahan.</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="other">%d hari</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="other">%d jam</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="other">%d menit</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="other">%d detik</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="other">%d milidetik</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="other">%d mikrodetik</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="other">%d nanodetik</item>
+  </plurals>
 </resources>

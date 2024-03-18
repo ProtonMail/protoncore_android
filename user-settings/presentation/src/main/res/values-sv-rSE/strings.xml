@@ -32,6 +32,8 @@
   <string name="settings_validation_email">E-postadress är ogiltig.</string>
   <string name="settings_general_error">Ett fel uppstod.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Inloggningslösenord</string>
+  <string name="settings_password_management_tab_mailbox_password">Lösenord för brevlåda</string>
   <string name="settings_password_management_change_login_password">Ändra lösenord</string>
   <string name="settings_password_management_change_mailbox_password">Ändra lösenord för brevlåda</string>
   <string name="settings_password_management_header">Lösenordshantering</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Lösenord uppdaterat</string>
   <string name="settings_password_management_login_password_success">Inloggningslösenord uppdaterat</string>
   <string name="settings_password_management_mailbox_password_success">Brevlådans lösenord uppdaterad</string>
+  <string name="settings_password_management_start_recovery">Vet du inte ditt nuvarande lösenord?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonym telemetri</string>
   <string name="device_settings_telemetry_hint">För att förbättra våra tjänster samlar vi ibland in anonymiserad användningsdata.</string>

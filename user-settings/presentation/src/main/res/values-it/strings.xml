@@ -32,6 +32,8 @@
   <string name="settings_validation_email">Indirizzo email non valido.</string>
   <string name="settings_general_error">Si è verificato un errore.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Password di accesso</string>
+  <string name="settings_password_management_tab_mailbox_password">Password della casella di posta</string>
   <string name="settings_password_management_change_login_password">Cambia la password di accesso</string>
   <string name="settings_password_management_change_mailbox_password">Cambia la password della casella di posta</string>
   <string name="settings_password_management_header">Gestione delle password</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Password aggiornata</string>
   <string name="settings_password_management_login_password_success">Password di accesso aggiornata</string>
   <string name="settings_password_management_mailbox_password_success">Password della casella di posta aggiornata</string>
+  <string name="settings_password_management_start_recovery">Non ricordi la password attuale?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
   <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo in forma anonima.</string>

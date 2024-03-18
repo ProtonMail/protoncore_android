@@ -32,6 +32,8 @@
   <string name="settings_validation_email">올바르지 않은 이메일 주소입니다.</string>
   <string name="settings_general_error">오류 발생.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">로그인 비밀번호</string>
+  <string name="settings_password_management_tab_mailbox_password">메일함 비밀번호</string>
   <string name="settings_password_management_change_login_password">비밀번호 변경</string>
   <string name="settings_password_management_change_mailbox_password">메일함 비밀번호 변경</string>
   <string name="settings_password_management_header">비밀번호 관리</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">비밀번호 변경됨</string>
   <string name="settings_password_management_login_password_success">로그인 비밀번호가 변경되었습니다</string>
   <string name="settings_password_management_mailbox_password_success">메일함 비밀번호가 변경되었습니다</string>
+  <string name="settings_password_management_start_recovery">기존의 비밀번호를 잊으셨습니까?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">익명 원격 측정</string>
   <string name="device_settings_telemetry_hint">서비스 품질 향상을 위해, 익명의 데이터를 수집할 수 있습니다.</string>

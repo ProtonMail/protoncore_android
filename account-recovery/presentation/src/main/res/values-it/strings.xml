@@ -35,11 +35,30 @@
   <string name="account_recovery_cancelled_subtitle">Se non sei stato tu a chiedere il cambio della password, il tuo account potrebbe essere a rischio.\n\nProteggilo cambiando la password.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Reimpostazione della password disponibile</string>
-  <string name="account_recovery_password_started_subtitle">Per reimpostare la tua password, torna al dispositivo e browser da cui hai effettuato la richiesta di reimpostazione della password.\n\nDovrai farlo prima del %s.\n\nSe non sei stato tu a chiedere la reimpostazione della password, annullala adesso.</string>
+  <string name="account_recovery_password_started_subtitle">Per reimpostare la password, usa il dispositivo e l\'app o il browser da cui hai richiesto la reimpostazione della password.\n\nNon potrai più farlo dal %s.\n\nSe non hai richiesto tu la reimpostazione della password, annulla subito la richiesta.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Ora puoi reimpostare la password.\n\nNon potrai più farlo dal %s.\n\nSe non hai richiesto tu la reimpostazione della password, annulla subito la richiesta.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Reimpostazione della password scaduta</string>
   <string name="account_recovery_window_ended_subtitle">Dovrai richiedere una nuova reimpostazione della password per %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Annulla la richiesta</string>
   <string name="account_recovery_dismiss">Ho capito</string>
+  <string name="account_recovery_reset">Reimposta la password</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Reimpostazione della password richiesta</string>
+  <string name="account_recovery_info_grace_subtitle">Potrai reimpostare la password tra %1s.</string>
+  <string name="account_recovery_info_grace_description">Per essere sicuri che sia veramente tu a tentare di reimpostare la password, attendiamo 72 ore prima di approvare le richieste.\n\n Se non hai richiesto tu la reimpostazione della password, annulla subito questa richiesta.</string>
+  <string name="account_recovery_info_cancelled_title">Reimpostazione della password annullata</string>
+  <string name="account_recovery_info_cancelled_subtitle">È stata richiesta una reimpostazione della password il %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Se non riconosci questa richiesta, qualcun altro potrebbe avere accesso al tuo account Proton.\n\nProteggi subito il tuo account.</string>
+  <string name="account_recovery_info_insecure_title">Reimpostazione della password disponibile</string>
+  <string name="account_recovery_info_insecure_subtitle">Ora puoi cambiare la password. La reimpostazione della password è disponibile fino al %1s.</string>
+  <string name="account_recovery_info_insecure_description">Non hai fatto tu questa richiesta?\n\nSe non hai richiesto tu la reimpostazione della password, annulla subito la richiesta.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Reimposta la password?</string>
+  <string name="account_recovery_reset_dialog_text">"Per motivi di sicurezza, dovrai attendere 72 ore prima di poter modificare la password per %1s.\n\nSe hai impostato un metodo di recupero, prova invece il recupero dell'account. Ciò ti consentirà di modificare immediatamente la tua password."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Richiedi la reimpostazione della password</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Usa un metodo di recupero</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Cambia la password nel tuo browser web senza attendere il periodo di sicurezza.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Reimpostazione della password richiesta</string>
 </resources>

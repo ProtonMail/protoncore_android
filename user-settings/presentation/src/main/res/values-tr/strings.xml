@@ -32,6 +32,8 @@
   <string name="settings_validation_email">E-posta adresi geçersiz.</string>
   <string name="settings_general_error">Bir sorun çıktı.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Oturum açma parolası</string>
+  <string name="settings_password_management_tab_mailbox_password">E-posta kutusu parolası</string>
   <string name="settings_password_management_change_login_password">Parolayı değiştir</string>
   <string name="settings_password_management_change_mailbox_password">Posta kutusu parolasını değiştir</string>
   <string name="settings_password_management_header">Parola yönetimi</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Parola güncellendi</string>
   <string name="settings_password_management_login_password_success">Oturum açma parolası güncellendi</string>
   <string name="settings_password_management_mailbox_password_success">Posta kutusu parolası güncellendi</string>
+  <string name="settings_password_management_start_recovery">Mevcut parolanızı bilmiyor musunuz?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonim kullanım verileri</string>
   <string name="device_settings_telemetry_hint">Hizmetlerimizi iyileştirmek için bazen anonimleştirilmiş kullanım verileri toplarız.</string>

@@ -32,6 +32,8 @@
   <string name="settings_validation_email">La dirección de correo es inválida.</string>
   <string name="settings_general_error">Ocurrió un error.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Contraseña de inicio de sesión</string>
+  <string name="settings_password_management_tab_mailbox_password">Contraseña del buzón</string>
   <string name="settings_password_management_change_login_password">Cambiar contraseña</string>
   <string name="settings_password_management_change_mailbox_password">Cambiar contraseña del buzón</string>
   <string name="settings_password_management_header">Gestión de contraseñas</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Contraseña actualizada</string>
   <string name="settings_password_management_login_password_success">Contraseña de inicio de sesión actualizada</string>
   <string name="settings_password_management_mailbox_password_success">Contraseña del buzón actualizada</string>
+  <string name="settings_password_management_start_recovery">¿No recuerda su contraseña?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetría anónima</string>
   <string name="device_settings_telemetry_hint">Para mejorar nuestros servicios, a veces recolectamos datos de uso anónimos.</string>

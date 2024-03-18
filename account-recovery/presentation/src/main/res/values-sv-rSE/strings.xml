@@ -35,11 +35,30 @@
   <string name="account_recovery_cancelled_subtitle">Om du aldrig bett om att ändra ditt lösenord kan ditt konto vara i fara.\n\nSkydda ditt konto genom att ändra ditt lösenord.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Lösenordsåterställning tillgänglig</string>
-  <string name="account_recovery_password_started_subtitle">För att återställa ditt lösenord, gå tillbaka till enheten och webbläsaren som du gjorde din begäran om lösenordsåterställning från.\n\nDu måste göra detta innan %s.\n\nOm du inte bad om att få återställa ditt lösenord, avbryt återställningen nu.</string>
+  <string name="account_recovery_password_started_subtitle">För att återställa ditt lösenord, gå tillbaka till enheten, appen eller webbläsaren som du gjorde din begäran om lösenordsåterställning från.\n\nDu måste göra detta innan %s.\n\nOm du inte bad om att få återställa ditt lösenord , avbryt begäran nu.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Du kan nu återställa ditt lösenord.\n\nDu måste göra detta innan %s.\n\nOm du inte bad om att få återställa ditt lösenord, avbryt begäran nu.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Lösenordsåterställning löpt ut</string>
   <string name="account_recovery_window_ended_subtitle">Du måste begära en ny lösenordsåterställning för %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Avbryt begäran</string>
   <string name="account_recovery_dismiss">Jag förstår</string>
+  <string name="account_recovery_reset">Återställ lösenord</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Lösenordsåterställning begärd</string>
+  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
+  <string name="account_recovery_info_grace_description">För att vara säker på att det verkligen är du som försöker återställa ditt lösenord väntar vi 72 timmar innan vi godkänner begäran.\n\nOm du inte bad om att få återställa ditt lösenord, avbryt denna begäran nu.</string>
+  <string name="account_recovery_info_cancelled_title">Lösenordsåterställning avbruten</string>
+  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Om du inte känner igen denna begäran kan det betyda att någon annan har åtkomst till ditt Proton-konto.\n\nSäkra ditt konto nu.</string>
+  <string name="account_recovery_info_insecure_title">Lösenordsåterställning tillgänglig</string>
+  <string name="account_recovery_info_insecure_subtitle">Du kan nu återställa ditt lösenord. Lösenordsåterställning är tillgänglig till %1s.</string>
+  <string name="account_recovery_info_insecure_description">Gjorde du inte denna begäran?\n\nOm du inte bad om att få återställa ditt lösenord, avbryt begäran nu.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Återställ lösenord?</string>
+  <string name="account_recovery_reset_dialog_text">"Av säkerhetsskäl måste du vänta 72 timmar innan du kan ändra lösenordet för %1s.\n\nOm du har ställt in en återställningsmetod, prova kontoåterställning istället. Detta gör att du kan ändra ditt lösenord direkt."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Begär lösenordsåterställning</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Använd återställningsmetod</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Ändra ditt lösenord i din webbläsare utan att vänta genom säkerhetsperioden.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Lösenordsåterställning begärd</string>
 </resources>

@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">გამოტოვება</string>
   <string name="auth_signup_set_recovery">აღდგენის მეთოდის დაყენება</string>
   <string name="auth_signup_no_connectivity">წესებისა და პირობების საჩვენებლად შეერთება არ არსებობს.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>
   <string name="auth_signup_error_passwords_do_not_match">პაროლები არ ემთხვევა.</string>
   <string name="auth_signup_validation_password_length">პაროლი 8 სიმბოლო მაინც უნდა იყოს.</string>

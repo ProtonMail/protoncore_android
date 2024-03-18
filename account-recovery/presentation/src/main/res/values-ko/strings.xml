@@ -34,11 +34,30 @@
   <string name="account_recovery_cancelled_subtitle">비밀번호 변경을 요청한 적이 없다면, 계정의 보안에 대한 문제가 있을 수 있습니다. \n\n 비밀번호를 변경하여 계정을 보호하시기 바랍니다.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">비밀번호 재설정 가능</string>
-  <string name="account_recovery_password_started_subtitle">비밀번호를 재설정 하기 위해선, 비밀번호 재설정을 요청한 기기의 브라우저로 돌아가세요.\n\n %s 전에 이 작업이 완료되어야 합니다. \n\n 이 요청을 직접 수행하지 않았다면, 즉시 재설정을 취소하세요.</string>
+  <string name="account_recovery_password_started_subtitle">비밀번호 재설정을 요청한 기기, 또는 앱이나 브라우저로 돌아가십시오.\n\n%s 이전에 작업을 완료하셔야 합니다.\n\n비밀번호 재설정을 요청하지 않았다면 지금 취소하십시오.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">이제 비밀번호를 재설정할 수 있습니다.\n\n%s 이전에 작업을 완료하셔야 합니다.\n\n비밀번호 재설정을 요청하지 않았다면 지금 취소하십시오.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">만료된 비밀번호 재설정입니다.</string>
   <string name="account_recovery_window_ended_subtitle">%s 의 새 비밀번호 재설정 요청이 필요합니다.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">요청 취소</string>
   <string name="account_recovery_dismiss">확인</string>
+  <string name="account_recovery_reset">비밀번호 재설정</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">비밀번호 재설정 요청함</string>
+  <string name="account_recovery_info_grace_subtitle">%1s 후에 비밀번호 재설정이 가능합니다.</string>
+  <string name="account_recovery_info_grace_description">비밀번호를 재설정하려는 것이 본인인지 확인하기 위해 저희는 승인 전에 72시간을 유예합니다.\n\n비밀번호 재설정을 요청하지 않았다면 지금 취소하십시오.</string>
+  <string name="account_recovery_info_cancelled_title">비밀번호 재설정 취소함</string>
+  <string name="account_recovery_info_cancelled_subtitle">비밀번호 재설정 요청이 %1s에 이루어졌습니다.</string>
+  <string name="account_recovery_info_cancelled_description">이 요청을 한 기억이 없다면 당신의 Proton 계정에 다른 누군가가 접근할 수도 있다는 뜻니다.\n\n지금 계정을 안전하게 하십시오.</string>
+  <string name="account_recovery_info_insecure_title">비밀번호 재설정 가능</string>
+  <string name="account_recovery_info_insecure_subtitle">이제 비밀번호를 재설정할 수 있습니다. %1s까지 유효합니다.</string>
+  <string name="account_recovery_info_insecure_description">이 요청을 하지 않으셨습니까?\n\n그렇다면 지금 취소하십시오.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">비밀번호를 재설정하시겠습니까?</string>
+  <string name="account_recovery_reset_dialog_text">"보안상의 이유로 %1s의 비밀변호 변경이 가능해지기 전까지 72시간을 기다리셔야 합니다. \n\n복구방법이 설정되어 있다면, 계정복구를 이용하여 즉시 변경할 수도 있습니다."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">비밀번호 재설정 요청</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">복구 수단 사용하기</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">보안 기간동안 대기하지 않아도 브라우저에서 비밀번호를 바꿀 수 있습니다.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">비밀번호 재설정 요청함</string>
 </resources>

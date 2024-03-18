@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">略過</string>
   <string name="auth_signup_set_recovery">設定備援方法</string>
   <string name="auth_signup_no_connectivity">無法連線以顯示條款與細則。</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">使用者名稱不能為空。</string>
   <string name="auth_signup_error_passwords_do_not_match">密碼不相符。</string>
   <string name="auth_signup_validation_password_length">密碼應至少 8 個字元長。</string>

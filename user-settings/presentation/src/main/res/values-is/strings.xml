@@ -32,6 +32,8 @@
   <string name="settings_validation_email">Tölvupóstfangið er ógilt.</string>
   <string name="settings_general_error">Villa kom upp.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Login password</string>
+  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
   <string name="settings_password_management_change_login_password">Breyta lykilorði</string>
   <string name="settings_password_management_change_mailbox_password">Breyta lykilorði á pósthólfi</string>
   <string name="settings_password_management_header">Sýsl með lykilorð</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Lykilorð uppfært</string>
   <string name="settings_password_management_login_password_success">Login password updated</string>
   <string name="settings_password_management_mailbox_password_success">Mailbox password updated</string>
+  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymous telemetry</string>
   <string name="device_settings_telemetry_hint">To improve our services, we sometimes collect anonymized usage data.</string>

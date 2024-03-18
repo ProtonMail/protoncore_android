@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Preskoči</string>
   <string name="auth_signup_set_recovery">Postavite metodu oporavka</string>
   <string name="auth_signup_no_connectivity">Nema veze za prikaz Uvjeta i Odredbi.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">Korisničko ime ne smije biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lozinke se ne poklapaju.</string>
   <string name="auth_signup_validation_password_length">Lozinka mora imati najmanje 8 znakova.</string>

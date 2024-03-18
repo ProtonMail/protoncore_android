@@ -48,4 +48,32 @@
   <string name="presentation_connectivity_issues">Anslutningsproblem</string>
   <string name="presentation_field_required">Detta fält är obligatoriskt.</string>
   <string name="presentation_error_general">Ett fel uppstod.</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="one">%d dag</item>
+    <item quantity="other">%d dagar</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="one">%d timme</item>
+    <item quantity="other">%d timmar</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="one">%d minut</item>
+    <item quantity="other">%d minuter</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="one">%d sekund</item>
+    <item quantity="other">%d sekunder</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="one">%d millisekund</item>
+    <item quantity="other">%d millisekunder</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="one">%d mikrosekund</item>
+    <item quantity="other">%d mikrosekunder</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="one">%d nanosekund</item>
+    <item quantity="other">%d nanosekunder</item>
+  </plurals>
 </resources>

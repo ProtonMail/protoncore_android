@@ -37,11 +37,30 @@
   <string name="account_recovery_cancelled_subtitle">Konto może być zagrożone, jeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie.\n\nZmień hasło, aby zabezpieczyć konto.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Resetowanie hasła jest dostępne</string>
-  <string name="account_recovery_password_started_subtitle">Aby zresetować hasło, wróć do urządzenia i przeglądarki, z której o to poprosiłeś.\n\nMusisz to zrobić przed %s.\n\nJeśli żądanie zmiany hasła nie zostało wysłane przez Ciebie, anuluj je.</string>
+  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Resetowanie hasła wygasło</string>
   <string name="account_recovery_window_ended_subtitle">Musisz ponownie zresetować hasło konta %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Anuluj żądanie</string>
   <string name="account_recovery_dismiss">Ok</string>
+  <string name="account_recovery_reset">Reset password</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Password reset requested</string>
+  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
+  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_cancelled_title">Password reset cancelled</string>
+  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
+  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_insecure_title">Password reset available</string>
+  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
+  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Reset Password?</string>
+  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Użyj metody odzyskiwania</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Żądanie zresetowania hasła zostało wysłane</string>
 </resources>

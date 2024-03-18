@@ -39,7 +39,7 @@
   <string name="auth_email_username">Uživatelské jméno nebo e-mail</string>
   <string name="auth_account_details">Zadejte údaje Vašeho účtu Proton.</string>
   <string name="auth_sign_in">Přihlásit se</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Odhlásit se</string>
   <string name="auth_sign_in_action">Přihlásit se</string>
   <string name="auth_sign_in_sso">Přihlaste se ke své organizaci</string>
   <string name="auth_sign_in_with_password">Přihlásit se pomocí hesla</string>
@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Přeskočit</string>
   <string name="auth_signup_set_recovery">Nastavit metodu obnovení</string>
   <string name="auth_signup_no_connectivity">Žádné připojení k zobrazení Obchodních podmínek.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">Uživatelské jméno nesmí být prázdné.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hesla se neshodují.</string>
   <string name="auth_signup_validation_password_length">Heslo by mělo být nejméně 8 znaků dlouhé.</string>

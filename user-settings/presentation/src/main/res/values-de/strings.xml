@@ -32,6 +32,8 @@
   <string name="settings_validation_email">E-Mail-Adresse ist ungültig.</string>
   <string name="settings_general_error">Ein Fehler ist aufgetreten.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Anmeldepasswort</string>
+  <string name="settings_password_management_tab_mailbox_password">Postfachpasswort</string>
   <string name="settings_password_management_change_login_password">Passwort ändern</string>
   <string name="settings_password_management_change_mailbox_password">Postfach-Passwort ändern</string>
   <string name="settings_password_management_header">Passwörter verwalten</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Passwort wurde aktualisiert</string>
   <string name="settings_password_management_login_password_success">Anmeldepasswort wurde aktualisiert</string>
   <string name="settings_password_management_mailbox_password_success">Postfach-Passwort wurde aktualisiert</string>
+  <string name="settings_password_management_start_recovery">Du kennst dein aktuelles Passwort nicht?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonyme Telemetrie</string>
   <string name="device_settings_telemetry_hint">Um unsere Dienste zu verbessern, sammeln wir gelegentlich anonymisierte Nutzungsdaten.</string>

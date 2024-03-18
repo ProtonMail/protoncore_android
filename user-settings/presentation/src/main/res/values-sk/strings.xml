@@ -32,6 +32,8 @@
   <string name="settings_validation_email">Emailová adresa je neplatná.</string>
   <string name="settings_general_error">Vyskytla sa chyba.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Login password</string>
+  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
   <string name="settings_password_management_change_login_password">Zmeniť heslo</string>
   <string name="settings_password_management_change_mailbox_password">Zmeniť heslo k poštovej schránke</string>
   <string name="settings_password_management_header">Správa hesiel</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Heslo bolo aktualizované</string>
   <string name="settings_password_management_login_password_success">Prihlasovacie heslo bolo aktualizované</string>
   <string name="settings_password_management_mailbox_password_success">Heslo k poštovej schránke aktualizované</string>
+  <string name="settings_password_management_start_recovery">Neviete, aké je vaše aktuálne heslo?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymná telemetria</string>
   <string name="device_settings_telemetry_hint">Na zlepšenie našich služieb niekedy zhromažďujeme anonymizované údaje o používaní.</string>

@@ -32,6 +32,8 @@
   <string name="settings_validation_email">E-postadressen er ugyldig</string>
   <string name="settings_general_error">En feil oppstod</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Påloggingspassord</string>
+  <string name="settings_password_management_tab_mailbox_password">Postbokspassord</string>
   <string name="settings_password_management_change_login_password">Endre passord</string>
   <string name="settings_password_management_change_mailbox_password">Endre postbokspassord</string>
   <string name="settings_password_management_header">Passordhåndtering</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Passord oppdatert</string>
   <string name="settings_password_management_login_password_success">Påloggingpassord oppdatert</string>
   <string name="settings_password_management_mailbox_password_success">Postbokspassord oppdatert</string>
+  <string name="settings_password_management_start_recovery">Vet du ikke hva ditt nåværende passord er?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonym telemetri</string>
   <string name="device_settings_telemetry_hint">For å forbedre våres tjenester, hender det vi samler inn anonymisert bruksdata.</string>

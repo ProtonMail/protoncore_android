@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Omet</string>
   <string name="auth_signup_set_recovery">Estableix un mètode de recuperació</string>
   <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>
+  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot estar en blanc.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les contrasenyes no coincideixen.</string>
   <string name="auth_signup_validation_password_length">La contrasenya ha de tenir almenys 8 caràcters.</string>

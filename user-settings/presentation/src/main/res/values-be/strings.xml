@@ -32,6 +32,8 @@
   <string name="settings_validation_email">Памылковы адрас электроннай пошты.</string>
   <string name="settings_general_error">Адбылася памылка.</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Пароль уваходу</string>
+  <string name="settings_password_management_tab_mailbox_password">Пароль паштовай скрыні</string>
   <string name="settings_password_management_change_login_password">Змяніць пароль</string>
   <string name="settings_password_management_change_mailbox_password">Змяніць пароль паштовай скрыні</string>
   <string name="settings_password_management_header">Кіраванне паролямі</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">Пароль абноўлены</string>
   <string name="settings_password_management_login_password_success">Пароль уваходу абноўлены</string>
   <string name="settings_password_management_mailbox_password_success">Пароль ад паштовай скрыні абноўлены</string>
+  <string name="settings_password_management_start_recovery">Не ведаеце свой бягучы пароль?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Ананімная тэлеметрыя</string>
   <string name="device_settings_telemetry_hint">Для ўдасканалення нашага сэрвісу час ад часу мы ананімна збіраем даныя аб выкарыстанні.</string>

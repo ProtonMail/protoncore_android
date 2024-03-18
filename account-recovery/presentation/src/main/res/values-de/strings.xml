@@ -35,11 +35,30 @@
   <string name="account_recovery_cancelled_subtitle">Falls du nie eine Passwort-Änderung beantragt hast, könnte dein Konto gefährdet sein.\n\nSichere dein Konto, indem du dein Passwort änderst.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Passwortzurücksetzung verfügbar</string>
-  <string name="account_recovery_password_started_subtitle">Um dein Passwort zurückzusetzen, kehre zu dem Gerät und Browser zurück, von dem aus du die Anfrage zur Passwortrücksetzung gestellt hast.\n\nDu musst dies tun, bevor %s abläuft.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Zurücksetzung sofort ab.</string>
+  <string name="account_recovery_password_started_subtitle">Um dein Passwort zurückzusetzen, kehre zu dem Gerät und Browser zurück, von dem aus du die Anfrage zur Passwortzurücksetzung gestellt hast.\n\nDu musst dies vor dem %s tun.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Du kannst dein Passwort jetzt zurücksetzen.\n\nDu musst dies vor dem %s tun.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Passwortzurücksetzung abgelaufen</string>
   <string name="account_recovery_window_ended_subtitle">Du musst ein neues Passwort für %s beantragen.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Anfrage abbrechen</string>
   <string name="account_recovery_dismiss">Verstanden</string>
+  <string name="account_recovery_reset">Passwort zurücksetzen</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Passwortzurücksetzung angefordert</string>
+  <string name="account_recovery_info_grace_subtitle">Du kannst dein Passwort in %1s zurücksetzen.</string>
+  <string name="account_recovery_info_grace_description">Um sicherzugehen, dass wirklich du versucht hast dein Passwort zurückzusetzen, warten wir 72 Stunden, bevor wir Anfragen genehmigen.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
+  <string name="account_recovery_info_cancelled_title">Passwortzurücksetzung abgebrochen</string>
+  <string name="account_recovery_info_cancelled_subtitle">Eine Anfrage zur Passwortzurücksetzung wurde am %1s erstellt.</string>
+  <string name="account_recovery_info_cancelled_description">Wenn du diese Anfrage nicht erkennst, könnte dies bedeuten, dass jemand anderes Zugang zu deinem Proton-Konto hat.\n\nSichere dein Konto jetzt ab.</string>
+  <string name="account_recovery_info_insecure_title">Passwortzurücksetzung verfügbar</string>
+  <string name="account_recovery_info_insecure_subtitle">Du kannst dein Passwort jetzt zurücksetzen. Die Passwortzurücksetzung ist bis zum %1s verfügbar.</string>
+  <string name="account_recovery_info_insecure_description">Du hast diese Anfrage nicht gestellt?\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Passwort zurücksetzen?</string>
+  <string name="account_recovery_reset_dialog_text">"Aus Sicherheitsgründen musst du 72 Stunden warten, bevor du das Passwort für %1s ändern kannst.\n\nWenn du eine Wiederherstellungsmethode eingerichtet hast, versuche stattdessen die Kontowiederherstellung. So kannst du dein Passwort sofort ändern."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Passwortzurücksetzung anfordern</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Wiederherstellungsmethode verwenden</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Ändere dein Passwort in deinem Browser, ohne die Sicherheitsfrist abzuwarten.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Passwortzurücksetzung angefordert</string>
 </resources>

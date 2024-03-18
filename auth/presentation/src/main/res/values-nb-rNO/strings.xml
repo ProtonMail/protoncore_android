@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Hopp over</string>
   <string name="auth_signup_set_recovery">Angi gjenopprettingsmetode</string>
   <string name="auth_signup_no_connectivity">Ingen forbindelse for å vise brukervilkår.</string>
+  <string name="auth_signup_error_create_to_continue">Vennligst opprett en konto for å fortsette</string>
   <string name="auth_signup_error_username_blank">Brukernavn kan ikke være tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Passordene samsvarer ikke.</string>
   <string name="auth_signup_validation_password_length">Passordet bør være minst 8 tegn langt.</string>

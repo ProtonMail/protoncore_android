@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Pular</string>
   <string name="auth_signup_set_recovery">Definir o método de recuperação</string>
   <string name="auth_signup_no_connectivity">Sem conexão para exibir os Termos e Condições.</string>
+  <string name="auth_signup_error_create_to_continue">Crie uma conta para continuar</string>
   <string name="auth_signup_error_username_blank">Nome de usuário não pode ficar em branco.</string>
   <string name="auth_signup_error_passwords_do_not_match">As senhas não correspondem.</string>
   <string name="auth_signup_validation_password_length">A senha deve ter pelo menos 8 caracteres.</string>

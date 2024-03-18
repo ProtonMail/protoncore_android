@@ -48,4 +48,25 @@
   <string name="presentation_connectivity_issues">接続の問題</string>
   <string name="presentation_field_required">この項目の入力は必須です。</string>
   <string name="presentation_error_general">エラーが発生しました。</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="other">%d days</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="other">%d hours</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="other">%d minutes</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="other">%d seconds</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="other">%d milliseconds</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="other">%d microseconds</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="other">%d nanoseconds</item>
+  </plurals>
 </resources>

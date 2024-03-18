@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Hoppa över</string>
   <string name="auth_signup_set_recovery">Ställ in återställningsmetod</string>
   <string name="auth_signup_no_connectivity">Ingen anslutning för att visa användarvillkor.</string>
+  <string name="auth_signup_error_create_to_continue">Skapa ett konto för att fortsätta</string>
   <string name="auth_signup_error_username_blank">Användarnamn får inte vara tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lösenorden matchar inte.</string>
   <string name="auth_signup_validation_password_length">Lösenord ska vara minst 8 tecken långt.</string>
@@ -151,7 +152,7 @@
   <string name="auth_signup_start_using_vpn">Börja använda Proton VPN</string>
   <string name="auth_signup_start_using_pass">Börja använda Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Återställningsdestinationen är ogiltig.</string>
-  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_credentialless_vpn_no_logs">Certifierat VPN utan loggning</string>
   <string name="auth_credentialless_vpn_title">Välkommen till Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Surfa privat, åtkomst till blockerat innehåll och njut av digital frihet.</string>
   <string name="auth_credentialless_guest_button">Fortsätt som gäst</string>

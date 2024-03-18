@@ -52,7 +52,7 @@
   <string name="auth_help_option_forgot_username">Lupa nama pengguna</string>
   <string name="auth_help_option_forgot_password">Lupa kata sandi</string>
   <string name="auth_help_option_other">Masalah masuk lainnya</string>
-  <string name="auth_help_other">Masih butuh bantuan lebih lanjut? Hubungi kami secara langsung.</string>
+  <string name="auth_help_other">Masih perlu bantuan? Hubungi kami secara langsung.</string>
   <string name="auth_help_option_customer_support">Layanan dukungan</string>
   <string name="auth_2fa_title">Autentikasi dua faktor</string>
   <string name="auth_2fa_label">Kode dua faktor</string>
@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Lewati</string>
   <string name="auth_signup_set_recovery">Atur metode pemulihan</string>
   <string name="auth_signup_no_connectivity">Tidak ada koneksi untuk menampilkan Syarat dan Ketentuan.</string>
+  <string name="auth_signup_error_create_to_continue">Silakan buat akun untuk melanjutkan</string>
   <string name="auth_signup_error_username_blank">Nama pengguna tidak boleh kosong.</string>
   <string name="auth_signup_error_passwords_do_not_match">Kata sandi tidak cocok.</string>
   <string name="auth_signup_validation_password_length">Kata sandi harus mengandung minimal 8 karakter.</string>

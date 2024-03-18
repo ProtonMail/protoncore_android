@@ -32,6 +32,8 @@
   <string name="settings_validation_email">メールアドレスが無効です.</string>
   <string name="settings_general_error">エラーが発生しました。</string>
   <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Login password</string>
+  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
   <string name="settings_password_management_change_login_password">パスワードを変更</string>
   <string name="settings_password_management_change_mailbox_password">メールボックスのパスワードの変更</string>
   <string name="settings_password_management_header">パスワード管理</string>
@@ -45,6 +47,7 @@
   <string name="settings_password_management_success">パスワードが更新されました。</string>
   <string name="settings_password_management_login_password_success">ログインパスワードが更新されました</string>
   <string name="settings_password_management_mailbox_password_success">受信箱のパスワードが更新されました</string>
+  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名の情報収集</string>
   <string name="device_settings_telemetry_hint">サービスを改善するため、匿名化されたデータを収集します。</string>

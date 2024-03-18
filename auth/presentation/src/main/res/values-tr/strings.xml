@@ -131,6 +131,7 @@
   <string name="auth_signup_skip_recovery">Atla</string>
   <string name="auth_signup_set_recovery">Kurtarma yöntemini ayarla</string>
   <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar görüntülenemiyor.</string>
+  <string name="auth_signup_error_create_to_continue">Devam etmek için lütfen bir hesap oluşturun</string>
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
@@ -157,5 +158,5 @@
   <string name="auth_credentialless_guest_button">Konuk olarak ilerle</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Bu uygulamayı kullanarak <annotation link="terms">Hüküm ve Koşullarımızı</annotation> kabul etmiş olursunuz.</string>
   <string name="auth_credentialless_settings_title">Gizliliğe geçiş yapın.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_subtitle">Proton Hesabı ile parola yöneticisi, şifrelenmiş Posta ve Takvim ve 1 GB bulut depolama alanına ücretsiz sahip olun.</string>
 </resources>

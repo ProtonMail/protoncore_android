@@ -21,7 +21,7 @@
   <string name="account_recovery_grace_period_info_title">Réinitialisation du mot de passe nécessaire</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="one">Une réinitialisation du mot de passe a été demandée pour <b>%1$s</b>. Vous pourrez modifier votre mot de passe dans %2$d heure.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez-la maintenant.</item>
-    <item quantity="other">Une réinitialisation du mot de passe a été demandée pour <b>%1$s</b>. Vous pourrez modifier votre mot de passe dans %2$d heures.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez-la maintenant.</item>
+    <item quantity="other">Une réinitialisation du mot de passe a été demandée pour <b>%1$s</b>. Vous pourrez modifier votre mot de passe dans %2$d heures.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez-la immédiatement.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Annuler la réinitialisation du mot de passe ?</string>
@@ -35,11 +35,30 @@
   <string name="account_recovery_cancelled_subtitle">Si vous n\'avez jamais demandé la modification de votre mot de passe, votre compte pourrait être menacé.\n\nSécurisez votre compte en changeant votre mot de passe.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">La réinitialisation du mot de passe est disponible.</string>
-  <string name="account_recovery_password_started_subtitle">Pour réinitialiser votre mot de passe, retournez sur l\'appareil et le navigateur à partir desquels vous avez demandé la réinitialisation de votre mot de passe.\n\nVous devrez le faire avant le %s.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez maintenant la réinitialisation.</string>
+  <string name="account_recovery_password_started_subtitle">Pour réinitialiser votre mot de passe, retournez sur l\'appareil, l\'application ou le navigateur à partir desquels vous avez demandé la réinitialisation de votre mot de passe.\n\nVous devrez le faire avant le %s.\n\nSi vous n\'êtes pas à l\'origine de cette demande, annulez immédiatement cette demande.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Vous pouvez maintenant réinitialiser votre mot de passe.\n\nVous devez effectuer cette action avant le %s.\n\nSi vous n\'avez pas demandé la réinitialisation de votre mot de passe, annulez immédiatement cette demande.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">La réinitialisation du mot de passe a expiré.</string>
   <string name="account_recovery_window_ended_subtitle">Vous devrez demander une nouvelle réinitialisation du mot de passe pour %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Annuler la demande</string>
   <string name="account_recovery_dismiss">J\'ai compris</string>
+  <string name="account_recovery_reset">Réinitialiser le mot de passe</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">La réinitialisation du mot de passe a été demandée.</string>
+  <string name="account_recovery_info_grace_subtitle">Vous pouvez réinitialiser votre mot de passe dans %1s.</string>
+  <string name="account_recovery_info_grace_description">Pour nous assurer que vous êtes bien à l\'origine de la demande de réinitialisation de votre mot de passe, nous attendons 72  heures avant d\'approuver la demande.\n\nSi vous n\'avez pas demandé à réinitialiser votre mot de passe, annulez cette demande maintenant.</string>
+  <string name="account_recovery_info_cancelled_title">La réinitialisation du mot de passe a été annulée.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Une demande de réinitialisation du mot de passe a été effectué le %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Si vous n\'êtes pas à l\'origine de cette demande, il se peut qu\'une autre personne ait accès à votre compte Proton.\n\nSécurisez votre compte maintenant.</string>
+  <string name="account_recovery_info_insecure_title">La réinitialisation du mot de passe est disponible.</string>
+  <string name="account_recovery_info_insecure_subtitle">Vous pouvez maintenant réinitialiser votre mot de passe. La réinitialisation du mot de passe est disponible jusqu\'au %1s.</string>
+  <string name="account_recovery_info_insecure_description">Vous n\'avez pas effectué cette demande ?\n\nSi vous n\'avez pas demandé à réinitialiser votre mot de passe, annulez-la immédiatement.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Réinitialiser le mot de passe ?</string>
+  <string name="account_recovery_reset_dialog_text">"Pour des raisons de sécurité, vous devrez attendre 72 heures avant de changer le mot de passe pour %1s. \n\nSi vous avez une méthode de récupération activée, essayez la récupération de compte à la place. Cela vous permet de changer votre mot de passe tout de suite."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Demander une réinitialisation du mot de passe</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Utiliser une méthode de récupération</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Changez votre mot de passe dans votre navigateur web sans avoir à attendre la fin de la période de sécurité.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">La réinitialisation du mot de passe a été demandée</string>
 </resources>
