@@ -94,20 +94,24 @@ public final class me/proton/core/auth/test/MinimalSignInExternalTests$DefaultIm
 }
 
 public abstract interface class me/proton/core/auth/test/MinimalSignInGuestTests {
+	public abstract fun credentialLessToRegularAccount ()V
 	public abstract fun getIntentsRule ()Landroidx/test/espresso/intent/rule/IntentsRule;
+	public abstract fun navigateToSignupFromCredentialLess ()V
 	public abstract fun opensTermsAndConditionsLink ()V
 	public abstract fun opensVpnNoLogsLink ()V
 	public abstract fun setUp ()V
-	public abstract fun signInWithGuestAccount ()V
-	public abstract fun verifyAfter ()V
+	public abstract fun signInWithCredentialLessAccount ()V
+	public abstract fun verifyAfterCredentialLessSignup ()V
+	public abstract fun verifyAfterRegularSignup (Ljava/lang/String;)V
 }
 
 public final class me/proton/core/auth/test/MinimalSignInGuestTests$DefaultImpls {
+	public static fun credentialLessToRegularAccount (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
 	public static fun getIntentsRule (Lme/proton/core/auth/test/MinimalSignInGuestTests;)Landroidx/test/espresso/intent/rule/IntentsRule;
 	public static fun opensTermsAndConditionsLink (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
 	public static fun opensVpnNoLogsLink (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
 	public static fun setUp (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
-	public static fun signInWithGuestAccount (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
+	public static fun signInWithCredentialLessAccount (Lme/proton/core/auth/test/MinimalSignInGuestTests;)V
 }
 
 public abstract interface class me/proton/core/auth/test/MinimalSignInInternalTests {
@@ -147,11 +151,11 @@ public final class me/proton/core/auth/test/fake/FakeIsCredentialLessEnabled : m
 	public fun <init> (ZLkotlin/jvm/functions/Function1;)V
 	public fun awaitIsRemoteDisabled-8Mi8wO0 (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun getLocalEnabled ()Z
-	public final fun getRemoteEnabled ()Lkotlin/jvm/functions/Function1;
+	public final fun getRemoteDisabled ()Lkotlin/jvm/functions/Function1;
 	public fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun isLocalEnabled ()Z
 	public final fun setLocalEnabled (Z)V
-	public final fun setRemoteEnabled (Lkotlin/jvm/functions/Function1;)V
+	public final fun setRemoteDisabled (Lkotlin/jvm/functions/Function1;)V
 }
 
 public final class me/proton/core/auth/test/fake/FakeIsSsoCustomTabEnabled : me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {

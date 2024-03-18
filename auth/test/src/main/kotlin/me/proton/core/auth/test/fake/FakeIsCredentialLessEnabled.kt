@@ -27,10 +27,10 @@ import kotlin.time.Duration
 @Singleton
 public class FakeIsCredentialLessEnabled(
     public var localEnabled: Boolean,
-    public var remoteEnabled: suspend () -> Boolean
+    public var remoteDisabled: suspend () -> Boolean
 ) : IsCredentialLessEnabled {
 
-    public constructor(enabled: Boolean) : this(localEnabled = enabled, remoteEnabled = { enabled })
+    public constructor(enabled: Boolean) : this(localEnabled = enabled, remoteDisabled = { !enabled })
 
     @Inject
     public constructor() : this(enabled = false)
@@ -43,5 +43,5 @@ public class FakeIsCredentialLessEnabled(
     override suspend fun awaitIsRemoteDisabled(
         userId: UserId?,
         timeout: Duration
-    ): Boolean = remoteEnabled()
+    ): Boolean = remoteDisabled()
 }

@@ -19,11 +19,13 @@
 package me.proton.core.auth.test
 
 import androidx.test.espresso.intent.rule.IntentsRule
+import me.proton.core.auth.test.flow.SignUpFlow
 import me.proton.core.auth.test.robot.CredentialLessWelcomeRobot
+import me.proton.core.auth.test.robot.signup.SignUpRobot
+import me.proton.core.util.kotlin.random
 import me.proton.test.fusion.Fusion.intent
 import org.junit.Rule
 import kotlin.test.BeforeTest
-import kotlin.test.Ignore
 import kotlin.test.Test
 
 public interface MinimalSignInGuestTests {
@@ -31,7 +33,9 @@ public interface MinimalSignInGuestTests {
     public val intentsRule: IntentsRule
         get() = IntentsRule()
 
-    public fun verifyAfter()
+    public fun navigateToSignupFromCredentialLess()
+    public fun verifyAfterCredentialLessSignup()
+    public fun verifyAfterRegularSignup(username: String)
 
     @BeforeTest
     public fun setUp() {
@@ -39,10 +43,22 @@ public interface MinimalSignInGuestTests {
     }
 
     @Test
-    @Ignore("Not yet implemented.")
-    public fun signInWithGuestAccount() {
+    public fun signInWithCredentialLessAccount() {
         CredentialLessWelcomeRobot.clickContinueAsGuest()
-        verifyAfter()
+        verifyAfterCredentialLessSignup()
+    }
+
+    @Test
+    public fun credentialLessToRegularAccount() {
+        CredentialLessWelcomeRobot.clickContinueAsGuest()
+        verifyAfterCredentialLessSignup()
+
+        navigateToSignupFromCredentialLess()
+
+        val testUsername = "test-${String.random()}"
+        SignUpRobot.forExternal().clickSwitch()
+        SignUpFlow.signUpInternal(testUsername)
+        verifyAfterRegularSignup(testUsername)
     }
 
     @Test
