@@ -1,3 +1,9 @@
+public final class me/proton/core/test/android/FusionExtensionsKt {
+	public static final fun withToast (Lme/proton/test/fusion/ui/espresso/wrappers/EspressoMatchers;I)Lme/proton/test/fusion/ui/espresso/builders/OnView;
+	public static final fun withToastAwait-ck1zr5g (Lme/proton/test/fusion/ui/espresso/wrappers/EspressoMatchers;IJJLkotlin/jvm/functions/Function1;)Lme/proton/test/fusion/ui/espresso/wrappers/EspressoAssertions;
+	public static synthetic fun withToastAwait-ck1zr5g$default (Lme/proton/test/fusion/ui/espresso/wrappers/EspressoMatchers;IJJLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/test/fusion/ui/espresso/wrappers/EspressoAssertions;
+}
+
 public final class me/proton/core/test/android/NestedScrollViewExtension : androidx/test/espresso/ViewAction {
 	public fun <init> ()V
 	public fun <init> (Landroidx/test/espresso/ViewAction;)V
@@ -110,6 +116,14 @@ public final class me/proton/core/test/android/instrumented/Robot$DefaultImpls {
 
 public final class me/proton/core/test/android/instrumented/matchers/InputFieldMatcherKt {
 	public static final fun inputFieldMatcher (I)Lorg/hamcrest/Matcher;
+}
+
+public final class me/proton/core/test/android/instrumented/matchers/ToastOverlayMatcher : org/hamcrest/TypeSafeMatcher {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun describeTo (Lorg/hamcrest/Description;)V
+	public synthetic fun matchesSafely (Ljava/lang/Object;)Z
 }
 
 public final class me/proton/core/test/android/instrumented/rules/RetryRule : org/junit/rules/TestRule {

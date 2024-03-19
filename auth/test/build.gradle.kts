@@ -59,6 +59,7 @@ dependencies {
         project(Module.androidInstrumentedTest),
         project(Module.humanVerificationTest),
         project(Module.authPresentation),
+        project(Module.presentation),
         fusion,
         `kotlin-test`,
         `kotlin-test-junit`

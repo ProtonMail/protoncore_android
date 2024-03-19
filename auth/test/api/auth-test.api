@@ -202,6 +202,14 @@ public final class me/proton/core/auth/test/robot/CredentialLessWelcomeRobot {
 	public final fun termsAndConditionsOpened ()V
 }
 
+public final class me/proton/core/auth/test/robot/dialog/PasswordAnd2FARobot {
+	public static final field INSTANCE Lme/proton/core/auth/test/robot/dialog/PasswordAnd2FARobot;
+	public final fun clickCancel ()Lme/proton/core/auth/test/robot/dialog/PasswordAnd2FARobot;
+	public final fun clickEnter ()Lme/proton/core/auth/test/robot/dialog/PasswordAnd2FARobot;
+	public final fun fillPassword (Ljava/lang/String;)Lme/proton/core/auth/test/robot/dialog/PasswordAnd2FARobot;
+	public final fun fillTwoFA (Ljava/lang/String;)Lme/proton/core/auth/test/robot/dialog/PasswordAnd2FARobot;
+}
+
 public final class me/proton/core/auth/test/robot/login/IdentityProviderRobot {
 	public static final field INSTANCE Lme/proton/core/auth/test/robot/login/IdentityProviderRobot;
 	public final fun clickVerify ()V

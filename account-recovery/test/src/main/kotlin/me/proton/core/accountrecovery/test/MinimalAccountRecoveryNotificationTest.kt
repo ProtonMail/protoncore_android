@@ -112,7 +112,7 @@ public interface MinimalAccountRecoveryNotificationTest {
             ?: error("Could not find the notification for account recovery.")
 
         // Check that Account recovery popup is displayed:
-        val gracePeriodRobot = AccountRecoveryGracePeriodRobot()
+        val gracePeriodRobot = AccountRecoveryGracePeriodRobot
         gracePeriodRobot.uiElementsDisplayed()
         gracePeriodRobot.clickContinue()
 

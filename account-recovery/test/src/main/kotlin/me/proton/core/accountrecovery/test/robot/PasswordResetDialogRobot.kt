@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,25 +19,38 @@
 package me.proton.core.accountrecovery.test.robot
 
 import me.proton.core.accountrecovery.presentation.compose.R
+import me.proton.core.test.android.withToastAwait
+import me.proton.test.fusion.Fusion
 import me.proton.test.fusion.Fusion.node
+import kotlin.time.Duration.Companion.seconds
 
-public object AccountRecoveryGracePeriodRobot {
-    private val cancelRecoveryButton = node.withText(R.string.account_recovery_cancel)
+public object PasswordResetDialogRobot {
+
+    private val requestResetButton =
+        node.withText(R.string.account_recovery_reset_dialog_action_request_reset)
     private val continueButton = node.withText(R.string.account_recovery_dismiss)
-    private val dialogTitle = node.withText(R.string.account_recovery_grace_period_info_title)
+    private val dialogTitle = node.withText(R.string.account_recovery_reset_dialog_title)
 
-    public fun clickCancelRecovery(): CancelResetDialogRobot {
-        cancelRecoveryButton.click()
-        return CancelResetDialogRobot
+    public fun clickRequestReset(): PasswordResetDialogRobot = apply {
+        requestResetButton.click()
     }
 
-    public fun clickContinue() {
+    public fun clickContinue(): PasswordResetDialogRobot = apply {
         continueButton.click()
     }
 
-    public fun uiElementsDisplayed(): AccountRecoveryGracePeriodRobot = apply {
+    public fun uiElementsDisplayed(): PasswordResetDialogRobot = apply {
         dialogTitle.await { assertIsDisplayed() }
-        cancelRecoveryButton.await { assertIsDisplayed() }
+        requestResetButton.await { assertIsDisplayed() }
         continueButton.await { assertIsDisplayed() }
+    }
+
+    public fun successRequestResetIsDisplayed(): PasswordResetDialogRobot = apply {
+        Fusion.view.withToastAwait(
+            text = R.string.account_recovery_reset_dialog_action_request_reset_success,
+            timeout = 20.seconds
+        ) {
+            checkIsDisplayed()
+        }
     }
 }

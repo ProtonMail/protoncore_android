@@ -73,6 +73,7 @@ dependencies {
         `espresso-contrib`,
         `espresso-idling-resource`,
         `espresso-web`,
+        fusion,
         `hilt-android-testing`,
         material,
         okhttp,

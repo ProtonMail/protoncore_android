@@ -32,14 +32,14 @@ protonCoverage.disabled.set(true)
 publishOption.shouldBePublishedAsLib = true
 
 android {
-    namespace = "me.proton.core.accountrecovery.test"
+    namespace = "me.proton.core.usersettings.test"
 }
 
 dependencies {
     api(
         project(Module.accountManagerData),
-        project(Module.accountRecoveryDomain),
         project(Module.authTest),
+        project(Module.accountRecoveryTest),
         project(Module.eventManagerDomain),
         project(Module.networkData),
         project(Module.notificationDomain),
@@ -49,6 +49,7 @@ dependencies {
 
     implementation(
         project(Module.androidInstrumentedTest),
+        project(Module.userSettingsPresentation),
         project(Module.accountRecoveryPresentationCompose),
         project(Module.sentryUtil),
         `androidx-test-monitor`,
