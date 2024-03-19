@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<!--
   ~ Copyright (c) 2024 Proton Technologies AG
   ~ This file is part of Proton AG and ProtonCore.
   ~
@@ -15,9 +15,27 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:angle="270"
-        android:endColor="#006E4BFF"
-        android:startColor="#6611D8CC" />
-</shape>
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="360dp"
+    android:height="360dp"
+    android:viewportWidth="360"
+    android:viewportHeight="360">
+  <path
+      android:pathData="M0,0h360v360h-360z"
+      android:strokeAlpha="0.4"
+      android:fillAlpha="0.4">
+    <aapt:attr name="android:fillColor">
+      <gradient
+          android:startX="180"
+          android:startY="325.5"
+          android:endX="180"
+          android:endY="-0"
+          android:type="linear">
+        <item android:offset="0" android:color="#006E4BFF"/>
+        <item android:offset="1" android:color="#FF11D8CC"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+</vector>
