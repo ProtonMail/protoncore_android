@@ -21,6 +21,7 @@ package me.proton.core.paymentiap.data.usecase
 import android.app.Activity
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
+import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
@@ -34,14 +35,18 @@ public class GetStorePriceImpl @Inject constructor(
 ) : GetStorePrice {
     override suspend fun invoke(planName: ProductId): ProductPrice? =
         billingRepositoryProvider.get().use { repository ->
-            repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
-                ?.firstPriceOrNull()?.let { price ->
-                    GoogleProductPrice(
-                        priceAmountMicros = price.priceAmountMicros,
-                        currency = price.priceCurrencyCode,
-                        formattedPriceAndCurrency = price.formattedPrice,
-                    )
-                }
+            try {
+                repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
+                    ?.firstPriceOrNull()?.let { price ->
+                        GoogleProductPrice(
+                            priceAmountMicros = price.priceAmountMicros,
+                            currency = price.priceCurrencyCode,
+                            formattedPriceAndCurrency = price.formattedPrice,
+                        )
+                    }
+            } catch (ignored: BillingClientError) {
+                null
+            }
         }
 }
 

@@ -602,6 +602,7 @@ public final class me/proton/core/auth/presentation/databinding/FragmentCreating
 }
 
 public final class me/proton/core/auth/presentation/databinding/FragmentCredentialLessWelcomeBinding : androidx/viewbinding/ViewBinding {
+	public final field globeImage Landroid/widget/ImageView;
 	public final field noLogsButton Landroidx/cardview/widget/CardView;
 	public final field signIn Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field signInGuest Lme/proton/core/presentation/ui/view/ProtonProgressButton;

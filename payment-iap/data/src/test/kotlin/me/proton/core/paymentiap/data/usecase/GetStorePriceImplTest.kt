@@ -101,15 +101,11 @@ class GetStorePriceImplTest {
     @Test
     fun `billing repository throws exception`() = runTest {
         val testPlanName = ProductId("test-plan-name")
-        val productDetails = mockk<com.android.billingclient.api.ProductDetails>(relaxed = true)
+        val productDetails = mockk<ProductDetails>(relaxed = true)
         every { productDetails.firstPriceOrNull() } returns null
         coEvery { googleBillingRepository.getProductsDetails(any()) } throws BillingClientError(
             BillingResponseCode.SERVICE_TIMEOUT, "Service timeout"
         )
-        val error = assertFailsWith<BillingClientError> {
-            tested(testPlanName)
-        }
-        assertNotNull(error)
-        assertEquals(BillingResponseCode.SERVICE_TIMEOUT, error.responseCode)
+        assertNull(tested(testPlanName))
     }
 }
