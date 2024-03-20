@@ -33,7 +33,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
-import me.proton.core.presentation.utils.showToast
+import me.proton.core.presentation.utils.successToast
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -87,7 +87,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
 
     private fun close(hasCancelledSuccessfully: Boolean = false) {
         if (hasCancelledSuccessfully) {
-            showToast(R.string.account_recovery_cancelled_title)
+            successToast(getString(R.string.account_recovery_cancelled_title))
         }
         finish()
     }

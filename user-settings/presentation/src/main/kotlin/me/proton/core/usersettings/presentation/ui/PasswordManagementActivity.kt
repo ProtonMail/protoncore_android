@@ -23,16 +23,18 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
+import me.proton.core.presentation.utils.successToast
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.ActivityPasswordManagementBinding
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.ui.PasswordManagementFragment.Companion.ARG_UPDATE_RESULT
 import me.proton.core.usersettings.presentation.ui.PasswordManagementFragment.Companion.KEY_UPDATE_RESULT
 
 @AndroidEntryPoint
-class PasswordManagementActivity :
-    ProtonViewBindingActivity<ActivityPasswordManagementBinding>(ActivityPasswordManagementBinding::inflate) {
-
+class PasswordManagementActivity : ProtonViewBindingActivity<ActivityPasswordManagementBinding>(
+    ActivityPasswordManagementBinding::inflate
+) {
     private val input: SettingsInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
@@ -43,7 +45,10 @@ class PasswordManagementActivity :
 
         supportFragmentManager.showUpdatePassword(R.id.layoutContent, input)
         supportFragmentManager.setFragmentResultListener(KEY_UPDATE_RESULT, this) { _, bundle ->
-            val result = bundle.getParcelable<PasswordManagementResult>(PasswordManagementFragment.ARG_UPDATE_RESULT)
+            val result = bundle.getParcelable<PasswordManagementResult>(ARG_UPDATE_RESULT)
+            if (result?.result == true) {
+                successToast(getString(R.string.settings_password_management_success))
+            }
             val intent = Intent().putExtra(ARG_RESULT, result)
             setResult(Activity.RESULT_OK, intent)
             finish()

@@ -23,33 +23,31 @@ import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
-import me.proton.core.presentation.utils.normToast
+import me.proton.core.presentation.utils.successToast
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.ActivityUpdateRecoveryEmailBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
+import me.proton.core.usersettings.presentation.ui.UpdateRecoveryEmailFragment.Companion.ARG_UPDATE_RESULT
+import me.proton.core.usersettings.presentation.ui.UpdateRecoveryEmailFragment.Companion.KEY_UPDATE_RESULT
 
 @AndroidEntryPoint
-class UpdateRecoveryEmailActivity :
-    ProtonViewBindingActivity<ActivityUpdateRecoveryEmailBinding>(ActivityUpdateRecoveryEmailBinding::inflate) {
-
+class UpdateRecoveryEmailActivity : ProtonViewBindingActivity<ActivityUpdateRecoveryEmailBinding>(
+    ActivityUpdateRecoveryEmailBinding::inflate
+) {
     private val input: SettingsInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(binding.toolbar) {
-            title = getString(R.string.settings_recovery_email_header)
-        }
-        supportFragmentManager.showRecoveryEmail(R.id.layoutContent, input)
+        binding.toolbar.title = getString(R.string.settings_recovery_email_header)
 
-        supportFragmentManager.setFragmentResultListener(
-            UpdateRecoveryEmailFragment.KEY_UPDATE_RESULT, this@UpdateRecoveryEmailActivity
-        ) { _, bundle ->
-            val result = bundle.getParcelable<UpdateRecoveryEmailResult>(UpdateRecoveryEmailFragment.ARG_UPDATE_RESULT)
+        supportFragmentManager.showRecoveryEmail(R.id.layoutContent, input)
+        supportFragmentManager.setFragmentResultListener(KEY_UPDATE_RESULT, this) { _, bundle ->
+            val result = bundle.getParcelable<UpdateRecoveryEmailResult>(ARG_UPDATE_RESULT)
             if (result?.result == true) {
-                normToast(getString(R.string.settings_recovery_email_success))
+                successToast(getString(R.string.settings_recovery_email_success))
             }
             val intent = Intent().putExtra(ARG_RESULT, result)
             setResult(Activity.RESULT_OK, intent)

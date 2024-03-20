@@ -136,8 +136,8 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
             plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
             plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }
 
-            settingsRecovery.onClick { settingsViewModel.onUpdateRecoveryEmailClicked(this@MainActivity) }
-            settingsPassword.onClick { settingsViewModel.onPasswordManagementClicked(this@MainActivity) }
+            settingsRecovery.onClick { settingsViewModel.onUpdateRecoveryEmailClicked() }
+            settingsPassword.onClick { settingsViewModel.onPasswordManagementClicked() }
 
             triggerConfirmPasswordLocked.onClick { secureScopesViewModel.triggerLockedScope() }
             triggerConfirmPasswordPass.onClick { secureScopesViewModel.triggerPasswordScope() }

@@ -22,14 +22,10 @@ import androidx.activity.ComponentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.accountmanager.domain.getPrimaryAccount
-import me.proton.core.presentation.utils.showToast
 import me.proton.core.usersettings.presentation.UserSettingsOrchestrator
-import me.proton.core.usersettings.presentation.onPasswordManagementResult
-import me.proton.core.usersettings.presentation.onUpdateRecoveryEmailResult
 import javax.inject.Inject
 
 @HiltViewModel
@@ -46,31 +42,17 @@ class UserSettingsViewModel @Inject constructor(
         userSettingsOrchestrator.unregister()
     }
 
-    private fun getPrimaryAccount() = accountManager.getPrimaryAccount()
+    private suspend fun getPrimaryUserId() = accountManager.getPrimaryUserId().firstOrNull()
 
-    fun onUpdateRecoveryEmailClicked(context: ComponentActivity) {
-        viewModelScope.launch {
-            getPrimaryAccount().first()?.let {
-                with(userSettingsOrchestrator) {
-                    onUpdateRecoveryEmailResult {
-                        if (it?.result == true) context.showToast("Recovery email updated")
-                    }
-                    startUpdateRecoveryEmailWorkflow(userId = it.userId)
-                }
-            }
+    fun onUpdateRecoveryEmailClicked() = viewModelScope.launch {
+        getPrimaryUserId()?.let {
+            userSettingsOrchestrator.startUpdateRecoveryEmailWorkflow(it)
         }
     }
 
-    fun onPasswordManagementClicked(context: ComponentActivity) {
-        viewModelScope.launch {
-            getPrimaryAccount().first()?.let {
-                with(userSettingsOrchestrator) {
-                    onPasswordManagementResult {
-                        if (it?.result == true) context.showToast("Password updated")
-                    }
-                    startPasswordManagementWorkflow(userId = it.userId)
-                }
-            }
+    fun onPasswordManagementClicked() = viewModelScope.launch {
+        getPrimaryUserId()?.let {
+            userSettingsOrchestrator.startPasswordManagementWorkflow(it)
         }
     }
 }

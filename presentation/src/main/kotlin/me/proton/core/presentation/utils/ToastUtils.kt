@@ -95,6 +95,14 @@ fun Context?.normToast(
 }
 
 @SuppressLint("InflateParams")
+fun Context?.successToast(
+    message: String,
+    length: Int = DEFAULT_TOAST_LENGTH
+) {
+    protonToast(message, background = R.drawable.snackbar_background_success, length = length)
+}
+
+@SuppressLint("InflateParams")
 private fun Context?.protonToast(
     message: String,
     @DrawableRes background: Int,

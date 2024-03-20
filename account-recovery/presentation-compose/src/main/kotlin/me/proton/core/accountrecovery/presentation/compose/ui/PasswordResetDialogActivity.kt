@@ -33,7 +33,7 @@ import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.openBrowserLink
-import me.proton.core.presentation.utils.showToast
+import me.proton.core.presentation.utils.successToast
 
 @AndroidEntryPoint
 class PasswordResetDialogActivity : ProtonActivity() {
@@ -77,7 +77,7 @@ class PasswordResetDialogActivity : ProtonActivity() {
     }
 
     private fun showSuccess() {
-        showToast(R.string.account_recovery_reset_dialog_action_request_reset_success)
+        successToast(getString(R.string.account_recovery_reset_dialog_action_request_reset_success))
         finish()
     }
 

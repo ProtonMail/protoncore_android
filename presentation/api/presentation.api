@@ -1093,6 +1093,8 @@ public final class me/proton/core/presentation/utils/TextUtils {
 	public static final fun showToast (Landroid/content/Context;Ljava/lang/CharSequence;II)V
 	public static synthetic fun showToast$default (Landroid/content/Context;IIIILjava/lang/Object;)V
 	public static synthetic fun showToast$default (Landroid/content/Context;Ljava/lang/CharSequence;IIILjava/lang/Object;)V
+	public static final fun successToast (Landroid/content/Context;Ljava/lang/String;I)V
+	public static synthetic fun successToast$default (Landroid/content/Context;Ljava/lang/String;IILjava/lang/Object;)V
 }
 
 public abstract class me/proton/core/presentation/utils/UiComponent {
