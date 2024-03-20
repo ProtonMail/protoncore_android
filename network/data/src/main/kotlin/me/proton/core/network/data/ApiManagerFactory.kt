@@ -49,6 +49,7 @@ import me.proton.core.network.domain.handlers.ProtonForceUpdateHandler
 import me.proton.core.network.domain.handlers.TokenErrorHandler
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.interceptor.InterceptorInfo
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.serverconnection.DohAlternativesListener
@@ -58,6 +59,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.ProtonCoreConfig
 import okhttp3.Cache
 import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
@@ -94,7 +96,8 @@ class ApiManagerFactory(
     private val clientVersionValidator: ClientVersionValidator,
     private val dohAlternativesListener: DohAlternativesListener?,
     private val dohProviderUrls: Array<String> = Constants.DOH_PROVIDERS_URLS,
-    private val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient,
+    private val interceptors: Set<Pair<InterceptorInfo, Interceptor>>,
 ) {
 
     @OptIn(DelicateCoroutinesApi::class)
@@ -199,6 +202,7 @@ class ApiManagerFactory(
             prefs,
             cookieStore,
             extraHeaderProvider,
+            interceptors,
         )
 
         val alternativePinningStrategy = { builder: OkHttpClient.Builder ->
@@ -242,6 +246,7 @@ class ApiManagerFactory(
                 prefs,
                 cookieStore,
                 extraHeaderProvider,
+                interceptors,
             )
         }
         val errorHandlers = createBaseErrorHandlers(sessionId, ::javaMonoClockMs, dohApiHandler) + clientErrorHandlers

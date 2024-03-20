@@ -168,7 +168,8 @@ internal class ApiManagerTests {
                 cache = { null },
                 clientVersionValidator = clientVersionValidator,
                 dohAlternativesListener = null,
-                okHttpClient = mockk(relaxed = true)
+                okHttpClient = mockk(relaxed = true),
+                interceptors = emptySet(),
             )
 
         coEvery { dohService.getAlternativeBaseUrls(any(), any()) } returns listOf(proxy1url)

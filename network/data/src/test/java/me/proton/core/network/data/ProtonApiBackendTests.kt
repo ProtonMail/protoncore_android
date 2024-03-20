@@ -147,7 +147,8 @@ internal class ProtonApiBackendTests {
             cache = { null },
             clientVersionValidator = clientVersionValidator,
             dohAlternativesListener = null,
-            okHttpClient = OkHttpClient()
+            okHttpClient = OkHttpClient(),
+            interceptors = emptySet(),
         )
 
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
@@ -195,6 +196,7 @@ internal class ProtonApiBackendTests {
             prefs,
             cookieJar,
             extraHeaderProvider,
+            emptySet(),
         )
 
     @AfterTest

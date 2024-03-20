@@ -183,7 +183,8 @@ internal class HumanVerificationTests {
                 cache = { null },
                 clientVersionValidator = clientVersionValidator,
                 dohAlternativesListener = null,
-                okHttpClient = OkHttpClient()
+                okHttpClient = OkHttpClient(),
+                interceptors = emptySet(),
             )
         every { networkManager.isConnectedToNetwork() } returns isNetworkAvailable
 
@@ -215,6 +216,7 @@ internal class HumanVerificationTests {
             pinningInit,
             prefs,
             cookieJar,
+            interceptors = emptySet(),
         )
 
     @After

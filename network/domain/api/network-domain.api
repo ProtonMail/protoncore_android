@@ -586,6 +586,52 @@ public final class me/proton/core/network/domain/humanverification/VerificationM
 	public static final field PHONE Ljava/lang/String;
 }
 
+public final class me/proton/core/network/domain/interceptor/InterceptorInfo {
+	public synthetic fun <init> (Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;
+	public final fun component2-NVsBYFU ()I
+	public final fun copy-_9aMDtU (Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;I)Lme/proton/core/network/domain/interceptor/InterceptorInfo;
+	public static synthetic fun copy-_9aMDtU$default (Lme/proton/core/network/domain/interceptor/InterceptorInfo;Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;IILjava/lang/Object;)Lme/proton/core/network/domain/interceptor/InterceptorInfo;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPriority-NVsBYFU ()I
+	public final fun getType ()Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/network/domain/interceptor/InterceptorInfo$Priority : java/lang/Comparable {
+	public static final field Companion Lme/proton/core/network/domain/interceptor/InterceptorInfo$Priority$Companion;
+	public static final synthetic fun box-impl (I)Lme/proton/core/network/domain/interceptor/InterceptorInfo$Priority;
+	public synthetic fun compareTo (Ljava/lang/Object;)I
+	public fun compareTo-Sl0Tga8 (I)I
+	public static fun compareTo-Sl0Tga8 (II)I
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public final fun getValue ()I
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class me/proton/core/network/domain/interceptor/InterceptorInfo$Priority$Companion {
+	public final fun getLEAST-NVsBYFU ()I
+	public final fun getMEDIUM-NVsBYFU ()I
+	public final fun getTOP-NVsBYFU ()I
+	public final fun invoke-3nIOzgg (I)I
+}
+
+public final class me/proton/core/network/domain/interceptor/InterceptorInfo$Type : java/lang/Enum {
+	public static final field APP Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;
+	public static final field NETWORK Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;
+	public static fun values ()[Lme/proton/core/network/domain/interceptor/InterceptorInfo$Type;
+}
+
 public abstract interface class me/proton/core/network/domain/scopes/MissingScopeListener {
 	public abstract fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public abstract fun onMissingScope (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

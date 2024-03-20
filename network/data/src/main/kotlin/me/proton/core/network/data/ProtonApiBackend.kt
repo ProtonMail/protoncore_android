@@ -27,6 +27,7 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.LogTag
 import me.proton.core.network.domain.NetworkManager
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.TimeoutOverride
@@ -34,6 +35,7 @@ import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.interceptor.InterceptorInfo
 import me.proton.core.network.domain.server.ServerTimeListener
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
@@ -80,6 +82,7 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
     private val networkPrefs: NetworkPrefs,
     private val cookieStore: ProtonCookieStore?,
     private val extraHeaderProvider: ExtraHeaderProvider? = null,
+    private val interceptors: Set<Pair<InterceptorInfo, Interceptor>>,
 ) : ApiBackend<Api> {
 
     private val api: Api
@@ -96,6 +99,24 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
             .apply { cookieStore?.let { addInterceptor(DoHCookieInterceptor(networkPrefs, it)) } }
             .initLogging(client)
             .apply(securityStrategy)
+            .apply {
+                interceptors
+                    .sortedBy { (info, _) -> info.priority }
+                    .apply {
+                            if (size != distinctBy { (info, _) -> info.priority.value }.size) {
+                                CoreLogger.w(
+                                    tag = LogTag.DEFAULT,
+                                    message = "Multiple interceptors with same priority detected.",
+                                )
+                            }
+                    }
+                    .forEach { (info, interceptor) ->
+                        when (info.type) {
+                            InterceptorInfo.Type.APP -> addInterceptor(interceptor)
+                            InterceptorInfo.Type.NETWORK -> addNetworkInterceptor(interceptor)
+                        }
+                    }
+            }
             .build()
 
     init {

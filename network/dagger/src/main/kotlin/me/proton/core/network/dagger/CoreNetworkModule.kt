@@ -25,6 +25,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.ElementsIntoSet
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -52,6 +53,7 @@ import me.proton.core.network.domain.deviceverification.DeviceVerificationListen
 import me.proton.core.network.domain.deviceverification.DeviceVerificationProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.humanverification.HumanVerificationProvider
+import me.proton.core.network.domain.interceptor.InterceptorInfo
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.server.ServerClock
 import me.proton.core.network.domain.server.ServerTimeListener
@@ -62,6 +64,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import okhttp3.Cache
 import okhttp3.HttpUrl
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Singleton
@@ -71,6 +74,12 @@ private const val OKHTTP_CACHE_SIZE = 10L * 1024L * 1024L // 10 MiB
 @Module
 @InstallIn(SingletonComponent::class)
 public class CoreNetworkModule {
+
+    @Provides
+    @Singleton
+    @ElementsIntoSet
+    public fun provideNothing(): Set<Pair<InterceptorInfo, Interceptor>> = emptySet()
+
     @Provides
     @Singleton
     @Suppress("LongParameterList")
@@ -96,7 +105,8 @@ public class CoreNetworkModule {
         @DohProviderUrls dohProviderUrls: Array<String>,
         @CertificatePins certificatePins: Array<String>,
         @AlternativeApiPins alternativeApiPins: List<String>,
-        @SharedOkHttpClient okHttpClient: OkHttpClient
+        @SharedOkHttpClient okHttpClient: OkHttpClient,
+        interceptors: @JvmSuppressWildcards Set<Pair<InterceptorInfo, Interceptor>>,
     ): ApiManagerFactory {
         return ApiManagerFactory(
             apiUrl,
@@ -126,7 +136,8 @@ public class CoreNetworkModule {
             clientVersionValidator = clientVersionValidator,
             dohAlternativesListener = dohAlternativesListener,
             dohProviderUrls = dohProviderUrls,
-            okHttpClient = okHttpClient
+            okHttpClient = okHttpClient,
+            interceptors = interceptors,
         )
     }
 
