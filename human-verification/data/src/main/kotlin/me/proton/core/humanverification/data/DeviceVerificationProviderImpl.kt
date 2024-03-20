@@ -22,7 +22,7 @@ import me.proton.core.network.domain.deviceverification.DeviceVerificationProvid
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 import io.github.reactivecircus.cache4k.Cache
-import me.proton.core.util.android.dagger.Monotonic
+import me.proton.core.util.android.datetime.Monotonic
 import kotlin.time.Duration.Companion.minutes
 import kotlin.time.TimeSource
 

@@ -53,7 +53,7 @@ dependencies {
     )
 
     implementation(
-        project(Module.androidUtilDagger),
+        project(Module.androidUtilDatetime),
         project(Module.kotlinUtil),
         project(Module.cryptoCommon),
         `coroutines-core`,

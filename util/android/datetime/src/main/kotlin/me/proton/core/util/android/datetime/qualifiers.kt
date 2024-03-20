@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.util.android.dagger
+package me.proton.core.util.android.datetime
 
 import javax.inject.Qualifier
 

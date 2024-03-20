@@ -38,6 +38,7 @@ android {
 dependencies {
     api(
         project(Module.accountManagerData),
+        project(Module.accountRecoveryDomain),
         project(Module.authTest),
         project(Module.eventManagerDomain),
         project(Module.networkData),

@@ -31,11 +31,11 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.user.domain.entity.UserRecovery
-import me.proton.core.util.android.dagger.UtcClock
 import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DateTimeFormat.DateTimeForm
 import me.proton.core.util.android.datetime.DurationFormat
+import me.proton.core.util.android.datetime.UtcClock
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.DurationUnit

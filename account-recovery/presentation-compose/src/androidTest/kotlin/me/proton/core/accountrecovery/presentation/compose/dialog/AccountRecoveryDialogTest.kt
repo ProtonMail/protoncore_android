@@ -49,7 +49,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class AccountRecoveryDialogTest {
 
-    @get: Rule
+    @get:Rule
     val composeTestRule = createComposeRule()
 
     private val passwordInput: SemanticsNodeInteraction
@@ -84,6 +84,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -121,6 +122,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -154,6 +156,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -185,6 +188,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -215,6 +219,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -254,6 +259,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -288,6 +294,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -319,6 +326,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -353,6 +361,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -387,6 +396,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -419,6 +429,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }
@@ -450,6 +461,7 @@ class AccountRecoveryDialogTest {
             ProtonTheme {
                 AccountRecoveryDialog(
                     viewModel = viewModel,
+                    onStartPasswordManager = {},
                     onClosed = {},
                     onError = {})
             }

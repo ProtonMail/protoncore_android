@@ -63,10 +63,10 @@ import me.proton.core.user.domain.entity.UserRecovery.State.Grace
 import me.proton.core.user.domain.entity.UserRecovery.State.Insecure
 import me.proton.core.user.domain.entity.UserRecovery.State.None
 import me.proton.core.user.domain.usecase.ObserveUser
-import me.proton.core.util.android.dagger.UtcClock
 import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DateTimeFormat.DateTimeForm
+import me.proton.core.util.android.datetime.UtcClock
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject

@@ -49,9 +49,3 @@ public final class me/proton/core/util/android/dagger/CoreAndroidModule_Companio
 	public static fun provideMonotonicTimeSource$util_android_dagger_release ()Lkotlin/time/TimeSource;
 }
 
-public abstract interface annotation class me/proton/core/util/android/dagger/Monotonic : java/lang/annotation/Annotation {
-}
-
-public abstract interface annotation class me/proton/core/util/android/dagger/UtcClock : java/lang/annotation/Annotation {
-}
-

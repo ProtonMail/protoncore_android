@@ -21,7 +21,6 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonComposeUiLibrary
-    protonDagger
     id("kotlin-parcelize")
 }
 
@@ -42,6 +41,24 @@ protonBuild {
 
 dependencies {
     api(
+        activity,
+        `activity-compose`,
+        `compose-foundation`,
+        `compose-foundation-layout`,
+        `compose-material`,
+        `compose-runtime`,
+        `compose-ui`,
+        `compose-ui-graphics`,
+        `compose-ui-text`,
+        `coroutines-core`,
+        `hilt-navigation-compose`,
+        `lifecycle-common`,
+        `lifecycle-viewModel`,
+        `lifecycle-viewModel-compose`,
+        `lifecycle-runtime-compose`,
+    )
+
+    implementation(
         project(Module.accountRecoveryDomain),
         project(Module.accountRecoveryPresentation),
         project(Module.accountManagerDomain),
@@ -51,29 +68,13 @@ dependencies {
         project(Module.notification),
         project(Module.kotlinUtil),
         project(Module.androidUtilDatetime),
-        `compose-foundation`,
-        `compose-foundation-layout`,
-        `compose-material`,
-        `compose-runtime`,
-        `compose-ui`,
-        `compose-ui-graphics`,
-        `compose-ui-text`,
-        `coroutines-core`,
-        `hilt-android`,
-        `hilt-navigation-compose`,
-        `lifecycle-common`,
-        `lifecycle-viewModel`,
-        `lifecycle-viewModel-compose`,
-    )
-
-    implementation(
         project(Module.observabilityDomain),
-        project(Module.androidUtilDagger),
         `coroutines-core`,
         `android-ktx`,
         `appcompat`,
         `compose-material3`,
         `compose-ui-tooling-preview`,
+        `compose-ui-unit`,
         `lifecycle-runtime`,
     )
 
@@ -88,7 +89,6 @@ dependencies {
         `compose-ui-test-manifest`,
         junit,
         `mockk-android`,
-        `hilt-android-testing`,
         `junit-ktx`,
         `kotlin-test`
     )

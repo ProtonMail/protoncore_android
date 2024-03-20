@@ -62,3 +62,9 @@ public final class me/proton/core/util/android/datetime/DurationFormat {
 	public static synthetic fun format-rnQQ1Ag$default (Lme/proton/core/util/android/datetime/DurationFormat;JLkotlin/time/DurationUnit;Lkotlin/time/DurationUnit;CILjava/lang/Object;)Ljava/lang/String;
 }
 
+public abstract interface annotation class me/proton/core/util/android/datetime/Monotonic : java/lang/annotation/Annotation {
+}
+
+public abstract interface annotation class me/proton/core/util/android/datetime/UtcClock : java/lang/annotation/Annotation {
+}
+
