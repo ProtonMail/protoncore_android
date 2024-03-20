@@ -344,7 +344,7 @@ internal class HumanVerificationTests {
         verify(exactly = 1) {
             humanVerificationDetails.tokenCode
         }
-        verify(exactly = 1) {
+        verify(exactly = 2) {
             humanVerificationDetails.tokenType
         }
         assertTrue(headers?.contains(Pair("x-pm-human-verification-token-type", "captcha")) ?: false)
@@ -384,7 +384,7 @@ internal class HumanVerificationTests {
         verify(exactly = 1) {
             humanVerificationDetails.tokenCode
         }
-        verify(exactly = 1) {
+        verify(exactly = 2) {
             humanVerificationDetails.tokenType
         }
         assertTrue(headers?.contains(Pair("x-pm-human-verification-token-type", "captcha")) ?: false)

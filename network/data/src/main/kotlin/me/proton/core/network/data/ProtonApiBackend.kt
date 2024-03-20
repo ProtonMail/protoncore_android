@@ -157,6 +157,10 @@ internal class ProtonApiBackend<Api : BaseRetrofitApi>(
                 }
                 details.tokenCode?.let { tokenCode ->
                     request.header("x-pm-human-verification-token", tokenCode)
+
+                    if (details.tokenType == "payment") {
+                        request.header("x-pm-payment-info-token", tokenCode)
+                    }
                 }
             }
         }
