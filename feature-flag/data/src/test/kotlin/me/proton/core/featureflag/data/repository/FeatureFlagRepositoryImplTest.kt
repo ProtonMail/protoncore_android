@@ -67,13 +67,10 @@ import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.FeatureFlagAwaitTotal
-import me.proton.core.observability.domain.metrics.FeatureFlagGetAllTotal
-import me.proton.core.observability.domain.metrics.FeatureFlagGetValueTotal
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
@@ -417,9 +414,6 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val result = repository.getValue(userId, featureId)
         assertNotNull(result)
         assertTrue(result)
-
-        coVerify { observabilityManager.enqueue(FeatureFlagGetValueTotal.Enabled, any()) }
-        coVerify { observabilityManager.enqueue(any<FeatureFlagGetAllTotal>(), any()) }
     }
 
     @Test
@@ -448,9 +442,6 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val result = repository.getValue(userId, featureId)
         assertNotNull(result)
         assertFalse(result)
-
-        coVerify { observabilityManager.enqueue(FeatureFlagGetValueTotal.Disabled, any()) }
-        coVerify { observabilityManager.enqueue(any<FeatureFlagGetAllTotal>(), any()) }
     }
 
     @Test
@@ -470,9 +461,6 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         val result = repository.getValue(userId, featureId)
         assertNull(result)
-
-        coVerify { observabilityManager.enqueue(FeatureFlagGetValueTotal.Unknown, any()) }
-        coVerify { observabilityManager.enqueue(any<FeatureFlagGetAllTotal>(), any()) }
     }
 
     @Test

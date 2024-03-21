@@ -33,6 +33,7 @@ public interface FeatureFlagRepository {
      *
      * Note: May suspend indefinitely, if a given scope is never fetched or is empty.
      */
+    @Deprecated("Will be removed when CredentialLessDisabled FF will be removed.")
     public suspend fun awaitNotEmptyScope(userId: UserId? = null, scope: Scope)
 
     /**

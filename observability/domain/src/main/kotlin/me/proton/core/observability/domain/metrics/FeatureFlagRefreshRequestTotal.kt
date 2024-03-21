@@ -26,7 +26,8 @@ import me.proton.core.observability.domain.entity.SchemaId
 @Serializable
 @Schema(description = "Feature Flag Refresh Request (onetime/periodic).")
 @SchemaId("https://proton.me/android_core_featureflag_refreshrequest_total_v1.schema.json")
-public data class FeatureFlagRefreshRequestTotal(
+@Deprecated("Please do not use. Kept for documentation.")
+private data class FeatureFlagRefreshRequestTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : CoreObservabilityData() {

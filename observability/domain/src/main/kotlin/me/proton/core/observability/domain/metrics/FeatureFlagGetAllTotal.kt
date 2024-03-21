@@ -28,7 +28,8 @@ import me.proton.core.observability.domain.metrics.common.toHttpApiStatus
 @Serializable
 @Schema(description = "Feature Flag GetAll (network).")
 @SchemaId("https://proton.me/android_core_featureflag_getall_total_v1.schema.json")
-public data class FeatureFlagGetAllTotal(
+@Deprecated("Please do not use. Kept for documentation.")
+private data class FeatureFlagGetAllTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : CoreObservabilityData() {
@@ -63,7 +64,7 @@ public data class FeatureFlagGetAllTotal(
     }
 }
 
-public fun HttpApiStatus.toFeatureFlagApiStatus(): FeatureFlagGetAllTotal.ApiStatus = when (this) {
+private fun HttpApiStatus.toFeatureFlagApiStatus(): FeatureFlagGetAllTotal.ApiStatus = when (this) {
     HttpApiStatus.http1xx -> FeatureFlagGetAllTotal.ApiStatus.http1xx
     HttpApiStatus.http2xx -> FeatureFlagGetAllTotal.ApiStatus.http2xx
     HttpApiStatus.http3xx -> FeatureFlagGetAllTotal.ApiStatus.http3xx

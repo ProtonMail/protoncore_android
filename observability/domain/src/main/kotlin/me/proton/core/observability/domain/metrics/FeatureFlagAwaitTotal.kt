@@ -26,6 +26,7 @@ import me.proton.core.observability.domain.entity.SchemaId
 @Serializable
 @Schema(description = "Feature Flag Await.")
 @SchemaId("https://proton.me/android_core_featureflag_await_total_v1.schema.json")
+@Deprecated("Will be removed when CredentialLessDisabled FF will be removed. Keep for documentation.")
 public data class FeatureFlagAwaitTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1

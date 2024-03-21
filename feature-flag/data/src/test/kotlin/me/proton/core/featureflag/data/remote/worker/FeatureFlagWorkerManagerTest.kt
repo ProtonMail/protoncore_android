@@ -29,8 +29,6 @@ import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.featureflag.data.testdata.UserIdTestData
-import me.proton.core.observability.domain.ObservabilityManager
-import me.proton.core.observability.domain.metrics.FeatureFlagRefreshRequestTotal
 import org.junit.Test
 
 class FeatureFlagWorkerManagerTest {
@@ -43,9 +41,8 @@ class FeatureFlagWorkerManagerTest {
         }
     }
     private val workManager = mockk<WorkManager>(relaxed = true)
-    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
 
-    private fun mockManager() = FeatureFlagWorkerManager(context, workManager, observabilityManager)
+    private fun mockManager() = FeatureFlagWorkerManager(context, workManager)
 
     @Test
     fun enqueueOneTime() = runTest {
@@ -60,8 +57,6 @@ class FeatureFlagWorkerManagerTest {
                 any<OneTimeWorkRequest>()
             )
         }
-
-        verify { observabilityManager.enqueue(FeatureFlagRefreshRequestTotal.Onetime, any()) }
     }
 
     @Test
@@ -77,8 +72,6 @@ class FeatureFlagWorkerManagerTest {
                 any<PeriodicWorkRequest>()
             )
         }
-
-        verify { observabilityManager.enqueue(FeatureFlagRefreshRequestTotal.Periodic, any()) }
     }
 
     @Test
@@ -94,7 +87,5 @@ class FeatureFlagWorkerManagerTest {
                 any<PeriodicWorkRequest>()
             )
         }
-
-        verify { observabilityManager.enqueue(FeatureFlagRefreshRequestTotal.Periodic, any()) }
     }
 }

@@ -42,9 +42,6 @@ import me.proton.core.featureflag.domain.repository.FeatureFlagRepository
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.FeatureFlagAwaitTotal
-import me.proton.core.observability.domain.metrics.FeatureFlagGetAllTotal
-import me.proton.core.observability.domain.metrics.FeatureFlagGetAllTotal.ApiStatus
-import me.proton.core.observability.domain.metrics.FeatureFlagGetValueTotal
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -105,12 +102,6 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
     } else {
         runBlocking { initJob.join() } // ~10ms
         unleashFeatureMap[userId]?.get(featureId)?.value
-    }.also {
-        when (it) {
-            null -> enqueueObservability(FeatureFlagGetValueTotal.Unknown)
-            true -> enqueueObservability(FeatureFlagGetValueTotal.Enabled)
-            false -> enqueueObservability(FeatureFlagGetValueTotal.Disabled)
-        }
     }
 
     override suspend fun getAll(
@@ -120,9 +111,6 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         localDataSource.replaceAll(userId, Scope.Unleash, list)
         putAllUnleashInMemory()
         return@runCatching list
-    }.also {
-        it.onSuccess { enqueueObservability(FeatureFlagGetAllTotal(ApiStatus.http2xx)) }
-        it.onFailure { throwable -> enqueueObservability(FeatureFlagGetAllTotal(throwable)) }
     }.getOrThrow()
 
     override fun refreshAllOneTime(

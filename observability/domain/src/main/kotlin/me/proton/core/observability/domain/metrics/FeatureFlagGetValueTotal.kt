@@ -26,7 +26,8 @@ import me.proton.core.observability.domain.entity.SchemaId
 @Serializable
 @Schema(description = "Feature Flag GetValue.")
 @SchemaId("https://proton.me/android_core_featureflag_getvalue_total_v1.schema.json")
-public data class FeatureFlagGetValueTotal(
+@Deprecated("Please do not use. Kept for documentation.")
+private data class FeatureFlagGetValueTotal(
     @Required override val Labels: LabelsData,
     @Required override val Value: Long = 1
 ) : CoreObservabilityData() {
