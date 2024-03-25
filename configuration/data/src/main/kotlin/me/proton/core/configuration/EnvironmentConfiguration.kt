@@ -20,26 +20,28 @@ package me.proton.core.configuration
 
 import me.proton.core.configuration.entity.ConfigContract
 import kotlin.reflect.KFunction1
+import kotlin.reflect.KProperty
+
+private const val DEFAULT_CONFIG_CLASS: String = "me.proton.core.configuration.EnvironmentConfigurationDefaults"
 
 public data class EnvironmentConfiguration(
-    private val stringProvider: KFunction1<String, String?>
+    val stringProvider: KFunction1<String, Any?>
 ) : ConfigContract {
-    override val host: String = stringProvider(::host.name) ?: ""
-    override val proxyToken: String = stringProvider(::proxyToken.name) ?: ""
-    override val apiPrefix: String = stringProvider(::apiPrefix.name) ?: "api"
-    override val apiHost: String = stringProvider(::apiHost.name) ?: "$apiPrefix.$host"
-    override val baseUrl: String = stringProvider(::baseUrl.name) ?: "https://$apiHost"
-    override val hv3Host: String = stringProvider(::hv3Host.name) ?: "verify.$host"
-    override val hv3Url: String = stringProvider(::hv3Url.name) ?: "https://$hv3Host"
+    override val host: String = getString(::host) ?: ""
+    override val proxyToken: String = getString(::proxyToken) ?: ""
+    override val apiPrefix: String = getString(::apiPrefix) ?: "api"
+    override val apiHost: String = getString(::apiHost) ?: "$apiPrefix.$host"
+    override val baseUrl: String = getString(::baseUrl) ?: "https://$apiHost"
+    override val hv3Host: String = getString(::hv3Host) ?: "verify.$host"
+    override val hv3Url: String = getString(::hv3Url) ?: "https://$hv3Host"
+    override val useDefaultPins: Boolean = getString(::useDefaultPins) ?: (host == "proton.me")
 
-    val useDefaultPins: Boolean get() = host == "proton.me"
+    private fun <T> getString(propertyName: KProperty<Any>): T = stringProvider(propertyName.name) as T
 
     public companion object {
 
-        private const val DEFAULT_CONFIG_CLASS: String = "me.proton.core.configuration.EnvironmentConfigurationDefaults"
-
         public fun fromMap(configMap: Map<String, Any?>): EnvironmentConfiguration =
-            EnvironmentConfiguration(configMap::configField)
+            EnvironmentConfiguration(configMap::get)
 
         public fun fromClass(className: String = DEFAULT_CONFIG_CLASS): EnvironmentConfiguration =
             fromMap(getConfigDataMapFromClass(className))
@@ -61,12 +63,4 @@ public data class EnvironmentConfiguration(
             )
         }
     }
-}
-
-public inline fun <reified T> Map<String, Any?>.configField(key: String): T = this[key].let {
-    require((it is String? || it is Boolean?) && it is T) {
-        "Unexpected value type for property: $key. " +
-            "Expected String? or Boolean?. Found ${it?.javaClass?.name}."
-    }
-    it
 }

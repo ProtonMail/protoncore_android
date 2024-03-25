@@ -64,9 +64,9 @@ open class EnvironmentConfigSettings : EnvironmentConfig() {
         }
 
     private var _useDefaultPins: Boolean? = null
-    final override var useDefaultPins: Boolean
+    override var useDefaultPins: Boolean
         get() = _useDefaultPins ?: true
-        private set(value) {
+        set(value) {
             _useDefaultPins = value
         }
 
@@ -78,9 +78,9 @@ open class EnvironmentConfigSettings : EnvironmentConfig() {
         }
 
     private var _proxyToken: String? = null
-    final override var proxyToken: String?
-        get() = proxyTokenFromCurl.takeIf { useProxy } ?: ""
-        private set(value) {
+    override var proxyToken: String?
+        get() = proxyTokenFromCurl.takeIf { useProxy } ?: _proxyToken ?: ""
+        set(value) {
             _proxyToken = value
         }
 }

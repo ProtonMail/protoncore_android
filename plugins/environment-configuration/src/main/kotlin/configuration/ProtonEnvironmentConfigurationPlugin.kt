@@ -19,7 +19,6 @@ package configuration
 
 import com.android.build.api.dsl.ApplicationBuildType
 import com.android.build.api.dsl.DefaultConfig
-import com.android.build.api.dsl.ProductFlavor
 import com.android.build.gradle.BaseExtension
 import configuration.extensions.environmentConfiguration
 import configuration.extensions.mergeWith
@@ -28,6 +27,9 @@ import configuration.extensions.sourceClassContent
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.configurationcache.extensions.capitalized
+import java.util.Locale
+
+typealias ConfigMatrix = List<Pair<String, EnvironmentConfig>>
 
 class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
 
@@ -49,35 +51,49 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
      */
     private fun handleConfigurations(project: Project) {
         project.extensions.getByType(BaseExtension::class.java).apply {
-            buildTypes.all { buildType ->
-                productFlavors.takeIf { it.isNotEmpty() }?.all { flavor ->
-                    project.handleFlavorAndBuildType(defaultConfig, flavor, buildType)
-                    true
-                } ?: run {
-                    project.handleBuildTypeOnly(defaultConfig, buildType)
+            val flavors = flavorDimensionList.mapNotNull { dimension ->
+                productFlavors.filter { it.dimension == dimension }
+                    .takeIf { it.isNotEmpty() }
+                    ?.map { it.name.capitalized() to it.environmentConfiguration }
+            }
+
+            if (flavors.isEmpty()) {
+                buildTypes.forEach {
+                    project.handleBuildTypeOnly(defaultConfig, it)
                 }
-                true
+                return@apply
+            }
+
+            flavors.permutations.forEach { flavor ->
+                buildTypes.forEach { buildType ->
+                    project.handleFlavorAndBuildType(
+                        defaultConfig,
+                        flavor.joinedDecapitalized(),
+                        buildType,
+                        mergeConfigurations(*flavor.joinedConfig(buildType))
+                    )
+                }
             }
         }
     }
 
     private fun Project.handleFlavorAndBuildType(
         defaultConfig: DefaultConfig,
-        flavor: ProductFlavor,
-        buildType: ApplicationBuildType
+        flavorName: String,
+        buildType: ApplicationBuildType,
+        environmentConfig: EnvironmentConfig
     ) {
-        val mergedConfig = mergeConfigurations(
-            defaultConfig.environmentConfiguration,
-            buildType.environmentConfiguration,
-            flavor.environmentConfiguration
-        )
-        val variantName = "${flavor.name}${buildType.name.capitalized()}"
+        val mergedConfig = mergeConfigurations(defaultConfig.environmentConfiguration, environmentConfig)
+        val variantName = "${flavorName}${buildType.name.capitalized()}"
+        val variantLocation = "${flavorName}/${buildType.name}"
+
         createJavaFileForVariant(
             variantName = variantName,
-            variantLocation = "${flavor.name}/${buildType.name}",
+            variantLocation = variantLocation,
             config = mergedConfig
         )
     }
+
 
     private fun Project.handleBuildTypeOnly(
         defaultConfig: DefaultConfig,
@@ -161,3 +177,17 @@ class ProtonEnvironmentConfigurationPlugin : Plugin<Project> {
         const val DEFAULTS_CLASS_NAME: String = "EnvironmentConfigurationDefaults"
     }
 }
+
+val <T> List<List<T>>.permutations: List<List<T>>
+    get() =
+        takeIf { isNotEmpty() }
+            ?.first()
+            ?.flatMap { item ->
+                drop(1).permutations.map { listOf(item) + it }
+            } ?: listOf(listOf())
+
+fun ConfigMatrix.joinedDecapitalized() = joinToString("") { it.first }
+    .replaceFirstChar { it.lowercase(Locale.getDefault()) }
+
+fun ConfigMatrix.joinedConfig(buildType: ApplicationBuildType): Array<out EnvironmentConfig> =
+    (map { it.second } + listOf(buildType.environmentConfiguration)).toTypedArray()

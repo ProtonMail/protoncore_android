@@ -18,17 +18,17 @@
 
 package me.proton.core.configuration
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
-import me.proton.core.configuration.extension.contentValues
 
 public open class ContentResolverConfigManager(
-    private val context: Context
+    public val context: Context
 ) {
     @Synchronized
-    public fun fetchConfigDataFromContentResolver(): Map<String, Any?>? = context.contentResolver.query(
-        CONFIG_CONTENT_URI,
+    public fun fetchConfigurationDataAtPath(path: String): Map<String, Any?>? = context.contentResolver.query(
+        path.contentResolverUrl,
         null,
         null,
         null,
@@ -42,10 +42,10 @@ public open class ContentResolverConfigManager(
     }
 
     @Synchronized
-    public fun insertConfiguration(configuration: EnvironmentConfiguration): Uri? = context.contentResolver.insert(
-        CONFIG_CONTENT_URI,
-        configuration.contentValues
-    )
+    public fun insertContentValuesAtPath(configFieldMap: Map<String, Any?>, path: String): Uri? =
+        context.contentResolver.insert(path.contentResolverUrl, contentValues(configFieldMap))
+
+    private val String.contentResolverUrl: Uri get() = Uri.parse("content://$CONFIG_AUTHORITY/config/$this")
 
     private fun Cursor.retrieveValue(columnName: String): Any? {
         val columnIndex = getColumnIndex(columnName)
@@ -53,8 +53,16 @@ public open class ContentResolverConfigManager(
         return if (moveToFirst()) getString(columnIndex) else null
     }
 
-    private companion object {
+    private fun contentValues(map: Map<String, Any?>): ContentValues = ContentValues().apply {
+        map.forEach { (key, value) ->
+            when (value) {
+                is String -> put(key, value)
+                is Boolean -> put(key, value)
+            }
+        }
+    }
+
+    public companion object {
         private const val CONFIG_AUTHORITY = "me.proton.core.configuration.configurator"
-        val CONFIG_CONTENT_URI: Uri = Uri.parse("content://$CONFIG_AUTHORITY/config")
     }
 }

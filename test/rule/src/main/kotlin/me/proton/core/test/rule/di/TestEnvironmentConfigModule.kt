@@ -26,7 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.configuration.dagger.ContentResolverEnvironmentConfigModule
-import me.proton.core.configuration.extension.configContractFieldsMap
+import me.proton.core.configuration.extension.primitiveFieldMap
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Singleton
 
@@ -53,8 +53,8 @@ public object TestEnvironmentConfigModule {
     private val defaultConfig = EnvironmentConfiguration.fromClass()
 
     private fun getConfigValue(key: String): String {
-        val defaultValue = defaultConfig.configContractFieldsMap[key].toString()
-        val overrideValue = overrideConfig.get()?.configContractFieldsMap?.get(key)?.toString()
+        val defaultValue = defaultConfig.primitiveFieldMap[key].toString()
+        val overrideValue = overrideConfig.get()?.primitiveFieldMap?.get(key)?.toString()
         return overrideValue ?: defaultValue
     }
 

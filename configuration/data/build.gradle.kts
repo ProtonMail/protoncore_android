@@ -30,8 +30,8 @@ android {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(56)
-    lineCoveragePercentage.set(74)
+    branchCoveragePercentage.set(79)
+    lineCoveragePercentage.set(85)
 }
 
 dependencies {

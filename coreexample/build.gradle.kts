@@ -145,7 +145,7 @@ fun setupFlavors(testedExtension: TestedExtension) {
                 }
             }
 
-            val atlasHost: String = localProperties.getProperty("HOST") ?: "proton.me"
+            val atlasHost: String = localProperties.getProperty("HOST") ?: "proton.black"
             val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
             val sentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.SENTRY_DSN)
             val accountSentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.ACCOUNT_SENTRY_DSN)

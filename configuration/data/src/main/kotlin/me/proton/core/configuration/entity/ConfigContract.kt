@@ -26,4 +26,5 @@ public interface ConfigContract {
     public val baseUrl: String
     public val hv3Host: String
     public val hv3Url: String
+    public val useDefaultPins: Boolean
 }

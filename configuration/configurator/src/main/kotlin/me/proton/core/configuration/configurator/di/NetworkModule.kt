@@ -16,35 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.configuration.dagger
+package me.proton.core.configuration.configurator.di
 
-import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
+import me.proton.core.network.data.client.ExtraHeaderProviderImpl
+import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.domain.client.ExtraHeaderProvider
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-public class ContentResolverEnvironmentConfigModule {
-    @Provides
+class NetworkModule {
     @Singleton
-    public fun provideEnvironmentConfig(
-        contentResolverConfigManager: ContentResolverConfigManager
-    ): EnvironmentConfiguration {
-        val staticEnvironmentConfig = EnvironmentConfiguration.fromClass()
-        val contentResolverConfigData = contentResolverConfigManager.fetchConfigurationDataAtPath(
-            EnvironmentConfiguration::class.java.name
-        )
-        return EnvironmentConfiguration.fromMap(contentResolverConfigData ?: return staticEnvironmentConfig)
-    }
+    @Provides
+    @BaseProtonApiUrl
+    fun provideBaseProtonApiUrl(environmentConfiguration: EnvironmentConfiguration): HttpUrl =
+        environmentConfiguration.baseUrl.toHttpUrl()
 
-    @Provides
     @Singleton
-    public fun provideContentResolverConfigManager(@ApplicationContext context: Context): ContentResolverConfigManager =
-        ContentResolverConfigManager(context)
+    @Provides
+    fun provideExtraHeaderProvider(): ExtraHeaderProvider = ExtraHeaderProviderImpl()
 }

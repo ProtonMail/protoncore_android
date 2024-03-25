@@ -20,4 +20,6 @@
     <queries>
         <provider android:authorities="me.proton.core.configuration.configurator"/>
     </queries>
+
+    <uses-permission android:name="me.proton.core.configuration.ACCESS_DATA"/>
 </manifest>

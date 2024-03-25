@@ -20,7 +20,6 @@ package me.proton.core.configuration
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
-import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class ConfigFieldTest {
@@ -31,7 +30,7 @@ class ConfigFieldTest {
         val expectedValue = "testValue"
         val configMap: Map<String, Any?> = mapOf(key to expectedValue)
 
-        val actualValue: String = configMap.configField(key)
+        val actualValue: String = configMap[key] as String
 
         assertEquals(expectedValue, actualValue)
     }
@@ -42,7 +41,7 @@ class ConfigFieldTest {
         val expectedValue = true
         val configMap: Map<String, Any?> = mapOf(key to expectedValue)
 
-        val actualValue: Boolean = configMap.configField(key)
+        val actualValue: Boolean = configMap[key] as Boolean
 
         assertEquals(expectedValue, actualValue)
     }
@@ -52,29 +51,8 @@ class ConfigFieldTest {
         val key = "testKey"
         val configMap: Map<String, Any?> = mapOf(key to null)
 
-        val actualValue: String? = configMap.configField(key)
+        val actualValue: String? = configMap[key] as String?
 
         assertNull(actualValue)
-    }
-
-    @Test
-    fun `throws exception when value in map is not of expected type`() {
-        val key = "testKey"
-        val intValue = 123
-        val configMap: Map<String, Any?> = mapOf(key to intValue)
-
-        assertThrows(IllegalArgumentException::class.java) {
-            configMap.configField(key)
-        }
-    }
-
-    @Test
-    fun `throws exception when key is not present in map`() {
-        val key = "missingKey"
-        val configMap: Map<String, Any?> = emptyMap()
-
-        assertThrows(IllegalArgumentException::class.java) {
-            configMap.configField(key)
-        }
     }
 }

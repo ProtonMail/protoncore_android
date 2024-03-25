@@ -1,12 +1,18 @@
 public class me/proton/core/configuration/ContentResolverConfigManager {
+	public static final field Companion Lme/proton/core/configuration/ContentResolverConfigManager$Companion;
 	public fun <init> (Landroid/content/Context;)V
-	public final fun fetchConfigDataFromContentResolver ()Ljava/util/Map;
-	public final fun insertConfiguration (Lme/proton/core/configuration/EnvironmentConfiguration;)Landroid/net/Uri;
+	public final fun fetchConfigurationDataAtPath (Ljava/lang/String;)Ljava/util/Map;
+	public final fun getContext ()Landroid/content/Context;
+	public final fun insertContentValuesAtPath (Ljava/util/Map;Ljava/lang/String;)Landroid/net/Uri;
+}
+
+public final class me/proton/core/configuration/ContentResolverConfigManager$Companion {
 }
 
 public final class me/proton/core/configuration/EnvironmentConfiguration : me/proton/core/configuration/entity/ConfigContract {
 	public static final field Companion Lme/proton/core/configuration/EnvironmentConfiguration$Companion;
 	public fun <init> (Lkotlin/reflect/KFunction;)V
+	public final fun component1 ()Lkotlin/reflect/KFunction;
 	public final fun copy (Lkotlin/reflect/KFunction;)Lme/proton/core/configuration/EnvironmentConfiguration;
 	public static synthetic fun copy$default (Lme/proton/core/configuration/EnvironmentConfiguration;Lkotlin/reflect/KFunction;ILjava/lang/Object;)Lme/proton/core/configuration/EnvironmentConfiguration;
 	public fun equals (Ljava/lang/Object;)Z
@@ -17,7 +23,8 @@ public final class me/proton/core/configuration/EnvironmentConfiguration : me/pr
 	public fun getHv3Host ()Ljava/lang/String;
 	public fun getHv3Url ()Ljava/lang/String;
 	public fun getProxyToken ()Ljava/lang/String;
-	public final fun getUseDefaultPins ()Z
+	public final fun getStringProvider ()Lkotlin/reflect/KFunction;
+	public fun getUseDefaultPins ()Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -43,11 +50,11 @@ public abstract interface class me/proton/core/configuration/entity/ConfigContra
 	public abstract fun getHv3Host ()Ljava/lang/String;
 	public abstract fun getHv3Url ()Ljava/lang/String;
 	public abstract fun getProxyToken ()Ljava/lang/String;
+	public abstract fun getUseDefaultPins ()Z
 }
 
 public final class me/proton/core/configuration/extension/EnvironmentConfigurationKt {
-	public static final fun getConfigContractFields (Lme/proton/core/configuration/EnvironmentConfiguration;)Ljava/util/Map;
-	public static final fun getConfigContractFieldsMap (Lme/proton/core/configuration/EnvironmentConfiguration;)Ljava/util/Map;
-	public static final fun getContentValues (Lme/proton/core/configuration/EnvironmentConfiguration;)Landroid/content/ContentValues;
+	public static final fun getConfigContractFields (Ljava/lang/Object;)Ljava/util/Map;
+	public static final fun getPrimitiveFieldMap (Ljava/lang/Object;)Ljava/util/Map;
 }
 

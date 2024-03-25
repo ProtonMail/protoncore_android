@@ -18,28 +18,17 @@
 
 package me.proton.core.configuration.extension
 
-import android.content.ContentValues
-import me.proton.core.configuration.EnvironmentConfiguration
 import java.lang.reflect.Field
 
-public val EnvironmentConfiguration.configContractFields: Map<String, Field>
+public val Any.configContractFields: Map<String, Field>
     get() = this::class.java.declaredFields.associateBy {
         it.isAccessible = true
         it.name
     }
 
-public val EnvironmentConfiguration.configContractFieldsMap: Map<String, Any?>
-    get() = configContractFields.mapValues {
+public val Any.primitiveFieldMap: Map<String, Any?>
+    get() = configContractFields.filter { map ->
+        map.value.get(this).let { it is String || it is Boolean }
+    }.mapValues {
         it.value.get(this)
-    }
-
-public val EnvironmentConfiguration.contentValues: ContentValues
-    get() = ContentValues().also { contentValues ->
-        configContractFields.forEach {
-            val stringValue = it.value.get(this)?.toString()
-            when (it.value.type) {
-                String::class.java -> contentValues.put(it.key, stringValue)
-                Boolean::class.java -> contentValues.put(it.key, stringValue.toBoolean())
-            }
-        }
     }

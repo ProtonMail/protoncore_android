@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    id("me.proton.core.gradle-plugins.global-coverage")
-}
+package me.proton.core.configuration.configurator.extension
 
-publishOption.shouldBePublishedAsLib = false
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import me.proton.core.test.quark.v2.QuarkCommand
 
-// Global minimum coverage percentage.
-protonCoverage {
-    branchCoveragePercentage.set(36)
-    lineCoveragePercentage.set(62)
+suspend fun QuarkCommand.getProxyToken(): String? = withContext(Dispatchers.IO) {
+    route("token/get")
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+        .body
+        ?.string()
 }

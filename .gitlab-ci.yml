@@ -156,6 +156,19 @@ assemble:
       - crypto/android/build/outputs/apk/
       - key-transparency/data/build/outputs/apk/
 
+assemble:configurator:
+  extends: .gradle-job
+  stage: build
+  needs: [ ]
+  when: manual
+  allow_failure: true
+  interruptible: true
+  script:
+    - ./gradlew :configuration:configuration-configurator:assembleDebug
+  artifacts:
+    paths:
+      - configuration/configurator/build/outputs/apk/
+
 ## test stage ######################################################################################
 unit-tests-and-coverage-report:
   extends: .gradle-job

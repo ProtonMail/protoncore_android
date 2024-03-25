@@ -25,7 +25,7 @@ import org.jetbrains.kotlin.gradle.plugin.extraProperties
 
 var BaseFlavor.environmentConfiguration: EnvironmentConfig
     get() = extraProperties.getEnvironmentConfigurationByName(getName())
-    private set(config) = extraProperties.setEnvironmentConfigurationByName(getName(), config)
+    set(config) = extraProperties.setEnvironmentConfigurationByName(getName(), config)
 
 fun BaseFlavor.protonEnvironment(action: EnvironmentConfigSettings.() -> Unit) {
     environmentConfiguration = EnvironmentConfigSettings().apply(action)

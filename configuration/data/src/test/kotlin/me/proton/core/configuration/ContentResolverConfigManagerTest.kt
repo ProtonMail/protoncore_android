@@ -26,6 +26,9 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 
 class ContentResolverConfigManagerTest {
@@ -34,8 +37,8 @@ class ContentResolverConfigManagerTest {
     private lateinit var contentResolver: ContentResolver
     private lateinit var configManager: ContentResolverConfigManager
 
-    @Test
-    fun `fetchConfigDataFromContentResolver returns correct data`() {
+    @Before
+    fun setUp() {
         mockkStatic(Uri::class)
         every { Uri.parse(any()) } returns mockk(relaxed = true)
 
@@ -44,7 +47,11 @@ class ContentResolverConfigManagerTest {
         every { context.contentResolver } returns contentResolver
 
         configManager = ContentResolverConfigManager(context)
+    }
 
+
+    @Test
+    fun `fetchConfigDataFromContentResolver returns correct data`() {
         val cursor: Cursor = mockk(relaxed = true)
         every { cursor.columnNames } returns arrayOf("key1", "key2")
         every { cursor.getColumnIndex("key1") } returns 0
@@ -54,8 +61,30 @@ class ContentResolverConfigManagerTest {
         every { cursor.getString(1) } returns "value2"
         every { contentResolver.query(any(), any(), any(), any(), any()) } returns cursor
 
-        val result = configManager.fetchConfigDataFromContentResolver()
+        val result = configManager.fetchConfigurationDataAtPath(EnvironmentConfiguration::class.java.name)
 
         assertEquals(mapOf("key1" to "value1", "key2" to "value2"), result)
+    }
+
+
+    @Test
+    fun `fetchConfigurationDataAtPath returns empty map when no data found`() {
+        val cursor: Cursor = mockk(relaxed = true)
+        every { cursor.moveToFirst() } returns false // No data to move to
+        every { contentResolver.query(any(), null, null, null, null) } returns cursor
+
+        val result = configManager.fetchConfigurationDataAtPath("emptyPath")
+
+        assertTrue(result.isNullOrEmpty())
+    }
+
+
+    @Test
+    fun `fetchConfigurationDataAtPath returns null for invalid path`() {
+        every { contentResolver.query(any(), null, null, null, null) } returns null
+
+        val result = configManager.fetchConfigurationDataAtPath("invalidPath")
+
+        assertNull(result)
     }
 }

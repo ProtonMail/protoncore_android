@@ -64,7 +64,7 @@ class EnvironmentConfigurationTest {
 
     @Test
     fun `throw error for unsupported type when loading from map`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows(ClassCastException::class.java) {
             EnvironmentConfiguration.fromMap(mapOf("host" to arrayOf("")))
         }
     }
@@ -78,7 +78,7 @@ class EnvironmentConfigurationTest {
 
     @Test
     fun `throw error for loading invalid config`() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertThrows(ClassCastException::class.java) {
             EnvironmentConfiguration.fromClass(InvalidStaticConfig::class.java.name)
         }
     }
@@ -87,5 +87,17 @@ class EnvironmentConfigurationTest {
     fun `load config from class`() {
         val actual = EnvironmentConfiguration.fromClass(ValidStaticConfig::class.java.name)
         assertEquals(actual.configContractFields, expected.configContractFields)
+    }
+
+    @Test
+    fun `default proxy usage is set`() {
+        val actual = EnvironmentConfiguration.fromMap(mapOf("host" to "proton.me"))
+        assertEquals(actual.useDefaultPins, true)
+    }
+
+    @Test
+    fun `default proxy usage is overridden`() {
+        val actual = EnvironmentConfiguration.fromMap(mapOf("host" to "proton.me", "useDefaultPins" to false))
+        assertEquals(actual.useDefaultPins, false)
     }
 }
