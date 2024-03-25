@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">Při změně hesla došlo k chybě.</string>
   <string name="settings_recovery_email_success">E-mailová adresa pro obnovení aktualizována</string>
   <string name="settings_password_management_success">Heslo bylo změněno</string>
-  <string name="settings_password_management_login_password_success">Přihlašovací heslo bylo aktualizováno</string>
-  <string name="settings_password_management_mailbox_password_success">Heslo k e-mailové schránce bylo aktualizováno</string>
   <string name="settings_password_management_start_recovery">Neznáte své aktuální heslo?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymní telemetrie</string>

@@ -37,7 +37,7 @@
   <string name="auth_second_factor_code">Kód pre dvojstupňové overenie</string>
   <string name="auth_email">E-mail</string>
   <string name="auth_email_username">Používateľské meno alebo email</string>
-  <string name="auth_account_details">Zadajte podrobnosti o svojom účte Proton.</string>
+  <string name="auth_account_details">Zadajte podrobnosti o svojom Proton účte.</string>
   <string name="auth_sign_in">Prihlásiť sa</string>
   <string name="auth_sign_out">Odhlásiť sa</string>
   <string name="auth_sign_in_action">Prihlásiť sa</string>
@@ -113,7 +113,7 @@
   <string name="auth_signup_username">Používateľské meno</string>
   <string name="auth_signup_domain">Doména</string>
   <string name="auth_signup_email">E-mail</string>
-  <string name="auth_signup_next">Ďalší</string>
+  <string name="auth_signup_next">Ďalej</string>
   <string name="auth_signup_choose_password">Vytvorte si heslo</string>
   <string name="auth_signup_repeat_password">Zopakovať heslo</string>
   <string name="auth_signup_recovery_method_title">Nastaviť spôsob obnovenia (voliteľné)</string>

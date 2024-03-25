@@ -49,20 +49,20 @@
   <string name="presentation_field_required">Urti-a ilaq.</string>
   <string name="presentation_error_general">Teḍra-d tuccḍa.</string>
   <plurals name="presentation_datetime_day">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d n wass</item>
+    <item quantity="other">%d n wussan</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d n usrag</item>
+    <item quantity="other">%d n yisragen</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d n tesdat</item>
+    <item quantity="other">%d n tesdatin</item>
   </plurals>
   <plurals name="presentation_datetime_second">
-    <item quantity="one">%d second</item>
-    <item quantity="other">%d seconds</item>
+    <item quantity="one">%d n tsint</item>
+    <item quantity="other">%d n tsinin</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d millisecond</item>

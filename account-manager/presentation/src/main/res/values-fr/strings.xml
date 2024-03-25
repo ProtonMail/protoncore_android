@@ -24,4 +24,12 @@
   <string name="account_switcher_action_remove">Retirer</string>
   <string name="account_list_item_chevron_content_description">Tous vos comptes</string>
   <string name="account_view_three_dots_content_description">Options</string>
+  <string name="account_settings_header">Paramètres du compte</string>
+  <string name="account_settings_item_header">Utilisateur</string>
+  <string name="account_settings_list_header">Compte</string>
+  <string name="account_settings_list_item_password_header">Gestion des mots de passe</string>
+  <string name="account_settings_list_item_password_hint_grace">Réinitialisation du mot de passe en attente</string>
+  <string name="account_settings_list_item_password_hint_insecure">La réinitialisation du mot de passe est prête.</string>
+  <string name="account_settings_list_item_recovery_header">E-mail de récupération</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Non défini</string>
 </resources>

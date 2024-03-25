@@ -39,7 +39,7 @@
   <string name="auth_email_username">Felhasználónév vagy e-mail cím</string>
   <string name="auth_account_details">Írja be a Proton fiókja adatait.</string>
   <string name="auth_sign_in">Bejelentkezés</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Kijelentkezés</string>
   <string name="auth_sign_in_action">Bejelentkezés</string>
   <string name="auth_sign_in_sso">Jelentkezzen be a szervezetébe</string>
   <string name="auth_sign_in_with_password">Bejelentkezés jelszóval</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Kihagyás</string>
   <string name="auth_signup_set_recovery">Helyreállítási módszer beállítása</string>
   <string name="auth_signup_no_connectivity">Nincs kapcsolat a Felhasználási feltételek megjelenítéséhez.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Kérjük, hozzon létre egy fiókot a folytatáshoz</string>
   <string name="auth_signup_error_username_blank">A felhasználónév nem lehet üres.</string>
   <string name="auth_signup_error_passwords_do_not_match">A jelszavak nem egyeznek meg.</string>
   <string name="auth_signup_validation_password_length">A jelszónak legalább 8 karakternek kell lennie.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Böngésszen privát módon, érjen el blokkolt tartalmakat és élvezze a digitális szabadságot.</string>
   <string name="auth_credentialless_guest_button">Folytatás vendégként</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Az alkalmazásunk használatával elfogadja a <annotation link="terms">Felhasználási feltételeket</annotation></string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Lépjen az adatvédelem irányába.</string>
+  <string name="auth_credentialless_settings_subtitle">Szerezzen egy jelszókezelőt, titkosított levelezést, naptárat, valamint 1 GB felhőalapú tárhelyet ingyenesen egy Proton-fiókkal.</string>
 </resources>

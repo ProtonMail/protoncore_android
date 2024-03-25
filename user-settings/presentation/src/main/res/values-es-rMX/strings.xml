@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">Ocurrió un error al cambiar la contraseña.</string>
   <string name="settings_recovery_email_success">La dirección de correo de recuperación fue actualizada.</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>
-  <string name="settings_password_management_login_password_success">Contraseña de inicio de sesión actualizada</string>
-  <string name="settings_password_management_mailbox_password_success">Contraseña del buzón actualizada</string>
   <string name="settings_password_management_start_recovery">¿No recuerda su contraseña?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetría anónima</string>

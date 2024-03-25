@@ -32,8 +32,8 @@
   <string name="settings_validation_email">Неверный адрес электронной почты.</string>
   <string name="settings_general_error">Произошла ошибка.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
+  <string name="settings_password_management_tab_login_password">Пароль для входа</string>
+  <string name="settings_password_management_tab_mailbox_password">Пароль почтового ящика</string>
   <string name="settings_password_management_change_login_password">Изменить пароль</string>
   <string name="settings_password_management_change_mailbox_password">Изменить пароль почтового ящика</string>
   <string name="settings_password_management_header">Управление паролями</string>
@@ -45,9 +45,7 @@
   <string name="settings_change_password_error">Произошла ошибка при смене пароля.</string>
   <string name="settings_recovery_email_success">Резервный адрес электронной почты обновлён</string>
   <string name="settings_password_management_success">Пароль обновлен</string>
-  <string name="settings_password_management_login_password_success">Пароль для входа обновлен</string>
-  <string name="settings_password_management_mailbox_password_success">Пароль почтового ящика обновлен</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
+  <string name="settings_password_management_start_recovery">Не знаете свой текущий пароль?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Анонимная телеметрия</string>
   <string name="device_settings_telemetry_hint">Иногда мы собираем обезличенные данные для улучшения наших сервисов.</string>

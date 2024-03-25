@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Overslaan</string>
   <string name="auth_signup_set_recovery">Herstelmethode instellen</string>
   <string name="auth_signup_no_connectivity">Geen connectiviteit om Voorwaarden en Condities te tonen.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Maak een account aan om verder te gaan</string>
   <string name="auth_signup_error_username_blank">De gebruikersnaam mag niet leeg zijn.</string>
   <string name="auth_signup_error_passwords_do_not_match">Wachtwoorden komen niet overeen.</string>
   <string name="auth_signup_validation_password_length">Wachtwoord moet ten minste 8 tekens bevatten.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Surf privé, bekijk geblokkeerde content en geniet van digitale vrijheid.</string>
   <string name="auth_credentialless_guest_button">Ga verder als gast</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Door dit programma te gebruiken accepteert u onze <annotation link="terms">Voorwaarden</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Maak de stap naar privacy.</string>
+  <string name="auth_credentialless_settings_subtitle">Krijg een wachtwoordmanager, versleutelde e-mail en agenda, en 1 GB gratis cloudopslag gratis met een Proton Account.</string>
 </resources>

@@ -19,8 +19,8 @@
 <resources>
   <string name="plans_select_a_plan">Seleziona un piano</string>
   <string name="plans_select_a_plan_subtitle">Un piano per tutti i servizi di Proton</string>
-  <string name="plans_fetching_general_error">Si è verificato un errore nel caricamento dei piani.</string>
-  <string name="plans_payment_error">Si è verificato un errore di pagamento. Riprova più tardi o crea un piano gratuito.</string>
+  <string name="plans_fetching_general_error">Errore nel caricamento dei piani</string>
+  <string name="plans_payment_error">Errore nel pagamento. Riprova più tardi o crea un piano gratuito.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">al mese</string>
   <string name="plan_price_annually">all\'anno</string>

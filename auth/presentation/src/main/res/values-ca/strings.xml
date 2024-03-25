@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Omet</string>
   <string name="auth_signup_set_recovery">Estableix un mètode de recuperació</string>
   <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Creeu un compte per a continuar</string>
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot estar en blanc.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les contrasenyes no coincideixen.</string>
   <string name="auth_signup_validation_password_length">La contrasenya ha de tenir almenys 8 caràcters.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Navegueu privadament, accediu a continguts bloquejats i gaudiu de llibertat digital.</string>
   <string name="auth_credentialless_guest_button">Continueu com a convidat</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilitzar aquesta aplicació, accepteu els nostres <annotation link="terms">termes i condicions</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Feu el pas cap a la privacitat.</string>
+  <string name="auth_credentialless_settings_subtitle">Obteniu un gestor de contrasenyes, un correu electrònic i un calendari xifrats, i 1 GB d\'emmagatzematge al núvol de forma gratuïta amb un compte del Proton.</string>
 </resources>

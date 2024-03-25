@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">Адбылася памылка пры змяненні пароля.</string>
   <string name="settings_recovery_email_success">Адрас электроннай пошты для аднаўлення доступу абноўлены</string>
   <string name="settings_password_management_success">Пароль абноўлены</string>
-  <string name="settings_password_management_login_password_success">Пароль уваходу абноўлены</string>
-  <string name="settings_password_management_mailbox_password_success">Пароль ад паштовай скрыні абноўлены</string>
   <string name="settings_password_management_start_recovery">Не ведаеце свой бягучы пароль?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Ананімная тэлеметрыя</string>

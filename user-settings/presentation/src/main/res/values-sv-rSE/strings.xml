@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">Ett fel uppstod vid ändring av lösenord.</string>
   <string name="settings_recovery_email_success">E-postadress för återställning uppdaterad</string>
   <string name="settings_password_management_success">Lösenord uppdaterat</string>
-  <string name="settings_password_management_login_password_success">Inloggningslösenord uppdaterat</string>
-  <string name="settings_password_management_mailbox_password_success">Brevlådans lösenord uppdaterad</string>
   <string name="settings_password_management_start_recovery">Vet du inte ditt nuvarande lösenord?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonym telemetri</string>

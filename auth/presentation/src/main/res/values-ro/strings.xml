@@ -39,7 +39,7 @@
   <string name="auth_email_username">Utilizator sau e-mail</string>
   <string name="auth_account_details">Introduceți detaliile contului Proton.</string>
   <string name="auth_sign_in">Autentificare</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Deconectare</string>
   <string name="auth_sign_in_action">Autentificare</string>
   <string name="auth_sign_in_sso">Autentificare la organizație</string>
   <string name="auth_sign_in_with_password">Autentificare cu e-mail și parolă</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Omitere</string>
   <string name="auth_signup_set_recovery">Setare metodă de recuperare</string>
   <string name="auth_signup_no_connectivity">Nu există conectivitate pentru a afișa termenii și condițiile.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Creați un cont pentru a continua</string>
   <string name="auth_signup_error_username_blank">Numele de utilizator nu poate fi gol.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parolele nu coincid.</string>
   <string name="auth_signup_validation_password_length">Parola trebuie să fie de cel puțin 8 caractere.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Navigați în privat, accesați conținutul blocat și bucurați-vă de libertatea digitală.</string>
   <string name="auth_credentialless_guest_button">Continuare ca vizitator</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Folosind această aplicație sunteți de acord cu <annotation link="terms">Termenii și condițiile</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Faceți pasul spre intimitate.</string>
+  <string name="auth_credentialless_settings_subtitle">Cu un cont Proton gratuit obțineți un manager de parole, e-mail și calendar criptat și 1 GiB de spațiu de stocare în cloud.</string>
 </resources>

@@ -39,7 +39,7 @@
   <string name="auth_email_username">მომხმარებლის სახელი ან ელფოსტა</string>
   <string name="auth_account_details">შეიყვანეთ თქვენი Proton-ის ანგარიშის დეტალები.</string>
   <string name="auth_sign_in">შესვლა</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">გასვლა</string>
   <string name="auth_sign_in_action">შესვლა</string>
   <string name="auth_sign_in_sso">შედით თქვენს ორგანიზაციაში</string>
   <string name="auth_sign_in_with_password">პაროლით შესვლა</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">გამოტოვება</string>
   <string name="auth_signup_set_recovery">აღდგენის მეთოდის დაყენება</string>
   <string name="auth_signup_no_connectivity">წესებისა და პირობების საჩვენებლად შეერთება არ არსებობს.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">გასაგრძელებლად შექმენით ანგარიში</string>
   <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>
   <string name="auth_signup_error_passwords_do_not_match">პაროლები არ ემთხვევა.</string>
   <string name="auth_signup_validation_password_length">პაროლი 8 სიმბოლო მაინც უნდა იყოს.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">იმუშავეთ ინტერნეტში ინკოგნიტოდ, იქონიეთ წვდომა დაბლოკილ შემცველობასთან და ისიამოვნეთ ციფრული თავისუფლებით.</string>
   <string name="auth_credentialless_guest_button">გაგრძელება სტუმრის სახელით</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">ამ აპის გამოყენებით თქვენ ეთანხმებით ჩვენს <annotation link="terms">წესებს და პირობებს</annotation></string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
+  <string name="auth_credentialless_settings_title">გადადგით ნაბიჯი კონფიდენციალობისკენ</string>
   <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
 </resources>

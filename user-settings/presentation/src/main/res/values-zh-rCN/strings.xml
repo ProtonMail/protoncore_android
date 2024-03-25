@@ -33,7 +33,7 @@
   <string name="settings_general_error">出错了。</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
+  <string name="settings_password_management_tab_mailbox_password">邮箱密码</string>
   <string name="settings_password_management_change_login_password">更改密码</string>
   <string name="settings_password_management_change_mailbox_password">更改邮箱密码</string>
   <string name="settings_password_management_header">密码管理</string>
@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">密码更改失败。</string>
   <string name="settings_recovery_email_success">密保邮箱地址已更新</string>
   <string name="settings_password_management_success">密码已更改</string>
-  <string name="settings_password_management_login_password_success">登录密码已更改</string>
-  <string name="settings_password_management_mailbox_password_success">邮箱密码已更改</string>
   <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名遥测</string>

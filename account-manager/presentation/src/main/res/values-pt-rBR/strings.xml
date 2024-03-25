@@ -24,4 +24,12 @@
   <string name="account_switcher_action_remove">Remover</string>
   <string name="account_list_item_chevron_content_description">Abrir alternador de contas</string>
   <string name="account_view_three_dots_content_description">Opções</string>
+  <string name="account_settings_header">Configurações da conta</string>
+  <string name="account_settings_item_header">Usuário</string>
+  <string name="account_settings_list_header">Conta</string>
+  <string name="account_settings_list_item_password_header">Gerenciamento de senhas</string>
+  <string name="account_settings_list_item_password_hint_grace">Redefinição de senha pendente</string>
+  <string name="account_settings_list_item_password_hint_insecure">Pronto para redefinição de senha</string>
+  <string name="account_settings_list_item_recovery_header">E-mail de recuperação</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Não definido</string>
 </resources>

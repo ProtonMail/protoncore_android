@@ -25,7 +25,7 @@
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Annullare la reimpostazione della password?</string>
-  <string name="account_recovery_cancel_subtitle">Inserisci la password per annullare.</string>
+  <string name="account_recovery_cancel_subtitle">Inserisci la password per annullare</string>
   <string name="account_recovery_cancel_password_label">Password attuale</string>
   <string name="account_recovery_cancel_password_placeholder">Password</string>
   <string name="account_recovery_cancel_now">Annulla la reimpostazione della password</string>
@@ -55,7 +55,7 @@
   <string name="account_recovery_info_insecure_subtitle">Ora puoi cambiare la password. La reimpostazione della password è disponibile fino al %1s.</string>
   <string name="account_recovery_info_insecure_description">Non hai fatto tu questa richiesta?\n\nSe non hai richiesto tu la reimpostazione della password, annulla subito la richiesta.</string>
   <!-- Password Reset Dialog -->
-  <string name="account_recovery_reset_dialog_title">Reimposta la password?</string>
+  <string name="account_recovery_reset_dialog_title">Vuoi reimpostare la password?</string>
   <string name="account_recovery_reset_dialog_text">"Per motivi di sicurezza, dovrai attendere 72 ore prima di poter modificare la password per %1s.\n\nSe hai impostato un metodo di recupero, prova invece il recupero dell'account. Ciò ti consentirà di modificare immediatamente la tua password."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Richiedi la reimpostazione della password</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Usa un metodo di recupero</string>

@@ -60,5 +60,5 @@
   <string name="account_recovery_reset_dialog_action_request_reset">Demander une réinitialisation du mot de passe</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Utiliser une méthode de récupération</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Changez votre mot de passe dans votre navigateur web sans avoir à attendre la fin de la période de sécurité.</string>
-  <string name="account_recovery_reset_dialog_action_request_reset_success">La réinitialisation du mot de passe a été demandée</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">La réinitialisation du mot de passe a été demandée.</string>
 </resources>

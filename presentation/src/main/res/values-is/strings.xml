@@ -49,20 +49,20 @@
   <string name="presentation_field_required">Þessi reitur er nauðsynlegur.</string>
   <string name="presentation_error_general">Villa kom upp.</string>
   <plurals name="presentation_datetime_day">
-    <item quantity="one">%d day</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d dagur</item>
+    <item quantity="other">%d dagar</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
-    <item quantity="one">%d hour</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d klukkustund</item>
+    <item quantity="other">%d klukkustundir</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
-    <item quantity="one">%d minute</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d mínúta</item>
+    <item quantity="other">%d mínútur</item>
   </plurals>
   <plurals name="presentation_datetime_second">
-    <item quantity="one">%d second</item>
-    <item quantity="other">%d seconds</item>
+    <item quantity="one">%d sekúnda</item>
+    <item quantity="other">%d sekúndur</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d millisecond</item>

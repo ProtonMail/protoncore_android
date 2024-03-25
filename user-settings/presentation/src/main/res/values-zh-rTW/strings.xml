@@ -32,8 +32,8 @@
   <string name="settings_validation_email">電子郵件位址無效.</string>
   <string name="settings_general_error">發生錯誤。</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
+  <string name="settings_password_management_tab_login_password">登入密碼</string>
+  <string name="settings_password_management_tab_mailbox_password">郵箱密碼</string>
   <string name="settings_password_management_change_login_password">變更密碼</string>
   <string name="settings_password_management_change_mailbox_password">更改郵箱密碼</string>
   <string name="settings_password_management_header">密碼管理</string>
@@ -45,9 +45,7 @@
   <string name="settings_change_password_error">發生變更密碼錯誤。</string>
   <string name="settings_recovery_email_success">已更新備援電子郵件位址</string>
   <string name="settings_password_management_success">已更新密碼</string>
-  <string name="settings_password_management_login_password_success">已更新登入密碼</string>
-  <string name="settings_password_management_mailbox_password_success">電子信箱密碼已更新</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
+  <string name="settings_password_management_start_recovery">忘記您目前的密碼嗎？</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名遙測</string>
   <string name="device_settings_telemetry_hint">為了改善我們的服務，我們有時候會蒐集匿名的使用資料。</string>

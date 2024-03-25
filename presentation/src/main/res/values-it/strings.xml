@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Impossibile trovare il browser per aprire il link.</string>
+  <string name="presentation_browser_missing">Impossibile trovare il browser per aprire il link</string>
   <string name="presentation_force_update_title">Aggiornamento necessario</string>
   <string name="presentation_force_update_message">Questa versione dell\'app non è più supportata, aggiornala per continuare a usarla.</string>
   <string name="presentation_force_update_learn_more">Scopri di più</string>
@@ -43,11 +43,11 @@
   <string name="presentation_retry">Riprova</string>
   <string name="presentation_skip">Salta</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Impossibile connettersi al server.</string>
+  <string name="presentation_general_connection_error">Impossibile connettersi al server</string>
   <string name="presentation_check_your_connection">Controlla la tua connessione</string>
   <string name="presentation_connectivity_issues">Problemi di connessione</string>
-  <string name="presentation_field_required">Questo campo è obbligatorio.</string>
-  <string name="presentation_error_general">Si è verificato un errore.</string>
+  <string name="presentation_field_required">Campo necessario</string>
+  <string name="presentation_error_general">Si è verificato un errore</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d giorno</item>
     <item quantity="other">%d giorni</item>

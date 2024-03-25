@@ -47,20 +47,20 @@
   <string name="account_recovery_dismiss">Rozumiem</string>
   <string name="account_recovery_reset">Reset password</string>
   <!-- Account Recovery Info -->
-  <string name="account_recovery_info_grace_title">Password reset requested</string>
+  <string name="account_recovery_info_grace_title">Vyžiadané obnovenie hesla</string>
   <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
   <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
-  <string name="account_recovery_info_cancelled_title">Password reset cancelled</string>
+  <string name="account_recovery_info_cancelled_title">Obnovenie hesla zrušené</string>
   <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
   <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
-  <string name="account_recovery_info_insecure_title">Password reset available</string>
+  <string name="account_recovery_info_insecure_title">Obnovenie hesla je k dispozícii</string>
   <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
   <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
   <!-- Password Reset Dialog -->
-  <string name="account_recovery_reset_dialog_title">Reset Password?</string>
+  <string name="account_recovery_reset_dialog_title">Resetovať heslo?</string>
   <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
-  <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Žiadosť o obnovenie hesla</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Použitie metódy obnovy</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
-  <string name="account_recovery_reset_dialog_action_request_reset_success">Password reset requested</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Vyžiadané obnovenie hesla</string>
 </resources>

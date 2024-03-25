@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">Ocorreu um erro na troca da senha.</string>
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação atualizado</string>
   <string name="settings_password_management_success">Senha atualizada</string>
-  <string name="settings_password_management_login_password_success">Senha de início de sessão atualizada</string>
-  <string name="settings_password_management_mailbox_password_success">Senha da caixa de correio atualizada</string>
   <string name="settings_password_management_start_recovery">Não sabe sua senha atual?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anônima</string>

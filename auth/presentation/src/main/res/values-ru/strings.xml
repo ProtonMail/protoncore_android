@@ -39,7 +39,7 @@
   <string name="auth_email_username">Имя пользователя или эл. почта</string>
   <string name="auth_account_details">Введите данные вашего аккаунта Proton.</string>
   <string name="auth_sign_in">Войти</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Bыйти</string>
   <string name="auth_sign_in_action">Войти</string>
   <string name="auth_sign_in_sso">Войдите в вашу организацию</string>
   <string name="auth_sign_in_with_password">Войти с паролем</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Пропустить</string>
   <string name="auth_signup_set_recovery">Задать метод восстановления доступа</string>
   <string name="auth_signup_no_connectivity">Нет подключения, чтобы посмотреть условия.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Создайте аккаунт, чтобы продолжить</string>
   <string name="auth_signup_error_username_blank">Имя пользователя не может быть пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Пароли не совпадают.</string>
   <string name="auth_signup_validation_password_length">Пароль должен содержать минимум 8 символов.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Просматривайте сайты в приватно, получайте доступ к заблокированному содержимому и пользуйтесь цифровой свободой.</string>
   <string name="auth_credentialless_guest_button">Продолжить без регистрации</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Используя это приложение, вы принимаете наши <annotation link="terms">Условия использования</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Сделайте шаг к конфиденциальности.</string>
+  <string name="auth_credentialless_settings_subtitle">Получите менеджер паролей, зашифрованную почту и календарь, а также 1 ГБ облачного хранилища бесплатно с аккаунтом Proton.</string>
 </resources>

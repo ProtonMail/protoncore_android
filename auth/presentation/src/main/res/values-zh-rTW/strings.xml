@@ -39,7 +39,7 @@
   <string name="auth_email_username">使用者名稱或電子信箱</string>
   <string name="auth_account_details">輸入您的 Proton 帳號詳細資料。</string>
   <string name="auth_sign_in">登入</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">登出</string>
   <string name="auth_sign_in_action">登入</string>
   <string name="auth_sign_in_sso">登入您的組織</string>
   <string name="auth_sign_in_with_password">使用密碼登入</string>
@@ -118,12 +118,12 @@
   <string name="auth_signup_repeat_password">重複輸入密碼</string>
   <string name="auth_signup_recovery_method_title">設定備援方式（選擇性）</string>
   <string name="auth_signup_recovery_method_title_mandatory">設定備援方法</string>
-  <string name="auth_signup_recovery_method_subtitle">如果您的帳號被鎖定，我們會向此電子信箱或電話號碼傳送復原說明</string>
+  <string name="auth_signup_recovery_method_subtitle">如果您的帳號被鎖定，我們會傳送復原說明至此電郵位址或電話號碼</string>
   <string name="auth_signup_recovery_method_subtitle_email_only">如果您的帳號被鎖定，我們會向此電子信箱傳送復原說明</string>
   <string name="auth_signup_recovery_method_email">電子信箱</string>
   <string name="auth_signup_recovery_method_phone">手機</string>
   <string name="auth_signup_recovery_method_email_hint">備援電子郵件</string>
-  <string name="auth_signup_recovery_method_phone_hint">備援電話號碼</string>
+  <string name="auth_signup_recovery_method_phone_hint">復原電話號碼</string>
   <string name="auth_signup_terms_conditions">條款與細則</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">點擊下一步，即表示您同意 Proton 的<annotation link="terms">合約條款</annotation>。</string>
   <string name="auth_signup_skip_recovery_title">略過備援方法？</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">略過</string>
   <string name="auth_signup_set_recovery">設定備援方法</string>
   <string name="auth_signup_no_connectivity">無法連線以顯示條款與細則。</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">請建立帳號以繼續</string>
   <string name="auth_signup_error_username_blank">使用者名稱不能為空。</string>
   <string name="auth_signup_error_passwords_do_not_match">密碼不相符。</string>
   <string name="auth_signup_validation_password_length">密碼應至少 8 個字元長。</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">私密瀏覽、存取被封鎖的內容並享受數位自由。</string>
   <string name="auth_credentialless_guest_button">以訪客身份繼續</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">使用此應用程式即表示您接受我們的<annotation link="terms">條款與條件</annotation>。</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">轉向隱私。</string>
+  <string name="auth_credentialless_settings_subtitle">使用 Proton 帳號免費取得密碼管理器、加密郵件與日曆，以及 1 GB 的雲端儲存空間。</string>
 </resources>

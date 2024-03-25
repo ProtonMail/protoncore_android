@@ -18,16 +18,16 @@
   -->
 <resources>
   <!-- region payment errors -->
-  <string name="payments_general_error">Si è verificato un errore.</string>
-  <string name="payments_no_connectivity">Nessuna connessione per visualizzare la pagina di conferma del 3DS.</string>
-  <string name="payments_3ds_not_approved">L\'approvazione 3DS è stata rifiutata.</string>
-  <string name="payments_error_card_name">Nome sulla carta necessario.</string>
-  <string name="payments_error_card_number">Numero della carta non valido.</string>
-  <string name="payments_error_cvc">Inserisci un codice di sicurezza valido.</string>
-  <string name="payments_error_session">È necessario un ID di sessione valido quando si iscrive un utente che ha effettuato l\'accesso.</string>
-  <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente.</string>
-  <string name="payments_error_invalid_session">Sessione non valida.</string>
-  <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento trovato.</string>
+  <string name="payments_general_error">Si è verificato un errore</string>
+  <string name="payments_no_connectivity">Nessuna connessione per visualizzare la pagina di conferma del 3DS</string>
+  <string name="payments_3ds_not_approved">Approvazione 3DS rifiutata</string>
+  <string name="payments_error_card_name">Nome sulla carta necessario</string>
+  <string name="payments_error_card_number">Numero della carta non valido</string>
+  <string name="payments_error_cvc">Inserisci un codice di sicurezza valido</string>
+  <string name="payments_error_session">ID di sessione valido necessario quando si iscrive un utente che ha effettuato l\'accesso.</string>
+  <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente</string>
+  <string name="payments_error_invalid_session">Sessione non valida</string>
+  <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento trovato</string>
   <string name="payments_error_google_prices">Problema nel caricamento dei prezzi dal Google Play Store.</string>
   <!-- endregion -->
   <!-- region payment options -->
@@ -35,7 +35,7 @@
   <string name="payments_add_credit_debit_card">Aggiungi una nuova carta di credito/debito</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga con</string>
-  <string name="payments_method_icon">Icona del metodo di pagamento.</string>
+  <string name="payments_method_icon">Icona del metodo di pagamento</string>
   <string name="payments_method_surcharge">*Gli acquisti effettuati con questo metodo di pagamento comportano un supplemento.</string>
   <string name="payments_method_terms_conditions">Acquistare con Google Pay significa accettare i termini e le condizioni di Google Pay e accettare di impostare un pagamento ricorrente con Google.</string>
   <string name="payments_method_google">Google</string>

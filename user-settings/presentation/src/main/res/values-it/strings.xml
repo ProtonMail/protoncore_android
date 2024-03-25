@@ -21,16 +21,16 @@
   <string name="settings_recovery_email_header">Indirizzo email di recupero</string>
   <string name="settings_recovery_email_current">Indirizzo email di recupero attuale</string>
   <string name="settings_recovery_email_new">Nuovo indirizzo email di recupero</string>
-  <string name="settings_recovery_email_confirm">Conferma il nuovo indirizzo email di recupero</string>
+  <string name="settings_recovery_email_confirm">Conferma il nuovo indirizzo email</string>
   <string name="settings_recovery_email_new_hint">Inserisci l\'indirizzo email</string>
   <string name="settings_recovery_email_confirm_hint">Inserisci nuovamente l\'indirizzo email</string>
   <string name="settings_save">Salva</string>
   <string name="settings_password_required">Inserisci la password di accesso</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non impostato</string>
-  <string name="settings_recovery_email_error_no_match">Le email di recupero non corrispondono</string>
-  <string name="settings_validation_email">Indirizzo email non valido.</string>
-  <string name="settings_general_error">Si è verificato un errore.</string>
+  <string name="settings_recovery_email_error_no_match">Email non corrispondente</string>
+  <string name="settings_validation_email">Indirizzo email non valido</string>
+  <string name="settings_general_error">Si è verificato un errore</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_login_password">Password di accesso</string>
   <string name="settings_password_management_tab_mailbox_password">Password della casella di posta</string>
@@ -42,15 +42,13 @@
   <string name="settings_login_password_hint_new_confirm">Conferma la nuova password</string>
   <string name="settings_mailbox_password_hint_new">Nuova password della casella di posta</string>
   <string name="settings_mailbox_password_hint_new_confirm">Conferma la nuova password</string>
-  <string name="settings_change_password_error">Si è verificato un errore nel cambio della password.</string>
+  <string name="settings_change_password_error">Errore nel cambio della password</string>
   <string name="settings_recovery_email_success">Indirizzo email di recupero aggiornato</string>
   <string name="settings_password_management_success">Password aggiornata</string>
-  <string name="settings_password_management_login_password_success">Password di accesso aggiornata</string>
-  <string name="settings_password_management_mailbox_password_success">Password della casella di posta aggiornata</string>
   <string name="settings_password_management_start_recovery">Non ricordi la password attuale?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
   <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo in forma anonima.</string>
-  <string name="device_settings_crashreport_title">Segnalazioni anonime per gli arresti anomali</string>
+  <string name="device_settings_crashreport_title">Segnalazioni anonime</string>
   <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviata una segnalazione ai nostri tecnici con i dettagli della causa. Useremo queste solamente al fine di migliorare l\'app.</string>
 </resources>

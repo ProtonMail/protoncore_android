@@ -58,7 +58,7 @@
   <string name="account_recovery_info_insecure_description">Не рабілі гэты запыт?\n\nКалі вы не запытвалі скіданне пароля, скасуйце запыт.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Скінуць пароль?</string>
-  <string name="account_recovery_reset_dialog_text">"У мэтах бяспекі, вам давядзецца чакаць 72 гадзіны перад тым, як вы зможаце змяніць свой пароль для %1s.\n\nКалі ў вас наладжаны метад аднаўлення паспрабуйце скарыстацца спачатку ім. Гэта дазволіць адразу змяніць ваш пароль."</string>
+  <string name="account_recovery_reset_dialog_text">"У мэтах бяспекі, вам давядзецца чакаць 72 гадзіны перад тым, як вы зможаце змяніць свой пароль для %1s.\n\nКалі ў вас наладжаны спосаб аднаўлення паспрабуйце скарыстацца спачатку ім. Гэта дазволіць адразу змяніць ваш пароль."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Запытаць скіданне пароля</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Скарыстацца спосабам аднаўлення</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Змяніць пароль у вэб-браўзеры не чакаючы завяршэння перыяду бяспекі.</string>

@@ -46,7 +46,7 @@
   <string name="account_recovery_reset">Återställ lösenord</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Lösenordsåterställning begärd</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
+  <string name="account_recovery_info_grace_subtitle">Du kan återställa ditt lösenord om %1s.</string>
   <string name="account_recovery_info_grace_description">För att vara säker på att det verkligen är du som försöker återställa ditt lösenord väntar vi 72 timmar innan vi godkänner begäran.\n\nOm du inte bad om att få återställa ditt lösenord, avbryt denna begäran nu.</string>
   <string name="account_recovery_info_cancelled_title">Lösenordsåterställning avbruten</string>
   <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>

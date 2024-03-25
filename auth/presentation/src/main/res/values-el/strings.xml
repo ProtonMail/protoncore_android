@@ -39,7 +39,7 @@
   <string name="auth_email_username">Όνομα χρήστη ή email</string>
   <string name="auth_account_details">Εισαγάγετε τα στοιχεία του λογαριασμού σας Proton.</string>
   <string name="auth_sign_in">Είσοδος</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Έξοδος</string>
   <string name="auth_sign_in_action">Είσοδος</string>
   <string name="auth_sign_in_sso">Συνδεθήτε στον οργανισμό σας</string>
   <string name="auth_sign_in_with_password">Σύνδεση με κωδικό</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Παράλειψη</string>
   <string name="auth_signup_set_recovery">Ορισμός μεθόδου ανάκτησης</string>
   <string name="auth_signup_no_connectivity">Δεν υπάρχει συνδεσιμότητα για την εμφάνιση των Όρων και Προϋποθέσεων.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Παρακαλούμε δημιουργήστε έναν λογαριασμό για να συνεχίσετε</string>
   <string name="auth_signup_error_username_blank">Το Όνομα Χρήστη δεν πρέπει να είναι κενό.</string>
   <string name="auth_signup_error_passwords_do_not_match">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
   <string name="auth_signup_validation_password_length">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Περιηγηθείτε ιδιωτικά, αποκτήστε πρόσβαση σε αποκλεισμένο περιεχόμενο και απολαύστε ψηφιακή ελευθερία.</string>
   <string name="auth_credentialless_guest_button">Συνέχιση ως επισκέπτης</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Χρησιμοποιώντας αυτήν την εφαρμογή αποδέχεστε τους <annotation link="terms">Όρους και Προϋποθέσεις</annotation> μας.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Κάντε τη μετάβαση στο απόρρητο.</string>
+  <string name="auth_credentialless_settings_subtitle">Αποκτήστε έναν διαχειριστή κωδικών πρόσβασης, κρυπτογραφημένη αλληλογραφία και ημερολόγιο και 1 GB αποθηκευτικού χώρου στο cloud δωρεάν με έναν λογαριασμό Proton.</string>
 </resources>

@@ -49,28 +49,28 @@
   <string name="presentation_field_required">Це поле обов\'язкове.</string>
   <string name="presentation_error_general">Сталася помилка.</string>
   <plurals name="presentation_datetime_day">
-    <item quantity="one">%d day</item>
-    <item quantity="few">%d days</item>
-    <item quantity="many">%d days</item>
-    <item quantity="other">%d days</item>
+    <item quantity="one">%d день</item>
+    <item quantity="few">%d днів</item>
+    <item quantity="many">%d дні</item>
+    <item quantity="other">%d дні</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
-    <item quantity="one">%d hour</item>
-    <item quantity="few">%d hours</item>
-    <item quantity="many">%d hours</item>
-    <item quantity="other">%d hours</item>
+    <item quantity="one">%d година</item>
+    <item quantity="few">%d годин</item>
+    <item quantity="many">%d години</item>
+    <item quantity="other">%d години</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
-    <item quantity="one">%d minute</item>
-    <item quantity="few">%d minutes</item>
-    <item quantity="many">%d minutes</item>
-    <item quantity="other">%d minutes</item>
+    <item quantity="one">%d хвилина</item>
+    <item quantity="few">%d хвилини</item>
+    <item quantity="many">%d хвилин</item>
+    <item quantity="other">%d хвилин</item>
   </plurals>
   <plurals name="presentation_datetime_second">
-    <item quantity="one">%d second</item>
-    <item quantity="few">%d seconds</item>
-    <item quantity="many">%d seconds</item>
-    <item quantity="other">%d seconds</item>
+    <item quantity="one">%d секунда</item>
+    <item quantity="few">%d секунд</item>
+    <item quantity="many">%d секунди</item>
+    <item quantity="other">%d секунди</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d millisecond</item>

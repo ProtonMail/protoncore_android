@@ -20,18 +20,18 @@
   <string name="core_report_bug_activity_title">Laporkan masalah</string>
   <string name="core_report_bug_close">Tutup</string>
   <string name="core_report_bug_subject_field_hint">Subjek</string>
-  <string name="core_report_bug_subject_field_required">Beri subjek</string>
+  <string name="core_report_bug_subject_field_required">Tulis subjek</string>
   <string name="core_report_bug_description_field_hint">Apa yang salah? Minimum 10 karakter</string>
   <string name="core_report_bug_description_field_placeholder">Mohon uraikan masalah Anda serinci mungkin. Apabila Anda menjumpai pesan kesalahan tertentu, mohon beri tahu kami isi dari pesan tersebut.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="other">Masukkan setidaknya %d karakter</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">Tutup laporan bug?</string>
-  <string name="core_report_bug_discard_changes_description">Jika Anda meninggalkan halaman ini, laporan Anda tidak akan disimpan.</string>
+  <string name="core_report_bug_discard_changes_description">Apabila Anda meninggalkan halaman ini, laporan Anda tidak akan disimpan.</string>
   <string name="core_report_bug_discard_changes_cancel">Teruskan menulis</string>
   <string name="core_report_bug_discard_changes_confirm">Tutup tanpa menyimpan</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="other">Maksimum %d karakter</item>
+    <item quantity="other">Maksimal %d karakter</item>
   </plurals>
   <string name="core_report_bug_general_error">Terjadi kesalahan. Silakan coba beberapa saat lagi.</string>
   <string name="core_report_bug_send">Kirim laporan</string>

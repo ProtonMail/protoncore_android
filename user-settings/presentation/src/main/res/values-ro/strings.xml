@@ -32,8 +32,8 @@
   <string name="settings_validation_email">Adresa de e-mail nu este validă.</string>
   <string name="settings_general_error">A apărut o eroare.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
+  <string name="settings_password_management_tab_login_password">Parola de conectare</string>
+  <string name="settings_password_management_tab_mailbox_password">Parolă mesaje</string>
   <string name="settings_password_management_change_login_password">Schimbare parolă</string>
   <string name="settings_password_management_change_mailbox_password">Schimbare parolă mesaje</string>
   <string name="settings_password_management_header">Gestionare parole</string>
@@ -45,9 +45,7 @@
   <string name="settings_change_password_error">A apărut o eroare la schimbarea parolei.</string>
   <string name="settings_recovery_email_success">Adresă e-mail de recuperare s-a actualizat.</string>
   <string name="settings_password_management_success">Parolă actualizată</string>
-  <string name="settings_password_management_login_password_success">Parola de conectare s-a actualizat</string>
-  <string name="settings_password_management_mailbox_password_success">Parola pentru mesaje s-a actualizat</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
+  <string name="settings_password_management_start_recovery">Nu vă amintiți parola de conectare?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetrie anonimă</string>
   <string name="device_settings_telemetry_hint">Pentru a ne îmbunătăți serviciile, uneori colectăm date de utilizare anonime.</string>

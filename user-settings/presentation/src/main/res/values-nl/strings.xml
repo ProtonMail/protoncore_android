@@ -32,8 +32,8 @@
   <string name="settings_validation_email">E-mailadres is ongeldig.</string>
   <string name="settings_general_error">Er is iets fout gegaan.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
+  <string name="settings_password_management_tab_login_password">Inlogwachtwoord</string>
+  <string name="settings_password_management_tab_mailbox_password">Mailbox-wachtwoord</string>
   <string name="settings_password_management_change_login_password">Wachtwoord wijzigen</string>
   <string name="settings_password_management_change_mailbox_password">Wijzig mailbox-wachtwoord</string>
   <string name="settings_password_management_header">Wachtwoordbeheer</string>
@@ -45,9 +45,7 @@
   <string name="settings_change_password_error">Er is een fout opgetreden bij het wijzigen van het wachtwoord.</string>
   <string name="settings_recovery_email_success">Herstel-e-mailadres gewijzigd</string>
   <string name="settings_password_management_success">Wachtwoord bijgewerkt</string>
-  <string name="settings_password_management_login_password_success">Login wachtwoord bijgewerkt</string>
-  <string name="settings_password_management_mailbox_password_success">Mailbox wachtwoord bijgewerkt</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
+  <string name="settings_password_management_start_recovery">Wachtwoord vergeten?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonieme telemetrie</string>
   <string name="device_settings_telemetry_hint">Om onze diensten te verbeteren verzamelen we soms anonieme gebruiksgegevens.</string>

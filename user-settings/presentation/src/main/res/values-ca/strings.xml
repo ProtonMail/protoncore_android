@@ -32,8 +32,8 @@
   <string name="settings_validation_email">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="settings_general_error">S\'ha produït un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox password</string>
+  <string name="settings_password_management_tab_login_password">Contrasenya d\'inici de sessió</string>
+  <string name="settings_password_management_tab_mailbox_password">Contrasenya de la bústia de correu</string>
   <string name="settings_password_management_change_login_password">Canvia la contrasenya</string>
   <string name="settings_password_management_change_mailbox_password">Canvia la contrasenya de la bústia de correu</string>
   <string name="settings_password_management_header">Gestió de contrasenyes</string>
@@ -45,9 +45,7 @@
   <string name="settings_change_password_error">Hi ha hagut un error de canvi de contrasenya.</string>
   <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
-  <string name="settings_password_management_login_password_success">Contrasenya d\'inici de sessió actualitzada</string>
-  <string name="settings_password_management_mailbox_password_success">Contrasenya de la bústia actualitzada</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
+  <string name="settings_password_management_start_recovery">No coneixeu la contrasenya actual?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anònima</string>
   <string name="device_settings_telemetry_hint">Per millorar els nostres serveis, a vegades recopilem dades d\'ús anònimes.</string>

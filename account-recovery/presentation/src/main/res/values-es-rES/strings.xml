@@ -43,7 +43,7 @@
   <!-- Other -->
   <string name="account_recovery_cancel">Cancelar la solicitud</string>
   <string name="account_recovery_dismiss">Entendido</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">Restablecer la contraseña</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Se ha solicitado un restablecimiento de contraseña.</string>
   <string name="account_recovery_info_grace_subtitle">Puedes restablecer su contraseña en %1s.</string>
@@ -55,10 +55,10 @@
   <string name="account_recovery_info_insecure_subtitle">Ahora puedes restablecer tu contraseña. El restablecimiento de contraseña está disponible hasta %1s.</string>
   <string name="account_recovery_info_insecure_description">¿No has realizado esta solicitud?\n\nSi no has solicitado restablecer tu contraseña, cancélala ahora.</string>
   <!-- Password Reset Dialog -->
-  <string name="account_recovery_reset_dialog_title">Reset Password?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
-  <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
-  <string name="account_recovery_reset_dialog_action_request_reset_success">Password reset requested</string>
+  <string name="account_recovery_reset_dialog_title">¿Restablecer la contraseña?</string>
+  <string name="account_recovery_reset_dialog_text">"Por razones de seguridad, tendrás que esperar 72 horas antes de poder cambiar la contraseña para %1s.\n\nSi tienes un método de recuperación configurado, intenta con una de esas opciones. Esto te permitirá cambiar tu contraseña de manera inmediata."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Solicitar el restablecimiento de contraseña</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Usar un método de recuperación</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Cambia tu contraseña en tu navegador sin la necesidad de esperar el periodo de seguridad.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Se ha solicitado un restablecimiento de contraseña.</string>
 </resources>

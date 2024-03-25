@@ -45,8 +45,6 @@
   <string name="settings_change_password_error">Une erreur s\'est produite pendant le changement du mot de passe.</string>
   <string name="settings_recovery_email_success">L\'adresse e-mail de récupération a été mise à jour.</string>
   <string name="settings_password_management_success">Le mot de passe a été mis à jour.</string>
-  <string name="settings_password_management_login_password_success">Le mot de passe de connexion a été mis à jour.</string>
-  <string name="settings_password_management_mailbox_password_success">Le mot de passe de la messagerie a été mis à jour.</string>
   <string name="settings_password_management_start_recovery">Vous ne connaissez pas votre mot de passe actuel ?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Données d\'utilisation anonymisées</string>

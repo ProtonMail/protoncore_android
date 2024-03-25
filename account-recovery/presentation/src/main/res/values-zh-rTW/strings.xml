@@ -34,30 +34,30 @@
   <string name="account_recovery_cancelled_subtitle">若您並未要求更改密碼，您的帳號可能面臨風險。\n\n請更改您的密碼來保護您的帳號。</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">可以重設密碼</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_subtitle">為了重設密碼，請回到您原先做出密碼重設要求的裝置、應用程式或瀏覽器。\n\n您必須在 %s 之前完成。\n\n若您並未要求重設密碼，請立刻取消要求。</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">現在您可以重設密碼。\n\n您需要在 %s 之前執行此操作。\n\n若您沒有要求重設密碼，請立刻取消要求。</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">密碼重設要求已過期</string>
   <string name="account_recovery_window_ended_subtitle">您將需要為 %s 重設密碼。</string>
   <!-- Other -->
   <string name="account_recovery_cancel">取消要求</string>
   <string name="account_recovery_dismiss">瞭解</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">重設密碼</string>
   <!-- Account Recovery Info -->
-  <string name="account_recovery_info_grace_title">Password reset requested</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
-  <string name="account_recovery_info_cancelled_title">Password reset cancelled</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
-  <string name="account_recovery_info_insecure_title">Password reset available</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_grace_title">密碼重設已被送出</string>
+  <string name="account_recovery_info_grace_subtitle">您可以在 %1s 內重設密碼。</string>
+  <string name="account_recovery_info_grace_description">為了確保確實是您在嘗試重設密碼，我們會等待 72 小時才核准請求。\n\n若您沒有要求重設密碼，請立即取消此要求。</string>
+  <string name="account_recovery_info_cancelled_title">已取消密碼重設</string>
+  <string name="account_recovery_info_cancelled_subtitle">密碼重設要求於 %1s 發出。</string>
+  <string name="account_recovery_info_cancelled_description">若您不認得此要求，則可能代表其他人可以存取您的 Proton 帳號。\n\n立刻保護您的帳號。</string>
+  <string name="account_recovery_info_insecure_title">可以重設密碼</string>
+  <string name="account_recovery_info_insecure_subtitle">現在，您可以重設密碼了。可以在 %1s 前重設密碼。</string>
+  <string name="account_recovery_info_insecure_description">並未提出此要求？\n\n若您並未要求重設密碼，請立刻取消要求。</string>
   <!-- Password Reset Dialog -->
-  <string name="account_recovery_reset_dialog_title">Reset Password?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
-  <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
-  <string name="account_recovery_reset_dialog_action_request_reset_success">Password reset requested</string>
+  <string name="account_recovery_reset_dialog_title">重設密碼?</string>
+  <string name="account_recovery_reset_dialog_text">"出於安全原因，您必須等待 72 小時才能變更 %1s 的密碼。\n\n如果您設定了備援方法，請嘗試帳號還原。這將讓您可以立刻變更密碼。"</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">需求重設密碼</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">使用備援方法</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">在網頁瀏覽器中變更密碼，不需要等待安全期結束。</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">密碼重設已被送出</string>
 </resources>

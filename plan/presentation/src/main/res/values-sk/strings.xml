@@ -194,8 +194,8 @@
   <string name="ten_hide_my_email_aliases">10 skrytých aliasov e-mailu</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Úložisko disku: %d%% plné</string>
-  <string name="upgrade_storage_current_mail_storage">Úložisko pošty: %d%% plné</string>
+  <string name="upgrade_storage_current_drive_storage">Úložisko disku: zaplnené na %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Úložisko pošty: zaplnené na %d%%</string>
   <string name="upgrade_storage_subtitle">Získať viac úložného priestoru</string>
   <string name="upgrade_storage_cta_button">Upgrade</string>
   <!-- endregion -->
