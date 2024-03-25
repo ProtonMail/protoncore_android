@@ -31,13 +31,13 @@ import me.proton.core.push.domain.repository.PushRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class PushModule {
+public interface PushModule {
     @Binds
-    abstract fun bindPushRepository(impl: PushRepositoryImpl): PushRepository
+    public fun bindPushRepository(impl: PushRepositoryImpl): PushRepository
 
     @Binds
-    abstract fun bindPushRemoteDataSource(impl: PushRemoteDataSourceImpl): PushRemoteDataSource
+    public fun bindPushRemoteDataSource(impl: PushRemoteDataSourceImpl): PushRemoteDataSource
 
     @Binds
-    abstract fun bindPushLocalDataSource(impl: PushLocalDataSourceImpl): PushLocalDataSource
+    public fun bindPushLocalDataSource(impl: PushLocalDataSourceImpl): PushLocalDataSource
 }

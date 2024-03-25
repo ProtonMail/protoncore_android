@@ -27,7 +27,7 @@ import me.proton.core.crypto.validator.domain.prefs.CryptoPrefs
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class CoreCryptoValidatorBindsModule {
+public interface CoreCryptoValidatorBindsModule {
     @Binds
-    abstract fun bindCryptoPrefs(cryptoPrefsImpl: CryptoPrefsImpl): CryptoPrefs
+    public fun bindCryptoPrefs(cryptoPrefsImpl: CryptoPrefsImpl): CryptoPrefs
 }

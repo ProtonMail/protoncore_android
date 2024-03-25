@@ -1,4 +1,4 @@
-public class hilt_aggregated_deps/_me_proton_core_featureflag_dagger_HiltWrapper_CoreFeatureFlagModule {
+public class hilt_aggregated_deps/_me_proton_core_featureflag_dagger_CoreFeatureFlagModule {
 	public fun <init> ()V
 }
 
@@ -9,7 +9,11 @@ public final class me/proton/core/featureflag/dagger/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/featureflag/dagger/HiltWrapper_CoreFeatureFlagModule {
-	public fun <init> ()V
+public abstract interface class me/proton/core/featureflag/dagger/CoreFeatureFlagModule {
+	public abstract fun bindFeatureFlagLocalDataSource (Lme/proton/core/featureflag/data/local/FeatureFlagLocalDataSourceImpl;)Lme/proton/core/featureflag/domain/repository/FeatureFlagLocalDataSource;
+	public abstract fun bindFeatureFlagRemoteDataSource (Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;)Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;
+	public abstract fun bindManager (Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;)Lme/proton/core/featureflag/domain/FeatureFlagManager;
+	public abstract fun bindRepository (Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;)Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;
+	public abstract fun optionalFeatureFlagContextProvider ()Lme/proton/core/featureflag/domain/repository/FeatureFlagContextProvider;
 }
 

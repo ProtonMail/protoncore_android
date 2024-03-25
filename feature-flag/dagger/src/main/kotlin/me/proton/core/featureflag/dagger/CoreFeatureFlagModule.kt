@@ -36,24 +36,24 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-internal abstract class CoreFeatureFlagModule {
+public interface CoreFeatureFlagModule {
 
     @Binds
     @Singleton
-    abstract fun bindFeatureFlagLocalDataSource(impl: FeatureFlagLocalDataSourceImpl): FeatureFlagLocalDataSource
+    public fun bindFeatureFlagLocalDataSource(impl: FeatureFlagLocalDataSourceImpl): FeatureFlagLocalDataSource
 
     @Binds
     @Singleton
-    abstract fun bindFeatureFlagRemoteDataSource(impl: FeatureFlagRemoteDataSourceImpl): FeatureFlagRemoteDataSource
+    public fun bindFeatureFlagRemoteDataSource(impl: FeatureFlagRemoteDataSourceImpl): FeatureFlagRemoteDataSource
 
     @Binds
     @Singleton
-    abstract fun bindRepository(featureFlagRepositoryImpl: FeatureFlagRepositoryImpl): FeatureFlagRepository
+    public fun bindRepository(featureFlagRepositoryImpl: FeatureFlagRepositoryImpl): FeatureFlagRepository
 
     @Binds
     @Singleton
-    abstract fun bindManager(featureFlagManagerImpl: FeatureFlagManagerImpl): FeatureFlagManager
+    public fun bindManager(featureFlagManagerImpl: FeatureFlagManagerImpl): FeatureFlagManager
 
     @BindsOptionalOf
-    abstract fun optionalFeatureFlagContextProvider(): FeatureFlagContextProvider
+    public fun optionalFeatureFlagContextProvider(): FeatureFlagContextProvider
 }
