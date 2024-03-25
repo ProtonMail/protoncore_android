@@ -19,7 +19,7 @@ internal class MapUtilsTest {
         )
         assertEquals(4, map.size)
 
-        val filteredMap = map.filterNullValues()
+        val filteredMap = map.filterNotNullValues()
         assertEquals(3, filteredMap.size)
     }
 

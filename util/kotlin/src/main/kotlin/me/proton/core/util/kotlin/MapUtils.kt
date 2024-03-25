@@ -10,8 +10,15 @@ import kotlin.reflect.KClass
  */
 
 /** @return [Map] without `null` values */
+@Deprecated(
+    "The name of this function is not consistent with Kotlin's conventional naming.",
+    replaceWith = ReplaceWith("filterNotNullValues()", "me.proton.core.util.kotlin.filterNotNullValues")
+)
+fun <T : Any, V : Any> Map<T, V?>.filterNullValues() = filterNotNullValues()
+
+/** @return [Map] without `null` values */
 @Suppress("UNCHECKED_CAST") // All values as not null
-fun <T : Any, V : Any> Map<T, V?>.filterNullValues() = filterValues { it != null } as Map<T, V>
+fun <T : Any, V : Any> Map<T, V?>.filterNotNullValues() = filterValues { it != null } as Map<T, V>
 
 /** @return [Map] of [K] and [V] by filtering by values which are instance of [javaClass] */
 @Suppress("UNCHECKED_CAST")
