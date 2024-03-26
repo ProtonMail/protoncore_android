@@ -32,38 +32,34 @@ import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.remote.FeaturesApi
-import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
-import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.domain.ApiResult
+import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
+import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
 
 @HiltWorker
 internal class UpdateFeatureFlagWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val apiProvider: ApiProvider,
+    private val remoteDataSource: FeatureFlagRemoteDataSource,
     private val localDataSource: FeatureFlagLocalDataSource
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         val userId = inputData.getString(INPUT_USER_ID)?.let { UserId(it) }
-        val featureId = inputData.getString(INPUT_FEATURE_ID) ?: return Result.failure()
+        val featureId = inputData.getString(INPUT_FEATURE_ID)?.let(::FeatureId) ?: return Result.failure()
         val isEnabled = inputData.getBoolean(INPUT_FEATURE_VALUE, false)
 
-        val apiManager = apiProvider.get<FeaturesApi>(userId)
-        val body = PutFeatureFlagBody(isEnabled)
-        return when (val result = apiManager { putFeatureFlag(featureId, body) }) {
-            is ApiResult.Success -> Result.success()
-            is ApiResult.Error -> {
-                if (result.isRetryable()) {
-                    Result.retry()
-                } else {
-                    rollbackLocalFeatureFlag(userId, FeatureId(featureId), isEnabled)
-                    Result.failure()
-                }
+        return runCatching {
+            remoteDataSource.update(userId, featureId, isEnabled)
+            Result.success()
+        }.getOrElse { error ->
+            if (error is ApiException && error.isRetryable()) {
+                Result.retry()
+            } else {
+                rollbackLocalFeatureFlag(userId, featureId, isEnabled)
+                Result.failure()
             }
         }
     }

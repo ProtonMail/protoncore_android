@@ -18,13 +18,10 @@
 
 package me.proton.core.featureflag.data.remote
 
-import androidx.work.ExistingWorkPolicy
-import androidx.work.WorkManager
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
 import me.proton.core.featureflag.data.remote.response.toFeatureFlag
 import me.proton.core.featureflag.domain.LogTag
-import me.proton.core.featureflag.data.remote.worker.FetchFeatureIdsWorker
-import me.proton.core.featureflag.data.remote.worker.UpdateFeatureFlagWorker
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagContextProvider
@@ -37,7 +34,6 @@ import kotlin.jvm.optionals.getOrNull
 
 public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
     private val apiProvider: ApiProvider,
-    private val workManager: WorkManager,
     private val featureFlagContextProvider: Optional<FeatureFlagContextProvider>,
 ) : FeatureFlagRemoteDataSource {
 
@@ -62,20 +58,9 @@ public class FeatureFlagRemoteDataSourceImpl @Inject constructor(
             }
         }.valueOrThrow
 
-    override suspend fun update(featureFlag: FeatureFlag) {
-        val request = UpdateFeatureFlagWorker.getRequest(
-            featureFlag.userId,
-            featureFlag.featureId,
-            featureFlag.value
-        )
-        workManager.enqueue(request)
-    }
-
-    override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {
-        workManager.enqueueUniqueWork(
-            FetchFeatureIdsWorker.getUniqueWorkName(userId),
-            ExistingWorkPolicy.REPLACE,
-            FetchFeatureIdsWorker.getRequest(userId, featureIds),
-        )
+    override suspend fun update(userId: UserId?, featureId: FeatureId, enabled: Boolean) {
+        apiProvider.get<FeaturesApi>(userId).invoke {
+            putFeatureFlag(featureId.id, PutFeatureFlagBody(enabled))
+        }.valueOrThrow
     }
 }

@@ -27,8 +27,7 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
-import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
+import me.proton.core.featureflag.domain.FeatureFlagWorkerManager
 import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
 import org.junit.Before
 import org.junit.Test

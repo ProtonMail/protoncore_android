@@ -26,12 +26,15 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
+import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData
 import org.junit.Test
+import kotlin.test.assertEquals
 
-class FeatureFlagWorkerManagerTest {
+class FeatureFlagWorkerManagerImplTest {
 
     private val userId = UserIdTestData.userId
 
@@ -42,7 +45,7 @@ class FeatureFlagWorkerManagerTest {
     }
     private val workManager = mockk<WorkManager>(relaxed = true)
 
-    private fun mockManager() = FeatureFlagWorkerManager(context, workManager)
+    private fun mockManager() = FeatureFlagWorkerManagerImpl(context, workManager)
 
     @Test
     fun enqueueOneTime() = runTest {
@@ -87,5 +90,37 @@ class FeatureFlagWorkerManagerTest {
                 any<PeriodicWorkRequest>()
             )
         }
+    }
+
+    @Test
+    fun `update enqueues worker to update on remote`() = runTest {
+        // given
+        val featureFlag = FeatureFlagTestData.disabledFeature
+
+        // when
+        mockManager().update(featureFlag)
+
+        // then
+        val requestSlot = slot<OneTimeWorkRequest>()
+        verify { workManager.enqueue(capture(requestSlot)) }
+        val workSpec = requestSlot.captured.workSpec
+        assertEquals(UpdateFeatureFlagWorker::class.qualifiedName, workSpec.workerClassName)
+    }
+
+    @Test
+    fun `prefetch enqueues worker to prefetch on remote`() = runTest {
+        // given
+        val featureIds = setOf(FeatureFlagTestData.featureId, FeatureFlagTestData.featureId1)
+        val userId = UserIdTestData.userId
+
+        // when
+        mockManager().prefetch(userId, featureIds)
+
+        // then
+        val requestSlot = slot<OneTimeWorkRequest>()
+        val expectedName = FetchFeatureIdsWorker.getUniqueWorkName(userId)
+        verify { workManager.enqueueUniqueWork(expectedName, ExistingWorkPolicy.REPLACE, capture(requestSlot)) }
+        val workSpec = requestSlot.captured.workSpec
+        assertEquals(FetchFeatureIdsWorker::class.qualifiedName, workSpec.workerClassName)
     }
 }

@@ -32,7 +32,7 @@ import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
+import me.proton.core.featureflag.domain.FeatureFlagWorkerManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.entity.Scope
@@ -154,11 +154,11 @@ public class FeatureFlagRepositoryImpl @Inject internal constructor(
         get(userId, setOf(featureId), refresh).firstOrNull()
 
     override fun prefetch(userId: UserId?, featureIds: Set<FeatureId>) {
-        remoteDataSource.prefetch(userId, featureIds)
+        workerManager.prefetch(userId, featureIds)
     }
 
     override suspend fun update(featureFlag: FeatureFlag) {
         localDataSource.upsert(listOf(featureFlag))
-        remoteDataSource.update(featureFlag)
+        workerManager.update(featureFlag)
     }
 }

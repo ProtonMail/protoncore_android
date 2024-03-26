@@ -47,7 +47,6 @@ import me.proton.core.featureflag.data.remote.FeatureFlagRemoteDataSourceImpl
 import me.proton.core.featureflag.data.remote.FeaturesApi
 import me.proton.core.featureflag.data.remote.response.GetFeaturesResponse
 import me.proton.core.featureflag.data.remote.response.GetUnleashTogglesResponse
-import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeature
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.disabledFeatureApiResponse
@@ -59,6 +58,7 @@ import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId
 import me.proton.core.featureflag.data.testdata.FeatureFlagTestData.featureId1
 import me.proton.core.featureflag.data.testdata.SessionIdTestData
 import me.proton.core.featureflag.data.testdata.UserIdTestData.userId
+import me.proton.core.featureflag.domain.FeatureFlagWorkerManager
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.entity.Scope
@@ -115,7 +115,6 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
             )
         } returns TestApiManager(featuresApi)
     }
-    private val workManager = mockk<WorkManager>(relaxed = true)
     private val workerManager = mockk<FeatureFlagWorkerManager>(relaxed = true)
 
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
@@ -131,7 +130,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, coroutinesRule.dispatchers)
         featureFlagContextProvider = TestFeatureFlagContextProvider()
         local = spyk(FeatureFlagLocalDataSourceImpl(database))
-        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider, workManager, Optional.of(featureFlagContextProvider)))
+        remote = spyk(FeatureFlagRemoteDataSourceImpl(apiProvider, Optional.of(featureFlagContextProvider)))
         repository = FeatureFlagRepositoryImpl(
             localDataSource = local,
             remoteDataSource = remote,
@@ -372,7 +371,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
         val featureIds = setOf(featureId, featureId1)
         repository.prefetch(userId, featureIds)
 
-        coVerify { remote.prefetch(userId, featureIds) }
+        coVerify { workerManager.prefetch(userId, featureIds) }
     }
 
     @Test
@@ -385,7 +384,7 @@ class FeatureFlagRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTest
 
         // Then
         coVerify { local.upsert(listOf(featureFlag)) }
-        coVerify { remote.update(featureFlag) }
+        coVerify { workerManager.update(featureFlag) }
     }
 
     @Test

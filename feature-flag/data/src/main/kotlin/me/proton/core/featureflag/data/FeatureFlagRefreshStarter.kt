@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.featureflag.data.remote.worker.FeatureFlagWorkerManager
+import me.proton.core.featureflag.domain.FeatureFlagWorkerManager
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton

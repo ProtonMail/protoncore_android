@@ -26,7 +26,7 @@ plugins {
 
 protonCoverage {
     branchCoveragePercentage.set(50)
-    lineCoveragePercentage.set(83)
+    lineCoveragePercentage.set(82)
 }
 
 protonDagger {

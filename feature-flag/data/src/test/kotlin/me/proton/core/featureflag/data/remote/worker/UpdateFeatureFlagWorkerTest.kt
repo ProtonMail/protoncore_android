@@ -27,27 +27,22 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.SerializationException
-import me.proton.core.featureflag.data.remote.FeaturesApi
-import me.proton.core.featureflag.data.remote.request.PutFeatureFlagBody
-import me.proton.core.featureflag.data.remote.response.PutFeatureResponse
 import me.proton.core.featureflag.data.testdata.UserIdTestData
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
-import me.proton.core.network.data.ApiProvider
+import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
+import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import java.net.UnknownHostException
 
 class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest() {
 
     private val userId = UserIdTestData.userId
     private val featureId = FeatureId("feature-flag-mail")
     private val featureFlagValue = true
-    private val nonRetryableException = SerializationException()
-    private val retryableException = UnknownHostException()
 
     private val context = mockk<Context>()
     private val parameters = mockk<WorkerParameters> {
@@ -56,27 +51,13 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
         every { inputData.getBoolean(UpdateFeatureFlagWorker.INPUT_FEATURE_VALUE, false) } returns featureFlagValue
         every { this@mockk.taskExecutor } returns mockk(relaxed = true)
     }
-    private val featuresApi: FeaturesApi = mockk()
-    private val apiProvider: ApiProvider = mockk {
-        coEvery { get<FeaturesApi>(userId).invoke<PutFeatureResponse>(block = any()) } coAnswers {
-            val block = firstArg<suspend FeaturesApi.() -> PutFeatureResponse>()
-            try {
-                ApiResult.Success(block(featuresApi))
-            } catch (e: Exception) {
-                when (e) {
-                    nonRetryableException -> ApiResult.Error.Parse(e)
-                    retryableException -> ApiResult.Error.Connection()
-                    else -> throw e
-                }
-            }
-        }
-    }
+    private val remoteDataSource: FeatureFlagRemoteDataSource = mockk()
     private val localDataSource: FeatureFlagLocalDataSource = mockk(relaxUnitFun = true)
 
     private val worker = UpdateFeatureFlagWorker(
         context,
         parameters,
-        apiProvider,
+        remoteDataSource,
         localDataSource
     )
 
@@ -113,7 +94,7 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
     @Test
     fun `worker returns success when API calls succeeds`() = runTest {
         // given
-        coEvery { featuresApi.putFeatureFlag(featureId.id, PutFeatureFlagBody(featureFlagValue)) } returns mockk()
+        coEvery { remoteDataSource.update(userId, featureId, featureFlagValue) } returns mockk()
 
         // when
         val actual = worker.doWork()
@@ -126,11 +107,8 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
     fun `worker returns retry when API calls fails with retryable exception`() = runTest {
         // given
         coEvery {
-            featuresApi.putFeatureFlag(
-                featureId.id,
-                PutFeatureFlagBody(featureFlagValue)
-            )
-        } throws retryableException
+            remoteDataSource.update(userId, featureId, featureFlagValue)
+        } throws ApiException(ApiResult.Error.NoInternet())
 
         // when
         val actual = worker.doWork()
@@ -143,33 +121,14 @@ class UpdateFeatureFlagWorkerTest : CoroutinesTest by UnconfinedCoroutinesTest()
     fun `worker returns failure when API calls fails with non retryable exception`() = runTest {
         // given
         coEvery {
-            featuresApi.putFeatureFlag(
-                featureId.id,
-                PutFeatureFlagBody(featureFlagValue)
-            )
-        } throws nonRetryableException
+            remoteDataSource.update(userId, featureId, featureFlagValue)
+        } throws ApiException(ApiResult.Error.Parse(SerializationException()))
 
         // when
         val actual = worker.doWork()
 
         // then
-        assertEquals(androidx.work.ListenableWorker.Result.failure(), actual)
-    }
-
-    @Test
-    fun `worker rollbacks local feature flag value when API calls fails with non retryable exception`() = runTest {
-        // given
-        coEvery {
-            featuresApi.putFeatureFlag(
-                featureId.id,
-                PutFeatureFlagBody(featureFlagValue)
-            )
-        } throws nonRetryableException
-
-        // when
-        worker.doWork()
-
-        // then
         coVerify { localDataSource.updateValue(userId, featureId, featureFlagValue.not()) }
+        assertEquals(androidx.work.ListenableWorker.Result.failure(), actual)
     }
 }

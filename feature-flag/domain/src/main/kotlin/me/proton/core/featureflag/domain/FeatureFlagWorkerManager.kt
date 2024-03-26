@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,14 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.featureflag.domain.repository
+package me.proton.core.featureflag.domain
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.entity.FeatureFlag
 import me.proton.core.featureflag.domain.entity.FeatureId
 
-public interface FeatureFlagRemoteDataSource {
-    public suspend fun getAll(userId: UserId?): List<FeatureFlag>
-    public suspend fun get(userId: UserId?, ids: Set<FeatureId>): List<FeatureFlag>
-    public suspend fun update(userId: UserId?, featureId: FeatureId, enabled: Boolean)
+public interface FeatureFlagWorkerManager {
+    public fun enqueueOneTime(userId: UserId?)
+    public fun enqueuePeriodic(userId: UserId?, immediately: Boolean)
+    public fun cancel(userId: UserId?)
+    public fun update(featureFlag: FeatureFlag)
+    public fun prefetch(userId: UserId?, featureIds: Set<FeatureId>)
 }

@@ -14,6 +14,7 @@ public abstract interface class me/proton/core/featureflag/dagger/CoreFeatureFla
 	public abstract fun bindFeatureFlagRemoteDataSource (Lme/proton/core/featureflag/data/remote/FeatureFlagRemoteDataSourceImpl;)Lme/proton/core/featureflag/domain/repository/FeatureFlagRemoteDataSource;
 	public abstract fun bindManager (Lme/proton/core/featureflag/data/FeatureFlagManagerImpl;)Lme/proton/core/featureflag/domain/FeatureFlagManager;
 	public abstract fun bindRepository (Lme/proton/core/featureflag/data/repository/FeatureFlagRepositoryImpl;)Lme/proton/core/featureflag/domain/repository/FeatureFlagRepository;
+	public abstract fun bindWorkerManager (Lme/proton/core/featureflag/data/remote/worker/FeatureFlagWorkerManagerImpl;)Lme/proton/core/featureflag/domain/FeatureFlagWorkerManager;
 	public abstract fun optionalFeatureFlagContextProvider ()Lme/proton/core/featureflag/domain/repository/FeatureFlagContextProvider;
 }
 
