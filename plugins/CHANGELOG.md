@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.1]
+
+### Changes
+
+- Added product flavor dimension support to environment config plugin.
+
+## [1.3.0]
+
+### Changes
+
+- Added Environment Configuration Plugins:
+    - Plugin id: `me.proton.core.gradle-plugins.environment-config`
+    - Published on MavenCentral.
+    - This plugin should be applied to either build flavor or application build type android extension in `build.gradle.kts` file.
+
 ## [1.2.0]
 
 ### Changes
