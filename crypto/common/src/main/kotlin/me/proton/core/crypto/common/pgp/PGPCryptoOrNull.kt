@@ -70,6 +70,17 @@ fun PGPCrypto.decryptDataOrNull(
     sessionKey: SessionKey
 ): ByteArray? = runCatching { decryptData(data, sessionKey) }.getOrNull()
 
+
+/**
+ * @return [ByteArray], or `null` if [message] cannot be decrypted.
+ *
+ * @see [PGPCrypto.decryptDataWithPassword]
+ */
+fun PGPCrypto.decryptDataWithPasswordOrNull(
+    message: EncryptedMessage,
+    password: ByteArray
+): ByteArray? = runCatching { decryptDataWithPassword(message, password) }.getOrNull()
+
 /**
  * @return [DecryptedFile], or `null` if [source] cannot be decrypted.
  *

@@ -100,6 +100,15 @@ interface PGPCrypto {
     fun encryptData(data: ByteArray, sessionKey: SessionKey): DataPacket
 
     /**
+     * Encrypt [data] using [password].
+     *
+     * @throws [CryptoException] if [data] cannot be encrypted.
+     *
+     * @see [decryptDataWithPassword]
+     */
+    fun encryptDataWithPassword(data: ByteArray, password: ByteArray): EncryptedMessage
+
+    /**
      * Encrypt [source] into [destination] using [sessionKey].
      *
      * @throws [CryptoException] if [source] cannot be encrypted.
@@ -295,6 +304,15 @@ interface PGPCrypto {
      * @see [encryptData]
      */
     fun decryptData(data: DataPacket, sessionKey: SessionKey): ByteArray
+
+    /**
+     * Decrypt [message] as [Byte] using [password].
+     *
+     * @throws [CryptoException] if [message] cannot be decrypted.
+     *
+     * @see [encryptDataWithPassword]
+     */
+    fun decryptDataWithPassword(message: EncryptedMessage, password: ByteArray): ByteArray
 
     /**
      * Decrypt [source] into [destination] using [sessionKey].

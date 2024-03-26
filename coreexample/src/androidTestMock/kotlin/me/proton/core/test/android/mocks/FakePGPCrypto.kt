@@ -86,6 +86,10 @@ class FakePGPCrypto : PGPCrypto {
         return data
     }
 
+    override fun encryptDataWithPassword(data: ByteArray, password: ByteArray): EncryptedMessage {
+        TODO("Not yet implemented: encryptDataWithPassword")
+    }
+
     override fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile {
         TODO("Not yet implemented: encryptFile")
     }
@@ -160,6 +164,10 @@ class FakePGPCrypto : PGPCrypto {
 
     override fun decryptData(data: DataPacket, sessionKey: SessionKey): ByteArray {
         TODO("Not yet implemented: decryptData")
+    }
+
+    override fun decryptDataWithPassword(message: EncryptedMessage, password: ByteArray): ByteArray {
+        TODO("Not yet implemented: decryptTextWithPassword")
     }
 
     override fun decryptFile(source: EncryptedFile, destination: File, sessionKey: SessionKey): DecryptedFile {

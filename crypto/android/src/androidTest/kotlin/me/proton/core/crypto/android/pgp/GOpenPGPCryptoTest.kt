@@ -28,9 +28,9 @@ import me.proton.core.crypto.common.pgp.PGPHeader
 import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.pgp.VerificationContext
 import me.proton.core.crypto.common.pgp.VerificationTime
-import me.proton.core.crypto.common.pgp.keyPacket
 import org.junit.Test
 import java.io.File
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFails
 import kotlin.test.assertFalse
@@ -1781,4 +1781,17 @@ internal class GOpenPGPCryptoTest {
         assertEquals(expected = text, actual = decryptedText)
     }
 
+    @Test
+    fun encryptAndDecryptDataWithPassword() {
+        // Given
+        val data = "Hello world!".encodeToByteArray()
+        val password = "123456".toByteArray()
+
+        // When
+        val encryptedMessage = crypto.encryptDataWithPassword(data, password)
+
+        // Then
+        val decryptedData = crypto.decryptDataWithPassword(encryptedMessage, password)
+        assertContentEquals(expected = data, actual = decryptedData)
+    }
 }

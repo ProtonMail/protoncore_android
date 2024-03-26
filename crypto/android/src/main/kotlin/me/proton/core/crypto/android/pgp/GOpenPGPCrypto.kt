@@ -642,6 +642,13 @@ class GOpenPGPCrypto : PGPCrypto {
         encryptMessageSessionKey(PlainMessage(data), sessionKey)
     }.getOrElse { throw CryptoException("Data cannot be encrypted.", it) }
 
+    override fun encryptDataWithPassword(
+        data: ByteArray,
+        password: ByteArray
+    ): EncryptedMessage = runCatching {
+        Crypto.encryptMessageWithPassword(PlainMessage(data), password).splitMessage().armored
+    }.getOrElse { throw CryptoException("Data cannot be encrypted with password.", it) }
+
     override fun encryptFile(
         source: File,
         destination: File,
@@ -784,6 +791,13 @@ class GOpenPGPCrypto : PGPCrypto {
     ): ByteArray = runCatching {
         decryptDataSessionKey(data, sessionKey).getBinaryOrEmpty()
     }.getOrElse { throw CryptoException("Data cannot be decrypted.", it) }
+
+    override fun decryptDataWithPassword(
+        message: EncryptedMessage,
+        password: ByteArray
+    ): ByteArray = runCatching {
+        Crypto.decryptMessageWithPassword(PGPMessage(message), password).data
+    }.getOrElse { throw CryptoException("Message cannot be decrypted.", it) }
 
     override fun decryptFile(
         source: File,

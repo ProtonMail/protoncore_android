@@ -320,7 +320,10 @@ open class TestCryptoContext : CryptoContext {
             }
 
         override fun decryptTextWithPassword(message: EncryptedMessage, password: ByteArray): String =
-            "decryptedText"
+            message.decryptMessage(password).let { decrypted ->
+                check(decrypted.startsWith("TEXT"))
+                decrypted.extractMessage()
+            }
 
         override fun decryptMimeMessage(
             message: EncryptedMessage,
@@ -350,6 +353,12 @@ open class TestCryptoContext : CryptoContext {
                 decrypted
             }
 
+        override fun decryptDataWithPassword(message: EncryptedMessage, password: ByteArray): ByteArray =
+            message.decryptMessage(password).let { decrypted ->
+                check(decrypted.startsWith("BINARY"))
+                decrypted.extractMessage().toByteArray()
+            }
+
         override fun decryptFile(source: EncryptedFile, destination: File, sessionKey: SessionKey): DecryptedFile {
             val data = source.readBytes()
             return DecryptedFile(
@@ -365,7 +374,8 @@ open class TestCryptoContext : CryptoContext {
                 .encryptMessage(publicKey)
 
         override fun encryptTextWithPassword(text: String, password: ByteArray): EncryptedMessage =
-            "encryptedText"
+            "TEXT([$text]+$password)"
+                .encryptMessage(password)
 
         override fun encryptData(data: ByteArray, publicKey: Armored): EncryptedMessage =
             "BINARY([${data.fromByteArray()}]+$publicKey)"
@@ -375,6 +385,10 @@ open class TestCryptoContext : CryptoContext {
             "BINARY([${data.fromByteArray()}]+${sessionKey.key})"
                 .encryptMessage(sessionKey.key)
                 .toByteArray()
+
+        override fun encryptDataWithPassword(data: ByteArray, password: ByteArray): EncryptedMessage =
+            "BINARY([${data.fromByteArray()}]+$password)"
+                .encryptMessage(password)
 
         override fun encryptFile(source: File, destination: File, sessionKey: SessionKey): EncryptedFile =
             destination.apply { appendBytes(source.readBytes()) }
