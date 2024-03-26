@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 ProtonTechnologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.usecase
+package me.proton.core.userrecovery.domain.usecase
 
 import io.mockk.coEvery
 import io.mockk.coVerify
@@ -44,7 +44,7 @@ class SetRecoverySecretRemoteTest {
             lambda<(suspend () -> Unit)>().captured()
         }
     }
-    private val generateRecoverySecret: GenerateRecoverySecret = mockk(relaxed = true) {
+    private val getRecoverySecret: GetRecoverySecret = mockk(relaxed = true) {
         coEvery { this@mockk.invoke(any()) } returns Pair(secret, signature)
     }
     private val userSettingsRemoteDataSource: UserSettingsRemoteDataSource = mockk(relaxed = true)
@@ -54,7 +54,7 @@ class SetRecoverySecretRemoteTest {
     @Before
     fun setup() {
         mockkStatic("me.proton.core.eventmanager.domain.extension.EventManagerKt")
-        tested = SetRecoverySecretRemote(eventManagerProvider, generateRecoverySecret, userSettingsRemoteDataSource)
+        tested = SetRecoverySecretRemote(eventManagerProvider, getRecoverySecret, userSettingsRemoteDataSource)
     }
 
     @After

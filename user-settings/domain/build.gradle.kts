@@ -20,6 +20,7 @@ import studio.forface.easygradle.dsl.*
 
 plugins {
     protonKotlinLibrary
+    kotlin("plugin.serialization")
 }
 
 protonBuild {
@@ -27,8 +28,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(38)
-    lineCoveragePercentage.set(71)
+    branchCoveragePercentage.set(39)
+    lineCoveragePercentage.set(72)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -47,6 +48,7 @@ dependencies {
 
     implementation(
         project(Module.kotlinUtil),
+        `serialization-json`
     )
 
     testImplementation(

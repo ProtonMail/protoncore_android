@@ -31,13 +31,6 @@ interface UserSettingsRepository {
     suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean
 
     /**
-     * Set the user primary key recovery secret, remotely, in background.
-     *
-     * Note: Once remotely set, local will be updated asap.
-     */
-    suspend fun setRecoverySecret(userId: UserId)
-
-    /**
      * Update [UserSettings], locally.
      *
      * Note: This function is usually used for Events handling.

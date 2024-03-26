@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,13 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain
+import studio.forface.easygradle.dsl.*
 
-import me.proton.core.domain.entity.UserId
-
-interface IsDeviceRecoveryEnabled {
-    operator fun invoke(userId: UserId?): Boolean
-
-    fun isLocalEnabled(): Boolean
-    fun isRemoteEnabled(userId: UserId?): Boolean
+plugins {
+    protonAndroidLibrary
 }
+
+protonCoverage.disabled.set(true)
+publishOption.shouldBePublishedAsLib = true
+
+android {
+    namespace = "me.proton.core.userrecovery"
+}
+
+dependencies {
+    api(
+        project(Module.userRecoveryDagger),
+        project(Module.userRecoveryData),
+        project(Module.userRecoveryDomain),
+        project(Module.userRecoveryPresentation),
+        project(Module.userRecoveryPresentationCompose)
+    )
+}
+
+dependencyAnalysis.issues { onAny { severity("ignore") } }

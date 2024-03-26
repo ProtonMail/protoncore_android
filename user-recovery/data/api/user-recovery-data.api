@@ -1,0 +1,88 @@
+public class hilt_aggregated_deps/_me_proton_core_userrecovery_data_worker_SetRecoverySecretWorker_HiltModule {
+	public fun <init> ()V
+}
+
+public final class me/proton/core/userrecovery/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/userrecovery/data/DeviceRecoveryHandler {
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryFile;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/userrecovery/data/DeviceRecoveryHandler_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/DeviceRecoveryHandler_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/data/DeviceRecoveryHandler;
+	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryFile;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys;)Lme/proton/core/userrecovery/data/DeviceRecoveryHandler;
+}
+
+public final class me/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl : me/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled {
+	public static final field Companion Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl$Companion;
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
+public final class me/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl$Companion {
+	public final fun getFeatureId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
+}
+
+public final class me/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl;
+}
+
+public final class me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker : androidx/work/CoroutineWorker {
+	public static final field Companion Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker$Companion;
+	public fun <init> (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/userrecovery/domain/usecase/SetRecoverySecretRemote;)V
+	public fun doWork (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun getContext ()Landroid/content/Context;
+}
+
+public final class me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker$Companion {
+	public final fun getRequest (Lme/proton/core/domain/entity/UserId;)Landroidx/work/OneTimeWorkRequest;
+}
+
+public abstract interface class me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
+}
+
+public final class me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_AssistedFactory_Impl : me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_AssistedFactory {
+	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
+	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker;
+	public static fun create (Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_Factory;)Ljavax/inject/Provider;
+}
+
+public final class me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_Factory;
+	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/userrecovery/domain/usecase/SetRecoverySecretRemote;)Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker;
+}
+
+public abstract interface class me/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_HiltModule {
+	public abstract fun bind (Lme/proton/core/userrecovery/data/worker/SetRecoverySecretWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
+}
+
+public final class me/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl : me/proton/core/userrecovery/domain/worker/UserRecoveryWorkerManager {
+	public fun <init> (Landroidx/work/WorkManager;)V
+	public fun enqueueSetRecoverySecret (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl;
+	public static fun newInstance (Landroidx/work/WorkManager;)Lme/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl;
+}
+

@@ -232,6 +232,13 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:user-dagger                           |
 | me.proton.core:user-data                             |
 | me.proton.core:user-domain                           |
+| me.proton.core:user-recovery                         |
+| me.proton.core:user-recovery-dagger                  |
+| me.proton.core:user-recovery-data                    |
+| me.proton.core:user-recovery-domain                  |
+| me.proton.core:user-recovery-presentation            |
+| me.proton.core:user-recovery-presentation-compose    |
+| me.proton.core:user-recovery-test                    |
 | me.proton.core:user-settings                         |
 | me.proton.core:user-settings-dagger                  |
 | me.proton.core:user-settings-data                    |

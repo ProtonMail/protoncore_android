@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.usecase
+package me.proton.core.userrecovery.domain.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerConfig
@@ -30,14 +30,14 @@ import javax.inject.Inject
  */
 class SetRecoverySecretRemote @Inject constructor(
     private val eventManagerProvider: EventManagerProvider,
-    private val generateRecoverySecret: GenerateRecoverySecret,
+    private val getRecoverySecret: GetRecoverySecret,
     private val userSettingsRemoteDataSource: UserSettingsRemoteDataSource
 ) {
     suspend operator fun invoke(
         userId: UserId
     ) {
         eventManagerProvider.suspend(EventManagerConfig.Core(userId)) {
-            val (secret, signature) = generateRecoverySecret(userId)
+            val (secret, signature) = getRecoverySecret(userId)
             userSettingsRemoteDataSource.setRecoverySecret(userId, secret, signature)
         }
     }

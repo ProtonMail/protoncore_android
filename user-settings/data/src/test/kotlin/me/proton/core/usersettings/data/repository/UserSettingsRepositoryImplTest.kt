@@ -400,20 +400,6 @@ class UserSettingsRepositoryImplTest {
     }
 
     @Test
-    fun setRecoverySecret() = runTest(dispatcherProvider.Main) {
-        // WHEN
-        repository.setRecoverySecret(UserId(testUserId))
-        // THEN
-        verify {
-            workManager.enqueueUniqueWork(
-                "setRecoverySecretWork-test-user-id",
-                ExistingWorkPolicy.KEEP,
-                any<OneTimeWorkRequest>()
-            )
-        }
-    }
-
-    @Test
     fun localObjectIsReturnedForCredentialLess() = runTest(dispatcherProvider.Main) {
         // GIVEN
         val userSettingsEntity = UserSettingsEntity(

@@ -36,7 +36,6 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.data.extension.toUserSettingsPropertySerializable
 import me.proton.core.usersettings.data.worker.FetchUserSettingsWorker
-import me.proton.core.usersettings.data.worker.SetRecoverySecretWorker
 import me.proton.core.usersettings.data.worker.UpdateUserSettingsWorker
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.entity.UserSettingsProperty
@@ -70,14 +69,6 @@ class UserSettingsRepositoryImpl @Inject constructor(
 
     override suspend fun setUsername(sessionUserId: SessionUserId, username: String): Boolean =
         remoteDataSource.setUsername(sessionUserId, username)
-
-    override suspend fun setRecoverySecret(userId: UserId) {
-        workManager.enqueueUniqueWork(
-            "setRecoverySecretWork-${userId.id}",
-            ExistingWorkPolicy.KEEP,
-            SetRecoverySecretWorker.getRequest(userId)
-        )
-    }
 
     override suspend fun updateUserSettings(userSettings: UserSettings) {
         localDataSource.insertOrUpdate(userSettings)

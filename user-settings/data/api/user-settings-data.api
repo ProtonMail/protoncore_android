@@ -2,10 +2,6 @@ public class hilt_aggregated_deps/_me_proton_core_usersettings_data_worker_Fetch
 	public fun <init> ()V
 }
 
-public class hilt_aggregated_deps/_me_proton_core_usersettings_data_worker_SetRecoverySecretWorker_HiltModule {
-	public fun <init> ()V
-}
-
 public class hilt_aggregated_deps/_me_proton_core_usersettings_data_worker_UpdateUserSettingsWorker_HiltModule {
 	public fun <init> ()V
 }
@@ -15,26 +11,6 @@ public final class me/proton/core/usersettings/data/BuildConfig {
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
-}
-
-public final class me/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl : me/proton/core/usersettings/domain/IsDeviceRecoveryEnabled {
-	public static final field Companion Lme/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl$Companion;
-	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
-	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
-	public fun isLocalEnabled ()Z
-	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
-}
-
-public final class me/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl$Companion {
-	public final fun getFeatureId ()Lme/proton/core/featureflag/domain/entity/FeatureId;
-}
-
-public final class me/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/usersettings/data/IsDeviceRecoveryEnabledImpl;
 }
 
 public class me/proton/core/usersettings/data/UserSettingsEventListener : me/proton/core/eventmanager/domain/EventListener {
@@ -973,7 +949,6 @@ public final class me/proton/core/usersettings/data/repository/UserSettingsRepos
 	public fun getUserSettings (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUserSettingsFlow (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun markAsStale (Lme/proton/core/domain/entity/UserId;)V
-	public fun setRecoverySecret (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateCrashReports (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1019,37 +994,6 @@ public final class me/proton/core/usersettings/data/worker/FetchUserSettingsWork
 
 public abstract interface class me/proton/core/usersettings/data/worker/FetchUserSettingsWorker_HiltModule {
 	public abstract fun bind (Lme/proton/core/usersettings/data/worker/FetchUserSettingsWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
-}
-
-public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker : androidx/work/CoroutineWorker {
-	public static final field Companion Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker$Companion;
-	public fun <init> (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/usersettings/domain/usecase/SetRecoverySecretRemote;)V
-	public fun doWork (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public final fun getContext ()Landroid/content/Context;
-}
-
-public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker$Companion {
-	public final fun getRequest (Lme/proton/core/domain/entity/UserId;)Landroidx/work/OneTimeWorkRequest;
-}
-
-public abstract interface class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {
-}
-
-public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory_Impl : me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory {
-	public synthetic fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Landroidx/work/ListenableWorker;
-	public fun create (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker;
-	public static fun create (Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker_Factory;)Ljavax/inject/Provider;
-}
-
-public final class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker_Factory;
-	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker;
-	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/usersettings/domain/usecase/SetRecoverySecretRemote;)Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker;
-}
-
-public abstract interface class me/proton/core/usersettings/data/worker/SetRecoverySecretWorker_HiltModule {
-	public abstract fun bind (Lme/proton/core/usersettings/data/worker/SetRecoverySecretWorker_AssistedFactory;)Landroidx/hilt/work/WorkerAssistedFactory;
 }
 
 public final class me/proton/core/usersettings/data/worker/UpdateUserSettingsWorker : androidx/work/CoroutineWorker {

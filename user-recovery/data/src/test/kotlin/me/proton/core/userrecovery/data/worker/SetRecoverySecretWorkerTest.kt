@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.worker
+package me.proton.core.userrecovery.data.worker
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
@@ -30,7 +30,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
-import me.proton.core.usersettings.domain.usecase.SetRecoverySecretRemote
+import me.proton.core.userrecovery.domain.usecase.SetRecoverySecretRemote
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.data.worker
+package me.proton.core.userrecovery.data.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
@@ -32,8 +32,8 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
-import me.proton.core.usersettings.domain.LogTag
-import me.proton.core.usersettings.domain.usecase.SetRecoverySecretRemote
+import me.proton.core.userrecovery.domain.usecase.SetRecoverySecretRemote
+import me.proton.core.userrecovery.domain.LogTag
 import me.proton.core.util.kotlin.CoreLogger
 
 @HiltWorker

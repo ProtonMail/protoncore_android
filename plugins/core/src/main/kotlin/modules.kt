@@ -176,6 +176,14 @@ public object Module {
     public const val countryDomain: String = "$country:country-domain"
     public const val countryPresentation: String = "$country:country-presentation"
 
+    // User Recovery
+    public const val userRecovery: String = ":user-recovery"
+    public const val userRecoveryDagger: String = "$userRecovery:user-recovery-dagger"
+    public const val userRecoveryData: String = "$userRecovery:user-recovery-data"
+    public const val userRecoveryDomain: String = "$userRecovery:user-recovery-domain"
+    public const val userRecoveryPresentation: String = "$userRecovery:user-recovery-presentation"
+    public const val userRecoveryPresentationCompose: String = "$userRecovery:user-recovery-presentation-compose"
+
     // Settings
     public const val userSettings: String = ":user-settings"
     public const val userSettingsDagger: String = "$userSettings:user-settings-dagger"
