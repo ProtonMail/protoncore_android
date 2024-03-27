@@ -160,7 +160,7 @@ fun ProtonSettingsItem(
             )
             hint?.let {
                 Text(
-                    modifier = Modifier,
+                    modifier = Modifier.padding(top = ProtonDimens.ExtraSmallSpacing),
                     text = hint,
                     color = ProtonTheme.colors.textHint,
                     style = ProtonTheme.typography.body2Regular
