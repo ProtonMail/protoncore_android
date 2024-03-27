@@ -26,10 +26,7 @@ import androidx.test.espresso.web.webdriver.DriverAtoms.findElement
 import androidx.test.espresso.web.webdriver.DriverAtoms.webClick
 import androidx.test.espresso.web.webdriver.DriverAtoms.webKeys
 import androidx.test.espresso.web.webdriver.Locator
-import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
-import androidx.test.uiautomator.SearchCondition
-import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.Until.findObject
 import androidx.test.uiautomator.Until.hasObject
 import me.proton.core.humanverification.domain.entity.TokenType
@@ -58,9 +55,9 @@ internal class HV3Robot : BaseHVRobot(), WithUiDevice {
     private inline fun <reified T> hvOption(option: TokenType): T {
         view.withId(R.id.humanVerificationWebView).checkDisplayed()
         val testId = when (option) {
-            CAPTCHA -> "tab-header-CAPTCHA-button"
-            SMS -> "tab-header-SMS-button"
-            EMAIL -> "tab-header-Email-button"
+            CAPTCHA -> "tab-header-captcha-button"
+            SMS -> "tab-header-sms-button"
+            EMAIL -> "tab-header-email-button"
             else -> throw IllegalArgumentException("Only Captcha, SMS and Email are supported")
         }
         onWebView()

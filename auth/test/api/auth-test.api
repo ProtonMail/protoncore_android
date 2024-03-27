@@ -96,6 +96,7 @@ public final class me/proton/core/auth/test/MinimalSignInExternalTests$DefaultIm
 public abstract interface class me/proton/core/auth/test/MinimalSignInGuestTests {
 	public abstract fun credentialLessToRegularAccount ()V
 	public abstract fun getIntentsRule ()Landroidx/test/espresso/intent/rule/IntentsRule;
+	public abstract fun getQuark ()Lme/proton/core/test/quark/Quark;
 	public abstract fun navigateToSignupFromCredentialLess ()V
 	public abstract fun opensTermsAndConditionsLink ()V
 	public abstract fun opensVpnNoLogsLink ()V

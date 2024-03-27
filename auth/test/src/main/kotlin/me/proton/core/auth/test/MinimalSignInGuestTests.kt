@@ -19,9 +19,14 @@
 package me.proton.core.auth.test
 
 import androidx.test.espresso.intent.rule.IntentsRule
-import me.proton.core.auth.test.flow.SignUpFlow
 import me.proton.core.auth.test.robot.CredentialLessWelcomeRobot
+import me.proton.core.auth.test.robot.signup.RecoveryMethodRobot
+import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignUpRobot
+import me.proton.core.test.android.robots.CoreRobot
+import me.proton.core.test.android.robots.humanverification.HVCodeRobot
+import me.proton.core.test.android.robots.humanverification.HVRobot
+import me.proton.core.test.quark.Quark
 import me.proton.core.util.kotlin.random
 import me.proton.test.fusion.Fusion.intent
 import org.junit.Rule
@@ -33,6 +38,8 @@ public interface MinimalSignInGuestTests {
     public val intentsRule: IntentsRule
         get() = IntentsRule()
 
+    public val quark: Quark
+
     public fun navigateToSignupFromCredentialLess()
     public fun verifyAfterCredentialLessSignup()
     public fun verifyAfterRegularSignup(username: String)
@@ -40,6 +47,7 @@ public interface MinimalSignInGuestTests {
     @BeforeTest
     public fun setUp() {
         intent.stubExternalIntents()
+        quark.jailUnban()
     }
 
     @Test
@@ -57,7 +65,23 @@ public interface MinimalSignInGuestTests {
 
         val testUsername = "test-${String.random()}"
         SignUpRobot.forExternal().clickSwitch()
-        SignUpFlow.signUpInternal(testUsername)
+        SignUpRobot
+            .forInternal()
+            .fillUsername(testUsername)
+            .clickNext()
+        SetPasswordRobot
+            .fillAndClickNext("123123123")
+        RecoveryMethodRobot
+            .skip()
+            .skipConfirm()
+        HVRobot()
+            .email()
+            .setEmail("${testUsername}@proton.wtf")
+            .getVerificationCode()
+        HVCodeRobot()
+            .setCode("666666")
+            .verifyCode(CoreRobot::class.java)
+
         verifyAfterRegularSignup(testUsername)
     }
 
