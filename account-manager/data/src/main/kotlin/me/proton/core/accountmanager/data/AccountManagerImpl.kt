@@ -19,6 +19,7 @@
 package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.account.domain.entity.Account
@@ -49,6 +50,7 @@ import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isCredentialLess
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -196,6 +198,7 @@ class AccountManagerImpl @Inject constructor(
     override suspend fun handleAccountReady(userId: UserId) {
         accountRepository.updateAccountState(userId, Ready)
         clearSessionDetails(userId)
+        disableCredentialLessAccounts(userId)
     }
 
     override suspend fun handleAccountNotReady(userId: UserId) {
@@ -207,4 +210,18 @@ class AccountManagerImpl @Inject constructor(
     }
 
     // endregion
+
+    private suspend fun disableCredentialLessAccounts(readyUserId: UserId) {
+        val isReadyUserCredentialLess = userManager.getUser(readyUserId).isCredentialLess()
+        accountRepository.getAccounts().first().forEach { account ->
+            val user = userManager.getUser(account.userId)
+            when {
+                user.userId == readyUserId -> Unit // Ignore self.
+                user.isCredentialLess() -> disableAccount(
+                    userId = user.userId,
+                    keepSession = !isReadyUserCredentialLess // Only 1 CredentialLess session at a time.
+                )
+            }
+        }
+    }
 }

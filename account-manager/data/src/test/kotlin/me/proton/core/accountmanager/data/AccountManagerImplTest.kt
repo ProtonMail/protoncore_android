@@ -19,6 +19,9 @@ package me.proton.core.accountmanager.data
 
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
@@ -30,6 +33,8 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.entity.User
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -38,17 +43,32 @@ class AccountManagerImplTest {
 
     private lateinit var accountManager: AccountManagerImpl
 
-    private val userId = UserId("user1")
+    private val userId1 = UserId("user1")
+    private val userId2 = UserId("user2")
+    private val userId3 = UserId("user3")
+
+    private val user1 = mockk<User> {
+        every { this@mockk.userId } returns userId1
+        every { this@mockk.type } returns Type.Proton
+    }
+    private val user2 = mockk<User> {
+        every { this@mockk.userId } returns userId2
+        every { this@mockk.type } returns Type.CredentialLess
+    }
+    private val user3 = mockk<User> {
+        every { this@mockk.userId } returns userId3
+        every { this@mockk.type } returns Type.CredentialLess
+    }
+
     private val session1 = Session.Authenticated(
-        userId = userId,
+        userId = userId1,
         sessionId = SessionId("session1"),
         accessToken = "accessToken",
         refreshToken = "refreshToken",
         scopes = listOf("full", "calendar", "mail")
     )
-
     private val account1 = Account(
-        userId = userId,
+        userId = userId1,
         username = "username",
         email = "test@example.com",
         state = AccountState.Ready,
@@ -56,20 +76,58 @@ class AccountManagerImplTest {
         sessionState = SessionState.Authenticated,
         details = AccountDetails(null, null)
     )
+    private val session2 = Session.Authenticated(
+        userId = userId2,
+        sessionId = SessionId("session2"),
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
+        scopes = listOf("calendar", "mail")
+    )
+    private val account2 = Account(
+        userId = userId2,
+        username = null,
+        email = null,
+        state = AccountState.Ready,
+        sessionId = session2.sessionId,
+        sessionState = SessionState.Authenticated,
+        details = AccountDetails(null, null)
+    )
+    private val session3 = Session.Authenticated(
+        userId = userId3,
+        sessionId = SessionId("session3"),
+        accessToken = "accessToken",
+        refreshToken = "refreshToken",
+        scopes = listOf("calendar", "mail")
+    )
+    private val account3 = Account(
+        userId = userId3,
+        username = null,
+        email = null,
+        state = AccountState.Ready,
+        sessionId = session2.sessionId,
+        sessionState = SessionState.Authenticated,
+        details = AccountDetails(null, null)
+    )
 
-    private val mocks = RepositoryMocks(session1, account1)
+    private val mocks = RepositoryMocks(account1, session1)
 
     @Before
     fun beforeEveryTest() {
         mocks.init()
 
-        accountManager = AccountManagerImpl(
-            Product.Calendar,
-            mocks.accountRepository,
-            mocks.authRepository,
-            mocks.userManager,
-            mocks.sessionListener
+        accountManager = spyk(
+            AccountManagerImpl(
+                Product.Calendar,
+                mocks.accountRepository,
+                mocks.authRepository,
+                mocks.userManager,
+                mocks.sessionListener
+            )
         )
+
+        coEvery { mocks.userManager.getUser(userId1) } returns user1
+        coEvery { mocks.userManager.getUser(userId2) } returns user2
+        coEvery { mocks.userManager.getUser(userId3) } returns user3
     }
 
     @Test
@@ -211,6 +269,27 @@ class AccountManagerImplTest {
         assertEquals(AccountState.Ready, stateLists[0].state)
 
         coVerify(exactly = 1) { mocks.accountRepository.clearSessionDetails(any()) }
+        coVerify(exactly = 0) { accountManager.disableAccount(any()) }
+    }
+
+    @Test
+    fun `on handleAccountReady with existing credentialLess`() = runTest {
+        mocks.setupAccountRepository(listOf(account2), listOf(session2))
+        mocks.setupAuthRepository()
+
+        accountManager.handleAccountReady(account1.userId)
+
+        coVerify(exactly = 1) { accountManager.disableAccount(userId2, keepSession = true) }
+    }
+
+    @Test
+    fun `on handleAccountReady with credentialLess`() = runTest {
+        mocks.setupAccountRepository(listOf(account2, account3), listOf(session2, session3))
+        mocks.setupAuthRepository()
+
+        accountManager.handleAccountReady(account3.userId)
+
+        coVerify(exactly = 1) { accountManager.disableAccount(userId2, keepSession = false) }
     }
 
     @Test

@@ -37,8 +37,8 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.UserManager
 
 class RepositoryMocks(
-    private val session: Session.Authenticated,
-    private val account: Account
+    private val defaultAccount: Account,
+    private val defaultSession: Session.Authenticated
 ) {
 
     @RelaxedMockK
@@ -69,7 +69,10 @@ class RepositoryMocks(
     }
 
     @Suppress("LongMethod")
-    fun setupAccountRepository() {
+    fun setupAccountRepository(
+        additionalAccounts: List<Account> = emptyList(),
+        additionalSessions: List<Session.Authenticated> = emptyList()
+    ) {
         val userIdSlot = slot<UserId>()
         val sessionIdSlot = slot<SessionId>()
         val accountStateSlot = slot<AccountState>()
@@ -81,13 +84,18 @@ class RepositoryMocks(
         // Initial state.
         flowOfAccountLists.clear()
         flowOfSessionLists.clear()
-        flowOfAccountLists.add(listOf(account))
-        flowOfSessionLists.add(listOf(session))
+        flowOfAccountLists.add(listOf(defaultAccount) + additionalAccounts)
+        flowOfSessionLists.add(listOf(defaultSession) + additionalSessions)
         flowOfAccountStateChangedLists.clear()
         flowOfSessionStateChangedLists.clear()
 
         // For each updateAccountState -> emit a new updated List<Account> from getAccounts().
-        coEvery { accountRepository.updateAccountState(capture(userIdSlot), capture(accountStateSlot)) } answers {
+        coEvery {
+            accountRepository.updateAccountState(
+                capture(userIdSlot),
+                capture(accountStateSlot)
+            )
+        } answers {
             flowOfAccountLists.add(
                 listOf(
                     flowOfAccountLists.last().first { it.userId == userIdSlot.captured }.copy(
@@ -101,7 +109,12 @@ class RepositoryMocks(
                 )
             )
         }
-        coEvery { accountRepository.updateAccountState(capture(sessionIdSlot), capture(accountStateSlot)) } answers {
+        coEvery {
+            accountRepository.updateAccountState(
+                capture(sessionIdSlot),
+                capture(accountStateSlot)
+            )
+        } answers {
             flowOfAccountLists.add(
                 listOf(
                     flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
@@ -117,7 +130,12 @@ class RepositoryMocks(
         }
 
         // For each updateSessionState -> emit a new updated List<Account> from getAccounts().
-        coEvery { accountRepository.updateSessionState(capture(sessionIdSlot), capture(sessionStateSlot)) } answers {
+        coEvery {
+            accountRepository.updateSessionState(
+                capture(sessionIdSlot),
+                capture(sessionStateSlot)
+            )
+        } answers {
             flowOfAccountLists.add(
                 listOf(
                     flowOfAccountLists.last().first { it.sessionId == sessionIdSlot.captured }.copy(
@@ -133,7 +151,12 @@ class RepositoryMocks(
         }
 
         // For each updateSessionScopes -> emit a new updated List<Session> from getSessions().
-        coEvery { accountRepository.updateSessionScopes(capture(sessionIdSlot), capture(updatedScopesSlot)) } answers {
+        coEvery {
+            accountRepository.updateSessionScopes(
+                capture(sessionIdSlot),
+                capture(updatedScopesSlot)
+            )
+        } answers {
             val session = flowOfSessionLists.last().first { it.sessionId == sessionIdSlot.captured }
             flowOfSessionLists.add(
                 listOf(session.copy(scopes = updatedScopesSlot.captured))
@@ -150,7 +173,7 @@ class RepositoryMocks(
         } answers {
             flowOfSessionLists.add(
                 listOf(
-                    session.copy(
+                    defaultSession.copy(
                         sessionId = sessionIdSlot.captured,
                         accessToken = accessTokenSlot.captured,
                         refreshToken = refreshTokenSlot.captured
