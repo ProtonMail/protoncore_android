@@ -11,6 +11,87 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [22.0.0] - 2024-03-28
+
+### Breaking Changes
+
+**Features**
+
+- Added Purchase, Manager, Repository, StateHandlers and Workers.
+
+  Migration: PaymentDatabase.MIGRATION_1.
+
+### Chores
+
+- Added Configurator application.
+- feature-flag:
+  - Group all call to WorkManager in FeatureFlagWorkerManager.
+
+    Extract interface from FeatureFlagWorkerManager.
+- injection:
+  - Modules should be public to allow @TestInstallIn to replace them and avoid hilt to generate a wrapper.
+
+    Modules with bindings can be interfaces.
+- presentation:
+  - Update color for ic_proton_servers* icons.
+
+### Features
+
+- Added CreateAccountNeeded handling.
+- account-manager:
+  - Added Account Settings Composables.
+- account-recovery:
+  - Enabled Account Recovery Reset support.
+  - Added AccountRecovery Start/Reset metrics.
+  - Added PasswordResetDialog.
+  - Added AccountRecoveryInfo.
+- user-settings:
+  - Added PasswordManagement Account Recovery state handling.
+- util-android-datetime:
+  - Added DurationFormat and DateTimeFormat.
+
+### Bug Fixes
+
+- Update icons for support for Android 6.
+- account-manager:
+  - Disable CredentialLess accounts on a new Ready Account.
+- account-recovery:
+  - Added back ProtonDagger plugin.
+  - Various fixes regarding Material 2/3 support.
+- feature-flag:
+  - Removed FeatureFlag metrics (except FeatureFlagAwaitTotal).
+- network:
+  - Pass `x-pm-payment-info-token` header if payment token is present.
+
+    For now, the value of `x-pm-payment-info-token` is the same as `x-pm-human-verification-token`. However, using `x-pm-human-verification-token-type: payment` is deprecated, but `x-pm-payment-info-token` is not implemented in every endpoint we need.
+- payment-iap:
+  - In `GetStorePriceImpl`, default to `null` if billing client has failed.
+- plan:
+  - Do not call `getDynamicSubscriptions` if user is credential-less.
+- presentation-compose:
+  - Add padding for the second row of `ProtonSettingsItem`.
+- user-settings:
+  - Added Password/Recovery success Toasts.
+
+### Internationalization
+
+- Upgrade translations from crowdin (1b7e5389).
+- Upgrade translations from crowdin (1e272664).
+
+### Refactoring
+
+- Deprecated RememberFlow extensions.
+- account-manager:
+  - Renamed AccountSettingsViewModel to AccountSettingsInfoViewModel.
+- account-recovery:
+  - Replaced Clock/DateTime/Duration usages by Proton Util Android DataTime module.
+- user-settings:
+  - Refactored PasswordManagement Fragment/ViewModel.
+- util-kotlin:
+  - Deprecate `Map.filterNullValues` function and add `Map.filterNotNullValues` instead.
+
+    The naming `filterNullValues` is not consistent with Kotlin's naming convention, where `filterNotNull` will remove the `null` values from a list.
+
 ## [21.2.0] - 2024-03-14
 
 ### Chores
