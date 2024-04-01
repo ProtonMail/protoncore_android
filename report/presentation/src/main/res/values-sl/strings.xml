@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2021 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="core_report_bug_activity_title">Poročanje o težavi</string>
+  <string name="core_report_bug_close">Zapri</string>
+  <string name="core_report_bug_subject_field_hint">Zadeva</string>
+  <string name="core_report_bug_subject_field_required">Vnesite zadevo</string>
+  <string name="core_report_bug_description_field_hint">Kaj se je zgodilo? Vsaj 10 znakov</string>
+  <string name="core_report_bug_description_field_placeholder">Težavo čim bolj podrobno opišite. Če se je pojavilo sporočilo o napaki, nam sporočite, kaj je v njem pisalo.</string>
+  <plurals name="core_report_bug_description_field_required">
+    <item quantity="one">Vnesite vsaj %d znak</item>
+    <item quantity="two">Vnesite vsaj %d znaka</item>
+    <item quantity="few">Vnesite vsaj %d znake</item>
+    <item quantity="other">Vnesite vsaj %d znakov</item>
+  </plurals>
+  <string name="core_report_bug_discard_changes_title">Zaprem poročilo o hrošču?</string>
+  <string name="core_report_bug_discard_changes_description">Če zapustite to stran, vaše poročilo ne bo shranjeno.</string>
+  <string name="core_report_bug_discard_changes_cancel">Nadaljuj s pisanjem</string>
+  <string name="core_report_bug_discard_changes_confirm">Zapri brez shranjevanja</string>
+  <plurals name="core_report_bug_form_field_too_long">
+    <item quantity="one">Največ %d znak</item>
+    <item quantity="two">Največ %d znaka</item>
+    <item quantity="few">Največ %d znake</item>
+    <item quantity="other">Največ %d znakov</item>
+  </plurals>
+  <string name="core_report_bug_general_error">Nekaj je šlo narobe. Poskusite znova čez nekaj minut.</string>
+  <string name="core_report_bug_send">Pošlji poročilo</string>
+  <string name="core_report_bug_success">Hvala za vaše poročilo</string>
+</resources>

@@ -47,18 +47,18 @@
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Nulstilling af adgangskode anmodet</string>
   <string name="account_recovery_info_grace_subtitle">Du kan nulstille din adgangskode om %1s.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_description">For at sikre, at det virkelig er dig, der forsøger at nulstille din adgangskode, venter vi 72 timer, før vi godkender anmodninger.\n\nHvis du ikke har bedt om at nulstille din adgangskode, skal du annullere denne anmodning nu.</string>
   <string name="account_recovery_info_cancelled_title">Nulstilling af adgangskode annulleret</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_cancelled_subtitle">En anmodning om nulstilling af adgangskode blev foretaget på %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Hvis du ikke genkender denne anmodning, kan det betyde at en anden har adgang til din Proton-konto.\n\nBeskyt din konto nu.</string>
   <string name="account_recovery_info_insecure_title">Nulstilling af adgangskode tilgængelig</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_insecure_subtitle">Du kan nu nulstille din adgangskode. Nulstilling af adgangskode er tilgængelig indtil %1s.</string>
+  <string name="account_recovery_info_insecure_description">Foretog du ikke denne anmodning?\n\nHvis du ikke bad om at nulstille din adgangskode, skal du annullere anmodningen nu.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Nulstil adgangskode?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_text">"Af sikkerhedsmæssige årsager skal du vente 72 timer, før du kan ændre adgangskoden til %1s.\n\nHvis du har konfigureret en gendannelsesmetode, så prøv kontogendannelse i stedet. Dette giver dig mulighed for at ændre din adgangskode med det samme."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Anmod om nulstilling af adgangskode</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Brug gendannelsesmetode</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Skift din adgangskode i din webbrowser uden at vente i sikkerhedsperioden.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Nulstilling af adgangskode anmodet</string>
 </resources>

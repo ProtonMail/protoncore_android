@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- region payment errors -->
+  <string name="payments_general_error">Prišlo je do napake.</string>
+  <string name="payments_no_connectivity">Ni povezave za prikaz 3DS potrditvene strani.</string>
+  <string name="payments_3ds_not_approved">3DS potrditev je bila zavrnjena.</string>
+  <string name="payments_error_card_name">Zahtevano ime na kartici.</string>
+  <string name="payments_error_card_number">Neveljavna številka kartice.</string>
+  <string name="payments_error_cvc">Vnesite veljavno varnostno kodo.</string>
+  <string name="payments_error_session">Pri nakupu naročnine za prijavljenega uporabnika je potreben veljavni ID seje.</string>
+  <string name="payments_error_signup_paymentmethod">Z obstoječim načinom plačila se ne morete registrirati.</string>
+  <string name="payments_error_invalid_session">Neveljavna seja.</string>
+  <string name="payments_no_payment_provider">Ni aktivnega ponudnia plačil.</string>
+  <string name="payments_error_google_prices">Trenutno so težave s pridobivanjem cen v trgovini Google Play.</string>
+  <!-- endregion -->
+  <!-- region payment options -->
+  <string name="payments_choose_payment_method">Izberite način plačila</string>
+  <string name="payments_add_credit_debit_card">Dodajte novo kreditno/debetno kartico</string>
+  <string name="payments_pay" comment="Example: Pay 5EUR">Plačaj %s</string>
+  <string name="payments_pay_with" comment="Example: Pay with debit card">Plačilo z</string>
+  <string name="payments_method_icon">Ikona za način plačila.</string>
+  <string name="payments_method_surcharge">*Pri nakupih s tem načinom plačila se zaračuna doplačilo.</string>
+  <string name="payments_method_terms_conditions">Nakup z Google Pay pomeni, da sprejemate pogoje storitve Google Pay in se strinjate z nastavitvijo ponavljajočega se plačila pri Googlu.</string>
+  <string name="payments_method_google">Google</string>
+  <string name="payments_method_continue">Nadaljuj</string>
+  <!-- endregion -->
+  <!-- region billing -->
+  <string name="payments_payment_details">Podrobnosti plačila</string>
+  <string name="payments_card_name">Ime na kartici</string>
+  <string name="payments_card_number">Številka kartice</string>
+  <string name="payments_expiration_date">Datum poteka</string>
+  <string name="payments_security_code">Varnostna koda</string>
+  <string name="payments_postal_code">Poštna številka</string>
+  <string name="payments_card_number_hint">0000 0000 0000 0000</string>
+  <string name="payments_expiration_date_hint">MM/YY</string>
+  <string name="payments_security_code_hint">123</string>
+  <string name="payments_country">Država</string>
+  <string name="payments_get_plan">Pridobi %s</string>
+  <string name="payments_paying_in_process">Plačilo je v obdelavi</string>
+  <string name="payments_choose_country">Izberite državo</string>
+  <string name="payment_cc_list_item">%1$s – %2$s (Poteče %3$s/%4$s)</string>
+  <string name="payment_paypal_list_item">PayPal</string>
+  <string name="payments_info_not_available">ni na voljo</string>
+  <string name="payments_billing_monthly">Za en mesec</string>
+  <string name="payments_billing_yearly">Za eno leto</string>
+  <string name="payments_billing_two_years">Za dve leti</string>
+  <string name="payment_use_google_pay_instead">Namesto tega uporabite Google Pay</string>
+  <string name="payment_use_credit_card_instead">Namesto tega uporabite plačilno kartico</string>
+  <!-- endregion -->
+  <!-- region GIAP -->
+  <string name="payments_giap_unredeemed_title">Potrdi nadgradnjo računa</string>
+  <string name="payments_giap_unredeemed_description">Vaše plačilo Google Pay je bilo uspešno obdelano, vendar je bil postopek nadgradnje računa prekinjen. Ali želite plačilo sedaj uporabiti za nadgradnjo računa?</string>
+  <string name="payments_giap_unredeemed_confirm">Potrdi nadgradnjo</string>
+  <string name="payments_giap_redeem_success">Vaš račun je bil uspešno nadgrajen</string>
+  <string name="payments_giap_redeem_error">Nadgradnje ni mogoče dokončati. Prosimo, poskusite znova pozneje.</string>
+  <!-- endregion -->
+</resources>

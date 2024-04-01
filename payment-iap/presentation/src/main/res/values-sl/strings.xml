@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2022 Proton Technologies AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="payments_iap_surcharge_info">* Vključuje doplačilo za dodatne pristojbine in davke ponudnika.</string>
+  <string name="payments_iap_terms_conditions">Ko tapnete \"Nakup z Google Pay\", se strinjate s pogoji storitve Google Pay in se strinjate z nastavitvijo ponavljajočega se plačila pri Googlu.</string>
+  <string name="payments_iap_invalid_google_plan">Izbrano je neveljavno ime paketa. Prosimo, ponovite postopek.</string>
+  <string name="payments_iap_error_google_plan_price">Težava z Googlovim izdelkom. Prosimo, ponovite postopek.</string>
+  <string name="payments_iap_error_fetching_google_plan">Težava pri pridobivanju Googlovega izdelka. Prosimo, ponovite postopek.</string>
+  <string name="payments_iap_error_already_owned">Ta izdelek je že v vaši lasti. Prosimo, izberite drugega.</string>
+  <string name="payments_iap_error_billing_client_unavailable">Plačevanje z Google trenutno ni na voljo ali ni povezano.</string>
+  <string name="payments_iap_general_error">Prišlo je do napake. Prosimo, ponovite postopek.</string>
+</resources>

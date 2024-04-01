@@ -24,12 +24,12 @@
   <string name="account_switcher_action_remove">Odstrániť</string>
   <string name="account_list_item_chevron_content_description">Otvoriť prepínač účtov</string>
   <string name="account_view_three_dots_content_description">Možnosti</string>
-  <string name="account_settings_header">Account settings</string>
-  <string name="account_settings_item_header">User</string>
-  <string name="account_settings_list_header">Account</string>
-  <string name="account_settings_list_item_password_header">Password management</string>
-  <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
-  <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
-  <string name="account_settings_list_item_recovery_header">Recovery email</string>
-  <string name="account_settings_list_item_recovery_hint_not_set">Not set</string>
+  <string name="account_settings_header">Nastavenia účtu</string>
+  <string name="account_settings_item_header">Používateľ</string>
+  <string name="account_settings_list_header">Účet</string>
+  <string name="account_settings_list_item_password_header">Správa hesiel</string>
+  <string name="account_settings_list_item_password_hint_grace">Čaká sa na obnovenie hesla</string>
+  <string name="account_settings_list_item_password_hint_insecure">Obnovenie hesla pripravené</string>
+  <string name="account_settings_list_item_recovery_header">Email na obnovenie</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Nenastavené</string>
 </resources>

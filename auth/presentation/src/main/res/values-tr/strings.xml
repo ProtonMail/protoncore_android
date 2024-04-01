@@ -39,7 +39,7 @@
   <string name="auth_email_username">Kullanıcı adı ya da e-posta</string>
   <string name="auth_account_details">Proton hesabınızın bilgilerini yazın.</string>
   <string name="auth_sign_in">Oturum aç</string>
-  <string name="auth_sign_out">Çıkış yap</string>
+  <string name="auth_sign_out">Oturumu kapat</string>
   <string name="auth_sign_in_action">Oturum aç</string>
   <string name="auth_sign_in_sso">Kuruluşunuzda oturum açın</string>
   <string name="auth_sign_in_with_password">Parola ile oturum açın</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Atla</string>
   <string name="auth_signup_set_recovery">Kurtarma yöntemini ayarla</string>
   <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar görüntülenemiyor.</string>
-  <string name="auth_signup_error_create_to_continue">Devam etmek için lütfen bir hesap oluşturun</string>
+  <string name="auth_signup_error_create_to_continue">İlerlemek için lütfen bir hesap açın</string>
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Gizliliğinizi koruyarak gezinin, engellenen içeriğe erişin ve dijital özgürlüğün tadını çıkarın.</string>
   <string name="auth_credentialless_guest_button">Konuk olarak ilerle</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Bu uygulamayı kullanarak <annotation link="terms">Hüküm ve Koşullarımızı</annotation> kabul etmiş olursunuz.</string>
-  <string name="auth_credentialless_settings_title">Gizliliğe geçiş yapın.</string>
-  <string name="auth_credentialless_settings_subtitle">Proton Hesabı ile parola yöneticisi, şifrelenmiş Posta ve Takvim ve 1 GB bulut depolama alanına ücretsiz sahip olun.</string>
+  <string name="auth_credentialless_settings_title">Gizliliğe geçin.</string>
+  <string name="auth_credentialless_settings_subtitle">Proton hesabı ile ücretsiz olarak parola yöneticisi, şifrelenmiş e-posta, takvim ve 1 GB bulut depolama alanı edinin.</string>
 </resources>

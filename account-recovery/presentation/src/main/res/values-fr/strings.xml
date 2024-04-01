@@ -47,10 +47,10 @@
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">La réinitialisation du mot de passe a été demandée.</string>
   <string name="account_recovery_info_grace_subtitle">Vous pouvez réinitialiser votre mot de passe dans %1s.</string>
-  <string name="account_recovery_info_grace_description">Pour nous assurer que vous êtes bien à l\'origine de la demande de réinitialisation de votre mot de passe, nous attendons 72  heures avant d\'approuver la demande.\n\nSi vous n\'avez pas demandé à réinitialiser votre mot de passe, annulez cette demande maintenant.</string>
+  <string name="account_recovery_info_grace_description">Pour nous assurer que vous êtes bien à l\'origine de la demande de réinitialisation de votre mot de passe, nous attendons 72 heures avant d\'approuver la demande.\n\nSi vous n\'avez pas demandé à réinitialiser votre mot de passe, annulez cette demande maintenant.</string>
   <string name="account_recovery_info_cancelled_title">La réinitialisation du mot de passe a été annulée.</string>
-  <string name="account_recovery_info_cancelled_subtitle">Une demande de réinitialisation du mot de passe a été effectué le %1s.</string>
-  <string name="account_recovery_info_cancelled_description">Si vous n\'êtes pas à l\'origine de cette demande, il se peut qu\'une autre personne ait accès à votre compte Proton.\n\nSécurisez votre compte maintenant.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Une demande de réinitialisation du mot de passe a été effectuée le %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Si vous n\'êtes pas à l\'origine de cette demande, il se peut qu\'une autre personne ait accès à votre compte Proton.\n\nSécurisez votre compte dès maintenant.</string>
   <string name="account_recovery_info_insecure_title">La réinitialisation du mot de passe est disponible.</string>
   <string name="account_recovery_info_insecure_subtitle">Vous pouvez maintenant réinitialiser votre mot de passe. La réinitialisation du mot de passe est disponible jusqu\'au %1s.</string>
   <string name="account_recovery_info_insecure_description">Vous n\'avez pas effectué cette demande ?\n\nSi vous n\'avez pas demandé à réinitialiser votre mot de passe, annulez-la immédiatement.</string>

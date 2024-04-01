@@ -35,8 +35,8 @@
   <string name="account_recovery_cancelled_subtitle">თუ პაროლის შეცვლა არასოდეს გამოგითხოვიათ, შეიძლება, თქვენი ანგარიში რისკის ქვეშაა.\n\nდაიცავით თქვენი ანგარიში, შეცვალეთ მისი პაროლი.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">პაროლის შეცვლა ხელმისაწვდომია</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_subtitle">პაროლის შესაცვლელად დაბრუნდით თქვენს მოწყობილობაზე და აპში ან ბრაუზერში, საიდანაც პაროლის შეცვლის მოთხოვნა გამოაგზავნეთ.\n\nამის გაკეთება %s-მდე უნდა მოასწროთ.\n\nთუ პაროლის ჩამოყრის მოთხოვნა თქვენი გამოგზავნილი არაა, გააუქმეთ ის.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">ახლა შეგიძლიათ პაროლის გადაყენება.\n\n ამის გაკეთება %s-მდე მოგიწევთ.\n\nთუ პაროლის გადაყენება არ მოგითხოვიათ, გააუქმეთ მოთხოვნა ახლავე.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">პაროლის შეცვლის ვადა ამოიწურა</string>
   <string name="account_recovery_window_ended_subtitle">დაგჭირდებათ, %s-სთვის პაროლის შეცვლა თავიდან მოითხოვოთ.</string>
@@ -47,18 +47,18 @@
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">პაროლის შეცვლა მოთხოვნილია</string>
   <string name="account_recovery_info_grace_subtitle">პაროლის ჩამოყრა, შეგიძლიათ, %1s-ში.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_description">იმისათვის, რომ დავრწმუნდეთ, რომ ნამდვილად თქვენ ცდილობთ პაროლის გადაყენებას, ველოდებით 72 საათს, სანამ დავადასტურებთ მოთხოვნებს.\n\nთუ პაროლის გადაყენება არ მოგითხოვიათ, გააუქმეთ ეს მოთხოვნა ახლავე.</string>
   <string name="account_recovery_info_cancelled_title">პაროლის შეცვლა გაუქმდა</string>
   <string name="account_recovery_info_cancelled_subtitle">პაროლის ჩამოყრის მოთხოვნის შექმნის დროა %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_cancelled_description">თუ თქვენ არ ცნობთ ამ მოთხოვნას, ეს შეიძლება ნიშნავს, რომ სხვას აქვს წვდომა თქვენს Proton ანგარიშზე.\n\nდაიცავით თქვენი ანგარიში ახლავე.</string>
   <string name="account_recovery_info_insecure_title">პაროლის შეცვლა ხელმისაწვდომია</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_insecure_subtitle">ახლა შეგილიათ, თქვენი პაროლი ჩამოყაროთ. პაროლის ჩამოყრა ხელმისაწვდომი იქნება დრომდე: %1s.</string>
+  <string name="account_recovery_info_insecure_description">ეს მოთხოვნა არ გაგიკეთებიათ?\n\nთუ პაროლის გადაყენება არ მოგითხოვიათ, გააუქმეთ მოთხოვნა ახლავე.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">პაროლის თავიდან დაყენება?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_text">"უსაფრთხოების მიზეზების გამო, მოგიწევთ 72 საათი ლოდინი, სანამ %1s-ის პაროლის შეცვლას შეძლებთ.\n\nთუ დაყენებული გაქვთ აღდგენის მეთოდი, სცადეთ ანგარიშის აღდგენა. ეს საშუალებას მოგცემთ დაუყოვნებლივ შეცვალოთ პაროლი."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">პაროლის შეცვლის მოთხოვნა</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">აღდგენის მეთოდის გამოყენება</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">შეცვალეთ პაროლი თქვენს ბრაუზერში უსაფრთხოების პერიოდის დალოდების გარეშე.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">პაროლის შეცვლა მოთხოვნილია</string>
 </resources>

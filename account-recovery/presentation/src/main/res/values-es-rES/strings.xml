@@ -21,7 +21,7 @@
   <string name="account_recovery_grace_period_info_title">Restablecimiento de contraseña solicitado.</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
     <item quantity="one">Se ha solicitado el restablecimiento de la contraseña para <b>%1$s</b>. Puedes cambiar tu contraseña en %2$d hora.\n\nSi no has realizado esta solicitud, cancélala ahora.</item>
-    <item quantity="other">Un restablecimiento de contraseña se ha solicitado para <b>%1$s</b>. Podrás cambiar tu contraseña en %2$d horas.\n\nSi tú no has realizado esta solicitud, cancélala ahora.</item>
+    <item quantity="other">Un restablecimiento de contraseña se ha solicitado para <b>%1$s</b>. Podrás cambiar tu contraseña en %2$d horas.\n\n Si tú no has realizado esta solicitud, cancélala ahora.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Cancelar el restablecimiento de contraseña?</string>

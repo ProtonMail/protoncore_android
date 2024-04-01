@@ -158,5 +158,5 @@
   <string name="auth_credentialless_guest_button">Continuer comme invité</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilisant cette application, vous acceptez nos <annotation link="terms">conditions générales</annotation>.</string>
   <string name="auth_credentialless_settings_title">Faites le pas vers le respect de la vie privée.</string>
-  <string name="auth_credentialless_settings_subtitle">Obtenez un gestionnaire de mots de passe, une boîte mail et un calendrier chiffrés, ainsi que 1 Go de stockage cloud gratuitement avec un compte Proton.</string>
+  <string name="auth_credentialless_settings_subtitle">Obtenez un gestionnaire de mots de passe, Mail chiffré, Calendar et 1 Go de stockage sur le cloud gratuitement avec un compte Proton.</string>
 </resources>

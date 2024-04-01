@@ -39,7 +39,7 @@
   <string name="auth_email_username">Ім\'я користувача або е-пошта</string>
   <string name="auth_account_details">Введіть дані свого облікового запису Proton.</string>
   <string name="auth_sign_in">Увійти</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Вийти</string>
   <string name="auth_sign_in_action">Увійти</string>
   <string name="auth_sign_in_sso">Увійдіть до своєї організації</string>
   <string name="auth_sign_in_with_password">Увійти за допомогою пароля</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Пропустити</string>
   <string name="auth_signup_set_recovery">Налаштувати спосіб відновлення</string>
   <string name="auth_signup_no_connectivity">Немає з\'єднання, щоб показати Умови та положення.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Будь ласка, створіть обліковий запис, щоби продовжити</string>
   <string name="auth_signup_error_username_blank">Поле з ім\'ям користувача не повинно бути порожнім.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі відрізняються.</string>
   <string name="auth_signup_validation_password_length">Пароль повинен містити принаймні 8 символів.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Приватний перегляд, доступ до заблокованого вмісту і задоволення від цифрової свободи.</string>
   <string name="auth_credentialless_guest_button">Продовжити як гість</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Використовуючи цю програму, ви приймаєте наші <annotation link="terms">Умови та Положення</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Зробіть крок до приватності.</string>
+  <string name="auth_credentialless_settings_subtitle">Отримайте менеджер паролів, зашифровані пошту та календар, а також 1 ГБ хмарного сховища безплатно з обліковим записом Proton.</string>
 </resources>

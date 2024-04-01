@@ -164,8 +164,8 @@
   <string name="ten_hide_my_email_aliases">10 alias « hide-my-email »</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Espace de stockage Drive : %d%% utilisé</string>
-  <string name="upgrade_storage_current_mail_storage">Espace de stockage Mail : %d%% utilisé</string>
+  <string name="upgrade_storage_current_drive_storage">Espace de stockage Drive : %d %% utilisé</string>
+  <string name="upgrade_storage_current_mail_storage">Espace de stockage Mail : %d %% utilisé</string>
   <string name="upgrade_storage_subtitle">Obtenir plus d\'espace de stockage</string>
   <string name="upgrade_storage_cta_button">Changer d\'abonnement</string>
   <!-- endregion -->

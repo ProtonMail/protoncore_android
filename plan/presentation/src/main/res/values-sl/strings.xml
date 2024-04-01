@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="plans_select_a_plan">Izberite paket</string>
+  <string name="plans_select_a_plan_subtitle">En paket za vse storitve Proton</string>
+  <string name="plans_fetching_general_error">Pri pridobivanju seznama paketov je prišlo do napake.</string>
+  <string name="plans_payment_error">Pri plačilu je prišlo do napake. Poskusite znova pozneje ali ustvarite brezplačen račun.</string>
+  <string name="plans_free_name">Free</string>
+  <string name="plan_price_monthly">na mesec</string>
+  <string name="plan_price_annually">na leto</string>
+  <string name="plans_current_plan">Trenutni paket</string>
+  <string name="plans_upgrade_plan">Nadgradite trenutni paket</string>
+  <string name="plans_subscription">Naročnina</string>
+  <string name="plans_renewal_date">Vaš paket bo samodejno podaljšan &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Vaša naročnina poteče dne &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Plačajte mesečno</string>
+  <string name="plans_pay_annually">Plačajte letno</string>
+  <string name="plans_pay_biennially">Plačajte vsaki dve leti</string>
+  <plurals name="plans_pay_other">
+    <item quantity="one">Plačajte za %d mesec</item>
+    <item quantity="two">Plačajte za %d meseca</item>
+    <item quantity="few">Plačajte za %d mesece</item>
+    <item quantity="other">Plačajte za %d mesecev</item>
+  </plurals>
+  <string name="plans_billed_yearly">*Obračunano letno v višini %s</string>
+  <string name="plans_billed_monthly">Obračunano mesečno</string>
+  <string name="plans_billing_monthly">Za en mesec</string>
+  <string name="plans_billing_yearly">Za eno leto</string>
+  <string name="plans_billing_two_years">Za dve leti</string>
+  <plurals name="plans_billing_other_period">
+    <item quantity="one">Za %d mesec</item>
+    <item quantity="two">Za %d meseca</item>
+    <item quantity="few">Za %d mesece</item>
+    <item quantity="other">Za %d mesecev</item>
+  </plurals>
+  <string name="plans_upgrade_your_plan">Nadgradite trenutni paket</string>
+  <string name="plans_proton_for_free">Pridobite brezplačni Proton</string>
+  <string name="plans_get_proton">Izberi %s</string>
+  <string name="plans_manage_your_subscription">Upravljajte svojo naročnino na <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s od %2$s</string>
+  <string name="plans_payments_info_not_available">ni na voljo</string>
+  <string name="plans_manage_your_subscription_google">Vašo naročnino upravlja Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Naročnine ni mogoče upravljati v mobilni aplikaciji.</string>
+  <string name="plans_autorenew_subscriptions">V tej aplikaciji so na voljo le samodejno obnovljive letne naročnine.</string>
+  <string name="plans_can_not_upgrade_from_mobile">Nadgradnje iz mobilne aplikacije ni mogoče izvesti.</string>
+  <string name="plans_no_upgrade_available">Trenutno ni na voljo nadgradenj.</string>
+  <string name="plans_limited_offer">Časovno omejena ponudba</string>
+  <string name="plans_subscription_base_storage_full_title">Vaš poštni nabiralnik je poln</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Vaš poštni nabiralnik je skoraj poln</string>
+  <string name="plans_subscription_drive_storage_full_title">Vaša shramba v storitvi Drive je polna</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Vaša shramba v storitvi Drive je skoraj polna</string>
+  <string name="plans_subscription_storage_get_more">Pridobite več prostora</string>
+  <string name="plans_subscription_storage_full_description">Nadgradite svoj načrt, če želite še naprej uporabljati svoj račun brez prekinitev.</string>
+  <!-- region all possible plan item types. this could be updated as per language requirements.-->
+  <plurals name="item_storage" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# shramb</item>
+    <item quantity="two">#proton_storage# shrambi</item>
+    <item quantity="few">#proton_storage# shrambe</item>
+    <item quantity="other">#proton_storage# shramb</item>
+  </plurals>
+  <plurals name="item_storage_free" comment="please do not modify the text between #">
+    <item quantity="one">Do #proton_storage# prostora za shranjevanje</item>
+    <item quantity="two">Do #proton_storage# prostora za shranjevanje</item>
+    <item quantity="few">Do #proton_storage# prostora za shranjevanje</item>
+    <item quantity="other">Do #proton_storage# prostora za shranjevanje</item>
+  </plurals>
+  <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
+    <item quantity="one">#proton_storage# prostora za shranjevanje / uporabnika</item>
+    <item quantity="two">#proton_storage# prostora za shranjevanje / uporabnika</item>
+    <item quantity="few">#proton_storage# prostora za shranjevanje / uporabnika</item>
+    <item quantity="other">#proton_storage# prostora za shranjevanje / uporabnika</item>
+  </plurals>
+  <plurals name="item_address" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# e-poštni naslov</item>
+    <item quantity="two">#proton_addresses# e-poštna naslova</item>
+    <item quantity="few">#proton_addresses# e-poštni naslovi</item>
+    <item quantity="other">#proton_addresses# e-poštnih naslovov</item>
+  </plurals>
+  <plurals name="item_address_multiuser" comment="please do not modify the test between #">
+    <item quantity="one">#proton_addresses# naslov / uporabnika</item>
+    <item quantity="two">#proton_addresses# naslova / uporabnika</item>
+    <item quantity="few">#proton_addresses# naslovi / uporabnika</item>
+    <item quantity="other">#proton_addresses# naslovov / uporabnika</item>
+  </plurals>
+  <plurals name="item_address_current" comment="please do not modify the test between #">
+    <item quantity="one">Naslov: %d / #proton_addresses#</item>
+    <item quantity="two">Naslov: %d / #proton_addresses#</item>
+    <item quantity="few">Naslov: %d / #proton_addresses#</item>
+    <item quantity="other">Naslov: %d / #proton_addresses#</item>
+  </plurals>
+  <plurals name="item_domain" comment="please do not modify the test between #">
+    <item quantity="one">Podpora za #proton_domains# domeno po meri</item>
+    <item quantity="two">Podpora za #proton_domains# domeni po meri</item>
+    <item quantity="few">Podpora za #proton_domains# domene po meri</item>
+    <item quantity="other">Podpora za #proton_domains# domen po meri</item>
+  </plurals>
+  <plurals name="item_calendar" comment="please do not modify the test between #">
+    <item quantity="one">#proton_calendars# osebni koledar</item>
+    <item quantity="two">#proton_calendars# osebna koledarja</item>
+    <item quantity="few">#proton_calendars# osebni koledarji</item>
+    <item quantity="other">#proton_calendars# osebnih koledarjev</item>
+  </plurals>
+  <plurals name="item_calendar_current" comment="please do not modify the test between #">
+    <item quantity="one">Koledar: %d / #proton_calendars#</item>
+    <item quantity="two">Koledar: %d / #proton_calendars#</item>
+    <item quantity="few">Koledar: %d / #proton_calendars#</item>
+    <item quantity="other">Koledar: %d / #proton_calendars#</item>
+  </plurals>
+  <plurals name="item_connections" comment="please do not modify the test between #">
+    <item quantity="one">Brezplačna storitev VPN v #proton_vpn# napravi</item>
+    <item quantity="two">Brezplačna storitev VPN v #proton_vpn# napravah</item>
+    <item quantity="few">Brezplačna storitev VPN v #proton_vpn# napravah</item>
+    <item quantity="other">Brezplačna storitev VPN v #proton_vpn# napravah</item>
+  </plurals>
+  <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
+    <item quantity="one">#proton_vpn# hitra VPN povezava</item>
+    <item quantity="two">#proton_vpn# hitri VPN povezavi</item>
+    <item quantity="few">#proton_vpn# hitre VPN povezave</item>
+    <item quantity="other">#proton_vpn# hitrih VPN povezav</item>
+  </plurals>
+  <plurals name="item_users" comment="please do not modify the test between #">
+    <item quantity="one">#proton_users# uporabnik</item>
+    <item quantity="two">#proton_users# uporabnika</item>
+    <item quantity="few">#proton_users# uporabniki</item>
+    <item quantity="other">#proton_users# uporabnikov</item>
+  </plurals>
+  <plurals name="item_users_current" comment="please do not modify the test between #">
+    <item quantity="one">Uporabnik: %d / #proton_users#</item>
+    <item quantity="two">Uporabnik: %d / #proton_users#</item>
+    <item quantity="few">Uporabnik: %d / #proton_users#</item>
+    <item quantity="other">Uporabnik: %d / #proton_users#</item>
+  </plurals>
+  <!-- endregion -->
+  <!-- region plans headers -->
+  <string name="plan_id_free_header">Osnova za zasebne in varne komunikacije.</string>
+  <string name="plan_id_plus_header">Poštni predal z neokrnjenimi funkcijami in z izboljšano zaščito.</string>
+  <string name="plan_id_vpnbasic_header">VPN Basic</string>
+  <string name="plan_id_vpnbasic_countries">63 držav</string>
+  <string name="plan_id_vpnbasic_high_speed">Visoka hitrost</string>
+  <string name="plan_id_vpnplus_adblock">Blokiranje oglasov (NetShield)</string>
+  <string name="plan_id_vpnplus_streaming">Podpora pretočnim storitvam</string>
+  <string name="plan_id_vpnplus_header">VPN Plus</string>
+  <string name="plan_id_vpnplus_countries">63 držav</string>
+  <string name="plan_id_vpnplus_highest_speed">Najvišja hitrost</string>
+  <string name="plan_id_professional_header">Professional</string>
+  <string name="plan_id_professional_multiuser">Podpora za več uporabnikov</string>
+  <string name="plan_id_visionary_header">Visionary</string>
+  <string name="plan_id_family_header">Family</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Varna e-pošta z naprednimi funkcijami za vsakodnevno komunikacijo.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Vaša zasebnost in varnost sta naša prednostna naloga.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Varna shramba v oblaku, s katero lahko preprosto shranjujete, sinhronizirate in delite datoteke.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Celovita zasebnost in varnost s kombinacijo vseh storitev Proton.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Za napredno upravljanje gesel in zaščito identitete.</string>
+  <!-- endregion -->
+  <string-array name="supported_currencies">
+    <item>EUR</item>
+    <item>USD</item>
+    <item>CHF</item>
+  </string-array>
+  <!-- region plans hardcoded texts -->
+  <string name="unlimited_folders_labels_filters" comment="new_plans">Neomejeno število map, oznak in filtrov</string>
+  <string name="highest_vpn_speed" comment="new_plans">Najvišja hitrost VPN</string>
+  <string name="servers_in_countries" comment="new_plans">1500+ strežnikov v 63 državah</string>
+  <string name="ad_blocker" comment="new_plans">Vgrajeno blokiranje oglasov (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Globalen dostop so pretočnih storitev</string>
+  <string name="secure_core" comment="new_plans">Strežniki Secure Core</string>
+  <string name="tor_vpn" comment="new_plans">Tor preko VPN</string>
+  <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
+  <string name="unlimited_logins_and_notes">Neomejeno število prijav in beležk</string>
+  <string name="unlimited_devices">Neomejeno število naprav</string>
+  <string name="integrated_2fa_authenticator">Vgrajen modul za preverjanje pristnosti 2FA</string>
+  <string name="multiple_vaults">Več trezorjev</string>
+  <string name="unlimited_email_alias">Neomejeno število vzdevkov Hide My Email</string>
+  <string name="custom_email_alias_domains">Domene po meri za e-poštne vzdevke</string>
+  <string name="multiple_forwarding_mailboxes">Več e-poštnih predalov za posredovanje</string>
+  <string name="priority_support">Prednostna podpora</string>
+  <string name="one_vault">En trezor</string>
+  <string name="ten_hide_my_email_aliases">Deset vzdevkov Hide My Email</string>
+  <!-- endregion -->
+  <!-- region Plan entitlement tags -->
+  <string name="upgrade_storage_current_drive_storage">Shramba v storitvi Drive: %d%% zasedeno</string>
+  <string name="upgrade_storage_current_mail_storage">Shramba v storitvi Mail: %d%% zasedeno</string>
+  <string name="upgrade_storage_subtitle">Pridobite več prostora</string>
+  <string name="upgrade_storage_cta_button">Nadgradi</string>
+  <!-- endregion -->
+</resources>

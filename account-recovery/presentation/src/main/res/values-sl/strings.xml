@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- Grace period - info -->
+  <string name="account_recovery_grace_period_info_title">Zahtevana je ponastavitev gesla.</string>
+  <plurals name="account_recovery_grace_period_info_subtitle">
+    <item quantity="one">Zahtevana je bila ponastavitev gesla za <b>%1$s</b>. Vaše geslo lahko zamenjate v %2$d uri.\n\nČe tega niste zahtevali, takoj prekličite to zahtevo.</item>
+    <item quantity="two">Zahtevana je bila ponastavitev gesla za <b>%1$s</b>. Vaše geslo lahko zamenjate v %2$d urah.\n\nČe tega niste zahtevali, takoj prekličite to zahtevo.</item>
+    <item quantity="few">Zahtevana je bila ponastavitev gesla za <b>%1$s</b>. Vaše geslo lahko zamenjate v %2$d urah.\n\nČe tega niste zahtevali, takoj prekličite to zahtevo.</item>
+    <item quantity="other">Zahtevana je bila ponastavitev gesla za <b>%1$s</b>. Vaše geslo lahko zamenjate v %2$d urah.\n\nČe tega niste zahtevali, takoj prekličite to zahtevo.</item>
+  </plurals>
+  <!-- Grace period - cancellation form -->
+  <string name="account_recovery_cancel_title">Prekliči ponastavitev gesla?</string>
+  <string name="account_recovery_cancel_subtitle">Vnesite vaše geslo za preklic.</string>
+  <string name="account_recovery_cancel_password_label">Trenutno geslo</string>
+  <string name="account_recovery_cancel_password_placeholder">Geslo</string>
+  <string name="account_recovery_cancel_now">Prekliči ponastavitev gesla</string>
+  <string name="account_recovery_cancel_back">Nazaj</string>
+  <!-- Account recovery cancelled -->
+  <string name="account_recovery_cancelled_title">Ponastavitev gesla je preklicana.</string>
+  <string name="account_recovery_cancelled_subtitle">Če niste zahtevali spremembe gesla, je lahko vaš račun ogrožen.\n\nZavarujte vaš račun s spremembo vašega gesla.</string>
+  <!-- Password change period -->
+  <string name="account_recovery_password_started_title">Ponastavitev gesla je na voljo.</string>
+  <string name="account_recovery_password_started_subtitle">Za ponastavitev gesla uporabite napravo in brskalnik, s katerim ste sprožili zahtevo za ponastavitev gesla.\n\nTo morate storiti pred %s.\n\nČe niste zaprosili za ponastavitev gesla, prekinite postopek.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Sedaj lahko ponastavite geslo.\n\nTo morate narediti pred %s.\n\nČe niste zaprosili za ponastavitev gesla, prekinite postopek.</string>
+  <!-- Recovery window ended -->
+  <string name="account_recovery_window_ended_title">Ponastavitev gesla je potekla.</string>
+  <string name="account_recovery_window_ended_subtitle">Podati boste morali novo zahtevo za ponastavitev gesla za %s.</string>
+  <!-- Other -->
+  <string name="account_recovery_cancel">Prekliči zahtevo</string>
+  <string name="account_recovery_dismiss">Razumem</string>
+  <string name="account_recovery_reset">Ponastavitev gesla</string>
+  <!-- Account Recovery Info -->
+  <string name="account_recovery_info_grace_title">Zahteva za ponastavitev gesla je bila poslana</string>
+  <string name="account_recovery_info_grace_subtitle">Geslo lahko ponastavite v %1s.</string>
+  <string name="account_recovery_info_grace_description">Da bi se prepričali, da geslo res želite ponastaviti vi, z odobritvijo zahtevkov počakamo 72 ur.\n\nČe niste zaprosili za ponastavitev gesla, prekličite zahtevek zdaj.</string>
+  <string name="account_recovery_info_cancelled_title">Ponastavitev gesla je preklicana.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Dne %1s je bil podan zahtevek za ponastavitev gesla.</string>
+  <string name="account_recovery_info_cancelled_description">Če ne prepoznate zahteve je možno, da ima nekdo dostop do vašega Proton računa.\n\nZaščitite svoj račun.</string>
+  <string name="account_recovery_info_insecure_title">Ponastavitev gesla je na voljo.</string>
+  <string name="account_recovery_info_insecure_subtitle">Zdaj lahko ponastavite geslo. Ponastavitev gesla je na voljo do %1s.</string>
+  <string name="account_recovery_info_insecure_description">Tega niste zahtevali?\n\nČe niste zahtevali ponastavitve gesla prekinite postopek.</string>
+  <!-- Password Reset Dialog -->
+  <string name="account_recovery_reset_dialog_title">Ponastavi geslo?</string>
+  <string name="account_recovery_reset_dialog_text">"Iz varnostnih razlogov boste morali počakati 72 ur, preden lahko spremenite geslo za %1s.\n\nČe imate nastavljeno obnovitveno metodo, raje poskusite z obnovitvijo računa. Tako boste lahko takoj spremenili geslo."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Zahtevaj ponastavitev gesla</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Uporabi način obnovitve</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Spremenite geslo v spletnem brskalniku, ne da bi čakali na varnostno obdobje.</string>
+  <string name="account_recovery_reset_dialog_action_request_reset_success">Zahteva za ponastavitev gesla je bila poslana</string>
+</resources>

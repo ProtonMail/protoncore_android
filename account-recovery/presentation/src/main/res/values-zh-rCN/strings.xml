@@ -34,19 +34,19 @@
   <string name="account_recovery_cancelled_subtitle">如果您从未要求更改您的密码，您的账号可能存在风险。\n\n更改密码以确保账号安全。</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">可进行密码重置</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_subtitle">请通过您提交申请时所用的设备、应用或浏览器重置密码。\n\n密码重置必须在 %s 前完成。\n\n如果您没有申请重置密码，请立即取消此次申请。</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">您现在可以重置密码了。\n\n密码重置必须在 %s 前完成。\n\n如果您没有申请重置密码，请立即取消此次申请。</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">密码重置已过期</string>
   <string name="account_recovery_window_ended_subtitle">您需要重新为 %s 申请重置密码。</string>
   <!-- Other -->
   <string name="account_recovery_cancel">取消请求</string>
   <string name="account_recovery_dismiss">了解</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">重置密码</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">已请求重置密码</string>
   <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_description">为了确保是您本人重置密码，申请提交 72 小时后才能通过。\n\n如果您没有提交过申请，请立即予以取消。</string>
   <string name="account_recovery_info_cancelled_title">密码重置已取消</string>
   <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
   <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>

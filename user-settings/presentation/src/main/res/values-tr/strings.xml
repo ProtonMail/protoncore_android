@@ -45,7 +45,7 @@
   <string name="settings_change_password_error">Parola değiştirilirken bir sorun çıktı.</string>
   <string name="settings_recovery_email_success">Kurtarma e-posta adresi güncellendi</string>
   <string name="settings_password_management_success">Parola güncellendi</string>
-  <string name="settings_password_management_start_recovery">Mevcut parolanızı bilmiyor musunuz?</string>
+  <string name="settings_password_management_start_recovery">Geçerli parolanızı bilmiyor musunuz?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonim kullanım verileri</string>
   <string name="device_settings_telemetry_hint">Hizmetlerimizi iyileştirmek için bazen anonimleştirilmiş kullanım verileri toplarız.</string>

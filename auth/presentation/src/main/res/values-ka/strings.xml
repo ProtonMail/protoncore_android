@@ -158,5 +158,5 @@
   <string name="auth_credentialless_guest_button">გაგრძელება სტუმრის სახელით</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">ამ აპის გამოყენებით თქვენ ეთანხმებით ჩვენს <annotation link="terms">წესებს და პირობებს</annotation></string>
   <string name="auth_credentialless_settings_title">გადადგით ნაბიჯი კონფიდენციალობისკენ</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_subtitle">მიიღეთ პაროლის მენეჯერი, დაშიფრული ფოსტა და კალენდარი და 1 გბ ღრუბლოვანი საცავი უფასოდ პროტონის ანგარიშით.</string>
 </resources>

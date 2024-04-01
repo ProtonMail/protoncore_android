@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- recovery email settings -->
+  <string name="settings_recovery_email_header">E-poštni naslov za obnovitev</string>
+  <string name="settings_recovery_email_current">Trenutni e-poštni naslov za obnovitev</string>
+  <string name="settings_recovery_email_new">Nov e-poštni naslov za obnovitev</string>
+  <string name="settings_recovery_email_confirm">Potrdite e-poštni naslov za obnovitev</string>
+  <string name="settings_recovery_email_new_hint">Vnesi e-poštni naslov</string>
+  <string name="settings_recovery_email_confirm_hint">Ponovno vnesi e-poštni naslov</string>
+  <string name="settings_save">Shrani</string>
+  <string name="settings_password_required">Vnesite geslo za prijavo</string>
+  <string name="settings_password_required_ok">V REDU</string>
+  <string name="settings_not_set">Ni nastavljeno</string>
+  <string name="settings_recovery_email_error_no_match">Nova e-poštna naslova za obnovitev nista enaka</string>
+  <string name="settings_validation_email">E-poštni naslov ni veljaven.</string>
+  <string name="settings_general_error">Prišlo je do napake.</string>
+  <!-- login and mailbox password settings -->
+  <string name="settings_password_management_tab_login_password">Geslo za prijavo</string>
+  <string name="settings_password_management_tab_mailbox_password">Geslo e-poštnega nabiralnika</string>
+  <string name="settings_password_management_change_login_password">Spremeni geslo</string>
+  <string name="settings_password_management_change_mailbox_password">Spremeni geslo poštnega nabiralnika</string>
+  <string name="settings_password_management_header">Upravljanje gesel</string>
+  <string name="settings_login_password_hint_current">Trenutno geslo za prijavo</string>
+  <string name="settings_login_password_hint_new">Novo geslo za prijavo</string>
+  <string name="settings_login_password_hint_new_confirm">Potrdite novo geslo za prijavo</string>
+  <string name="settings_mailbox_password_hint_new">Novo geslo poštnega nabiralnika</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Potrdite novo geslo poštnega nabiralnika</string>
+  <string name="settings_change_password_error">Pri spremembi gesla je prišlo do napake.</string>
+  <string name="settings_recovery_email_success">E-poštni naslov za obnovitev je posodobljen</string>
+  <string name="settings_password_management_success">Geslo je posodobljeno</string>
+  <string name="settings_password_management_start_recovery">Ne poznate trenutnega gesla?</string>
+  <!-- device/local settings -->
+  <string name="device_settings_telemetry_title">Anonimna telemetrija</string>
+  <string name="device_settings_telemetry_hint">Za izboljšanje naših storitev občasno zbiramo anonimne podatke o uporabi.</string>
+  <string name="device_settings_crashreport_title">Anonimna poročila o napakah</string>
+  <string name="device_settings_crashreport_hint">Če aplikacija preneha delovati, je poročilo s podrobnostmi o vzroku poslano našim tehnikom. To uporabljamo le za izboljšanje aplikacije.</string>
+</resources>

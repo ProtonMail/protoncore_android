@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2023 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <!-- base common presentation strings -->
+  <string name="presentation_browser_missing">Ne najdem brskalnika, s katerim bi odprli povezavo.</string>
+  <string name="presentation_force_update_title">Zahtevana je posodobitev</string>
+  <string name="presentation_force_update_message">Ta različica aplikacije ni več podprta, če jo želite še naprej uporabljati, jo najprej posodobite.</string>
+  <string name="presentation_force_update_learn_more">Več informacij</string>
+  <string name="presentation_force_update_update">Posodobi</string>
+  <string name="presentation_market_missing">Aplikacije za upravljanje posodobitev ni bilo mogoče najti v napravi. Pojdite v trgovino in posodobite aplikacijo.</string>
+  <string name="presentation_authenticate">Preverjanje pristnosti</string>
+  <string name="presentation_signin_to_continue">Za nadaljevanje se najprej vpišite</string>
+  <string name="presentation_alert_title">Opozorilo</string>
+  <string name="presentation_alert_ok">V REDU</string>
+  <string name="presentation_alert_enter">Potrdi</string>
+  <string name="presentation_alert_cancel">Prekliči</string>
+  <string name="presentation_alert_continue">Nadaljuj</string>
+  <string name="presentation_alert_submit">Pošlji</string>
+  <!-- Common menu items -->
+  <string name="presentation_menu_item_title_report_a_bug">Poročanje o težavi</string>
+  <string name="presentation_menu_item_title_settings">Nastavitve</string>
+  <string name="presentation_menu_item_title_subscription">Naročnina</string>
+  <string name="presentation_menu_item_title_sign_out">Odjava</string>
+  <!-- Other -->
+  <string name="presentation_back">Nazaj</string>
+  <string name="presentation_close">Zapri</string>
+  <string name="presentation_retry">Poskusi znova</string>
+  <string name="presentation_skip">Preskoči</string>
+  <string name="presentation_phone_calling_code_template">+%s</string>
+  <string name="presentation_general_connection_error">Povezave s strežnikom ni bilo mogoče vzpostaviti.</string>
+  <string name="presentation_check_your_connection">Preverite vašo povezavo</string>
+  <string name="presentation_connectivity_issues">Težave s povezavo</string>
+  <string name="presentation_field_required">To polje je obvezno.</string>
+  <string name="presentation_error_general">Prišlo je do napake.</string>
+  <plurals name="presentation_datetime_day">
+    <item quantity="one">%d dan</item>
+    <item quantity="two">%d dni</item>
+    <item quantity="few">%d dni</item>
+    <item quantity="other">%d dni</item>
+  </plurals>
+  <plurals name="presentation_datetime_hour">
+    <item quantity="one">%d ura</item>
+    <item quantity="two">%d uri</item>
+    <item quantity="few">%d ure</item>
+    <item quantity="other">%d ur</item>
+  </plurals>
+  <plurals name="presentation_datetime_minute">
+    <item quantity="one">%d minuta</item>
+    <item quantity="two">%d minuti</item>
+    <item quantity="few">%d minute</item>
+    <item quantity="other">%d minut</item>
+  </plurals>
+  <plurals name="presentation_datetime_second">
+    <item quantity="one">%d sekunda</item>
+    <item quantity="two">%d sekundi</item>
+    <item quantity="few">%d sekunde</item>
+    <item quantity="other">%d sekund</item>
+  </plurals>
+  <plurals name="presentation_datetime_millisecond">
+    <item quantity="one">%d milisekunda</item>
+    <item quantity="two">%d milisekundi</item>
+    <item quantity="few">%d milisekunde</item>
+    <item quantity="other">%d milisekund</item>
+  </plurals>
+  <plurals name="presentation_datetime_microsecond">
+    <item quantity="one">%d mikrosekunda</item>
+    <item quantity="two">%d mikrosekundi</item>
+    <item quantity="few">%d mikrosekunde</item>
+    <item quantity="other">%d mikrosekund</item>
+  </plurals>
+  <plurals name="presentation_datetime_nanosecond">
+    <item quantity="one">%d nanosekunda</item>
+    <item quantity="two">%d nanosekundi</item>
+    <item quantity="few">%d nanosekunde</item>
+    <item quantity="other">%d nanosekund</item>
+  </plurals>
+</resources>

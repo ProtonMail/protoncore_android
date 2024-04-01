@@ -39,7 +39,7 @@
   <string name="auth_email_username">Имя пользователя или эл. почта</string>
   <string name="auth_account_details">Введите данные вашего аккаунта Proton.</string>
   <string name="auth_sign_in">Войти</string>
-  <string name="auth_sign_out">Bыйти</string>
+  <string name="auth_sign_out">Выйти</string>
   <string name="auth_sign_in_action">Войти</string>
   <string name="auth_sign_in_sso">Войдите в вашу организацию</string>
   <string name="auth_sign_in_with_password">Войти с паролем</string>
@@ -152,7 +152,7 @@
   <string name="auth_signup_start_using_vpn">Начать использовать Proton VPN</string>
   <string name="auth_signup_start_using_pass">Начните использовать Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">Место назначения восстановления недействительно.</string>
-  <string name="auth_credentialless_vpn_no_logs">Сертифицированная VPN без журналов</string>
+  <string name="auth_credentialless_vpn_no_logs">Сертифицированный VPN без журналов</string>
   <string name="auth_credentialless_vpn_title">Добро пожаловать в Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Просматривайте сайты в приватно, получайте доступ к заблокированному содержимому и пользуйтесь цифровой свободой.</string>
   <string name="auth_credentialless_guest_button">Продолжить без регистрации</string>

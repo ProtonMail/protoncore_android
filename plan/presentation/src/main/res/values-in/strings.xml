@@ -63,13 +63,13 @@
   <string name="plans_subscription_storage_full_description">Tingkatkan paket Anda untuk terus menggunakan akun Anda tanpa gangguan.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="other">Kuota penyimpanan #proton_storage#</item>
+    <item quantity="other">Ruang penyimpanan #proton_storage#</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
-    <item quantity="other">Kuota penyimpanan hingga #proton_storage#</item>
+    <item quantity="other">Ruang penyimpanan hingga #proton_storage#</item>
   </plurals>
   <plurals name="item_storage_multiuser" comment="please do not modify the text between #">
-    <item quantity="other">Kuota penyimpanan #proton_storage# / pengguna</item>
+    <item quantity="other">Ruang penyimpanan #proton_storage# / pengguna</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# alamat surel</item>

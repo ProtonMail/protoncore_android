@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Surfujte v súkromí, získajte prístup k blokovanému obsahu a užívajte si digitálnu slobodu.</string>
   <string name="auth_credentialless_guest_button">Pokračovať ako hosť</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Používaním tejto aplikácie súhlasíte s našimi <annotation link="terms">Zmluvnými podmienkami</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Spravte zmenu k súkromiu.</string>
-  <string name="auth_credentialless_settings_subtitle">S účtom Proton získate správcu hesiel, šifrovaný email a kalendár a 1 GB cloudového úložiska zdarma.</string>
+  <string name="auth_credentialless_settings_title">Prejdite na súkromie.</string>
+  <string name="auth_credentialless_settings_subtitle">Získajte správcu hesiel, šifrovaný Mail a Calendar, a 1 GB cloudového úložiska zdarma s Proton účtom.</string>
 </resources>

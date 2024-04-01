@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2020 Proton Technologies AG
+  ~ This file is part of Proton Technologies AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+  <string name="account_switcher_section_switch_to">Preklopite na</string>
+  <string name="account_switcher_action_add_account">Dodaj račun</string>
+  <string name="account_switcher_action_sign_in">Prijava</string>
+  <string name="account_switcher_action_sign_out">Odjava</string>
+  <string name="account_switcher_action_remove">Odstrani</string>
+  <string name="account_list_item_chevron_content_description">Preklopi na drug račun</string>
+  <string name="account_view_three_dots_content_description">Možnosti</string>
+  <string name="account_settings_header">Nastavitve računa</string>
+  <string name="account_settings_item_header">Uporabnik</string>
+  <string name="account_settings_list_header">Račun</string>
+  <string name="account_settings_list_item_password_header">Upravljanje gesel</string>
+  <string name="account_settings_list_item_password_hint_grace">Ponastavitev gesla je v teku</string>
+  <string name="account_settings_list_item_password_hint_insecure">Ponastavitev gesla je pripravljena</string>
+  <string name="account_settings_list_item_recovery_header">E-poštni naslov za obnovitev</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ni nastavljeno</string>
+</resources>

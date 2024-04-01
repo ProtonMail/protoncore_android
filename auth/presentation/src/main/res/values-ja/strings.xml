@@ -39,7 +39,7 @@
   <string name="auth_email_username">ユーザー名またはメールアドレス</string>
   <string name="auth_account_details">Proton アカウントの詳細を入力してください。</string>
   <string name="auth_sign_in">サインイン</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">サインアウト</string>
   <string name="auth_sign_in_action">サインイン</string>
   <string name="auth_sign_in_sso">組織にサインインする</string>
   <string name="auth_sign_in_with_password">パスワードを使ってサインインする</string>

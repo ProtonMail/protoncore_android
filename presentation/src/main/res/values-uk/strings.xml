@@ -73,21 +73,21 @@
     <item quantity="other">%d секунди</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
-    <item quantity="one">%d millisecond</item>
-    <item quantity="few">%d milliseconds</item>
-    <item quantity="many">%d milliseconds</item>
-    <item quantity="other">%d milliseconds</item>
+    <item quantity="one">%d мілісекунда</item>
+    <item quantity="few">%d мілісекунди</item>
+    <item quantity="many">%d мілісекунд</item>
+    <item quantity="other">%d мілісекунд</item>
   </plurals>
   <plurals name="presentation_datetime_microsecond">
-    <item quantity="one">%d microsecond</item>
-    <item quantity="few">%d microseconds</item>
-    <item quantity="many">%d microseconds</item>
-    <item quantity="other">%d microseconds</item>
+    <item quantity="one">%d мікросекунд</item>
+    <item quantity="few">%d мікросекунди</item>
+    <item quantity="many">%d мікросекунд</item>
+    <item quantity="other">%d мікросекунд</item>
   </plurals>
   <plurals name="presentation_datetime_nanosecond">
-    <item quantity="one">%d nanosecond</item>
-    <item quantity="few">%d nanoseconds</item>
-    <item quantity="many">%d nanoseconds</item>
-    <item quantity="other">%d nanoseconds</item>
+    <item quantity="one">%d наносекунда</item>
+    <item quantity="few">%d наносекунди</item>
+    <item quantity="many">%d наносекунд</item>
+    <item quantity="other">%d наносекунд</item>
   </plurals>
 </resources>

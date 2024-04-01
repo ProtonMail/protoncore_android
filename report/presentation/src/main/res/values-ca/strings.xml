@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="core_report_bug_activity_title">Notifica un problema</string>
-  <string name="core_report_bug_close">Tancar</string>
+  <string name="core_report_bug_close">Tanca</string>
   <string name="core_report_bug_subject_field_hint">Assumpte</string>
   <string name="core_report_bug_subject_field_required">Introduïu un assumpte</string>
   <string name="core_report_bug_description_field_hint">Quin és el problema? Mínim 10 caràcters</string>

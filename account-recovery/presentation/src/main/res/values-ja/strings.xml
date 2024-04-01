@@ -42,14 +42,14 @@
   <!-- Other -->
   <string name="account_recovery_cancel">リクエストのキャンセル</string>
   <string name="account_recovery_dismiss">了解</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">パスワードをリセット</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">パスワード再設定リクエスト</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
+  <string name="account_recovery_info_grace_subtitle">%1sでパスワードをリセットできます。</string>
   <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
   <string name="account_recovery_info_cancelled_title">パスワードリセットが取り消されました</string>
   <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_cancelled_description">このリクエストを認識できない場合は、他のだれかがあなたのProtonアカウントにアクセスできる可能性があります。\n\n今すぐあなたのアカウントを保護してください。</string>
   <string name="account_recovery_info_insecure_title">パスワードのリセットが可能</string>
   <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
   <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
