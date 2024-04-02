@@ -1105,12 +1105,12 @@ public final class me/proton/core/plan/presentation/ui/CycleAdapter : android/wi
 
 public final class me/proton/core/plan/presentation/ui/DynamicPlanListFragment : me/proton/core/presentation/ui/ProtonFragment {
 	public fun <init> ()V
-	public final fun getPlanList ()Ljava/util/List;
-	public final fun getUser ()Lme/proton/core/plan/presentation/entity/DynamicUser;
+	public final fun getPlanList ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun getUser ()Lkotlinx/coroutines/flow/StateFlow;
+	public final fun onError ()Lkotlinx/coroutines/flow/Flow;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setCurrency (Ljava/lang/String;)V
 	public final fun setCycle (I)V
-	public final fun setOnPlanList (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnPlanSelected (Lkotlin/jvm/functions/Function1;)V
 	public final fun setOnProtonPaymentResultListener (Lme/proton/core/payment/presentation/view/ProtonPaymentEventListener;)V
 	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
@@ -1132,12 +1132,12 @@ public final class me/proton/core/plan/presentation/ui/DynamicPlanSelectionFragm
 	public field paymentsOrchestrator Lme/proton/core/payment/presentation/PaymentsOrchestrator;
 	public fun <init> ()V
 	public final fun getPaymentsOrchestrator ()Lme/proton/core/payment/presentation/PaymentsOrchestrator;
-	public final fun getPlanList ()Ljava/util/List;
+	public final fun getPlanList ()Lkotlinx/coroutines/flow/StateFlow;
 	public fun onCreate (Landroid/os/Bundle;)V
+	public final fun onError ()Lkotlinx/coroutines/flow/Flow;
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 	public final fun setOnPlanBilled (Lkotlin/jvm/functions/Function2;)V
 	public final fun setOnPlanFree (Lkotlin/jvm/functions/Function1;)V
-	public final fun setOnPlanList (Lkotlin/jvm/functions/Function1;)V
 	public final fun setPaymentsOrchestrator (Lme/proton/core/payment/presentation/PaymentsOrchestrator;)V
 	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;)V
 }
@@ -1491,7 +1491,7 @@ public final class me/proton/core/plan/presentation/usecase/LoadStorageUsageStat
 
 public final class me/proton/core/plan/presentation/usecase/ObserveUserId {
 	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;)V
-	public final fun getUser ()Lme/proton/core/plan/presentation/entity/DynamicUser;
+	public final fun getUser ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
 	public final fun setUser (Lme/proton/core/plan/presentation/entity/DynamicUser;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

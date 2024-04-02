@@ -23,6 +23,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -78,14 +79,16 @@ internal class DynamicPlanListViewModel @Inject constructor(
     private val cycleFilter = mutablePlanFilter.mapLatest { it.cycle }.distinctUntilChanged()
     private val currencyFilter = mutablePlanFilter.mapLatest { it.currency }.distinctUntilChanged()
 
+    private val mutablePlanList = MutableStateFlow<List<DynamicPlan>?>(null)
+
     val state: StateFlow<State> = observeState().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = State.Loading
     )
 
-    fun getUser(): DynamicUser = observeUserId.getUser()
-    fun getPlanList(): List<DynamicPlan>? = (state.value as? State.Success)?.plans
+    fun getUser(): StateFlow<DynamicUser> = observeUserId.getUser()
+    fun getPlanList(): StateFlow<List<DynamicPlan>?> = mutablePlanList.asStateFlow()
 
     private fun observeState() = mutableLoadCount
         .flatMapLatest { observeUserId().distinctUntilChanged() }
@@ -104,6 +107,7 @@ internal class DynamicPlanListViewModel @Inject constructor(
         it.onResultEnqueueGiapBillingProductQueryObservability()
         send(State.Loading)
         val filteredPlans = getDynamicPlans(filter.userId).plans.filterBy(filter.cycle, filter.currency)
+        mutablePlanList.emit(filteredPlans)
         send(State.Success(filteredPlans, filter))
     }.catch {
         emit(State.Error(it))

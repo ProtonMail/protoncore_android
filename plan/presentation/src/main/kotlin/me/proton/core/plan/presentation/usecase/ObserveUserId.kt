@@ -20,6 +20,8 @@ package me.proton.core.plan.presentation.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
@@ -47,5 +49,5 @@ class ObserveUserId @Inject constructor(
         mutableUser.emit(user)
     }
 
-    fun getUser(): DynamicUser = mutableUser.value
+    fun getUser(): StateFlow<DynamicUser> = mutableUser.asStateFlow()
 }

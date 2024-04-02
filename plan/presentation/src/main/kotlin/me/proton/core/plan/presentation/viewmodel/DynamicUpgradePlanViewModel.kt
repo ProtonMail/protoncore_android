@@ -40,6 +40,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
+import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
@@ -69,10 +70,12 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     sealed class Action {
         object Load : Action()
         data class SetUser(val user: DynamicUser) : Action()
+        data class SetPlanList(val planList: List<DynamicPlan>?) : Action()
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
     private val mutableUser = MutableStateFlow<DynamicUser>(DynamicUser.Primary)
+    private val mutablePlanList = MutableStateFlow<List<DynamicPlan>?>(null)
 
     val state: StateFlow<State> = observeState().stateIn(
         scope = viewModelScope,
@@ -96,7 +99,7 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     private suspend fun canUpgradeFromMobile(userId: UserId) = flow {
         emit(State.Loading)
         when (canUpgradeFromMobile.invoke(userId)) {
-            false -> emit(State.UpgradeNotAvailable(storageUsageState = loadStorageUsageState(userId)))
+            false -> emit(State.UpgradeNotAvailable(loadStorageUsageState(userId)))
             else -> emitAll(loadUnredeemedPurchase(userId))
         }
     }.catch { emit(State.Error(it)) }
@@ -104,14 +107,22 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
     private suspend fun loadUnredeemedPurchase(userId: UserId) = flow {
         emit(State.Loading)
         when (val unredeemedPurchase = checkUnredeemedGooglePurchase.invoke(userId)) {
-            null -> emit(State.UpgradeAvailable(storageUsageState = loadStorageUsageState(userId)))
+            null -> emitAll(waitOnPlanList(userId))
             else -> emit(State.UnredeemedPurchase(unredeemedPurchase))
+        }
+    }.catch { emit(State.Error(it)) }
+
+    private suspend fun waitOnPlanList(userId: UserId) = mutablePlanList.filterNotNull().mapLatest { list ->
+        when (list.isNotEmpty()) {
+            true -> State.UpgradeAvailable(loadStorageUsageState(userId))
+            false -> State.UpgradeNotAvailable(loadStorageUsageState(userId))
         }
     }.catch { emit(State.Error(it)) }
 
     fun perform(action: Action) = when (action) {
         is Action.Load -> onLoad()
         is Action.SetUser -> onSetUser(action.user)
+        is Action.SetPlanList -> onSetPlanList(action.planList)
     }
 
     fun onScreenView() {
@@ -124,5 +135,9 @@ internal class DynamicUpgradePlanViewModel @Inject constructor(
 
     private fun onSetUser(user: DynamicUser) = viewModelScope.launch {
         mutableUser.emit(user)
+    }
+
+    private fun onSetPlanList(list: List<DynamicPlan>?) = viewModelScope.launch {
+        mutablePlanList.emit(list)
     }
 }

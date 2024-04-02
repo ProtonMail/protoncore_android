@@ -128,6 +128,8 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @Test
     fun returnUpgradeAvailableWhenCanUpgradeFromMobileAndNoUnredeemed() = runTest {
+        // Given
+        viewModel.perform(Action.SetPlanList(listOf(mockk())))
         // When
         viewModel.state.test {
             // Then
@@ -166,6 +168,7 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
         // Given
         coEvery { checkUnredeemedGooglePurchase.invoke(userId2) } returns mockk()
         viewModel.perform(Action.SetUser(DynamicUser.ByUserId(userId1)))
+        viewModel.perform(Action.SetPlanList(listOf(mockk())))
         // When
         viewModel.state.test {
             // Then

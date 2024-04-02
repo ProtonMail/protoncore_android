@@ -186,6 +186,7 @@ public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : andr
 public abstract class me/proton/core/presentation/ui/ProtonFragment : androidx/fragment/app/Fragment, me/proton/core/presentation/utils/OnUiComponentCreatedListener {
 	public fun <init> ()V
 	public fun <init> (I)V
+	public final fun launchInViewLifecycleScope (Landroidx/lifecycle/Lifecycle$State;Lkotlin/jvm/functions/Function1;)Lkotlinx/coroutines/Job;
 	public final fun launchInViewLifecycleScope (Lkotlinx/coroutines/flow/Flow;)Lkotlinx/coroutines/Job;
 	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V

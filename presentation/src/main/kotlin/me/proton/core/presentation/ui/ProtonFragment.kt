@@ -21,9 +21,12 @@ package me.proton.core.presentation.ui
 import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.launch
 import me.proton.core.presentation.utils.OnUiComponentCreatedListener
 import me.proton.core.presentation.utils.UiComponent
 
@@ -48,4 +51,17 @@ abstract class ProtonFragment : Fragment, OnUiComponentCreatedListener {
      * @see getViewLifecycleOwner
      */
     fun Flow<*>.launchInViewLifecycleScope() = launchIn(viewLifecycleOwner.lifecycleScope)
+
+    /**
+     * It is a shorthand for `viewLifecycleOwner.lifecycleScope.launch { repeatOnLifecycle(state) { block() } } `.
+     *
+     * @see repeatOnLifecycle
+     * @see getViewLifecycleOwner
+     */
+    fun launchInViewLifecycleScope(
+        state: Lifecycle.State,
+        block: suspend () -> Unit
+    ) = viewLifecycleOwner.lifecycleScope.launch {
+        repeatOnLifecycle(state) { block() }
+    }
 }

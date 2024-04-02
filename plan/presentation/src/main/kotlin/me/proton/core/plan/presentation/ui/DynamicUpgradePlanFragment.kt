@@ -24,13 +24,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.allViews
 import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
+import androidx.lifecycle.Lifecycle.State.RESUMED
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.presentation.R
@@ -40,7 +38,9 @@ import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.usecase.StorageUsageState
 import me.proton.core.plan.presentation.view.DynamicPlanCardView
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel
-import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action
+import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action.Load
+import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action.SetPlanList
+import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action.SetUser
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.getUserMessage
@@ -61,12 +61,10 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
     private var onBackClicked: (() -> Unit)? = null
     private var onPlanBilled: ((SelectedPlan, BillingResult) -> Unit)? = null
 
-    private var upgradeAvailable = MutableStateFlow<Boolean?>(null)
-
     private val unredeemedPurchaseLauncher =
         registerForActivityResult(StartUnredeemedPurchase) { result ->
             if (result?.redeemed == true) {
-                viewModel.perform(Action.Load)
+                viewModel.perform(Load)
                 subscriptionFragment.reload()
             }
         }
@@ -74,7 +72,7 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
     fun setUser(user: DynamicUser) {
         planSelectionFragment.setUser(user)
         subscriptionFragment.setUser(user)
-        viewModel.perform(Action.SetUser(user))
+        viewModel.perform(SetUser(user))
     }
 
     fun setShowSubscription(isVisible: Boolean) = with(binding) {
@@ -99,52 +97,30 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener { onBackClicked?.invoke() }
+        binding.retry.onClick { viewModel.perform(Load) }
+
+        planSelectionFragment.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
+        planSelectionFragment.setOnPlanBilled { plan, result -> onPlanBilled?.invoke(plan, result) }
+        launchInViewLifecycleScope(RESUMED) {
+            planSelectionFragment.onError().filterNotNull().collect { onError(it, showChildLayout = true) }
+        }
+        launchInViewLifecycleScope(RESUMED) {
+            planSelectionFragment.getPlanList().filterNotNull().collect { viewModel.perform(SetPlanList(it)) }
+        }
+
         viewModel.state.onEach {
             when (it) {
                 is State.Loading -> onLoading()
-                is State.Error -> onError(it.error)
+                is State.Error -> onError(it.error, showChildLayout = false)
                 is State.UnredeemedPurchase -> onUnredeemedPurchase()
                 is State.UpgradeAvailable -> onUpgradeAvailable(it.storageUsageState)
                 is State.UpgradeNotAvailable -> onUpgradeNotAvailable(it.storageUsageState)
             }
         }.launchInViewLifecycleScope()
 
-        upgradeAvailable
-            // Wait RESUMED state to access binding fragments.
-            .flowWithLifecycle(viewLifecycleOwner.lifecycle, Lifecycle.State.RESUMED)
-            .onEach { onUpgradeAvailableChanged() }
-            .launchInViewLifecycleScope()
-
-        binding.toolbar.setNavigationOnClickListener { onBackClicked?.invoke() }
-        binding.retry.onClick { viewModel.perform(Action.Load) }
-
-        planSelectionFragment.setOnPlanList { onPlanList() }
-        planSelectionFragment.setOnPlanFree { throw IllegalStateException("Cannot upgrade to Free plan.") }
-        planSelectionFragment.setOnPlanBilled { plan, result -> onPlanBilled?.invoke(plan, result) }
-
-        launchOnScreenView {
-            viewModel.onScreenView()
-        }
-    }
-
-    private fun setUpgradeLayoutVisibility() = with(binding) {
-        fun available() = upgradeAvailable.value
-        fun hasPlans() = planSelectionFragment.getPlanList()?.isNotEmpty()
-        with(upgradeLayout) {
-            when {
-                isGone -> Unit // End case.
-                isVisible -> Unit // End case.
-                available() == null -> isInvisible = true
-                available() == false -> isGone = true
-                hasPlans() == null -> isInvisible = true
-                hasPlans() == false -> isGone = true
-                else -> isVisible = true
-            }
-        }
-    }
-
-    private fun onUpgradeAvailableChanged() {
-        setUpgradeLayoutVisibility()
+        launchOnScreenView { viewModel.onScreenView() }
     }
 
     private fun onLoading() {
@@ -156,28 +132,24 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         showLoading(false)
     }
 
-    private fun onPlanList() {
-        setUpgradeLayoutVisibility()
-    }
-
-    private fun onUpgradeAvailable(storageUsageState: StorageUsageState?) {
+    private fun onUpgradeAvailable(storageUsageState: StorageUsageState?) = with(binding) {
         showLoading(false)
         updateStorageUsageState(storageUsageState)
-        upgradeAvailable.value = true
-        binding.storageFullView.onUpgradeAvailable { scrollToFirstAvailablePlanForUpgrade() }
+        storageFullView.onUpgradeAvailable { scrollToFirstAvailablePlanForUpgrade() }
+        upgradeLayout.isVisible = true
     }
 
     private fun onUpgradeNotAvailable(storageUsageState: StorageUsageState?) = with(binding) {
         showLoading(false)
-        upgradeAvailable.value = false
-        binding.storageFullView.onUpgradeUnavailable()
         updateStorageUsageState(storageUsageState)
+        storageFullView.onUpgradeUnavailable()
+        upgradeLayout.isVisible = subscription.isGone or false
     }
 
-    private fun onError(error: Throwable?) = with(binding) {
+    private fun onError(error: Throwable?, showChildLayout: Boolean) = with(binding) {
         showLoading(false)
         val message = error?.getUserMessage(resources)
-        showError(message ?: getString(R.string.presentation_error_general))
+        showError(message ?: getString(R.string.presentation_error_general), showChildLayout)
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
@@ -186,10 +158,10 @@ class DynamicUpgradePlanFragment : ProtonFragment(R.layout.fragment_dynamic_upgr
         errorLayout.isVisible = false
     }
 
-    private fun showError(message: String) = with(binding) {
-        errorLayout.isVisible = true
+    private fun showError(message: String, showChildLayout: Boolean) = with(binding) {
+        errorLayout.isVisible = !showChildLayout
         error.text = message
-        planSelection.isVisible = false
+        upgradeLayout.isVisible = showChildLayout
     }
 
     private fun updateStorageUsageState(state: StorageUsageState?) {

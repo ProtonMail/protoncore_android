@@ -24,6 +24,9 @@ import androidx.core.view.forEach
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.payment.presentation.view.ProtonPaymentEventListener
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
@@ -63,18 +66,15 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
     private val viewModel by viewModels<DynamicPlanListViewModel>()
 
     private var onPlanSelected: ((SelectedPlan) -> Unit)? = null
-    private var onPlanList: ((List<DynamicPlan>) -> Unit)? = null
     private var onProtonPaymentEventListener: ProtonPaymentEventListener? = null
 
-    fun getUser(): DynamicUser = viewModel.getUser()
-    fun getPlanList(): List<DynamicPlan>? = viewModel.getPlanList()
+    fun onError(): Flow<Throwable?> = viewModel.state.map { (it as? State.Error)?.error }
+
+    fun getUser(): StateFlow<DynamicUser> = viewModel.getUser()
+    fun getPlanList(): StateFlow<List<DynamicPlan>?> = viewModel.getPlanList()
 
     fun setOnPlanSelected(onPlanSelected: (SelectedPlan) -> Unit) {
         this.onPlanSelected = onPlanSelected
-    }
-
-    fun setOnPlanList(onPlanList: (List<DynamicPlan>) -> Unit) {
-        this.onPlanList = onPlanList
     }
 
     fun setOnProtonPaymentResultListener(listener: ProtonPaymentEventListener) {
@@ -117,7 +117,6 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
     }
 
     private fun onSuccess(result: State.Success) {
-        onPlanList?.invoke(result.plans)
         showLoading(false)
         showPlans(result.plans, result.filter.cycle, result.filter.currency)
     }
@@ -153,7 +152,7 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         val promoTitleBadge = badges.firstTitleOrNull(instance?.price?.get(currency)?.id)
         val promoSubtitleBadge = badges.firstSubtitleOrNull(instance?.price?.get(currency)?.id)
         val stars = plan.decorations.filterIsInstance<DynamicDecoration.Starred>()
-        val userId = getUser().userId
+        val userId = getUser().value.userId
 
         id = abs(plan.name.hashCode())
         title = plan.title
