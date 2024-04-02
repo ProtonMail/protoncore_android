@@ -116,7 +116,7 @@ class ObtainSendPreferencesTests {
             contacWith2PinnedKeysContactEmail
         )
 
-        coEvery { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("contact_1")) } returns externalContactWithPinnedKeyBrokenSignature
+        coEvery { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("contact_1"), true) } returns externalContactWithPinnedKeyBrokenSignature
 
         coEvery { getRecipientPublicAddressesMock.invoke(userId, any()) } returns mapOf(
             "disabled_address@pm.me" to null, // address is disabled
@@ -268,7 +268,7 @@ class ObtainSendPreferencesTests {
 
         val map = sut(userId, emails)
 
-        coVerify(exactly = 1) { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("contact_1")) }
+        coVerify(exactly = 1) { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("contact_1"), true) }
 
         val result = map["contact_external_pinned_key+alias@email.com"]
         println(result)
@@ -286,7 +286,7 @@ class ObtainSendPreferencesTests {
         every { pgpCryptoMock.isKeyExpired(any()) } returns false
         every { pgpCryptoMock.isKeyRevoked(any()) } returns false
 
-        coEvery { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys")) } returns contactWith2PinnedKeys
+        coEvery { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys"), true) } returns contactWith2PinnedKeys
 
         mockkStatic(KeyHolderContext::decryptContactCard)
         every { any<KeyHolderContext>().decryptContactCard(any()) } returns DecryptedVCard(Ezvcard.parse(contactWith2PinnedKeys.contactCards.filterIsInstance<ContactCard.Signed>().first().data).first(), VerificationStatus.Success)
@@ -295,7 +295,7 @@ class ObtainSendPreferencesTests {
 
         val result = sut(userId, emails)
 
-        coVerify(exactly = 1) { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys")) }
+        coVerify(exactly = 1) { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys"), true) }
 
         with (result[emailWithPinnedKeys] as ObtainSendPreferences.Result.Success) {
             assertTrue(this.sendPreferences.sign)
@@ -317,7 +317,7 @@ class ObtainSendPreferencesTests {
         every { pgpCryptoMock.isKeyExpired(any()) } returns false
         every { pgpCryptoMock.isKeyRevoked(any()) } returns false
 
-        coEvery { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys")) } returns contactWith2PinnedKeys
+        coEvery { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys"), true) } returns contactWith2PinnedKeys
 
         mockkStatic(KeyHolderContext::decryptContactCard)
         every { any<KeyHolderContext>().decryptContactCard(any()) } returns DecryptedVCard(Ezvcard.parse(contactWith2PinnedKeys.contactCards.filterIsInstance<ContactCard.Signed>().first().data).first(), VerificationStatus.Success)
@@ -326,7 +326,7 @@ class ObtainSendPreferencesTests {
 
         val result = sut(userId, emails)
 
-        coVerify(exactly = 1) { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys")) }
+        coVerify(exactly = 1) { contactEmailsRepositoryMock.getContactWithCards(userId, ContactId("ID of contact with 2 pinned keys"), true) }
 
         with (result[emailWithPinnedKeys] as ObtainSendPreferences.Result.Success) {
             assertTrue(this.sendPreferences.sign)

@@ -93,7 +93,7 @@ class ObtainSendPreferences @Inject constructor(
 
         val sendPreferencesOrError = if (contactEmail?.defaults == false.toInt()) { // custom Send Preferences
 
-            val contactWithCards = contactEmailsRepository.getContactWithCards(user.userId, contactEmail.contactId)
+            val contactWithCards = contactEmailsRepository.getContactWithCards(user.userId, contactEmail.contactId, true)
 
             user.useKeys(cryptoContext) {
 
