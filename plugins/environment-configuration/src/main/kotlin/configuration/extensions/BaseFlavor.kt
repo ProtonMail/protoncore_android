@@ -21,11 +21,11 @@ package configuration.extensions
 import com.android.build.api.dsl.BaseFlavor
 import configuration.EnvironmentConfig
 import configuration.EnvironmentConfigSettings
-import org.jetbrains.kotlin.gradle.plugin.extraProperties
+import org.gradle.api.plugins.ExtensionAware
 
 var BaseFlavor.environmentConfiguration: EnvironmentConfig
-    get() = extraProperties.getEnvironmentConfigurationByName(getName())
-    set(config) = extraProperties.setEnvironmentConfigurationByName(getName(), config)
+    get() = (this as ExtensionAware).extensions.extraProperties.getEnvironmentConfigurationByName(getName())
+    set(config) = (this as ExtensionAware).extensions.extraProperties.setEnvironmentConfigurationByName(getName(), config)
 
 fun BaseFlavor.protonEnvironment(action: EnvironmentConfigSettings.() -> Unit) {
     environmentConfiguration = EnvironmentConfigSettings().apply(action)
