@@ -18,6 +18,10 @@
 
 package me.proton.core.report.test.robot
 
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isChecked
+import androidx.test.espresso.matcher.ViewMatchers.isNotChecked
 import me.proton.core.report.presentation.R
 import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.test.fusion.Fusion.view
@@ -26,6 +30,7 @@ import me.proton.test.fusion.Fusion.view
 public object ReportRobot {
     private val subjectInput = view.withCustomMatcher(inputFieldMatcher(R.id.bug_report_subject))
     private val descriptionInput = view.withCustomMatcher(inputFieldMatcher(R.id.bug_report_description))
+    private val attachLogCheckBox = view.withId(R.id.bug_report_attach_log)
     private val sendButton = view.withId(R.id.bug_report_send)
 
     public fun fillSubject(subject: String): ReportRobot = apply {
@@ -34,6 +39,24 @@ public object ReportRobot {
 
     public fun fillDescription(description: String): ReportRobot = apply {
         descriptionInput.typeText(description)
+    }
+
+    public fun checkAttachLog() {
+        attachLogCheckBox
+            .interaction
+            .check(matches(isNotChecked()))
+            .perform(click())
+    }
+
+    public fun uncheckAttachLog() {
+        attachLogCheckBox
+            .interaction
+            .check(matches(isChecked()))
+            .perform(click())
+    }
+
+    public fun clickAttachLog() {
+        attachLogCheckBox.click()
     }
 
     public fun clickSend() {

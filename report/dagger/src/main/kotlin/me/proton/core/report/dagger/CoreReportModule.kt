@@ -20,14 +20,17 @@ package me.proton.core.report.dagger
 
 import android.os.Build
 import dagger.Binds
+import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.ElementsIntoSet
 import me.proton.core.domain.entity.Product
 import me.proton.core.report.data.SendBugReportImpl
 import me.proton.core.report.data.repository.ReportRepositoryImpl
 import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.report.domain.provider.BugReportLogProvider
 import me.proton.core.report.domain.repository.ReportRepository
 import me.proton.core.report.domain.usecase.SendBugReport
 
@@ -54,4 +57,7 @@ internal interface CoreReportBindModule {
 
     @Binds
     fun provideSendBugReportUseCase(useCase: SendBugReportImpl): SendBugReport
+
+    @BindsOptionalOf
+    fun optionalBugReportLogProvider(): BugReportLogProvider
 }

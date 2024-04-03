@@ -18,13 +18,13 @@
 
 package me.proton.core.report.data.api
 
-import me.proton.core.report.data.api.request.BugReportRequest
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
+import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.POST
 
 internal interface ReportApi : BaseRetrofitApi {
     @POST("reports/bug")
-    suspend fun sendBugReport(@Body body: BugReportRequest): GenericResponse
+    suspend fun sendBugReport(@Body body: RequestBody): GenericResponse
 }

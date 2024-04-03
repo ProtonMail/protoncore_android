@@ -38,6 +38,7 @@ import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertFailsWith
 
 internal class ReportRepositoryImplTest {
@@ -51,7 +52,8 @@ internal class ReportRepositoryImplTest {
         title = "title",
         description = "description",
         username = "username",
-        email = "email@test"
+        email = "email@test",
+        shouldAttachLog = false,
     )
     private val testBugReportMeta = BugReportMeta(
         appVersionName = "android-mail@1.2.3",
@@ -71,7 +73,7 @@ internal class ReportRepositoryImplTest {
             every { create(any(), ReportApi::class) } returns mockApiManager
         }
         mockApiProvider = ApiProvider(mockApiManagerFactory, mockSessionProvider, dispatcherProvider)
-        tested = ReportRepositoryImpl(mockApiProvider)
+        tested = ReportRepositoryImpl(mockApiProvider, Optional.empty())
     }
 
     @Test

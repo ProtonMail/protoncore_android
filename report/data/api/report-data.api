@@ -24,16 +24,16 @@ public final class me/proton/core/report/data/SendBugReportImpl_Factory : dagger
 }
 
 public final class me/proton/core/report/data/repository/ReportRepositoryImpl : me/proton/core/report/domain/repository/ReportRepository {
-	public fun <init> (Lme/proton/core/network/data/ApiProvider;)V
+	public fun <init> (Lme/proton/core/network/data/ApiProvider;Ljava/util/Optional;)V
 	public fun sendReport (Lme/proton/core/report/domain/entity/BugReport;Lme/proton/core/report/domain/entity/BugReportMeta;Lme/proton/core/report/domain/entity/BugReportExtra;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/report/data/repository/ReportRepositoryImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/report/data/repository/ReportRepositoryImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/report/data/repository/ReportRepositoryImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/report/data/repository/ReportRepositoryImpl;
-	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;)Lme/proton/core/report/data/repository/ReportRepositoryImpl;
+	public static fun newInstance (Lme/proton/core/network/data/ApiProvider;Ljava/util/Optional;)Lme/proton/core/report/data/repository/ReportRepositoryImpl;
 }
 
 public abstract interface class me/proton/core/report/data/work/BugReportWorker_AssistedFactory : androidx/hilt/work/WorkerAssistedFactory {

@@ -18,20 +18,28 @@
 
 package me.proton.core.report.data.repository
 
+import android.webkit.MimeTypeMap
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.onSuccess
 import me.proton.core.report.data.api.ReportApi
-import me.proton.core.report.data.api.request.BugReportRequest
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.entity.BugReportMeta
+import me.proton.core.report.domain.provider.BugReportLogProvider
 import me.proton.core.report.domain.repository.ReportRepository
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
+import java.util.Optional
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 public class ReportRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
+    private val bugReportLogProvider: Optional<BugReportLogProvider>,
 ) : ReportRepository {
     override suspend fun sendReport(
         bugReport: BugReport,
@@ -45,24 +53,72 @@ public class ReportRepositoryImpl @Inject constructor(
             Product.Drive -> 4
             Product.Pass -> 5
         }
+        val logProvider = bugReportLogProvider.getOrNull()
+        val logFile = takeIf { bugReport.shouldAttachLog }
+            ?.let { logProvider?.getLog() }
 
-        val request = BugReportRequest(
-            osName = meta.osName,
-            osVersion = meta.osVersion,
-            client = meta.clientName,
-            clientType = clientType,
-            appVersionName = meta.appVersionName,
-            title = bugReport.title,
-            description = bugReport.description,
-            username = bugReport.username,
-            email = bugReport.email,
-            country = extra?.country,
-            isp = extra?.isp
-        )
+        runCatching {
+            apiProvider.get<ReportApi>()
+                .invoke {
+                    sendBugReport(
+                        getMultipartBodyBuilder(
+                            bugReport = bugReport,
+                            meta = meta,
+                            clientType = clientType,
+                            country = extra?.country,
+                            isp = extra?.isp,
+                            logFile = logFile,
+                        ).build()
+                    )
+                }
+                .onSuccess { check(it.isSuccess()) }
+                .valueOrThrow
+        }
+            .apply { logFile?.let { logProvider?.releaseLog(logFile) } }
+            .getOrThrow()
+    }
 
-        apiProvider.get<ReportApi>()
-            .invoke { sendBugReport(request) }
-            .onSuccess { check(it.isSuccess()) }
-            .valueOrThrow
+    private fun getMultipartBodyBuilder(
+        bugReport: BugReport,
+        meta: BugReportMeta,
+        clientType: Int,
+        country: String?,
+        isp: String?,
+        logFile: File?,
+    ): MultipartBody.Builder = MultipartBody.Builder()
+        .setType(MultipartBody.FORM)
+        .addFormDataPart(name = "OS", value = meta.osName)
+        .addFormDataPart(name = "OSVersion", value = meta.osVersion)
+        .addFormDataPart(name = "Client", value = meta.clientName)
+        .addFormDataPart(name = "ClientVersion", value = meta.appVersionName)
+        .addFormDataPart(name = "ClientType",value = "$clientType")
+        .addFormDataPart(name = "Title", value = bugReport.title)
+        .addFormDataPart(name = "Description", value = bugReport.description)
+        .addFormDataPart(name = "Username", value = bugReport.username)
+        .addFormDataPart(name = "Email", value = bugReport.email)
+        .apply {
+            country?.let {
+                addFormDataPart(name = "Country", value = country)
+            }
+            isp?.let {
+                addFormDataPart(name = "ISP", value = isp)
+            }
+            logFile?.takeIf { file -> file.exists() && file.length() > 0 }?.let { file ->
+                addFormDataPart(
+                    name = ATTACHMENT,
+                    filename = file.name,
+                    body = file.asRequestBody(file.mimeType?.toMediaTypeOrNull()),
+                )
+            }
+        }
+
+    private val File.mimeType: String? get() = name
+        .substringAfterLast('.', "")
+        .let { extension ->
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
+        }
+
+    private companion object {
+        private const val ATTACHMENT = "Attachment"
     }
 }

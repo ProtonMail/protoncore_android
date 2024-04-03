@@ -30,7 +30,8 @@ internal class BugReportValidationTest {
             title = "Title",
             description = "Description...",
             username = "username",
-            email = "test@user"
+            email = "test@user",
+            shouldAttachLog = false,
         ).validate()
         assertTrue(errors.isEmpty())
     }
@@ -41,7 +42,8 @@ internal class BugReportValidationTest {
             title = "",
             description = "",
             username = "",
-            email = ""
+            email = "",
+            shouldAttachLog = false,
         ).validate()
         assertNotNull(errors)
         assertEquals(2, errors.size)
@@ -55,7 +57,8 @@ internal class BugReportValidationTest {
             title = " ".repeat(20),
             description = " ".repeat(20),
             username = "",
-            email = ""
+            email = "",
+            shouldAttachLog = false,
         ).validate()
         assertNotNull(errors)
         assertEquals(2, errors.size)
@@ -69,7 +72,8 @@ internal class BugReportValidationTest {
             title = "Title",
             description = "Test",
             username = "",
-            email = ""
+            email = "",
+            shouldAttachLog = false,
         ).validate()
         assertNotNull(errors)
         assertEquals(1, errors.size)
@@ -82,7 +86,8 @@ internal class BugReportValidationTest {
             title = "a".repeat(BugReport.SubjectMaxLength + 1),
             description = "b".repeat(BugReport.DescriptionMaxLength + 1),
             username = "",
-            email = ""
+            email = "",
+            shouldAttachLog = false,
         ).validate()
         assertNotNull(errors)
         assertEquals(2, errors.size)

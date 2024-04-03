@@ -27,21 +27,23 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.domain.entity.BugReportExtra
 import me.proton.core.report.domain.entity.BugReportField
 import me.proton.core.report.domain.entity.validate
+import me.proton.core.report.domain.provider.BugReportLogProvider
 import me.proton.core.report.domain.usecase.SendBugReport
 import me.proton.core.report.presentation.entity.BugReportFormState
 import me.proton.core.report.presentation.entity.ExitSignal
 import me.proton.core.report.presentation.entity.ReportFormData
+import java.util.Optional
 import javax.inject.Inject
 
 @HiltViewModel
 internal class BugReportViewModel @Inject constructor(
-    private val sendBugReport: SendBugReport
+    private val sendBugReport: SendBugReport,
+    bugReportLogProvider: Optional<BugReportLogProvider>,
 ) : ViewModel() {
     private val _bugReportFormState = MutableStateFlow<BugReportFormState>(BugReportFormState.Idle)
     val bugReportFormState: StateFlow<BugReportFormState> = _bugReportFormState.asStateFlow()
@@ -51,6 +53,8 @@ internal class BugReportViewModel @Inject constructor(
 
     private val _hideKeyboardSignal = MutableSharedFlow<Unit>()
     val hideKeyboardSignal: Flow<Unit> = _hideKeyboardSignal.asSharedFlow()
+
+    val shouldShowAttachLog = bugReportLogProvider.isPresent
 
     /** Re-validates the description, and preserves other errors (if any). */
     suspend fun revalidateDescription(description: String) {
@@ -115,6 +119,7 @@ internal class BugReportViewModel @Inject constructor(
         title = data.subject,
         description = data.description,
         email = email,
-        username = username
+        username = username,
+        shouldAttachLog = data.attachLog,
     )
 }

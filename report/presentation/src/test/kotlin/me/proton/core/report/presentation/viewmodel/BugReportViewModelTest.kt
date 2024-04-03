@@ -33,6 +33,7 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
+import java.util.Optional
 import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
@@ -51,7 +52,7 @@ internal class BugReportViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Before
     fun setUp() {
         sendBugReport = mockk()
-        tested = BugReportViewModel(sendBugReport)
+        tested = BugReportViewModel(sendBugReport, Optional.empty())
     }
 
     @Test

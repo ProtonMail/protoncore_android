@@ -27,7 +27,8 @@ internal val testBugReport = BugReport(
     title = "Title",
     description = "Bug report description",
     username = "username",
-    email = "test@email"
+    email = "test@email",
+    shouldAttachLog = false,
 )
 internal val testBugReportMeta = BugReportMeta(
     appVersionName = "android-mail@1.2.3",

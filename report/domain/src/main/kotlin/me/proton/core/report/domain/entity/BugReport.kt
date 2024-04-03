@@ -27,7 +27,8 @@ public data class BugReport(
     val title: String,
     val description: String,
     val username: String,
-    val email: String
+    val email: String,
+    val shouldAttachLog: Boolean,
 ) {
     public companion object {
         public const val DescriptionMinLength: Int = 10

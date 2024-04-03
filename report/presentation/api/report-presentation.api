@@ -35,6 +35,8 @@ public final class me/proton/core/report/presentation/ReportOrchestrator_Factory
 }
 
 public final class me/proton/core/report/presentation/databinding/CoreReportActivityBugReportBinding : androidx/viewbinding/ViewBinding {
+	public final field bugReportAttachLog Lme/proton/core/presentation/ui/view/ProtonCheckbox;
+	public final field bugReportAttachLogLayout Landroid/widget/LinearLayout;
 	public final field bugReportDescription Lcom/google/android/material/textfield/TextInputEditText;
 	public final field bugReportDescriptionLayout Lcom/google/android/material/textfield/TextInputLayout;
 	public final field bugReportSubject Lcom/google/android/material/textfield/TextInputEditText;
@@ -103,11 +105,11 @@ public abstract interface class me/proton/core/report/presentation/ui/BugReportA
 }
 
 public final class me/proton/core/report/presentation/viewmodel/BugReportViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/report/presentation/viewmodel/BugReportViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/report/presentation/viewmodel/BugReportViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/report/presentation/viewmodel/BugReportViewModel;
-	public static fun newInstance (Lme/proton/core/report/domain/usecase/SendBugReport;)Lme/proton/core/report/presentation/viewmodel/BugReportViewModel;
+	public static fun newInstance (Lme/proton/core/report/domain/usecase/SendBugReport;Ljava/util/Optional;)Lme/proton/core/report/presentation/viewmodel/BugReportViewModel;
 }
 
 public final class me/proton/core/report/presentation/viewmodel/BugReportViewModel_HiltModules {

@@ -28,6 +28,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -112,6 +113,8 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
                 showKeyboard(binding.bugReportDescription)
             }
         }
+
+        binding.bugReportAttachLogLayout.visibility = if (viewModel.shouldShowAttachLog) View.VISIBLE else View.GONE
     }
 
     private fun initToolbar() {
@@ -151,6 +154,7 @@ internal class BugReportActivity : ProtonViewBindingActivity<CoreReportActivityB
         return ReportFormData(
             subject = binding.bugReportSubject.text.toString(),
             description = binding.bugReportDescription.text.toString(),
+            attachLog = binding.bugReportAttachLog.isVisible && binding.bugReportAttachLog.isChecked,
         )
     }
 

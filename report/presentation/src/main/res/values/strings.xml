@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Something went wrong. Please try again in a few minutes.</string>
   <string name="core_report_bug_send">Send report</string>
   <string name="core_report_bug_success">Thank you for your report</string>
+  <string name="core_report_bug_attach_log">Attach log</string>
 </resources>

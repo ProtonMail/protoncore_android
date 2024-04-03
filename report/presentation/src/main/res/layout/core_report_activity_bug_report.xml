@@ -85,6 +85,30 @@
                 android:layout_marginBottom="8dp"
                 android:background="?proton_separator_norm" />
 
+            <LinearLayout
+                android:id="@+id/bug_report_attach_log_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+		<me.proton.core.presentation.ui.view.ProtonCheckbox
+                    android:id="@+id/bug_report_attach_log"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:checked="true"
+                    android:text="@string/core_report_bug_attach_log" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:background="?proton_separator_norm" />
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/bug_report_description_layout"
                 android:layout_width="match_parent"

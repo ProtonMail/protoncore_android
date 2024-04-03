@@ -3,16 +3,18 @@ public final class me/proton/core/report/domain/entity/BugReport {
 	public static final field DescriptionMaxLength I
 	public static final field DescriptionMinLength I
 	public static final field SubjectMaxLength I
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReport;
-	public static synthetic fun copy$default (Lme/proton/core/report/domain/entity/BugReport;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/report/domain/entity/BugReport;
+	public final fun component5 ()Z
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Lme/proton/core/report/domain/entity/BugReport;
+	public static synthetic fun copy$default (Lme/proton/core/report/domain/entity/BugReport;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZILjava/lang/Object;)Lme/proton/core/report/domain/entity/BugReport;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getEmail ()Ljava/lang/String;
+	public final fun getShouldAttachLog ()Z
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun getUsername ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -122,6 +124,11 @@ public final class me/proton/core/report/domain/entity/BugReportValidationError 
 	public final fun getField ()Lme/proton/core/report/domain/entity/BugReportField;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/report/domain/entity/BugReportValidationError;
 	public static fun values ()[Lme/proton/core/report/domain/entity/BugReportValidationError;
+}
+
+public abstract interface class me/proton/core/report/domain/provider/BugReportLogProvider {
+	public abstract fun getLog (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun releaseLog (Ljava/io/File;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public abstract interface class me/proton/core/report/domain/repository/ReportRepository {

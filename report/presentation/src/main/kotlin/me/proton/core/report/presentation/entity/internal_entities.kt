@@ -30,7 +30,8 @@ internal sealed class BugReportFormState {
 
 internal data class ReportFormData(
     val subject: String,
-    val description: String
+    val description: String,
+    val attachLog: Boolean = false,
 )
 
 internal enum class ExitSignal {
