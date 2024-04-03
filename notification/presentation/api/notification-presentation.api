@@ -324,6 +324,7 @@ public final class me/proton/core/notification/presentation/usecase/ReplaceNotif
 }
 
 public final class me/proton/core/notification/presentation/usecase/ShowNotificationViewImpl : me/proton/core/notification/domain/usecase/ShowNotificationView {
+	public fun invoke (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lme/proton/core/notification/domain/entity/NotificationPayload;Ljava/lang/String;Ljava/lang/String;)V
 	public fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
 }
 

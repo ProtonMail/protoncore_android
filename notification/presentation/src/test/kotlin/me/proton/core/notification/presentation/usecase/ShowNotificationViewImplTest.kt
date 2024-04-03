@@ -71,12 +71,35 @@ class ShowNotificationViewImplTest {
     @MockK(relaxed = true)
     private lateinit var deeplinkIntentProvider: DeeplinkIntentProvider
 
+    private val notificationUnknown = Notification(
+        notificationId = NotificationId("notification_id"),
+        userId = UserId("user_id"),
+        time = 11,
+        type = "type",
+        payload = NotificationPayload.Unknown(raw = "")
+    )
+
+    private val notificationUnencrypted = Notification(
+        notificationId = NotificationId("notification_id"),
+        userId = UserId("user_id"),
+        time = 11,
+        type = "type",
+        payload = NotificationPayload.Unencrypted(
+            raw = "",
+            title = "title",
+            subtitle = "subtitle",
+            body = "body"
+        )
+    )
+
     private lateinit var tested: ShowNotificationViewImpl
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
         mockkStatic(IconCompat::class)
+        every { getNotificationId(any<Notification>()) } returns 1
+        every { getNotificationTag(any<Notification>()) } returns "notification-tag"
         context = ApplicationProvider.getApplicationContext()
     }
 
@@ -92,15 +115,7 @@ class ShowNotificationViewImplTest {
         every { hasNotificationPermission() } returns true
 
         // WHEN
-        tested(
-            Notification(
-                notificationId = NotificationId("notification_id"),
-                userId = UserId("user_id"),
-                time = 11,
-                type = "type",
-                payload = NotificationPayload.Unknown(raw = "")
-            )
-        )
+        tested(notificationUnknown)
 
         // THEN
         val notificationManager =
@@ -115,7 +130,7 @@ class ShowNotificationViewImplTest {
         every { hasNotificationPermission() } returns false
 
         // WHEN
-        tested(mockk())
+        tested(notificationUnencrypted)
 
         // THEN
         val notificationManager =
@@ -126,18 +141,7 @@ class ShowNotificationViewImplTest {
     @Test
     fun postNotification() {
         // GIVEN
-        val notification = Notification(
-            notificationId = NotificationId("notification_id"),
-            userId = UserId("user_id"),
-            time = 11,
-            type = "type",
-            payload = NotificationPayload.Unencrypted(
-                raw = "",
-                title = "title",
-                subtitle = "subtitle",
-                body = "body"
-            )
-        )
+
 
         val contextSpy = spyk(context)
         val notificationManager =
@@ -149,15 +153,13 @@ class ShowNotificationViewImplTest {
 
         every { hasNotificationPermission() } returns true
         every { getNotificationChannelId() } returns "channel-id"
-        every { getNotificationId(any<Notification>()) } returns 1
-        every { getNotificationTag(any<Notification>()) } returns "notification-tag"
 
         // WHEN
-        tested(notification)
+        tested(notificationUnencrypted)
 
         // THEN
         verify { getNotificationId(any<Notification>()) }
-        verify { getNotificationTag(notification) }
+        verify { getNotificationTag(notificationUnencrypted) }
         verify { deeplinkIntentProvider.getActivityPendingIntent(any(), any(), any()) }
         verify { deeplinkIntentProvider.getBroadcastPendingIntent(any(), any(), any()) }
 

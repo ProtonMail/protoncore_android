@@ -9,19 +9,6 @@ public final class me/proton/core/userrecovery/data/BuildConfig {
 	public fun <init> ()V
 }
 
-public final class me/proton/core/userrecovery/data/DeviceRecoveryHandler {
-	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryFile;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys;)V
-	public final fun start ()V
-}
-
-public final class me/proton/core/userrecovery/data/DeviceRecoveryHandler_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/DeviceRecoveryHandler_Factory;
-	public synthetic fun get ()Ljava/lang/Object;
-	public fun get ()Lme/proton/core/userrecovery/data/DeviceRecoveryHandler;
-	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryFile;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys;)Lme/proton/core/userrecovery/data/DeviceRecoveryHandler;
-}
-
 public final class me/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl : me/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled {
 	public static final field Companion Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl$Companion;
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V

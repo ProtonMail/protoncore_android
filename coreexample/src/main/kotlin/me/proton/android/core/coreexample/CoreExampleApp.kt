@@ -35,7 +35,7 @@ import me.proton.core.network.presentation.init.UnAuthSessionFetcherInitializer
 import me.proton.core.paymentiap.presentation.GooglePurchaseHandlerInitializer
 import me.proton.core.plan.presentation.PurchaseHandlerInitializer
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
-import me.proton.core.userrecovery.presentation.DeviceRecoveryHandlerInitializer
+import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryInitializer
 
 @HiltAndroidApp
 class CoreExampleApp : Application() {
@@ -45,7 +45,7 @@ class CoreExampleApp : Application() {
             initializeComponent(WorkManagerInitializer::class.java)
             initializeComponent(EventManagerInitializer::class.java)
             initializeComponent(AccountStateHandlerInitializer::class.java)
-            initializeComponent(DeviceRecoveryHandlerInitializer::class.java)
+            initializeComponent(DeviceRecoveryInitializer::class.java)
             initializeComponent(CryptoValidatorInitializer::class.java)
             initializeComponent(PurchaseHandlerInitializer::class.java)
             initializeComponent(GooglePurchaseHandlerInitializer::class.java)

@@ -18,13 +18,32 @@
 
 package me.proton.core.notification.domain.usecase
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
+import me.proton.core.notification.domain.entity.NotificationPayload
 
-public fun interface ShowNotificationView {
-    /** Shows a [notification] view.
+public interface ShowNotificationView {
+
+    /**
+     * Shows a notification from a [Notification].
+     *
      * Any previous notifications for the same [Notification.notificationId] and [Notification.userId] are cancelled.
      */
     public operator fun invoke(notification: Notification)
+
+    /**
+     * Shows a notification from a [NotificationPayload].
+     *
+     * Any previous notifications for the same [notificationId] and [userId] are cancelled.
+     */
+    public operator fun invoke(
+        userId: UserId,
+        notificationId: Int,
+        notificationTag: String,
+        payload: NotificationPayload,
+        contentDeeplink: String? = null,
+        deleteDeeplink: String? = null,
+    )
 
     public companion object {
         public const val ExtraNotificationId: String = "me.proton.core.notification.notificationId"

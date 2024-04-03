@@ -155,11 +155,16 @@ public abstract interface class me/proton/core/notification/domain/usecase/ShowN
 	public static final field Companion Lme/proton/core/notification/domain/usecase/ShowNotificationView$Companion;
 	public static final field ExtraNotificationId Ljava/lang/String;
 	public static final field ExtraUserId Ljava/lang/String;
+	public abstract fun invoke (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lme/proton/core/notification/domain/entity/NotificationPayload;Ljava/lang/String;Ljava/lang/String;)V
 	public abstract fun invoke (Lme/proton/core/notification/domain/entity/Notification;)V
 }
 
 public final class me/proton/core/notification/domain/usecase/ShowNotificationView$Companion {
 	public static final field ExtraNotificationId Ljava/lang/String;
 	public static final field ExtraUserId Ljava/lang/String;
+}
+
+public final class me/proton/core/notification/domain/usecase/ShowNotificationView$DefaultImpls {
+	public static synthetic fun invoke$default (Lme/proton/core/notification/domain/usecase/ShowNotificationView;Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lme/proton/core/notification/domain/entity/NotificationPayload;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)V
 }
 

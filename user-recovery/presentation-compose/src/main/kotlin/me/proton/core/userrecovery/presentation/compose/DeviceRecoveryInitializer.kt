@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.userrecovery.presentation
+package me.proton.core.userrecovery.presentation.compose
 
 import android.content.Context
 import androidx.startup.Initializer
@@ -24,20 +24,23 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.userrecovery.data.DeviceRecoveryHandler
 
-class DeviceRecoveryHandlerInitializer : Initializer<Unit> {
+class DeviceRecoveryInitializer : Initializer<Unit> {
 
     override fun create(context: Context) = EntryPointAccessors.fromApplication(
         context.applicationContext,
-        DeviceRecoveryHandlerInitializerEntryPoint::class.java
-    ).deviceRecoveryHandler().start()
+        DeviceRecoveryInitializerEntryPoint::class.java
+    ).run {
+        deviceRecoveryNotificationSetup().init()
+        deviceRecoveryHandler().start()
+    }
 
     override fun dependencies(): List<Class<out Initializer<*>?>> = emptyList()
 
     @EntryPoint
     @InstallIn(SingletonComponent::class)
-    interface DeviceRecoveryHandlerInitializerEntryPoint {
+    interface DeviceRecoveryInitializerEntryPoint {
+        fun deviceRecoveryNotificationSetup(): DeviceRecoveryNotificationSetup
         fun deviceRecoveryHandler(): DeviceRecoveryHandler
     }
 }

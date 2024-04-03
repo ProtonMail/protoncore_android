@@ -1,7 +1,249 @@
+public class hilt_aggregated_deps/_me_proton_core_userrecovery_presentation_compose_DeviceRecoveryDialogActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_userrecovery_presentation_compose_DeviceRecoveryInitializer_DeviceRecoveryInitializerEntryPoint {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_userrecovery_presentation_compose_viewmodel_DeviceRecoveryDialogViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_userrecovery_presentation_compose_viewmodel_DeviceRecoveryDialogViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public final class me/proton/core/userrecovery/presentation/compose/BuildConfig {
 	public static final field BUILD_TYPE Ljava/lang/String;
 	public static final field DEBUG Z
 	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
 	public fun <init> ()V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDeeplink {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDeeplink;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDeeplink$Arg {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDeeplink$Arg;
+	public static final field UserId Ljava/lang/String;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDeeplink$Recovery {
+	public static final field $stable I
+	public static final field Deeplink Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDeeplink$Recovery;
+	public final fun get (Lme/proton/core/domain/entity/UserId;)Ljava/lang/String;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity : me/proton/core/presentation/ui/ProtonActivity {
+	public static final field $stable I
+	public static final field ARG_INPUT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$Companion;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$Companion {
+	public final fun getIntent (Landroid/content/Context;Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;)Landroid/content/Intent;
+	public final fun start (Landroid/content/Context;Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;)V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;
+	public static synthetic fun copy$default (Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity$DeviceRecoveryDialogInput;
+}
+
+public abstract interface class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity_GeneratedInjector {
+	public abstract fun injectDeviceRecoveryDialogActivity (Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryDialogActivity;)V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryHandler {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryFile;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys;Lme/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification;)V
+	public final fun start ()V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryHandler_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryHandler_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryHandler;
+	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/user/domain/UserManager;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryFile;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys;Lme/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryHandler;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryInitializer : androidx/startup/Initializer {
+	public static final field $stable I
+	public fun <init> ()V
+	public synthetic fun create (Landroid/content/Context;)Ljava/lang/Object;
+	public fun create (Landroid/content/Context;)V
+	public fun dependencies ()Ljava/util/List;
+}
+
+public abstract interface class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryInitializer$DeviceRecoveryInitializerEntryPoint {
+	public abstract fun deviceRecoveryHandler ()Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryHandler;
+	public abstract fun deviceRecoveryNotificationSetup ()Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup {
+	public static final field $stable I
+	public static final field Companion Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup$Companion;
+	public static final field deeplink Ljava/lang/String;
+	public final fun init ()V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup$Companion {
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup;
+	public static fun newInstance (Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup;
+}
+
+public abstract class me/proton/core/userrecovery/presentation/compose/Hilt_DeviceRecoveryDialogActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification {
+	public static final field $stable I
+	public fun <init> (Landroid/content/Context;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;)V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/notification/domain/usecase/ShowNotificationView;)Lme/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotification;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/view/ComposableSingletons$DeviceRecoveryDialogKt {
+	public static final field INSTANCE Lme/proton/core/userrecovery/presentation/compose/view/ComposableSingletons$DeviceRecoveryDialogKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$user_recovery_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/view/DeviceRecoveryDialogKt {
+	public static final fun DeviceRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function1;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DeviceRecoveryDialog (Landroidx/compose/ui/Modifier;Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+	public static final fun DeviceRecoveryDialogPreview (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel : androidx/lifecycle/ViewModel, me/proton/core/observability/domain/ObservabilityContext {
+	public static final field $stable I
+	public fun <init> (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$Action {
+	public static final field $stable I
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$Action$ObserveState : me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$Action {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$Action$ObserveState;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State {
+	public static final field $stable I
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Error : me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Error;
+	public static synthetic fun copy$default (Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Error;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getThrowable ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Idle : me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Idle;
+	public static synthetic fun copy$default (Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Idle;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Idle;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmail ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Loading : me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel$State$Loading;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel;
+	public static fun newInstance (Landroidx/lifecycle/SavedStateHandle;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/userrecovery/presentation/compose/viewmodel/DeviceRecoveryDialogViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
 }
 

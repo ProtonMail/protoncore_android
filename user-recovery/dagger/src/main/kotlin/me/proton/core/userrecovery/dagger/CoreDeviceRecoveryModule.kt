@@ -18,9 +18,21 @@
 
 package me.proton.core.userrecovery.dagger
 
+import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.userrecovery.data.IsDeviceRecoveryEnabledImpl
+import me.proton.core.userrecovery.domain.IsDeviceRecoveryEnabled
+
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CoreDeviceRecoveryFeaturesModule {
+    @Binds
+    public fun bindIsDeviceRecoveryEnabled(
+        impl: IsDeviceRecoveryEnabledImpl
+    ): IsDeviceRecoveryEnabled
+}
 
 @Module
 @InstallIn(SingletonComponent::class)

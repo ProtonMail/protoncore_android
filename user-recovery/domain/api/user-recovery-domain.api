@@ -6,6 +6,7 @@ public abstract interface class me/proton/core/userrecovery/domain/IsDeviceRecov
 
 public final class me/proton/core/userrecovery/domain/LogTag {
 	public static final field DEFAULT Ljava/lang/String;
+	public static final field ERROR_OBSERVING_STATE Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/userrecovery/domain/LogTag;
 }
 

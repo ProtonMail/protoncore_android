@@ -22,6 +22,7 @@ import studio.forface.easygradle.dsl.android.*
 plugins {
     protonComposeUiLibrary
     protonDagger
+    id("kotlin-parcelize")
 }
 
 protonBuild {
@@ -38,7 +39,9 @@ dependencies {
     api(
         project(Module.presentationCompose),
         project(Module.userRecoveryDomain),
+        project(Module.notificationDomain),
         project(Module.userRecoveryPresentation),
+        project(Module.notificationPresentation),
 
         `compose-foundation`,
         `compose-foundation-layout`,

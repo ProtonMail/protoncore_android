@@ -16,18 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.userrecovery.data
+package me.proton.core.userrecovery.presentation.compose
 
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.user.domain.UserManager
-import me.proton.core.userrecovery.domain.LogTag
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryFile
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryInactivePrivateKeys
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryPrivateKeys
-import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.userrecovery.presentation.compose.usecase.ShowDeviceRecoveryNotification
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -41,17 +40,20 @@ class DeviceRecoveryHandler @Inject constructor(
     internal val getRecoveryFile: GetRecoveryFile,
     internal val getRecoveryPrivateKeys: GetRecoveryPrivateKeys,
     internal val getRecoveryInactivePrivateKeys: GetRecoveryInactivePrivateKeys,
+    internal val showDeviceRecoveryNotification: ShowDeviceRecoveryNotification,
 ) {
     fun start() {
         scopeProvider.GlobalDefaultSupervisedScope.launch {
             val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
-
+            /*
             val message = getRecoveryFile(userId)
             CoreLogger.d(LogTag.DEFAULT, "Recovery file: $message")
             val keys = getRecoveryPrivateKeys(userId, message)
             CoreLogger.d(LogTag.DEFAULT, "Recovery Private Keys: $keys")
             val recoverable = getRecoveryInactivePrivateKeys(userId, keys)
             CoreLogger.d(LogTag.DEFAULT, "Recovery inactive keys: $recoverable")
+            */
+            showDeviceRecoveryNotification(userId)
         }
     }
 }

@@ -21,4 +21,7 @@ package me.proton.core.userrecovery.domain
 object LogTag {
     /** Default tag for any other issue we need to log */
     const val DEFAULT = "core.userrecovery.default"
+
+    /** Tag for Device Recovery State observation. */
+    const val ERROR_OBSERVING_STATE = "core.userrecovery.error.observing.state"
 }

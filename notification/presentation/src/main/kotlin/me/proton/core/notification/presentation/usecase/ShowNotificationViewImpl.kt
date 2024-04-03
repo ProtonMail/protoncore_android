@@ -29,6 +29,7 @@ import androidx.core.graphics.drawable.IconCompat
 import androidx.core.os.bundleOf
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationPayload
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
@@ -52,34 +53,72 @@ public class ShowNotificationViewImpl @Inject internal constructor(
     private val deeplinkIntentProvider: DeeplinkIntentProvider,
     private val product: Product
 ) : ShowNotificationView {
+
+    @SuppressLint("InlinedApi")
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    private fun show(
+        userId: UserId,
+        notificationId: Int,
+        notificationTag: String,
+        payload: NotificationPayload,
+        build: NotificationCompat.Builder.() -> Unit
+    ) {
+        if (!hasNotificationPermission()) return
+        if (payload !is NotificationPayload.Unencrypted) return
+
+        val builder = NotificationCompat.Builder(context, getNotificationChannelId()).apply {
+            setSmallIcon(getSmallIcon())
+            setContentTitle(payload.title)
+            setSubText(payload.subtitle)
+            setContentText(payload.body) // collapsed - truncated to single line
+            setStyle(NotificationCompat.BigTextStyle().bigText(payload.body)) // expanded
+            addExtras(bundleOf(ExtraUserId to userId.id))
+        }
+
+        build.invoke(builder)
+
+        NotificationManagerCompat.from(context).notify(notificationTag, notificationId, builder.build())
+    }
+
+    @SuppressLint("InlinedApi")
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
+    override fun invoke(
+        userId: UserId,
+        notificationId: Int,
+        notificationTag: String,
+        payload: NotificationPayload,
+        contentDeeplink: String?,
+        deleteDeeplink: String?,
+    ) {
+        show(
+            userId = userId,
+            notificationId = notificationId,
+            notificationTag = notificationTag,
+            payload = payload,
+            build = {
+                contentDeeplink?.let { setContentIntent(makeContentIntent(contentDeeplink)) }
+                deleteDeeplink?.let { setDeleteIntent(makeOnDeleteIntent(deleteDeeplink)) }
+                setAutoCancel(true)
+            }
+        )
+    }
+
     @SuppressLint("InlinedApi")
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     override fun invoke(notification: Notification) {
-        if (!hasNotificationPermission()) return
-        val payload = notification.payload as? NotificationPayload.Unencrypted ?: return
-
-        val builder = NotificationCompat.Builder(context, getNotificationChannelId())
-            .setSmallIcon(getSmallIcon())
-            .setContentTitle(payload.title)
-            .setSubText(payload.subtitle)
-            .setContentText(payload.body) // collapsed - truncated to single line
-            .setStyle(NotificationCompat.BigTextStyle().bigText(payload.body)) // expanded
-            .setWhen(notification.time * 1000L)
-            .setShowWhen(true)
-            .setContentIntent(makeContentIntent(notification))
-            .setDeleteIntent(makeOnDeleteIntent(notification))
-            .setAutoCancel(true)
-            .addExtras(
-                bundleOf(
-                    ExtraNotificationId to notification.notificationId.id,
-                    ExtraUserId to notification.userId.id
-                )
-            )
-
-        NotificationManagerCompat.from(context).notify(
-            getNotificationTag(notification),
-            getNotificationId(notification),
-            builder.build()
+        show(
+            userId = notification.userId,
+            notificationId = getNotificationId(notification),
+            notificationTag = getNotificationTag(notification),
+            payload = notification.payload,
+            build = {
+                addExtras(bundleOf(ExtraNotificationId to notification.notificationId.id))
+                setWhen(notification.time * 1000L)
+                setShowWhen(true)
+                setContentIntent(makeContentIntent(notification))
+                setDeleteIntent(makeOnDeleteIntent(notification))
+                setAutoCancel(true)
+            }
         )
     }
 
@@ -87,17 +126,29 @@ public class ShowNotificationViewImpl @Inject internal constructor(
         IconCompat.createWithResource(context, product.getSmallIconResId())
 
     private fun makeOnDeleteIntent(
-        notification: Notification
+        deeplinkPath: String
     ): PendingIntent = deeplinkIntentProvider.getBroadcastPendingIntent(
-        path = NotificationDeeplink.Delete.get(notification.userId, notification.notificationId),
+        path = deeplinkPath,
         flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
     )
 
     private fun makeContentIntent(
-        notification: Notification
+        deeplinkPath: String
     ): PendingIntent = deeplinkIntentProvider.getActivityPendingIntent(
-        path = NotificationDeeplink.Open.get(notification.userId, notification.notificationId, notification.type),
+        path = deeplinkPath,
         flags = PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+    )
+
+    private fun makeOnDeleteIntent(
+        notification: Notification
+    ): PendingIntent = makeOnDeleteIntent(
+        deeplinkPath = NotificationDeeplink.Delete.get(notification.userId, notification.notificationId),
+    )
+
+    private fun makeContentIntent(
+        notification: Notification
+    ): PendingIntent = makeContentIntent(
+        deeplinkPath = NotificationDeeplink.Open.get(notification.userId, notification.notificationId, notification.type),
     )
 }
 
