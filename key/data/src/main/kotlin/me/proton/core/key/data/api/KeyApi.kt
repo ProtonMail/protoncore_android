@@ -20,6 +20,7 @@ package me.proton.core.key.data.api
 
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.key.data.api.request.CreateAddressKeyRequest
+import me.proton.core.key.data.api.request.ReactivateKeysRequest
 import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.request.UpdateKeysForPasswordChangeRequest
 import me.proton.core.key.data.api.response.CreateAddressKeyResponse
@@ -29,11 +30,13 @@ import me.proton.core.key.data.api.response.SetupInitialKeysResponse
 import me.proton.core.key.data.api.response.SingleSignedKeyListResponse
 import me.proton.core.key.data.api.response.SignedKeyListsResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
+import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.CacheOverride
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Tag
 
@@ -71,4 +74,10 @@ interface KeyApi : BaseRetrofitApi {
         @Query("Email") email: String,
         @Query("EpochID") epochID: Int,
     ): SingleSignedKeyListResponse
+
+    @PUT("core/v4/keys/user/{userKeyId}")
+    suspend fun reactivateKeys(
+        @Path("userKeyId") userKeyId: String,
+        @Body request: ReactivateKeysRequest
+    ): GenericResponse
 }

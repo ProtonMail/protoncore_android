@@ -38,11 +38,12 @@ import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeySalt
-import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
+import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
@@ -52,10 +53,12 @@ import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
+import me.proton.core.util.kotlin.any
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertIs
+import kotlin.test.assertNotNull
 
 class UserManagerImplTest {
 
@@ -440,5 +443,52 @@ class UserManagerImplTest {
         coVerify(exactly = 0) { organizationRepository.getOrganizationKeys(any(), any()) }
         verify(exactly = 0) { userPrimaryKey.updatePrivateKeyPassphraseOrNull(any(), any()) }
         unmockkStatic("me.proton.core.key.domain.extension.UpdatePrivateKeyKt")
+    }
+
+    @Test
+    fun reactivateKeys() = runTest {
+        // GIVEN
+        val testPrivateKeyMock = mockk<PrivateKey> {
+            every { key } returns "privateKey"
+            every { isPrimary } returns true
+            every { passphrase } returns EncryptedByteArray("password".toByteArray())
+            every { isActive } returns true
+            every { canEncrypt } returns true
+            every { canVerify } returns true
+        }
+        val userAddressKey = mockk<UserAddressKey>(relaxed = true) {
+            every { keyId } returns KeyId("keyId")
+            every { token } returns "token"
+            every { signature } returns "signature"
+            every { privateKey } returns testPrivateKeyMock
+            every { active } returns false
+        }
+        val addressMigrated = mockk<UserAddress> {
+            every { userId } returns userIdMigrated
+            every { keys } returns listOf(userAddressKey)
+            every { addressId } returns AddressId("test-address-id")
+        }
+        val userAddressRepository: UserAddressRepository = mockk(relaxed = true) {
+            coEvery { this@mockk.getAddresses(userIdMigrated, any()) } returns listOf(addressMigrated)
+        }
+        coEvery { userAddressKeySecretProvider.getPassphrase(userIdMigrated, any(), userAddressKey) } returns mockk(relaxed = true)
+
+        manager = UserManagerImpl(
+            userRepository = userRepository,
+            userAddressRepository = userAddressRepository,
+            passphraseRepository = passphraseRepository,
+            keySaltRepository = keySaltRepository,
+            privateKeyRepository = privateKeyRepository,
+            accountRecoveryRepository = accountRecoveryRepository,
+            userAddressKeySecretProvider = userAddressKeySecretProvider,
+            cryptoContext = cryptoContext,
+            generateSignedKeyList = mockk(relaxed = true),
+            signedKeyListChangeListener = mockk(relaxed = true),
+            organizationRepository = organizationRepository
+        )
+        // When
+        val result = manager.reactivateKey(userIdMigrated, KeyId("user-key-id"), testPrivateKeyMock)
+        // Then
+        assertNotNull(result)
     }
 }

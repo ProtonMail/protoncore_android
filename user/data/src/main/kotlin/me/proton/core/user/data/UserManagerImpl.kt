@@ -33,13 +33,15 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
-import me.proton.core.key.domain.entity.key.Key
+import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.key.domain.useKeysAs
 import me.proton.core.user.data.usecase.GenerateSignedKeyList
 import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
@@ -185,7 +187,7 @@ class UserManagerImpl @Inject constructor(
                     organizationKey = updatedOrgPrivateKey
                 )
 
-                refreshUser(userId, newPassphrase)
+                refreshUser(userId, newPassphrase.encrypt(keyStore))
 
                 return result
             }
@@ -286,6 +288,52 @@ class UserManagerImpl @Inject constructor(
         }
     }
 
+    override suspend fun reactivateKey(
+        sessionUserId: SessionUserId,
+        userKeyId: KeyId,
+        privateKey: PrivateKey
+    ): User {
+        // find all addresses.
+        val userAddresses = userAddressRepository
+            .getAddresses(sessionUserId, refresh = true)
+
+        privateKey.keyHolder().useKeysAs(cryptoContext) { keyHolderContext ->
+            // find all disabled addresses that can be decrypted with the private/user key we are reactivating
+            val privateKeyUserAddresses = userAddresses
+                .filter { userAddress ->
+                    userAddress.keys.any {
+                        !it.active && userAddressKeySecretProvider.getPassphrase(
+                            sessionUserId,
+                            keyHolderContext,
+                            it.copy(active = true)
+                        ) != null
+                    }
+                }
+
+            // get fingerprints
+            val privateKeyUserAddressesFingerprints = privateKeyUserAddresses
+                .flatMap { it.keys }
+                .map { pgp.getFingerprint(it.privateKey.key) }
+
+            // get the signed key list
+            val signedKeyLists = privateKeyUserAddresses.associate {
+                it.addressId.id to generateSignedKeyList(it)
+            }
+
+            privateKeyRepository.reactivatePrivateKey(
+                sessionUserId = sessionUserId,
+                privateKeyId = userKeyId.id,
+                privateKey = privateKey,
+                addressKeysFingerprints = privateKeyUserAddressesFingerprints,
+                signedKeyLists = signedKeyLists
+            )
+
+            // refresh the user
+            refreshUser(sessionUserId)
+            return checkNotNull(userRepository.getUser(sessionUserId))
+        }
+    }
+
     override suspend fun resetPassword(
         sessionUserId: SessionUserId,
         newPassword: EncryptedString,
@@ -314,13 +362,15 @@ class UserManagerImpl @Inject constructor(
                     organizationKey = organizationKeys?.privateKey?.takeIfNotEmpty()
                 )
 
-                refreshUser(sessionUserId, newPassphrase)
+                refreshUser(sessionUserId, newPassphrase.encrypt(keyStore))
 
                 return result
             }
         }
 
-    private suspend fun refreshUser(userId: UserId, newPassphrase: PlainByteArray) {
+    private suspend fun refreshUser(userId: UserId, passphrase: EncryptedByteArray? = null) {
+        val tempPassphrase = checkNotNull(passphrase ?: passphraseRepository.getPassphrase(userId))
+
         // Lock, refresh and unlock.
         lock(userId)
 
@@ -329,6 +379,6 @@ class UserManagerImpl @Inject constructor(
         userRepository.getUser(userId, refresh = true)
 
         // Unlock.
-        unlockWithPassphrase(userId, newPassphrase.encrypt(keyStore))
+        unlockWithPassphrase(userId, tempPassphrase)
     }
 }

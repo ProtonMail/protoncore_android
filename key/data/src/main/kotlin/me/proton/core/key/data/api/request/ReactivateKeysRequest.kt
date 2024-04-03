@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,17 +22,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreateAddressKeyRequest(
-    @SerialName("AddressID")
-    val addressId: String,
+data class ReactivateKeysRequest(
     @SerialName("PrivateKey")
     val privateKey: String,
-    @SerialName("Primary")
-    val primary: Int = 0,
-    @SerialName("Token")
-    val token: String? = null,
-    @SerialName("Signature")
-    val signature: String? = null,
-    @SerialName("SignedKeyList")
-    val signedKeyList: SignedKeyListRequest
+    @SerialName("AddressKeyFingerprints")
+    val addressKeyFingerprints: List<String>,
+    @SerialName("SignedKeyLists")
+    val signedKeyLists: Map<String, SignedKeyListRequest>
 )

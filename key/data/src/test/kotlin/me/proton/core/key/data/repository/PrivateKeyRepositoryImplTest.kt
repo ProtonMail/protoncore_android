@@ -32,11 +32,15 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.TestKeys
 import me.proton.core.key.data.api.KeyApi
+import me.proton.core.key.data.api.request.ReactivateKeysRequest
+import me.proton.core.key.data.api.request.SignedKeyListRequest
 import me.proton.core.key.data.api.response.CreateAddressKeyResponse
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.GenericResponse
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
@@ -45,6 +49,8 @@ import me.proton.core.test.kotlin.TestDispatcherProvider
 import org.junit.Before
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertNotNull
+import kotlin.test.assertTrue
 
 class PrivateKeyRepositoryImplTest {
 
@@ -209,4 +215,44 @@ class PrivateKeyRepositoryImplTest {
         coVerify(exactly = 1) { keyApi.setupInitialKeys(any()) }
     }
 
+    @Test
+    fun `reactivate private key`() = runTest(dispatcherProvider.Main) {
+        // GIVEN
+        val testPrivateKeyId = "test-private-key-id"
+        val testPrivateKey = mockk<PrivateKey>(relaxed = true)
+        val testAddressKeyFingerprint = "test-address-key-fingerprint"
+        val testAddressKeyFingerprints = listOf(testAddressKeyFingerprint)
+        val testAddressId = "test-address-id"
+        val testPublicSKL = PublicSignedKeyList(
+            data = "test-data",
+            signature = "test-signature",
+            minEpochId = null,
+            maxEpochId = null,
+            expectedMinEpochId = null
+        )
+        val testSignedKeyLists: Map<String, PublicSignedKeyList> = mapOf(testAddressId to testPublicSKL)
+        coEvery { keyApi.reactivateKeys(any(), any()) } returns GenericResponse(1000)
+        // WHEN
+        val result = repository.reactivatePrivateKey(
+            sessionUserId = UserId(testUserId),
+            privateKeyId = testPrivateKeyId,
+            privateKey = testPrivateKey,
+            addressKeysFingerprints = testAddressKeyFingerprints,
+            signedKeyLists =  testSignedKeyLists
+        )
+        // THEN
+        assertNotNull(result)
+        assertTrue(result)
+        coVerify(exactly = 1) { keyApi.reactivateKeys(
+            testPrivateKeyId,
+            ReactivateKeysRequest(
+                testPrivateKey.key,
+                testAddressKeyFingerprints,
+                mapOf(testAddressId to SignedKeyListRequest(
+                    "test-data", "test-signature"
+                ))
+            )
+        )
+        }
+    }
 }

@@ -28,13 +28,17 @@ import me.proton.core.key.data.api.KeyApi
 import me.proton.core.key.data.api.request.AuthRequest
 import me.proton.core.key.data.api.request.CreateAddressKeyRequest
 import me.proton.core.key.data.api.request.PrivateKeyRequest
+import me.proton.core.key.data.api.request.ReactivateKeysRequest
 import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.request.SignedKeyListRequest
 import me.proton.core.key.data.api.request.UpdateKeysForPasswordChangeRequest
 import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
+import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.repository.PrivateKeyRepository
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.util.kotlin.toInt
 import javax.inject.Inject
 
@@ -123,5 +127,26 @@ class PrivateKeyRepositoryImpl @Inject constructor(
             validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "key update failed" }
             response.isSuccess()
         }.valueOrThrow
+    }
+
+    override suspend fun reactivatePrivateKey(
+        sessionUserId: SessionUserId,
+        privateKeyId: String,
+        privateKey: PrivateKey,
+        addressKeysFingerprints: List<String>,
+        signedKeyLists: Map<String, PublicSignedKeyList>
+    ): Boolean {
+        return provider.get<KeyApi>(sessionUserId).invoke {
+            reactivateKeys(
+                userKeyId = privateKeyId,
+                request = ReactivateKeysRequest(
+                    privateKey = privateKey.key,
+                    addressKeyFingerprints = addressKeysFingerprints,
+                    signedKeyLists = signedKeyLists.map {
+                        it.key to SignedKeyListRequest.from(it.value)
+                    }.toMap()
+                )
+            )
+        }.valueOrThrow.isSuccess()
     }
 }

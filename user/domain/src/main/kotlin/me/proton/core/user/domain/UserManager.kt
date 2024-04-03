@@ -29,6 +29,8 @@ import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.Key
+import me.proton.core.key.domain.entity.key.KeyId
+import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
@@ -163,6 +165,15 @@ interface UserManager {
         domain: String,
         auth: Auth,
         password: ByteArray
+    ): User
+
+    /**
+     * Tries to reactivate a user private key.
+     */
+    suspend fun reactivateKey(
+        sessionUserId: SessionUserId,
+        userKeyId: KeyId,
+        privateKey: PrivateKey
     ): User
 
     /**

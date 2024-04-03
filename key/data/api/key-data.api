@@ -12,6 +12,7 @@ public abstract interface class me/proton/core/key/data/api/KeyApi : me/proton/c
 	public abstract fun getSKLAtEpoch (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSKLsAfterEpoch (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSalts (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun reactivateKeys (Ljava/lang/String;Lme/proton/core/key/data/api/request/ReactivateKeysRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun setupInitialKeys (Lme/proton/core/key/data/api/request/SetupInitialKeysRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updatePrivateKeys (Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -121,6 +122,37 @@ public final class me/proton/core/key/data/api/request/PrivateKeyRequest$Compani
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/key/data/api/request/ReactivateKeysRequest {
+	public static final field Companion Lme/proton/core/key/data/api/request/ReactivateKeysRequest$Companion;
+	public fun <init> (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Ljava/util/Map;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;Ljava/util/Map;)Lme/proton/core/key/data/api/request/ReactivateKeysRequest;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/request/ReactivateKeysRequest;Ljava/lang/String;Ljava/util/List;Ljava/util/Map;ILjava/lang/Object;)Lme/proton/core/key/data/api/request/ReactivateKeysRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddressKeyFingerprints ()Ljava/util/List;
+	public final fun getPrivateKey ()Ljava/lang/String;
+	public final fun getSignedKeyLists ()Ljava/util/Map;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/key/data/api/request/ReactivateKeysRequest$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/key/data/api/request/ReactivateKeysRequest$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/key/data/api/request/ReactivateKeysRequest;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/key/data/api/request/ReactivateKeysRequest;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/key/data/api/request/ReactivateKeysRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/key/data/api/request/SetupInitialKeysRequest {
 	public static final field Companion Lme/proton/core/key/data/api/request/SetupInitialKeysRequest$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/key/data/api/request/AuthRequest;)V
@@ -181,6 +213,7 @@ public final class me/proton/core/key/data/api/request/SignedKeyListRequest$$ser
 }
 
 public final class me/proton/core/key/data/api/request/SignedKeyListRequest$Companion {
+	public final fun from (Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;)Lme/proton/core/key/data/api/request/SignedKeyListRequest;
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -972,6 +1005,7 @@ public final class me/proton/core/key/data/repository/KeySaltRepositoryImpl : me
 public final class me/proton/core/key/data/repository/PrivateKeyRepositoryImpl : me/proton/core/key/domain/repository/PrivateKeyRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;Lme/proton/core/auth/domain/usecase/ValidateServerProof;)V
 	public fun createAddressKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/PrivateAddressKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun reactivatePrivateKey (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PrivateKey;Ljava/util/List;Ljava/util/Map;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setupInitialKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updatePrivateKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Ljava/util/List;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

@@ -195,6 +195,7 @@ public final class me/proton/core/user/data/UserManagerImpl : me/proton/core/use
 	public fun lock (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observeAddresses (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observeUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
+	public fun reactivateKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun resetPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setupPrimaryKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun unlockWithPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

@@ -24,6 +24,8 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
+import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
 @ExcludeFromCoverage // excluded because of the default value in updatePrivateKeys. we do not test interfaces.
@@ -58,5 +60,13 @@ interface PrivateKeyRepository {
         keys: List<Key>? = null,
         userKeys: List<Key>? = null,
         organizationKey: String?
+    ): Boolean
+
+    suspend fun reactivatePrivateKey(
+        sessionUserId: SessionUserId,
+        privateKeyId: String,
+        privateKey: PrivateKey,
+        addressKeysFingerprints: List<String>,
+        signedKeyLists: Map<String, PublicSignedKeyList>
     ): Boolean
 }

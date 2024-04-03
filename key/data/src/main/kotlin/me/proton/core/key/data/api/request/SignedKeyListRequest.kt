@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,19 +20,19 @@ package me.proton.core.key.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 
 @Serializable
-data class CreateAddressKeyRequest(
-    @SerialName("AddressID")
-    val addressId: String,
-    @SerialName("PrivateKey")
-    val privateKey: String,
-    @SerialName("Primary")
-    val primary: Int = 0,
-    @SerialName("Token")
-    val token: String? = null,
+data class SignedKeyListRequest(
+    @SerialName("Data")
+    val data: String,
     @SerialName("Signature")
-    val signature: String? = null,
-    @SerialName("SignedKeyList")
-    val signedKeyList: SignedKeyListRequest
-)
+    val signature: String
+) {
+    companion object {
+        fun from(publicSignedKeyList: PublicSignedKeyList) = SignedKeyListRequest(
+            data = checkNotNull(publicSignedKeyList.data) { "Signed key list's data can't be null" },
+            signature = checkNotNull(publicSignedKeyList.signature) { "Signed key list's signature can't be null" },
+        )
+    }
+}
