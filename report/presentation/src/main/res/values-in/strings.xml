@@ -36,4 +36,5 @@
   <string name="core_report_bug_general_error">Terjadi kesalahan. Silakan coba beberapa saat lagi.</string>
   <string name="core_report_bug_send">Kirim laporan</string>
   <string name="core_report_bug_success">Terima kasih atas laporan Anda</string>
+  <string name="core_report_bug_attach_log">Lampirkan log</string>
 </resources>

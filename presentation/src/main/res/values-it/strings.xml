@@ -36,7 +36,7 @@
   <string name="presentation_menu_item_title_report_a_bug">Segnala un problema</string>
   <string name="presentation_menu_item_title_settings">Impostazioni</string>
   <string name="presentation_menu_item_title_subscription">Abbonamento</string>
-  <string name="presentation_menu_item_title_sign_out">Disconnetti</string>
+  <string name="presentation_menu_item_title_sign_out">Esci</string>
   <!-- Other -->
   <string name="presentation_back">Indietro</string>
   <string name="presentation_close">Chiudi</string>

@@ -50,27 +50,27 @@
   <string name="presentation_error_general">Произошла ошибка.</string>
   <plurals name="presentation_datetime_day">
     <item quantity="one">%d день</item>
-    <item quantity="few">%d дней</item>
-    <item quantity="many">%d дня</item>
-    <item quantity="other">%d дня</item>
+    <item quantity="few">%d дня</item>
+    <item quantity="many">%d дней</item>
+    <item quantity="other">%d дней</item>
   </plurals>
   <plurals name="presentation_datetime_hour">
     <item quantity="one">%d час</item>
-    <item quantity="few">%d часов</item>
-    <item quantity="many">%d часа</item>
-    <item quantity="other">%d часа</item>
+    <item quantity="few">%d часа</item>
+    <item quantity="many">%d часов</item>
+    <item quantity="other">%d часов</item>
   </plurals>
   <plurals name="presentation_datetime_minute">
     <item quantity="one">%d минута</item>
     <item quantity="few">%d минуты</item>
-    <item quantity="many">%d минуты</item>
-    <item quantity="other">%d минуты</item>
+    <item quantity="many">%d минут</item>
+    <item quantity="other">%d минут</item>
   </plurals>
   <plurals name="presentation_datetime_second">
     <item quantity="one">%d секунда</item>
-    <item quantity="few">%d секунд</item>
-    <item quantity="many">%d секунды</item>
-    <item quantity="other">%d секунды</item>
+    <item quantity="few">%d секунды</item>
+    <item quantity="many">%d секунд</item>
+    <item quantity="other">%d секунд</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
     <item quantity="one">%d миллисекунда</item>

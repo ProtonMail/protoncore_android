@@ -42,4 +42,5 @@
   <string name="core_report_bug_general_error">Coś poszło nie tak. Spróbuj ponownie za kilka minut.</string>
   <string name="core_report_bug_send">Wyślij raport</string>
   <string name="core_report_bug_success">Dziękujemy za przesłanie zgłoszenia</string>
+  <string name="core_report_bug_attach_log">Dołącz logi</string>
 </resources>

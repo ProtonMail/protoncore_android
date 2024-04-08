@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Noe gikk galt. Vennligst prøv igjen om noen få minutter.</string>
   <string name="core_report_bug_send">Send rapport</string>
   <string name="core_report_bug_success">Takk for rapporten</string>
+  <string name="core_report_bug_attach_log">Legg ved logg</string>
 </resources>

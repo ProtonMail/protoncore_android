@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Bir şeyler ters gitti. Lütfen bir kaç dakika sonra yeniden deneyin.</string>
   <string name="core_report_bug_send">Bildirimi gönder</string>
   <string name="core_report_bug_success">Bildiriminiz için teşekkür ederiz</string>
+  <string name="core_report_bug_attach_log">Attach log</string>
 </resources>

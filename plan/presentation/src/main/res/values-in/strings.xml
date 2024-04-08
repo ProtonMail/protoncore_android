@@ -72,7 +72,7 @@
     <item quantity="other">Ruang penyimpanan #proton_storage# / pengguna</item>
   </plurals>
   <plurals name="item_address" comment="please do not modify the test between #">
-    <item quantity="other">#proton_addresses# alamat surel</item>
+    <item quantity="other">#proton_addresses# alamat email</item>
   </plurals>
   <plurals name="item_address_multiuser" comment="please do not modify the test between #">
     <item quantity="other">#proton_addresses# alamat / pengguna</item>
@@ -81,7 +81,7 @@
     <item quantity="other">%d dari #proton_addresses# alamat</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="other">Dukungan #proton_domains# domain surel khusus</item>
+    <item quantity="other">Dukungan #proton_domains# domain email khusus</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="other">#proton_calendars# kalender personal</item>
@@ -117,7 +117,7 @@
   <string name="plan_id_professional_multiuser">Dukungan multi-pengguna</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
-  <string name="plan_id_mail2022_header" comment="new_plans">Surel aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
+  <string name="plan_id_mail2022_header" comment="new_plans">Email aman dengan berbagai fitur mutakhir untuk kebutuhan komunikasi Anda sehari-hari.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Privasi dan keamanan Anda adalah prioritas kami.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Layanan penyimpanan cloud aman yang memudahkan Anda untuk menyimpan, menyinkronkan, dan membagikan berkas secara aman.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Privasi dan keamanan yang komprehensif dengan dukungan gabungan dari seluruh layanan Proton.</string>
@@ -142,7 +142,7 @@
   <string name="integrated_2fa_authenticator">Autentikator 2FA terintegrasi</string>
   <string name="multiple_vaults">Brankas berganda</string>
   <string name="unlimited_email_alias">Tanpa batasan jumlah alias Hide My Email</string>
-  <string name="custom_email_alias_domains">Domain khusus untuk alias surel</string>
+  <string name="custom_email_alias_domains">Domain khusus untuk alias email</string>
   <string name="multiple_forwarding_mailboxes">Kotak surat penerusan berganda</string>
   <string name="priority_support">Dukungan prioritas</string>
   <string name="one_vault">1 brankas</string>

@@ -36,4 +36,5 @@
   <string name="core_report_bug_general_error">문제가 발생했습니다.몇 분 후에 다시 시도해 주세요.</string>
   <string name="core_report_bug_send">신고하기</string>
   <string name="core_report_bug_success">신고해 주셔서 감사합니다</string>
+  <string name="core_report_bug_attach_log">로그 첨부</string>
 </resources>

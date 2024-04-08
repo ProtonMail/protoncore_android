@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Une erreur s\'est produite. Nous vous invitons à réessayer dans quelques minutes.</string>
   <string name="core_report_bug_send">Envoyer le rapport</string>
   <string name="core_report_bug_success">Merci pour votre rapport</string>
+  <string name="core_report_bug_attach_log">Joindre le journal</string>
 </resources>

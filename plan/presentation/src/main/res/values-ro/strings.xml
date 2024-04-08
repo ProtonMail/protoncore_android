@@ -60,9 +60,9 @@
   <string name="plans_no_upgrade_available">În acest moment nu există planuri noi disponibile.</string>
   <string name="plans_limited_offer">Ofertă limitată</string>
   <string name="plans_subscription_base_storage_full_title">Spațiu de stocare mesaje este plin</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Spațiul de stocare mesaje este aproape plin</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Spațiul de stocare din Mail este aproape plin</string>
   <string name="plans_subscription_drive_storage_full_title">Spațiu de stocare fișiere este plin</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Spațiul de stocare fișiere este aproape plin</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Spațiul de stocare din Drive este aproape plin</string>
   <string name="plans_subscription_storage_get_more">Obțineți mai mult spațiu de stocare</string>
   <string name="plans_subscription_storage_full_description">Modificați planul pentru a continua să vă folosiți contul fără întreruperi.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->

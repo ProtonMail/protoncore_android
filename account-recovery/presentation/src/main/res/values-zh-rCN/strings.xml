@@ -45,19 +45,19 @@
   <string name="account_recovery_reset">重置密码</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">已请求重置密码</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
+  <string name="account_recovery_info_grace_subtitle">您可以在 %1s 内重置您的密码。</string>
   <string name="account_recovery_info_grace_description">为了确保是您本人重置密码，申请提交 72 小时后才能通过。\n\n如果您没有提交过申请，请立即予以取消。</string>
   <string name="account_recovery_info_cancelled_title">密码重置已取消</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_cancelled_subtitle">我们在 %1s 收到了密码重置申请。</string>
+  <string name="account_recovery_info_cancelled_description">如果您没有提交过申请，则可能有人已经窃取了您的 Proton 账户。\n\n请立即提升账户安全等级。</string>
   <string name="account_recovery_info_insecure_title">可重置密码</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_insecure_subtitle">您现在可以重置您的密码。重置密码的时限直到 %1s。</string>
+  <string name="account_recovery_info_insecure_description">没有提交过申请？\n\n如果您并未申请重置密码，请立即取消重置。</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">重置密码?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_text">"出于安全原因，您必须等待72小时后才能更改 %1s的密码。\n\n如果您设置了恢复方法，请尝试恢复帐户。这将允许您直接更改密码。"</string>
   <string name="account_recovery_reset_dialog_action_request_reset">请求重置密码</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">设置恢复方法</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">在您的 web 浏览器中更改您的密码，无需等待安全期。</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">已请求重置密码</string>
 </resources>

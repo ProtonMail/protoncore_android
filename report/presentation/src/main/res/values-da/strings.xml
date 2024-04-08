@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Noget gik galt. Prøv igen om nogle få minutter.</string>
   <string name="core_report_bug_send">Indsend rapport</string>
   <string name="core_report_bug_success">Tak for din rapport</string>
+  <string name="core_report_bug_attach_log">Attach log</string>
 </resources>

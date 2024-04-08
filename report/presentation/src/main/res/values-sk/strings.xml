@@ -42,4 +42,5 @@
   <string name="core_report_bug_general_error">Niečo sa pokazilo. Prosím skúste znovu o pár minút.</string>
   <string name="core_report_bug_send">Odoslať hlásenie</string>
   <string name="core_report_bug_success">Ďakujeme Vám za nahlásenie</string>
+  <string name="core_report_bug_attach_log">Attach log</string>
 </resources>

@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Da ist etwas schief gelaufen. Bitte versuche es in ein paar Minuten erneut.</string>
   <string name="core_report_bug_send">Bericht senden</string>
   <string name="core_report_bug_success">Vielen Dank für deinen Bericht</string>
+  <string name="core_report_bug_attach_log">Attach log</string>
 </resources>

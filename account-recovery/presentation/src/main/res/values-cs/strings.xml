@@ -37,30 +37,30 @@
   <string name="account_recovery_cancelled_subtitle">Pokud jste o změnu hesla nikdy nepožádali, může být váš účet ohrožen.\n\nZabezpečte si svůj účet změnou hesla.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Resetování hesla je k dispozici</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_subtitle">Chcete-li resetovat své heslo, použijte znovu zařízení, aplikaci nebo prohlížeč, ze kterého jste zadali požadavek na reset hesla.\n\nToto je potřeba provést před %s.\n\nPokud jste o reset hesla nepožádali, tak požadavek zrušte.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Nyní můžete resetovat své heslo.\n\nToto je potřeba provést před %s.\n\nPokud jste o reset hesla nepožádali, tak požadavek zrušte.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Resetování hesla vypršelo</string>
   <string name="account_recovery_window_ended_subtitle">Budete muset požádat o nové resetování hesla pro %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Zrušit žádost</string>
   <string name="account_recovery_dismiss">Rozumím</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">Resetovat heslo</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Vyžádáno resetování hesla</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_subtitle">Své heslo můžete resetovat za %1s.</string>
+  <string name="account_recovery_info_grace_description">Abychom měli jistotu, že se o reset hesla pokoušíte skutečně vy, čekáme před schválením požadavku 72 hodin.\n\nPokud jste o reset hesla nepožádali, tak požadavek zrušte.</string>
   <string name="account_recovery_info_cancelled_title">Resetování hesla zrušeno</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Požadavek na reset hesla byl zaslán %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Pokud tento požadavek nerozpoznáte, může to znamenat, že k vašemu účtu Proton má přístup někdo jiný.\n\nZabezpečte si ihned svůj účet.</string>
   <string name="account_recovery_info_insecure_title">Resetování hesla je k dispozici</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_insecure_subtitle">Nyní si můžete resetovat heslo. Reset hesla bude dostupný do %1s.</string>
+  <string name="account_recovery_info_insecure_description">Nejde o váš požadavek?\n\nPokud jste o reset hesla nepožádali, můžete nyní požadavek zrušit.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Resetovat heslo?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_text">"Z důvodu ochrany musíte počkat 72 hodin, než bude možné změnit heslo pro %1s.\n\nPokud máte nastavenu metodu obnovení účtu, zkuste místo toho obnovení účtu, které vám umožní resetovat heslo bez čekání."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Požádat o resetování hesla</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Použít metodu obnovení</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Změňte si heslo ve vašem internetovém prohlížeči, aniž byste museli čekat na bezpečnostní lhůtu.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Vyžádáno resetování hesla</string>
 </resources>

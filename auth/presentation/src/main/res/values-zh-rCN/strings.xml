@@ -39,7 +39,7 @@
   <string name="auth_email_username">用户名或电子邮箱</string>
   <string name="auth_account_details">请输入您的 Proton 账户信息。</string>
   <string name="auth_sign_in">登录</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">退出账户</string>
   <string name="auth_sign_in_action">登录</string>
   <string name="auth_sign_in_sso">登录到您的组织</string>
   <string name="auth_sign_in_with_password">使用密码登录</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">跳过</string>
   <string name="auth_signup_set_recovery">设置恢复方法</string>
   <string name="auth_signup_no_connectivity">网络未连接，无法显示服务条款。</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">请创建一个账户以继续</string>
   <string name="auth_signup_error_username_blank">用户名不能为空。</string>
   <string name="auth_signup_error_passwords_do_not_match">两次输入的密码不一致。</string>
   <string name="auth_signup_validation_password_length">密码长度至少应为 8 个字符。</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">私密浏览，访问被屏蔽的内容，享受数字自由。</string>
   <string name="auth_credentialless_guest_button">以宾客身份继续</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">使用本应用程序即表示您接受我们的<annotation link="terms">服务条款</annotation>。</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">踏上通往隐私的道路。</string>
+  <string name="auth_credentialless_settings_subtitle">免费注册 Proton 账户即可获取密码管理器、加密的邮箱和日历，以及 1 GB 云存储空间。</string>
 </resources>

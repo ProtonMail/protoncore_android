@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">مشکلی پیش آمد، لطفا چند دقیقه بعد دوباره امتحان کنید.</string>
   <string name="core_report_bug_send">ارسال گزارش</string>
   <string name="core_report_bug_success">از گزارش شما متشکریم</string>
+  <string name="core_report_bug_attach_log">Attach log</string>
 </resources>

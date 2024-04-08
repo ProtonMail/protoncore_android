@@ -37,30 +37,30 @@
   <string name="account_recovery_cancelled_subtitle">Ak ste nikdy nepožiadali o zmenu hesla, váš účet môže byť ohrozený.\n\nZabezpečte svoj účet zmenou hesla.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Obnovenie hesla je k dispozícii</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_subtitle">Ak chcete obnoviť heslo, vráťte sa do zariadenia, aplikácie alebo prehliadača, z ktorého ste zadali požiadavku na obnovenie hesla.\n\nMusíte to urobiť pred %s.\n\nAk ste nepožiadali o obnovenie hesla, zrušte požiadavku teraz.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Teraz môžete obnoviť svoje heslo.\n\nMusíte to urobiť pred %s.\n\nAk ste nepožiadali o obnovenie hesla, zrušte žiadosť teraz.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Obnovenie hesla vypršalo</string>
   <string name="account_recovery_window_ended_subtitle">Budete musieť požiadať o obnovenie nového hesla pre %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Zrušiť žiadosť</string>
   <string name="account_recovery_dismiss">Rozumiem</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">Resetovať heslo</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Vyžiadané resetovanie hesla</string>
   <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_description">Aby sme mali istotu, že sa o obnovenie hesla pokúšate naozaj vy, pred schválením žiadosti počkáme 72 hodín.\n\nAk ste o obnovenie hesla nepožiadali, túto žiadosť teraz zrušte.</string>
   <string name="account_recovery_info_cancelled_title">Resetovanie hesla zrušené</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
-  <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
+  <string name="account_recovery_info_cancelled_subtitle">O obnovenie hesla bolo požiadané %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Ak túto požiadavku nerozpoznávate, môže to znamenať, že niekto iný má prístup k vášmu kontu Proton.\n\nZabezpečte si svoje konto.</string>
   <string name="account_recovery_info_insecure_title">Resetovanie hesla je k dispozícii</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_insecure_subtitle">Teraz môžete obnoviť svoje heslo. Obnovenie hesla je k dispozícii do %1s.</string>
+  <string name="account_recovery_info_insecure_description">Nepožiadali ste o obnovenie hesla?\n\nAk ste nepožiadali o obnovenie hesla, zrušte túto požiadavku teraz.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Resetovať heslo?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_text">"Z bezpečnostných dôvodov budete musieť počkať 72 hodín, kým budete môcť zmeniť heslo pre %1s.\n\nAk máte nastavenú metódu obnovenia, skúste namiesto toho obnoviť účet. To vám umožní zmeniť heslo ihneď."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Žiadosť o resetovanie hesla</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Použiť metódu obnovenia</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Heslo si môžete zmeniť vo webovom prehliadači bez toho, aby ste museli čakať na bezpečnostnú lehotu.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Vyžiadané resetovanie hesla</string>
 </resources>

@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Přeskočit</string>
   <string name="auth_signup_set_recovery">Nastavit metodu obnovení</string>
   <string name="auth_signup_no_connectivity">Žádné připojení k zobrazení Obchodních podmínek.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Pro pokračování si vytvořte účet</string>
   <string name="auth_signup_error_username_blank">Uživatelské jméno nesmí být prázdné.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hesla se neshodují.</string>
   <string name="auth_signup_validation_password_length">Heslo by mělo být nejméně 8 znaků dlouhé.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Procházejte soukromě, přistupujte k blokovanému obsahu a užívejte si digitální svobody.</string>
   <string name="auth_credentialless_guest_button">Pokračovat jako host</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Používáním této aplikace souhlasíte s našimi <annotation link="terms">smluvními podmínkami užívání</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">Zvolte si soukromí.</string>
+  <string name="auth_credentialless_settings_subtitle">Získejte správce hesel, šifrovaný Mail a Calendar a 1 GB cloudového úložiště zdarma s účtem Proton.</string>
 </resources>

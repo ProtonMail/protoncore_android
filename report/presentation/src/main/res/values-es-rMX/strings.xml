@@ -38,4 +38,5 @@
   <string name="core_report_bug_general_error">Hubo un problema. Intente de nuevo en unos minutos.</string>
   <string name="core_report_bug_send">Enviar reporte</string>
   <string name="core_report_bug_success">Gracias por su reporte</string>
+  <string name="core_report_bug_attach_log">Adjuntar registro</string>
 </resources>
