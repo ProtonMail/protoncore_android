@@ -358,7 +358,7 @@ private fun SignInButton(
         Text(
             text = stringResource(id = R.string.auth_sign_in),
             // TODO: Remove after CP-7603.
-            color = ProtonTheme.colors.interactionNorm
+            color = ProtonTheme.colors.textAccent
         )
     }
 }
