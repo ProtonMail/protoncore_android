@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,8 +18,6 @@
 
 package me.proton.core.userrecovery.presentation.compose
 
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.user.domain.UserManager
@@ -43,17 +41,18 @@ class DeviceRecoveryHandler @Inject constructor(
     internal val showDeviceRecoveryNotification: ShowDeviceRecoveryNotification,
 ) {
     fun start() {
+        /*
         scopeProvider.GlobalDefaultSupervisedScope.launch {
             val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
-            /*
             val message = getRecoveryFile(userId)
             CoreLogger.d(LogTag.DEFAULT, "Recovery file: $message")
             val keys = getRecoveryPrivateKeys(userId, message)
             CoreLogger.d(LogTag.DEFAULT, "Recovery Private Keys: $keys")
             val recoverable = getRecoveryInactivePrivateKeys(userId, keys)
             CoreLogger.d(LogTag.DEFAULT, "Recovery inactive keys: $recoverable")
-            */
+
             showDeviceRecoveryNotification(userId)
         }
+        */
     }
 }
