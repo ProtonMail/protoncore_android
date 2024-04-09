@@ -18,48 +18,35 @@
 
 package me.proton.core.configuration
 
-import me.proton.core.configuration.extension.configContractFields
 import me.proton.core.configuration.extension.primitiveFieldMap
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class ExtensionFunctionTests {
-
-    class TestClass {
-        private val stringField: String = "TestString"
-        private val booleanField: Boolean = true
-        private val intField: Int = 42
-    }
-
-    @Test
-    fun `configContractFields includes all declared fields`() {
-        val testObject = TestClass()
-        val fields = testObject.configContractFields
-
-        assertEquals(3, fields.size)
-        assertTrue(fields.containsKey("stringField"))
-        assertTrue(fields.containsKey("booleanField"))
-        assertTrue(fields.containsKey("intField"))
+    class MockClass {
+        val stringField = "Test String"
+        val booleanField = true
+        val intField = 123
+        val listField = listOf("Not", "Primitive")
+        val doubleField = 123.45
     }
 
     @Test
     fun `primitiveFieldMap includes only primitive fields`() {
-        val testObject = TestClass()
-        val primitiveFields = testObject.primitiveFieldMap
+        val mockInstance = MockClass()
+        val primitiveFieldMap = mockInstance.primitiveFieldMap
 
-        assertEquals(2, primitiveFields.size)
-        assertEquals("TestString", primitiveFields["stringField"])
-        assertEquals(true, primitiveFields["booleanField"])
-        assertFalse(primitiveFields.containsKey("intField"))
-    }
+        assertEquals(3, primitiveFieldMap.size)
+        assertTrue(primitiveFieldMap.containsKey("stringField"))
+        assertTrue(primitiveFieldMap.containsKey("booleanField"))
+        assertTrue(primitiveFieldMap.containsKey("intField"))
 
-    @Test
-    fun `configContractFields makes fields accessible`() {
-        val testObject = TestClass()
-        val fields = testObject.configContractFields
+        assertEquals("Test String", primitiveFieldMap["stringField"])
+        assertEquals(true, primitiveFieldMap["booleanField"])
+        assertEquals(123, primitiveFieldMap["intField"])
 
-        assertTrue(fields.all { it.value.isAccessible })
+        assertTrue(!primitiveFieldMap.containsKey("listField"))
+        assertTrue(!primitiveFieldMap.containsKey("doubleField"))
     }
 }

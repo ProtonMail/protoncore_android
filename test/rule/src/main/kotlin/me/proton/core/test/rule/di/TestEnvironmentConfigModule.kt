@@ -18,15 +18,17 @@
 
 package me.proton.core.test.rule.di
 
-import android.os.Bundle
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
+import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.configuration.dagger.ContentResolverEnvironmentConfigModule
+import me.proton.core.configuration.entity.ConfigContract
 import me.proton.core.configuration.extension.primitiveFieldMap
+import me.proton.core.test.rule.printInfo
 import java.util.concurrent.atomic.AtomicReference
 import javax.inject.Singleton
 
@@ -36,34 +38,34 @@ import javax.inject.Singleton
     replaces = [ContentResolverEnvironmentConfigModule::class]
 )
 public object TestEnvironmentConfigModule {
-    @Provides
-    @Singleton
-    public fun provideEnvironmentConfiguration(): EnvironmentConfiguration =
+
+    public val overrideEnvironmentConfiguration: AtomicReference<EnvironmentConfiguration?> = AtomicReference(null)
+
+    private val instrumentationArgumentsConfig by lazy {
         InstrumentationRegistry
             .getArguments()
-            .configFields()
-            .takeIf { it.isNotEmpty() }
-            ?.let {
-                EnvironmentConfiguration.fromMap(it)
-            } ?: EnvironmentConfiguration(::getConfigValue)
-
-
-    public val overrideConfig: AtomicReference<EnvironmentConfiguration?> = AtomicReference(null)
-
-    private val defaultConfig = EnvironmentConfiguration.fromClass()
-
-    private fun getConfigValue(key: String): String {
-        val defaultValue = defaultConfig.primitiveFieldMap[key].toString()
-        val overrideValue = overrideConfig.get()?.primitiveFieldMap?.get(key)?.toString()
-        return overrideValue ?: defaultValue
+            .takeIf { it.containsKey(ConfigContract::host.name) || it.containsKey(ConfigContract::proxyToken.name) }
+            ?.let { args ->
+                EnvironmentConfiguration.fromBundle(args).also {
+                    printInfo("Overriding EnvironmentConfiguration with Instrumentation arguments: ${it.primitiveFieldMap}")
+                }
+            }
     }
 
-    private fun Bundle.configFields(): Map<String, Any?> {
-        val hostKey = EnvironmentConfiguration::host.name
-        val proxyTokenKey = EnvironmentConfiguration::proxyToken.name
-        return mapOf(
-            hostKey to (getString(hostKey) ?: getConfigValue(hostKey)),
-            proxyTokenKey to (getString(proxyTokenKey) ?: getConfigValue(proxyTokenKey))
-        )
+    private val staticEnvironmentConfig by lazy(EnvironmentConfiguration::fromClass)
+
+    @Provides
+    @Singleton
+    public fun provideEnvironmentConfiguration(
+        contentResolverConfigManager: ContentResolverConfigManager
+    ): EnvironmentConfiguration {
+        val contentResolverConfig = contentResolverConfigManager
+            .queryAtClassPath(EnvironmentConfiguration::class)
+            ?.let(EnvironmentConfiguration::fromMap)
+
+        return instrumentationArgumentsConfig
+            ?: overrideEnvironmentConfiguration.get()
+            ?: contentResolverConfig
+            ?: staticEnvironmentConfig
     }
 }

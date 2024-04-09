@@ -24,15 +24,17 @@ import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.rule.annotation.AnnotationTestData
 import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.test.rule.annotation.TestUserData
+import me.proton.core.test.rule.annotation.annotationTestData
 import me.proton.core.test.rule.annotation.handleExternal
-import me.proton.core.test.rule.annotation.toEnvironmentConfiguration
-import me.proton.core.test.rule.extension.seedTestUserData
+import me.proton.core.test.rule.annotation.shouldHandleExternal
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.measureTime
 import kotlin.time.toJavaDuration
 
 /**
@@ -42,19 +44,15 @@ import kotlin.time.toJavaDuration
  *
  * @property initialTestUserData Initial user data to set up before tests. Can be overridden by test-specific
  * annotations.
- * @property environmentConfig A lambda expression that supplies the [EnvironmentConfig] used for test execution.
+ * @property environmentConfiguration A lambda expression that supplies the [EnvironmentConfig] used for test execution.
  */
 public class QuarkTestDataRule(
-    private vararg val annotationTestData: AnnotationTestData<Annotation>,
-    initialTestUserData: TestUserData?,
-    private val environmentConfig: () -> EnvironmentConfig
+    private val annotationTestData: Set<AnnotationTestData<Annotation>>,
+    private val initialTestUserData: TestUserData?,
+    private val environmentConfiguration: () -> EnvironmentConfiguration
 ) : TestWatcher() {
 
     private lateinit var quarkCommand: QuarkCommand
-
-    private val environmentConfiguration: EnvironmentConfiguration by lazy {
-        environmentConfig().toEnvironmentConfiguration()
-    }
 
     private var createdUserResponse: CreateUserQuarkResponse? = null
 
@@ -64,41 +62,95 @@ public class QuarkTestDataRule(
      * The user data applied to the current test, initially set from [initialTestUserData] and potentially
      * overridden by test-specific annotations.
      */
-    public var testUserData: TestUserData? = initialTestUserData?.handleExternal()
-        private set
+    public var testUserData: TestUserData? = null
 
     /**
      * Prepares and applies test data and configurations before each test starts. This includes setting up
      * user/env data and processing all test data entries against the test's annotations.
      */
     override fun starting(description: Description) {
-        quarkCommand = QuarkCommand(quarkClient)
-            .baseUrl("https://${environmentConfiguration.host}/api/internal")
-            .proxyToken(environmentConfiguration.proxyToken)
+        quarkCommand = getQuarkCommand(environmentConfiguration())
 
-        testUserData = description.getAnnotation(TestUserData::class.java)?.handleExternal() ?: testUserData
+        if (initialTestUserData != null) {
+            val userData = description.getAnnotation(TestUserData::class.java) ?: initialTestUserData
+            val handledUserData = userData.handleExternal()
 
-        testUserData?.takeIf { it.shouldSeed }?.apply {
-            createdUserResponse = quarkCommand.seedTestUserData(this)
+            if (userData.shouldHandleExternal) {
+                printInfo("isExternal set to true, but external email is empty. Overriding values with name: ${handledUserData.name}, externalEmail: ${handledUserData.externalEmail}")
+            }
+
+            handledUserData.annotationTestData.let {
+                val userSeedingTime = measureTime {
+                    createdUserResponse = it.implementation(
+                        quarkCommand,
+                        it.instance,
+                        null,
+                        null
+                    ) as CreateUserQuarkResponse
+                }
+
+                printInfo("${TestUserData::class.java.simpleName} seeding done: $createdUserResponse")
+                printInfo("${TestUserData::class.java.simpleName} seeded in ${userSeedingTime.inWholeSeconds} seconds")
+
+                testUserData = it.instance
+                testDataMap[it.annotationClass] = it.instance
+
+                printInfo("Running Test with $testUserData")
+            }
         }
 
         annotationTestData.forEach { entry ->
-            val annotationData = description.getAnnotation(entry.annotationClass) ?: entry.default
-            entry.implementation(quarkCommand, annotationData, testUserData, createdUserResponse)
-            testDataMap[entry.annotationClass] = annotationData
+            val annotationData = getRuntimeAnnotationData(description, entry)
+
+            val seedingTime = measureTime {
+                val result = annotationData.implementation(
+                    quarkCommand,
+                    entry.instance,
+                    testUserData,
+                    createdUserResponse
+                )
+
+                if (result is Response) {
+                    printInfo("Seeding response received: { ${result.message} }")
+                }
+
+                printInfo("Running Test with ${entry.instance}")
+            }
+
+            printInfo("${entry.annotationClass.simpleName} data seeded in ${seedingTime.inWholeSeconds} seconds")
+
+            testDataMap[entry.annotationClass] = annotationData.instance
         }
     }
 
+    private fun getQuarkCommand(envConfig: EnvironmentConfiguration): QuarkCommand =
+        QuarkCommand(quarkClient)
+            .baseUrl("https://${envConfig.host}/api/internal")
+            .proxyToken(envConfig.proxyToken)
+
+    private inline fun <reified T : Annotation> getRuntimeAnnotationData(
+        description: Description,
+        defaultData: AnnotationTestData<T>
+    ): AnnotationTestData<T> = AnnotationTestData(
+        description.getAnnotation(T::class.java) ?: defaultData.instance,
+        defaultData.implementation,
+        defaultData.tearDown
+    )
+
     /** Clean up test data and configurations after each test finishes. **/
     override fun finished(description: Description) {
-        annotationTestData.forEach { data ->
-            testDataMap[data.annotationClass]?.let {
-                data.tearDown?.invoke(
+        annotationTestData.forEach { entry ->
+            testDataMap[entry.annotationClass]?.let {
+                val result = entry.tearDown?.invoke(
                     quarkCommand,
                     it,
                     testUserData,
                     createdUserResponse
-                )
+                ) ?: return@let
+
+                if (result is Response) {
+                    printInfo("Tear down response received: { ${result.message} }")
+                }
             }
         }
     }
@@ -108,12 +160,12 @@ public class QuarkTestDataRule(
     public fun <T : Annotation> getTestData(annotationClass: Class<T>): T = testDataMap[annotationClass] as T
 
     private val AnnotationTestData<Annotation>.annotationClass: Class<out Annotation>
-        get() = default.annotationClass.java
+        get() = instance.annotationClass.java
 
     public companion object {
-        public val quarkClientTimeout: AtomicReference<Duration> = AtomicReference(60.seconds)
+        private val quarkClientTimeout: AtomicReference<Duration> = AtomicReference(60.seconds)
 
-        private val quarkClient: OkHttpClient by lazy {
+        public val quarkClient: OkHttpClient by lazy {
             OkHttpClient.Builder()
                 .connectTimeout(quarkClientTimeout.get().toJavaDuration())
                 .readTimeout(quarkClientTimeout.get().toJavaDuration())

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,37 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.configuration.provider
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import android.os.Bundle
+import me.proton.core.configuration.entity.EnvironmentConfigFieldProvider
 
-publishOption.shouldBePublishedAsLib = true
+public class BundleConfigFieldProvider(
+    private val bundle: Bundle
+) : EnvironmentConfigFieldProvider {
+    override fun getString(key: String): String? = bundle.getString(key)
 
-android {
-    namespace = "me.proton.core.configuration.data"
-}
+    override fun getBoolean(key: String): Boolean? = bundle.takeIf { bundle.containsKey(key) }?.getBoolean(key)
 
-protonCoverage {
-    branchCoveragePercentage.set(62)
-    lineCoveragePercentage.set(77)
-}
-
-dependencies {
-    implementation(project(Module.networkData))
-
-    testImplementation(
-        junit,
-        mockk
-    )
-
-    androidTestImplementation(
-        junit,
-        `android-test-core-ktx`,
-        `android-test-runner`,
-        `android-test-rules`
-    )
+    override fun getInt(key: String): Int? = bundle.takeIf { bundle.containsKey(key) }?.getInt(key)
 }

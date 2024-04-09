@@ -18,17 +18,13 @@
 
 package me.proton.core.configuration.extension
 
-import java.lang.reflect.Field
-
-public val Any.configContractFields: Map<String, Field>
-    get() = this::class.java.declaredFields.associateBy {
-        it.isAccessible = true
-        it.name
-    }
-
 public val Any.primitiveFieldMap: Map<String, Any?>
-    get() = configContractFields.filter { map ->
-        map.value.get(this).let { it is String || it is Boolean }
-    }.mapValues {
-        it.value.get(this)
-    }
+    get() = this::class.java.declaredFields
+        .associateBy {
+            it.isAccessible = true
+            it.name
+        }
+        .filter { it.value.get(this).isPrimitive() }
+        .mapValues { it.value.get(this) }
+
+private fun Any?.isPrimitive(): Boolean = this is String || this is Boolean || this is Int

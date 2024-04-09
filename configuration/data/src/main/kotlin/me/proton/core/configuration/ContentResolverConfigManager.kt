@@ -22,44 +22,50 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import kotlin.reflect.KClass
 
 public open class ContentResolverConfigManager(
     public val context: Context
 ) {
+    private val String.contentResolverUrl: Uri get() = Uri.parse("content://$CONFIG_AUTHORITY/config/$this")
+
     @Synchronized
-    public fun fetchConfigurationDataAtPath(path: String): Map<String, Any?>? = context.contentResolver.query(
-        path.contentResolverUrl,
-        null,
-        null,
-        null,
-        null
-    )?.use { cursor ->
-        cursor.columnNames.associateWith { columnName ->
-            cursor.retrieveValue(columnName)
+    public fun queryAtClassPath(clazz: KClass<*>): Map<String, Any?>? {
+        val cursor = context.contentResolver.query(
+            clazz.qualifiedName?.contentResolverUrl ?: return null,
+            null,
+            null,
+            null,
+            null
+        )
+
+        return cursor?.use {
+            cursor.columnNames.associateWith { columnName ->
+                cursor.retrieveValue(columnName)
+            }
+        }?.takeIf {
+            it.isNotEmpty()
         }
-    }?.takeIf {
-        it.isNotEmpty()
     }
 
     @Synchronized
-    public fun insertContentValuesAtPath(configFieldMap: Map<String, Any?>, path: String): Uri? =
-        context.contentResolver.insert(path.contentResolverUrl, contentValues(configFieldMap))
+    public fun insertConfigFieldMapAtClassPath(configFieldMap: Map<String, Any?>, clazz: KClass<*>): Uri? =
+        context.contentResolver.insert(clazz.qualifiedName!!.contentResolverUrl, configFieldMap.contentValues)
 
-    private val String.contentResolverUrl: Uri get() = Uri.parse("content://$CONFIG_AUTHORITY/config/$this")
+    private val Map<String, Any?>.contentValues: ContentValues get() = ContentValues().apply {
+        forEach { (key, value) ->
+            when (value) {
+                is String -> put(key, value)
+                is Boolean -> put(key, value)
+                is Int -> put(key, value)
+            }
+        }
+    }
 
     private fun Cursor.retrieveValue(columnName: String): Any? {
         val columnIndex = getColumnIndex(columnName)
         if (columnIndex == -1) return null
         return if (moveToFirst()) getString(columnIndex) else null
-    }
-
-    private fun contentValues(map: Map<String, Any?>): ContentValues = ContentValues().apply {
-        map.forEach { (key, value) ->
-            when (value) {
-                is String -> put(key, value)
-                is Boolean -> put(key, value)
-            }
-        }
     }
 
     public companion object {

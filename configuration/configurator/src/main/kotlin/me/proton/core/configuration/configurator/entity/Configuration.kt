@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,37 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.configuration.configurator.entity
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.configuration.data"
-}
-
-protonCoverage {
-    branchCoveragePercentage.set(62)
-    lineCoveragePercentage.set(77)
-}
-
-dependencies {
-    implementation(project(Module.networkData))
-
-    testImplementation(
-        junit,
-        mockk
-    )
-
-    androidTestImplementation(
-        junit,
-        `android-test-core-ktx`,
-        `android-test-runner`,
-        `android-test-rules`
-    )
+interface Configuration {
+    suspend fun fetchConfig()
+    suspend fun saveConfig(advanced: Boolean)
+    suspend fun updateConfigField(key: String, newValue: Any)
+    suspend fun fetchConfigField(key: String)
 }

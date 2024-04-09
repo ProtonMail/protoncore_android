@@ -24,8 +24,10 @@ import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.EntryPointAccessors
 import me.proton.core.auth.domain.testing.LoginTestHelper
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
+import me.proton.core.test.rule.entity.UserConfig
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
+import kotlin.time.measureTime
 
 /**
  * A JUnit test rule for managing user authentication states before and after tests.
@@ -34,8 +36,10 @@ import org.junit.runner.Description
  */
 @SuppressLint("RestrictedApi")
 public class AuthenticationRule(
-    private val userConfig: ProtonRule.UserConfig,
+    config: () -> UserConfig,
 ) : TestWatcher() {
+
+    private val userConfig by lazy(config)
 
     private val loginTestHelper: LoginTestHelper by lazy {
         protonTestEntryPoint.loginTestHelper
@@ -54,8 +58,15 @@ public class AuthenticationRule(
         }
 
         userConfig.userData?.let {
-            if (userConfig.loginBefore)
-                loginTestHelper.login(it.name, it.password)
+            if (userConfig.loginBefore) {
+                printInfo("Logging in: ${it.name} / ${it.password} ...")
+
+                val loginTime = measureTime {
+                    loginTestHelper.login(it.name, it.password)
+                }
+
+                printInfo("Logged in in ${loginTime.inWholeSeconds} seconds.")
+            }
         }
     }
 
@@ -66,6 +77,7 @@ public class AuthenticationRule(
     }
 
     private fun logout() {
+        printInfo("Logging out all users")
         runCatching { loginTestHelper.logoutAll() }
     }
 }

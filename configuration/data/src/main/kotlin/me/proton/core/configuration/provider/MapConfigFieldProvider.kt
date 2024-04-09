@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,37 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.configuration.provider
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import me.proton.core.configuration.entity.EnvironmentConfigFieldProvider
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.configuration.data"
-}
-
-protonCoverage {
-    branchCoveragePercentage.set(62)
-    lineCoveragePercentage.set(77)
-}
-
-dependencies {
-    implementation(project(Module.networkData))
-
-    testImplementation(
-        junit,
-        mockk
-    )
-
-    androidTestImplementation(
-        junit,
-        `android-test-core-ktx`,
-        `android-test-runner`,
-        `android-test-rules`
-    )
+public open class MapConfigFieldProvider(
+    public val map: Map<String, Any?>
+) : EnvironmentConfigFieldProvider {
+    override fun getString(key: String): String? = map[key]?.toString()
+    override fun getInt(key: String): Int? = map[key]?.toString()?.toInt()
+    override fun getBoolean(key: String): Boolean? =
+        map[key].takeIf { map.containsKey(key) && it is Boolean } as? Boolean
 }

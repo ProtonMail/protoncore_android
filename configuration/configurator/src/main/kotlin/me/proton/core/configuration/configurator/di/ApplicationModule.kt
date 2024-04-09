@@ -22,10 +22,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.configuration.ContentResolverConfigManager
+import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
+import me.proton.core.configuration.configurator.domain.EnvironmentConfigurationUseCase
+import me.proton.core.configuration.configurator.entity.AppConfig
 import me.proton.core.test.quark.v2.QuarkCommand
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
-import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
 @Module
@@ -37,8 +40,8 @@ object ApplicationModule {
 
     @Singleton
     @Provides
-    fun provideOkHttpClient(): OkHttpClient {
-        val clientTimeout = 3.seconds.toJavaDuration()
+    fun provideOkHttpClient(appConfig: AppConfig): OkHttpClient {
+        val clientTimeout = appConfig.quarkTimeout.toJavaDuration()
         return OkHttpClient.Builder().connectTimeout(clientTimeout)
             .readTimeout(clientTimeout)
             .writeTimeout(clientTimeout)
@@ -46,4 +49,12 @@ object ApplicationModule {
             .retryOnConnectionFailure(false)
             .build()
     }
+
+    @Singleton
+    @Provides
+    fun provideContentResolverConfigurationUseCase(
+        contentResolverConfigManager: ContentResolverConfigManager,
+        appConfig: AppConfig,
+        quark: QuarkCommand
+    ): ConfigurationUseCase = EnvironmentConfigurationUseCase(quark, contentResolverConfigManager, appConfig)
 }

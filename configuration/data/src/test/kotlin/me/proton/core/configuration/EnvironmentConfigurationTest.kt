@@ -18,86 +18,45 @@
 
 package me.proton.core.configuration
 
-import me.proton.core.configuration.extension.configContractFields
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertThrows
 import org.junit.Test
-import kotlin.reflect.KFunction1
 
 class EnvironmentConfigurationTest {
 
-    private val mockConfigData: Map<String, Any?> = mapOf(
-        "host" to "testHost",
-        "proxyToken" to "testProxyToken",
-        "apiPrefix" to "testApiPrefix",
-        "baseUrl" to "testBaseUrl",
-        "apiHost" to "api.host",
-        "hv3Host" to "testHv3Host",
-        "hv3Url" to "testHv3Url"
-    )
-
-    @Suppress("UNCHECKED_CAST")
-    private val expected = EnvironmentConfiguration(mockConfigData::get as KFunction1<String, String?>)
-
-    private class ValidStaticConfig {
-        val host: String = "testHost"
-        val proxyToken: String = "testProxyToken"
-        val apiPrefix: String = "testApiPrefix"
-        val baseUrl: String = "testBaseUrl"
-        val apiHost: String = "api.host"
-        val hv3Host: String = "testHv3Host"
-        val hv3Url: String = "testHv3Url"
-    }
-
-    private class InvalidStaticConfig {
-        val host = 0
-    }
-
     @Test
-    fun `load config from map`() {
-        val actual = EnvironmentConfiguration.fromMap(mockConfigData)
-        assertEquals(
-            actual.configContractFields,
-            expected.configContractFields
+    fun `EnvironmentConfiguration initializes correctly with MapFieldProvider`() {
+        val configMap = mapOf(
+            "host" to "test.proton.me",
+            "proxyToken" to "token123",
+            "apiPrefix" to "apiTest",
+            "useDefaultPins" to false
         )
+        val config = EnvironmentConfiguration.fromMap(configMap)
+
+        assertEquals("test.proton.me", config.host)
+        assertEquals("token123", config.proxyToken)
+        assertEquals("apiTest", config.apiPrefix)
+        assertEquals("apiTest.test.proton.me", config.apiHost)
+        assertEquals("https://apiTest.test.proton.me", config.baseUrl)
+        assertEquals("verify.test.proton.me", config.hv3Host)
+        assertEquals("https://verify.test.proton.me", config.hv3Url)
+        assertEquals(false, config.useDefaultPins)
     }
 
     @Test
-    fun `throw error for unsupported type when loading from map`() {
-        assertThrows(ClassCastException::class.java) {
-            EnvironmentConfiguration.fromMap(mapOf("host" to arrayOf("")))
-        }
-    }
+    fun `EnvironmentConfiguration uses defaults correctly`() {
+        val minimalConfigMap = mapOf(
+            "host" to "proton.me"
+        )
+        val config = EnvironmentConfiguration.fromMap(minimalConfigMap)
 
-    @Test
-    fun `throw error for loading non-existent class`() {
-        assertThrows(IllegalStateException::class.java) {
-            EnvironmentConfiguration.fromClass("null")
-        }
-    }
-
-    @Test
-    fun `throw error for loading invalid config`() {
-        assertThrows(ClassCastException::class.java) {
-            EnvironmentConfiguration.fromClass(InvalidStaticConfig::class.java.name)
-        }
-    }
-
-    @Test
-    fun `load config from class`() {
-        val actual = EnvironmentConfiguration.fromClass(ValidStaticConfig::class.java.name)
-        assertEquals(actual.configContractFields, expected.configContractFields)
-    }
-
-    @Test
-    fun `default proxy usage is set`() {
-        val actual = EnvironmentConfiguration.fromMap(mapOf("host" to "proton.me"))
-        assertEquals(actual.useDefaultPins, true)
-    }
-
-    @Test
-    fun `default proxy usage is overridden`() {
-        val actual = EnvironmentConfiguration.fromMap(mapOf("host" to "proton.me", "useDefaultPins" to false))
-        assertEquals(actual.useDefaultPins, false)
+        assertEquals("proton.me", config.host)
+        assertEquals("", config.proxyToken) // Default empty string
+        assertEquals("api", config.apiPrefix) // Specified default
+        assertEquals("api.proton.me", config.apiHost) // Constructed from defaults
+        assertEquals("https://api.proton.me", config.baseUrl) // Constructed URL
+        assertEquals("verify.proton.me", config.hv3Host) // Constructed host
+        assertEquals("https://verify.proton.me", config.hv3Url) // Constructed URL
+        assertEquals(true, config.useDefaultPins) // Default based on `host == "proton.me"`
     }
 }

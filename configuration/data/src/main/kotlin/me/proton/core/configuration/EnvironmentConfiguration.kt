@@ -18,49 +18,35 @@
 
 package me.proton.core.configuration
 
+import android.os.Bundle
 import me.proton.core.configuration.entity.ConfigContract
-import kotlin.reflect.KFunction1
-import kotlin.reflect.KProperty
+import me.proton.core.configuration.entity.EnvironmentConfigFieldProvider
+import me.proton.core.configuration.provider.BundleConfigFieldProvider
+import me.proton.core.configuration.provider.MapConfigFieldProvider
+import me.proton.core.configuration.provider.StaticClassConfigFieldProvider
 
 private const val DEFAULT_CONFIG_CLASS: String = "me.proton.core.configuration.EnvironmentConfigurationDefaults"
 
 public data class EnvironmentConfiguration(
-    val stringProvider: KFunction1<String, Any?>
+    val configFieldProvider: EnvironmentConfigFieldProvider
 ) : ConfigContract {
-    override val host: String = getString(::host) ?: ""
-    override val proxyToken: String = getString(::proxyToken) ?: ""
-    override val apiPrefix: String = getString(::apiPrefix) ?: "api"
-    override val apiHost: String = getString(::apiHost) ?: "$apiPrefix.$host"
-    override val baseUrl: String = getString(::baseUrl) ?: "https://$apiHost"
-    override val hv3Host: String = getString(::hv3Host) ?: "verify.$host"
-    override val hv3Url: String = getString(::hv3Url) ?: "https://$hv3Host"
-    override val useDefaultPins: Boolean = getString(::useDefaultPins) ?: (host == "proton.me")
-
-    private fun <T> getString(propertyName: KProperty<Any>): T = stringProvider(propertyName.name) as T
+    override val host: String = configFieldProvider.getString(::host.name) ?: ""
+    override val proxyToken: String = configFieldProvider.getString(::proxyToken.name) ?: ""
+    override val apiPrefix: String = configFieldProvider.getString(::apiPrefix.name) ?: "api"
+    override val apiHost: String = configFieldProvider.getString(::apiHost.name) ?: "$apiPrefix.$host"
+    override val baseUrl: String = configFieldProvider.getString(::baseUrl.name) ?: "https://$apiHost"
+    override val hv3Host: String = configFieldProvider.getString(::hv3Host.name) ?: "verify.$host"
+    override val hv3Url: String = configFieldProvider.getString(::hv3Url.name) ?: "https://$hv3Host"
+    override val useDefaultPins: Boolean = configFieldProvider.getBoolean(::useDefaultPins.name) ?: (host == "proton.me")
 
     public companion object {
-
         public fun fromMap(configMap: Map<String, Any?>): EnvironmentConfiguration =
-            EnvironmentConfiguration(configMap::get)
+            EnvironmentConfiguration(MapConfigFieldProvider(configMap))
 
         public fun fromClass(className: String = DEFAULT_CONFIG_CLASS): EnvironmentConfiguration =
-            fromMap(getConfigDataMapFromClass(className))
+            EnvironmentConfiguration(StaticClassConfigFieldProvider(className))
 
-        private fun getConfigDataMapFromClass(className: String) = try {
-            val defaultsClass = Class.forName(className)
-            val instance = defaultsClass.newInstance()
-
-            defaultsClass
-                .declaredFields
-                .associate { property ->
-                    property.isAccessible = true
-                    property.name to property.get(instance)
-                }
-        } catch (e: ClassNotFoundException) {
-            throw IllegalStateException(
-                "Class not found: $className. Make sure environment configuration gradle plugin is enabled!",
-                e
-            )
-        }
+        public fun fromBundle(bundle: Bundle): EnvironmentConfiguration =
+            EnvironmentConfiguration(BundleConfigFieldProvider(bundle))
     }
 }

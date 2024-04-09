@@ -26,7 +26,7 @@ import me.proton.core.util.kotlin.EMPTY_STRING
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 public annotation class TestSubscriptionData(
-    val plan: Plan = Plan.Free,
+    val plan: Plan,
     val couponCode: String = EMPTY_STRING,
     val delinquent: Boolean = false
 )

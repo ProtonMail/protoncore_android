@@ -18,6 +18,7 @@
 
 package me.proton.core.test.rule.annotation
 
+import me.proton.core.test.rule.extension.seedTestUserData
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.random
 
@@ -37,6 +38,8 @@ public annotation class TestUserData(
     val toTpSecret: String = EMPTY_STRING,
     val recoveryPhone: String = EMPTY_STRING,
     val externalEmail: String = EMPTY_STRING,
+    val vpnSettings: String = EMPTY_STRING,
+    val creationTime: String = EMPTY_STRING,
 
     val shouldSeed: Boolean = true,
 ) {
@@ -59,10 +62,9 @@ public annotation class TestUserData(
 }
 
 public fun TestUserData.handleExternal(
-    username: String = TestUserData.randomUsername(),
-    extEmail: String = "${TestUserData.randomUsername()}@example.lt"
+    username: String = TestUserData.randomUsername()
 ): TestUserData = TestUserData(
-    name = if (name.isEmpty() && external) name else username,
+    name = if (shouldHandleExternal) username else name,
     password,
     recoveryEmail,
     status,
@@ -73,5 +75,16 @@ public fun TestUserData.handleExternal(
     external,
     toTpSecret,
     recoveryPhone,
-    externalEmail = if (externalEmail.isEmpty() && external) extEmail else externalEmail
+    externalEmail = if (shouldHandleExternal) "$username@example.lt" else externalEmail
 )
+
+public val TestUserData.annotationTestData: AnnotationTestData<TestUserData>
+    get() = AnnotationTestData(
+        default = this,
+        implementation = { data ->
+            seedTestUserData(data)
+        }
+    )
+
+public val TestUserData.shouldHandleExternal: Boolean
+    get() = externalEmail.isEmpty() && external

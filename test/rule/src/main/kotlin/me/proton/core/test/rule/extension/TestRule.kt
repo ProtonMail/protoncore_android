@@ -28,6 +28,9 @@ import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.annotation.AnnotationTestData
 import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.test.rule.annotation.TestUserData
+import me.proton.core.test.rule.entity.HiltConfig
+import me.proton.core.test.rule.entity.TestConfig
+import me.proton.core.test.rule.entity.UserConfig
 import org.junit.rules.TestRule
 
 /**
@@ -40,45 +43,51 @@ import org.junit.rules.TestRule
  *  - Custom setup logic
  *  - Activity or Compose test rule
  *
- * @param annotationTestData Array of `AnnotationTestData` for `QuarkTestDataRule`.
+ * @param annotationTestData Set of `AnnotationTestData` for `QuarkTestDataRule`.
  * @param envConfig Environment configuration for the test (optional).
  * @param userData Test user data (optional).
  * @param loginBefore Whether to perform login before the test (default: false).
  * @param logoutBefore Whether to perform logout before the test (default: false).
  * @param logoutAfter Whether to perform logout after the test (default: false).
  * @param activityRule Optional `TestRule` for managing activities (default: null).
- * @param setUp A lambda function containing setup logic to be executed before each test (default: empty).
+ * @param afterHilt A lambda function containing setup logic to be executed before each test (default: empty).
  * @return A new `ProtonRule` instance.
  */
 @SuppressWarnings("LongParameterList")
 public fun Any.protonRule(
-    vararg annotationTestData: AnnotationTestData<Annotation>,
+    annotationTestData: Set<AnnotationTestData<Annotation>> = emptySet(),
     envConfig: EnvironmentConfig? = null,
     userData: TestUserData? = null,
     loginBefore: Boolean = false,
     logoutBefore: Boolean = false,
     logoutAfter: Boolean = false,
     activityRule: TestRule? = null,
-    setUp: () -> Any = { },
+    afterHilt: (ProtonRule) -> Any = { },
+    beforeHilt: (ProtonRule) -> Any = { },
 ): ProtonRule {
-    val userConfig = ProtonRule.UserConfig(
+    val userConfig = UserConfig(
         userData = userData,
         loginBefore = loginBefore,
         logoutBefore = logoutBefore,
         logoutAfter = logoutAfter
     )
 
-    val testConfig = ProtonRule.TestConfig(
+    val testConfig = TestConfig(
         envConfig = envConfig,
         annotationTestData = annotationTestData,
         activityRule = activityRule
     )
 
+    val hiltConfig = HiltConfig(
+        hiltInstance = this,
+        afterHilt = afterHilt,
+        beforeHilt = beforeHilt
+    )
+
     return ProtonRule(
         userConfig = userConfig,
         testConfig = testConfig,
-        hiltTestInstance = this,
-        setup = setUp
+        hiltConfig = hiltConfig
     )
 }
 
@@ -102,14 +111,15 @@ public fun Any.protonRule(
  */
 @SuppressWarnings("LongParameterList")
 public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
-    vararg annotationTestData: AnnotationTestData<Annotation>,
+    annotationTestData: Set<AnnotationTestData<Annotation>> = emptySet(),
     envConfig: EnvironmentConfig? = null,
     userData: TestUserData? = TestUserData.withRandomUsername,
     loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
     logoutAfter: Boolean = true,
     activityScenarioRule: ActivityScenarioRule<A> = activityScenarioRule(),
-    noinline setUp: () -> Any = { },
+    noinline beforeHilt: (ProtonRule) -> Unit = { },
+    noinline afterHilt: (ProtonRule) -> Unit = { },
 ): ProtonRule = protonRule(
     annotationTestData = annotationTestData,
     envConfig = envConfig,
@@ -118,7 +128,8 @@ public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityRule = activityScenarioRule,
-    setUp = setUp
+    afterHilt = afterHilt,
+    beforeHilt = beforeHilt
 )
 
 /**
@@ -136,19 +147,20 @@ public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
  * @param logoutAfter Whether to perform logout after the test (default: true).
  * @param composeTestRule A `ComposeTestRule` for the specified component activity type
  *        (default: created using `createAndroidComposeRule()`).
- * @param setUp A lambda function containing setup logic to be executed before each test (default: empty).
+ * @param afterHilt A lambda function containing setup logic to be executed before each test (default: empty).
  * @return A new `ProtonRule` instance.
  */
 @SuppressWarnings("LongParameterList")
 public inline fun <reified A : ComponentActivity> Any.protonAndroidComposeRule(
-    vararg annotationTestData: AnnotationTestData<Annotation>,
+    annotationTestData: Set<AnnotationTestData<Annotation>> = emptySet(),
     envConfig: EnvironmentConfig? = null,
     userData: TestUserData? = TestUserData.withRandomUsername,
     loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
     logoutAfter: Boolean = true,
     composeTestRule: ComposeTestRule = createAndroidComposeRule<A>(),
-    noinline setUp: () -> Any = { },
+    noinline beforeHilt: (ProtonRule) -> Any = { },
+    noinline afterHilt: (ProtonRule) -> Any = { },
 ): ProtonRule = protonRule(
     annotationTestData = annotationTestData,
     envConfig = envConfig,
@@ -157,5 +169,6 @@ public inline fun <reified A : ComponentActivity> Any.protonAndroidComposeRule(
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityRule = composeTestRule,
-    setUp = setUp
+    beforeHilt = beforeHilt,
+    afterHilt = afterHilt
 )

@@ -20,98 +20,109 @@ package me.proton.core.configuration.configurator.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.configuration.ContentResolverConfigManager
-import me.proton.core.configuration.extension.primitiveFieldMap
+import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
+import javax.inject.Inject
 
-typealias ConfigFieldMapper<T> = (Map<String, Any?>) -> T
-
-class ConfigurationScreenViewModel<T : Any>(
-    private val contentResolverConfigManager: ContentResolverConfigManager,
-    private val configFieldMapper: ConfigFieldMapper<T>,
-    private val defaultConfig: T
+@HiltViewModel
+class ConfigurationScreenViewModel @Inject constructor(
+    private val configurationUseCase: ConfigurationUseCase
 ) : ViewModel() {
 
-    private val _configState: MutableStateFlow<T> = MutableStateFlow(defaultConfig)
-    val configurationState: StateFlow<T> get() = _configState
-
-    private val _errorEvent = MutableSharedFlow<Throwable>()
-    val errorEvent: SharedFlow<Throwable> get() = _errorEvent
-
-    private val _infoEvent = MutableSharedFlow<String>()
-    val infoEvent: SharedFlow<String> get() = _infoEvent
-
-    val configFieldMap get() = _configState.value.primitiveFieldMap
-
-    init {
-        fetchInitialConfig()
+    sealed class Action {
+        data object ObserveConfig : Action()
+        data object FetchConfig: Action()
+        data object SetDefaultConfigFields : Action()
+        data class SaveConfig(val isAdvanced: Boolean) : Action()
+        data class SetAdvanced(val isAdvanced: Boolean) : Action()
+        data class FetchConfigField(val key: String) : Action()
+        data class UpdateConfigField(val key: String, val value: Any) : Action()
     }
 
-    fun fetchConfigField(fieldName: String, configurationFieldGetter: suspend () -> Any) {
+    data class State(
+        val configFieldSet: Set<ConfigurationUseCase.ConfigField>,
+        val isAdvanced: Boolean
+    )
+
+    private val mutableErrorFlow: MutableSharedFlow<String> = MutableSharedFlow()
+
+    private val isAdvanced: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    val errorFlow: SharedFlow<String> = mutableErrorFlow.asSharedFlow()
+
+    val state: StateFlow<State> =
+        observeConfig().onStart {
+            perform(Action.FetchConfig)
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+            initialValue = State(configurationUseCase.configState.value, isAdvanced.value)
+        )
+
+    fun perform(action: Action) = runCatching {
+        when (action) {
+            is Action.SetDefaultConfigFields -> setDefaultConfigFields()
+            is Action.ObserveConfig -> observeConfig()
+            is Action.FetchConfig -> fetchConfig()
+            is Action.SaveConfig -> saveConfig(action.isAdvanced)
+            is Action.SetAdvanced -> setAdvanced(action.isAdvanced)
+            is Action.FetchConfigField -> fetchConfigField(action.key)
+            is Action.UpdateConfigField -> updateConfigField(action.key, action.value)
+        }
+    }.onFailure {
+        mutableErrorFlow.tryEmit(it.message ?: "Unknown message")
+    }
+
+    private fun observeConfig(): Flow<State> = combine(
+        configurationUseCase.configState,
+        isAdvanced
+    ) { fieldSet, advanced ->
+        val fieldList = if (isAdvanced.value) fieldSet else fieldSet.filter { it.isAdvanced == advanced }
+        State(fieldList.toSet(), isAdvanced.value)
+    }
+
+    private fun setDefaultConfigFields() = launchCatching {
+        configurationUseCase.setDefaultConfigurationFields()
+    }
+
+    private fun fetchConfig() = launchCatching {
+        configurationUseCase.fetchConfig()
+    }
+
+    private fun saveConfig(isAdvanced: Boolean) = launchCatching {
+        configurationUseCase.saveConfig(isAdvanced)
+    }
+
+    private fun fetchConfigField(key: String) = launchCatching {
+        configurationUseCase.fetchConfigField(key)
+    }
+
+    private fun updateConfigField(key: String, value: Any) = launchCatching {
+        configurationUseCase.updateConfigField(key, value)
+    }
+
+    private fun setAdvanced(advancedValue: Boolean) = launchCatching {
+        isAdvanced.emit(advancedValue)
+    }
+
+    private fun launchCatching(block: suspend () -> Unit) =
         viewModelScope.launch {
             runCatching {
-                _infoEvent.emit("Fetching $fieldName")
-                configurationFieldGetter()
+                block()
+            }.onFailure {
+                mutableErrorFlow.emit(it.message ?: "Unknown error")
             }
-                .onFailure {
-                    _errorEvent.emit(it)
-                }
-                .onSuccess { newValue ->
-                    updateConfigField(fieldName, newValue)
-                }
         }
-    }
-
-    fun saveConfiguration(keysToSave: Set<String> = _configState.value.primitiveFieldMap.keys) {
-        viewModelScope.launch {
-            val mapToInsert = keysToSave.associateWith { _configState.value.primitiveFieldMap[it] }
-            runCatching {
-                contentResolverConfigManager.insertContentValuesAtPath(
-                    mapToInsert,
-                    _configState.value::class.java.name
-                )
-            }.onFailure { _errorEvent.emit(it) }.onSuccess {
-                _infoEvent.emit("Configuration Saved")
-            }
-        }
-    }
-
-    fun setDefaultConfigurationFields(preservedFields: Set<String> = configFieldMap.keys) {
-        val map = preservedFields.associateWith { configFieldMap[it].toString() }
-        _configState.value = configFieldMapper(map)
-    }
-
-    fun <R> observeField(key: String, defaultValue: R): StateFlow<R> =
-        _configState.map { state ->
-            state.primitiveFieldMap[key] as? R ?: defaultValue
-        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), defaultValue)
-
-    private fun fetchInitialConfig() {
-        viewModelScope.launch {
-            runCatching {
-                val configMap =
-                    contentResolverConfigManager.fetchConfigurationDataAtPath(defaultConfig::class.java.name)
-                configFieldMapper(configMap ?: emptyMap())
-            }.onFailure { _errorEvent.emit(it) }
-                .onSuccess { config ->
-                    _configState.value = config
-                }
-        }
-    }
-
-    fun updateConfigField(updatedField: String, newValue: Any) {
-        _configState.value = _configState.value.withUpdatedField(updatedField, newValue).also {
-            println("Updating field: $updatedField, $newValue")
-        }
-    }
-
-    private fun T.withUpdatedField(updatedField: String, newValue: Any): T =
-        configFieldMapper(this.primitiveFieldMap.toMutableMap().apply { this[updatedField] = newValue })
 }

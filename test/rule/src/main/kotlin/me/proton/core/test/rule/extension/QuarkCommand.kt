@@ -41,7 +41,7 @@ public fun QuarkCommand.setPaymentMethods(methods: TestPaymentMethods): Response
 
 public fun QuarkCommand.seedTestUserData(data: TestUserData): CreateUserQuarkResponse {
     val args = listOf(
-        "-N" to data.name,
+        "-N" to (data.name.takeIf { !data.external } ?: EMPTY_STRING),
         "-p" to data.password,
         "-c" to data.createAddress.trueOrEmpty(),
         "-r" to data.recoveryEmail,
@@ -51,9 +51,11 @@ public fun QuarkCommand.seedTestUserData(data: TestUserData): CreateUserQuarkRes
         "-k" to data.genKeys.valueOrEmpty(),
         "-m" to data.mailboxPassword,
         "-e" to data.external.trueOrEmpty(),
-        "-ts" to data.toTpSecret,
-        "-rp" to data.recoveryPhone,
-        "-em" to data.externalEmail,
+        "--vpn-settings" to data.vpnSettings,
+        "--creation-time" to data.creationTime,
+        "--totp-secret" to data.toTpSecret,
+        "--recovery-phone" to data.recoveryPhone,
+        "--external-email" to data.externalEmail,
         "--format" to "json"
     ).toEncodedArgs(ignoreEmpty = true)
 

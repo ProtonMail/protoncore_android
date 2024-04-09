@@ -25,17 +25,17 @@ import me.proton.core.test.quark.v2.QuarkCommand
  * Represents a test data configuration for the `QuarkTestDataRule`.
  *
  * @param T The annotation type associated with this test data configuration.
- * @param default The default annotation instance to use if no test-specific annotation is present.
+ * @param instance The default annotation instance to use if no test-specific annotation is present.
  * @param implementation A lambda function defining how to apply the test data using the provided Quark command,
  *        test user data (if available), and created user response (if available).
  * @param tearDown An optional lambda function defining how to tear down the test data after the test, using the
  *        provided Quark command, test data annotation, test user data (if available),
  *        and created user response (if available).
  */
-public class AnnotationTestData<T: Annotation>(
-    public val default: T,
-    public val implementation: QuarkCommand.(T, TestUserData?, CreateUserQuarkResponse?) -> Any,
-    public val tearDown: (QuarkCommand.(T, TestUserData?, CreateUserQuarkResponse?) -> Unit)? = null,
+public class AnnotationTestData<out T: Annotation>(
+    public val instance: T,
+    public val implementation: QuarkCommand.(@UnsafeVariance T, TestUserData?, CreateUserQuarkResponse?) -> Any,
+    public val tearDown: (QuarkCommand.(@UnsafeVariance T, TestUserData?, CreateUserQuarkResponse?) -> Any?)? = null,
 ) {
 
     /**
@@ -50,9 +50,9 @@ public class AnnotationTestData<T: Annotation>(
     public constructor(
         default: T,
         implementation: QuarkCommand.(T) -> Any,
-        tearDown: (QuarkCommand.(T) -> Unit)? = null
+        tearDown: (QuarkCommand.(T) -> Any)? = null
     ) : this(
-        default = default,
+        instance = default,
         implementation = { data, _, _ -> implementation(data) },
         tearDown = { data, _, _ -> tearDown?.invoke(this, data) }
     )
@@ -71,7 +71,7 @@ public class AnnotationTestData<T: Annotation>(
         implementation: QuarkCommand.(T, CreateUserQuarkResponse) -> Any,
         tearDown: (QuarkCommand.(T, CreateUserQuarkResponse) -> Unit)? = null
     ) : this(
-        default = default,
+        instance = default,
         implementation = { data, _, seededUser ->
             implementation(
                 data,

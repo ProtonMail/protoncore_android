@@ -61,7 +61,7 @@ class ContentResolverConfigManagerTest {
         every { cursor.getString(1) } returns "value2"
         every { contentResolver.query(any(), any(), any(), any(), any()) } returns cursor
 
-        val result = configManager.fetchConfigurationDataAtPath(EnvironmentConfiguration::class.java.name)
+        val result = configManager.queryAtClassPath(EnvironmentConfiguration::class)
 
         assertEquals(mapOf("key1" to "value1", "key2" to "value2"), result)
     }
@@ -73,7 +73,7 @@ class ContentResolverConfigManagerTest {
         every { cursor.moveToFirst() } returns false // No data to move to
         every { contentResolver.query(any(), null, null, null, null) } returns cursor
 
-        val result = configManager.fetchConfigurationDataAtPath("emptyPath")
+        val result = configManager.queryAtClassPath(EnvironmentConfiguration::class)
 
         assertTrue(result.isNullOrEmpty())
     }
@@ -83,7 +83,7 @@ class ContentResolverConfigManagerTest {
     fun `fetchConfigurationDataAtPath returns null for invalid path`() {
         every { contentResolver.query(any(), null, null, null, null) } returns null
 
-        val result = configManager.fetchConfigurationDataAtPath("invalidPath")
+        val result = configManager.queryAtClassPath(this::class)
 
         assertNull(result)
     }

@@ -37,9 +37,7 @@ public class ContentResolverEnvironmentConfigModule {
         contentResolverConfigManager: ContentResolverConfigManager
     ): EnvironmentConfiguration {
         val staticEnvironmentConfig = EnvironmentConfiguration.fromClass()
-        val contentResolverConfigData = contentResolverConfigManager.fetchConfigurationDataAtPath(
-            EnvironmentConfiguration::class.java.name
-        )
+        val contentResolverConfigData = contentResolverConfigManager.queryAtClassPath(EnvironmentConfiguration::class)
         return EnvironmentConfiguration.fromMap(contentResolverConfigData ?: return staticEnvironmentConfig)
     }
 

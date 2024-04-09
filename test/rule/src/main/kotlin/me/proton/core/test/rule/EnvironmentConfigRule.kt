@@ -18,41 +18,32 @@
 
 package me.proton.core.test.rule
 
-import me.proton.core.configuration.EnvironmentConfiguration
+import dagger.hilt.android.testing.HiltAndroidTest
+import me.proton.core.configuration.extension.primitiveFieldMap
 import me.proton.core.test.rule.annotation.EnvironmentConfig
-import me.proton.core.test.rule.annotation.configContractFieldsMap
-import me.proton.core.test.rule.di.TestEnvironmentConfigModule.overrideConfig
-import me.proton.core.test.rule.di.TestEnvironmentConfigModule.provideEnvironmentConfiguration
-import org.junit.rules.TestRule
+import me.proton.core.test.rule.annotation.toEnvironmentConfiguration
+import me.proton.core.test.rule.di.TestEnvironmentConfigModule.overrideEnvironmentConfiguration
+import org.junit.rules.TestWatcher
 import org.junit.runner.Description
-import org.junit.runners.model.Statement
 
 /**
  * A test rule for setting up environment configuration before running tests.
  *
- * @property defaultConfig The default [EnvironmentConfig] to use for tests if no overrides are specified.
- * By default, it uses a configuration provided by [provideEnvironmentConfiguration].
+ * @property ruleConfig The default [EnvironmentConfig] to use for tests if no overrides are specified.
  */
+@HiltAndroidTest
 public class EnvironmentConfigRule(
-    private val defaultConfig: EnvironmentConfig =
-        EnvironmentConfig.fromConfiguration(provideEnvironmentConfiguration())
-) : TestRule {
+    private val ruleConfig: EnvironmentConfig?
+) : TestWatcher() {
+    public override fun starting(description: Description) {
+        val annotationConfig = description.getAnnotation(EnvironmentConfig::class.java)
+        val overrideConfig = annotationConfig ?: ruleConfig ?: return
+        val overrideEnvironmentConfig = overrideConfig.toEnvironmentConfiguration()
 
-    /**
-     * The active [EnvironmentConfig] for the current test. It is determined by looking for an
-     * [EnvironmentConfig] annotation on the test method or class. If not found, [defaultConfig] is used.
-     *
-     * This property is initialized when the rule is applied and is accessible during the test execution.
-     */
-    public lateinit var config: EnvironmentConfig
-        private set
+        overrideEnvironmentConfiguration.set(overrideEnvironmentConfig)
 
-    /**
-     * Applies the environment configuration for the test described by [description].
-     */
-    override fun apply(base: Statement, description: Description): Statement {
-        config = description.getAnnotation(EnvironmentConfig::class.java) ?: defaultConfig
-        EnvironmentConfiguration.fromMap(config.configContractFieldsMap).apply(overrideConfig::set)
-        return base
+        val overrideString = if (annotationConfig != null) "@EnvironmentConfig annotation" else "ProtonRule argument"
+
+        printInfo("Overriding EnvironmentConfiguration with $overrideString: ${overrideEnvironmentConfig.primitiveFieldMap}")
     }
 }

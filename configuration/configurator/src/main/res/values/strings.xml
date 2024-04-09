@@ -19,7 +19,7 @@
 <resources>
     <string name="app_name" translatable="false">Configurator</string>
     <string name="configuration_button_apply" translatable="false">Apply</string>
-    <string name="configuration_restore_confirmation" translatable="false">Set</string>
+    <string name="configuration_set_defaults" translatable="false">Set</string>
     <string name="configuration_title_network_configuration" translatable="false">Network Configuration</string>
     <string name="configuration_text_advanced" translatable="false">Advanced</string>
     <string name="configuration_error_unknown" translatable="false">Could not save configuration. Unknown error</string>

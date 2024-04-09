@@ -18,12 +18,15 @@
 
 package me.proton.core.test.rule
 
+import android.util.Log
+import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
 import kotlinx.coroutines.runBlocking
-import me.proton.core.test.rule.annotation.AnnotationTestData
-import me.proton.core.test.rule.annotation.EnvironmentConfig
-import me.proton.core.test.rule.annotation.TestUserData
+import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.test.rule.di.TestEnvironmentConfigModule.provideEnvironmentConfiguration
+import me.proton.core.test.rule.entity.HiltConfig
+import me.proton.core.test.rule.entity.TestConfig
+import me.proton.core.test.rule.entity.UserConfig
 import org.junit.rules.ExternalResource
 import org.junit.rules.RuleChain
 import org.junit.rules.TestRule
@@ -44,74 +47,91 @@ import org.junit.runners.model.Statement
  *
  * @param userConfig Configuration for user data and related behavior (e.g., login/logout settings).
  * @param testConfig Configuration for environment, test data, and an optional activity rule.
- * @param hiltTestInstance Hilt test instance for dependency injection.
- * @param setup A lambda function containing setup logic to be executed before each test.
+ * @param hiltConfig Configuration for hooking into hilt setup
  */
 public open class ProtonRule(
-    private val userConfig: UserConfig,
+    private val userConfig: UserConfig?,
     private val testConfig: TestConfig,
-    private val hiltTestInstance: Any,
-    private val setup: () -> Any
+    private val hiltConfig: HiltConfig?,
 ) : TestRule {
 
+    public val activityScenarioRule: TestRule? = testConfig.activityRule
+
+    private val targetContext get() = InstrumentationRegistry.getInstrumentation().targetContext
+
     private val environmentConfigRule by lazy {
-        val envConfig = testConfig.envConfig ?: EnvironmentConfig.fromConfiguration(provideEnvironmentConfiguration())
-        EnvironmentConfigRule(envConfig)
+        EnvironmentConfigRule(testConfig.envConfig)
     }
 
-    private val hiltRule by lazy {
-        HiltAndroidRule(hiltTestInstance)
+    private val hiltRule: HiltAndroidRule? by lazy {
+        HiltAndroidRule(hiltConfig?.hiltInstance ?: return@lazy null)
     }
 
-    public val testDataRule: QuarkTestDataRule by lazy {
+    private val hiltInjectRule by lazy {
+        if (hiltConfig == null) return@lazy null
+        before {
+            hiltRule!!.inject()
+        }
+    }
+
+    public val testDataRule: QuarkTestDataRule? by lazy {
+        if (userConfig?.userData == null && testConfig.annotationTestData.isEmpty()) return@lazy null
         QuarkTestDataRule(
-            *testConfig.annotationTestData,
-            initialTestUserData = userConfig.userData,
-            environmentConfig = { environmentConfigRule.config }
+            testConfig.annotationTestData,
+            initialTestUserData = userConfig?.userData,
+            environmentConfiguration = {
+                provideEnvironmentConfiguration(ContentResolverConfigManager(targetContext))
+            }
         )
     }
 
     private val authenticationRule by lazy {
-        userConfig
-            .takeUnless { it.userData == null }
-            ?.let {
-                AuthenticationRule(it)
-            }
+        if (userConfig == null) return@lazy null.also {
+            printInfo("No UserConfig provided. Skipping authentication.")
+        }
+        AuthenticationRule {
+            UserConfig(
+                testDataRule?.testUserData,
+                loginBefore = userConfig.loginBefore,
+                logoutBefore = userConfig.logoutBefore,
+                logoutAfter = userConfig.logoutAfter,
+            )
+        }
     }
 
-    private val setupRule by lazy {
-        before { setup() }
+    private val beforeHiltRule by lazy {
+        if (hiltConfig?.beforeHilt == null) return@lazy null
+        before {
+            printInfo("Executing beforeHilt()")
+            hiltConfig!!.beforeHilt.invoke(this)
+        }
     }
 
-    private val ruleChain: RuleChain by lazy {
-        RuleChain.outerRule(environmentConfigRule)
-            .around(hiltRule)
-            .around(setupRule)
-            .around(testDataRule)
+    private val afterHiltRule by lazy {
+        if (hiltConfig?.afterHilt == null) return@lazy null
+        before {
+            printInfo("Executing afterHilt()")
+            hiltConfig!!.afterHilt.invoke(this)
+        }
+    }
+
+    override fun apply(base: Statement, description: Description): Statement {
+        return RuleChain
+            .outerRule(beforeHiltRule)
+            .aroundNullable(hiltRule)
+            .around(environmentConfigRule)
+            .around(hiltInjectRule)
+            .aroundNullable(afterHiltRule)
+            .aroundNullable(testDataRule)
             .aroundNullable(authenticationRule)
             .aroundNullable(testConfig.activityRule)
+            .around(TestExecutionWatcher())
+            .apply(base, description)
     }
+}
 
-    override fun apply(base: Statement, description: Description): Statement = ruleChain.apply(base, description)
-
-    public data class UserConfig(
-        val userData: TestUserData? = null,
-        val loginBefore: Boolean = true,
-        val logoutBefore: Boolean = true,
-        val logoutAfter: Boolean = true
-    ) {
-        val overrideLogin: Boolean get() = loginBefore || logoutBefore || logoutAfter
-    }
-
-    public data class TestConfig(
-        val envConfig: EnvironmentConfig? = null,
-        val annotationTestData: Array<out AnnotationTestData<Annotation>> = emptyArray(),
-        val activityRule: TestRule? = null,
-    )
-
-    private fun RuleChain.aroundNullable(rule: TestRule?): RuleChain {
-        return around(rule ?: return this)
-    }
+private fun RuleChain.aroundNullable(rule: TestRule?): RuleChain {
+    return around(rule ?: return this)
 }
 
 public fun <T> T.before(block: suspend T.() -> Any): ExternalResource =
@@ -122,3 +142,11 @@ public fun <T> T.before(block: suspend T.() -> Any): ExternalResource =
             }
         }
     }
+
+public fun Any.printInfo(message: String) {
+    val (tag, msg) = this::class.java.name to "[ProtonRule] -> $message"
+    if (message.contains("CRITICAL") || message.contains("failed!"))
+        Log.e(tag, msg)
+    else
+        Log.i(tag, msg)
+}

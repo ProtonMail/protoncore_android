@@ -16,24 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.rule.annotation
+package me.proton.core.test.rule
 
-import me.proton.core.configuration.EnvironmentConfiguration
+import org.junit.rules.TestWatcher
+import org.junit.runner.Description
 
+public class TestExecutionWatcher: TestWatcher() {
+    override fun starting(description: Description?) {
+        printInfo("${description?.methodName} starting")
+    }
 
-@Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.RUNTIME)
-public annotation class EnvironmentConfig(
-    public val host: String
-) {
-    public companion object {
-        public fun fromConfiguration(config: EnvironmentConfiguration): EnvironmentConfig =
-            EnvironmentConfig(config.host)
+    override fun finished(description: Description?) {
+        printInfo("${description?.methodName} finished")
+    }
+
+    override fun failed(e: Throwable?, description: Description?) {
+        printInfo("${description?.methodName} failed! Exception: ${e!!::class.java.simpleName}")
+    }
+
+    override fun succeeded(description: Description?) {
+        printInfo("${description?.methodName} succeeded!")
     }
 }
-
-public val EnvironmentConfig.configContractFieldsMap: Map<String, String?>
-    get() = mapOf(::host.name to host)
-
-public fun EnvironmentConfig.toEnvironmentConfiguration(): EnvironmentConfiguration =
-    EnvironmentConfiguration.fromMap(configContractFieldsMap)
