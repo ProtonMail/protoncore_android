@@ -109,6 +109,17 @@ open class EventMetadataRepositoryImpl @Inject constructor(
         nextEventId: EventId
     ) = eventMetadataDao.updateNextEventId(config.userId, config, eventId?.id, nextEventId.id)
 
+    override suspend fun setInitialEventId(config: EventManagerConfig, eventId: EventId) {
+        eventMetadataDao.insertOrIgnore(
+            EventMetadata(
+                userId = config.userId,
+                eventId = eventId,
+                config = config,
+                createdAt = System.currentTimeMillis()
+            ).toEntity()
+        )
+    }
+
     override suspend fun updateState(
         config: EventManagerConfig,
         state: State

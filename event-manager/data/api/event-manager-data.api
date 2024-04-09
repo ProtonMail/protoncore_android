@@ -10,16 +10,16 @@ public final class me/proton/core/eventmanager/data/BuildConfig {
 }
 
 public final class me/proton/core/eventmanager/data/CoreEventManagerStarter {
-	public fun <init> (Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/EventManagerProvider;Lme/proton/core/eventmanager/domain/IsCoreEventManagerEnabled;)V
+	public fun <init> (Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/EventManagerProvider;Lme/proton/core/eventmanager/domain/IsCoreEventManagerEnabled;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)V
 	public final fun start ()V
 }
 
 public final class me/proton/core/eventmanager/data/CoreEventManagerStarter_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/CoreEventManagerStarter_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/CoreEventManagerStarter_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/eventmanager/data/CoreEventManagerStarter;
-	public static fun newInstance (Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/EventManagerProvider;Lme/proton/core/eventmanager/domain/IsCoreEventManagerEnabled;)Lme/proton/core/eventmanager/data/CoreEventManagerStarter;
+	public static fun newInstance (Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/EventManagerProvider;Lme/proton/core/eventmanager/domain/IsCoreEventManagerEnabled;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;)Lme/proton/core/eventmanager/data/CoreEventManagerStarter;
 }
 
 public abstract interface class me/proton/core/eventmanager/data/EventDeserializer {
@@ -390,6 +390,7 @@ public class me/proton/core/eventmanager/data/repository/EventMetadataRepository
 	public fun getLatestEventId (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun readText (Lme/proton/core/domain/entity/UniqueId;Lme/proton/core/domain/entity/UniqueId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun readText (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun setInitialEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateEventId (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateMetadata (Lme/proton/core/eventmanager/domain/entity/EventMetadata;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
