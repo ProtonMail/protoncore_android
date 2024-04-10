@@ -11,6 +11,63 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [22.1.0] - 2024-04-10
+
+### Chores
+
+- Fixed Account Recovery Presentation Compose dependencies.
+- network:
+  - Allow adding OKHttp interceptors through dependency injection
+- user-recovery:
+  - Disable Device Recovery feature.
+
+### Features
+
+- Configuration module improvements.
+- account-manager:
+  - Added SignOut Dialog.
+- crypto:
+  - Added encryptDataWithPassword/decryptDataWithPassword.
+- key:
+  - Add key reactivation.
+- report:
+  - Added attach log file functionality
+- user:
+  - Add key reactivation.
+- user-recovery:
+  - Added Device Recovery Notification & Dialog.
+  - Added User Recovery modules.
+
+    Added GetRecoveryFile/GetRecoveryPrivateKeys.
+    Added GetRecoveryInactivePrivateKeys.
+    Added DeviceRecoveryHandler/DeviceRecoveryHandlerInitializer.
+
+### Bug Fixes
+
+- Avoid build failures when running core as a local build
+
+  When running mail project including core as a local build
+  (by enabling `local.git.proton-libs=../proton-libs` in gradle.properties)
+  the build fails as it can't resolve what `extensions` is.
+  Casting BaseFlavor extension to ExtensionAware explicitly solves this.
+- account-manager-presentation-compose:
+  - Update text color of "Sign in" button in account settings info view.
+- plan-presentation:
+  - Fixed upgrade layout visibility race condition.
+- send-preferences:
+  - Force refreshing contact cards to define send preferences
+
+    To ensure up-to-date sending preferences are used also immediately after
+    they were changed from another client, we force refresh data that is not
+    coming through the event loop and which is needed to define them.
+    
+    MAILANDR-1250
+
+### Internationalization
+
+- Upgrade translations from crowdin (b3f95c25).
+- Upgrade translations from crowdin (ff392f83).
+
 ## [22.0.0] - 2024-03-28
 
 ### Breaking Changes
