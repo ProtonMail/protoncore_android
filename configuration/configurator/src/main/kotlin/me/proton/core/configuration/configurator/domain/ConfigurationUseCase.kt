@@ -39,6 +39,7 @@ open class ConfigurationUseCase(
         val isAdvanced: Boolean = true,
         val isPreserved: Boolean = false,
         val value: Any? = "",
+        val isSearchable: Boolean = false,
         val fetcher: (suspend (String) -> Any)? = null,
     )
 

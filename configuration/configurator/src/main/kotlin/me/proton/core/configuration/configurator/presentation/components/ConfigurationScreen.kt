@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -67,8 +68,7 @@ fun ConfigurationScreen(
         },
         onConfigurationFieldFetch = {
             configViewModel.perform(ConfigurationScreenViewModel.Action.FetchConfigField(it))
-        }
-    )
+        })
 
     LaunchedEffect(Unit) {
         configViewModel.errorFlow.collect {
@@ -127,24 +127,55 @@ private fun ConfigurationFields(
 ) {
     configFields.forEach { configField ->
         val fetchAction = configField.fetcher?.let { { onConfigurationFieldFetch(configField.name) } }
-        when (configField.value) {
-            is String -> ConfigurationTextField(
-                configField = configField,
-                onValueChange = { newValue ->
-                    onFieldUpdate(configField.name, newValue)
-                },
-                fetchAction = fetchAction
-            )
+        if (configField.isSearchable) {
+            var showingSearchView by remember { mutableStateOf(true) }
+            var selectedResult by remember { mutableStateOf("") }
+            val onResultSelected: (String) -> Unit = { result ->
+                selectedResult = result
+                onFieldUpdate(configField.name, handleDomain(result)) // Update immediately
+                showingSearchView = false // Hide the SearchView after a result is selected
+            }
+            val onDismissRequest: () -> Unit = {
+                showingSearchView = false // Action to take on dismissing the search
+            }
 
-            is Boolean -> ConfigurationCheckbox(
-                configField = configField,
-                onCheckChanged = { newValue ->
-                    onFieldUpdate(configField.name, newValue)
-                }
-            )
+            val domains = LocalContext.current.resources.getStringArray(R.array.domains)
 
-            null -> Unit
-            else -> error("Unsupported configuration field type for key ${configField.name}")
+            if (showingSearchView) {
+                SearchableConfigurationTextField(
+                    searchData = domains.toMutableList(),
+                    onResultSelected = onResultSelected,
+                    onDismissRequest = onDismissRequest
+                )
+            } else {
+                ConfigurationTextField(
+                    configField = configField,
+                    onValueChange = {
+                        showingSearchView = true
+                    },
+                    fetchAction = fetchAction
+                )
+            }
+        } else {
+            when (configField.value) {
+                is String -> ConfigurationTextField(
+                    configField = configField,
+                    onValueChange = { newValue ->
+                        onFieldUpdate(configField.name, newValue)
+                    },
+                    fetchAction = fetchAction
+                )
+
+                is Boolean -> ConfigurationCheckbox(
+                    configField = configField,
+                    onCheckChanged = { newValue ->
+                        onFieldUpdate(configField.name, newValue)
+                    }
+                )
+
+                null -> Unit
+                else -> error("Unsupported configuration field type for key ${configField.name}")
+            }
         }
     }
 }
@@ -279,6 +310,25 @@ private fun ConfigActionButton(
 
 private fun Modifier.bottomPad(bottomPadding: Dp) = fillMaxWidth().padding(bottom = bottomPadding)
 
-private val Boolean.drawable: Int @DrawableRes get() = if (this) R.drawable.ic_proton_arrow_up else R.drawable.ic_proton_arrow_down
+private
+val Boolean.drawable: Int
+    @DrawableRes get() = if (this) R.drawable.ic_proton_arrow_up else R.drawable.ic_proton_arrow_down
 
 fun String.toSpacedWords(): String = replace("(?<=\\p{Lower})(?=[A-Z])".toRegex(), " ").capitalize()
+
+
+sealed class Domain(val rawValue: String) {
+    object Black : Domain("proton.black")
+    class Custom(name: String) : Domain("$name.proton.black")
+    object Production : Domain("proton.me")
+}
+
+fun handleDomain(stringValue: String): String {
+    val domain = when (stringValue) {
+        "black" -> Domain.Black
+        "production" -> Domain.Production
+        else -> Domain.Custom(name = stringValue)
+    }
+
+    return domain.rawValue
+}

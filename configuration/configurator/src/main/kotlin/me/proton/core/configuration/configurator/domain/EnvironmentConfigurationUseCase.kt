@@ -35,7 +35,13 @@ class EnvironmentConfigurationUseCase @Inject constructor(
     contentResolverConfigManager = contentResolverConfigManager,
     configClass = EnvironmentConfiguration::class,
     supportedContractFieldSet = setOf(
-        ConfigField(ConfigContract::host.name, isAdvanced = false, isPreserved = true, value = defaultConfig.host),
+        ConfigField(
+            ConfigContract::host.name,
+            isAdvanced = false,
+            isPreserved = true,
+            value = defaultConfig.host,
+            isSearchable = true
+        ),
         ConfigField(ConfigContract::proxyToken.name, isAdvanced = false, isPreserved = true) {
             quark.baseUrl(appConfig.proxyUrl).getProxyToken() ?: error("Could not obtain proxy token")
         },
