@@ -19,6 +19,7 @@
 package me.proton.core.key.domain
 
 import io.mockk.mockk
+import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -51,6 +52,8 @@ import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.serialize
 import java.io.File
 
 open class TestCryptoContext : CryptoContext {
@@ -572,10 +575,18 @@ open class TestCryptoContext : CryptoContext {
         override suspend fun getCurrentTime(): Long = 0
 
         override fun isPublicKey(key: Armored): Boolean = key.contains("privateKey")
-        override fun isPrivateKey(key: Armored): Boolean =
-            key.contains("privateKey")
+        override fun isPrivateKey(key: Armored): Boolean = key.contains("privateKey")
         override fun isValidKey(key: Armored): Boolean = key.contains("privateKey")
+
+        override fun serializeKeys(keys: List<Unarmored>): ByteArray =
+            ByteArrayList(keys).serialize().encodeToByteArray()
+
+        override fun deserializeKeys(keys: ByteArray): List<Unarmored> =
+            keys.decodeToString().deserialize<ByteArrayList>().keys
     }
+
+    @Serializable
+    data class ByteArrayList(val keys: List<ByteArray>)
 
     override val pgpCrypto = TestPGPCrypto()
 

@@ -1794,4 +1794,19 @@ internal class GOpenPGPCryptoTest {
         val decryptedData = crypto.decryptDataWithPassword(encryptedMessage, password)
         assertContentEquals(expected = data, actual = decryptedData)
     }
+
+    @Test
+    fun serializeAndDeserializeUnlockedKey() {
+        // Given
+        val unlockedKey1 = crypto.unlock(TestKey.privateKey, TestKey.privateKeyPassphrase)
+        val unlockedKey2 = crypto.unlock(TestKey.privateKey2, TestKey.privateKey2Passphrase)
+        val keys = listOf(unlockedKey1.value, unlockedKey2.value)
+        // When
+        val serialized = crypto.serializeKeys(keys)
+        val deserialized = crypto.deserializeKeys(serialized)
+        // Then
+        assertTrue(deserialized.size == 2)
+        assertContentEquals(expected = keys[0], actual = deserialized[0])
+        assertContentEquals(expected = keys[1], actual = deserialized[1])
+    }
 }

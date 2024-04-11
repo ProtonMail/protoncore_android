@@ -116,6 +116,16 @@ class GOpenPGPCrypto : PGPCrypto {
     private fun newKeyRing(keys: List<CloseableUnlockedKey>) =
         CloseableUnlockedKeyRing(Crypto.newKeyRing(null).apply { keys.forEach { addKey(it.value) } })
 
+    override fun serializeKeys(keys: List<Unarmored>): ByteArray =
+        newKeyRing(newKeys(keys)).use { it.value.serialize() }
+
+    override fun deserializeKeys(keys: ByteArray): List<Unarmored> =
+        CloseableUnlockedKeyRing(Crypto.newKeyRingFromBinary(keys)).use { keyRing ->
+            val count = keyRing.value.countEntities()
+            val indices = 0..<count
+            indices.map { index -> keyRing.value.getKey(index).serialize() }
+        }
+
     // endregion
 
     // region Public Key

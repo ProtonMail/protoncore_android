@@ -216,6 +216,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun decryptSessionKeyWithPassword ([B[B)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public abstract fun decryptText (Ljava/lang/String;[B)Ljava/lang/String;
 	public abstract fun decryptTextWithPassword (Ljava/lang/String;[B)Ljava/lang/String;
+	public abstract fun deserializeKeys ([B)Ljava/util/List;
 	public abstract fun encryptAndSignData ([BLjava/lang/String;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public abstract fun encryptAndSignData ([BLme/proton/core/crypto/common/pgp/SessionKey;[BLme/proton/core/crypto/common/pgp/SignatureContext;)[B
 	public abstract fun encryptAndSignDataWithCompression ([BLjava/lang/String;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
@@ -255,6 +256,7 @@ public abstract interface class me/proton/core/crypto/common/pgp/PGPCrypto {
 	public abstract fun isPublicKey (Ljava/lang/String;)Z
 	public abstract fun isValidKey (Ljava/lang/String;)Z
 	public abstract fun lock ([B[B)Ljava/lang/String;
+	public abstract fun serializeKeys (Ljava/util/List;)[B
 	public abstract fun signData ([B[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public abstract fun signDataEncrypted ([B[BLjava/util/List;Lme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public abstract fun signFile (Ljava/io/File;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;

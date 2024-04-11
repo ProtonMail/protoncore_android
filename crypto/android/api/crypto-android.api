@@ -57,6 +57,7 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun decryptSessionKeyWithPassword ([B[B)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public fun decryptText (Ljava/lang/String;[B)Ljava/lang/String;
 	public fun decryptTextWithPassword (Ljava/lang/String;[B)Ljava/lang/String;
+	public fun deserializeKeys ([B)Ljava/util/List;
 	public fun encryptAndSignData ([BLjava/lang/String;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public fun encryptAndSignData ([BLme/proton/core/crypto/common/pgp/SessionKey;[BLme/proton/core/crypto/common/pgp/SignatureContext;)[B
 	public fun encryptAndSignDataWithCompression ([BLjava/lang/String;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
@@ -96,6 +97,7 @@ public final class me/proton/core/crypto/android/pgp/GOpenPGPCrypto : me/proton/
 	public fun isPublicKey (Ljava/lang/String;)Z
 	public fun isValidKey (Ljava/lang/String;)Z
 	public fun lock ([B[B)Ljava/lang/String;
+	public fun serializeKeys (Ljava/util/List;)[B
 	public fun signData ([B[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public fun signDataEncrypted ([B[BLjava/util/List;Lme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;
 	public fun signFile (Ljava/io/File;[BLme/proton/core/crypto/common/pgp/SignatureContext;)Ljava/lang/String;

@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.mocks
 
+import kotlinx.serialization.Serializable
 import io.mockk.mockk
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.pgp.DataPacket
@@ -40,6 +41,8 @@ import me.proton.core.crypto.common.pgp.Unarmored
 import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.VerificationTime
 import me.proton.core.crypto.common.pgp.VerificationContext
+import me.proton.core.util.kotlin.deserialize
+import me.proton.core.util.kotlin.serialize
 import java.io.File
 import java.util.Base64
 
@@ -58,6 +61,15 @@ class FakePGPCrypto : PGPCrypto {
     override fun isValidKey(key: Armored): Boolean {
         return true
     }
+
+    @Serializable
+    data class ByteArrayList(val keys: List<ByteArray>)
+
+    override fun serializeKeys(keys: List<Unarmored>): ByteArray =
+        ByteArrayList(keys).serialize().encodeToByteArray()
+
+    override fun deserializeKeys(keys: ByteArray): List<Unarmored> =
+        keys.decodeToString().deserialize<ByteArrayList>().keys
 
     override fun lock(unlockedKey: Unarmored, passphrase: ByteArray): Armored {
         return decoder.decode(unlockedKey).decodeToString()

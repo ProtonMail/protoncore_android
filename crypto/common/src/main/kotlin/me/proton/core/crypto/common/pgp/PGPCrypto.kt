@@ -44,6 +44,20 @@ interface PGPCrypto {
     fun isValidKey(key: Armored): Boolean
 
     /**
+     * Serialize a list of [Unarmored] unlocked keys into a [ByteArray].
+     *
+     * @see deserializeKeys
+     */
+    fun serializeKeys(keys: List<Unarmored>): ByteArray
+
+    /**
+     * Deserialize a [ByteArray] of unlocked keys into an [Unarmored] list.
+     *
+     * @see serializeKeys
+     */
+    fun deserializeKeys(keys: ByteArray): List<Unarmored>
+
+    /**
      * Lock [unlockedKey] using [passphrase].
      *
      * @throws [CryptoException] if [unlockedKey] cannot be locked using [passphrase].
