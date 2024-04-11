@@ -10,33 +10,6 @@ public final class me/proton/core/userrecovery/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/userrecovery/domain/LogTag;
 }
 
-public final class me/proton/core/userrecovery/domain/usecase/ByteArrayList {
-	public static final field Companion Lme/proton/core/userrecovery/domain/usecase/ByteArrayList$Companion;
-	public fun <init> (Ljava/util/List;)V
-	public final fun component1 ()Ljava/util/List;
-	public final fun copy (Ljava/util/List;)Lme/proton/core/userrecovery/domain/usecase/ByteArrayList;
-	public static synthetic fun copy$default (Lme/proton/core/userrecovery/domain/usecase/ByteArrayList;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/userrecovery/domain/usecase/ByteArrayList;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getKeys ()Ljava/util/List;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/proton/core/userrecovery/domain/usecase/ByteArrayList$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
-	public static final field INSTANCE Lme/proton/core/userrecovery/domain/usecase/ByteArrayList$$serializer;
-	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
-	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
-	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/userrecovery/domain/usecase/ByteArrayList;
-	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
-	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
-	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/userrecovery/domain/usecase/ByteArrayList;)V
-	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
-}
-
-public final class me/proton/core/userrecovery/domain/usecase/ByteArrayList$Companion {
-	public final fun serializer ()Lkotlinx/serialization/KSerializer;
-}
-
 public final class me/proton/core/userrecovery/domain/usecase/GetRecoveryFile {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/crypto/common/context/CryptoContext;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

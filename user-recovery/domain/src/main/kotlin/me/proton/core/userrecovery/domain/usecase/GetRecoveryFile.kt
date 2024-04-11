@@ -18,13 +18,12 @@
 
 package me.proton.core.userrecovery.domain.usecase
 
-import kotlinx.serialization.Serializable
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.unlockOrNull
 import me.proton.core.user.domain.UserManager
-import me.proton.core.util.kotlin.serialize
 import javax.inject.Inject
 
 /**
@@ -46,15 +45,10 @@ class GetRecoveryFile @Inject constructor(
         val privateKeys = activeKeys.map { it.privateKey }
         val unlockedKeys = privateKeys.mapNotNull { it.unlockOrNull(cryptoContext)?.unlockedKey }
         check(unlockedKeys.isNotEmpty())
-        val byteArrayList = ByteArrayList(unlockedKeys.map { it.value })
-        val fileByteArray = byteArrayList.serialize().encodeToByteArray()
-        val secret = pgpCrypto.getBase64Decoded(primaryKeyRecoverySecret)
-        return pgpCrypto.encryptDataWithPassword(fileByteArray, secret)
+        pgpCrypto.serializeKeys(unlockedKeys.map { it.value }).use {
+            unlockedKeys.forEach { unlockedKey -> unlockedKey.close() }
+            val secret = pgpCrypto.getBase64Decoded(primaryKeyRecoverySecret)
+            return pgpCrypto.encryptDataWithPassword(it.array, secret)
+        }
     }
 }
-
-@Deprecated("Replace with proper binary serialization (pgp).")
-@Serializable
-data class ByteArrayList(
-    val keys: List<ByteArray>
-)

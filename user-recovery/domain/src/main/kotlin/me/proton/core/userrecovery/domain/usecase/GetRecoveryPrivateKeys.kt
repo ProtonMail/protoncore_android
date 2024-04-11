@@ -29,7 +29,6 @@ import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 import me.proton.core.key.domain.lock
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
-import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 
 class GetRecoveryPrivateKeys @Inject constructor(
@@ -48,9 +47,9 @@ class GetRecoveryPrivateKeys @Inject constructor(
         secrets.forEach { secret ->
             val decodedSecret = pgpCrypto.getBase64Decoded(secret)
             pgpCrypto.decryptDataWithPasswordOrNull(message, decodedSecret)?.let {
-                val byteArrayList = it.decodeToString().deserialize<ByteArrayList>()
+                val unlockedKeys = pgpCrypto.deserializeKeys(it)
                 val passphrase = checkNotNull(passphraseRepository.getPassphrase(userId))
-                return byteArrayList.keys.map { key ->
+                return unlockedKeys.map { key ->
                     UnlockedPrivateKey(TempUnlockedKey(key), isPrimary = false).use { unlocked ->
                         unlocked.lock(cryptoContext, passphrase = passphrase, isPrimary = false)
                     }
