@@ -13,6 +13,19 @@ public final class me/proton/core/userrecovery/data/BuildConfig {
 	public fun <init> ()V
 }
 
+public final class me/proton/core/userrecovery/data/CanUserDeviceRecoverImpl : me/proton/core/userrecovery/domain/CanUserDeviceRecover {
+	public fun <init> (Lme/proton/core/user/domain/repository/UserAddressRepository;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/userrecovery/data/CanUserDeviceRecoverImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/CanUserDeviceRecoverImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/userrecovery/data/CanUserDeviceRecoverImpl;
+	public static fun newInstance (Lme/proton/core/user/domain/repository/UserAddressRepository;)Lme/proton/core/userrecovery/data/CanUserDeviceRecoverImpl;
+}
+
 public final class me/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl : me/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled {
 	public static final field Companion Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl$Companion;
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
@@ -99,16 +112,16 @@ public final class me/proton/core/userrecovery/data/usecase/DeleteRecoveryFiles_
 }
 
 public final class me/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/userrecovery/domain/CanUserDeviceRecover;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;)V
 	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
 }
 
 public final class me/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;)Lme/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/userrecovery/domain/CanUserDeviceRecover;Lme/proton/core/user/domain/usecase/ObserveUser;Lme/proton/core/usersettings/domain/usecase/ObserveUserSettings;)Lme/proton/core/userrecovery/data/usecase/ObserveUserDeviceRecovery;
 }
 
 public final class me/proton/core/userrecovery/data/usecase/ObserveUsersWithInactiveKeysForRecovery {
@@ -151,16 +164,16 @@ public final class me/proton/core/userrecovery/data/usecase/ObserveUsersWithoutR
 }
 
 public final class me/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys {
-	public fun <init> (Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactiveUserKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository;Lme/proton/core/user/domain/UserManager;)V
+	public fun <init> (Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactiveUserKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository;Lme/proton/core/userrecovery/domain/usecase/ShowDeviceRecoveryNotification;Lme/proton/core/user/domain/UserManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys;
-	public static fun newInstance (Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactiveUserKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys;
+	public static fun newInstance (Lme/proton/core/userrecovery/domain/usecase/GetRecoveryInactiveUserKeys;Lme/proton/core/userrecovery/domain/usecase/GetRecoveryPrivateKeys;Lme/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository;Lme/proton/core/userrecovery/domain/usecase/ShowDeviceRecoveryNotification;Lme/proton/core/user/domain/UserManager;)Lme/proton/core/userrecovery/data/usecase/RecoverInactivePrivateKeys;
 }
 
 public final class me/proton/core/userrecovery/data/usecase/StoreRecoveryFile {

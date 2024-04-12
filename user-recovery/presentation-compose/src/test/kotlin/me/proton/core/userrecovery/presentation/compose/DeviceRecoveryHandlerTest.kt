@@ -86,7 +86,6 @@ class DeviceRecoveryHandlerTest {
             observeUsersWithInactiveKeysForRecovery,
             observeUsersWithoutRecoverySecret,
             observeUsersWithRecoverySecretButNoFile,
-            mockk(),
             storeRecoveryFile,
             userRecoveryWorkerManager
         )

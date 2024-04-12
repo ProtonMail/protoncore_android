@@ -20,6 +20,7 @@ package me.proton.core.userrecovery.data.usecase
 
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +31,7 @@ import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.userrecovery.data.mock.mockAccount
 import me.proton.core.userrecovery.data.mock.mockUser
 import me.proton.core.userrecovery.data.mock.mockUserSettings
+import me.proton.core.userrecovery.domain.CanUserDeviceRecover
 import me.proton.core.userrecovery.domain.IsDeviceRecoveryEnabled
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import kotlin.test.BeforeTest
@@ -44,6 +46,9 @@ class ObserveUserDeviceRecoveryTest {
     private lateinit var isDeviceRecoveryEnabled: IsDeviceRecoveryEnabled
 
     @MockK
+    private lateinit var canUserDeviceRecover: CanUserDeviceRecover
+
+    @MockK
     private lateinit var observeUser: ObserveUser
 
     @MockK
@@ -54,7 +59,7 @@ class ObserveUserDeviceRecoveryTest {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = ObserveUserDeviceRecovery(accountManager, isDeviceRecoveryEnabled, observeUser, observeUserSettings)
+        tested = ObserveUserDeviceRecovery(accountManager, isDeviceRecoveryEnabled, canUserDeviceRecover, observeUser, observeUserSettings)
     }
 
     @Test
@@ -64,6 +69,7 @@ class ObserveUserDeviceRecoveryTest {
         val user = mockUser(testUserId)
         every { accountManager.getAccounts() } returns MutableStateFlow(listOf(mockAccount(testUserId)))
         every { isDeviceRecoveryEnabled(testUserId) } returns true
+        coEvery { canUserDeviceRecover(testUserId) } returns true
         every { observeUser(testUserId) } returns MutableStateFlow(user)
         every { observeUserSettings(testUserId) } returns MutableStateFlow(mockUserSettings(testUserId, false))
 
@@ -71,6 +77,24 @@ class ObserveUserDeviceRecoveryTest {
         tested().test {
             // THEN
             assertEquals(Pair(user, false), awaitItem())
+        }
+    }
+
+    @Test
+    fun `user is non migrated user`() = runTest {
+        // GIVEN
+        val testUserId = UserId("user_id_1")
+        val user = mockUser(testUserId)
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(mockAccount(testUserId)))
+        every { isDeviceRecoveryEnabled(testUserId) } returns true
+        coEvery { canUserDeviceRecover(testUserId) } returns false
+        every { observeUser(testUserId) } returns MutableStateFlow(user)
+        every { observeUserSettings(testUserId) } returns MutableStateFlow(mockUserSettings(testUserId, false))
+
+        // WHEN
+        tested().test {
+            // THEN
+            expectNoEvents()
         }
     }
 
@@ -108,6 +132,7 @@ class ObserveUserDeviceRecoveryTest {
             )
         )
         every { isDeviceRecoveryEnabled(any()) } returns true
+        coEvery { canUserDeviceRecover(any()) } returns true
         every { observeUser(testUserId1) } returns MutableStateFlow(user1)
         every { observeUser(testUserId2) } returns MutableStateFlow(user2)
         every { observeUserSettings(testUserId1) } returns userSettingsFlow1

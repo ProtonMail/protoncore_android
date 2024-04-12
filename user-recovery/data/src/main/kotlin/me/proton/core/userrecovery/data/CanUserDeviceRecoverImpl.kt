@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,23 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.userrecovery.data
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.user.domain.repository.UserAddressRepository
+import me.proton.core.userrecovery.domain.CanUserDeviceRecover
+import javax.inject.Inject
+
+class CanUserDeviceRecoverImpl @Inject constructor(
+    private val userAddressRepository: UserAddressRepository
+) : CanUserDeviceRecover {
+
+    override suspend fun invoke(sessionUserId: SessionUserId): Boolean =
+        userAddressRepository.getAddresses(sessionUserId).hasMigratedKey()
 }
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.userrecovery.dagger"
-}
-
-dependencies {
-    api(
-        project(Module.userRecoveryData),
-        project(Module.userRecoveryDomain),
-        project(Module.userRecoveryPresentationCompose),
-    )
-}

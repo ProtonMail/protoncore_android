@@ -23,15 +23,16 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.NotificationPayload
 import me.proton.core.notification.domain.usecase.ShowNotificationView
+import me.proton.core.userrecovery.domain.usecase.ShowDeviceRecoveryNotification
 import me.proton.core.userrecovery.presentation.compose.DeviceRecoveryDeeplink
 import me.proton.core.userrecovery.presentation.compose.R
 import javax.inject.Inject
 
-class ShowDeviceRecoveryNotification @Inject constructor(
+class ShowDeviceRecoveryNotificationImpl @Inject constructor(
     @ApplicationContext private val context: Context,
     private val showNotificationView: ShowNotificationView
-) {
-    operator fun invoke(userId: UserId) {
+): ShowDeviceRecoveryNotification {
+    override operator fun invoke(userId: UserId) {
         val title = context.getString(R.string.user_recovery_notification_title)
         val body = context.getString(R.string.user_recovery_notification_body)
         val tag = "device-recovery-${userId.id}"

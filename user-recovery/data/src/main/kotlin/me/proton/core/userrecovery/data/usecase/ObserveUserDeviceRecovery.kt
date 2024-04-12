@@ -30,6 +30,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.usecase.ObserveUser
+import me.proton.core.userrecovery.domain.CanUserDeviceRecover
 import me.proton.core.userrecovery.domain.IsDeviceRecoveryEnabled
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import javax.inject.Inject
@@ -37,6 +38,7 @@ import javax.inject.Inject
 class ObserveUserDeviceRecovery @Inject constructor(
     private val accountManager: AccountManager,
     private val isDeviceRecoveryEnabled: IsDeviceRecoveryEnabled,
+    private val canUserDeviceRecover: CanUserDeviceRecover,
     private val observeUser: ObserveUser,
     private val observeUserSettings: ObserveUserSettings,
 ) {
@@ -59,5 +61,7 @@ class ObserveUserDeviceRecovery @Inject constructor(
                 }
             }.merge()
         }
-        .filter { (user, _) -> isDeviceRecoveryEnabled(user.userId) }
+        .filter { (user, _) ->
+            isDeviceRecoveryEnabled(user.userId) && canUserDeviceRecover(user.userId)
+        }
 }

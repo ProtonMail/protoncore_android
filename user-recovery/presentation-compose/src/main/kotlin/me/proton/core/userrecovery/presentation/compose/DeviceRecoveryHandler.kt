@@ -31,7 +31,6 @@ import me.proton.core.userrecovery.data.usecase.StoreRecoveryFile
 import me.proton.core.userrecovery.domain.LogTag
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryFile
 import me.proton.core.userrecovery.domain.worker.UserRecoveryWorkerManager
-import me.proton.core.userrecovery.presentation.compose.usecase.ShowDeviceRecoveryNotification
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
@@ -47,7 +46,6 @@ class DeviceRecoveryHandler @Inject constructor(
     private val observeUsersWithInactiveKeysForRecovery: ObserveUsersWithInactiveKeysForRecovery,
     private val observeUsersWithoutRecoverySecret: ObserveUsersWithoutRecoverySecret,
     private val observeUsersWithRecoverySecretButNoFile: ObserveUsersWithRecoverySecretButNoFile,
-    private val showDeviceRecoveryNotification: ShowDeviceRecoveryNotification,
     private val storeRecoveryFile: StoreRecoveryFile,
     private val userRecoveryWorkerManager: UserRecoveryWorkerManager,
 ) {
@@ -68,8 +66,6 @@ class DeviceRecoveryHandler @Inject constructor(
             .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
 
         // Recover private keys if possible:
-        // TODO `recoverInactivePrivateKeys` will likely refresh the user..
-        //  so we need to avoid scheduling duplicate worker
         observeUsersWithInactiveKeysForRecovery()
             .onEach { userRecoveryWorkerManager.enqueueRecoverInactivePrivateKeys(it) }
             .catch { CoreLogger.e(LogTag.DEFAULT, it) }
@@ -81,7 +77,5 @@ class DeviceRecoveryHandler @Inject constructor(
             .onEach { (user, _) -> deleteRecoveryFiles(user.userId) }
             .catch { CoreLogger.e(LogTag.DEFAULT, it) }
             .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
-
-        // TODO showDeviceRecoveryNotification(userId)
     }
 }

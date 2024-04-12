@@ -23,19 +23,29 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryInactiveUserKeys
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryPrivateKeys
+import me.proton.core.userrecovery.domain.usecase.ShowDeviceRecoveryNotification
 import javax.inject.Inject
 
 class RecoverInactivePrivateKeys @Inject constructor(
     private val getRecoveryInactiveUserKeys: GetRecoveryInactiveUserKeys,
     private val getRecoveryPrivateKeys: GetRecoveryPrivateKeys,
     private val deviceRecoveryRepository: DeviceRecoveryRepository,
+    private val showDeviceRecoveryNotification: ShowDeviceRecoveryNotification,
     private val userManager: UserManager
 ) {
     suspend operator fun invoke(userId: UserId) {
-        deviceRecoveryRepository.getRecoveryFiles(userId).forEach { recoveryFile ->
-            val privateKeys = getRecoveryPrivateKeys(userId, recoveryFile.recoveryFile)
-            getRecoveryInactiveUserKeys(userId, privateKeys).forEach { userKey ->
-                userManager.reactivateKey(userKey)
+        var someKeysRecovered = false
+        try {
+            deviceRecoveryRepository.getRecoveryFiles(userId).forEach { recoveryFile ->
+                val privateKeys = getRecoveryPrivateKeys(userId, recoveryFile.recoveryFile)
+                getRecoveryInactiveUserKeys(userId, privateKeys).forEach { userKey ->
+                    userManager.reactivateKey(userKey)
+                    someKeysRecovered = true
+                }
+            }
+        } finally {
+            if (someKeysRecovered) {
+                showDeviceRecoveryNotification(userId)
             }
         }
     }

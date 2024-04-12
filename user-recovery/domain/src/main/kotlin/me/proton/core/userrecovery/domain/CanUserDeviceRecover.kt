@@ -16,23 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.userrecovery.domain
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import me.proton.core.domain.entity.SessionUserId
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.userrecovery.dagger"
-}
-
-dependencies {
-    api(
-        project(Module.userRecoveryData),
-        project(Module.userRecoveryDomain),
-        project(Module.userRecoveryPresentationCompose),
-    )
+interface CanUserDeviceRecover {
+    suspend operator fun invoke(sessionUserId: SessionUserId): Boolean
 }

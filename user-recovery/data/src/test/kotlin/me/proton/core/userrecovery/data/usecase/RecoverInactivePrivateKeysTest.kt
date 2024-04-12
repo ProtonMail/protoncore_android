@@ -34,6 +34,8 @@ import me.proton.core.userrecovery.domain.entity.RecoveryFile
 import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryInactiveUserKeys
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryPrivateKeys
+import me.proton.core.userrecovery.domain.usecase.ShowDeviceRecoveryNotification
+import kotlin.random.Random
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -47,10 +49,15 @@ class RecoverInactivePrivateKeysTest {
     @MockK
     private lateinit var deviceRecoveryRepository: DeviceRecoveryRepository
 
+    @MockK(relaxed = true)
+    private lateinit var showDeviceRecoveryNotification: ShowDeviceRecoveryNotification
+
     @MockK
     private lateinit var userManager: UserManager
 
     private lateinit var tested: RecoverInactivePrivateKeys
+
+    private val testUserId = UserId("test_user_id")
 
     @BeforeTest
     fun setUp() {
@@ -59,30 +66,20 @@ class RecoverInactivePrivateKeysTest {
             getRecoveryInactiveUserKeys,
             getRecoveryPrivateKeys,
             deviceRecoveryRepository,
+            showDeviceRecoveryNotification,
             userManager
         )
     }
 
     @Test
-    fun `recover private keys`() = runTest {
+    fun `recover single key`() = runTest {
         // GIVEN
-        val testUserId = UserId("test_user_id")
-        val testKeyId = KeyId("key-id")
-        val testPrivateKey = PrivateKey(
-            key = "key",
-            isPrimary = true,
-            passphrase = null
-        )
-        val userKeyMock = mockk<UserKey> {
-            every { userId } returns testUserId
-            every { keyId } returns testKeyId
-            every { privateKey } returns testPrivateKey
-        }
+        val userKeyMock = mockUserKey()
 
         coEvery { deviceRecoveryRepository.getRecoveryFiles(testUserId) } returns listOf(
             RecoveryFile(testUserId, 100, "recoveryFile", "hash")
         )
-        coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(testPrivateKey)
+        coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(userKeyMock.privateKey)
         coEvery { getRecoveryInactiveUserKeys(testUserId, any()) } returns listOf(userKeyMock)
         coEvery { userManager.reactivateKey(any()) } returns mockk()
 
@@ -90,6 +87,67 @@ class RecoverInactivePrivateKeysTest {
         tested(testUserId)
 
         // THEN
-        coVerify { userManager.reactivateKey(userKeyMock) }
+        coVerify(exactly = 1) { userManager.reactivateKey(userKeyMock) }
+        coVerify(exactly = 1) { showDeviceRecoveryNotification(testUserId) }
+    }
+
+    @Test
+    fun `recover multiple keys`() = runTest {
+        // GIVEN
+        val userKeyMock1 = mockUserKey()
+        val userKeyMock2 = mockUserKey()
+
+        coEvery { deviceRecoveryRepository.getRecoveryFiles(testUserId) } returns listOf(
+            RecoveryFile(testUserId, 100, "recoveryFile", "hash")
+        )
+        coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(
+            userKeyMock1.privateKey,
+            userKeyMock2.privateKey
+        )
+        coEvery { getRecoveryInactiveUserKeys(testUserId, any()) } returns listOf(userKeyMock1, userKeyMock2)
+        coEvery { userManager.reactivateKey(any()) } returns mockk()
+
+        // WHEN
+        tested(testUserId)
+
+        // THEN
+        coVerify(exactly = 1) { userManager.reactivateKey(userKeyMock1) }
+        coVerify(exactly = 1) { userManager.reactivateKey(userKeyMock2) }
+        coVerify(exactly = 1) { showDeviceRecoveryNotification(testUserId) }
+    }
+
+    @Test
+    fun `recover zero keys`() = runTest {
+        // GIVEN
+        val userKeyMock = mockUserKey()
+
+        coEvery { deviceRecoveryRepository.getRecoveryFiles(testUserId) } returns listOf(
+            RecoveryFile(testUserId, 100, "recoveryFile", "hash")
+        )
+        coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(userKeyMock.privateKey)
+        coEvery { getRecoveryInactiveUserKeys(testUserId, any()) } returns emptyList()
+        coEvery { userManager.reactivateKey(any()) } returns mockk()
+
+        // WHEN
+        tested(testUserId)
+
+        // THEN
+        coVerify(exactly = 0) { userManager.reactivateKey(any()) }
+        coVerify(exactly = 0) { showDeviceRecoveryNotification(any()) }
+    }
+
+    @OptIn(ExperimentalStdlibApi::class)
+    private fun mockUserKey(): UserKey {
+        val testKeyId = KeyId(Random.nextBytes(4).toHexString())
+        val testPrivateKey = PrivateKey(
+            key = "key",
+            isPrimary = true,
+            passphrase = null
+        )
+        return mockk<UserKey> {
+            every { userId } returns testUserId
+            every { keyId } returns testKeyId
+            every { privateKey } returns testPrivateKey
+        }
     }
 }
