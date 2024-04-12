@@ -81,11 +81,6 @@ object AndroidTestComponent {
 
     @Provides
     @Singleton
-    fun provideEnvironmentConfig(): EnvironmentConfiguration =
-        EnvironmentConfiguration.fromClass()
-
-    @Provides
-    @Singleton
     fun provideQuarkCommand(envConfig: EnvironmentConfiguration): QuarkCommand {
         val timeout = 45.seconds.toJavaDuration()
         val quarkClient = OkHttpClient
@@ -94,6 +89,7 @@ object AndroidTestComponent {
             .readTimeout(timeout)
             .writeTimeout(timeout)
             .build()
+
         return QuarkCommand(quarkClient)
             .baseUrl("https://${envConfig.host}/api/internal")
             .proxyToken(envConfig.proxyToken)

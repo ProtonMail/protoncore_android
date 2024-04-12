@@ -18,7 +18,6 @@
 
 package me.proton.core.test.rule
 
-import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.configuration.extension.primitiveFieldMap
 import me.proton.core.test.rule.annotation.EnvironmentConfig
 import me.proton.core.test.rule.annotation.toEnvironmentConfiguration
@@ -31,7 +30,6 @@ import org.junit.runner.Description
  *
  * @property ruleConfig The default [EnvironmentConfig] to use for tests if no overrides are specified.
  */
-@HiltAndroidTest
 public class EnvironmentConfigRule(
     private val ruleConfig: EnvironmentConfig?
 ) : TestWatcher() {

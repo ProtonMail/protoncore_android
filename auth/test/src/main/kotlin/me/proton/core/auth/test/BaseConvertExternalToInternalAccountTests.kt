@@ -18,152 +18,108 @@
 
 package me.proton.core.auth.test
 
-import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.login.TwoPassRobot
 import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
-import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.User
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.util.kotlin.random
-import kotlin.test.BeforeTest
+import me.proton.test.fusion.FusionConfig
+import org.junit.Before
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
-public interface BaseConvertExternalToInternalAccountTests {
-    public val quark: Quark
-    public var testUser: User
-    public var testUsername: String
+@RunWith(Parameterized::class)
+public abstract class BaseConvertExternalToInternalAccountTests(
+    @Suppress("unused") public val friendlyName: String,
+    @Suppress("unused") public val testUserData: TestUserData,
+    public val onLogin: () -> Any
+) {
+    public abstract val protonRule: ProtonRule
 
-    public fun verifyLoggedOut()
-    public fun verifySuccessfulLogin()
+    public abstract fun loggedIn(username: String)
 
-    @BeforeTest
-    public fun prepare() {
-        quark.jailUnban()
+    private val seededData: TestUserData get() = protonRule.testDataRule?.testUserData ?: error("No User data was seeded")
+
+    @Before
+    public fun setUp() {
+        FusionConfig.Compose.waitTimeout.set(60.seconds)
+        FusionConfig.Espresso.waitTimeout.set(60.seconds)
     }
 
     @Test
-    public fun happyPath() {
-        // GIVEN
-        testUsername = User.randomUsername()
-        testUser = User(
-            name = "",
-            email = "${testUsername}@external-domain.test",
-            isExternal = true
-        )
-        quark.userCreate(testUser, Quark.CreateAddress.WithKey())
-
-        // WHEN
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInExternal(testUser.email, testUser.password, testUsername)
-
-        // THEN
-        verifySuccessfulLogin()
-    }
-
-    @Test
-    public fun externalAccountWithAddressButNoAddressKey() {
-        // GIVEN
-        testUsername = User.randomUsername()
-        testUser = User(
-            name = "",
-            email = "${testUsername}@external-domain.test",
-            isExternal = true
-        )
-        quark.userCreate(testUser, Quark.CreateAddress.NoKey)
-
-        // WHEN
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInExternal(testUser.email, testUser.password, testUsername)
-
-        // THEN
-        verifySuccessfulLogin()
-    }
-
-    @Test
-    public fun accountWithTwoPasswordMode() {
-        // GIVEN
-        val passphrase = "passphrase"
-        testUsername = User.randomUsername()
-        testUser = User(
-            name = "",
-            email = "${testUsername}@external-domain.test",
-            isExternal = true,
-            passphrase = passphrase
-        )
-        quark.userCreate(testUser, Quark.CreateAddress.WithKey())
-
-        // WHEN
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInExternal(testUser.email, testUser.password, testUsername)
-
-        TwoPassRobot
-            .fillMailboxPassword(passphrase)
-            .unlock()
-
-        // THEN
-        verifySuccessfulLogin()
-    }
-
-    @Test
-    public fun accountWithUnavailableUsername() {
-        // GIVEN
-        val domain = String.random()
-        testUsername = "proton_core_$domain"
-        testUser = User(
-            name = "",
-            email = "free@${domain}.test",
-            isExternal = true
-        )
-        quark.userCreate(testUser, Quark.CreateAddress.WithKey())
-
-        // WHEN
+    public fun convert() {
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUser.email)
-            .fillPassword(testUser.password)
+            .fillUsername(seededData.externalEmail)
+            .fillPassword(seededData.password)
             .login()
 
         ChooseInternalAddressRobot
             .apply {
                 screenIsDisplayed()
-                continueButtonIsEnabled()
                 domainInputDisplayed()
-                usernameInputIsEmpty()
-            }
-            .fillUsername(testUsername)
-            .next()
-
-        // THEN
-        verifySuccessfulLogin()
-    }
-
-    @Test
-    public fun chooseInternalAddressIsClosed() {
-        // GIVEN
-        val domain = String.random()
-        testUsername = "proton_core_$domain"
-        testUser = User(
-            name = "",
-            email = "free@${domain}.test",
-            isExternal = true
-        )
-        quark.userCreate(testUser, Quark.CreateAddress.WithKey())
-
-        // WHEN
-        AddAccountRobot
-            .clickSignIn()
-            .fillUsername(testUser.email)
-            .fillPassword(testUser.password)
-            .login()
-
-        ChooseInternalAddressRobot
-            .apply {
-                screenIsDisplayed()
+                usernameInputIsFilled(seededData.name)
                 continueButtonIsEnabled()
             }
-            .cancel()
+            .selectAlternativeDomain()
+            .selectPrimaryDomain()
+            .next()
+            .also {
+                onLogin()
+            }
+            .apply {
+                loggedIn(seededData.name)
+            }
+    }
 
-        // THEN
-        verifyLoggedOut()
+    public companion object {
+        public val username: String = String.random()
+
+        private val withKeys = arrayOf(
+            "With keys",
+            TestUserData(
+                name = username,
+                external = true,
+                externalEmail = "$username@example.lt"
+            ),
+            {}
+        )
+
+        private val noKeys = arrayOf(
+            "No Keys",
+            TestUserData(
+                name = username,
+                external = true,
+                genKeys = TestUserData.GenKeys.None,
+                externalEmail = "$username@example.lt"
+            ),
+            {}
+        )
+
+        private val twoPass = arrayOf(
+            "With Mailbox Password",
+            TestUserData(
+                name = username,
+                external = true,
+                mailboxPassword = "password",
+                externalEmail = "$username@example.lt"
+            ),
+            {
+                TwoPassRobot
+                    .apply {
+                        screenIsDisplayed()
+                    }
+                    .fillMailboxPassword("password")
+                    .unlock()
+            }
+        )
+
+        @get:Parameterized.Parameters(name = "{0}")
+        @get:JvmStatic
+        @Suppress("unused")
+        public val data: Collection<Array<*>> = listOf(withKeys, noKeys, twoPass)
     }
 }

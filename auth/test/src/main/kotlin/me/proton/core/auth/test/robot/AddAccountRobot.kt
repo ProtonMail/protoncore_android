@@ -40,10 +40,16 @@ public object AddAccountRobot {
         return SignUpRobot
     }
 
+<<<<<<< HEAD
     public fun uiElementsDisplayed(timeout: Duration = FusionConfig.Espresso.waitTimeout.get()) {
         signInButton.await(timeout = timeout) {
             signInButton.checkIsDisplayed()
             signUpButton.checkIsDisplayed()
         }
+=======
+    public fun uiElementsDisplayed() {
+        signInButton.await { checkIsDisplayed() }
+        signUpButton.await { checkIsDisplayed() }
+>>>>>>> 5e7aa0d2c (test: Updated module tests with test rules package.)
     }
 }

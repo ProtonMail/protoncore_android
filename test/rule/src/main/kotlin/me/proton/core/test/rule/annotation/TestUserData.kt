@@ -54,7 +54,7 @@ public annotation class TestUserData(
     public companion object {
         public fun randomUsername(): String =
             arrayOf(('A'..'Z').toList(), ('1'..'9').toList())
-                .map { String.random(length = 4, charPool = it) }
+                .map { String.random(length = 6, charPool = it) }
                 .let { "proton${it[0]}${it[1]}" }
 
         public val withRandomUsername: TestUserData get() = TestUserData(randomUsername())

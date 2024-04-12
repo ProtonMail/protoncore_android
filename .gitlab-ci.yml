@@ -320,28 +320,30 @@ pass-integration-tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
-uitest:signup:
-  allow_failure: true
+uitest:lib:auth:
   variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.signup"
+    TEST_TARGET: "package me.proton.core.test.android.libtests.auth"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
+  extends: .firebase-tests-common
+  allow_failure: true
+
+uitest:lib:subscription:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.libtests.subscription"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
+  extends: .firebase-tests-common
+  allow_failure: true
+
+uitest:lib:account-recovery:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.libtests.accountrecovery"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
 
-uitest:login-and-hv:
-  allow_failure: true
+uitest:lib:report:
   variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.auth.login,package me.proton.core.test.android.uitests.tests.medium.humanverification"
-  extends: .firebase-tests-common
-
-uitest:plans-and-payments:
-  allow_failure: true
-  variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.plans,package me.proton.core.test.android.uitests.tests.medium.payments"
-  extends: .firebase-tests-common
-
-uitest:usersettings:
-  allow_failure: true
-  variables:
-    TEST_TARGET: "package me.proton.core.test.android.uitests.tests.medium.usersettings"
+    TEST_TARGET: "package me.proton.core.test.android.libtests.report"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
 
 uitest:mocked-tests:

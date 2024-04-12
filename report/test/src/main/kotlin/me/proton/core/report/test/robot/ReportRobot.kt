@@ -32,6 +32,7 @@ public object ReportRobot {
     private val descriptionInput = view.withCustomMatcher(inputFieldMatcher(R.id.bug_report_description))
     private val attachLogCheckBox = view.withId(R.id.bug_report_attach_log)
     private val sendButton = view.withId(R.id.bug_report_send)
+    private val thankYouGrowler = view.withText(R.string.core_report_bug_success)
 
     public fun fillSubject(subject: String): ReportRobot = apply {
         subjectInput.typeText(subject)
@@ -59,7 +60,12 @@ public object ReportRobot {
         attachLogCheckBox.click()
     }
 
-    public fun clickSend() {
+    public fun clickSend(): ReportRobot {
         sendButton.click()
+        return ReportRobot
+    }
+
+    public fun thankYouDisplayed() {
+        thankYouGrowler.await { checkIsDisplayed() }
     }
 }

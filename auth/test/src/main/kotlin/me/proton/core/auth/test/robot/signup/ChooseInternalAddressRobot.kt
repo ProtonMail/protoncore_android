@@ -65,7 +65,7 @@ public object ChooseInternalAddressRobot {
 
     public fun screenIsDisplayed() {
         view.withText(R.string.auth_create_address_title)
-            .await(interval = 1.seconds, timeout = 60.seconds) {
+            .await(60.seconds) {
                 checkIsDisplayed()
             }
     }

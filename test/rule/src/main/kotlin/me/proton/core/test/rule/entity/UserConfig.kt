@@ -24,5 +24,5 @@ public data class UserConfig(
     val userData: TestUserData? = null,
     val loginBefore: Boolean = true,
     val logoutBefore: Boolean = true,
-    val logoutAfter: Boolean = true
+    val logoutAfter: Boolean = false
 )

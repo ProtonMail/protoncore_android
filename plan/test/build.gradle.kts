@@ -34,7 +34,6 @@ android {
 dependencies {
     api(
         project(Module.quark),
-        project(Module.authTest),
         `espresso-intents`
     )
 

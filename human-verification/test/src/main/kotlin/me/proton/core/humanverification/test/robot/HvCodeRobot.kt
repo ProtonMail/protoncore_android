@@ -22,6 +22,10 @@ public object HvCodeRobot {
         Fusion.device.pressEnter()
     }
 
+    public fun close() {
+        Fusion.device.pressBack()
+    }
+
     /** Clicks on the CAPTCHA checkbox. */
     public fun iAmHuman() {
         waitForWebView()
@@ -29,7 +33,7 @@ public object HvCodeRobot {
         Fusion.device.pressEnter()
     }
 
-    private fun waitForWebView() {
+    public fun waitForWebView() {
         val uiDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
         uiDevice.wait(Until.findObject(By.clazz(WebView::class.java)), WEB_VIEW_LOADING_TIMEOUT_MS)
     }

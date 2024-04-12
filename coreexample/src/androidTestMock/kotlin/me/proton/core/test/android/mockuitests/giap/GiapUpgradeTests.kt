@@ -30,9 +30,9 @@ import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
 import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
-import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.quark.data.Card
 import okhttp3.HttpUrl
 import org.junit.Rule

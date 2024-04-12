@@ -43,7 +43,7 @@ import me.proton.core.test.android.mocks.mockQueryPurchasesAsync
 import me.proton.core.test.android.mocks.mockStartConnection
 import me.proton.core.test.android.mockuitests.BaseMockTest
 import me.proton.core.test.android.mockuitests.MockTestRule
-import me.proton.core.test.android.uitests.robot.CoreexampleRobot
+import me.proton.core.test.android.robot.CoreexampleRobot
 import okhttp3.HttpUrl
 import org.junit.Rule
 import javax.inject.Inject
@@ -87,7 +87,10 @@ class UnredeemedPurchaseTest : BaseMockTest {
         appInitializer.initializeComponent(UnredeemedPurchaseInitializer::class.java)
 
         // WHEN
-        UnredeemedPurchaseRobot.clickRedeem()
+        UnredeemedPurchaseRobot
+            .apply {
+                robotDisplayed()
+            }.clickRedeem()
 
         // THEN
         verify { billingClientFactory.billingClient.acknowledgePurchase(any(), any()) }

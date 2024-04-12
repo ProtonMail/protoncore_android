@@ -19,49 +19,79 @@
 package me.proton.core.auth.test
 
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.test.flow.SignUpFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
-import me.proton.core.auth.test.robot.signup.CongratsRobot
+import me.proton.core.auth.test.robot.signup.SetPasswordRobot
+import me.proton.core.auth.test.robot.signup.SignupInternal
+import me.proton.core.humanverification.test.robot.HvCodeRobot
+import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.quark.data.Plan
 import me.proton.core.util.kotlin.random
+import me.proton.test.fusion.FusionConfig
+import org.junit.Before
 import kotlin.test.Test
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Minimal SignUp Tests for app providing [AccountType.External].
  */
 public interface MinimalSignUpExternalTests {
 
-    public val isCongratsDisplayed: Boolean
-    public fun verifyAfter()
+    @Before
+    public fun goToExternalSignup() {
+        FusionConfig.Compose.waitTimeout.set(60.seconds)
+        FusionConfig.Espresso.waitTimeout.set(60.seconds)
+        AddAccountRobot.clickSignUp()
+    }
 
     @Test
     public fun signupExternalAccountHappyPath() {
-        val testEmail = String.Companion.random(10, ('a'..'z').toList()) + "@example.com"
+        val testEmail = "${String.random()}@example.com"
 
-        AddAccountRobot.clickSignUp()
-        SignUpFlow.signUpExternalEmail(testEmail)
-        CongratsRobot.takeIf { isCongratsDisplayed }?.apply {
-            uiElementsDisplayed()
-            clickStart()
-        }
-        verifyAfter()
+        SignupInternal
+            .apply {
+                robotDisplayed()
+            }
+            .fillEmail(testEmail)
+            .clickNext()
+            .fillCode()
+            .clickVerify()
+
+        SetPasswordRobot
+            .fillAndClickNext("123123123")
+
+        SubscriptionRobot
+            .selectPlan(Plan.Free)
+
+        HvCodeRobot
+            .apply {
+                waitForWebView()
+            }
     }
 
     @Test
     public fun signupSwitchToInternalAccountHappyPath() {
-        val testUsername = "test-${String.random()}"
+        val testUsername = "test-${String.random(15)}"
 
-        AddAccountRobot
-            .clickSignUp()
-            .forExternal()
+        SignupInternal
             .clickSwitch()
+            .apply {
+                robotDisplayed()
+            }
+            .fillUsername(testUsername)
+            .clickNext()
+            .apply {
+                uiElementsDisplayed()
+            }
+            .fillAndClickNext("123123123")
+            .skip()
+            .skipConfirm()
 
-        SignUpFlow.signUpInternal(testUsername)
+        SubscriptionRobot
+            .selectPlan(Plan.Free)
 
-        CongratsRobot.takeIf { isCongratsDisplayed }?.apply {
-            uiElementsDisplayed()
-            clickStart()
-        }
-
-        verifyAfter()
+        HvCodeRobot
+            .apply {
+                waitForWebView()
+            }
     }
 }

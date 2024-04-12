@@ -42,6 +42,7 @@ dependencies {
         `coroutines-android`,
         okhttp,
         junit,
+        fusion,
         `hilt-android-testing`,
         `android-ktx`,
         `serialization-json`,

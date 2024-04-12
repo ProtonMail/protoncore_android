@@ -41,7 +41,7 @@ public object ForInternalRobot {
     }
 
     public fun uiElementsDisplayed() {
-        usernameInput.checkIsDisplayed()
-        nextButton.checkIsDisplayed()
+        usernameInput.await { checkIsDisplayed() }
+        nextButton.await { checkIsDisplayed() }
     }
 }

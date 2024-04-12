@@ -51,6 +51,7 @@ dependencies {
         project(Module.androidInstrumentedTest),
         project(Module.accountRecoveryPresentationCompose),
         project(Module.sentryUtil),
+        project(Module.testRule),
         `androidx-test-monitor`,
         `compose-ui-test-junit`,
         `coroutines-core`,

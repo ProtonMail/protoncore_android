@@ -44,8 +44,13 @@ public object TestEnvironmentConfigModule {
     private val instrumentationArgumentsConfig by lazy {
         InstrumentationRegistry
             .getArguments()
-            .takeIf { it.containsKey(ConfigContract::host.name) || it.containsKey(ConfigContract::proxyToken.name) }
+            .takeIf { !it.isEmpty }
             ?.let { args ->
+                if (!args.containsKey(ConfigContract::host.name)) {
+                    printInfo("Instrumentation arguments fetched, but 'host' key is not present. Skipping EnvironmentConfiguration override.")
+                    return@let null
+                }
+
                 EnvironmentConfiguration.fromBundle(args).also {
                     printInfo("Overriding EnvironmentConfiguration with Instrumentation arguments: ${it.primitiveFieldMap}")
                 }
@@ -63,8 +68,8 @@ public object TestEnvironmentConfigModule {
             .queryAtClassPath(EnvironmentConfiguration::class)
             ?.let(EnvironmentConfiguration::fromMap)
 
-        return instrumentationArgumentsConfig
-            ?: overrideEnvironmentConfiguration.get()
+        return overrideEnvironmentConfiguration.get()
+            ?: instrumentationArgumentsConfig
             ?: contentResolverConfig
             ?: staticEnvironmentConfig
     }

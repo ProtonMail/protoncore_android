@@ -35,8 +35,10 @@ public val TestSubscriptionData.annotationTestData: AnnotationTestData<TestSubsc
     get() = AnnotationTestData(
         default = this,
         implementation = { data: TestSubscriptionData, seededUser: CreateUserQuarkResponse? ->
-            seededUser?.let {
-                subscriptionCreate(data, it.decryptedUserId.toString())
-            } ?: error("Could not create subscription. User is not seeded.")
+            if (data.plan != Plan.Free) {
+                seededUser?.let {
+                    subscriptionCreate(data, it.decryptedUserId.toString())
+                } ?: error("Could not create subscription. User is not seeded.")
+            }
         }
     )

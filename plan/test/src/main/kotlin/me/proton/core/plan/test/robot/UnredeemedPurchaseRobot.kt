@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2022 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -18,12 +18,13 @@
 
 package me.proton.core.plan.test.robot
 
+import androidx.test.espresso.matcher.RootMatchers
 import me.proton.core.plan.presentation.R
 import me.proton.test.fusion.Fusion.view
 
 public object UnredeemedPurchaseRobot {
-    private val cancelButton = view.withText(R.string.presentation_alert_cancel)
-    private val redeemButton = view.withText(R.string.payments_giap_unredeemed_confirm)
+    private val cancelButton = view.withText(R.string.presentation_alert_cancel).withRootMatcher(RootMatchers.isDialog())
+    private val redeemButton = view.withText(R.string.payments_giap_unredeemed_confirm).withRootMatcher(RootMatchers.isDialog())
 
     public fun clickCancel() {
         cancelButton.await { checkIsDisplayed() }
@@ -33,5 +34,10 @@ public object UnredeemedPurchaseRobot {
     public fun clickRedeem() {
         redeemButton.await { checkIsDisplayed() }
         redeemButton.click()
+    }
+
+    public fun robotDisplayed() {
+        cancelButton.await { checkIsDisplayed() }
+        redeemButton.await { checkIsDisplayed() }
     }
 }

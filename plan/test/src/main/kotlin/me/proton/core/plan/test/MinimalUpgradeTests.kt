@@ -18,38 +18,20 @@
 
 package me.proton.core.plan.test
 
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyAtLeastOnePlanIsShown
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyUpgradeIsShown
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyUpgradeYourPlanTitleIsDisplayed
-import me.proton.core.test.quark.Quark
-import org.junit.After
-import org.junit.Before
+import me.proton.core.plan.test.robot.SubscriptionRobot
 import org.junit.Test
 
 /**
  * Minimal Upgrade tests (for both Static and Dynamic plans implementation).
  */
 public interface MinimalUpgradeTests {
-
-    public val quark: Quark
-
-    public fun startUpgrade()
-
-    @Before
-    public fun setPaymentMethods() {
-        quark.setPaymentMethods()
-    }
-
-    @After
-    public fun resetPaymentMethods() {
-        quark.setDefaultPaymentMethods()
-    }
+    public fun startUpgrade(): SubscriptionRobot
 
     @Test
     public fun upgradeScreenIsShownForFreeUser() {
         startUpgrade()
-        verifyUpgradeIsShown()
-        verifyUpgradeYourPlanTitleIsDisplayed()
-        verifyAtLeastOnePlanIsShown()
+            .apply {
+                upgradeYourPlanTitleIsDisplayed()
+            }
     }
 }

@@ -65,17 +65,13 @@ class TestClass {
     @get:Rule
     val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>(
         val customTestData = TestFeatureEnabled(false).annotationTestData
-    ) {
-        MainInitializer.init(targetContext)
-    }
+    )
 
     // If using Compose
     @get:Rule
     val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
         val customTestData = TestFeatureEnabled(false).annotationTestData
-    ) {
-        MainInitializer.init(targetContext)
-    }
+    )
 
     @Test
     @EnvironmentConfig(host = "scientist.proton.black")
@@ -187,7 +183,7 @@ class AdvancedTestSetup {
 
     @get:Rule
     val setupRule: ExternalResource = before {
-        MainInitializer.init(targetContext)
+        // setup
     }
 
     @get:Rule

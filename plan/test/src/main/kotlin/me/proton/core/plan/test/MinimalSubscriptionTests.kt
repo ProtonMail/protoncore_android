@@ -18,57 +18,33 @@
 
 package me.proton.core.plan.test
 
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyAtLeastOnePlanIsShown
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyCannotManagePlansFromMobile
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyNoPaidPlansAreShown
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifySubscriptionIsShown
-import me.proton.core.plan.test.robot.SubscriptionRobot.verifyUpgradeYourPlanTextIsDisplayed
-import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.User
-import org.junit.After
-import org.junit.Before
+import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.quark.data.Plan
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
 /**
  * Minimal Subscription tests (for both Static and Dynamic plans implementation).
  */
-public interface MinimalSubscriptionTests {
-
-    public val quark: Quark
-    public val users: User.Users
-
-    public fun startSubscription(user: User)
-
-    @Before
-    public fun setPaymentMethods() {
-        quark.setPaymentMethods()
-    }
-
-    @After
-    public fun resetPaymentMethods() {
-        quark.setDefaultPaymentMethods()
-    }
+@RunWith(Parameterized::class)
+public abstract class MinimalSubscriptionTests(private val plan: Plan) {
+    public abstract fun startSubscription(): SubscriptionRobot
 
     @Test
-    public fun subscriptionScreenIsShownForFreeUser() {
-        startSubscription(users.getUser { !it.isPaid })
-        verifySubscriptionIsShown()
-        verifyUpgradeYourPlanTextIsDisplayed()
-        verifyAtLeastOnePlanIsShown()
+    public fun subscriptionIsShownForPlan() {
+        startSubscription()
+            .apply {
+                currentPlanIsDisplayed()
+            }
     }
 
-    @Test
-    public fun subscriptionScreenIsShownForPaidUser() {
-        startSubscription(users.getUser { it.isPaid })
-        verifySubscriptionIsShown()
-        verifyNoPaidPlansAreShown()
-    }
-
-    @Test
-    public fun subscriptionScreenIsShownNoPaymentProvider() {
-        quark.setPaymentMethods(card = false, paypal = false, inApp = false)
-        startSubscription(users.getUser { it.isPaid })
-        verifySubscriptionIsShown()
-        verifyCannotManagePlansFromMobile()
+    public companion object {
+        @get:Parameterized.Parameters(name = "{0}")
+        @get:JvmStatic
+        public val data: Collection<Plan> = listOf(
+            Plan.MailPlus,
+            Plan.Unlimited
+        )
     }
 }

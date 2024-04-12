@@ -19,11 +19,7 @@
 package me.proton.core.report.test
 
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.test.flow.SignInFlow
-import me.proton.core.auth.test.robot.AddAccountRobot
-import me.proton.core.report.test.flow.ReportFlow
-import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.User
+import me.proton.core.report.test.robot.ReportRobot
 import org.junit.Test
 
 /**
@@ -31,24 +27,20 @@ import org.junit.Test
  */
 public interface MinimalReportInternalTests {
 
-    public val quark: Quark
-    public val users: User.Users
-
-    public fun verifyBefore()
     public fun startReport()
+
     public fun verifyAfter()
 
     @Test
     public fun fillAndSendReportHappyPath() {
-        val user = users.getUser { it.name == "pro" }
-
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
-        verifyBefore()
-
         startReport()
-        ReportFlow.fillAndSendReport()
 
-        verifyAfter()
+        ReportRobot
+            .fillSubject("Test Subject")
+            .fillDescription("Test Description")
+            .clickSend()
+            .apply {
+                verifyAfter()
+            }
     }
 }

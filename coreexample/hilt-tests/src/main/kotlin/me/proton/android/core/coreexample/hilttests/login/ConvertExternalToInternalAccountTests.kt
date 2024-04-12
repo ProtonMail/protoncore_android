@@ -1,7 +1,6 @@
 package me.proton.android.core.coreexample.hilttests.login
 
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.runBlocking
@@ -17,26 +16,38 @@ import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.test.android.instrumented.ProtonTest
-import me.proton.core.test.quark.Quark
-import me.proton.core.test.quark.data.User
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.annotation.TestUserData
+import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.core.user.domain.UserManager
 import org.junit.Rule
 import javax.inject.Inject
-import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
-import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
-class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccountTests,
-    ProtonTest(MainActivity::class.java) {
-    override lateinit var testUser: User
-    override lateinit var testUsername: String
+class ConvertExternalToInternalAccountTests(
+    friendlyName: String, testUserData: TestUserData, onLogin: () -> Any
+) : BaseConvertExternalToInternalAccountTests(friendlyName, testUserData, onLogin) {
 
     @get:Rule
-    val hiltRule = HiltAndroidRule(this)
+    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>(
+        loginBefore = false,
+        userData = testUserData
+    ) {
+        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
+    }
+
+    override fun loggedIn(username: String) {
+        val account = waitForPrimaryAccount()
+        assertNotNull(account)
+
+        val user = runBlocking { userManager.getUser(account.userId) }
+
+        assertEquals(testUserData.externalEmail, account.email)
+        assertEquals(testUserData.name, user.name)
+    }
 
     @get:Rule
     val logsRule = LogsRule()
@@ -64,28 +75,4 @@ class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccou
 
     @Inject
     lateinit var waitForNoPrimaryAccount: WaitForNoPrimaryAccount
-
-    @Inject
-    override lateinit var quark: Quark
-
-    @BeforeTest
-    override fun prepare() {
-        hiltRule.inject()
-        extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
-        super.prepare()
-    }
-
-    override fun verifyLoggedOut() {
-        waitForNoPrimaryAccount(timeout = 10.seconds)
-    }
-
-    override fun verifySuccessfulLogin() {
-        val account = waitForPrimaryAccount()
-        assertNotNull(account)
-
-        val user = runBlocking { userManager.getUser(account.userId) }
-
-        assertEquals(testUser.email, account.email)
-        assertEquals(testUsername, user.name)
-    }
 }

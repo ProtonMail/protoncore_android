@@ -20,9 +20,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <permission android:name="me.proton.core.configuration.ACCESS_DATA"
-        android:protectionLevel="signature"/>
-
     <application
         android:name="me.proton.core.configuration.configurator.App"
         android:theme="@style/ProtonTheme"
@@ -32,7 +29,6 @@
         <provider
             android:name=".ConfigContentProvider"
             android:authorities="me.proton.core.configuration.configurator"
-            android:permission="me.proton.core.configuration.ACCESS_DATA"
             android:exported="true" />
 
         <activity

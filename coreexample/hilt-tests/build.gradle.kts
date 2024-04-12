@@ -126,7 +126,8 @@ dependencies {
         project(Module.userRecovery),
         project(Module.userSettings),
         project(Module.keyTransparency),
-        project(Module.configurationData)
+        project(Module.configurationData),
+        project(Module.testRule)
     )
 }
 

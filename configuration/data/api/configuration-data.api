@@ -1,0 +1,96 @@
+public final class me/proton/core/configuration/ContentResolverConfigManager {
+	public static final field Companion Lme/proton/core/configuration/ContentResolverConfigManager$Companion;
+	public fun <init> (Landroid/content/Context;)V
+	public final fun getContext ()Landroid/content/Context;
+	public final fun insertConfigFieldMapAtClassPath (Ljava/util/Map;Lkotlin/reflect/KClass;)Landroid/net/Uri;
+	public final fun queryAtClassPath (Lkotlin/reflect/KClass;)Ljava/util/Map;
+}
+
+public final class me/proton/core/configuration/ContentResolverConfigManager$Companion {
+}
+
+public final class me/proton/core/configuration/ContentResolverConfigManager_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Lme/proton/core/configuration/ContentResolverConfigManager_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/configuration/ContentResolverConfigManager;
+	public static fun newInstance (Landroid/content/Context;)Lme/proton/core/configuration/ContentResolverConfigManager;
+}
+
+public final class me/proton/core/configuration/EnvironmentConfiguration : me/proton/core/configuration/entity/ConfigContract {
+	public static final field Companion Lme/proton/core/configuration/EnvironmentConfiguration$Companion;
+	public fun <init> (Lme/proton/core/configuration/entity/EnvironmentConfigFieldProvider;)V
+	public final fun component1 ()Lme/proton/core/configuration/entity/EnvironmentConfigFieldProvider;
+	public final fun copy (Lme/proton/core/configuration/entity/EnvironmentConfigFieldProvider;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public static synthetic fun copy$default (Lme/proton/core/configuration/EnvironmentConfiguration;Lme/proton/core/configuration/entity/EnvironmentConfigFieldProvider;ILjava/lang/Object;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun getApiHost ()Ljava/lang/String;
+	public fun getApiPrefix ()Ljava/lang/String;
+	public fun getBaseUrl ()Ljava/lang/String;
+	public final fun getConfigFieldProvider ()Lme/proton/core/configuration/entity/EnvironmentConfigFieldProvider;
+	public fun getHost ()Ljava/lang/String;
+	public fun getHv3Host ()Ljava/lang/String;
+	public fun getHv3Url ()Ljava/lang/String;
+	public fun getProxyToken ()Ljava/lang/String;
+	public fun getUseDefaultPins ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/EnvironmentConfiguration$Companion {
+	public final fun fromBundle (Landroid/os/Bundle;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public final fun fromClass (Ljava/lang/String;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public static synthetic fun fromClass$default (Lme/proton/core/configuration/EnvironmentConfiguration$Companion;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/configuration/EnvironmentConfiguration;
+	public final fun fromMap (Ljava/util/Map;)Lme/proton/core/configuration/EnvironmentConfiguration;
+}
+
+public final class me/proton/core/configuration/data/BuildConfig {
+	public static final field BUILD_TYPE Ljava/lang/String;
+	public static final field DEBUG Z
+	public static final field LIBRARY_PACKAGE_NAME Ljava/lang/String;
+	public fun <init> ()V
+}
+
+public abstract interface class me/proton/core/configuration/entity/ConfigContract {
+	public abstract fun getApiHost ()Ljava/lang/String;
+	public abstract fun getApiPrefix ()Ljava/lang/String;
+	public abstract fun getBaseUrl ()Ljava/lang/String;
+	public abstract fun getHost ()Ljava/lang/String;
+	public abstract fun getHv3Host ()Ljava/lang/String;
+	public abstract fun getHv3Url ()Ljava/lang/String;
+	public abstract fun getProxyToken ()Ljava/lang/String;
+	public abstract fun getUseDefaultPins ()Z
+}
+
+public abstract interface class me/proton/core/configuration/entity/EnvironmentConfigFieldProvider {
+	public abstract fun getBoolean (Ljava/lang/String;)Ljava/lang/Boolean;
+	public abstract fun getInt (Ljava/lang/String;)Ljava/lang/Integer;
+	public abstract fun getString (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/extension/EnvironmentConfigurationKt {
+	public static final fun getPrimitiveFieldMap (Ljava/lang/Object;)Ljava/util/Map;
+}
+
+public final class me/proton/core/configuration/provider/BundleConfigFieldProvider : me/proton/core/configuration/entity/EnvironmentConfigFieldProvider {
+	public fun <init> (Landroid/os/Bundle;)V
+	public fun getBoolean (Ljava/lang/String;)Ljava/lang/Boolean;
+	public fun getInt (Ljava/lang/String;)Ljava/lang/Integer;
+	public fun getString (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public class me/proton/core/configuration/provider/MapConfigFieldProvider : me/proton/core/configuration/entity/EnvironmentConfigFieldProvider {
+	public fun <init> (Ljava/util/Map;)V
+	public fun getBoolean (Ljava/lang/String;)Ljava/lang/Boolean;
+	public fun getInt (Ljava/lang/String;)Ljava/lang/Integer;
+	public final fun getMap ()Ljava/util/Map;
+	public fun getString (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/proton/core/configuration/provider/StaticClassConfigFieldProvider : me/proton/core/configuration/entity/EnvironmentConfigFieldProvider {
+	public fun <init> (Ljava/lang/String;)V
+	public fun getBoolean (Ljava/lang/String;)Ljava/lang/Boolean;
+	public fun getInt (Ljava/lang/String;)Ljava/lang/Integer;
+	public fun getString (Ljava/lang/String;)Ljava/lang/String;
+}
+

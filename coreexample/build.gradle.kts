@@ -94,6 +94,8 @@ android {
         setAssetLinksResValue("proton.me")
         version = Version(1, 18, 10)
         versionName = version.toString()
+        testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
     }
     setupFlavors(this)
     sourceSets.getByName("androidTest") {
@@ -122,7 +124,6 @@ fun setupFlavors(testedExtension: TestedExtension) {
         val lokiTenant = localProperties.getProperty(buildConfigFieldKeys.LOKI_TENANT)
 
         flavorDimensions(flavorDimensions.env)
-
         defaultConfig {
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, false.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
@@ -201,8 +202,6 @@ fun setupFlavors(testedExtension: TestedExtension) {
 
 
             dimension = flavorDimensions.env
-            testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
-            testInstrumentationRunnerArguments["clearPackageData"] = "true"
 
             testOptions {
                 animationsDisabled = true
@@ -338,15 +337,22 @@ dependencies {
         project(Module.androidInstrumentedTest),
         project(Module.paymentIapTest),
         project(Module.planTest),
+        project(Module.authTest),
         project(Module.quark),
         project(Module.testPerformance),
+        project(Module.testRule),
+        project(Module.humanVerificationTest),
+        project(Module.reportTest),
+        project(Module.accountRecoveryTest),
+        `android-work-testing`,
         `android-test-runner`,
         `hilt-android-testing`,
         `kotlin-test-junit`,
         `lifecycle-process`,
         `mockk-android`,
         mockWebServer,
-        uiautomator
+        uiautomator,
+        fusion
     )
 
     androidTestUtil(`androidx-test-orchestrator`)

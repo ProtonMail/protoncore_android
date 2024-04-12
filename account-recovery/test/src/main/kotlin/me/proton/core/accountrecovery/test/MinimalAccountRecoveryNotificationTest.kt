@@ -18,7 +18,6 @@
 
 package me.proton.core.accountrecovery.test
 
-import androidx.compose.ui.test.junit4.ComposeTestRule
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiDevice
@@ -27,8 +26,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import me.proton.core.accountmanager.data.AccountStateHandler
 import me.proton.core.accountrecovery.test.robot.AccountRecoveryGracePeriodRobot
-import me.proton.core.auth.test.flow.SignInFlow
-import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
 import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManager
@@ -37,8 +34,6 @@ import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.notification.domain.repository.NotificationRepository
-import me.proton.core.test.quark.Quark
-import me.proton.test.fusion.FusionConfig
 import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -54,20 +49,13 @@ public interface MinimalAccountRecoveryNotificationTest {
     public val eventManagerProvider: EventManagerProvider
     public val eventMetadataRepository: EventMetadataRepository
     public val notificationRepository: NotificationRepository
-    public val quark: Quark
     public val waitForPrimaryAccount: WaitForPrimaryAccount
-
-    /** Optionally, call this in constructor to initialize the Fusion testing library. */
-    public fun initFusion(composeTestRule: ComposeTestRule) {
-        FusionConfig.Compose.testRule.set(composeTestRule)
-    }
 
     /** When called, should verify the app is on the home screen for the logged in user. */
     public fun verifyAfterLogin()
 
     @BeforeTest
     public fun prepare() {
-        quark.jailUnban()
         accountStateHandler?.start()
     }
 
@@ -78,11 +66,6 @@ public interface MinimalAccountRecoveryNotificationTest {
 
     @Test
     public fun receiveAccountRecoveryNotification() {
-        val (user, _) = quark.userCreate()
-
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
-
         val account = waitForPrimaryAccount()
 
         runBlocking {

@@ -40,15 +40,16 @@ public object SetPasswordRobot {
         nextButton.click()
     }
 
-    public fun fillAndClickNext(password: String) {
+    public fun fillAndClickNext(password: String): RecoveryMethodRobot {
         fillPassword(password)
         fillConfirm(password)
         clickNext()
+        return RecoveryMethodRobot
     }
 
     public fun uiElementsDisplayed() {
-        passwordInput.checkIsDisplayed()
-        confirmInput.checkIsDisplayed()
-        nextButton.checkIsDisplayed()
+        passwordInput.await { checkIsDisplayed() }
+        confirmInput.await { checkIsDisplayed() }
+        nextButton.await { checkIsDisplayed() }
     }
 }

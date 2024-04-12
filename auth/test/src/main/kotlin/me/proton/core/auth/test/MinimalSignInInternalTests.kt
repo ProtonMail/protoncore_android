@@ -24,6 +24,8 @@ import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.login.LoginHelpRobot
 import me.proton.core.auth.test.robot.login.LoginRobot
+import me.proton.core.auth.test.robot.login.TwoPassRobot
+import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
 import org.junit.Rule
@@ -55,8 +57,16 @@ public interface MinimalSignInInternalTests {
     public fun signInInternalTwoPassHappyPath() {
         val user = users.getUser(usernameAndOnePass = false) { it.name == "twopasswords" }
 
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternalTwoPass(user.name, user.password, user.passphrase)
+        AddAccountRobot
+            .clickSignIn()
+            .fillUsername(user.name)
+            .fillPassword(user.password)
+            .login()
+
+        TwoPassRobot
+            .fillMailboxPassword(user.passphrase)
+            .unlock()
+
         verifyAfter()
     }
 
@@ -70,8 +80,23 @@ public interface MinimalSignInInternalTests {
         )
         quark.userCreate(user, Quark.CreateAddress.WithKey())
 
-        AddAccountRobot.clickSignIn()
-        SignInFlow.signInExternal(user.email, user.password, username)
+        AddAccountRobot
+            .clickSignIn()
+            .fillUsername(user.email)
+            .fillPassword(user.password)
+            .login()
+
+        ChooseInternalAddressRobot
+            .apply {
+                screenIsDisplayed()
+                domainInputDisplayed()
+                usernameInputIsFilled(username)
+                continueButtonIsEnabled()
+            }
+            .selectAlternativeDomain()
+            .selectPrimaryDomain()
+            .next()
+
         verifyAfter()
     }
 

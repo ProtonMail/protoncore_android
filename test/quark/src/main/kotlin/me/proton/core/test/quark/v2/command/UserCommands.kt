@@ -18,7 +18,6 @@
 
 package me.proton.core.test.quark.v2.command
 
-import kotlinx.serialization.decodeFromString
 import me.proton.core.test.quark.Quark.GenKeys
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse

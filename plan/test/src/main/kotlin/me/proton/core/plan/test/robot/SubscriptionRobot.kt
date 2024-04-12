@@ -47,28 +47,6 @@ public object SubscriptionRobot {
         device.pressBack()
     }
 
-    private fun currentPlanIsDisplayed() {
-        currentPlan.await { checkIsDisplayed() }
-    }
-
-    private fun currentPlanIsNotDisplayed() {
-        currentPlan.checkIsNotDisplayed()
-    }
-
-    private fun upgradeYourPlanTextIsDisplayed() {
-        upgradeYourPlanText.await { checkIsDisplayed() }
-    }
-
-    private fun upgradeYourPlanTitleIsDisplayed() {
-        upgradeYourPlanTitle.await { checkIsDisplayed() }
-    }
-
-    private fun planSelectionIsDisplayed() {
-        planSelection.scrollTo()
-        planSelection.await { checkIsDisplayed() }
-        planSelectionWithCardView.await { checkIsDisplayed() }
-    }
-
     private fun expandAndSelectFirstPlan() {
         planSelectionWithCardView.click()
         view.withCustomMatcher(ViewMatchers.withSubstring("Get"))
@@ -104,20 +82,22 @@ public object SubscriptionRobot {
 
     // region Verifications
 
-    public fun verifySubscriptionIsShown() {
-        currentPlanIsDisplayed()
+    public fun currentPlanIsDisplayed() {
+        currentPlan.await { checkIsDisplayed() }
     }
 
-    public fun verifyUpgradeIsShown() {
-        currentPlanIsNotDisplayed()
+    public fun upgradeYourPlanTextIsDisplayed() {
+        upgradeYourPlanText.await { checkIsDisplayed() }
     }
 
-    public fun verifyUpgradeYourPlanTextIsDisplayed() {
-        upgradeYourPlanTextIsDisplayed()
+    public fun upgradeYourPlanTitleIsDisplayed() {
+        upgradeYourPlanTitle.await { checkIsDisplayed() }
     }
 
-    public fun verifyUpgradeYourPlanTitleIsDisplayed() {
-        upgradeYourPlanTitleIsDisplayed()
+    private fun planSelectionIsDisplayed() {
+        planSelection.scrollTo()
+        planSelection.await { checkIsDisplayed() }
+        planSelectionWithCardView.await { checkIsDisplayed() }
     }
 
     public fun verifyAtLeastOnePlanIsShown() {
@@ -138,7 +118,7 @@ public object SubscriptionRobot {
     }
 
     public fun verifyCannotManagePlansFromMobile() {
-        managementInfo.checkContainsText(R.string.plans_manage_your_subscription_other)
+        managementInfo.await { checkContainsText(R.string.plans_manage_your_subscription_other) }
     }
 
     public fun verifyPlanRenewalDisplayed(value: String) {

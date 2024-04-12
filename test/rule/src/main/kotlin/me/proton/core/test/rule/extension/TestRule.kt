@@ -31,6 +31,7 @@ import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.test.rule.entity.HiltConfig
 import me.proton.core.test.rule.entity.TestConfig
 import me.proton.core.test.rule.entity.UserConfig
+import me.proton.test.fusion.FusionConfig
 import org.junit.rules.TestRule
 
 /**
@@ -62,6 +63,7 @@ public fun Any.protonRule(
     logoutBefore: Boolean = false,
     logoutAfter: Boolean = false,
     activityRule: TestRule? = null,
+    additionalRules: Set<TestRule> = mutableSetOf(),
     afterHilt: (ProtonRule) -> Any = { },
     beforeHilt: (ProtonRule) -> Any = { },
 ): ProtonRule {
@@ -87,7 +89,8 @@ public fun Any.protonRule(
     return ProtonRule(
         userConfig = userConfig,
         testConfig = testConfig,
-        hiltConfig = hiltConfig
+        hiltConfig = hiltConfig,
+        additionalRules = additionalRules
     )
 }
 
@@ -116,8 +119,9 @@ public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
     userData: TestUserData? = TestUserData.withRandomUsername,
     loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
-    logoutAfter: Boolean = true,
-    activityScenarioRule: ActivityScenarioRule<A> = activityScenarioRule(),
+    logoutAfter: Boolean = false,
+    activityScenarioRule: ActivityScenarioRule<A> = activityScenarioRule<A>(),
+    additionalRules: MutableSet<TestRule> = mutableSetOf(),
     noinline beforeHilt: (ProtonRule) -> Unit = { },
     noinline afterHilt: (ProtonRule) -> Unit = { },
 ): ProtonRule = protonRule(
@@ -128,6 +132,7 @@ public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityRule = activityScenarioRule,
+    additionalRules = additionalRules,
     afterHilt = afterHilt,
     beforeHilt = beforeHilt
 )
@@ -157,8 +162,10 @@ public inline fun <reified A : ComponentActivity> Any.protonAndroidComposeRule(
     userData: TestUserData? = TestUserData.withRandomUsername,
     loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
-    logoutAfter: Boolean = true,
+    logoutAfter: Boolean = false,
+    fusionEnabled: Boolean = false,
     composeTestRule: ComposeTestRule = createAndroidComposeRule<A>(),
+    additionalRules: Set<TestRule> = setOf(),
     noinline beforeHilt: (ProtonRule) -> Any = { },
     noinline afterHilt: (ProtonRule) -> Any = { },
 ): ProtonRule = protonRule(
@@ -169,6 +176,9 @@ public inline fun <reified A : ComponentActivity> Any.protonAndroidComposeRule(
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityRule = composeTestRule,
+    additionalRules = additionalRules,
     beforeHilt = beforeHilt,
     afterHilt = afterHilt
-)
+).apply {
+    if (fusionEnabled) FusionConfig.Compose.testRule.set(activityScenarioRule as ComposeTestRule)
+}

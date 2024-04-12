@@ -249,6 +249,7 @@ public object Module {
     public const val reportData: String = ":report:report-data"
     public const val reportPresentation: String = ":report:report-presentation"
     public const val reportDagger: String = ":report:report-dagger"
+    public const val reportTest: String = ":report:report-test"
 
     // Feature flags
     public const val featureFlag: String = ":feature-flag"

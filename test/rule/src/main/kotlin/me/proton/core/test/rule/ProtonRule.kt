@@ -18,6 +18,7 @@
 
 package me.proton.core.test.rule
 
+import android.content.Context
 import android.util.Log
 import androidx.test.platform.app.InstrumentationRegistry
 import dagger.hilt.android.testing.HiltAndroidRule
@@ -53,11 +54,25 @@ public open class ProtonRule(
     private val userConfig: UserConfig?,
     private val testConfig: TestConfig,
     private val hiltConfig: HiltConfig?,
+    private val additionalRules: Set<TestRule> = setOf()
 ) : TestRule {
 
     public val activityScenarioRule: TestRule? = testConfig.activityRule
 
-    private val targetContext get() = InstrumentationRegistry.getInstrumentation().targetContext
+    public val targetContext: Context get() = InstrumentationRegistry.getInstrumentation().targetContext
+
+    public val testDataRule: QuarkTestDataRule? by lazy {
+        if (userConfig?.userData == null && testConfig.annotationTestData.isEmpty()) return@lazy null
+        QuarkTestDataRule(
+            testConfig.annotationTestData,
+            initialTestUserData = userConfig?.userData,
+            environmentConfiguration = {
+                provideEnvironmentConfiguration(ContentResolverConfigManager(targetContext))
+            }
+        )
+    }
+
+    public lateinit var testName: String
 
     private val environmentConfigRule by lazy {
         EnvironmentConfigRule(testConfig.envConfig)
@@ -72,17 +87,6 @@ public open class ProtonRule(
         before {
             hiltRule!!.inject()
         }
-    }
-
-    public val testDataRule: QuarkTestDataRule? by lazy {
-        if (userConfig?.userData == null && testConfig.annotationTestData.isEmpty()) return@lazy null
-        QuarkTestDataRule(
-            testConfig.annotationTestData,
-            initialTestUserData = userConfig?.userData,
-            environmentConfiguration = {
-                provideEnvironmentConfiguration(ContentResolverConfigManager(targetContext))
-            }
-        )
     }
 
     private val authenticationRule by lazy {
@@ -116,6 +120,8 @@ public open class ProtonRule(
     }
 
     override fun apply(base: Statement, description: Description): Statement {
+        testName = description.methodName
+
         return RuleChain
             .outerRule(beforeHiltRule)
             .aroundNullable(hiltRule)
@@ -126,12 +132,21 @@ public open class ProtonRule(
             .aroundNullable(authenticationRule)
             .aroundNullable(testConfig.activityRule)
             .around(TestExecutionWatcher())
+            .aroundMultiple(additionalRules)
             .apply(base, description)
     }
 }
 
 private fun RuleChain.aroundNullable(rule: TestRule?): RuleChain {
     return around(rule ?: return this)
+}
+
+private fun RuleChain.aroundMultiple(ruleSet: Set<TestRule>): RuleChain {
+    var chain = this
+    ruleSet.map {
+        chain = chain.around(it)
+    }
+    return chain
 }
 
 public fun <T> T.before(block: suspend T.() -> Any): ExternalResource =

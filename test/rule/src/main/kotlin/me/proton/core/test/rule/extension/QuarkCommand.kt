@@ -73,14 +73,14 @@ public fun QuarkCommand.seedTestUserData(data: TestUserData): CreateUserQuarkRes
 public fun QuarkCommand.subscriptionCreate(
     subscription: TestSubscriptionData,
     decryptedUserId: String
-): Response =
-    route("quark/raw::user:create:subscription")
+): Response {
+    return route("quark/raw::user:create:subscription")
         .args(
             listOf(
                 "userID" to decryptedUserId,
                 "--planID" to subscription.plan.planName,
                 "--couponCode" to subscription.couponCode,
-                "--cycle" to subscription.delinquent.trueOrEmpty(),
+                "--delinquent" to subscription.delinquent.toString(),
                 "--format" to "json"
             ).toEncodedArgs()
         )
@@ -88,6 +88,7 @@ public fun QuarkCommand.subscriptionCreate(
         .let {
             client.executeQuarkRequest(it)
         }
+}
 
 private fun Boolean.trueOrEmpty() = if (this) toString() else EMPTY_STRING
 

@@ -22,10 +22,12 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
-public open class ContentResolverConfigManager(
-    public val context: Context
+public class ContentResolverConfigManager @Inject constructor(
+    @ApplicationContext public val context: Context
 ) {
     private val String.contentResolverUrl: Uri get() = Uri.parse("content://$CONFIG_AUTHORITY/config/$this")
 
