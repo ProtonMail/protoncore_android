@@ -18,7 +18,10 @@
 
 package me.proton.core.userrecovery.domain.usecase
 
+import io.mockk.MockKAnnotations
+import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.key.domain.unlockOrNull
@@ -27,21 +30,27 @@ import org.junit.Test
 import kotlin.test.assertFailsWith
 
 class GetRecoveryFileTest : BaseUserKeysTest() {
+    @MockK
+    private lateinit var getExistingVerifiedRecoverySecret: GetExistingVerifiedRecoverySecret
 
     private lateinit var tested: GetRecoveryFile
 
     @Before
     override fun before() {
         super.before()
+        MockKAnnotations.init(this)
         tested = GetRecoveryFile(
             userManager = testUserManager,
-            userRemoteDataSource = testUserRemoteDataSource,
-            cryptoContext = testCryptoContext
+            cryptoContext = testCryptoContext,
+            getExistingVerifiedRecoverySecret = getExistingVerifiedRecoverySecret
         )
     }
 
     @Test
     fun getRecoverFileHappyPath() = runTest {
+        // GIVEN
+        coEvery { getExistingVerifiedRecoverySecret(any()) } returns testSecretValid
+
         // WHEN
         tested.invoke(testUser.userId)
 
@@ -56,21 +65,9 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
     }
 
     @Test
-    fun getRecoverFileThrowIllegalArgumentWhenNoPrimary() = runTest {
-        // GIVEN
-        every { testPrivateKeyPrimary.isPrimary } returns false
-
-        // WHEN
-        assertFailsWith<IllegalArgumentException> {
-            tested.invoke(testUser.userId)
-        }
-    }
-
-    @Test
     fun getRecoverFileThrowIllegalArgumentWhenNoSecret() = runTest {
         // GIVEN
-        every { testKey1.recoverySecret } returns null
-        every { testKey2.recoverySecret } returns null
+        coEvery { getExistingVerifiedRecoverySecret(any()) } returns null
 
         // WHEN
         assertFailsWith<IllegalArgumentException> {
@@ -81,6 +78,7 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
     @Test
     fun getRecoverFileThrowIllegalStateWhenNoActive() = runTest {
         // GIVEN
+        coEvery { getExistingVerifiedRecoverySecret(any()) } returns testSecretValid
         every { testKey1.active } returns false
         every { testKey2.active } returns false
 

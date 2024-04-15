@@ -37,8 +37,13 @@ public abstract interface class me/proton/core/userrecovery/domain/repository/De
 	public abstract fun insertRecoveryFile (Lme/proton/core/userrecovery/domain/entity/RecoveryFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/userrecovery/domain/usecase/GetExistingVerifiedRecoverySecret {
+	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/domain/UserManager;Lme/proton/core/user/domain/repository/UserRemoteDataSource;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/userrecovery/domain/usecase/GetRecoveryFile {
-	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/user/domain/repository/UserRemoteDataSource;Lme/proton/core/crypto/common/context/CryptoContext;)V
+	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/userrecovery/domain/usecase/GetExistingVerifiedRecoverySecret;Lme/proton/core/user/domain/UserManager;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

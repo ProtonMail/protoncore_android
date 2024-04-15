@@ -53,6 +53,7 @@ abstract class BaseUserKeysTest {
 
     internal val testSecretValid = "valid"
     internal val testSecretValidHash = HashUtils.sha256(testSecretValid)
+    internal val testSecretValidSignature = "signature-valid"
     internal val testSecretInvalid = "invalid"
     internal val testSecretInvalidHash = HashUtils.sha256(testSecretInvalid)
 
@@ -75,11 +76,14 @@ abstract class BaseUserKeysTest {
         every { this@mockk.isActive } returns true
         every { this@mockk.isPrimary } returns true
         every { this@mockk.key } returns "active.key"
+        every { this@mockk.canEncrypt } returns true
+        every { this@mockk.canVerify } returns true
     }
     internal val testKey1 = mockk<UserKey>(relaxed = true) {
         every { this@mockk.privateKey } returns testPrivateKeyPrimary
         every { this@mockk.recoverySecret } returns testSecretValid
         every { this@mockk.recoverySecretHash } returns testSecretValidHash
+        every { this@mockk.recoverySecretSignature } returns testSecretValidSignature
         every { this@mockk.active } returns true
         every { this@mockk.keyId } returns KeyId("testKey1")
     }
