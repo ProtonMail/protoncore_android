@@ -1,8 +1,8 @@
 public abstract class me/proton/core/accountmanager/domain/AccountManager {
 	public fun <init> (Lme/proton/core/domain/entity/Product;)V
 	public abstract fun addAccount (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun disableAccount (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public static synthetic fun disableAccount$default (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public abstract fun disableAccount (Lme/proton/core/domain/entity/UserId;ZZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun disableAccount$default (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/domain/entity/UserId;ZZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public abstract fun getAccount (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getAccounts ()Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getPreviousPrimaryUserId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -13,7 +13,8 @@ public abstract class me/proton/core/accountmanager/domain/AccountManager {
 	public static synthetic fun onAccountStateChanged$default (Lme/proton/core/accountmanager/domain/AccountManager;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun onSessionStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
 	public static synthetic fun onSessionStateChanged$default (Lme/proton/core/accountmanager/domain/AccountManager;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;
-	public abstract fun removeAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun removeAccount (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun removeAccount$default (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public abstract fun setAsPrimary (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

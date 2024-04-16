@@ -50,15 +50,19 @@ abstract class AccountManager(
      * Remove an [Account] from [AccountManager], revoking existing [Session] if needed.
      *
      * Note: The [Account.state] will shortly be set to [AccountState.Removed], before actual deletion.
+     *
+     * @param waitForCompletion if false, a global supervised scope will launch this operation and directly return.
      */
-    abstract suspend fun removeAccount(userId: UserId)
+    abstract suspend fun removeAccount(userId: UserId, waitForCompletion: Boolean = true)
 
     /**
      * Disable an [Account], revoking existing [Session] if needed.
      *
      * Note: The [Account.state] will be set to [AccountState.Disabled].
+     *
+     * @param waitForCompletion if false, a global supervised scope will launch this operation and directly return.
      */
-    abstract suspend fun disableAccount(userId: UserId, keepSession: Boolean = false)
+    abstract suspend fun disableAccount(userId: UserId, waitForCompletion: Boolean = true, keepSession: Boolean = false)
 
     /**
      * Flow of persisted [Account] on this device, by userId.

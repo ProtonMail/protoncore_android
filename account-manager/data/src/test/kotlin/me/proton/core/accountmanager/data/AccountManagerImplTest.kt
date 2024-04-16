@@ -24,6 +24,7 @@ import io.mockk.mockk
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
@@ -33,6 +34,9 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import org.junit.Before
@@ -118,6 +122,7 @@ class AccountManagerImplTest {
         accountManager = spyk(
             AccountManagerImpl(
                 Product.Calendar,
+                UnconfinedTestCoroutineScopeProvider(),
                 mocks.accountRepository,
                 mocks.authRepository,
                 mocks.userManager,

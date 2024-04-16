@@ -3,9 +3,9 @@ public class hilt_aggregated_deps/_me_proton_core_accountmanager_data_RefreshUse
 }
 
 public final class me/proton/core/accountmanager/data/AccountManagerImpl : me/proton/core/accountmanager/domain/AccountManager, me/proton/core/accountmanager/domain/AccountWorkflowHandler {
-	public fun <init> (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionListener;)V
+	public fun <init> (Lme/proton/core/domain/entity/Product;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionListener;)V
 	public fun addAccount (Lme/proton/core/account/domain/entity/Account;Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun disableAccount (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun disableAccount (Lme/proton/core/domain/entity/UserId;ZZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAccount (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
 	public fun getAccounts ()Lkotlinx/coroutines/flow/Flow;
 	public fun getPreviousPrimaryUserId (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -29,16 +29,16 @@ public final class me/proton/core/accountmanager/data/AccountManagerImpl : me/pr
 	public fun handleUnlockFailed (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onAccountStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
 	public fun onSessionStateChanged (Z)Lkotlinx/coroutines/flow/Flow;
-	public fun removeAccount (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun removeAccount (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setAsPrimary (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/accountmanager/data/AccountManagerImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/data/AccountManagerImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/accountmanager/data/AccountManagerImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/accountmanager/data/AccountManagerImpl;
-	public static fun newInstance (Lme/proton/core/domain/entity/Product;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionListener;)Lme/proton/core/accountmanager/data/AccountManagerImpl;
+	public static fun newInstance (Lme/proton/core/domain/entity/Product;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/account/domain/repository/AccountRepository;Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/UserManager;Lme/proton/core/network/domain/session/SessionListener;)Lme/proton/core/accountmanager/data/AccountManagerImpl;
 }
 
 public final class me/proton/core/accountmanager/data/AccountMigratorImpl : me/proton/core/accountmanager/domain/migrator/AccountMigrator {

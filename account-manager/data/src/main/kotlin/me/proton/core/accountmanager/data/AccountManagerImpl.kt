@@ -18,8 +18,10 @@
 
 package me.proton.core.accountmanager.data
 
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import me.proton.core.account.domain.entity.Account
@@ -51,12 +53,14 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.isCredentialLess
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class AccountManagerImpl @Inject constructor(
     product: Product,
+    private val scopeProvider: CoroutineScopeProvider,
     private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
     private val userManager: UserManager,
@@ -76,14 +80,24 @@ class AccountManagerImpl @Inject constructor(
         }
     }
 
-    private suspend fun disableAccount(account: Account, keepSession: Boolean) {
-        accountRepository.updateAccountState(account.userId, Disabled)
-        account.sessionId?.takeUnless { keepSession }?.let { removeSession(it) }
-        userManager.lock(account.userId)
+    private fun removeAccount(account: Account): Job {
+        return scopeProvider.GlobalDefaultSupervisedScope.launch {
+            accountRepository.updateAccountState(account.userId, Removed)
+            account.sessionId?.let { removeSession(it) }
+            accountRepository.deleteAccount(account.userId)
+        }
+    }
+
+    private fun disableAccount(account: Account, keepSession: Boolean): Job {
+        return scopeProvider.GlobalDefaultSupervisedScope.launch {
+            accountRepository.updateAccountState(account.userId, Disabled)
+            account.sessionId?.takeUnless { keepSession }?.let { removeSession(it) }
+            userManager.lock(account.userId)
+        }
     }
 
     private suspend fun disableAccount(sessionId: SessionId, keepSession: Boolean) {
-        accountRepository.getAccountOrNull(sessionId)?.let { disableAccount(it, keepSession) }
+        accountRepository.getAccountOrNull(sessionId)?.let { disableAccount(it, keepSession).join() }
     }
 
     private suspend fun clearSessionDetails(userId: UserId) {
@@ -94,16 +108,16 @@ class AccountManagerImpl @Inject constructor(
         handleSession(account.copy(state = Ready), session)
     }
 
-    override suspend fun removeAccount(userId: UserId) {
-        accountRepository.getAccountOrNull(userId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, Removed)
-            account.sessionId?.let { removeSession(it) }
-            accountRepository.deleteAccount(account.userId)
+    override suspend fun removeAccount(userId: UserId, waitForCompletion: Boolean) {
+        accountRepository.getAccountOrNull(userId)?.let {
+            removeAccount(it).takeIf { waitForCompletion }?.join()
         }
     }
 
-    override suspend fun disableAccount(userId: UserId, keepSession: Boolean) {
-        accountRepository.getAccountOrNull(userId)?.let { disableAccount(it, keepSession) }
+    override suspend fun disableAccount(userId: UserId, waitForCompletion: Boolean, keepSession: Boolean) {
+        accountRepository.getAccountOrNull(userId)?.let {
+            disableAccount(it, keepSession).takeIf { waitForCompletion }?.join()
+        }
     }
 
     override fun getAccount(userId: UserId): Flow<Account?> =

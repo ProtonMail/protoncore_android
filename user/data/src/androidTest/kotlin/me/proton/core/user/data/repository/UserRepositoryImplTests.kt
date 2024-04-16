@@ -57,6 +57,7 @@ import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.android.api.TestApiManager
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
+import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
 import me.proton.core.user.data.TestAccountManagerDatabase
 import me.proton.core.user.data.TestAccounts
@@ -160,6 +161,7 @@ class UserRepositoryImplTests {
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
             Product.Mail,
+            UnconfinedTestCoroutineScopeProvider(),
             AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
             mockk(relaxed = true),
             mockk(relaxed = true),
