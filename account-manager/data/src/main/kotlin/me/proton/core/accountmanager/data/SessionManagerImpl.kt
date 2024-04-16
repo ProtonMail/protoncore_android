@@ -20,9 +20,9 @@ package me.proton.core.accountmanager.data
 
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.LogTag
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -46,6 +46,7 @@ class SessionManagerImpl @Inject constructor(
     private val sessionProvider: SessionProvider,
     private val authRepository: AuthRepository,
     private val accountRepository: AccountRepository,
+    private val accountManager: AccountManager,
     private val monoClock: () -> Long
 ) : SessionManager, SessionProvider by sessionProvider {
 
@@ -136,7 +137,7 @@ class SessionManagerImpl @Inject constructor(
     private suspend fun internalSessionForceLogout(session: Session, httpCode: Int) {
         accountRepository.updateSessionState(session.sessionId, SessionState.ForceLogout)
         accountRepository.getAccountOrNull(session.sessionId)?.let { account ->
-            accountRepository.updateAccountState(account.userId, AccountState.Disabled)
+            accountManager.disableAccount(account.userId, waitForCompletion = false)
         }
         accountRepository.deleteSession(session.sessionId)
         sessionListener.onSessionForceLogout(session, httpCode)

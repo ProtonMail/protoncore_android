@@ -27,6 +27,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.entity.SessionState.ForceLogout
 import me.proton.core.account.domain.repository.AccountRepository
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiResult
@@ -62,6 +63,7 @@ class SessionManagerImplTest {
         scopes = emptyList()
     )
 
+    private val accountManager = mockk<AccountManager>(relaxed = true)
     private val sessionListener = mockk<SessionListener>(relaxed = true)
     private val sessionProvider = mockk<SessionProvider>(relaxed = true) {
         coEvery { this@mockk.getSessionId(userId) } returns authSessionId
@@ -85,6 +87,7 @@ class SessionManagerImplTest {
         sessionProvider = sessionProvider,
         authRepository = authRepository,
         accountRepository = accountRepository,
+        accountManager = accountManager,
         monoClock = { time }
     )
 
@@ -158,6 +161,7 @@ class SessionManagerImplTest {
         // Then
         coVerify(exactly = 1) { authRepository.refreshSession(authSession) }
         coVerify(exactly = 1) { accountRepository.updateSessionState(authSession.sessionId, ForceLogout) }
+        coVerify(exactly = 1) { accountManager.disableAccount(any(), waitForCompletion = any()) }
         coVerify(exactly = 1) { accountRepository.deleteSession(authSession.sessionId) }
         coVerify(exactly = 0) { authRepository.requestSession() }
         coVerify(exactly = 0) { accountRepository.createOrUpdateSession(any(), authSession) }
@@ -178,6 +182,7 @@ class SessionManagerImplTest {
         // Then
         coVerify(exactly = 1) { authRepository.refreshSession(unauthSession) }
         coVerify(exactly = 1) { accountRepository.updateSessionState(unauthSession.sessionId, ForceLogout) }
+        coVerify(exactly = 1) { accountManager.disableAccount(any(), waitForCompletion = any()) }
         coVerify(exactly = 1) { accountRepository.deleteSession(unauthSession.sessionId) }
         coVerify(exactly = 1) { authRepository.requestSession() }
         coVerify(exactly = 1) { accountRepository.createOrUpdateSession(any(), unauthSession) }
