@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.presentation.viewmodel
 
+import java.util.Optional
 import android.app.Activity
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -57,7 +58,6 @@ import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.ResultCollector
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
-import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
 
@@ -93,8 +93,6 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
         plan: DynamicPlan,
         userId: UserId?
     ) = viewModelScope.launchWithResultContext {
-        check(buttonStates.none { it.value.value == ButtonState.Loading })
-
         val resolvedPaymentProvider = paymentProvider ?: getPreferredPaymentProvider(userId)
         onResultEnqueueObservabilityEvents(resolvedPaymentProvider)
 
