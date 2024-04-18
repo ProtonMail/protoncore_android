@@ -50,6 +50,7 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.client.CookieSessionId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupAccountCreationTotal
 import me.proton.core.payment.domain.entity.Currency
@@ -124,6 +125,9 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     private lateinit var userRepository: UserRepository
 
     @MockK(relaxed = true)
+    private lateinit var sessionProvider: SessionProvider
+
+    @MockK(relaxed = true)
     private lateinit var srpCrypto: SrpCrypto
 
     @MockK(relaxed = true)
@@ -188,6 +192,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             PerformCreateUser(
                 authRepository,
                 userRepository,
+                sessionProvider,
                 srpCrypto,
                 keyStoreCrypto,
                 challengeManager,
@@ -200,6 +205,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             PerformCreateExternalEmailUser(
                 authRepository,
                 userRepository,
+                sessionProvider,
                 srpCrypto,
                 keyStoreCrypto,
                 challengeManager,

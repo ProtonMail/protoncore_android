@@ -26,6 +26,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.GetPrimaryUser
@@ -36,6 +37,7 @@ import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
@@ -57,6 +59,8 @@ class PerformCreateUserTest {
 
     @MockK(relaxed = true)
     private lateinit var getPrimaryUser: GetPrimaryUser
+    @MockK(relaxed = true)
+    private lateinit var sessionProvider: SessionProvider
     // endregion
 
     // region test data
@@ -87,6 +91,7 @@ class PerformCreateUserTest {
         useCase = PerformCreateUser(
             authRepository,
             userRepository,
+            sessionProvider,
             srpCrypto,
             keyStoreCrypto,
             challengeManager,
@@ -100,6 +105,8 @@ class PerformCreateUserTest {
         every { keyStoreCrypto.encrypt(any<String>()) } returns testEncryptedPassword
 
         coEvery { authRepository.randomModulus(null) } returns testModulus
+        coEvery { sessionProvider.getSessionId(null) } returns null
+
         coEvery {
             userRepository.createUser(any(), any(), any(), any(), any(), any(), any(), any(), any())
         } returns mockk {

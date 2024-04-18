@@ -172,5 +172,8 @@ interface UserRepository : PassphraseRepository {
      *
      * @throws ApiException if corresponding external email is not available.
      */
-    suspend fun checkExternalEmailAvailable(email: String)
+    suspend fun checkExternalEmailAvailable(
+        sessionUserId: SessionUserId?,
+        email: String
+    )
 }

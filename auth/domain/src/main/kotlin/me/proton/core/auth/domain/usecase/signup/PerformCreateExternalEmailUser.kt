@@ -28,6 +28,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.UserRepository
@@ -36,6 +37,7 @@ import javax.inject.Inject
 class PerformCreateExternalEmailUser @Inject constructor(
     private val authRepository: AuthRepository,
     private val userRepository: UserRepository,
+    private val sessionProvider: SessionProvider,
     private val srpCrypto: SrpCrypto,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val challengeManager: ChallengeManager,
@@ -50,8 +52,9 @@ class PerformCreateExternalEmailUser @Inject constructor(
     ): UserId {
         require(email.isNotBlank()) { "Email must not be empty." }
 
-        val modulus = authRepository.randomModulus(null)
         val userId = getPrimaryUser().takeIf { it?.isCredentialLess() == true }?.userId
+        val sessionId = sessionProvider.getSessionId(userId)
+        val modulus = authRepository.randomModulus(sessionId)
 
         password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
             val auth = srpCrypto.calculatePasswordVerifier(

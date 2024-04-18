@@ -19,14 +19,17 @@
 package me.proton.core.auth.presentation.viewmodel.signup
 
 import app.cash.turbine.test
+import io.mockk.MockKAnnotations
 import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
 import io.mockk.verify
 import kotlinx.coroutines.flow.first
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.State
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -61,13 +64,17 @@ class ChooseInternalEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
         }
     }
 
+    @MockK(relaxed = true)
+    private lateinit var getPrimaryUser: GetPrimaryUser
+
     private lateinit var accountAvailability: AccountAvailability
 
     private lateinit var viewModel: ChooseInternalEmailViewModel
 
     @Before
     fun beforeEveryTest() {
-        accountAvailability = AccountAvailability(userRepository, domainRepository)
+        MockKAnnotations.init(this)
+        accountAvailability = AccountAvailability(userRepository, domainRepository, getPrimaryUser)
     }
 
     @Test

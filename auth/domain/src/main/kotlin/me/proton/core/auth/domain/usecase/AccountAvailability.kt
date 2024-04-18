@@ -21,6 +21,7 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.extension.isCredentialLess
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -30,7 +31,8 @@ import javax.inject.Inject
  */
 class AccountAvailability @Inject constructor(
     private val userRepository: UserRepository,
-    private val domainRepository: DomainRepository
+    private val domainRepository: DomainRepository,
+    private val getPrimaryUser: GetPrimaryUser
 ) {
 
     suspend fun getDomains(
@@ -57,7 +59,8 @@ class AccountAvailability @Inject constructor(
 
     suspend fun checkExternalEmail(email: String) {
         check(email.isNotBlank()) { "Email must not be blank." }
-        userRepository.checkExternalEmailAvailable(email)
+        val userId = getPrimaryUser().takeIf { it?.isCredentialLess() == true }?.userId
+        userRepository.checkExternalEmailAvailable(userId, email)
     }
 
     private suspend fun checkUsername(
@@ -65,6 +68,7 @@ class AccountAvailability @Inject constructor(
         username: String
     ) {
         check(username.isNotBlank()) { "Username must not be blank." }
-        userRepository.checkUsernameAvailable(sessionUserId = userId, username = username)
+        val userIdTmp = userId ?: getPrimaryUser().takeIf { it?.isCredentialLess() == true }?.userId
+        userRepository.checkUsernameAvailable(sessionUserId = userIdTmp, username = username)
     }
 }

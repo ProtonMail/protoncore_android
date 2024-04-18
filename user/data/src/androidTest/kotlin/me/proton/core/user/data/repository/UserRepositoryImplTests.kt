@@ -622,7 +622,7 @@ class UserRepositoryImplTests {
         coEvery { userApi.externalEmailAvailable(any()) } returns GenericResponse(ResponseCodes.OK)
 
         // WHEN
-        userRepository.checkExternalEmailAvailable("user@email.test")
+        userRepository.checkExternalEmailAvailable(null, "user@email.test")
 
         // THEN
         val result = assertSingleResult("checkExternalEmailAvailable")

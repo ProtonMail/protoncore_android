@@ -26,6 +26,7 @@ import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.slot
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel.State
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -56,12 +57,15 @@ class ChooseUsernameViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Co
     @MockK
     private lateinit var userRepository: UserRepository
 
+    @MockK(relaxed = true)
+    private lateinit var getPrimaryUser: GetPrimaryUser
+
     private lateinit var viewModel: ChooseUsernameViewModel
 
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        accountAvailability = AccountAvailability(userRepository, domainRepository)
+        accountAvailability = AccountAvailability(userRepository, domainRepository, getPrimaryUser)
     }
 
     @Test

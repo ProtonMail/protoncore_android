@@ -30,6 +30,8 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import kotlin.test.BeforeTest
@@ -46,16 +48,43 @@ internal class AccountAvailabilityTest {
     @MockK
     private lateinit var userRepository: UserRepository
 
+    @MockK
+    private lateinit var getPrimaryUser: GetPrimaryUser
+
+    val userId = UserId("123")
+    private val user = User(
+        userId = userId,
+        email = null,
+        name = "test username",
+        displayName = null,
+        currency = "test-curr",
+        credit = 0,
+        createdAtUtc = 1000L,
+        usedSpace = 0,
+        maxSpace = 100,
+        maxUpload = 100,
+        role = null,
+        private = true,
+        services = 1,
+        subscribed = 0,
+        delinquent = null,
+        recovery = null,
+        keys = emptyList(),
+        type = Type.Proton
+    )
+
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = AccountAvailability(userRepository, domainRepository)
+
+        coEvery { getPrimaryUser() } returns user
+
+        tested = AccountAvailability(userRepository, domainRepository, getPrimaryUser)
     }
 
     @Test
     fun `checkUsername observability success`() = runTest {
         // GIVEN
-        val userId = UserId("123")
         val username = "test-user"
         coEvery { userRepository.getUser(any()) } returns mockk {
             every { name } returns null

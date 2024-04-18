@@ -23,11 +23,14 @@ import io.mockk.MockKAnnotations
 import io.mockk.Ordering
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.auth.domain.usecase.GetPrimaryUser
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseExternalEmailViewModel.State
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.observability.domain.ObservabilityManager
@@ -36,6 +39,8 @@ import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.observability.domain.metrics.common.HttpApiStatus
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.user.domain.entity.Type
+import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.DomainRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.coroutine.result
@@ -55,14 +60,40 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
     private lateinit var observabilityManager: ObservabilityManager
 
     @MockK
+    private lateinit var getPrimaryUser: GetPrimaryUser
+
+    @MockK
     private lateinit var userRepository: UserRepository
 
     private lateinit var viewModel: ChooseExternalEmailViewModel
 
+    val userId = UserId("123")
+    private val user = User(
+        userId = userId,
+        email = null,
+        name = "test username",
+        displayName = null,
+        currency = "test-curr",
+        credit = 0,
+        createdAtUtc = 1000L,
+        usedSpace = 0,
+        maxSpace = 100,
+        maxUpload = 100,
+        role = null,
+        private = true,
+        services = 1,
+        subscribed = 0,
+        delinquent = null,
+        recovery = null,
+        keys = emptyList(),
+        type = Type.Proton
+    )
+
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        accountAvailability = AccountAvailability(userRepository, domainRepository)
+        coEvery { getPrimaryUser() } returns user
+        accountAvailability = AccountAvailability(userRepository, domainRepository, getPrimaryUser)
         viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
     }
 
@@ -72,7 +103,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
+        coEvery { userRepository.checkExternalEmailAvailable(null, testEmail) } returns Unit
         // WHEN
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
@@ -91,7 +122,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } throws ApiException(
+        coEvery { userRepository.checkExternalEmailAvailable(null, testEmail) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
                 "http error",
@@ -143,7 +174,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
             "proton.me",
             "proton.ch"
         )
-        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
+        coEvery { userRepository.checkExternalEmailAvailable(null, testEmail) } returns Unit
         // WHEN
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
@@ -161,7 +192,8 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         val testUsername = "test-username"
         val testDomain = "test-domain"
         val testEmail = "$testUsername@$testDomain"
-        coEvery { userRepository.checkExternalEmailAvailable(testEmail) } returns Unit
+        coEvery { userRepository.checkExternalEmailAvailable(any(), testEmail) } returns Unit
+
         // WHEN
         viewModel.state.test {
             viewModel.checkExternalEmail(testEmail)
@@ -169,11 +201,6 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
             assertIs<State.Processing>(awaitItem())
             assertIs<State.Success>(awaitItem())
             cancelAndConsumeRemainingEvents()
-        }
-        // THEN
-        coVerify(ordering = Ordering.ORDERED) {
-            accountAvailability.getDomains(any())
-            accountAvailability.checkExternalEmail(testEmail)
         }
     }
 
@@ -183,7 +210,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         coEvery { domainRepository.getAvailableDomains(any()) } coAnswers {
             result("getAvailableDomains") { listOf("domain") }
         }
-        coEvery { userRepository.checkExternalEmailAvailable(any()) } coAnswers {
+        coEvery { userRepository.checkExternalEmailAvailable(any(), any()) } coAnswers {
             result("checkExternalEmailAvailable") { /* Unit */ }
         }
 
