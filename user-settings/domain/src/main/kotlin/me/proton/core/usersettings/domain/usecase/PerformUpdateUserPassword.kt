@@ -27,11 +27,8 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.extension.nameNotNull
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
-import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
 
 class PerformUpdateUserPassword @Inject constructor(
@@ -39,8 +36,7 @@ class PerformUpdateUserPassword @Inject constructor(
     private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
     private val userManager: UserManager,
-    private val userRepository: UserRepository,
-    private val organizationRepository: OrganizationRepository,
+    private val userRepository: UserRepository
 ) {
     private val keyStore = context.keyStoreCrypto
     private val srp = context.srpCrypto
@@ -58,9 +54,6 @@ class PerformUpdateUserPassword @Inject constructor(
         val sessionId = requireNotNull(account?.sessionId)
         val loginInfo = authRepository.getAuthInfoSrp(sessionId, username)
         val modulus = authRepository.randomModulus(sessionId)
-        val organizationKeys = if (user.isOrganizationAdmin())
-            organizationRepository.getOrganizationKeys(userId, refresh = true)
-        else null
         loginPassword.decrypt(keyStore).toByteArray().use { decryptedLoginPassword ->
             newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
                 val clientProofs: SrpProofs = srp.generateSrpProofs(
@@ -85,8 +78,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     secondFactorCode = secondFactorCode,
                     proofs = clientProofs,
                     srpSession = loginInfo.srpSession,
-                    auth = auth,
-                    orgPrivateKey = organizationKeys?.privateKey?.takeIfNotEmpty()
+                    auth = auth
                 )
             }
         }

@@ -72,13 +72,11 @@ import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 import java.util.Optional
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -103,9 +101,6 @@ UserManagerImplTests {
 
     @MockK(relaxed = true)
     private lateinit var keyStoreCrypto: KeyStoreCrypto
-
-    @MockK(relaxed = true)
-    private lateinit var organizationRepository: OrganizationRepository
 
     @MockK(relaxed = true)
     private lateinit var accountRecoveryRepository: AccountRecoveryRepository
@@ -199,7 +194,6 @@ UserManagerImplTests {
             passphraseRepository,
             keySaltRepository,
             privateKeyRepository,
-            organizationRepository,
             accountRecoveryRepository,
             userAddressKeySecretProvider,
             cryptoContext,

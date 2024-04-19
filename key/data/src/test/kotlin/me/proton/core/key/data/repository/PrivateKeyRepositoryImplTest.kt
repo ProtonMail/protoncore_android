@@ -109,8 +109,7 @@ class PrivateKeyRepositoryImplTest {
                 secondFactorCode = "test-2fa-code",
                 auth = mockk(relaxed = true),
                 keys = listOf(mockk(relaxed = true)),
-                userKeys = listOf(mockk(relaxed = true)),
-                organizationKey = "test-org-key"
+                userKeys = listOf(mockk(relaxed = true))
             )
         }
     }

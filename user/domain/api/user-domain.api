@@ -51,7 +51,7 @@ public final class me/proton/core/user/domain/UserAddressManager$DefaultImpls {
 
 public abstract interface class me/proton/core/user/domain/UserManager {
 	public abstract fun addUser (Lme/proton/core/user/domain/entity/User;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun changePassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun changePassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun lock (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -65,7 +65,7 @@ public abstract interface class me/proton/core/user/domain/UserManager {
 }
 
 public final class me/proton/core/user/domain/UserManager$DefaultImpls {
-	public static synthetic fun changePassword$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Ljava/lang/String;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun changePassword$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getAddresses$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getUser$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun observeAddresses$default (Lme/proton/core/user/domain/UserManager;Lme/proton/core/domain/entity/UserId;ZILjava/lang/Object;)Lkotlinx/coroutines/flow/Flow;

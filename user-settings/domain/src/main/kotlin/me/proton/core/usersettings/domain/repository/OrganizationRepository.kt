@@ -36,11 +36,13 @@ interface OrganizationRepository {
         refresh: Boolean = false
     ): Organization
 
+    @Deprecated("Organization Keys should not be needed or updated from Mobile clients.")
     fun getOrganizationKeysFlow(
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): Flow<DataResult<OrganizationKeys>>
 
+    @Deprecated("Organization Keys should not be needed or updated from Mobile clients.")
     suspend fun getOrganizationKeys(
         sessionUserId: SessionUserId,
         refresh: Boolean = false

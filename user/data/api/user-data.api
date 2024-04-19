@@ -187,9 +187,9 @@ public final class me/proton/core/user/data/UserEvents$Companion {
 }
 
 public final class me/proton/core/user/data/UserManagerImpl : me/proton/core/user/domain/UserManager {
-	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/usersettings/domain/repository/OrganizationRepository;Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/usecase/GenerateSignedKeyList;Ljava/util/Optional;)V
+	public fun <init> (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/usecase/GenerateSignedKeyList;Ljava/util/Optional;)V
 	public fun addUser (Lme/proton/core/user/domain/entity/User;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun changePassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun changePassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getAddresses (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUser (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun lock (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -203,11 +203,11 @@ public final class me/proton/core/user/data/UserManagerImpl : me/proton/core/use
 }
 
 public final class me/proton/core/user/data/UserManagerImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/UserManagerImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/UserManagerImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/user/data/UserManagerImpl;
-	public static fun newInstance (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/usersettings/domain/repository/OrganizationRepository;Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/usecase/GenerateSignedKeyList;Ljava/util/Optional;)Lme/proton/core/user/data/UserManagerImpl;
+	public static fun newInstance (Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/user/domain/repository/UserAddressRepository;Lme/proton/core/user/domain/repository/PassphraseRepository;Lme/proton/core/key/domain/repository/KeySaltRepository;Lme/proton/core/key/domain/repository/PrivateKeyRepository;Lme/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository;Lme/proton/core/user/data/UserAddressKeySecretProvider;Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/usecase/GenerateSignedKeyList;Ljava/util/Optional;)Lme/proton/core/user/data/UserManagerImpl;
 }
 
 public final class me/proton/core/user/data/UserSpaceEvent {

@@ -52,7 +52,6 @@ public interface AccountRecoveryRepository {
     public suspend fun resetPassword(
         sessionUserId: UserId,
         keySalt: String,
-        organizationKey: String?,
         userKeys: List<Key>?,
         auth: Auth?
     ): Boolean

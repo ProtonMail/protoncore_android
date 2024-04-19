@@ -38,7 +38,6 @@ import me.proton.core.key.domain.entity.key.Key
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.PrivateKeySalt
-import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
@@ -52,8 +51,6 @@ import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
-import me.proton.core.util.kotlin.any
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFalse
@@ -129,7 +126,6 @@ class UserManagerImplTest {
         coEvery { this@mockk.getKeySalts(any(), any()) } returns listOf(privateKeySalt)
     }
     private val privateKeyRepository: PrivateKeyRepository = mockk(relaxed = true)
-    private val organizationRepository: OrganizationRepository = mockk(relaxed = true)
     private val accountRecoveryRepository: AccountRecoveryRepository = mockk(relaxed = true)
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider = mockk(relaxed = true)
     private val pgpCryptoMock: PGPCrypto = mockk(relaxed = true) {
@@ -154,8 +150,7 @@ class UserManagerImplTest {
             userAddressKeySecretProvider = userAddressKeySecretProvider,
             cryptoContext = cryptoContext,
             generateSignedKeyList = mockk(relaxed = true),
-            signedKeyListChangeListener = mockk(relaxed = true),
-            organizationRepository = organizationRepository
+            signedKeyListChangeListener = mockk(relaxed = true)
         )
     }
 
@@ -278,7 +273,6 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
-            orgPrivateKey = null
         )
         // Then
         assertFalse(result)
@@ -300,7 +294,6 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
-            orgPrivateKey = null
         )
         // Then
         coVerify {
@@ -313,7 +306,6 @@ class UserManagerImplTest {
                 auth = any(),
                 keys = null,
                 userKeys = expectedUserKeys,
-                organizationKey = null
             )
         }
     }
@@ -331,7 +323,6 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
-            orgPrivateKey = null
         )
         // Then
         coVerify {
@@ -344,15 +335,12 @@ class UserManagerImplTest {
                 auth = any(),
                 keys = expectedUserKeys + expectedAddressKeys,
                 userKeys = null,
-                organizationKey = null
             )
         }
     }
 
     @Test
     fun changePasswordOrgPrivateKey() = runTest {
-        // Given
-        val orgKey = "orgKey"
         // When
         manager.changePassword(
             userId = userIdMigrated,
@@ -361,7 +349,6 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
-            orgPrivateKey = orgKey
         )
         // Then
         coVerify {
@@ -374,7 +361,6 @@ class UserManagerImplTest {
                 auth = any(),
                 keys = any(),
                 userKeys = any(),
-                organizationKey = orgKey
             )
         }
     }
@@ -400,9 +386,6 @@ class UserManagerImplTest {
         mockkStatic("me.proton.core.key.domain.extension.UpdatePrivateKeyKt")
         every { userPrimaryKey.updatePrivateKeyPassphraseOrNull(any(), any()) } returns mockk(relaxed = true)
         coEvery { pgpCryptoMock.generateNewKeySalt() } returns "test-key-salt"
-        coEvery { organizationRepository.getOrganizationKeys(userIdMigrated, any()) } returns mockk {
-            every { privateKey } returns "org-private-key"
-        }
         // When
         manager.resetPassword(
             sessionUserId = userIdMigrated,
@@ -412,12 +395,10 @@ class UserManagerImplTest {
         // Then
         coVerify { userAddressRepository.getAddresses(userIdMigrated, refresh = true) }
         coVerify { userRepository.getUser(userIdMigrated, refresh = true) }
-        coVerify { organizationRepository.getOrganizationKeys(userIdMigrated, any()) }
         coVerify {
             accountRecoveryRepository.resetPassword(
                 userIdMigrated,
                 "test-key-salt",
-                "org-private-key",
                 any(),
                 any()
             )
@@ -440,7 +421,6 @@ class UserManagerImplTest {
         // Then
         coVerify { userAddressRepository.getAddresses(userIdNotMigrated, refresh = true) }
         coVerify { userRepository.getUser(userIdNotMigrated, refresh = true) }
-        coVerify(exactly = 0) { organizationRepository.getOrganizationKeys(any(), any()) }
         verify(exactly = 0) { userPrimaryKey.updatePrivateKeyPassphraseOrNull(any(), any()) }
         unmockkStatic("me.proton.core.key.domain.extension.UpdatePrivateKeyKt")
     }
@@ -483,8 +463,7 @@ class UserManagerImplTest {
             userAddressKeySecretProvider = userAddressKeySecretProvider,
             cryptoContext = cryptoContext,
             generateSignedKeyList = mockk(relaxed = true),
-            signedKeyListChangeListener = mockk(relaxed = true),
-            organizationRepository = organizationRepository
+            signedKeyListChangeListener = mockk(relaxed = true)
         )
         // When
         val result = manager.reactivateKey(userIdMigrated, KeyId("user-key-id"), testPrivateKeyMock)

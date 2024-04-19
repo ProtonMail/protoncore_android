@@ -103,8 +103,7 @@ class PrivateKeyRepositoryImpl @Inject constructor(
         secondFactorCode: String,
         auth: Auth?,
         keys: List<Key>?,
-        userKeys: List<Key>?,
-        organizationKey: String?
+        userKeys: List<Key>?
     ): Boolean {
         return provider.get<KeyApi>(sessionUserId).invoke {
             val response = updatePrivateKeys(
@@ -120,8 +119,7 @@ class PrivateKeyRepositoryImpl @Inject constructor(
                     },
                     userKeys = userKeys?.map {
                         PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
-                    },
-                    organizationKey = organizationKey
+                    }
                 )
             )
             validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "key update failed" }

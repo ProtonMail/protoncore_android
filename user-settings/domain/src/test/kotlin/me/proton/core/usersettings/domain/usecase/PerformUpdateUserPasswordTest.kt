@@ -37,7 +37,6 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
@@ -47,7 +46,6 @@ class PerformUpdateUserPasswordTest {
     private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
-    private val organizationRepository = mockk<OrganizationRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     private val cryptoContext = mockk<CryptoContext>(relaxed = true)
@@ -111,7 +109,6 @@ class PerformUpdateUserPasswordTest {
             accountRepository = accountRepository,
             authRepository = authRepository,
             userRepository = userRepository,
-            organizationRepository = organizationRepository,
             userManager = userManager
         )
 
@@ -122,8 +119,7 @@ class PerformUpdateUserPasswordTest {
                 secondFactorCode = any(),
                 proofs = any(),
                 srpSession = any(),
-                auth = any(),
-                orgPrivateKey = any()
+                auth = any()
             )
         } returns true
 
@@ -144,7 +140,6 @@ class PerformUpdateUserPasswordTest {
             modulusId = testModulusId,
             modulus = testModulus
         )
-        coEvery { organizationRepository.getOrganizationKeys(testUserId, any()) } returns mockk()
         every { cryptoContext.pgpCrypto } returns testPGPCrypto
         every {
             testPGPCrypto.generateNewKeySalt()

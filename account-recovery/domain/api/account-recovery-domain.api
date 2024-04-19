@@ -6,7 +6,7 @@ public abstract interface class me/proton/core/accountrecovery/domain/IsAccountR
 
 public abstract interface class me/proton/core/accountrecovery/domain/repository/AccountRecoveryRepository {
 	public abstract fun cancelRecoveryAttempt (Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun resetPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun resetPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/util/List;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun startRecovery (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

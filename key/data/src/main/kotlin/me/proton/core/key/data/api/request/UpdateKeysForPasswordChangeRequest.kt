@@ -38,9 +38,7 @@ data class UpdateKeysForPasswordChangeRequest(
     @SerialName("Keys")
     val keys: List<PrivateKeyRequest>? = null,
     @SerialName("UserKeys")
-    val userKeys: List<PrivateKeyRequest>? = null,
-    @SerialName("OrganizationKey")
-    val organizationKey: String?
+    val userKeys: List<PrivateKeyRequest>? = null
 )
 
 @Serializable

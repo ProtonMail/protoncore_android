@@ -24,7 +24,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.justRun
 import io.mockk.mockk
-import kotlinx.coroutines.test.runTest
 import me.proton.core.accountrecovery.data.api.AccountRecoveryApi
 import me.proton.core.accountrecovery.data.api.response.CancelRecoveryAttemptResponse
 import me.proton.core.auth.domain.usecase.ValidateServerProof
@@ -142,7 +141,6 @@ class AccountRecoveryRepositoryImplTest {
         val result = tested.resetPassword(
             sessionUserId = testUserId,
             keySalt = "test-key-salt",
-            organizationKey = null,
             userKeys = null,
             auth = null
         )
@@ -167,7 +165,6 @@ class AccountRecoveryRepositoryImplTest {
         val result = tested.resetPassword(
             sessionUserId = testUserId,
             keySalt = "test-key-salt",
-            organizationKey = null,
             userKeys = null,
             auth = null
         )
@@ -192,7 +189,6 @@ class AccountRecoveryRepositoryImplTest {
         val result = tested.resetPassword(
             sessionUserId = testUserId,
             keySalt = "test-key-salt",
-            organizationKey = "test-org-key",
             userKeys = listOf(
                 Key(keyId = KeyId("test-key-id-1"), privateKey = "test-private-key-armored")
             ),

@@ -37,7 +37,6 @@ import me.proton.core.user.domain.entity.Role
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
@@ -49,7 +48,6 @@ class PerformResetUserPasswordTest {
     private val accountRepository = mockk<AccountRepository>(relaxed = true)
     private val authRepository = mockk<AuthRepository>(relaxed = true)
     private val userRepository = mockk<UserRepository>(relaxed = true)
-    private val organizationRepository = mockk<OrganizationRepository>(relaxed = true)
     private val srpCrypto = mockk<SrpCrypto>(relaxed = true)
     private val keyStoreCrypto = mockk<KeyStoreCrypto>(relaxed = true)
     private val cryptoContext = mockk<CryptoContext>(relaxed = true)
@@ -113,7 +111,6 @@ class PerformResetUserPasswordTest {
             modulus = testModulus
         )
 
-        coEvery { organizationRepository.getOrganizationKeys(testUserId, any()) } returns mockk()
         every { cryptoContext.pgpCrypto } returns testPGPCrypto
 
         every {
@@ -233,15 +230,6 @@ class PerformResetUserPasswordTest {
     @Test
     fun `reset password organization admin`() = runTest {
         coEvery { userRepository.getUser(testUserId) } returns testUser.copy(role = Role.OrganizationAdmin)
-
-        coEvery {
-            organizationRepository.getOrganizationKeys(
-                sessionUserId = testUserId,
-                refresh = any()
-            )
-        } returns mockk {
-            every { privateKey } returns "armored-private-key"
-        }
 
         coEvery {
             userManager.resetPassword(

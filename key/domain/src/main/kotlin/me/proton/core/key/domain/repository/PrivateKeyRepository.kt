@@ -58,8 +58,7 @@ interface PrivateKeyRepository {
         secondFactorCode: String,
         auth: Auth?,
         keys: List<Key>? = null,
-        userKeys: List<Key>? = null,
-        organizationKey: String?
+        userKeys: List<Key>? = null
     ): Boolean
 
     suspend fun reactivatePrivateKey(

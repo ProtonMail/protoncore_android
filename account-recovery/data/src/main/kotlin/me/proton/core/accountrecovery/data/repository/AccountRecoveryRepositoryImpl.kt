@@ -73,14 +73,12 @@ public class AccountRecoveryRepositoryImpl @Inject constructor(
     override suspend fun resetPassword(
         sessionUserId: UserId,
         keySalt: String,
-        organizationKey: String?,
         userKeys: List<Key>?,
         auth: Auth?
     ): Boolean = result("account_recovery.reset") {
         apiProvider.get<AccountRecoveryApi>(sessionUserId).invoke {
             val request = ResetPasswordRequest(
                 keySalt = keySalt,
-                organizationKey = organizationKey,
                 userKeys = userKeys?.map {
                     PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
                 },

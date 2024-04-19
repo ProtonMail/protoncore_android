@@ -27,7 +27,6 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -50,12 +49,9 @@ import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.extension.generateNewKeyFormat
 import me.proton.core.user.domain.extension.hasMigratedKey
-import me.proton.core.user.domain.extension.isOrganizationAdmin
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.usersettings.domain.repository.OrganizationRepository
-import me.proton.core.util.kotlin.takeIfNotEmpty
 import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -67,7 +63,6 @@ class UserManagerImpl @Inject constructor(
     private val passphraseRepository: PassphraseRepository,
     private val keySaltRepository: KeySaltRepository,
     private val privateKeyRepository: PrivateKeyRepository,
-    private val organizationRepository: OrganizationRepository,
     private val accountRecoveryRepository: AccountRecoveryRepository,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
     private val cryptoContext: CryptoContext,
@@ -149,8 +144,7 @@ class UserManagerImpl @Inject constructor(
         secondFactorCode: String,
         proofs: SrpProofs,
         srpSession: String,
-        auth: Auth?,
-        orgPrivateKey: Armored?
+        auth: Auth?
     ): Boolean {
         newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
             val keySalt = pgp.generateNewKeySalt()
@@ -167,13 +161,6 @@ class UserManagerImpl @Inject constructor(
                 val updatedKeys = user.keys.takeUnless { isUserMigrated }?.plus(addresses.flatMap { it.keys })
                     ?.mapNotNull { it.updatePrivateKeyPassphraseOrNull(cryptoContext, newPassphrase.array) }
 
-                // Update organization key if provided.
-                val updatedOrgPrivateKey = orgPrivateKey?.takeIf { user.isOrganizationAdmin() }?.let { key ->
-                    requireNotNull(passphraseRepository.getPassphrase(userId)).decrypt(keyStore).use {
-                        key.updatePrivateKeyPassphraseOrNull(cryptoContext, it.array, newPassphrase.array)
-                    }
-                }
-
                 // Update all needed keys providing any authentication proof.
                 val result = privateKeyRepository.updatePrivateKeys(
                     sessionUserId = userId,
@@ -183,8 +170,7 @@ class UserManagerImpl @Inject constructor(
                     secondFactorCode = secondFactorCode,
                     auth = auth,
                     keys = updatedKeys,
-                    userKeys = updatedUserKeys,
-                    organizationKey = updatedOrgPrivateKey
+                    userKeys = updatedUserKeys
                 )
 
                 refreshUser(userId, newPassphrase.encrypt(keyStore))
@@ -346,11 +332,6 @@ class UserManagerImpl @Inject constructor(
                 val addresses = userAddressRepository.getAddresses(sessionUserId, refresh = true)
                 val user = userRepository.getUser(sessionUserId, refresh = true)
                 val isUserMigrated = addresses.hasMigratedKey()
-
-                val organizationKeys = if (user.isOrganizationAdmin())
-                    organizationRepository.getOrganizationKeys(sessionUserId, refresh = true)
-                else null
-
                 val updatedUserKeys = user.keys.takeIf { isUserMigrated }
                     ?.mapNotNull { it.updatePrivateKeyPassphraseOrNull(cryptoContext, newPassphrase.array) }
 
@@ -358,8 +339,7 @@ class UserManagerImpl @Inject constructor(
                     sessionUserId = sessionUserId,
                     auth = auth,
                     keySalt = keySalt,
-                    userKeys = updatedUserKeys,
-                    organizationKey = organizationKeys?.privateKey?.takeIfNotEmpty()
+                    userKeys = updatedUserKeys
                 )
 
                 refreshUser(sessionUserId, newPassphrase.encrypt(keyStore))

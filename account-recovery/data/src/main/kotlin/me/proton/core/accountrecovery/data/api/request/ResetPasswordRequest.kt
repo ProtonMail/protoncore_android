@@ -27,8 +27,6 @@ import me.proton.core.key.data.api.request.PrivateKeyRequest
 public data class ResetPasswordRequest(
     @SerialName("KeySalt")
     val keySalt: String,
-    @SerialName("OrganizationKey")
-    val organizationKey: String?,
     @SerialName("UserKeys")
     val userKeys: List<PrivateKeyRequest>? = null,
     @SerialName("Auth")

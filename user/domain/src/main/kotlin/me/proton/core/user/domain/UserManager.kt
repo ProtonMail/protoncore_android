@@ -142,8 +142,7 @@ interface UserManager {
         secondFactorCode: String = "",
         proofs: SrpProofs,
         srpSession: String,
-        auth: Auth?,
-        orgPrivateKey: Armored?
+        auth: Auth?
     ): Boolean
 
     /**
