@@ -43,7 +43,6 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.ApiResult
@@ -51,7 +50,6 @@ import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.coroutine.result
-import java.util.UUID
 
 class AuthRepositoryImpl(
     private val provider: ApiProvider,
@@ -125,7 +123,10 @@ class AuthRepositoryImpl(
 
     private suspend fun getFrameMap(frames: List<ChallengeFrameDetails>): Map<String, ChallengeFrame?> {
         val name = "${product.framePrefix()}-0"
-        val frame = ChallengeFrame.Username.from(context, frames.getOrNull(0))
+        val frame = when {
+            frames.isEmpty() -> ChallengeFrame.Device.build(context)
+            else -> ChallengeFrame.Username.from(context, frames[0])
+        }
         return mapOf(name to frame)
     }
 

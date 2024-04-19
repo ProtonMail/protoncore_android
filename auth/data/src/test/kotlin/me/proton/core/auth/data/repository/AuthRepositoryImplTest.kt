@@ -22,6 +22,7 @@ import android.content.Context
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.mockkObject
 import io.mockk.slot
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
@@ -32,6 +33,7 @@ import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
@@ -97,6 +99,9 @@ class AuthRepositoryImplTest {
     // endregion
     @Before
     fun beforeEveryTest() {
+        mockkObject(ChallengeFrame.Device.Companion)
+        coEvery { ChallengeFrame.Device.build(any()) } returns mockk()
+
         // GIVEN
         coEvery { sessionProvider.getSessionId(any()) } returns testSessionId
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, testDispatcherProvider)
