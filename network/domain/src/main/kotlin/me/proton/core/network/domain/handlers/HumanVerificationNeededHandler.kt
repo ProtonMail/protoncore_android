@@ -24,12 +24,14 @@ import me.proton.core.network.domain.ApiBackend
 import me.proton.core.network.domain.ApiErrorHandler
 import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.LogTag
 import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.client.ClientId
 import me.proton.core.network.domain.client.ClientIdProvider
 import me.proton.core.network.domain.humanverification.HumanVerificationAvailableMethods
 import me.proton.core.network.domain.humanverification.HumanVerificationListener
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.CoreLogger
 import org.jetbrains.annotations.TestOnly
 import java.util.concurrent.TimeUnit
 
@@ -50,7 +52,11 @@ class HumanVerificationNeededHandler<Api>(
         call: ApiManager.Call<Api, T>
     ): ApiResult<T> {
         // Do we have a clientId ?
-        val clientId = clientIdProvider.getClientId(sessionId) ?: return error
+        val clientId = clientIdProvider.getClientId(sessionId)
+        if (clientId == null) {
+            CoreLogger.w(LogTag.DEFAULT, "HumanVerificationNeededHandler: clientId not found.")
+            return error
+        }
 
         // Recoverable with human verification ?
         if (error !is ApiResult.Error.Http || error.proton?.code != ResponseCodes.HUMAN_VERIFICATION_REQUIRED) {
