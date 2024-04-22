@@ -11,6 +11,41 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [22.2.0] - 2024-04-22
+
+### Chores
+
+- network:
+  - Add a warning log if clientId is missing in `HumanVerificationNeededHandler`.
+- payments-iap:
+  - Remove check on buttonStates in onPayClicked
+
+### Features
+
+- crypto:
+  - Added serializeKeys and deserializeKeys functions.
+- gopenpgp:
+  - Update to gopenpgp v2.8.0-alpha.1-proton.
+
+### Bug Fixes
+
+- auth:
+  - Fallback to Device ChallengeFrame if no details frames exists.
+  - Fix credless HV duplicate invocation.
+- event-manager:
+  - Set initial eventId after signup/login.
+- user:
+  - Removed Organization Keys support (deprecated).
+
+### Internationalization
+
+- Upgrade translations from crowdin (14570e36).
+
+### Refactoring
+
+- user-recovery:
+  - Use serializeKeys and deserializeKeys functions.
+
 ## [22.1.0] - 2024-04-10
 
 ### Chores
