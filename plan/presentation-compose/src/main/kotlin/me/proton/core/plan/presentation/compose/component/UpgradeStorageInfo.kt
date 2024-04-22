@@ -19,6 +19,7 @@
 package me.proton.core.plan.presentation.compose.component
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -26,8 +27,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,9 +38,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import me.proton.core.compose.component.ProtonSolidButton
-import me.proton.core.compose.component.protonButtonColors
-import me.proton.core.compose.flow.rememberAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.compose.theme.ProtonColors
 import me.proton.core.compose.theme.ProtonDimens.DefaultIconSize
 import me.proton.core.compose.theme.ProtonDimens.ExtraSmallIconSize
@@ -52,7 +50,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.compose.viewmodel.AccountStorageState
 import me.proton.core.plan.presentation.compose.viewmodel.UpgradeStorageInfoViewModel
-import me.proton.core.plan.presentation.compose.viewmodel.UpgradeStorageInfoViewModel.Companion.INITIAL_STATE
 
 /** Displays information that storage is (nearly) full.
  * Only applies to users with free plan.
@@ -68,13 +65,13 @@ public fun UpgradeStorageInfo(
     withBottomDivider: Boolean = false,
 ) {
     if (viewModel == null) return
-    val state by rememberAsState(flow = viewModel.state, initial = INITIAL_STATE)
+    val state by viewModel.state.collectAsStateWithLifecycle()
     val userId = (state as? AccountStorageState.HighStorageUsage)?.userId
 
     if (state !is AccountStorageState.Hidden) {
         Column {
             if (withTopDivider) {
-                Divider(color = ProtonTheme.colors.separatorNorm)
+                HorizontalDivider(color = ProtonTheme.colors.separatorNorm)
             }
             UpgradeStorageInfo(
                 onUpgradeClicked = if (userId != null) {
@@ -86,7 +83,7 @@ public fun UpgradeStorageInfo(
                 modifier = modifier
             )
             if (withBottomDivider) {
-                Divider(color = ProtonTheme.colors.separatorNorm)
+                HorizontalDivider(color = ProtonTheme.colors.separatorNorm)
             }
         }
     }
@@ -99,17 +96,23 @@ public fun UpgradeStorageInfo(
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier.padding(
-            horizontal = dimensionResource(id = R.dimen.gap_large),
-            vertical = dimensionResource(id = R.dimen.gap_medium_plus)
-        ),
+        modifier = modifier
+            .clickable(onClick = onUpgradeClicked)
+            .padding(
+                horizontal = dimensionResource(id = R.dimen.gap_large),
+                vertical = dimensionResource(id = R.dimen.gap_medium_plus)
+            ),
         verticalAlignment = Alignment.CenterVertically
     ) {
         StackedIcons()
         Spacer(modifier = Modifier.width(dimensionResource(id = R.dimen.gap_medium_plus)))
-        StorageInfoText(title)
-        Spacer(modifier = Modifier.weight(1.0f))
-        UpgradeButton(onClick = { onUpgradeClicked() })
+        StorageInfoText(title, modifier = Modifier.weight(1.0f))
+        Image(
+            colorFilter = ColorFilter.tint(ProtonTheme.colors.iconNorm),
+            contentDescription = null,
+            modifier = Modifier.size(DefaultIconSize),
+            painter = painterResource(id = R.drawable.ic_proton_arrow_up),
+        )
     }
 }
 
@@ -155,25 +158,6 @@ private fun StorageInfoText(
 }
 
 @Composable
-private fun UpgradeButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    ProtonSolidButton(
-        colors = ButtonDefaults.protonButtonColors(
-            backgroundColor = ProtonTheme.colors.interactionWeakNorm
-        ),
-        onClick = onClick,
-        modifier = modifier
-    ) {
-        Text(
-            color = ProtonTheme.colors.textNorm,
-            text = stringResource(id = R.string.upgrade_storage_cta_button)
-        )
-    }
-}
-
-@Composable
 private fun AccountStorageState.getTitle(): String = when (this) {
     is AccountStorageState.HighStorageUsage.Drive -> stringResource(
         R.string.upgrade_storage_current_drive_storage,
@@ -204,7 +188,7 @@ internal fun PreviewHighDriveUsage() {
     ProtonTheme(colors = ProtonColors.Light.sidebarColors!!) {
         UpgradeStorageInfo(
             onUpgradeClicked = {},
-            title = "Drive storage: 90% full"
+            title = "Drive: 90% full"
         )
     }
 }
@@ -215,7 +199,7 @@ internal fun PreviewHighMailUsage() {
     ProtonTheme(colors = ProtonColors.Light.sidebarColors!!) {
         UpgradeStorageInfo(
             onUpgradeClicked = {},
-            title = "Mail storage: 100% full"
+            title = "Mail: 100% full"
         )
     }
 }
@@ -226,7 +210,7 @@ internal fun PreviewHighMailUsageDarkTheme() {
     ProtonTheme(colors = ProtonColors.Dark.sidebarColors!!) {
         UpgradeStorageInfo(
             onUpgradeClicked = {},
-            title = "Mail storage: 100% full"
+            title = "Mail: 100% full"
         )
     }
 }

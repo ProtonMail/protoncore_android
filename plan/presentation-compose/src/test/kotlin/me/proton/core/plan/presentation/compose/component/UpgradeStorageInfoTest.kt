@@ -38,7 +38,7 @@ class UpgradeStorageInfoTest {
             WithSidebarColors {
                 UpgradeStorageInfo(
                     onUpgradeClicked = {},
-                    title = "Drive storage: 80% full"
+                    title = "Drive: 80% full"
                 )
             }
         }
@@ -50,7 +50,7 @@ class UpgradeStorageInfoTest {
             WithSidebarColors(isDark = true) {
                 UpgradeStorageInfo(
                     onUpgradeClicked = {},
-                    title = "Drive storage: 80% full"
+                    title = "Drive: 80% full"
                 )
             }
         }
@@ -62,7 +62,7 @@ class UpgradeStorageInfoTest {
             WithSidebarColors {
                 UpgradeStorageInfo(
                     onUpgradeClicked = {},
-                    title = "Mail storage: 100% full"
+                    title = "Mail: 100% full"
                 )
             }
         }
@@ -74,7 +74,7 @@ class UpgradeStorageInfoTest {
             WithSidebarColors(isDark = true) {
                 UpgradeStorageInfo(
                     onUpgradeClicked = {},
-                    title = "Mail storage: 100% full"
+                    title = "Mail: 100% full"
                 )
             }
         }
