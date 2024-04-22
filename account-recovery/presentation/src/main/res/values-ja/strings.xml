@@ -34,8 +34,8 @@
   <string name="account_recovery_cancelled_subtitle">パスワードの変更を要求しなかった場合、アカウントが危険にさらされる可能性があります。\n\nパスワードを変更してアカウントを保護してください。</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">パスワードのリセットが可能</string>
-  <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">You can now reset your password.\n\nYou\’ll need to do this before %s.\n\nIf you didn\’t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_password_started_subtitle">パスワードをリセットするには、パスワードのリセットリクエストを行ったデバイス、アプリ、またはブラウザに戻ります。\n\n%sの前にする必要があります。\n\nもしパスワードのリセットを要求しない場合は、今すぐキャンセルしてください。</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">現在パスワードのリセットが可能です。\n\n%sのまえにする必要があります。\n\nもしパスワードリセットのリクエストを求めていない場合は、今リクエストをキャンセルしてください。</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">パスワードリセットの期限切れ</string>
   <string name="account_recovery_window_ended_subtitle">%s の新しいパスワードのリセットをリクエストする必要があります。</string>
@@ -46,18 +46,18 @@
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">パスワード再設定リクエスト</string>
   <string name="account_recovery_info_grace_subtitle">%1sでパスワードをリセットできます。</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_description">本当にあなたがパスワードをリセットしようとしているのかを確認するため、リクエストが承認されるまで 72 時間待機します。\n\nパスワードのリセットを求めていない場合は、今すぐこのリクエストをキャンセルしてください。</string>
   <string name="account_recovery_info_cancelled_title">パスワードリセットが取り消されました</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
+  <string name="account_recovery_info_cancelled_subtitle">%1sでパスワードのリセットリクエストが行われました。</string>
   <string name="account_recovery_info_cancelled_description">このリクエストを認識できない場合は、他のだれかがあなたのProtonアカウントにアクセスできる可能性があります。\n\n今すぐあなたのアカウントを保護してください。</string>
   <string name="account_recovery_info_insecure_title">パスワードのリセットが可能</string>
-  <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
-  <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
+  <string name="account_recovery_info_insecure_subtitle">パスワードのリセットが可能になりました。パスワードのリセットは%1sまで利用可能です。</string>
+  <string name="account_recovery_info_insecure_description">リクエストをしませんでしたか？\n\nもしパスワードのリセットをリクエストシていない場合は、今すぐリクエストをキャンセルしてください。</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">パスワードをリセット?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
+  <string name="account_recovery_reset_dialog_text">"セキュリティ上の理由から、%1sのパスワードを変更するには、72時間待つ必要があります。\n\nもし復旧方法を設定している場合は、アカウントのリカバリーをお試しください。これにより、すぐにパスワードを変更できます。"</string>
   <string name="account_recovery_reset_dialog_action_request_reset">パスワードリセットのリクエストを送信します。</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">リカバリーメソッドを使用してください。</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">セキュリティ期間中に待機することなく、ブラウザからパスワードを変更することができます。</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">パスワード再設定リクエスト</string>
 </resources>

@@ -139,7 +139,7 @@
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
   <string name="unlimited_logins_and_notes">무제한 로그인 및 메모</string>
   <string name="unlimited_devices">기기 개수 무제한</string>
-  <string name="integrated_2fa_authenticator">통합된 2FA 인증기</string>
+  <string name="integrated_2fa_authenticator">통합된 2단계 인증기</string>
   <string name="multiple_vaults">다중 금고</string>
   <string name="unlimited_email_alias">무제한 나의 이메일 숨기기 별명</string>
   <string name="custom_email_alias_domains">이메일 별명을 위한 지정 도메인</string>

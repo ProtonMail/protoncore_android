@@ -48,7 +48,7 @@
   <string name="account_recovery_reset">Resetovať heslo</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Vyžiadané resetovanie hesla</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
+  <string name="account_recovery_info_grace_subtitle">Svoje heslo môžete resetovať o %1s.</string>
   <string name="account_recovery_info_grace_description">Aby sme mali istotu, že sa o obnovenie hesla pokúšate naozaj vy, pred schválením žiadosti počkáme 72 hodín.\n\nAk ste o obnovenie hesla nepožiadali, túto žiadosť teraz zrušte.</string>
   <string name="account_recovery_info_cancelled_title">Resetovanie hesla zrušené</string>
   <string name="account_recovery_info_cancelled_subtitle">O obnovenie hesla bolo požiadané %1s.</string>

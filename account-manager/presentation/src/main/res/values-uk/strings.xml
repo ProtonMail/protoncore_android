@@ -30,6 +30,11 @@
   <string name="account_settings_list_item_password_header">Керування паролями</string>
   <string name="account_settings_list_item_password_hint_grace">Очікується скидання пароля</string>
   <string name="account_settings_list_item_password_hint_insecure">Скидання пароля готове</string>
-  <string name="account_settings_list_item_recovery_header">Пошта для відновлення</string>
+  <string name="account_settings_list_item_recovery_header">Резервна е-пошта</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не встановлено</string>
+  <string name="account_signout_dialog_title">Sign out?</string>
+  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
+  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
+  <string name="account_signout_dialog_action_signout">Sign out</string>
+  <string name="account_signout_dialog_action_cancel">Cancel</string>
 </resources>

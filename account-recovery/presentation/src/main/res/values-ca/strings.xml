@@ -42,7 +42,7 @@
   <string name="account_recovery_window_ended_subtitle">Necessitarà sol·licitar un restabliment de contrasenya per a %s.</string>
   <!-- Other -->
   <string name="account_recovery_cancel">Cancel·la la sol·licitud</string>
-  <string name="account_recovery_dismiss">Entesos</string>
+  <string name="account_recovery_dismiss">Ho heu aconseguit</string>
   <string name="account_recovery_reset">Restablir la contrasenya</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">S\'ha sol·licitat un restabliment de la contrasenya.</string>

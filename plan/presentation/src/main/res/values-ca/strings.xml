@@ -38,9 +38,9 @@
   </plurals>
   <string name="plans_billed_yearly">*Facturat anualment a %s</string>
   <string name="plans_billed_monthly">Facturat cada mesc</string>
-  <string name="plans_billing_monthly">1 mes</string>
+  <string name="plans_billing_monthly">Durant 1 mes</string>
   <string name="plans_billing_yearly">1 any</string>
-  <string name="plans_billing_two_years">2 anys</string>
+  <string name="plans_billing_two_years">Durant 2 anys</string>
   <plurals name="plans_billing_other_period">
     <item quantity="one">Per a %d mes</item>
     <item quantity="other">Per a %d mesos</item>

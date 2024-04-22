@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Account connessi</string>
+  <string name="account_switcher_section_switch_to">Altri account</string>
   <string name="account_switcher_action_add_account">Aggiungi un account</string>
   <string name="account_switcher_action_sign_in">Accedi</string>
   <string name="account_switcher_action_sign_out">Esci</string>
@@ -32,4 +32,9 @@
   <string name="account_settings_list_item_password_hint_insecure">Reimpostazione della password pronta</string>
   <string name="account_settings_list_item_recovery_header">Indirizzo email di recupero</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Non impostato</string>
+  <string name="account_signout_dialog_title">Vuoi uscire dall\'account?</string>
+  <string name="account_signout_dialog_text">I dati associati al tuo account rimarranno su questo dispositivo a meno che tu non scelga di eliminarli.</string>
+  <string name="account_signout_dialog_delete_information">Rimuovi tutti i dati associati</string>
+  <string name="account_signout_dialog_action_signout">Esci dall\'account</string>
+  <string name="account_signout_dialog_action_cancel">Annulla</string>
 </resources>

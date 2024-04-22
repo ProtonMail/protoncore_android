@@ -83,7 +83,7 @@
   <string name="auth_create_address_result_recovery_title">Vaš e-poštni naslov za obnovitev je:</string>
   <string name="auth_create_address_create">Ustvari naslov</string>
   <string name="auth_create_address_creating">Ustvarjanje naslova</string>
-  <string name="auth_create_address_terms">S klikom na Ustvari naslov se strinjate s <a href="https://proton.me/legal/terms">pogoji</a> podjetja Proton.</string>
+  <string name="auth_create_address_terms">S klikom na Ustvari naslov se strinjate s <a href="https://proton.me/legal/terms">Pogoji storitve</a> podjetja Proton.</string>
   <string name="auth_create_address_error_credentials">Poverilnice ne smejo biti prazne.</string>
   <string name="auth_create_address_error_no_available_domain">Domena ni na voljo.</string>
   <string name="auth_create_address_error_private_key">Ustvarjanje zasebnega ključa ni uspelo.</string>
@@ -124,13 +124,13 @@
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">E-poštni naslov za obnovitev</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonska številka za obnovitev</string>
-  <string name="auth_signup_terms_conditions">Pravila in pogoji poslovanja</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">S klikom Naprej se strinjate s Proton <annotation link="terms">Pravili in pogoji poslovanja</annotation>.</string>
+  <string name="auth_signup_terms_conditions">Pogoji storitve</string>
+  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">S klikom Naprej se strinjate s <annotation link="terms">Pravili storitve</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Preskoči metodo obnovitve?</string>
   <string name="auth_signup_skip_recovery_description">Način obnovitve vam pomaga dostopati do računa, če pozabite geslo ali če je vaš račun zaklenjen.</string>
   <string name="auth_signup_skip_recovery">Preskoči</string>
   <string name="auth_signup_set_recovery">Nastavitev načina obnovitve</string>
-  <string name="auth_signup_no_connectivity">Ni povezave za prikaz Pravil in pogojev poslovanja.</string>
+  <string name="auth_signup_no_connectivity">Ni povezave za prikaz Pogojev storitve.</string>
   <string name="auth_signup_error_create_to_continue">Za nadaljevanje ustvarite račun</string>
   <string name="auth_signup_error_username_blank">Uporabniško ime ne sme biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Gesli se ne ujemata.</string>
@@ -156,7 +156,7 @@
   <string name="auth_credentialless_vpn_title">Dobrodošli v Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Brskajte zasebno, dostopajte do blokirane vsebine in uživajte v digitalni svobodi.</string>
   <string name="auth_credentialless_guest_button">Nadaljujte kot gost</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Z uporabo te aplikacije sprejemate naša <annotation link="terms">Določila in pogoje</annotation>.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Z uporabo te aplikacije sprejemate naše <annotation link="terms">Pogoje storitve</annotation>.</string>
   <string name="auth_credentialless_settings_title">Naredite korak v večji zasebnosti.</string>
   <string name="auth_credentialless_settings_subtitle">Z brezplačnim računom Proton dobite upravitelja gesel, šifrirano e-pošto, koledar ter 1 GB shrambe v oblaku.</string>
 </resources>

@@ -32,4 +32,9 @@
   <string name="account_settings_list_item_password_hint_insecure">Klargjort for tilbakestilling av passord</string>
   <string name="account_settings_list_item_recovery_header">E-post for gjenoppretting</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ikke angitt</string>
+  <string name="account_signout_dialog_title">Logge av?</string>
+  <string name="account_signout_dialog_text">Dataene som er knyttet til kontoen din, forblir på denne enheten med mindre du velger å slette dem.</string>
+  <string name="account_signout_dialog_delete_information">Fjern alle tilknyttede data</string>
+  <string name="account_signout_dialog_action_signout">Logg av</string>
+  <string name="account_signout_dialog_action_cancel">Avbryt</string>
 </resources>

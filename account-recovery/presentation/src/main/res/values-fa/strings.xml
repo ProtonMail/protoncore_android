@@ -20,8 +20,8 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">درخواست بازنشانی گذرواژه ثبت شد</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">یک بازنشانی گذرواژه برای <b>%1$s</b> درخواست شده. شما می توانید تا %2$d ساعت گذرواژه خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، اکنون این عملیات را لغو کنید.</item>
-    <item quantity="other">یک بازنشانی رمزعبور برای <b>%1$s</b> درخواست شده. شما می توانید تا %2$d ساعت رمزعبور خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، اکنون این عملیات را لغو کنید.</item>
+    <item quantity="one">یک بازنشانی رمز عبور برای <b>%1$s</b> درخواست شده. شما می توانید تا %2$d ساعت رمز عبور خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، اکنون این عملیات را لغو کنید.</item>
+    <item quantity="other">یک بازنشانی رمز عبور برای <b>%1$s</b> درخواست شده. شما می توانید تا %2$d ساعت رمز عبور خود را تغییر دهید.\n\n اگر شما این درخواست را ثبت نکرده اید، اکنون این عملیات را لغو کنید.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">بازنشانی گذرواژه لغو شود؟</string>
@@ -32,8 +32,8 @@
   <string name="account_recovery_cancel_back">بازگشت</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">بازنشانی گذرواژه لغو شد</string>
-  <string name="account_recovery_cancelled_subtitle">اگر شما درخواست تغییر گذرواژه را ثبت نکرده اید، ممکن است حساب شما در خطر باشد!\n\n
-با تغییر گذرواژه خود حساب خود را ایمن کنید.</string>
+  <string name="account_recovery_cancelled_subtitle">اگر شما درخواست تغییر رمزعبور ثبت نکرده اید، ممکن است حساب شما در خطر باشد!\n\n
+با تغییر رمزعبور خود حساب خود را ایمن کنید.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">بازنشانی گذرواژه دردسترس است.</string>
   <string name="account_recovery_password_started_subtitle">To reset your password, go back to the device, app or browser that you made your password reset request from.\n\nYou’ll need to do this before %s.\n\nIf you didn’t ask to reset your password, cancel the request now.</string>
@@ -44,21 +44,21 @@
   <!-- Other -->
   <string name="account_recovery_cancel">لغو درخواست</string>
   <string name="account_recovery_dismiss">متوجه شدم</string>
-  <string name="account_recovery_reset">بازنشانی رمزعبور</string>
+  <string name="account_recovery_reset">بازنشانی گذرواژه</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">درخواست بازنشانی گذرواژه ثبت شد</string>
-  <string name="account_recovery_info_grace_subtitle">شما می توانید رمزعبور خود را در %1s بازنشانی کنید</string>
+  <string name="account_recovery_info_grace_subtitle">شما می توانید گذرواژه خود را در %1s بازنشانی کنید</string>
   <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
   <string name="account_recovery_info_cancelled_title">بازنشانی گذرواژه لغو شد</string>
-  <string name="account_recovery_info_cancelled_subtitle">یک درخواست بازنشانی رمزعبور توسط %1s ایجاد شده است</string>
+  <string name="account_recovery_info_cancelled_subtitle">یک درخواست بازنشانی گذرواژه توسط %1s ایجاد شده است</string>
   <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
   <string name="account_recovery_info_insecure_title">بازنشانی گذرواژه دردسترس است.</string>
-  <string name="account_recovery_info_insecure_subtitle">شما الان می توانید رمز خود را بازنشانی کنید. بازنشانی رمزعبور تا %1s معتبر می باشد.</string>
+  <string name="account_recovery_info_insecure_subtitle">شما الان می توانید گذرواژه خود را بازنشانی کنید. بازنشانی گذرواژه تا %1s معتبر می باشد.</string>
   <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">تنظیم مجدد کلمه عبور?</string>
   <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
-  <string name="account_recovery_reset_dialog_action_request_reset">درخواست بازنشانی رمز عبور</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">درخواست بازنشانی گذرواژه</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">از راهکار بازیابی استفاده کنید</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">درخواست بازنشانی گذرواژه ثبت شد</string>

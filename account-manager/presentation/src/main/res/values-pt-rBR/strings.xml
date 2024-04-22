@@ -32,4 +32,9 @@
   <string name="account_settings_list_item_password_hint_insecure">Pronto para redefinição de senha</string>
   <string name="account_settings_list_item_recovery_header">E-mail de recuperação</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Não definido</string>
+  <string name="account_signout_dialog_title">Encerrar sessão?</string>
+  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
+  <string name="account_signout_dialog_delete_information">Remover todos os dados associados</string>
+  <string name="account_signout_dialog_action_signout">Sair da sessão</string>
+  <string name="account_signout_dialog_action_cancel">Cancelar</string>
 </resources>

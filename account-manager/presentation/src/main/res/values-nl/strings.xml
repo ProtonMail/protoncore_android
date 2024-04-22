@@ -32,4 +32,9 @@
   <string name="account_settings_list_item_password_hint_insecure">Nieuw wachtwoord aanvragen klaar</string>
   <string name="account_settings_list_item_recovery_header">Herstel e-mailadres</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Niet ingesteld</string>
+  <string name="account_signout_dialog_title">Sign out?</string>
+  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
+  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
+  <string name="account_signout_dialog_action_signout">Sign out</string>
+  <string name="account_signout_dialog_action_cancel">Cancel</string>
 </resources>

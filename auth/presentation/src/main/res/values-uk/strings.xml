@@ -80,7 +80,7 @@
   <string name="auth_create_address_result_title">%s доступно</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s буде вашою новою адресою е-пошти Proton Mail.</string>
   <string name="auth_create_address_result_subtitle">Ви користуватиметесь цією адресою для входу до всіх служб Proton.</string>
-  <string name="auth_create_address_result_recovery_title">Ваша електронна пошта для відновлення:</string>
+  <string name="auth_create_address_result_recovery_title">Ваша адреса резервної електронної пошти:</string>
   <string name="auth_create_address_create">Створити адресу</string>
   <string name="auth_create_address_creating">Створення адреси</string>
   <string name="auth_create_address_terms">Натискаючи кнопку Створити адресу, ви погоджуєтеся з <a href="https://proton.me/legal/terms">Умовами та положеннями</a> компанії Proton.</string>
@@ -122,7 +122,7 @@
   <string name="auth_signup_recovery_method_subtitle_email_only">Ми надішлемо вказівки щодо відновлення на цю електронну адресу, якщо ви втратите доступ до свого облікового запису.</string>
   <string name="auth_signup_recovery_method_email">Е-пошта</string>
   <string name="auth_signup_recovery_method_phone">Телефон</string>
-  <string name="auth_signup_recovery_method_email_hint">Пошта для відновлення доступу</string>
+  <string name="auth_signup_recovery_method_email_hint">Резервна е-пошта</string>
   <string name="auth_signup_recovery_method_phone_hint">Номер телефону для відновлення</string>
   <string name="auth_signup_terms_conditions">Умови та положення</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Натискаючи Далі, ви погоджуєтеся з <annotation link="terms">Умовами та положеннями</annotation> Proton.</string>
@@ -131,7 +131,7 @@
   <string name="auth_signup_skip_recovery">Пропустити</string>
   <string name="auth_signup_set_recovery">Налаштувати спосіб відновлення</string>
   <string name="auth_signup_no_connectivity">Немає з\'єднання, щоб показати Умови та положення.</string>
-  <string name="auth_signup_error_create_to_continue">Будь ласка, створіть обліковий запис, щоби продовжити</string>
+  <string name="auth_signup_error_create_to_continue">Щоб продовжити, створіть обліковий запис</string>
   <string name="auth_signup_error_username_blank">Поле з ім\'ям користувача не повинно бути порожнім.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі відрізняються.</string>
   <string name="auth_signup_validation_password_length">Пароль повинен містити принаймні 8 символів.</string>
@@ -157,6 +157,6 @@
   <string name="auth_credentialless_vpn_subtitle">Приватний перегляд, доступ до заблокованого вмісту і задоволення від цифрової свободи.</string>
   <string name="auth_credentialless_guest_button">Продовжити як гість</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Використовуючи цю програму, ви приймаєте наші <annotation link="terms">Умови та Положення</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Зробіть крок до приватності.</string>
-  <string name="auth_credentialless_settings_subtitle">Отримайте менеджер паролів, зашифровані пошту та календар, а також 1 ГБ хмарного сховища безплатно з обліковим записом Proton.</string>
+  <string name="auth_credentialless_settings_title">Зробіть крок назустріч приватності.</string>
+  <string name="auth_credentialless_settings_subtitle">Отримайте менеджер паролів, зашифровані пошту і календар, а також 1 ГБ хмарного сховища безплатно з обліковим записом Proton.</string>
 </resources>

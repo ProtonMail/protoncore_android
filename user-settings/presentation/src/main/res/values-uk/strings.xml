@@ -18,17 +18,17 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Пошта для відновлення доступу</string>
-  <string name="settings_recovery_email_current">Поточна е-пошта для відновлення доступу</string>
-  <string name="settings_recovery_email_new">Нова е-пошта для відновлення доступу</string>
-  <string name="settings_recovery_email_confirm">Підтвердити адресу е-пошти для відновлення доступу</string>
+  <string name="settings_recovery_email_header">Резервна е-пошта</string>
+  <string name="settings_recovery_email_current">Поточна адреса резервної е-пошти</string>
+  <string name="settings_recovery_email_new">Нова адреса резервної е-пошти</string>
+  <string name="settings_recovery_email_confirm">Підтвердити адресу резервної е-пошти</string>
   <string name="settings_recovery_email_new_hint">Введіть адресу е-пошти</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введіть адресу е-пошти</string>
   <string name="settings_save">Зберегти</string>
   <string name="settings_password_required">Введіть свій пароль входу</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Не встановлено</string>
-  <string name="settings_recovery_email_error_no_match">Нові адреси е-пошти для відновлення не збігаються</string>
+  <string name="settings_recovery_email_error_no_match">Нові адреси резервної е-пошти відрізняються</string>
   <string name="settings_validation_email">Недійсна адреса е-пошти.</string>
   <string name="settings_general_error">Сталася помилка.</string>
   <!-- login and mailbox password settings -->
@@ -43,7 +43,7 @@
   <string name="settings_mailbox_password_hint_new">Новий пароль поштової скриньки</string>
   <string name="settings_mailbox_password_hint_new_confirm">Підтвердження нового пароля поштової скриньки</string>
   <string name="settings_change_password_error">Сталася помилка зміни пароля.</string>
-  <string name="settings_recovery_email_success">Адресу е-пошти для відновлення доступу оновлено</string>
+  <string name="settings_recovery_email_success">Адресу резервної електронної пошти оновлено</string>
   <string name="settings_password_management_success">Пароль оновлено</string>
   <string name="settings_password_management_start_recovery">Не знаєте свого поточного пароля?</string>
   <!-- device/local settings -->
