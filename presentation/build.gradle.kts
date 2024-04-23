@@ -43,9 +43,11 @@ android {
 
 dependencies {
     api(
+        project(Module.networkDomain),
         activity,
         appcompat,
         `constraint-layout`,
+        coordinatorlayout,
         `coroutines-core`,
         fragment,
         `javax-inject`,
@@ -53,17 +55,19 @@ dependencies {
         `lifecycle-savedState`,
         `lifecycle-viewModel`,
         material,
+        okhttp,
         recyclerview,
     )
 
     implementation(
         project(Module.kotlinUtil),
         project(Module.networkData),
-        project(Module.networkDomain),
         `android-ktx`,
         `core-splashscreen`,
+        drawerLayout,
         `hilt-android`,
         `lifecycle-livedata-core`,
+        `lifecycle-runtime`,
         `lifecycle-process`,
     )
 

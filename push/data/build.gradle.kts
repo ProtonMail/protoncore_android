@@ -47,6 +47,7 @@ dependencies {
         project(Module.eventManagerDomain),
         project(Module.networkData),
         project(Module.pushDomain),
+        project(Module.kotlinUtil),
         `coroutines-core`,
         `javax-inject`,
     )
@@ -54,7 +55,6 @@ dependencies {
     implementation(
         project(Module.userData),
         project(Module.data),
-        project(Module.kotlinUtil),
         project(Module.networkDomain),
         retrofit,
         `room-ktx`,
@@ -70,6 +70,7 @@ dependencies {
         project(Module.cryptoCommon),
         project(Module.keyDomain),
         project(Module.kotlinTest),
+        project(Module.userDomain),
         `android-test-core`,
         `android-work-testing`,
         `coroutines-test`,

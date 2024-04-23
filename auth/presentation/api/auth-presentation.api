@@ -1815,11 +1815,20 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Choos
 public final class me/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {
 	public fun <init> ()V
 	public fun onBackPressed ()V
+	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment_GeneratedInjector {
 	public abstract fun injectChoosePasswordFragment (Lme/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectIsCommonPasswordCheckEnabled (Lme/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment;Lme/proton/core/auth/domain/IsCommonPasswordCheckEnabled;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/ChoosePasswordFragment;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/ChooseUsernameFragment : me/proton/core/auth/presentation/ui/signup/SignupFragment {

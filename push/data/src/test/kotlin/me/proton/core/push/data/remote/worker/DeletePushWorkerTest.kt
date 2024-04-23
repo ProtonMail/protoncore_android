@@ -19,41 +19,33 @@
 package me.proton.core.push.data.remote.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.Data
 import androidx.work.ListenableWorker
+import androidx.work.WorkerFactory
+import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
-import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.HiltTestApplication
+import io.mockk.MockKAnnotations
 import io.mockk.MockKStubScope
 import io.mockk.coEvery
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.runBlocking
 import me.proton.core.domain.entity.UserId
-import me.proton.core.eventmanager.domain.EventManager
-import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.push.domain.entity.PushId
 import me.proton.core.push.domain.entity.PushObjectType
-import me.proton.core.push.domain.remote.PushRemoteDataSource
 import me.proton.core.push.domain.repository.PushRepository
 import me.proton.core.push.domain.usecase.DeletePushRemote
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Rule
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
-import javax.inject.Inject
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 
-@HiltAndroidTest
 @Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 internal class DeletePushWorkerTest {
@@ -63,23 +55,15 @@ internal class DeletePushWorkerTest {
     private val testUserId = UserId("test-user-id")
     private val testPushType = PushObjectType.Messages
 
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
+    @MockK
+    private lateinit var pushRepository: PushRepository
 
-    @BindValue
-    @JvmField
-    internal val pushRepository: PushRepository = mockk()
-
-    @BindValue
-    @JvmField
-    internal val deletePushRemote: DeletePushRemote = mockk()
-
-    @Inject
-    internal lateinit var hiltWorkerFactory: HiltWorkerFactory
+    @MockK
+    private lateinit var deletePushRemote: DeletePushRemote
 
     @Before
     fun setUp() {
-        hiltRule.inject()
+        MockKAnnotations.init(this)
         context = ApplicationProvider.getApplicationContext()
     }
 
@@ -106,7 +90,7 @@ internal class DeletePushWorkerTest {
     @Test
     fun `missing input data`() {
         val worker = TestListenableWorkerBuilder<DeletePushWorker>(context, Data.EMPTY)
-            .setWorkerFactory(hiltWorkerFactory)
+            .setWorkerFactory(makeWorkerFactory())
             .build()
         assertFailsWith<IllegalArgumentException> {
             runBlocking { worker.doWork() }
@@ -121,8 +105,16 @@ internal class DeletePushWorkerTest {
 
         val inputData = DeletePushWorker.makeInputData(testUserId, testPushId, testPushType.value)
         val worker = TestListenableWorkerBuilder<DeletePushWorker>(context, inputData)
-            .setWorkerFactory(hiltWorkerFactory)
+            .setWorkerFactory(makeWorkerFactory())
             .build()
         return runBlocking { worker.doWork() }
+    }
+
+    private fun makeWorkerFactory() = object : WorkerFactory() {
+        override fun createWorker(
+            appContext: Context,
+            workerClassName: String,
+            workerParameters: WorkerParameters
+        ): ListenableWorker = DeletePushWorker(appContext, workerParameters, pushRepository, deletePushRemote)
     }
 }

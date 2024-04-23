@@ -36,9 +36,9 @@ import kotlinx.coroutines.launch
 import kotlinx.parcelize.Parcelize
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.usecase.PerformLogin
-import me.proton.core.auth.domain.usecase.signup.SetCreateAccountSuccess
 import me.proton.core.auth.domain.usecase.signup.PerformCreateExternalEmailUser
 import me.proton.core.auth.domain.usecase.signup.PerformCreateUser
+import me.proton.core.auth.domain.usecase.signup.SetCreateAccountSuccess
 import me.proton.core.auth.domain.usecase.signup.SignupChallengeConfig
 import me.proton.core.auth.domain.usecase.userAlreadyExists
 import me.proton.core.auth.presentation.entity.signup.RecoveryMethod

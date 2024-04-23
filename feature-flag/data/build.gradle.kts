@@ -45,14 +45,15 @@ dependencies {
         project(Module.dataRoom),
         project(Module.domain),
         project(Module.featureFlagDomain),
+        project(Module.kotlinUtil),
         project(Module.accountManagerDomain),
         project(Module.observabilityDomain),
         project(Module.networkData),
     )
 
     implementation(
+        project(Module.accountDomain),
         project(Module.data),
-        project(Module.kotlinUtil),
         project(Module.networkDomain),
 
         `android-work-runtime`,

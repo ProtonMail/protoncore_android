@@ -14,6 +14,7 @@ public final class me/proton/core/auth/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/auth/dagger/CoreAuthFeaturesModule {
+	public abstract fun bindIsCommonPasswordCheckEnabled (Lme/proton/core/auth/data/usecase/IsCommonPasswordCheckEnabledImpl;)Lme/proton/core/auth/domain/IsCommonPasswordCheckEnabled;
 	public abstract fun bindIsCredentialLessEnabled (Lme/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl;)Lme/proton/core/auth/domain/usecase/IsCredentialLessEnabled;
 	public abstract fun provideIsSsoCustomTabEnabled (Lme/proton/core/auth/data/usecase/IsSsoCustomTabEnabledImpl;)Lme/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled;
 	public abstract fun provideIsSsoEnabled (Lme/proton/core/auth/data/usecase/IsSsoEnabledImpl;)Lme/proton/core/auth/domain/usecase/IsSsoEnabled;

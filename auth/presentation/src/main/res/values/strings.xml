@@ -135,6 +135,7 @@
     <string name="auth_signup_error_username_blank">Username must not be blank.</string>
     <string name="auth_signup_error_passwords_do_not_match">Passwords do not match.</string>
     <string name="auth_signup_validation_password_length">Password should be at least 8 characters long.</string>
+    <string name="auth_signup_password_not_allowed">Password not allowed.</string>
     <string name="auth_signup_validation_password">Password must not be empty.</string>
     <string name="auth_signup_your_account_is_being_setup">Your account is being created…</string>
     <string name="auth_signup_please_wait">It usually takes no more than a minute.</string>

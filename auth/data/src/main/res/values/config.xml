@@ -20,4 +20,5 @@
     <bool name="core_feature_auth_sso_enabled">true</bool>
     <bool name="core_feature_auth_sso_custom_tab_enabled">true</bool>
     <bool name="core_feature_credential_less_enabled">false</bool>
+    <bool name="core_feature_common_password_check_enabled">true</bool>
 </resources>

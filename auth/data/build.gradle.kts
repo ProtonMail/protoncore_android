@@ -29,8 +29,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(56)
-    lineCoveragePercentage.set(56)
+    branchCoveragePercentage.set(61)
+    lineCoveragePercentage.set(58)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -42,6 +42,7 @@ android {
 dependencies {
     api(
         project(Module.authDomain),
+        project(Module.challengeData),
         project(Module.challengeDomain),
         project(Module.cryptoCommon),
         project(Module.domain),
@@ -55,7 +56,6 @@ dependencies {
     )
 
     implementation(
-        project(Module.challengeData),
         project(Module.kotlinUtil),
         `coroutines-core`,
     )

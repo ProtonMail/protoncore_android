@@ -21,17 +21,22 @@ package me.proton.core.auth.presentation.ui.signup
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChoosePasswordBinding
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
+import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.validateInvalidPassword
 import me.proton.core.presentation.utils.validatePasswordMatch
 import me.proton.core.presentation.utils.validatePasswordMinLength
 import me.proton.core.presentation.utils.viewBinding
@@ -41,6 +46,7 @@ import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
+import javax.inject.Inject
 
 @AndroidEntryPoint
 @ProductMetrics(
@@ -67,11 +73,22 @@ import me.proton.core.telemetry.presentation.annotation.ViewFocused
 )
 class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_password) {
 
+    @Inject
+    internal lateinit var isCommonPasswordCheckEnabled: IsCommonPasswordCheckEnabled
+
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupChoosePasswordBinding::bind)
+    private val invalidPasswordProvider by lazy { InvalidPasswordProvider(requireContext()) }
 
     override fun onBackPressed() {
         parentFragmentManager.popBackStack()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycleScope.launch {
+            invalidPasswordProvider.init()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,12 +128,26 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
         binding.passwordInput.apply {
             val result = validatePasswordMinLength()
                 .onFailure { setInputError(getString(R.string.auth_signup_validation_password_length)) }
-                .onSuccess { password -> validateConfirmPasswordField(password) }
+                .onSuccess { _ -> validateInvalidPassword() }
             signupViewModel.onInputValidationResult(result)
         }
     }
 
-    private fun validateConfirmPasswordField(password: String) = with(binding) {
+    private fun validateInvalidPassword() = with(binding) {
+        val onSuccess = { validateConfirmPasswordField() }
+        passwordInput.apply {
+            if (isCommonPasswordCheckEnabled(userId = null)) {
+                val result = validateInvalidPassword(invalidPasswordProvider)
+                    .onFailure { setInputError(getString(R.string.auth_signup_password_not_allowed)) }
+                    .onSuccess { _ -> onSuccess() }
+                signupViewModel.onInputValidationResult(result)
+            } else {
+                onSuccess()
+            }
+        }
+    }
+
+    private fun validateConfirmPasswordField() = with(binding) {
         val confirmedPassword = confirmPasswordInput.text.toString()
         val result = passwordInput.validatePasswordMatch(confirmedPassword)
             .onFailure {

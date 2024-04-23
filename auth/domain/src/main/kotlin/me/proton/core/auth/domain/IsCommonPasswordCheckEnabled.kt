@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2023 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,22 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.auth.domain
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
-}
+import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.featureflag.dagger"
-}
-
-dependencies {
-    api(
-        project(Module.featureFlagData),
-        project(Module.featureFlagDomain)
-    )
-}
+interface IsCommonPasswordCheckEnabled : IsFeatureFlagEnabled

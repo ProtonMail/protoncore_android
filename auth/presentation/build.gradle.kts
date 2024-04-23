@@ -51,6 +51,7 @@ dependencies {
         project(Module.countryDomain),
         project(Module.cryptoCommon),
         project(Module.domain),
+        project(Module.featureFlagDomain),
         project(Module.humanVerificationDomain),
         project(Module.humanVerificationPresentation),
         project(Module.networkData),
@@ -58,8 +59,10 @@ dependencies {
         project(Module.observabilityDomain),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),
+        project(Module.planDomain),
         project(Module.planPresentation),
         project(Module.presentation),
+        project(Module.telemetryDomain),
         project(Module.telemetryPresentation),
         project(Module.userDomain),
         project(Module.userSettingsDomain),
@@ -72,12 +75,17 @@ dependencies {
         `lifecycle-common`,
         `lifecycle-savedState`,
         lottie,
-        material
+        material,
+        okhttp,
+        `startup-runtime`
     )
 
     implementation(
+        project(Module.challengeData),
         project(Module.countryPresentation),
+        project(Module.deviceUtil),
         project(Module.kotlinUtil),
+        project(Module.sharedPreferencesUtil),
         activity,
         `androidx-browser`,
         `android-ktx`,

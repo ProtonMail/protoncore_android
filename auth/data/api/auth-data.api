@@ -631,6 +631,21 @@ public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/p
 	public fun validatePhone (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/data/usecase/IsCommonPasswordCheckEnabledImpl : me/proton/core/auth/domain/IsCommonPasswordCheckEnabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
+public final class me/proton/core/auth/data/usecase/IsCommonPasswordCheckEnabledImpl_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/data/usecase/IsCommonPasswordCheckEnabledImpl_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/data/usecase/IsCommonPasswordCheckEnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/auth/data/usecase/IsCommonPasswordCheckEnabledImpl;
+}
+
 public final class me/proton/core/auth/data/usecase/IsCredentialLessEnabledImpl : me/proton/core/auth/domain/usecase/IsCredentialLessEnabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
 	public fun awaitIsRemoteDisabled-8Mi8wO0 (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;

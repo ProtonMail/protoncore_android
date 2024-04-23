@@ -42,6 +42,7 @@ dependencies {
         project(Module.challengeDomain),
         project(Module.cryptoCommon),
         project(Module.domain),
+        project(Module.featureFlagDomain),
         project(Module.networkDomain),
         project(Module.paymentDomain),
         project(Module.planDomain),
