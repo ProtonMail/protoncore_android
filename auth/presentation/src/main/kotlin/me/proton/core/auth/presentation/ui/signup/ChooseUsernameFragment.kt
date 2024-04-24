@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
+import me.proton.core.auth.presentation.alert.CancelCreateAccountDialog
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseUsernameBinding
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
@@ -63,7 +64,10 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
             signupViewModel.onFinish()
             activity?.finish()
         } else {
-            showError(getString(R.string.auth_signup_error_create_to_continue))
+            CancelCreateAccountDialog().show(parentFragmentManager) {
+                signupViewModel.onFinish()
+                activity?.finish()
+            }
         }
     }
 
@@ -71,7 +75,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            toolbar.setNavigationIcon(R.drawable.ic_proton_close, cancellable)
+            toolbar.setNavigationIcon(R.drawable.ic_proton_close, true)
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             usernameInput.apply {

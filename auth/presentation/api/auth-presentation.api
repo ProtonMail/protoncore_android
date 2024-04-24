@@ -2,6 +2,10 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_MissingScope
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_alert_CancelCreateAccountDialog_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_alert_confirmpass_ConfirmPasswordDialog_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -91,6 +95,14 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Ad
 }
 
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_AddAccountViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_CancelCreateAccountDialogViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_CancelCreateAccountDialogViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -342,6 +354,29 @@ public final class me/proton/core/auth/presentation/alert/AlertUtilsKt {
 	public static synthetic fun showPasswordEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZZZILjava/lang/Object;)V
 }
 
+public final class me/proton/core/auth/presentation/alert/CancelCreateAccountDialog : androidx/fragment/app/DialogFragment {
+	public fun <init> ()V
+	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+	public final fun show (Landroidx/fragment/app/FragmentManager;Lkotlin/jvm/functions/Function0;)V
+}
+
+public abstract interface class me/proton/core/auth/presentation/alert/CancelCreateAccountDialog_GeneratedInjector {
+	public abstract fun injectCancelCreateAccountDialog (Lme/proton/core/auth/presentation/alert/CancelCreateAccountDialog;)V
+}
+
+public abstract class me/proton/core/auth/presentation/alert/Hilt_CancelCreateAccountDialog : androidx/fragment/app/DialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
 public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog : androidx/fragment/app/DialogFragment {
 	public static final field BUNDLE_KEY_PASS_2FA_DATA Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/alert/PasswordAnd2FADialog$Companion;
@@ -552,6 +587,16 @@ public final class me/proton/core/auth/presentation/databinding/ContentHelpItemO
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
 	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/ContentHelpItemOtherIssuesBinding;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ContentHelpItemOtherIssuesBinding;
+}
+
+public final class me/proton/core/auth/presentation/databinding/DialogCancelCreationBinding : androidx/viewbinding/ViewBinding {
+	public final field cancelButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public final field continueButton Lme/proton/core/presentation/ui/view/ProtonButton;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/DialogCancelCreationBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/DialogCancelCreationBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/DialogCancelCreationBinding;
 }
 
 public final class me/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding : androidx/viewbinding/ViewBinding {
@@ -2135,6 +2180,38 @@ public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewMode
 public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/AddAccountViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
+	public final fun cancelCreation ()Lkotlinx/coroutines/Job;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)Lme/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/CancelCreateAccountDialogViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

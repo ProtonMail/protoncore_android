@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
+import me.proton.core.auth.presentation.alert.CancelCreateAccountDialog
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseExternalEmailBinding
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.onLongState
@@ -96,7 +97,10 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             signupViewModel.onFinish()
             activity?.finish()
         } else {
-            showError(getString(R.string.auth_signup_error_create_to_continue))
+            CancelCreateAccountDialog().show(parentFragmentManager) {
+                signupViewModel.onFinish()
+                activity?.finish()
+            }
         }
     }
 
@@ -104,7 +108,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            toolbar.setNavigationIcon(R.drawable.ic_proton_close, cancellable)
+            toolbar.setNavigationIcon(R.drawable.ic_proton_close, true)
             toolbar.setNavigationOnClickListener { onBackPressed() }
 
             emailInput.text = email
