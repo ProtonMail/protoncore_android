@@ -37,6 +37,7 @@ import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInit
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
@@ -61,6 +62,7 @@ class PasswordManagementViewModel @Inject constructor(
     private val performResetPassword: PerformResetUserPassword,
     private val isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled,
     override val observabilityManager: ObservabilityManager,
+    private val product: Product
 ) : ProtonViewModel(), ObservabilityContext {
 
     private var pendingUpdate: Action.UpdatePassword? = null
@@ -185,7 +187,7 @@ class PasswordManagementViewModel @Inject constructor(
     private val userRecovery get() = currentUserRecovery.value
     private val userSettings get() = currentUserSettings.value
     private val isSelfInitiated get() = currentSelfInitiated.value
-    private val isMailboxPassword get() = userSettings?.password?.mode == 2
+    private val isMailboxPassword get() = userSettings?.password?.mode == 2 && product != Product.Vpn
     private val isTwoFactorEnabled get() = userSettings?.twoFA?.enabled ?: false
     private val isRecoveryResetEnabled get() = isAccountRecoveryResetEnabled(currentUserId.value)
     private val isRecoveryInsecure get() = userRecovery?.state?.enum == UserRecovery.State.Insecure

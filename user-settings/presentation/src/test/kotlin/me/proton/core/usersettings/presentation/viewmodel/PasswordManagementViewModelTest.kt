@@ -28,6 +28,7 @@ import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.android.ArchTest
@@ -36,16 +37,14 @@ import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
-import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
+import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
-import me.proton.core.usersettings.domain.usecase.PerformResetUserPassword
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.Action.ObserveState
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.Action.UpdatePassword
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType.Both
@@ -134,7 +133,8 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                 performUpdateMailboxPassword,
                 performResetUserPassword,
                 isAccountRecoveryResetEnabled,
-                observabilityManager
+                observabilityManager,
+                Product.Mail
             )
     }
 
