@@ -136,6 +136,7 @@ class PasswordManagementFragment :
                         binding.tabLayout.isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
                         binding.loginPasswordGroup.isVisible = binding.tabLayout.selectedTabPosition == 0
                         binding.mailboxPasswordGroup.isVisible = binding.tabLayout.selectedTabPosition == 1
+                        binding.accountPasswordNote.isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
 
                         binding.dontKnowYourCurrentPassword.isVisible = it.recoveryResetAvailable
                         binding.currentLoginPasswordInput.isVisible = it.currentLoginPasswordNeeded

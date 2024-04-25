@@ -82,6 +82,7 @@ public final class me/proton/core/usersettings/presentation/databinding/Activity
 }
 
 public final class me/proton/core/usersettings/presentation/databinding/FragmentPasswordManagementBinding : androidx/viewbinding/ViewBinding {
+	public final field accountPasswordNote Landroid/widget/TextView;
 	public final field accountRecoveryInfo Landroidx/compose/ui/platform/ComposeView;
 	public final field confirmNewLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field confirmNewMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
