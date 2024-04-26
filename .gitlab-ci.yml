@@ -495,6 +495,23 @@ tag-gradle-plugins-release:
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/gradle-plugins\/.*/
 
+distribute:debug:post-merge:
+  stage: publish
+  image: $CI_REGISTRY/tpe/test-scripts
+  needs:
+    - job: "assemble:configurator"
+      artifacts: true
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH'
+      allow_failure: true
+  script:
+    - CONFIGURATOR_APK_PATH="configuration/configurator/build/outputs/apk/"
+    - /usr/local/bin/nexus/upload_to_nexus.py
+      --path "$CONFIGURATOR_APK_PATH"
+      --repository "test-productivity-builds-distribution"
+      --group "/TestProductivity/Android/Configurator"
+      --filename "configuration-configurator-debug.apk"
+
 ## review stage ######################################################################################
 danger-review:
   tags:
