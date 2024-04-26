@@ -53,7 +53,30 @@ data class UserSettingsResponse(
     val telemetry: Int,
     @SerialName("CrashReports")
     val crashReports: Int,
-)
+    @SerialName("SessionAccountRecovery")
+    val sessionAccountRecovery: Int,
+) {
+    companion object {
+        fun nil(): UserSettingsResponse = UserSettingsResponse(
+            email = null,
+            phone = null,
+            password = PasswordResponse(0, null),
+            twoFA = TwoFAResponse(0, 0, null),
+            news = 0,
+            locale = "en",
+            logAuth = 0,
+            density = 0,
+            weekStart = 0,
+            dateFormat = 0,
+            timeFormat = 0,
+            earlyAccess = 0,
+            deviceRecovery = 0,
+            telemetry = 0,
+            crashReports = 0,
+            sessionAccountRecovery = 0,
+        )
+    }
+}
 
 @Serializable
 data class RecoverySettingResponse(

@@ -80,23 +80,8 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         type = Type.Proton
     )
 
-    private val userSettings = UserSettings(
-        userId = userId,
-        email = null,
-        phone = null,
+    private val userSettings = UserSettings.nil(userId).copy(
         password = PasswordSetting(1, null),
-        twoFA = null,
-        news = null,
-        locale = null,
-        logAuth = null,
-        density = null,
-        weekStart = null,
-        dateFormat = null,
-        timeFormat = null,
-        earlyAccess = null,
-        deviceRecovery = null,
-        telemetry = null,
-        crashReports = null,
     )
 
     @BeforeTest

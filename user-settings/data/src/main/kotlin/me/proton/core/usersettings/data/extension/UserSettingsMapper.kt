@@ -59,6 +59,7 @@ internal fun UserSettingsResponse.fromResponse(userId: UserId) = UserSettings(
     deviceRecovery = deviceRecovery.toBooleanOrFalse(),
     telemetry = telemetry.toBooleanOrFalse(),
     crashReports = crashReports.toBooleanOrFalse(),
+    sessionAccountRecovery = sessionAccountRecovery.toBooleanOrFalse()
 )
 
 internal fun RecoverySettingResponse.fromResponse() = RecoverySetting(
@@ -96,6 +97,7 @@ internal fun UserSettingsEntity.fromEntity() = UserSettings(
     deviceRecovery = deviceRecovery,
     telemetry = telemetry,
     crashReports = crashReports,
+    sessionAccountRecovery = sessionAccountRecovery
 )
 
 internal fun UserSettings.toEntity() = UserSettingsEntity(
@@ -114,7 +116,8 @@ internal fun UserSettings.toEntity() = UserSettingsEntity(
     earlyAccess = earlyAccess,
     deviceRecovery = deviceRecovery,
     telemetry = telemetry,
-    crashReports = crashReports
+    crashReports = crashReports,
+    sessionAccountRecovery = sessionAccountRecovery
 )
 
 internal fun RecoverySettingEntity.fromEntity() = RecoverySetting(

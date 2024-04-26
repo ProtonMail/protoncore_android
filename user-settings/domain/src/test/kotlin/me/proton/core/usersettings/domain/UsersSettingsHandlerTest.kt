@@ -29,7 +29,6 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.domain.entity.UserId
 import me.proton.core.test.kotlin.coroutineScopeProvider
-import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import org.junit.Assert.assertEquals
@@ -96,22 +95,7 @@ class UsersSettingsHandlerTest {
         details = AccountDetails(null, null)
     )
 
-    private fun userSettings(userId: UserId, crashReports: Boolean?) = UserSettings(
-        userId = userId,
-        email = null,
-        phone = null,
-        password = PasswordSetting(null, null),
-        twoFA = null,
-        news = null,
-        locale = null,
-        logAuth = null,
-        density = null,
-        weekStart = null,
-        dateFormat = null,
-        timeFormat = null,
-        earlyAccess = null,
-        deviceRecovery = null,
-        telemetry = null,
+    private fun userSettings(userId: UserId, crashReports: Boolean?) = UserSettings.nil(userId).copy(
         crashReports = crashReports
     )
 }

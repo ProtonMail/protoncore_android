@@ -140,13 +140,9 @@ class UserSettingsRemoteDataSourceImplTest {
         assertTrue(response)
     }
 
-    private val settingsResponse = UserSettingsResponse(
+    private val settingsResponse = UserSettingsResponse.nil().copy(
         email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
-        phone = null,
-        twoFA = null,
         password = PasswordResponse(mode = 1, expirationTime = null),
-        news = 0,
-        locale = "en",
         logAuth = 1,
         density = 1,
         dateFormat = 1,

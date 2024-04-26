@@ -129,22 +129,5 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         is UserSettingsProperty.Telemetry -> updateTelemetry(UpdateTelemetryRequest(property.value.toInt()))
     }.exhaustive
 
-    private fun makeUserSettingsForCredentialLess(userId: UserId) = UserSettings(
-        userId = userId,
-        email = null,
-        phone = null,
-        password = PasswordSetting(null, null),
-        twoFA = null,
-        news = null,
-        locale = null,
-        logAuth = null,
-        density = null,
-        weekStart = null,
-        dateFormat = null,
-        timeFormat = null,
-        earlyAccess = null,
-        deviceRecovery = null,
-        telemetry = null,
-        crashReports = null,
-    )
+    private fun makeUserSettingsForCredentialLess(userId: UserId) = UserSettings.nil(userId)
 }

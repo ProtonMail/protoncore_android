@@ -108,5 +108,15 @@ interface UserSettingsDatabase : Database {
                 )
             }
         }
+
+        val MIGRATION_6 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserSettingsEntity",
+                    column = "sessionAccountRecovery",
+                    type = "INTEGER"
+                )
+            }
+        }
     }
 }

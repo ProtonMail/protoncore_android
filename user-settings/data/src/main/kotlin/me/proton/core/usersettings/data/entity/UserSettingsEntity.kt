@@ -24,6 +24,9 @@ import androidx.room.ForeignKey
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.entity.UserEntity
+import me.proton.core.usersettings.data.extension.toEntity
+import me.proton.core.usersettings.domain.entity.PasswordSetting
+import me.proton.core.usersettings.domain.entity.UserSettings
 
 @Entity(
     primaryKeys = ["userId"],
@@ -57,7 +60,12 @@ data class UserSettingsEntity(
     val deviceRecovery: Boolean?,
     val telemetry: Boolean?,
     val crashReports: Boolean?,
-)
+    val sessionAccountRecovery: Boolean?
+) {
+    companion object {
+        fun nil(userId: UserId): UserSettingsEntity = UserSettings.nil(userId).toEntity()
+    }
+}
 
 data class RecoverySettingEntity(
     val value: String?,

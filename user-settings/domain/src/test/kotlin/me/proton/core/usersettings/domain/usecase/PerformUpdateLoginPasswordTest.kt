@@ -97,14 +97,9 @@ class PerformUpdateLoginPasswordTest {
         keys = emptyList()
     )
 
-    private val testUserSettingsResponse = UserSettings(
-        userId = testUserId,
+    private val testUserSettingsResponse = UserSettings.nil(testUserId).copy(
         email = RecoverySetting("test-email", 1, notify = true, reset = true),
-        phone = null,
-        twoFA = null,
         password = PasswordSetting(mode = 1, expirationTime = null),
-        news = 0,
-        locale = "en",
         logAuth = UserSettings.LogAuth.enumOf(1),
         density = UserSettings.Density.enumOf(1),
         dateFormat = UserSettings.DateFormat.enumOf(1),

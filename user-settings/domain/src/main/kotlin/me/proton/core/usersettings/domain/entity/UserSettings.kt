@@ -38,7 +38,30 @@ data class UserSettings(
     val deviceRecovery: Boolean?,
     val telemetry: Boolean?,
     val crashReports: Boolean?,
+    val sessionAccountRecovery: Boolean?
 ) {
+    companion object {
+        fun nil(userId: UserId): UserSettings = UserSettings(
+            userId = userId,
+            email = null,
+            phone = null,
+            password = PasswordSetting(null, null),
+            twoFA = TwoFASetting(false, 0, null),
+            news = 0,
+            locale = "en",
+            logAuth = IntEnum(UserSettings.LogAuth.Disabled.value, UserSettings.LogAuth.Disabled),
+            density = IntEnum(UserSettings.Density.Comfortable.value, UserSettings.Density.Comfortable),
+            weekStart = IntEnum(UserSettings.WeekStart.Default.value, UserSettings.WeekStart.Default),
+            dateFormat = IntEnum(UserSettings.DateFormat.Default.value, UserSettings.DateFormat.Default),
+            timeFormat = IntEnum(UserSettings.TimeFormat.Default.value, UserSettings.TimeFormat.Default),
+            earlyAccess = false,
+            deviceRecovery = false,
+            telemetry = false,
+            crashReports = false,
+            sessionAccountRecovery = false,
+        )
+    }
+
     enum class LogAuth(val value: Int) {
         Disabled(0),
         Basic(1),

@@ -54,7 +54,6 @@ import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
 import me.proton.core.usersettings.data.db.UserSettingsLocalDataSourceImpl
 import me.proton.core.usersettings.data.db.dao.UserSettingsDao
-import me.proton.core.usersettings.data.entity.PasswordEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import me.proton.core.usersettings.data.extension.fromEntity
 import me.proton.core.usersettings.data.extension.fromResponse
@@ -121,13 +120,9 @@ class UserSettingsRepositoryImplTest {
 
     @Test
     fun `user settings returns success`() = runTest(dispatcherProvider.Main) {
-        val settingsResponse = UserSettingsResponse(
+        val settingsResponse = UserSettingsResponse.nil().copy(
             email = RecoverySettingResponse("test-email", 1, notify = 1, reset = 1),
-            phone = null,
-            twoFA = null,
             password = PasswordResponse(mode = 1, expirationTime = null),
-            news = 0,
-            locale = "en",
             logAuth = 1,
             density = 1,
             dateFormat = 1,
@@ -193,13 +188,9 @@ class UserSettingsRepositoryImplTest {
     }
 
     private fun setUpRecoveryEmailUpdateTest(srpServerProof: String) {
-        val settingsResponse = UserSettingsResponse(
+        val settingsResponse = UserSettingsResponse.nil().copy(
             email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
-            phone = null,
-            twoFA = null,
             password = PasswordResponse(mode = 1, expirationTime = null),
-            news = 0,
-            locale = "en",
             logAuth = 1,
             density = 1,
             dateFormat = 1,
@@ -261,13 +252,9 @@ class UserSettingsRepositoryImplTest {
     }
 
     private fun setUpUpdatePasswordTest(srpServerProof: String): Auth {
-        val settingsResponse = UserSettingsResponse(
+        val settingsResponse = UserSettingsResponse.nil().copy(
             email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
-            phone = null,
-            twoFA = null,
             password = PasswordResponse(mode = 1, expirationTime = null),
-            news = 0,
-            locale = "en",
             logAuth = 1,
             density = 1,
             dateFormat = 1,
@@ -299,13 +286,9 @@ class UserSettingsRepositoryImplTest {
     @Test
     fun `update crash reports returns success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        val settingsResponse = UserSettingsResponse(
+        val settingsResponse = UserSettingsResponse.nil().copy(
             email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
-            phone = null,
-            twoFA = null,
             password = PasswordResponse(mode = 1, expirationTime = null),
-            news = 0,
-            locale = "en",
             logAuth = 1,
             density = 1,
             dateFormat = 1,
@@ -341,13 +324,9 @@ class UserSettingsRepositoryImplTest {
     @Test
     fun `update telemetry returns success`() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        val settingsResponse = UserSettingsResponse(
+        val settingsResponse = UserSettingsResponse.nil().copy(
             email = RecoverySettingResponse("test-email2", 1, notify = 1, reset = 1),
-            phone = null,
-            twoFA = null,
             password = PasswordResponse(mode = 1, expirationTime = null),
-            news = 0,
-            locale = "en",
             logAuth = 1,
             density = 1,
             dateFormat = 1,
@@ -402,24 +381,7 @@ class UserSettingsRepositoryImplTest {
     @Test
     fun localObjectIsReturnedForCredentialLess() = runTest(dispatcherProvider.Main) {
         // GIVEN
-        val userSettingsEntity = UserSettingsEntity(
-            userId = UserId(testUserId),
-            email = null,
-            phone = null,
-            password = PasswordEntity(null, null),
-            twoFA = null,
-            news = null,
-            locale = null,
-            logAuth = null,
-            density = null,
-            weekStart = null,
-            dateFormat = null,
-            timeFormat = null,
-            earlyAccess = null,
-            deviceRecovery = null,
-            telemetry = null,
-            crashReports = null,
-        )
+        val userSettingsEntity = UserSettingsEntity.nil(UserId(testUserId))
         every { userSettingsDao.observeByUserId(any()) } returns flowOf(userSettingsEntity)
 
         coEvery { userRepository.getUser(any(), any()) } returns mockk {

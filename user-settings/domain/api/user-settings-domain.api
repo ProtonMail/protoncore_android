@@ -155,7 +155,8 @@ public final class me/proton/core/usersettings/domain/entity/TwoFASetting {
 }
 
 public final class me/proton/core/usersettings/domain/entity/UserSettings {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
+	public static final field Companion Lme/proton/core/usersettings/domain/entity/UserSettings$Companion;
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component10 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component11 ()Lme/proton/core/domain/type/IntEnum;
@@ -164,6 +165,7 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun component14 ()Ljava/lang/Boolean;
 	public final fun component15 ()Ljava/lang/Boolean;
 	public final fun component16 ()Ljava/lang/Boolean;
+	public final fun component17 ()Ljava/lang/Boolean;
 	public final fun component2 ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun component3 ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
 	public final fun component4 ()Lme/proton/core/usersettings/domain/entity/PasswordSetting;
@@ -172,8 +174,8 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun component7 ()Ljava/lang/String;
 	public final fun component8 ()Lme/proton/core/domain/type/IntEnum;
 	public final fun component9 ()Lme/proton/core/domain/type/IntEnum;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/usersettings/domain/entity/UserSettings;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettings;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/usersettings/domain/entity/UserSettings;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/UserSettings;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/RecoverySetting;Lme/proton/core/usersettings/domain/entity/PasswordSetting;Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Integer;Ljava/lang/String;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Lme/proton/core/domain/type/IntEnum;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/UserSettings;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCrashReports ()Ljava/lang/Boolean;
 	public final fun getDateFormat ()Lme/proton/core/domain/type/IntEnum;
@@ -186,6 +188,7 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun getNews ()Ljava/lang/Integer;
 	public final fun getPassword ()Lme/proton/core/usersettings/domain/entity/PasswordSetting;
 	public final fun getPhone ()Lme/proton/core/usersettings/domain/entity/RecoverySetting;
+	public final fun getSessionAccountRecovery ()Ljava/lang/Boolean;
 	public final fun getTelemetry ()Ljava/lang/Boolean;
 	public final fun getTimeFormat ()Lme/proton/core/domain/type/IntEnum;
 	public final fun getTwoFA ()Lme/proton/core/usersettings/domain/entity/TwoFASetting;
@@ -193,6 +196,10 @@ public final class me/proton/core/usersettings/domain/entity/UserSettings {
 	public final fun getWeekStart ()Lme/proton/core/domain/type/IntEnum;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/domain/entity/UserSettings$Companion {
+	public final fun nil (Lme/proton/core/domain/entity/UserId;)Lme/proton/core/usersettings/domain/entity/UserSettings;
 }
 
 public final class me/proton/core/usersettings/domain/entity/UserSettings$DateFormat : java/lang/Enum {

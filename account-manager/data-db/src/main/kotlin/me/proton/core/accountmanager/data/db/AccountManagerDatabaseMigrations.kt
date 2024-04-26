@@ -314,4 +314,10 @@ object AccountManagerDatabaseMigrations {
             PaymentDatabase.MIGRATION_1.migrate(database)
         }
     }
+
+    val MIGRATION_44_45 = object : Migration(44, 45) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            UserSettingsDatabase.MIGRATION_6.migrate(db)
+        }
+    }
 }
