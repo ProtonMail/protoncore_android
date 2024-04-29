@@ -31,11 +31,13 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable
+import me.proton.core.network.domain.isUnprocessable
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.payment.domain.MAX_PLAN_QUANTITY
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
+import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.extension.getSubscribeObservabilityData
@@ -78,25 +80,42 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
                 subscriptionManagement = SubscriptionManagement.GOOGLE_MANAGED
             )
         }.fold(
-            onSuccess = {
-                purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Subscribed))
-                Result.success()
-            },
-            onFailure = {
-                if (it is ApiException && it.isRetryable()) {
-                    Result.retry()
-                } else {
-                    CoreLogger.e(TAG, it)
-                    purchaseRepository.upsertPurchase(
-                        purchase.copy(
-                            purchaseFailure = it.localizedMessage,
-                            purchaseState = PurchaseState.Failed
-                        )
-                    )
-                    Result.failure()
+            onSuccess = { onSuccess(purchase) },
+            onFailure = { onFailure(purchase, it) }
+        )
+    }
+
+    private suspend fun onSuccess(purchase: Purchase): Result {
+        purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Subscribed))
+        return Result.success()
+    }
+
+    private suspend fun onFailure(purchase: Purchase, error: Throwable): Result {
+        return when {
+            error is ApiException && error.isRetryable() -> Result.retry()
+
+            error is ApiException && error.isUnprocessable() -> {
+                val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
+                val plans = plansRepository.getSubscription(userId)?.plans.orEmpty()
+                when {
+                    plans.any { it.name == purchase.planName } -> onSuccess(purchase)
+                    else -> onPermanentFailure(purchase, error)
                 }
             }
+
+            else -> onPermanentFailure(purchase, error)
+        }
+    }
+
+    private suspend fun onPermanentFailure(purchase: Purchase, error: Throwable): Result {
+        CoreLogger.e(TAG, error)
+        purchaseRepository.upsertPurchase(
+            purchase.copy(
+                purchaseFailure = error.localizedMessage,
+                purchaseState = PurchaseState.Failed
+            )
         )
+        return Result.failure()
     }
 
     companion object {

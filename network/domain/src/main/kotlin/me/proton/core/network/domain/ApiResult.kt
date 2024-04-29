@@ -167,19 +167,34 @@ fun ApiException.hasProtonErrorCode(code: Int): Boolean =
     (error as? ApiResult.Error.Http)?.proton?.code == code
 
 /**
- * Return true if [ApiException.error] is an unauthorized error (401).
+ * Return true if [ApiException.error] is a http error equals [code].
  *
- * @see ApiResult.isUnauthorized
+ * @see ApiResult.isHttpError
  */
-fun ApiException.isUnauthorized(): Boolean = error.isUnauthorized()
+fun ApiException.isHttpError(code: Int): Boolean = error.isHttpError(code)
+
+/**
+ * Return true if [ApiResult] is a http error equals [code].
+ */
+fun <T> ApiResult<T>.isHttpError(code: Int): Boolean {
+    val httpError = this as? ApiResult.Error.Http
+    return httpError?.httpCode == code
+}
 
 /**
  * Return true if [ApiResult] is an unauthorized error (401).
  */
-fun <T> ApiResult<T>.isUnauthorized(): Boolean {
-    val httpError = this as? ApiResult.Error.Http
-    return httpError?.httpCode == HttpResponseCodes.HTTP_UNAUTHORIZED
-}
+fun <T> ApiResult<T>.isUnauthorized(): Boolean = isHttpError(HttpResponseCodes.HTTP_UNAUTHORIZED)
+
+/**
+ * Return true if [ApiException.error] is an unauthorized error (401).
+ */
+fun ApiException.isUnauthorized(): Boolean = isHttpError(HttpResponseCodes.HTTP_UNAUTHORIZED)
+
+/**
+ * Return true if [ApiException.error] is an unprocessable error (422).
+ */
+fun ApiException.isUnprocessable() = isHttpError(HttpResponseCodes.HTTP_UNPROCESSABLE)
 
 /**
  * Return true if [ApiException.error] is a force update error (5003/5005).

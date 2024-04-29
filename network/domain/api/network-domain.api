@@ -175,11 +175,14 @@ public final class me/proton/core/network/domain/ApiResultKt {
 	public static final fun hasProtonErrorCode (Lme/proton/core/network/domain/ApiException;I)Z
 	public static final fun isForceUpdate (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun isForceUpdate (Lme/proton/core/network/domain/ApiResult;)Z
+	public static final fun isHttpError (Lme/proton/core/network/domain/ApiException;I)Z
+	public static final fun isHttpError (Lme/proton/core/network/domain/ApiResult;I)Z
 	public static final fun isPotentialBlocking (Ljava/lang/Throwable;)Z
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun isRetryable (Lme/proton/core/network/domain/ApiResult;)Z
 	public static final fun isUnauthorized (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun isUnauthorized (Lme/proton/core/network/domain/ApiResult;)Z
+	public static final fun isUnprocessable (Lme/proton/core/network/domain/ApiException;)Z
 	public static final fun onError (Lme/proton/core/network/domain/ApiResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/network/domain/ApiResult;
 	public static final fun onParseError (Lme/proton/core/network/domain/ApiResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/network/domain/ApiResult;
 	public static final fun onParseErrorLog (Lme/proton/core/network/domain/ApiResult;Ljava/lang/String;)Lme/proton/core/network/domain/ApiResult;
