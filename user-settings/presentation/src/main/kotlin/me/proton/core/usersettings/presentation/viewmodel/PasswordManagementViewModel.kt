@@ -44,6 +44,7 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.AccountRecoveryResetTotal
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.UserRecovery
+import me.proton.core.usersettings.domain.usecase.IsSessionAccountRecoveryEnabled
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
 import me.proton.core.usersettings.domain.usecase.PerformUpdateUserPassword
@@ -62,6 +63,7 @@ class PasswordManagementViewModel @Inject constructor(
     private val performResetPassword: PerformResetUserPassword,
     private val isAccountRecoveryResetEnabled: IsAccountRecoveryResetEnabled,
     override val observabilityManager: ObservabilityManager,
+    private val isSessionAccountRecoveryEnabled: IsSessionAccountRecoveryEnabled,
     private val product: Product
 ) : ProtonViewModel(), ObservabilityContext {
 
@@ -91,7 +93,7 @@ class PasswordManagementViewModel @Inject constructor(
             userId = userId,
             loginPasswordAvailable = true,
             mailboxPasswordAvailable = isMailboxPassword,
-            recoveryResetAvailable = isRecoveryResetEnabled && isRecoveryAvailable,
+            recoveryResetAvailable = recoveryResetAvailable(userId),
             recoveryResetEnabled = isRecoveryResetEnabled,
             currentLoginPasswordNeeded = !isRecoveryResetEnabled || !isRecoveryInsecure || !isSelfInitiated,
             twoFactorEnabled = isTwoFactorEnabled,
@@ -100,6 +102,9 @@ class PasswordManagementViewModel @Inject constructor(
     }.onStart {
         currentUserId.emit(userId)
     }
+
+    private suspend fun recoveryResetAvailable(userId: UserId): Boolean =
+        isRecoveryResetEnabled && isRecoveryAvailable && isSessionAccountRecoveryEnabled(userId)
 
     private suspend fun updatePassword(action: Action.UpdatePassword): Flow<State> = when {
         pendingUpdate == null && userSettings?.twoFA?.enabled == true -> {

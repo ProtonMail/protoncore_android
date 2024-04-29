@@ -373,6 +373,12 @@ public final class me/proton/core/usersettings/domain/usecase/GetUserSettings {
 	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/usersettings/domain/usecase/IsSessionAccountRecoveryEnabled {
+	public fun <init> (Lme/proton/core/usersettings/domain/usecase/GetUserSettings;)V
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static synthetic fun invoke$default (Lme/proton/core/usersettings/domain/usecase/IsSessionAccountRecoveryEnabled;Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/usersettings/domain/usecase/ObserveDeviceSettings {
 	public fun <init> (Lme/proton/core/usersettings/domain/repository/DeviceSettingsRepository;)V
 	public final fun invoke ()Lkotlinx/coroutines/flow/Flow;
