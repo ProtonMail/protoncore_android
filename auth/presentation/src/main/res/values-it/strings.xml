@@ -36,17 +36,17 @@
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice del secondo fattore</string>
   <string name="auth_email">Email</string>
-  <string name="auth_email_username">Nome utente o email</string>
+  <string name="auth_email_username">Email o nome utente</string>
   <string name="auth_account_details">Inserisci le credenziali dell\'account Proton</string>
   <string name="auth_sign_in">Accedi</string>
   <string name="auth_sign_out">Esci</string>
   <string name="auth_sign_in_action">Accedi</string>
-  <string name="auth_sign_in_sso">Accedi alla tua organizzazione</string>
+  <string name="auth_sign_in_sso">Accedi all\'organizzazione</string>
   <string name="auth_sign_in_with_password">Accedi con una password</string>
   <string name="auth_continue_to_proton_vpn">per continuare su Proton VPN</string>
   <string name="auth_sign_in_with_sso">Accedi con SSO</string>
   <string name="auth_help_label">Aiuto</string>
-  <string name="auth_login_assistive_text">Inserisci l\'indirizzo email o il nome utente dell\'account Proton.</string>
+  <string name="auth_login_assistive_text">Inserisci l\'indirizzo email o il nome utente dell\'account Proton</string>
   <string name="auth_login_sso_assistive_text">Inserisci l\'indirizzo email</string>
   <string name="auth_help_title">Come possiamo aiutare?</string>
   <string name="auth_help_option_forgot_username">Nome utente dimenticato</string>
@@ -63,7 +63,7 @@
   <string name="auth_2fa_use_recovery_code">Usa un codice di recupero</string>
   <string name="auth_2fa_use_2fa_code">Usa il codice del secondo fattore</string>
   <string name="auth_2fa_error_empty_code">Inserisci il codice a 6 cifre</string>
-  <string name="auth_mailbox_title">Sblocca la tua casella di posta</string>
+  <string name="auth_mailbox_title">Sblocca la casella di posta</string>
   <string name="auth_mailbox_password_label">Password della casella di posta</string>
   <string name="auth_mailbox_unlock_action">Sblocca</string>
   <string name="auth_forgot_password">Password dimenticata</string>
@@ -94,7 +94,7 @@
   <string name="auth_mailbox_login_error_primary_key_error">Errore nella chiave principale</string>
   <string name="auth_mailbox_login_error_invalid_passphrase">Passphrase non valida</string>
   <string name="auth_password_chooser_title">Cambia la password</string>
-  <string name="auth_password_chooser_description">Per utilizzare l\'app Proton come membro di un\'organizzazione, devi prima cambiare la tua password effettuando l\'accesso a Proton tramite un browser.</string>
+  <string name="auth_password_chooser_description">Per utilizzare l\'app Proton come membro di un\'organizzazione, prima cambia la tua password effettuando l\'accesso a Proton tramite un browser.</string>
   <string name="auth_password_chooser_change">Cambia la password</string>
   <string name="auth_user_check_one_free_error">È consentito un solo account Proton gratuito.</string>
   <string name="auth_user_check_delinquent_error">Il tuo account è attualmente sospeso a causa di una fattura scaduta.</string>
@@ -106,7 +106,7 @@
   <string name="auth_long_login">Accesso in corso</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Crea il tuo account Proton</string>
-  <string name="auth_signup_current_email">Usa invece la tua email attuale</string>
+  <string name="auth_signup_current_email">Usa invece l\'email attuale</string>
   <string name="auth_signup_external_footnote">Con un indirizzo Proton, puoi utilizzare tutti i servizi di Proton</string>
   <string name="auth_signup_internal_footnote">Dovrai avere un indirizzo Proton per utilizzare Proton Mail e Proton Calendar</string>
   <string name="auth_signup_create_secure_proton_address">Ottieni un nuovo indirizzo email crittografato</string>
@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Nome utente necessario</string>
   <string name="auth_signup_error_passwords_do_not_match">Password non corrispondente</string>
   <string name="auth_signup_validation_password_length">Inserisci una password lunga almeno 8 caratteri</string>
+  <string name="auth_signup_password_not_allowed">Password non consentita</string>
   <string name="auth_signup_validation_password">Inserisci la password di accesso attuale</string>
   <string name="auth_signup_your_account_is_being_setup">Creazione dell\'account in corso</string>
   <string name="auth_signup_please_wait">Solitamente non richiede più di un minuto</string>

@@ -28,7 +28,7 @@
     <item quantity="other">Inserisci almeno %d caratteri</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">Vuoi chiudere la segnalazione di bug?</string>
-  <string name="core_report_bug_discard_changes_description">Se esci da questa pagina, la tua segnalazione non verrà salvata.</string>
+  <string name="core_report_bug_discard_changes_description">Se esci da questa pagina, la segnalazione non verrà salvata.</string>
   <string name="core_report_bug_discard_changes_cancel">Continua a scrivere</string>
   <string name="core_report_bug_discard_changes_confirm">Chiudi senza salvare</string>
   <plurals name="core_report_bug_form_field_too_long">

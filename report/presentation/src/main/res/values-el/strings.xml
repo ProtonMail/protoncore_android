@@ -38,5 +38,5 @@
   <string name="core_report_bug_general_error">Κάτι πήγε στραβά. Παρακαλούμε δοκιμάστε ξανά σε λίγα λεπτά.</string>
   <string name="core_report_bug_send">Αποστολή αναφοράς</string>
   <string name="core_report_bug_success">Σας ευχαριστούμε για την αναφορά σας</string>
-  <string name="core_report_bug_attach_log">Attach log</string>
+  <string name="core_report_bug_attach_log">Επισυνάψτε αρχείο καταγραφής</string>
 </resources>

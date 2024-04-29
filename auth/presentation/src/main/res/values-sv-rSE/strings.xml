@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Användarnamn får inte vara tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lösenorden matchar inte.</string>
   <string name="auth_signup_validation_password_length">Lösenord ska vara minst 8 tecken långt.</string>
+  <string name="auth_signup_password_not_allowed">Lösenord inte tillåtet.</string>
   <string name="auth_signup_validation_password">Lösenord kan inte vara tomt.</string>
   <string name="auth_signup_your_account_is_being_setup">Ditt konto håller på att skapas…</string>
   <string name="auth_signup_please_wait">Det tar vanligtvis inte mer än en minut.</string>

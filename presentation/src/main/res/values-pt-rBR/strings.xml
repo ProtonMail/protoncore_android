@@ -65,8 +65,8 @@
     <item quantity="other">%d segundos</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
-    <item quantity="one">%d milesegundo</item>
-    <item quantity="other">%d milesegundos</item>
+    <item quantity="one">%d milisegundo</item>
+    <item quantity="other">%d milisegundos</item>
   </plurals>
   <plurals name="presentation_datetime_microsecond">
     <item quantity="one">%d microssegundo</item>

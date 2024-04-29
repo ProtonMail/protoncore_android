@@ -30,11 +30,11 @@
   <string name="account_settings_list_item_password_header">Adgangskodehåndtering</string>
   <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
   <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
-  <string name="account_settings_list_item_recovery_header">Recovery email</string>
+  <string name="account_settings_list_item_recovery_header">Gendannelses-e-mail</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ikke konfigureret</string>
-  <string name="account_signout_dialog_title">Sign out?</string>
+  <string name="account_signout_dialog_title">Logge ud?</string>
   <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
   <string name="account_signout_dialog_delete_information">Remove all associated data</string>
-  <string name="account_signout_dialog_action_signout">Sign out</string>
-  <string name="account_signout_dialog_action_cancel">Cancel</string>
+  <string name="account_signout_dialog_action_signout">Logge ud</string>
+  <string name="account_signout_dialog_action_cancel">Annuller</string>
 </resources>

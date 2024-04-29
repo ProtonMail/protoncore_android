@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>
   <string name="auth_signup_error_passwords_do_not_match">პაროლები არ ემთხვევა.</string>
   <string name="auth_signup_validation_password_length">პაროლი 8 სიმბოლო მაინც უნდა იყოს.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">პაროლი ცარიელი არ შეიძლება, იყოს.</string>
   <string name="auth_signup_your_account_is_being_setup">მიმდინარეობს თქვენი ანგარიშის შექმნა…</string>
   <string name="auth_signup_please_wait">ჩვეულებრივ წუთზე მეტი არ სჭირდება ხოლმე.</string>

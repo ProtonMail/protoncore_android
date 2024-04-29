@@ -28,7 +28,7 @@
     <item quantity="other">Ingrese al menos %d caracteres</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">¿Cerrar reporte de errores?</string>
-  <string name="core_report_bug_discard_changes_description">Si abandona esta página, su reporte no se guardará.</string>
+  <string name="core_report_bug_discard_changes_description">Si abandona esta página, el reporte no se guardará.</string>
   <string name="core_report_bug_discard_changes_cancel">Continuar escribiendo</string>
   <string name="core_report_bug_discard_changes_confirm">Cerrar sin guardar</string>
   <plurals name="core_report_bug_form_field_too_long">
@@ -37,6 +37,6 @@
   </plurals>
   <string name="core_report_bug_general_error">Hubo un problema. Intente de nuevo en unos minutos.</string>
   <string name="core_report_bug_send">Enviar reporte</string>
-  <string name="core_report_bug_success">Gracias por su reporte</string>
+  <string name="core_report_bug_success">Gracias por el reporte</string>
   <string name="core_report_bug_attach_log">Adjuntar registro</string>
 </resources>

@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">사용자 이름은 비울 수 없습니다.</string>
   <string name="auth_signup_error_passwords_do_not_match">비밀번호가 일치하지 않습니다.</string>
   <string name="auth_signup_validation_password_length">비밀번호는 8글자 이상이어야 합니다.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">비밀번호는 비워둘 수 없습니다.</string>
   <string name="auth_signup_your_account_is_being_setup">사용자의 계정이 곧 생성됩니다…</string>
   <string name="auth_signup_please_wait">1분 이상 걸리지 않습니다.</string>

@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Имя пользователя не может быть пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Пароли не совпадают.</string>
   <string name="auth_signup_validation_password_length">Пароль должен содержать минимум 8 символов.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Пароль не может быть пустым.</string>
   <string name="auth_signup_your_account_is_being_setup">Создается ваш аккаунт…</string>
   <string name="auth_signup_please_wait">Обычно на это требуется не больше минуты.</string>

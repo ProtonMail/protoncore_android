@@ -25,11 +25,11 @@
   <string name="settings_recovery_email_new_hint">Ingrese la dirección de correo</string>
   <string name="settings_recovery_email_confirm_hint">Ingrese la dirección de correo de nuevo</string>
   <string name="settings_save">Guardar</string>
-  <string name="settings_password_required">Ingrese su contraseña de inicio de sesión</string>
+  <string name="settings_password_required">Ingrese la contraseña de inicio de sesión</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">No definido</string>
   <string name="settings_recovery_email_error_no_match">Las direcciones de correo de recuperación nuevas no coinciden.</string>
-  <string name="settings_validation_email">La dirección de correo es inválida.</string>
+  <string name="settings_validation_email">La dirección de correo no es válida.</string>
   <string name="settings_general_error">Ocurrió un error.</string>
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_login_password">Contraseña de inicio de sesión</string>
@@ -45,10 +45,10 @@
   <string name="settings_change_password_error">Ocurrió un error al cambiar la contraseña.</string>
   <string name="settings_recovery_email_success">La dirección de correo de recuperación fue actualizada.</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>
-  <string name="settings_password_management_start_recovery">¿No recuerda su contraseña?</string>
+  <string name="settings_password_management_start_recovery">¿No recuerda la contraseña?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetría anónima</string>
   <string name="device_settings_telemetry_hint">Para mejorar nuestros servicios, a veces recolectamos datos de uso anónimos.</string>
   <string name="device_settings_crashreport_title">Reportes anónimos de errores</string>
-  <string name="device_settings_crashreport_hint">Si la app no funciona, se enviará un informe a nuestros ingenieros con los detalles del motivo. Solo lo utilizaremos para mejorar la aplicación.</string>
+  <string name="device_settings_crashreport_hint">Si la aplicación no funciona, se enviará un informe a nuestros ingenieros con los detalles del motivo. Solo lo utilizaremos para mejorar la aplicación.</string>
 </resources>

@@ -33,7 +33,7 @@
   <string name="account_settings_list_item_recovery_header">Correo electrónico de recuperación</string>
   <string name="account_settings_list_item_recovery_hint_not_set">No establecido</string>
   <string name="account_signout_dialog_title">¿Cerrar sesión?</string>
-  <string name="account_signout_dialog_text">La información asociada a su cuenta se mantendrá en este dispositivo a menos que la elimine.</string>
+  <string name="account_signout_dialog_text">La información asociada a la cuenta se mantendrá en este dispositivo a menos que la elimine.</string>
   <string name="account_signout_dialog_delete_information">Borrar toda información asociada</string>
   <string name="account_signout_dialog_action_signout">Cerrar sesión</string>
   <string name="account_signout_dialog_action_cancel">Cancelar</string>

@@ -33,8 +33,8 @@
   <string name="account_settings_list_item_recovery_header">E-mail pro obnovení</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nenastaveno</string>
   <string name="account_signout_dialog_title">Odhlásit se?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
-  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
+  <string name="account_signout_dialog_text">Údaje přidružené k vašemu účtu zůstanou v tomto zařízení, pokud nezvolíte jejich smazání.</string>
+  <string name="account_signout_dialog_delete_information">Odebrat všechny přidružené údaje</string>
   <string name="account_signout_dialog_action_signout">Odhlásit se</string>
-  <string name="account_signout_dialog_action_cancel">Cancel</string>
+  <string name="account_signout_dialog_action_cancel">Zrušit</string>
 </resources>

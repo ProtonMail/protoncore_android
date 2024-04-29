@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">De gebruikersnaam mag niet leeg zijn.</string>
   <string name="auth_signup_error_passwords_do_not_match">Wachtwoorden komen niet overeen.</string>
   <string name="auth_signup_validation_password_length">Wachtwoord moet ten minste 8 tekens bevatten.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Het wachtwoord mag niet leeg zijn.</string>
   <string name="auth_signup_your_account_is_being_setup">Uw account wordt aangemaakt…</string>
   <string name="auth_signup_please_wait">Dit duurt doorgaans niet langer dan één minuut.</string>

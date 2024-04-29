@@ -20,10 +20,10 @@
   <!-- base common presentation strings -->
   <string name="presentation_browser_missing">No se encuentra el navegador para abrir el enlace.</string>
   <string name="presentation_force_update_title">Actualización requerida</string>
-  <string name="presentation_force_update_message">Esta versión de la app ya no es compatible, actualícela para continuar usándola.</string>
+  <string name="presentation_force_update_message">Esta versión de la aplicación ya no es compatible, actualícela para continuar usándola.</string>
   <string name="presentation_force_update_learn_more">Más información</string>
   <string name="presentation_force_update_update">Actualizar</string>
-  <string name="presentation_market_missing">No se encuentra la aplicación en el dispositivo. Vaya a la tienda de apps para instalarla.</string>
+  <string name="presentation_market_missing">No se encuentra la aplicación en el dispositivo. Vaya a la tienda de aplicaciones para instalarla.</string>
   <string name="presentation_authenticate">Autenticar</string>
   <string name="presentation_signin_to_continue">Iniciar sesión para continuar</string>
   <string name="presentation_alert_title">Alerta</string>
@@ -44,7 +44,7 @@
   <string name="presentation_skip">Omitir</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">No se pudo conectar al servidor.</string>
-  <string name="presentation_check_your_connection">Verifique su conexión</string>
+  <string name="presentation_check_your_connection">Verifique la conexión</string>
   <string name="presentation_connectivity_issues">Problemas de conectividad</string>
   <string name="presentation_field_required">Este campo es obligatorio.</string>
   <string name="presentation_error_general">Ocurrió un error.</string>

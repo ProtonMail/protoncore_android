@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Nome de usuário não pode ficar em branco.</string>
   <string name="auth_signup_error_passwords_do_not_match">As senhas não correspondem.</string>
   <string name="auth_signup_validation_password_length">A senha deve ter pelo menos 8 caracteres.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">A senha não pode ser vazia.</string>
   <string name="auth_signup_your_account_is_being_setup">Sua conta está sendo criada…</string>
   <string name="auth_signup_please_wait">Em geral isto não leva mais de um minuto.</string>
@@ -157,6 +158,6 @@
   <string name="auth_credentialless_vpn_subtitle">Navegue com privacidade, acesse conteúdo bloqueado e desfrute da liberdade digital.</string>
   <string name="auth_credentialless_guest_button">Continuar como convidado</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao usar este aplicativo você aceita nossos <annotation link="terms">Termos e Condições</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Mude-se para a privacidade.</string>
-  <string name="auth_credentialless_settings_subtitle">Obtenha um gerenciador de senhas, Mail e Calendar criptografados e 1 GB de armazenamento em nuvem gratuitos com uma conta Proton.</string>
+  <string name="auth_credentialless_settings_title">Faça a mudança para a privacidade.</string>
+  <string name="auth_credentialless_settings_subtitle">Obtenha um gerenciador de senhas, e-mail e calendário criptografados e 1 GB de armazenamento em nuvem gratuitos com uma conta Proton.</string>
 </resources>

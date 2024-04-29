@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Používateľské meno nesmie byť prázdne.</string>
   <string name="auth_signup_error_passwords_do_not_match">Heslá sa nezhodujú.</string>
   <string name="auth_signup_validation_password_length">Heslo by malo mať aspoň 8 znakov.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Heslo nesmie byť prázdne.</string>
   <string name="auth_signup_your_account_is_being_setup">Váš účet sa vytvára…</string>
   <string name="auth_signup_please_wait">Zvyčajne to netrvá dlhšie ako minútu.</string>

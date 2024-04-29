@@ -37,7 +37,7 @@
   <string name="account_recovery_cancelled_subtitle">Якщо ви ніколи не створювали запит на зміну пароля, ваш обліковий запис може бути у небезпеці.\n\nЗахистіть свій обліковий запис, змінивши пароль.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Доступне скидання пароля</string>
-  <string name="account_recovery_password_started_subtitle">Щоб скинути пароль, поверніться до пристрою, застосунку або браузера, з якого ви надіслали запит на скидання пароля.\n\nВам потрібно зробити це до %s.\n\nЯкщо ви не надсилали запит на скидання пароля, скасуйте його зараз.</string>
+  <string name="account_recovery_password_started_subtitle">Щоб скинути пароль, поверніться до пристрою, програми або браузера, з якого ви надіслали запит на скидання пароля.\n\nВам потрібно зробити це до %s.\n\nЯкщо ви не надсилали запит про скидання пароля, скасуйте його зараз.</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">Тепер ви можете скинути пароль.\n\nВам потрібно зробити це до %s.\n\nЯкщо ви не запитували про скидання пароля, скасуйте запит негайно.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Скидання пароля протерміновано</string>
@@ -47,20 +47,20 @@
   <string name="account_recovery_dismiss">Зрозуміло</string>
   <string name="account_recovery_reset">Скинути пароль</string>
   <!-- Account Recovery Info -->
-  <string name="account_recovery_info_grace_title">Подано запит на скидання пароля</string>
+  <string name="account_recovery_info_grace_title">Запит на скидання пароля надіслано</string>
   <string name="account_recovery_info_grace_subtitle">Ви можете скинути пароль через %1s.</string>
-  <string name="account_recovery_info_grace_description">Щоб переконатися, що саме ви намагаєтеся скинути пароль, ми чекаємо 72 години, перш ніж схвалити запит.\n\nЯкщо ви не просили скинути пароль, скасуйте цей запит негайно.</string>
+  <string name="account_recovery_info_grace_description">Щоб переконатися, що саме ви намагаєтеся скинути пароль, ми чекаємо 72 години, перш ніж схвалити запит.\n\nЯкщо ви не запитували про скидання пароля, скасуйте цей запит негайно.</string>
   <string name="account_recovery_info_cancelled_title">Скидання пароля скасовано</string>
-  <string name="account_recovery_info_cancelled_subtitle">Запит на зміну пароля був зроблений на %1s.</string>
-  <string name="account_recovery_info_cancelled_description">Якщо Ви не розпізнаєте цей запит, це може означати, що хтось інший має доступ до вашого облікового запису Proton.\n\nЗахистіть ваш обліковий запис зараз.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Запит на скидання пароля було подано %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Якщо ви не розпізнаєте цей запит, це може означати, що хтось інший має доступ до вашого облікового запису Proton.\n\nЗахистіть свій обліковий запис зараз.</string>
   <string name="account_recovery_info_insecure_title">Доступне скидання пароля</string>
-  <string name="account_recovery_info_insecure_subtitle">Тепер ви можете скинути пароль. Скидання пароля буде доступно до %1s.</string>
+  <string name="account_recovery_info_insecure_subtitle">Тепер ви можете скинути пароль. Скидання пароля буде доступним до %1s.</string>
   <string name="account_recovery_info_insecure_description">Не робили цього запиту?\n\nЯкщо ви не просили скинути пароль, скасуйте запит негайно.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Скинути пароль?</string>
-  <string name="account_recovery_reset_dialog_text">"З міркувань безпеки вам доведеться почекати 72 години, перш ніж ви зможете змінити пароль для %1s.\n\nЯкщо у вас налаштовано метод відновлення, спробуйте замість цього скористатися відновленням облікового запису. Це дозволить вам одразу змінити пароль."</string>
+  <string name="account_recovery_reset_dialog_text">"З міркувань безпеки вам доведеться почекати 72 години, перш ніж ви зможете змінити пароль для %1s.\n\nЯкщо у вас налаштовано спосіб відновлення облікового запису, спробуйте замість цього скористатися ним. Це дозволить вам одразу змінити пароль."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Запитати скидання пароля</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Використати спосіб відновлення</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Змінити пароль у вашому браузері не чекаючи періоду безпеки.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Змініть пароль у вашому браузері без очікування періоду безпеки.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Подано запит на скидання пароля</string>
 </resources>

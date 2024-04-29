@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">نام کاربری نباید خالی باشد.</string>
   <string name="auth_signup_error_passwords_do_not_match">گذرواژه‌ها مطابقت ندارند.</string>
   <string name="auth_signup_validation_password_length">رمز عبور باید حداقل 8 نویسه داشته باشد.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">گذرواژه نباید خالی باشد.</string>
   <string name="auth_signup_your_account_is_being_setup">در حال ایجاد حساب کاربری شما…</string>
   <string name="auth_signup_please_wait">معمولا بیشتر از یک دقیقه طول نمی کشد.</string>

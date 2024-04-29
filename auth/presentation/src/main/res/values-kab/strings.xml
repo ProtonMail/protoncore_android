@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Isem n useqdac ur ilaq ara ad yili d ilem.</string>
   <string name="auth_signup_error_passwords_do_not_match">Awalen uffiren ur menṭaḍen ara.</string>
   <string name="auth_signup_validation_password_length">Awal uffir yessefk ad isεu ugar n 8 n isekkilen.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Awal uffir ur ilaq ara ad yili d ilem.</string>
   <string name="auth_signup_your_account_is_being_setup">Amiḍan-ik-im la yettwerna…</string>
   <string name="auth_signup_please_wait">It usually takes no more than a minute.</string>

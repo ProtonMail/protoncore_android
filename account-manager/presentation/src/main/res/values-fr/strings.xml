@@ -28,12 +28,12 @@
   <string name="account_settings_item_header">Utilisateur</string>
   <string name="account_settings_list_header">Compte</string>
   <string name="account_settings_list_item_password_header">Gestion des mots de passe</string>
-  <string name="account_settings_list_item_password_hint_grace">Réinitialisation du mot de passe en attente</string>
+  <string name="account_settings_list_item_password_hint_grace">La réinitialisation du mot de passe est en attente.</string>
   <string name="account_settings_list_item_password_hint_insecure">La réinitialisation du mot de passe est prête.</string>
   <string name="account_settings_list_item_recovery_header">E-mail de récupération</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Non défini</string>
   <string name="account_signout_dialog_title">Se déconnecter ?</string>
-  <string name="account_signout_dialog_text">Les données associées à votre compte resteront sur cet appareil à moins que vous ne choisissiez de le supprimer.</string>
+  <string name="account_signout_dialog_text">Les données associées à votre compte resteront sur cet appareil à moins que vous ne choisissiez de les supprimer.</string>
   <string name="account_signout_dialog_delete_information">Retirer toutes les données associées</string>
   <string name="account_signout_dialog_action_signout">Se déconnecter</string>
   <string name="account_signout_dialog_action_cancel">Annuler</string>

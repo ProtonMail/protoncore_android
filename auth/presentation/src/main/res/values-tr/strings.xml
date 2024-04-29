@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Parola boş olamaz.</string>
   <string name="auth_signup_your_account_is_being_setup">Hesabınız oluşturuluyor…</string>
   <string name="auth_signup_please_wait">Genellikle bir dakikadan kısa sürer.</string>

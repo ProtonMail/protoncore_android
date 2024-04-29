@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">O nome de utilizador não pode estar em branco.</string>
   <string name="auth_signup_error_passwords_do_not_match">As palavras-passe não correspondem.</string>
   <string name="auth_signup_validation_password_length">A palavra-passe deve ter pelo menos 8 carateres.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">A palavra-passe é obrigatória.</string>
   <string name="auth_signup_your_account_is_being_setup">A sua conta está a ser criada…</string>
   <string name="auth_signup_please_wait">Normalmente, não demora mais do que um minuto.</string>

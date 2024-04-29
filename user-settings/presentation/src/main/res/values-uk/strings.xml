@@ -45,7 +45,7 @@
   <string name="settings_change_password_error">Сталася помилка зміни пароля.</string>
   <string name="settings_recovery_email_success">Адресу резервної електронної пошти оновлено</string>
   <string name="settings_password_management_success">Пароль оновлено</string>
-  <string name="settings_password_management_start_recovery">Не знаєте свого поточного пароля?</string>
+  <string name="settings_password_management_start_recovery">Не знаєте свій поточний пароль?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Анонімна телеметрія</string>
   <string name="device_settings_telemetry_hint">Для поліпшення наших послуг ми іноді збираємо анонімні дані користування.</string>

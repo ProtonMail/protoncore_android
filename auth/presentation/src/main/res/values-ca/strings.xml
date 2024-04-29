@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot estar en blanc.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les contrasenyes no coincideixen.</string>
   <string name="auth_signup_validation_password_length">La contrasenya ha de tenir almenys 8 caràcters.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">La contrasenya no pot ser buida.</string>
   <string name="auth_signup_your_account_is_being_setup">S\'està creant el vostre compte…</string>
   <string name="auth_signup_please_wait">No sol tardar més d\'un minut.</string>

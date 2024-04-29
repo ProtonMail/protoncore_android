@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">使用者名稱不能為空。</string>
   <string name="auth_signup_error_passwords_do_not_match">密碼不相符。</string>
   <string name="auth_signup_validation_password_length">密碼應至少 8 個字元長。</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">密碼不能為空。</string>
   <string name="auth_signup_your_account_is_being_setup">您的帳號即時創建中...</string>
   <string name="auth_signup_please_wait">通常不超過一分鐘。</string>

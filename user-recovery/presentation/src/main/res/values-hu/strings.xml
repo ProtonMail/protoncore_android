@@ -17,9 +17,9 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="user_recovery_notification_title">Trusted device recovery</string>
+  <string name="user_recovery_notification_title">Helyreállítás megbízható eszközzel</string>
   <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
-  <string name="user_recovery_dialog_title">Trusted device recovery</string>
+  <string name="user_recovery_dialog_title">Helyreállítás megbízható eszközzel</string>
   <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
   <string name="user_recovery_dialog_dismiss">Got it</string>
 </resources>

@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">ユーザー名を空白にすることはできません。</string>
   <string name="auth_signup_error_passwords_do_not_match">パスワードが一致しません.</string>
   <string name="auth_signup_validation_password_length">パスワードは 8 文字以上必要です。</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">パスワードを空にすることはできません。</string>
   <string name="auth_signup_your_account_is_being_setup">アカウントを作成しています…</string>
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>

@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Поле з імем карыстальніка не можа быць пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі не супадаюць.</string>
   <string name="auth_signup_validation_password_length">Пароль павінен змяшчаць прынамсі 8 сімвалаў.</string>
+  <string name="auth_signup_password_not_allowed">Пароль забаронены.</string>
   <string name="auth_signup_validation_password">Пароль не можа быць пустым.</string>
   <string name="auth_signup_your_account_is_being_setup">Адбываецца стварэнне вашага ўліковага запісу…</string>
   <string name="auth_signup_please_wait">Звычайна гэта доўжыцца не больш за хвіліну.</string>

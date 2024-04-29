@@ -19,8 +19,8 @@
 <resources>
   <string name="plans_select_a_plan">Seleziona un piano</string>
   <string name="plans_select_a_plan_subtitle">Un piano per tutti i servizi di Proton</string>
-  <string name="plans_fetching_general_error">Errore nel caricamento dei piani</string>
-  <string name="plans_payment_error">Errore nel pagamento. Riprova più tardi o crea un piano gratuito.</string>
+  <string name="plans_fetching_general_error">Caricamento dei piani non riuscito</string>
+  <string name="plans_payment_error">Pagamento non riuscito. Riprova più tardi o crea un piano gratuito.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">al mese</string>
   <string name="plan_price_annually">all\'anno</string>
@@ -48,7 +48,7 @@
   <string name="plans_upgrade_your_plan">Effettua l\'upgrade del piano</string>
   <string name="plans_proton_for_free">Ottieni Proton gratuitamente</string>
   <string name="plans_get_proton">Ottieni %s</string>
-  <string name="plans_manage_your_subscription">Gestisci il tuo abbonamento su <a href="https://account.proton.me">account.proton.me</a></string>
+  <string name="plans_manage_your_subscription">Gestisci l\'abbonamento al sito <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s di %2$s</string>
   <string name="plans_payments_info_not_available">non disponibile</string>
   <string name="plans_manage_your_subscription_google">Il tuo abbonamento è gestito da Google Play.</string>
@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">Il tuo spazio di archiviazione Drive è pieno</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Il tuo spazio di archiviazione Drive è quasi pieno</string>
   <string name="plans_subscription_storage_get_more">Ottieni più spazio di archiviazione</string>
-  <string name="plans_subscription_storage_full_description">Effettua l\'upgrade del tuo piano per continuare a utilizzare il tuo account senza interruzioni.</string>
+  <string name="plans_subscription_storage_full_description">Effettua l\'upgrade per continuare a utilizzare il tuo account senza interruzioni.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# di archiviazione</item>

@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Το Όνομα Χρήστη δεν πρέπει να είναι κενό.</string>
   <string name="auth_signup_error_passwords_do_not_match">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
   <string name="auth_signup_validation_password_length">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Ο κωδικός πρόσβασης δεν γίνεται να είναι κενός.</string>
   <string name="auth_signup_your_account_is_being_setup">Ο λογαριασμός σας δημιουγείται…</string>
   <string name="auth_signup_please_wait">Συνήθως δεν διαρκεί περισσότερο από ένα λεπτό.</string>

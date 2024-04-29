@@ -33,8 +33,8 @@
   <string name="account_settings_list_item_recovery_header">Резервный адрес электронной почты</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не установлен</string>
   <string name="account_signout_dialog_title">Bыйти?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
-  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
+  <string name="account_signout_dialog_text">Данные, связанные с вашей учетной записью, будут оставаться на этом устройстве, пока вы не решите их удалить.</string>
+  <string name="account_signout_dialog_delete_information">Удалить все данные, связанные с этой учетной записью</string>
   <string name="account_signout_dialog_action_signout">Bыйти</string>
   <string name="account_signout_dialog_action_cancel">Отменить</string>
 </resources>

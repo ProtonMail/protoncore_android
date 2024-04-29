@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">A felhasználónév nem lehet üres.</string>
   <string name="auth_signup_error_passwords_do_not_match">A jelszavak nem egyeznek meg.</string>
   <string name="auth_signup_validation_password_length">A jelszónak legalább 8 karakternek kell lennie.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">A jelszó nem lehet üres.</string>
   <string name="auth_signup_your_account_is_being_setup">Fiókja létrehozás alatt…</string>
   <string name="auth_signup_please_wait">Ez általában nem tart tovább egy percnél.</string>

@@ -20,8 +20,8 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Reimpostazione della password richiesta</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">È stata richiesta una reimpostazione della password per <b>%1$s</b>. Puoi modificare la tua password tra %2$d ora.\n\nSe non hai effettuato tu questa richiesta, annullala adesso.</item>
-    <item quantity="other">È stata richiesta una reimpostazione della password per <b>%1$s</b>. Puoi modificare la tua password tra %2$d ore.\n\nSe non hai effettuato tu questa richiesta, annullala adesso.</item>
+    <item quantity="one">È stata richiesta una reimpostazione della password per <b>%1$s</b>. Puoi modificare la password tra %2$d ora.\n\nSe non hai effettuato tu questa richiesta, annullala adesso.</item>
+    <item quantity="other">È stata richiesta una reimpostazione della password per <b>%1$s</b>. Puoi modificare la password tra %2$d ore.\n\nSe non hai effettuato tu questa richiesta, annullala adesso.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Annullare la reimpostazione della password?</string>
@@ -59,6 +59,6 @@
   <string name="account_recovery_reset_dialog_text">"Per motivi di sicurezza, dovrai attendere 72 ore prima di poter modificare la password per %1s.\n\nSe hai impostato un metodo di recupero, prova invece il recupero dell'account. Ciò ti consentirà di modificare immediatamente la tua password."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Richiedi la reimpostazione della password</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Usa un metodo di recupero</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Cambia la password nel tuo browser web senza attendere il periodo di sicurezza.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Cambia la password nel browser web senza attendere il periodo di sicurezza.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Reimpostazione della password richiesta</string>
 </resources>

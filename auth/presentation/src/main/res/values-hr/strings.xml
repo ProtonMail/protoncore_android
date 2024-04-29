@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">Korisničko ime ne smije biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lozinke se ne poklapaju.</string>
   <string name="auth_signup_validation_password_length">Lozinka mora imati najmanje 8 znakova.</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">Lozinka ne smije biti prazna.</string>
   <string name="auth_signup_your_account_is_being_setup">Vaš račun se stvara…</string>
   <string name="auth_signup_please_wait">Najčešće ne traje više od minute.</string>

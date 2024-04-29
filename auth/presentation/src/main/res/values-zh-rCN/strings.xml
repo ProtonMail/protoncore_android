@@ -135,6 +135,7 @@
   <string name="auth_signup_error_username_blank">用户名不能为空。</string>
   <string name="auth_signup_error_passwords_do_not_match">两次输入的密码不一致。</string>
   <string name="auth_signup_validation_password_length">密码长度至少应为 8 个字符。</string>
+  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
   <string name="auth_signup_validation_password">密码不能为空。</string>
   <string name="auth_signup_your_account_is_being_setup">正在创建您的账户…</string>
   <string name="auth_signup_please_wait">通常不会超过一分钟。</string>

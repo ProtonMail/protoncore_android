@@ -33,8 +33,8 @@
   <string name="account_settings_list_item_recovery_header">Kurtarma e-posta adresi</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ayarlanmamış</string>
   <string name="account_signout_dialog_title">Oturum kapatılsın mı?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
-  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
+  <string name="account_signout_dialog_text">Hesabınızla ilişkili veriler, silmeyi seçmediğiniz sürece bu aygıtta kalır.</string>
+  <string name="account_signout_dialog_delete_information">İlişkili tüm verileri kaldır</string>
   <string name="account_signout_dialog_action_signout">Oturumu kapat</string>
   <string name="account_signout_dialog_action_cancel">İptal</string>
 </resources>

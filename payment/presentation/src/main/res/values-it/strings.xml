@@ -25,13 +25,13 @@
   <string name="payments_error_card_number">Numero della carta non valido</string>
   <string name="payments_error_cvc">Inserisci un codice di sicurezza valido</string>
   <string name="payments_error_session">ID di sessione valido necessario quando si iscrive un utente che ha effettuato l\'accesso.</string>
-  <string name="payments_error_signup_paymentmethod">Impossibile registrarsi con il metodo di pagamento esistente</string>
+  <string name="payments_error_signup_paymentmethod">Registrazione con il metodo di pagamento esistente non riuscita</string>
   <string name="payments_error_invalid_session">Sessione non valida</string>
   <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento trovato</string>
   <string name="payments_error_google_prices">Problema nel caricamento dei prezzi dal Google Play Store.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Scegli il tuo metodo di pagamento</string>
+  <string name="payments_choose_payment_method">Scegli il metodo di pagamento</string>
   <string name="payments_add_credit_debit_card">Aggiungi una nuova carta di credito/debito</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga con</string>
@@ -66,9 +66,9 @@
   <!-- endregion -->
   <!-- region GIAP -->
   <string name="payments_giap_unredeemed_title">Conferma l\'upgrade dell\'account</string>
-  <string name="payments_giap_unredeemed_description">Il tuo pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi ripetere il pagamento per effettuare l\'upgrade del tuo account adesso?</string>
+  <string name="payments_giap_unredeemed_description">Il pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi ripetere il pagamento per effettuare l\'upgrade del tuo account adesso?</string>
   <string name="payments_giap_unredeemed_confirm">Conferma l\'upgrade</string>
-  <string name="payments_giap_redeem_success">L\'upgrade del tuo account è stato effettuato correttamente</string>
-  <string name="payments_giap_redeem_error">Impossibile completare l\'upgrade. Riprova più tardi.</string>
+  <string name="payments_giap_redeem_success">L\'upgrade dell\'account è stato effettuato correttamente</string>
+  <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova più tardi.</string>
   <!-- endregion -->
 </resources>
