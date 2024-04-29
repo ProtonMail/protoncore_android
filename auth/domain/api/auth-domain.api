@@ -198,6 +198,9 @@ public final class me/proton/core/auth/domain/exception/InvalidServerAuthenticat
 	public fun <init> (Ljava/lang/String;)V
 }
 
+public abstract interface class me/proton/core/auth/domain/feature/IsFido2Enabled : me/proton/core/featureflag/domain/IsFeatureFlagEnabled {
+}
+
 public abstract interface class me/proton/core/auth/domain/repository/AuthRepository {
 	public abstract fun getAuthInfoSrp (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getAuthInfoSso (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

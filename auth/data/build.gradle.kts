@@ -56,6 +56,7 @@ dependencies {
     )
 
     implementation(
+        project(Module.featureFlagData),
         project(Module.kotlinUtil),
         `coroutines-core`,
     )

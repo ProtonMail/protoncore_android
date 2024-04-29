@@ -614,6 +614,10 @@ public final class me/proton/core/auth/data/api/response/SessionResponse$Compani
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/auth/data/feature/IsFido2EnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/auth/domain/feature/IsFido2Enabled {
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+}
+
 public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/proton/core/auth/domain/repository/AuthRepository {
 	public fun <init> (Lme/proton/core/network/data/ApiProvider;Landroid/content/Context;Lme/proton/core/domain/entity/Product;Lme/proton/core/auth/domain/usecase/ValidateServerProof;)V
 	public fun getAuthInfoSrp (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
