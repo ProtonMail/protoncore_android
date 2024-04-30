@@ -19,14 +19,11 @@
 package me.proton.core.telemetry.data.worker
 
 import android.content.Context
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.test.core.app.ApplicationProvider
 import androidx.work.ListenableWorker
+import androidx.work.WorkerFactory
+import androidx.work.WorkerParameters
 import androidx.work.testing.TestListenableWorkerBuilder
-import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
-import dagger.hilt.android.testing.HiltAndroidTest
-import dagger.hilt.android.testing.HiltTestApplication
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -35,50 +32,34 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.HttpResponseCodes
-import me.proton.core.telemetry.domain.repository.TelemetryRepository
 import me.proton.core.telemetry.domain.TelemetryWorkerManager
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
+import me.proton.core.telemetry.domain.repository.TelemetryRepository
 import me.proton.core.telemetry.domain.usecase.IsTelemetryEnabled
+import me.proton.core.telemetry.domain.usecase.ProcessTelemetryEvents
 import org.junit.Before
-import org.junit.Rule
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
-import javax.inject.Inject
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
-@HiltAndroidTest
-@Config(application = HiltTestApplication::class)
 @RunWith(RobolectricTestRunner::class)
 class TelemetryWorkerTest {
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
-
-    @Inject
-    internal lateinit var hiltWorkerFactory: HiltWorkerFactory
-
-    @BindValue
-    internal lateinit var isTelemetryEnabled: IsTelemetryEnabled
-
-    @BindValue
-    internal lateinit var telemetryWorkerManager: TelemetryWorkerManager
-
-    @BindValue
-    internal lateinit var repository: TelemetryRepository
-
+    private lateinit var isTelemetryEnabled: IsTelemetryEnabled
+    private lateinit var telemetryWorkerManager: TelemetryWorkerManager
+    private lateinit var repository: TelemetryRepository
     private lateinit var context: Context
-
+    private lateinit var processTelemetryEvents: ProcessTelemetryEvents
     private val userId = UserId("user-id")
 
     @Before
     fun setUp() {
-        hiltRule.inject()
         context = ApplicationProvider.getApplicationContext()
         isTelemetryEnabled = mockk()
         telemetryWorkerManager = mockk(relaxUnitFun = true)
         repository = mockk(relaxUnitFun = true)
+        processTelemetryEvents = ProcessTelemetryEvents(isTelemetryEnabled, repository)
     }
 
 
@@ -157,7 +138,7 @@ class TelemetryWorkerTest {
         coEvery { isTelemetryEnabled(userId) } returns true
         coEvery { repository.getEvents(userId, any()) } returns listOf(mockk())
         coEvery { repository.sendEvents(userId, any()) } throws
-            ApiException(ApiResult.Error.Http(HttpResponseCodes.HTTP_TOO_MANY_REQUESTS, "Error"))
+                ApiException(ApiResult.Error.Http(HttpResponseCodes.HTTP_TOO_MANY_REQUESTS, "Error"))
 
         val result = makeAndRunWorker(userId)
         assertEquals(ListenableWorker.Result.retry(), result)
@@ -168,7 +149,7 @@ class TelemetryWorkerTest {
         coEvery { isTelemetryEnabled(userId) } returns true
         coEvery { repository.getEvents(userId, any()) } returns listOf(mockk())
         coEvery { repository.sendEvents(userId, any()) } throws
-            ApiException(ApiResult.Error.Http(HttpResponseCodes.HTTP_BAD_REQUEST, "Error"))
+                ApiException(ApiResult.Error.Http(HttpResponseCodes.HTTP_BAD_REQUEST, "Error"))
 
         val result = makeAndRunWorker(userId)
         assertIs<ListenableWorker.Result.Failure>(result)
@@ -185,7 +166,19 @@ class TelemetryWorkerTest {
     }
 
     private fun makeWorker(userId: UserId?): TelemetryWorker = TestListenableWorkerBuilder<TelemetryWorker>(context)
-        .setWorkerFactory(hiltWorkerFactory)
+        .setWorkerFactory(object : WorkerFactory() {
+            override fun createWorker(
+                appContext: Context,
+                workerClassName: String,
+                workerParameters: WorkerParameters
+            ): ListenableWorker {
+                return TelemetryWorker(
+                    appContext,
+                    workerParameters,
+                    processTelemetryEvents
+                )
+            }
+        })
         .setInputData(TelemetryWorker.makeInputData(userId))
         .build()
 

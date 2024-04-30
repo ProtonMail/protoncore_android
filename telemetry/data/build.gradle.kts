@@ -67,7 +67,6 @@ dependencies {
         `android-test-core-ktx`,
         `android-work-testing`,
         `coroutines-test`,
-        `hilt-android-testing`,
         junit,
         `kotlin-reflect`,
         `kotlin-test`,
