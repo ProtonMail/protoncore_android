@@ -11,6 +11,40 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [23.0.0] - 2024-04-30
+
+### Breaking Changes
+
+**Features**
+
+- user-settings:
+  - Add `UserSettingsEntity.sessionAccountRecovery` property.
+
+    MIGRATION: UserSettingsDatabase.MIGRATION_6.
+
+### Features
+
+- Configuration module host selection improvements.
+- account-manager:
+  - Update UI for changing password.
+- auth:
+  - Added Cancel Create Account Dialog.
+  - Add common pass check.
+- user-settings:
+  - Check if session account recovery is enabled, before displaying the password reset button.
+  - Don't show "encryption password" tab in VPN.
+  - Update UI for changing password.
+
+### Bug Fixes
+
+- plan:
+  - Update UI of `UpgradeStorageInfo` to avoid truncated text.
+  - Fixed Subscription Update error handling (e.g. network issue).
+
+### Internationalization
+
+- Upgrade translations from crowdin (9115a3a2).
+
 ## [22.2.0] - 2024-04-22
 
 ### Chores
