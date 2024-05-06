@@ -149,9 +149,8 @@
   <string name="ten_hide_my_email_aliases">10个 Hide-my-email 别名</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Proton Drive 存储：已用 %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Proton Mail 存储：已用 %d%%</string>
-  <string name="upgrade_storage_subtitle">获得更多存储空间</string>
-  <string name="upgrade_storage_cta_button">升级</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Upgrade storage</string>
   <!-- endregion -->
 </resources>

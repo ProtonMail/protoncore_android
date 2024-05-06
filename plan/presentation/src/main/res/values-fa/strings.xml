@@ -164,9 +164,8 @@
   <string name="ten_hide_my_email_aliases">۱۰ پنهان‌سازی نام‌های مستعار ایمیل</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">حافظه درایو: %d%% پر</string>
-  <string name="upgrade_storage_current_mail_storage">حافظه ایمیل : %d%% پر</string>
-  <string name="upgrade_storage_subtitle">دریافت حافظه بیشتر</string>
-  <string name="upgrade_storage_cta_button">ارتقا</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Upgrade storage</string>
   <!-- endregion -->
 </resources>

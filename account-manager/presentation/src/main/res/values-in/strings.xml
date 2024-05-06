@@ -17,8 +17,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="account_switcher_section_switch_to">Ganti ke</string>
-  <string name="account_switcher_action_add_account">Tambah akun</string>
+  <string name="account_switcher_section_switch_to">Beralih ke</string>
+  <string name="account_switcher_action_add_account">Tambahkan akun</string>
   <string name="account_switcher_action_sign_in">Masuk</string>
   <string name="account_switcher_action_sign_out">Keluar</string>
   <string name="account_switcher_action_remove">Hapus</string>
@@ -27,10 +27,10 @@
   <string name="account_settings_header">Pengaturan akun</string>
   <string name="account_settings_item_header">Pengguna</string>
   <string name="account_settings_list_header">Akun</string>
-  <string name="account_settings_list_item_password_header">Pengelolaan kata sandi</string>
+  <string name="account_settings_list_item_password_header">Ubah kata sandi</string>
   <string name="account_settings_list_item_password_hint_grace">Pengaturan ulang kata sandi ditunda</string>
   <string name="account_settings_list_item_password_hint_insecure">Pengaturan ulang kata sandi siap</string>
-  <string name="account_settings_list_item_recovery_header">Alamat email pemulihan</string>
+  <string name="account_settings_list_item_recovery_header">Pemulihan surel</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Belum ditentukan</string>
   <string name="account_signout_dialog_title">Keluar dari akun?</string>
   <string name="account_signout_dialog_text">Data yang terhubung dengan akun Anda akan tetap tersimpan pada perangkat ini kecuali Anda memilih untuk menghapusnya.</string>

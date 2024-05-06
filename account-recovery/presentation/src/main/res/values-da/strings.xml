@@ -36,7 +36,7 @@
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Nulstilling af adgangskode tilgængelig</string>
   <string name="account_recovery_password_started_subtitle">For at nulstille din adgangskode skal du vende tilbage til den enhed og browser, hvorfra du anmodede om nulstilling af din adgangskode.\n\nDet skal du gøre før %s.\n\nHvis du ikke har bedt om at nulstille din adgangskode, skal du annullere nulstillingen nu.</string>
-  <string name="account_recovery_password_started_self_initiated_subtitle">Du kan nu nulstille din adgangskode.\n\nDu skal gøre dette før %s.\n\nHvis du ikke anmodet om at få reset din adgangskode skal du annullere denne anmodning nu.</string>
+  <string name="account_recovery_password_started_self_initiated_subtitle">Du kan nu nulstille din adgangskode.\n\nDu skal gøre det senest %s.\n\n Hvis du ikke har bestilt nulstilling af adgangskoden, skal du annullere anmodningen nu.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Nulstilling af adgangskode udløbet</string>
   <string name="account_recovery_window_ended_subtitle">Du er nødt til at anmode om en ny nulstilling af adgangskoden til %s.</string>
@@ -49,16 +49,16 @@
   <string name="account_recovery_info_grace_subtitle">Du kan nulstille din adgangskode om %1s.</string>
   <string name="account_recovery_info_grace_description">For at sikre, at det virkelig er dig, der forsøger at nulstille din adgangskode, venter vi 72 timer, før vi godkender anmodninger.\n\nHvis du ikke har bedt om at nulstille din adgangskode, skal du annullere denne anmodning nu.</string>
   <string name="account_recovery_info_cancelled_title">Nulstilling af adgangskode annulleret</string>
-  <string name="account_recovery_info_cancelled_subtitle">En anmodning om nulstilling af adgangskode blev foretaget på %1s.</string>
-  <string name="account_recovery_info_cancelled_description">Hvis du ikke genkender denne anmodning, kan det betyde at en anden har adgang til din Proton-konto.\n\nBeskyt din konto nu.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Der blev fremsat et ønske om nulstilling af adgangskode på %1s.</string>
+  <string name="account_recovery_info_cancelled_description">Såfremt du ikke genkender denne anmodning, kan det betyde, at nogen har opnået adgang til din Proton-konto.\n\nBeskyt din konto nu.</string>
   <string name="account_recovery_info_insecure_title">Nulstilling af adgangskode tilgængelig</string>
-  <string name="account_recovery_info_insecure_subtitle">Du kan nu nulstille din adgangskode. Nulstilling af adgangskode er tilgængelig indtil %1s.</string>
+  <string name="account_recovery_info_insecure_subtitle">Du kan nu nulstille adgangskoden. Nulstillingen er tilgængelig indtil %1s.</string>
   <string name="account_recovery_info_insecure_description">Foretog du ikke denne anmodning?\n\nHvis du ikke bad om at nulstille din adgangskode, skal du annullere anmodningen nu.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Nulstil adgangskode?</string>
-  <string name="account_recovery_reset_dialog_text">"Af sikkerhedsmæssige årsager skal du vente 72 timer, før du kan ændre adgangskoden til %1s.\n\nHvis du har konfigureret en gendannelsesmetode, så prøv kontogendannelse i stedet. Dette giver dig mulighed for at ændre din adgangskode med det samme."</string>
+  <string name="account_recovery_reset_dialog_text">"Af sikkerhedsmæssige årsager skal du vente 72 timer, før du kan ændre adgangskoden til %1s.\n\nHvis du har konfigureret en gendannelsesmetode, kan du prøve kontogendannelse i stedet. Sådan kan du ændre adgangskoden med det samme."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Anmod om nulstilling af adgangskode</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Brug gendannelsesmetode</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Skift din adgangskode i din webbrowser uden at vente i sikkerhedsperioden.</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Ændr din adgangskode i webbrowseren uden at vente i sikkerhedsperioden.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Nulstilling af adgangskode anmodet</string>
 </resources>

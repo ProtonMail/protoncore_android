@@ -36,5 +36,5 @@
   <string name="core_report_bug_general_error">問題が発生しました。数分後に再度お試しください。</string>
   <string name="core_report_bug_send">報告を送信</string>
   <string name="core_report_bug_success">ご報告ありがとうございます</string>
-  <string name="core_report_bug_attach_log">Attach log</string>
+  <string name="core_report_bug_attach_log">ログを添付</string>
 </resources>

@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">设置恢复方法</string>
   <string name="auth_signup_no_connectivity">网络未连接，无法显示服务条款。</string>
   <string name="auth_signup_error_create_to_continue">请创建一个账户以继续</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">用户名不能为空。</string>
   <string name="auth_signup_error_passwords_do_not_match">两次输入的密码不一致。</string>
   <string name="auth_signup_validation_password_length">密码长度至少应为 8 个字符。</string>

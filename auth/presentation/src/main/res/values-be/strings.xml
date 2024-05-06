@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Задаць спосаб аднаўлення</string>
   <string name="auth_signup_no_connectivity">Няма падключэння, каб паказаць умовы выкарыстання.</string>
   <string name="auth_signup_error_create_to_continue">Стварыце ўліковы запіс, каб працягнуць</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Даведацца больш</string>
+  <string name="auth_signup_create_account_dialog_title">Актываваць падпіску</string>
+  <string name="auth_signup_create_account_dialog_text">Ваш плацеж Google Pay паспяхова апрацаваны. Стварыце ўліковы запіс Proton, каб актываваць сваю падпіску.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Скасаваць</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Працягнуць</string>
   <string name="auth_signup_error_username_blank">Поле з імем карыстальніка не можа быць пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі не супадаюць.</string>
   <string name="auth_signup_validation_password_length">Пароль павінен змяшчаць прынамсі 8 сімвалаў.</string>

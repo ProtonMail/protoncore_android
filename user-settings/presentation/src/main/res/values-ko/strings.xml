@@ -32,16 +32,17 @@
   <string name="settings_validation_email">올바르지 않은 이메일 주소입니다.</string>
   <string name="settings_general_error">오류 발생.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">로그인 비밀번호</string>
-  <string name="settings_password_management_tab_mailbox_password">메일함 비밀번호</string>
-  <string name="settings_password_management_change_login_password">비밀번호 변경</string>
-  <string name="settings_password_management_change_mailbox_password">메일함 비밀번호 변경</string>
-  <string name="settings_password_management_header">비밀번호 관리</string>
-  <string name="settings_login_password_hint_current">현재 로그인 비밀번호</string>
-  <string name="settings_login_password_hint_new">새 로그인 비밀번호</string>
-  <string name="settings_login_password_hint_new_confirm">새로운 로그인 비밀번호 확인</string>
-  <string name="settings_mailbox_password_hint_new">새 메일함 비밀번호</string>
-  <string name="settings_mailbox_password_hint_new_confirm">새로운 메일함 비밀번호 확인</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">암호화 비밀번호</string>
+  <string name="settings_password_management_change_login_password">두 개의 비밀번호 모드에서는 Proton 계정에 로그인할 때 계정 비밀번호를 사용합니다.</string>
+  <string name="settings_password_management_change_mailbox_password">두 개의 비밀번호 모드에서는 데이터의 암호화와 복호화에 암호화 비밀번호를 사용합니다.</string>
+  <string name="settings_password_management_header">비밀번호 변경</string>
+  <string name="settings_login_password_hint_current">현재 비밀번호</string>
+  <string name="settings_login_password_hint_new">새로운 비밀번호</string>
+  <string name="settings_login_password_hint_new_confirm">새로운 비밀번호 확인</string>
+  <string name="settings_mailbox_password_hint_current_account_password">현재 계정 비밀번호</string>
+  <string name="settings_mailbox_password_hint_new">새 암호화 비밀번호</string>
+  <string name="settings_mailbox_password_hint_new_confirm">새 암호화 비밀번호 확인</string>
   <string name="settings_change_password_error">비밀번호 변경에 오류가 발생했습니다</string>
   <string name="settings_recovery_email_success">복구 이메일 주소 변경됨</string>
   <string name="settings_password_management_success">비밀번호 변경됨</string>

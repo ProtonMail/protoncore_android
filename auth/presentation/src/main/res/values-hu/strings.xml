@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Helyreállítási módszer beállítása</string>
   <string name="auth_signup_no_connectivity">Nincs kapcsolat a Felhasználási feltételek megjelenítéséhez.</string>
   <string name="auth_signup_error_create_to_continue">Kérjük, hozzon létre egy fiókot a folytatáshoz</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">A felhasználónév nem lehet üres.</string>
   <string name="auth_signup_error_passwords_do_not_match">A jelszavak nem egyeznek meg.</string>
   <string name="auth_signup_validation_password_length">A jelszónak legalább 8 karakternek kell lennie.</string>

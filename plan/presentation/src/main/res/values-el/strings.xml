@@ -164,9 +164,8 @@
   <string name="ten_hide_my_email_aliases">10 ψευδώνυμα Hide My Email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Αποθήκευση μονάδας δίσκου: %d%% πλήρης</string>
-  <string name="upgrade_storage_current_mail_storage">Αποθήκευση αλληλογραφίας: %d%% πλήρης</string>
-  <string name="upgrade_storage_subtitle">Αποκτήστε περισσότερο χώρο αποθήκευσης</string>
-  <string name="upgrade_storage_cta_button">Αναβάθμιση</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Upgrade storage</string>
   <!-- endregion -->
 </resources>

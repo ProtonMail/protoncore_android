@@ -27,7 +27,7 @@
   <string name="account_settings_header">Nastavitve računa</string>
   <string name="account_settings_item_header">Uporabnik</string>
   <string name="account_settings_list_header">Račun</string>
-  <string name="account_settings_list_item_password_header">Upravljanje gesel</string>
+  <string name="account_settings_list_item_password_header">Change password</string>
   <string name="account_settings_list_item_password_hint_grace">Ponastavitev gesla je v teku</string>
   <string name="account_settings_list_item_password_hint_insecure">Ponastavitev gesla je pripravljena</string>
   <string name="account_settings_list_item_recovery_header">E-poštni naslov za obnovitev</string>

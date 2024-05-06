@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">Dispositivo de confiança de recuperação</string>
-  <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
+  <string name="user_recovery_notification_body">Recuperámos automaticamente os dados da sua conta.</string>
   <string name="user_recovery_dialog_title">Dispositivo de confiança de recuperação</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Got it</string>
+  <string name="user_recovery_dialog_text">Na sequência de uma redefinição da palavra-passe, recuperámos automaticamente os dados de %1s.</string>
+  <string name="user_recovery_dialog_dismiss">Entendi</string>
 </resources>

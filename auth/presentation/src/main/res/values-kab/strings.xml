@@ -39,7 +39,7 @@
   <string name="auth_email_username">Isem n useqdac neɣ imayl</string>
   <string name="auth_account_details">Sekcem umlan n umiḍan-ik Proton.</string>
   <string name="auth_sign_in">Qqen</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Tuffɣa</string>
   <string name="auth_sign_in_action">Qqen</string>
   <string name="auth_sign_in_sso">Kcem ɣer tkebbanit-ik</string>
   <string name="auth_sign_in_with_password">Qqen s wawal uffir</string>
@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Sbadu tarrayt n tririt</string>
   <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
   <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">Isem n useqdac ur ilaq ara ad yili d ilem.</string>
   <string name="auth_signup_error_passwords_do_not_match">Awalen uffiren ur menṭaḍen ara.</string>
   <string name="auth_signup_validation_password_length">Awal uffir yessefk ad isεu ugar n 8 n isekkilen.</string>

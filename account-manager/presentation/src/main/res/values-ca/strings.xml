@@ -27,7 +27,7 @@
   <string name="account_settings_header">Configuració del compte</string>
   <string name="account_settings_item_header">Usuari</string>
   <string name="account_settings_list_header">Compte</string>
-  <string name="account_settings_list_item_password_header">Gestió de contrasenyes</string>
+  <string name="account_settings_list_item_password_header">Change password</string>
   <string name="account_settings_list_item_password_hint_grace">Pendent de restabliment de la contrasenya</string>
   <string name="account_settings_list_item_password_hint_insecure">Restablir la contrasenya llest</string>
   <string name="account_settings_list_item_recovery_header">Correu electrònic de recuperació</string>
@@ -36,5 +36,5 @@
   <string name="account_signout_dialog_text">Les dades associades al seu compte es mantindran en aquest dispositiu tret que seleccioni esborrar-los.</string>
   <string name="account_signout_dialog_delete_information">Esborrar totes les dades associades</string>
   <string name="account_signout_dialog_action_signout">Tancar la sessió</string>
-  <string name="account_signout_dialog_action_cancel">Cancel·lar</string>
+  <string name="account_signout_dialog_action_cancel">Cancel·la</string>
 </resources>

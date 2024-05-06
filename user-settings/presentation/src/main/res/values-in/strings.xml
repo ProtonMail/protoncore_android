@@ -32,16 +32,17 @@
   <string name="settings_validation_email">Alamat email tidak valid.</string>
   <string name="settings_general_error">Terdapat suatu kesalahan.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Kata sandi masuk</string>
-  <string name="settings_password_management_tab_mailbox_password">Kata sandi kotak surat</string>
-  <string name="settings_password_management_change_login_password">Ubah kata sandi</string>
-  <string name="settings_password_management_change_mailbox_password">Ubah kata sandi kotak surat</string>
-  <string name="settings_password_management_header">Pengelolaan kata sandi</string>
-  <string name="settings_login_password_hint_current">Masukan kata sandi saat ini</string>
-  <string name="settings_login_password_hint_new">Kata sandi baru untuk masuk</string>
-  <string name="settings_login_password_hint_new_confirm">Konfirmasikan kata sandi login baru</string>
-  <string name="settings_mailbox_password_hint_new">Kata sandi kotak surat baru</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Konfirmasi kata sandi kotak surat baru</string>
+  <string name="settings_password_management_tab_login_password">Kata sandi akun</string>
+  <string name="settings_password_management_tab_mailbox_password">Kata sandi enkripsi</string>
+  <string name="settings_password_management_change_login_password">Pada mode kata sandi ganda, kata sandi akun digunakan untuk masuk ke Akun Proton Anda.</string>
+  <string name="settings_password_management_change_mailbox_password">Pada mode kata sandi ganda, kata sandi enkripsi digunakan untuk mengenkripsi dan mendekripsi data Anda.</string>
+  <string name="settings_password_management_header">Ubah kata sandi</string>
+  <string name="settings_login_password_hint_current">Kata sandi saat ini</string>
+  <string name="settings_login_password_hint_new">Kata sandi baru</string>
+  <string name="settings_login_password_hint_new_confirm">Konfirmasi kata sandi baru</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Kata sandi akun saat ini</string>
+  <string name="settings_mailbox_password_hint_new">Kata sandi enkripsi baru</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Konfirmasikan kata sandi enkripsi baru</string>
   <string name="settings_change_password_error">Terdapat kesalahan dalam proses perubahan kata sandi.</string>
   <string name="settings_recovery_email_success">Alamat email pemulihan diperbarui</string>
   <string name="settings_password_management_success">Kata sandi diperbarui</string>

@@ -27,14 +27,14 @@
   <string name="account_settings_header">Kontoindstillinger</string>
   <string name="account_settings_item_header">Bruger</string>
   <string name="account_settings_list_header">Konto</string>
-  <string name="account_settings_list_item_password_header">Adgangskodehåndtering</string>
-  <string name="account_settings_list_item_password_hint_grace">Password reset pending</string>
-  <string name="account_settings_list_item_password_hint_insecure">Password reset ready</string>
-  <string name="account_settings_list_item_recovery_header">Gendannelses-e-mail</string>
-  <string name="account_settings_list_item_recovery_hint_not_set">Ikke konfigureret</string>
-  <string name="account_signout_dialog_title">Logge ud?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
-  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
-  <string name="account_signout_dialog_action_signout">Logge ud</string>
+  <string name="account_settings_list_item_password_header">Change password</string>
+  <string name="account_settings_list_item_password_hint_grace">Nulstilling af adgangskode afventes</string>
+  <string name="account_settings_list_item_password_hint_insecure">Nulstilling af adgangskode klar</string>
+  <string name="account_settings_list_item_recovery_header">E-mail til gendannelse</string>
+  <string name="account_settings_list_item_recovery_hint_not_set">Ikke angivet</string>
+  <string name="account_signout_dialog_title">Log ud?</string>
+  <string name="account_signout_dialog_text">Data, der er knyttet til din konto, forbliver på denne enhed, medmindre du vælger at slette dem.</string>
+  <string name="account_signout_dialog_delete_information">Fjern alle tilknyttede data</string>
+  <string name="account_signout_dialog_action_signout">Log ud</string>
   <string name="account_signout_dialog_action_cancel">Annuller</string>
 </resources>

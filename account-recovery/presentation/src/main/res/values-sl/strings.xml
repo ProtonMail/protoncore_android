@@ -58,7 +58,7 @@
   <string name="account_recovery_info_insecure_description">Tega niste zahtevali?\n\nČe niste zahtevali ponastavitve gesla prekinite postopek.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Ponastavi geslo?</string>
-  <string name="account_recovery_reset_dialog_text">"Iz varnostnih razlogov boste morali počakati 72 ur, preden lahko spremenite geslo za %1s.\n\nČe imate nastavljeno obnovitveno metodo, raje poskusite z obnovitvijo računa. Tako boste lahko takoj spremenili geslo."</string>
+  <string name="account_recovery_reset_dialog_text">"Iz varnostnih razlogov boste morali počakati 72 ur, preden lahko spremenite geslo za %1s.\n\nČe imate nastavljen način za obnovitev računa, raje poskusite z obnovitvijo računa. Tako boste lahko takoj spremenili geslo."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Zahtevaj ponastavitev gesla</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Uporabi način obnovitve</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Spremenite geslo v spletnem brskalniku, ne da bi čakali na varnostno obdobje.</string>

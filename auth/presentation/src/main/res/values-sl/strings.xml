@@ -126,12 +126,17 @@
   <string name="auth_signup_recovery_method_phone_hint">Telefonska številka za obnovitev</string>
   <string name="auth_signup_terms_conditions">Pogoji storitve</string>
   <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">S klikom Naprej se strinjate s <annotation link="terms">Pravili storitve</annotation> Proton.</string>
-  <string name="auth_signup_skip_recovery_title">Preskoči metodo obnovitve?</string>
+  <string name="auth_signup_skip_recovery_title">Preskoči način za obnovitev?</string>
   <string name="auth_signup_skip_recovery_description">Način obnovitve vam pomaga dostopati do računa, če pozabite geslo ali če je vaš račun zaklenjen.</string>
   <string name="auth_signup_skip_recovery">Preskoči</string>
   <string name="auth_signup_set_recovery">Nastavitev načina obnovitve</string>
   <string name="auth_signup_no_connectivity">Ni povezave za prikaz Pogojev storitve.</string>
   <string name="auth_signup_error_create_to_continue">Za nadaljevanje ustvarite račun</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">Uporabniško ime ne sme biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Gesli se ne ujemata.</string>
   <string name="auth_signup_validation_password_length">Vaše geslo mora imeti najmanj 8 znakov</string>

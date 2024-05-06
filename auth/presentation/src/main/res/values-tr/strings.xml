@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Kurtarma yöntemini ayarla</string>
   <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar görüntülenemiyor.</string>
   <string name="auth_signup_error_create_to_continue">İlerlemek için lütfen bir hesap açın</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">İptal</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Devam Et</string>
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>

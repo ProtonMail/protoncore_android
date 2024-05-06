@@ -196,7 +196,6 @@
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Przestrzeń dyskowa Proton Drive: %d%%</string>
   <string name="upgrade_storage_current_mail_storage">Przestrzeń dyskowa Proton Mail: %d%%</string>
-  <string name="upgrade_storage_subtitle">Uzyskaj więcej przestrzeni dyskowej</string>
-  <string name="upgrade_storage_cta_button">Ulepsz</string>
+  <string name="upgrade_storage_subtitle">Zwiększ przestrzeń dyskową</string>
   <!-- endregion -->
 </resources>

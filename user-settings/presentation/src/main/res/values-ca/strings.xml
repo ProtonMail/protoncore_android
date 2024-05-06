@@ -32,16 +32,17 @@
   <string name="settings_validation_email">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="settings_general_error">S\'ha produït un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Contrasenya d\'inici de sessió</string>
-  <string name="settings_password_management_tab_mailbox_password">Contrasenya de la bústia de correu</string>
-  <string name="settings_password_management_change_login_password">Canvia la contrasenya</string>
-  <string name="settings_password_management_change_mailbox_password">Canvia la contrasenya de la bústia de correu</string>
-  <string name="settings_password_management_header">Gestió de contrasenyes</string>
-  <string name="settings_login_password_hint_current">Contrasenya d\'inici de sessió actual</string>
-  <string name="settings_login_password_hint_new">Nova contrasenya d\'inici de sessió</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmar la nova contrasenya d\'inici de sessió</string>
-  <string name="settings_mailbox_password_hint_new">Nova contrasenya de la bústia</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmeu la nova contrasenya de la bústia</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Change password</string>
+  <string name="settings_login_password_hint_current">Current password</string>
+  <string name="settings_login_password_hint_new">Nova contrasenya</string>
+  <string name="settings_login_password_hint_new_confirm">Confirmeu la nova contrasenya</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">New encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Hi ha hagut un error de canvi de contrasenya.</string>
   <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>

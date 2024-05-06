@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Establecer un método de recuperación</string>
   <string name="auth_signup_no_connectivity">No hay conexión para mostrar los términos y condiciones.</string>
   <string name="auth_signup_error_create_to_continue">Crea una cuenta para continuar</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Más información</string>
+  <string name="auth_signup_create_account_dialog_title">Activar la suscripción</string>
+  <string name="auth_signup_create_account_dialog_text">El pago de Google Pay fue procesado. Para activar la suscripción, crea una cuenta de Proton.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancelar</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continuar</string>
   <string name="auth_signup_error_username_blank">El nombre de usuario no puede estar vacío.</string>
   <string name="auth_signup_error_passwords_do_not_match">Las contraseñas no coinciden.</string>
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>

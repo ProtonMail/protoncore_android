@@ -32,20 +32,21 @@
   <string name="settings_validation_email">O endereço de email é inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Palavra-passe da caixa de correio</string>
-  <string name="settings_password_management_change_login_password">Alterar a palavra-passe</string>
-  <string name="settings_password_management_change_mailbox_password">Alterar a palavra-passe da caixa de correio</string>
-  <string name="settings_password_management_header">Gestão de palavras-passe</string>
-  <string name="settings_login_password_hint_current">Palavra passe de início de sessão atual</string>
-  <string name="settings_login_password_hint_new">Nova palavra-passe de início</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmar nova palavra-passe de início de sessão</string>
-  <string name="settings_mailbox_password_hint_new">Nova palavra-passe da caixa de correio</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmar a nova palavra-passe da caixa de correio</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Change password</string>
+  <string name="settings_login_password_hint_current">Current password</string>
+  <string name="settings_login_password_hint_new">New password</string>
+  <string name="settings_login_password_hint_new_confirm">Confirm new password</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">New encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da palavra-passe.</string>
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação alterado</string>
   <string name="settings_password_management_success">Palavra-passe atualizada</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
+  <string name="settings_password_management_start_recovery">Não sabe a sua palavra-passe atual?</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anónima</string>
   <string name="device_settings_telemetry_hint">Para melhorar os nossos serviços, por vezes recolhemos dados de utilização anónimos.</string>

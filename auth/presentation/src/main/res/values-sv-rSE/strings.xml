@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Ställ in återställningsmetod</string>
   <string name="auth_signup_no_connectivity">Ingen anslutning för att visa användarvillkor.</string>
   <string name="auth_signup_error_create_to_continue">Skapa ett konto för att fortsätta</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Lär dig mer</string>
+  <string name="auth_signup_create_account_dialog_title">Aktivera din prenumeration</string>
+  <string name="auth_signup_create_account_dialog_text">Din Google Pay-betalning har behandlats. För att aktivera din prenumeration, skapa ditt Proton-konto.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Avbryt</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Fortsätt</string>
   <string name="auth_signup_error_username_blank">Användarnamn får inte vara tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lösenorden matchar inte.</string>
   <string name="auth_signup_validation_password_length">Lösenord ska vara minst 8 tecken långt.</string>

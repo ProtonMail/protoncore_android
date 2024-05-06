@@ -18,12 +18,12 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Kan ikke finde en browser til at åbne dette link.</string>
-  <string name="presentation_force_update_title">Opdatering nødvendig</string>
-  <string name="presentation_force_update_message">Denne version af appen understøttes ikke længere. Opgradér venligst for at fortsætte med at bruge den.</string>
+  <string name="presentation_browser_missing">Fandt ikke browseren til at åbne linket.</string>
+  <string name="presentation_force_update_title">Opdatering kræves</string>
+  <string name="presentation_force_update_message">Denne app-version understøttes ikke længere, opdater venligst for at fortsætte med at bruge den.</string>
   <string name="presentation_force_update_learn_more">Få mere at vide</string>
   <string name="presentation_force_update_update">Opdatér</string>
-  <string name="presentation_market_missing">Kan ikke finde applikationen på din enhed. Gå til app-butikken for at installere den.</string>
+  <string name="presentation_market_missing">Applikationen kan ikke findes på din enhed. Gå til app-butikken for at installere den.</string>
   <string name="presentation_authenticate">Godkend</string>
   <string name="presentation_signin_to_continue">Log ind for at fortsætte</string>
   <string name="presentation_alert_title">Advarsel</string>
@@ -35,7 +35,7 @@
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Anmeld et problem</string>
   <string name="presentation_menu_item_title_settings">Indstillinger</string>
-  <string name="presentation_menu_item_title_subscription">Abonnement</string>
+  <string name="presentation_menu_item_title_subscription">Abonnementsordning</string>
   <string name="presentation_menu_item_title_sign_out">Log ud</string>
   <!-- Other -->
   <string name="presentation_back">Tilbage</string>
@@ -43,9 +43,9 @@
   <string name="presentation_retry">Prøv igen</string>
   <string name="presentation_skip">Spring over</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
-  <string name="presentation_general_connection_error">Kunne ikke oprette forbindelse til server.</string>
+  <string name="presentation_general_connection_error">Kunne ikke forbinde til serveren.</string>
   <string name="presentation_check_your_connection">Tjek din forbindelse</string>
-  <string name="presentation_connectivity_issues">Problemer med forbindelse</string>
+  <string name="presentation_connectivity_issues">Tilslutningsproblemer</string>
   <string name="presentation_field_required">Dette felt er påkrævet.</string>
   <string name="presentation_error_general">Der opstod en fejl.</string>
   <plurals name="presentation_datetime_day">

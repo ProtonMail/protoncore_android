@@ -27,7 +27,7 @@
   <string name="account_settings_header">Accountinstellingen</string>
   <string name="account_settings_item_header">Gebruiker</string>
   <string name="account_settings_list_header">Account</string>
-  <string name="account_settings_list_item_password_header">Wachtwoordbeheer</string>
+  <string name="account_settings_list_item_password_header">Change password</string>
   <string name="account_settings_list_item_password_hint_grace">Wachtwoord opnieuw instellen aangevraagd</string>
   <string name="account_settings_list_item_password_hint_insecure">Nieuw wachtwoord aanvragen klaar</string>
   <string name="account_settings_list_item_recovery_header">Herstel e-mailadres</string>

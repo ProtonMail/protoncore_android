@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Définir une méthode de récupération</string>
   <string name="auth_signup_no_connectivity">Aucune connexion pour afficher les conditions générales d’utilisation.</string>
   <string name="auth_signup_error_create_to_continue">Créez un compte pour continuer</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">En savoir plus</string>
+  <string name="auth_signup_create_account_dialog_title">Activer votre abonnement</string>
+  <string name="auth_signup_create_account_dialog_text">Votre paiement Google Pay a été traité. Pour activer votre abonnement, vous devez créer votre compte Proton.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Annuler</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continuer</string>
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur ne doit pas être vide.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
@@ -158,6 +163,6 @@
   <string name="auth_credentialless_vpn_subtitle">Naviguez en toute confidentialité, accédez aux contenus bloqués et profitez de la liberté numérique.</string>
   <string name="auth_credentialless_guest_button">Continuer comme invité</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilisant cette application, vous acceptez nos <annotation link="terms">conditions générales</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Faites le pas vers le respect de la vie privée.</string>
+  <string name="auth_credentialless_settings_title">Commencez à protéger votre vie privée.</string>
   <string name="auth_credentialless_settings_subtitle">Obtenez un gestionnaire de mots de passe, Mail chiffré, Calendar et 1 Go de stockage sur le cloud gratuitement avec un compte Proton.</string>
 </resources>

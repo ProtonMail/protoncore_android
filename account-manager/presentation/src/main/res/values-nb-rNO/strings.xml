@@ -27,7 +27,7 @@
   <string name="account_settings_header">Kontoinnstillinger</string>
   <string name="account_settings_item_header">Bruker</string>
   <string name="account_settings_list_header">Konto</string>
-  <string name="account_settings_list_item_password_header">Passordhåndtering</string>
+  <string name="account_settings_list_item_password_header">Endre passord</string>
   <string name="account_settings_list_item_password_hint_grace">Venter på tilbakestilling av passord</string>
   <string name="account_settings_list_item_password_hint_insecure">Klargjort for tilbakestilling av passord</string>
   <string name="account_settings_list_item_recovery_header">E-post for gjenoppretting</string>

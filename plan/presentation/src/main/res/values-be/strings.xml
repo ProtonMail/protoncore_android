@@ -164,9 +164,9 @@
   <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Бяспечная электронная пошта з дадатковымі функцыямі для штодзённых камунікацый.</string>
   <string name="plan_id_vpn2022_header" comment="new_plans">Ваша прыватнасць і бяспека - наш прыярытэт.</string>
-  <string name="plan_id_drive2022_header" comment="new_plans">Бяспечнае воблачнае сховішча, якое дазваляе вам лёгка і бяспечна захоўваць, сінхранізаваць і абагуляць файлы.</string>
+  <string name="plan_id_drive2022_header" comment="new_plans">Бяспечнае воблачнае сховішча, якое дазваляе вам лёгка і бяспечна захоўваць, сінхранізаваць і абагульваць файлы.</string>
   <string name="plan_id_bundle2022_header" comment="new_plans">Комплексная прыватнасць і бяспека ў спалучэнні з усімі сэрвісамі Proton.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">Для больш высокага ўзроўню кіравання паролямі і абароны асабістых даных.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Для больш высокага ўзроўню кіравання паролямі і абароны ідэнтычнасці.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -194,9 +194,8 @@
   <string name="ten_hide_my_email_aliases">10 псеўданімаў Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Сховішча Drive: запоўнена на %d%%</string>
-  <string name="upgrade_storage_current_mail_storage">Сховішча Mail запоўнена на %d%%</string>
-  <string name="upgrade_storage_subtitle">Атрымаць больш месца ў сховішчы</string>
-  <string name="upgrade_storage_cta_button">Палепшыць</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: запоўнены на %d%%</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: запоўнены на %d%%</string>
+  <string name="upgrade_storage_subtitle">Павялічыць сховішча</string>
   <!-- endregion -->
 </resources>

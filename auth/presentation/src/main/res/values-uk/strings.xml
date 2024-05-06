@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Налаштувати спосіб відновлення</string>
   <string name="auth_signup_no_connectivity">Немає з\'єднання, щоб показати Умови та положення.</string>
   <string name="auth_signup_error_create_to_continue">Щоб продовжити, створіть обліковий запис</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Докладніше</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Скасувати</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Продовжити</string>
   <string name="auth_signup_error_username_blank">Поле з ім\'ям користувача не повинно бути порожнім.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі відрізняються.</string>
   <string name="auth_signup_validation_password_length">Пароль повинен містити принаймні 8 символів.</string>

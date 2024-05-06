@@ -32,16 +32,17 @@
   <string name="settings_validation_email">Неверный адрес электронной почты.</string>
   <string name="settings_general_error">Произошла ошибка.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Пароль для входа</string>
-  <string name="settings_password_management_tab_mailbox_password">Пароль почтового ящика</string>
-  <string name="settings_password_management_change_login_password">Изменить пароль</string>
-  <string name="settings_password_management_change_mailbox_password">Изменить пароль почтового ящика</string>
-  <string name="settings_password_management_header">Управление паролями</string>
-  <string name="settings_login_password_hint_current">Текущий пароль для входа</string>
-  <string name="settings_login_password_hint_new">Новый пароль для входа</string>
-  <string name="settings_login_password_hint_new_confirm">Подтвердить новый пароль</string>
-  <string name="settings_mailbox_password_hint_new">Новый пароль почтового ящика</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Подтвердите новый пароль почтового ящика</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Изменить пароль</string>
+  <string name="settings_login_password_hint_current">Текущий пароль</string>
+  <string name="settings_login_password_hint_new">Новый пароль</string>
+  <string name="settings_login_password_hint_new_confirm">Confirm new password</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">New encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Произошла ошибка при смене пароля.</string>
   <string name="settings_recovery_email_success">Резервный адрес электронной почты обновлён</string>
   <string name="settings_password_management_success">Пароль обновлен</string>

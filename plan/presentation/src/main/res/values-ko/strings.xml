@@ -149,9 +149,8 @@
   <string name="ten_hide_my_email_aliases">10개의 나의 이메일 숨기기 별명</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">드라이브 저장공간: %d%% 가득 참</string>
-  <string name="upgrade_storage_current_mail_storage">메일 저장공간: %d%% 가득 참</string>
-  <string name="upgrade_storage_subtitle">더 많은 스토리지 얻기</string>
-  <string name="upgrade_storage_cta_button">업그레이드</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% 채워짐</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% 채워짐</string>
+  <string name="upgrade_storage_subtitle">저장공간 업그레이드</string>
   <!-- endregion -->
 </resources>

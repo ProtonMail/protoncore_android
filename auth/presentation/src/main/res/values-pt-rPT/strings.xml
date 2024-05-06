@@ -39,7 +39,7 @@
   <string name="auth_email_username">Utilizador ou e-mail </string>
   <string name="auth_account_details">Introduza os detalhes da sua conta Proton.</string>
   <string name="auth_sign_in">Iniciar sessão</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Terminar sessão</string>
   <string name="auth_sign_in_action">Iniciar sessão</string>
   <string name="auth_sign_in_sso">Faça o login na sua organização</string>
   <string name="auth_sign_in_with_password">Faça o login com a palavra-passe</string>
@@ -131,7 +131,12 @@
   <string name="auth_signup_skip_recovery">Saltar</string>
   <string name="auth_signup_set_recovery">Definir método de recuperação</string>
   <string name="auth_signup_no_connectivity">Sem ligação para exibir os Termos e Condições.</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue">Por favor, crie uma conta para continuar</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">O nome de utilizador não pode estar em branco.</string>
   <string name="auth_signup_error_passwords_do_not_match">As palavras-passe não correspondem.</string>
   <string name="auth_signup_validation_password_length">A palavra-passe deve ter pelo menos 8 carateres.</string>
@@ -153,11 +158,11 @@
   <string name="auth_signup_start_using_vpn">Comece a usar o Proton VPN</string>
   <string name="auth_signup_start_using_pass">Comece a utilizar o Proton Pass</string>
   <string name="auth_signup_error_validation_recovery_destination">O destino de recuperação não é válido.</string>
-  <string name="auth_credentialless_vpn_no_logs">Certified no-logs VPN</string>
+  <string name="auth_credentialless_vpn_no_logs">VPN certificada sem registos</string>
   <string name="auth_credentialless_vpn_title">Bem-vindo à Proton VPN</string>
-  <string name="auth_credentialless_vpn_subtitle">Browse privately, access blocked content, and enjoy digital freedom.</string>
-  <string name="auth_credentialless_guest_button">Continue as guest</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By using this app you accept our <annotation link="terms">Terms and Conditions</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_vpn_subtitle">Navegue em privado, aceda a conteúdos bloqueados e desfrute da liberdade digital.</string>
+  <string name="auth_credentialless_guest_button">Continuar como convidado</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao usar este aplicativo, aceita os nossos <annotation link="terms">Termos e Condições</annotation>.</string>
+  <string name="auth_credentialless_settings_title">Faça a mudança para a privacidade.</string>
+  <string name="auth_credentialless_settings_subtitle">Obtenha um gestor de palavras-passe, Mail e Calendar encriptados e 1 GB de armazenamento na nuvem gratuitamente com uma Conta Proton.</string>
 </resources>

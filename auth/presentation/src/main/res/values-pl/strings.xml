@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Ustaw metodę odzyskiwania</string>
   <string name="auth_signup_no_connectivity">Brak połączenia z Internetem, aby wyświetlić regulamin.</string>
   <string name="auth_signup_error_create_to_continue">Utwórz konto, aby kontynuować</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Dowiedz się więcej</string>
+  <string name="auth_signup_create_account_dialog_title">Aktywuj subskrypcję</string>
+  <string name="auth_signup_create_account_dialog_text">Płatność Google Pay została przetworzona. Utwórz konto Proton, aby aktywować subskrypcję.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Anuluj</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Kontynuuj</string>
   <string name="auth_signup_error_username_blank">Nazwa użytkownika nie może być pusta.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hasła nie pasują do siebie.</string>
   <string name="auth_signup_validation_password_length">Hasło musi zawierać co najmniej 8 znaków.</string>

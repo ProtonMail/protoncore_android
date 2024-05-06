@@ -32,16 +32,17 @@
   <string name="settings_validation_email">Emailová adresa je neplatná.</string>
   <string name="settings_general_error">Vyskytla sa chyba.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Prihlasovacie heslo</string>
-  <string name="settings_password_management_tab_mailbox_password">Heslo k poštovej schránke</string>
-  <string name="settings_password_management_change_login_password">Zmeniť heslo</string>
-  <string name="settings_password_management_change_mailbox_password">Zmeniť heslo k poštovej schránke</string>
-  <string name="settings_password_management_header">Správa hesiel</string>
-  <string name="settings_login_password_hint_current">Aktuálne prihlasovacie heslo</string>
-  <string name="settings_login_password_hint_new">Nové prihlasovacie heslo</string>
-  <string name="settings_login_password_hint_new_confirm">Potvrdiť nové prihlasovacie heslo</string>
-  <string name="settings_mailbox_password_hint_new">Nové heslo k poštovej schránke</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Potvrdiť nové heslo k poštovej schránke</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Change password</string>
+  <string name="settings_login_password_hint_current">Current password</string>
+  <string name="settings_login_password_hint_new">New password</string>
+  <string name="settings_login_password_hint_new_confirm">Potvrďte nové heslo</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">New encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Vyskytla sa chyba pri zmene hesla.</string>
   <string name="settings_recovery_email_success">Email na obnovenie bol aktualizovaný</string>
   <string name="settings_password_management_success">Heslo bolo aktualizované</string>

@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">Obnova důvěryhodného zařízení</string>
-  <string name="user_recovery_notification_body">Automaticky jsme obnovili údaje vašeho účtu.</string>
+  <string name="user_recovery_notification_body">Automaticky jsme obnovili data vašeho účtu.</string>
   <string name="user_recovery_dialog_title">Obnova důvěryhodného zařízení</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Got it</string>
+  <string name="user_recovery_dialog_text">Po resetu hesla jsme automaticky obnovili data pro %1s.</string>
+  <string name="user_recovery_dialog_dismiss">Rozumím</string>
 </resources>

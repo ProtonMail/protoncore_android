@@ -194,9 +194,8 @@
   <string name="ten_hide_my_email_aliases">10 псевдонимов Hide My Email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive хранилище: %d%% заполнено</string>
-  <string name="upgrade_storage_current_mail_storage">Mail хранилище: %d%% заполнено</string>
-  <string name="upgrade_storage_subtitle">Получите больше дискового пространства</string>
-  <string name="upgrade_storage_cta_button">Улучшить</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Увеличить дисковое пространство</string>
   <!-- endregion -->
 </resources>

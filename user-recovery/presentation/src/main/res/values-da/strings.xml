@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">Gendannelse via betroet enhed</string>
-  <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
+  <string name="user_recovery_notification_body">Vi har automatisk gendannet dine kontodata.</string>
   <string name="user_recovery_dialog_title">Gendannelse via betroet enhed</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
+  <string name="user_recovery_dialog_text">Efter nulstilling af adgangskoden har vi automatisk gendannet data for %1s.</string>
   <string name="user_recovery_dialog_dismiss">Forstået</string>
 </resources>

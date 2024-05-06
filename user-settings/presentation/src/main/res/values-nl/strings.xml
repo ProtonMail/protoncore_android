@@ -32,16 +32,17 @@
   <string name="settings_validation_email">E-mailadres is ongeldig.</string>
   <string name="settings_general_error">Er is iets fout gegaan.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Inlogwachtwoord</string>
-  <string name="settings_password_management_tab_mailbox_password">Mailbox-wachtwoord</string>
-  <string name="settings_password_management_change_login_password">Wachtwoord wijzigen</string>
-  <string name="settings_password_management_change_mailbox_password">Wijzig mailbox-wachtwoord</string>
-  <string name="settings_password_management_header">Wachtwoordbeheer</string>
-  <string name="settings_login_password_hint_current">Huidig loginwachtwoord</string>
-  <string name="settings_login_password_hint_new">Nieuw inlogwachtwoord</string>
-  <string name="settings_login_password_hint_new_confirm">Bevestig nieuw inlogwachtwoord</string>
-  <string name="settings_mailbox_password_hint_new">Nieuw mailbox-wachtwoord</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Bevestig nieuw mailboxwachtwoord</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Change password</string>
+  <string name="settings_login_password_hint_current">Current password</string>
+  <string name="settings_login_password_hint_new">New password</string>
+  <string name="settings_login_password_hint_new_confirm">Confirm new password</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">New encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Er is een fout opgetreden bij het wijzigen van het wachtwoord.</string>
   <string name="settings_recovery_email_success">Herstel-e-mailadres gewijzigd</string>
   <string name="settings_password_management_success">Wachtwoord bijgewerkt</string>

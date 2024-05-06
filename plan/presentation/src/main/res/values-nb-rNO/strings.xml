@@ -164,9 +164,8 @@
   <string name="ten_hide_my_email_aliases">10 Hide My Email-aliaser</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive-lagring: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail-lagring: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Få mer lagringskapasitet</string>
-  <string name="upgrade_storage_cta_button">Oppgrader</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">E-post: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Oppgrader lagringsplass</string>
   <!-- endregion -->
 </resources>

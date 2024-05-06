@@ -132,10 +132,15 @@
   <string name="auth_signup_set_recovery">복구 방법 설정</string>
   <string name="auth_signup_no_connectivity">이용 약관을 표시할 연결 없음.</string>
   <string name="auth_signup_error_create_to_continue">계속하려면 가입해주세요</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">더 알아보기</string>
+  <string name="auth_signup_create_account_dialog_title">구독을 활성화하십시오</string>
+  <string name="auth_signup_create_account_dialog_text">Google Pay 결제가 완료되었습니다. 구독을 활성화하려면 Proton 계정을 생성해 주십시오.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">취소하기</string>
+  <string name="auth_signup_create_account_dialog_action_continue">계속하기</string>
   <string name="auth_signup_error_username_blank">사용자 이름은 비울 수 없습니다.</string>
   <string name="auth_signup_error_passwords_do_not_match">비밀번호가 일치하지 않습니다.</string>
   <string name="auth_signup_validation_password_length">비밀번호는 8글자 이상이어야 합니다.</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">사용할 수 없는 비밀번호입니다.</string>
   <string name="auth_signup_validation_password">비밀번호는 비워둘 수 없습니다.</string>
   <string name="auth_signup_your_account_is_being_setup">사용자의 계정이 곧 생성됩니다…</string>
   <string name="auth_signup_please_wait">1분 이상 걸리지 않습니다.</string>

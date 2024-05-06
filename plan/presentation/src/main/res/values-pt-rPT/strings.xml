@@ -57,12 +57,12 @@
   <string name="plans_can_not_upgrade_from_mobile">Não é possível atualizar a partir da aplicação móvel.</string>
   <string name="plans_no_upgrade_available">Não existe atualização atualmente disponível.</string>
   <string name="plans_limited_offer">Oferta por tempo limitado</string>
-  <string name="plans_subscription_base_storage_full_title">Your Mail storage is full</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Your Mail storage is almost full</string>
-  <string name="plans_subscription_drive_storage_full_title">Your Drive storage is full</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Your Drive storage is almost full</string>
+  <string name="plans_subscription_base_storage_full_title">O seu armazenamento Mail está cheio</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">O armazenamento do seu Mail está quase cheio</string>
+  <string name="plans_subscription_drive_storage_full_title">O armazenamento do seu Drive está cheio</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">O armazenamento do seu Drive está quase cheio</string>
   <string name="plans_subscription_storage_get_more">Obter mais espaço de armazenamento</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">Atualize o seu plano para continuar a utilizar a sua conta sem interrupções.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# de armazenamento</item>
@@ -164,9 +164,8 @@
   <string name="ten_hide_my_email_aliases">10 aliases de Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive storage: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail storage: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Obter mais espaço de armazenamento</string>
-  <string name="upgrade_storage_cta_button">Alterar a subscrição</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Upgrade storage</string>
   <!-- endregion -->
 </resources>

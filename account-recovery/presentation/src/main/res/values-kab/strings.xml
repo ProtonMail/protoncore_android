@@ -43,7 +43,7 @@
   <!-- Other -->
   <string name="account_recovery_cancel">Sefsex tuttra</string>
   <string name="account_recovery_dismiss">Gziɣ-t</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">Ales awennez n wawal uffir</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Isra awennez n wawal uffir</string>
   <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>

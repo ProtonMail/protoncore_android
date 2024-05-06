@@ -61,12 +61,12 @@
     <item quantity="other">%d 秒</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
-    <item quantity="other">%d milliseconds</item>
+    <item quantity="other">%d ミリ秒</item>
   </plurals>
   <plurals name="presentation_datetime_microsecond">
-    <item quantity="other">%d microseconds</item>
+    <item quantity="other">%d マイクロ秒</item>
   </plurals>
   <plurals name="presentation_datetime_nanosecond">
-    <item quantity="other">%d nanoseconds</item>
+    <item quantity="other">%d ナノ秒</item>
   </plurals>
 </resources>

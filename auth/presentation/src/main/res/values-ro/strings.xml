@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">Setare metodă de recuperare</string>
   <string name="auth_signup_no_connectivity">Nu există conectivitate pentru a afișa termenii și condițiile.</string>
   <string name="auth_signup_error_create_to_continue">Creați un cont pentru a continua</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">Numele de utilizator nu poate fi gol.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parolele nu coincid.</string>
   <string name="auth_signup_validation_password_length">Parola trebuie să fie de cel puțin 8 caractere.</string>

@@ -32,16 +32,17 @@
   <string name="settings_validation_email">Endereço de e-mail inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Senha de início de sessão</string>
-  <string name="settings_password_management_tab_mailbox_password">Senha da caixa de correio</string>
-  <string name="settings_password_management_change_login_password">Alterar a senha</string>
-  <string name="settings_password_management_change_mailbox_password">Alterar senha da caixa de correio</string>
-  <string name="settings_password_management_header">Gerenciamento de senhas</string>
-  <string name="settings_login_password_hint_current">Senha de início de sessão atual</string>
-  <string name="settings_login_password_hint_new">Nova senha de início de sessão</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmar nova senha de início de sessão</string>
-  <string name="settings_mailbox_password_hint_new">Nova senha da caixa de correio</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmar a nova senha da caixa de correio</string>
+  <string name="settings_password_management_tab_login_password">Senha da conta</string>
+  <string name="settings_password_management_tab_mailbox_password">Senha de criptografia</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Alterar senha</string>
+  <string name="settings_login_password_hint_current">Senha atual</string>
+  <string name="settings_login_password_hint_new">Nova senha</string>
+  <string name="settings_login_password_hint_new_confirm">Confirmar nova senha</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">Nova senha de criptografia</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da senha.</string>
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação atualizado</string>
   <string name="settings_password_management_success">Senha atualizada</string>

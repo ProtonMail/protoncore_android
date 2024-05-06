@@ -21,22 +21,22 @@
   <string name="core_report_bug_close">Luk</string>
   <string name="core_report_bug_subject_field_hint">Emne</string>
   <string name="core_report_bug_subject_field_required">Indtast et emne</string>
-  <string name="core_report_bug_description_field_hint">Hvad gik galt? Minimum 10 tegn</string>
-  <string name="core_report_bug_description_field_placeholder">Beskriv problemet så detaljeret som muligt. Fortæl os gerne, hvis du fik en fejlmeddelelse og indholdet af den.</string>
+  <string name="core_report_bug_description_field_hint">Hvad gik der galt? Minimum 10 tegn</string>
+  <string name="core_report_bug_description_field_placeholder">Beskriv venligst problemet så detaljeret som muligt. Giv os besked om, hvad der stod i en eventuel fejlmeddelelse.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="one">Indtast mindst %d tegn</item>
     <item quantity="other">Indtast mindst %d tegn</item>
   </plurals>
   <string name="core_report_bug_discard_changes_title">Luk fejlrapport?</string>
-  <string name="core_report_bug_discard_changes_description">Hvis du forlader denne side, vil din rapport ikke blive gemt.</string>
+  <string name="core_report_bug_discard_changes_description">Hvis du forlader denne side, vil rapporten ikke blive gemt.</string>
   <string name="core_report_bug_discard_changes_cancel">Fortsæt skrivning</string>
   <string name="core_report_bug_discard_changes_confirm">Luk uden at gemme</string>
   <plurals name="core_report_bug_form_field_too_long">
-    <item quantity="one">Maksimum %d tegn</item>
-    <item quantity="other">Maksimum %d tegn</item>
+    <item quantity="one">Maksimalt %d tegn</item>
+    <item quantity="other">Maksimalt %d tegn</item>
   </plurals>
   <string name="core_report_bug_general_error">Noget gik galt. Prøv igen om nogle få minutter.</string>
   <string name="core_report_bug_send">Indsend rapport</string>
   <string name="core_report_bug_success">Tak for din rapport</string>
-  <string name="core_report_bug_attach_log">Attach log</string>
+  <string name="core_report_bug_attach_log">Vedhæft log</string>
 </resources>

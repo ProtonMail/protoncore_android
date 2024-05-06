@@ -35,7 +35,7 @@
   <string name="account_recovery_cancelled_subtitle">Se você nunca solicitou a alteração da sua senha, sua conta pode estar em risco.\n\nProteja sua conta alterando sua senha.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">A redefinição de senha está disponível</string>
-  <string name="account_recovery_password_started_subtitle">Para redefinir a sua senha, volte ao dispositivo e navegador em que fez a sua solicitação de redefinição de senha. \n\nTerá que fazer isto antes de %s.\n\n Se não pediu para redefinir a sua senha, cancele a redefinição agora.</string>
+  <string name="account_recovery_password_started_subtitle">Para redefinir sua senha, retorne ao dispositivo, aplicativo ou navegador no qual você solicitou a redefinição de senha.\n\nVocê precisará fazer isso antes de %s.\n\nSe você não pediu a redefinição da sua senha, cancele agora a solicitação.</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">Você agora pode redefinir a sua senha.\n\nVocê precisará fazer isso antes de %s.\n\nISe você não solicitou a redefinição da senha, cancele agora.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Redefinição de senha expirada</string>

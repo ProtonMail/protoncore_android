@@ -194,9 +194,8 @@
   <string name="ten_hide_my_email_aliases">Deset vzdevkov Hide My Email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Shramba v storitvi Drive: %d%% zasedeno</string>
-  <string name="upgrade_storage_current_mail_storage">Shramba v storitvi Mail: %d%% zasedeno</string>
-  <string name="upgrade_storage_subtitle">Pridobite več prostora</string>
-  <string name="upgrade_storage_cta_button">Nadgradi</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Upgrade storage</string>
   <!-- endregion -->
 </resources>

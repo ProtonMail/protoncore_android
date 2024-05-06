@@ -19,25 +19,25 @@
 <resources>
   <string name="plans_select_a_plan">Vælg et abonnement</string>
   <string name="plans_select_a_plan_subtitle">Ét abonnement til alle Proton-tjenester</string>
-  <string name="plans_fetching_general_error">Der opstod en fejl under hentning af abonnementer.</string>
-  <string name="plans_payment_error">Der er opstået en betalingsfejl. Prøv venligst igen senere eller opret et gratis abonnement.</string>
+  <string name="plans_fetching_general_error">Der opstod en fejl ved hentning af abonnementer.</string>
+  <string name="plans_payment_error">Der opstod en betalingsfejl. Prøv igen senere, eller opret et gratis abonnement.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">pr. måned</string>
   <string name="plan_price_annually">pr. år</string>
   <string name="plans_current_plan">Nuværende abonnement</string>
   <string name="plans_upgrade_plan">Opgradér dit abonnement</string>
-  <string name="plans_subscription">Abonnement</string>
-  <string name="plans_renewal_date">Dit abonnement vil automatisk blive fornyet &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_expiration_date">Dit abonnement vil udløbe &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Betal månedligt</string>
+  <string name="plans_subscription">Abonnementsordning</string>
+  <string name="plans_renewal_date">Abonnementet bliver automatisk fornyet den &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_expiration_date">Abonnementet udløber den &lt;b&gt;%s&lt;/b&gt;</string>
+  <string name="plans_pay_monthly">Betal månedsvis</string>
   <string name="plans_pay_annually">Betal årligt</string>
   <string name="plans_pay_biennially">Betal hvert 2. år</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Betal for %d måned</item>
     <item quantity="other">Betal for %d måneder</item>
   </plurals>
-  <string name="plans_billed_yearly">*Faktureret årligt %s</string>
-  <string name="plans_billed_monthly">Faktureret månedligt</string>
+  <string name="plans_billed_yearly">*Faktureres årligt %s</string>
+  <string name="plans_billed_monthly">Faktureres månedligt</string>
   <string name="plans_billing_monthly">I 1 måned</string>
   <string name="plans_billing_yearly">I 1 år</string>
   <string name="plans_billing_two_years">I 2 år</string>
@@ -50,23 +50,23 @@
   <string name="plans_get_proton">Få %s</string>
   <string name="plans_manage_your_subscription">Administrer dit abonnement på <a href="https://account.proton.me">account.proton.me</a></string>
   <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s af %2$s</string>
-  <string name="plans_payments_info_not_available">Ikke tilgængelig</string>
-  <string name="plans_manage_your_subscription_google">Dit abonnement håndteres af Google Play.</string>
-  <string name="plans_manage_your_subscription_other">Dit abonnement kan ikke administreres i mobilappen.</string>
-  <string name="plans_autorenew_subscriptions">Kun årlige abonnementer med automatisk fornyelse er tilgængelige via denne app.</string>
+  <string name="plans_payments_info_not_available">findes ikke</string>
+  <string name="plans_manage_your_subscription_google">Abonnementet administreres af Google Play.</string>
+  <string name="plans_manage_your_subscription_other">Abonnementet kan ikke administreres i mobilappen.</string>
+  <string name="plans_autorenew_subscriptions">Der tilbydes kun automatisk fornyelse af årsabonnementer via denne app.</string>
   <string name="plans_can_not_upgrade_from_mobile">Du kan ikke opgradere fra mobil-appen.</string>
-  <string name="plans_no_upgrade_available">Der er ingen opgradering tilgængelig i øjeblikket.</string>
+  <string name="plans_no_upgrade_available">Der findes i øjeblikket ingen opgradering.</string>
   <string name="plans_limited_offer">Tidsbegrænset tilbud</string>
-  <string name="plans_subscription_base_storage_full_title">Din Mail lagerplads er fuld</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Din Mail lagerplads er næsten fuld</string>
-  <string name="plans_subscription_drive_storage_full_title">Din Drev lagerplads er fuld</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Din Drev lagerplads er næsten fuld</string>
+  <string name="plans_subscription_base_storage_full_title">Mail-lagerpladsen er fuld</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Mail-lagerpladsen er næsten fuld</string>
+  <string name="plans_subscription_drive_storage_full_title">Drive-lagerpladsen er fuld</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Drive-lagerpladsen er næsten fuld</string>
   <string name="plans_subscription_storage_get_more">Få mere lagerplads</string>
-  <string name="plans_subscription_storage_full_description">Opgrader din plan for at fortsætte med at bruge din konto uden afbrydelser.</string>
+  <string name="plans_subscription_storage_full_description">Opgrader dit abonnement for at fortsætte med at bruge din konto uden afbrydelser.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# lager</item>
-    <item quantity="other">#proton_storage# lager</item>
+    <item quantity="one">#proton_storage# lagerplads</item>
+    <item quantity="other">#proton_storage# lagerplads</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Op til #proton_storage# lagerplads</item>
@@ -90,7 +90,7 @@
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Understøtter #proton_domains# brugerdefineret e-mail-domæne</item>
-    <item quantity="other">Understøtter #proton_domains# brugerdefinerede e-mail-domæner</item>
+    <item quantity="other">Understøtter #proton_domains# brugertilpassede e-mail-domæner</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">
     <item quantity="one">#proton_calendars# personlig kalender</item>
@@ -101,12 +101,12 @@
     <item quantity="other">%d af #proton_calendars# kalendere</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">Gratis VPN på en enkelt enhed</item>
+    <item quantity="one">Gratis VPN på én enhed</item>
     <item quantity="other">Højhastigheds-VPN på #proton_vpn# enheder</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
-    <item quantity="one">#proton_vpn# højhastigheds VPN-forbindelse</item>
-    <item quantity="other">#proton_vpn# højhastigheds VPN-forbindelser</item>
+    <item quantity="one">#proton_vpn# højhastigheds-VPN-forbindelse</item>
+    <item quantity="other">#proton_vpn# højhastigheds-VPN-forbindelser</item>
   </plurals>
   <plurals name="item_users" comment="please do not modify the test between #">
     <item quantity="one">#proton_users# bruger</item>
@@ -118,25 +118,25 @@
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
-  <string name="plan_id_free_header">Det grundlæggende til privat og sikker kommunikation.</string>
-  <string name="plan_id_plus_header">Fuldt udstyret postkasse med avanceret beskyttelse.</string>
+  <string name="plan_id_free_header">Grundlaget for privat og sikker kommunikation.</string>
+  <string name="plan_id_plus_header">Mailboks med fuld funktionalitet og avanceret beskyttelse.</string>
   <string name="plan_id_vpnbasic_header">VPN Basic</string>
   <string name="plan_id_vpnbasic_countries">63 lande</string>
   <string name="plan_id_vpnbasic_high_speed">Høj hastighed</string>
-  <string name="plan_id_vpnplus_adblock">Annonceblokering (NetShield)</string>
+  <string name="plan_id_vpnplus_adblock">Reklameblokering (NetShield)</string>
   <string name="plan_id_vpnplus_streaming">Understøttelse af streamingtjenester</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 lande</string>
   <string name="plan_id_vpnplus_highest_speed">Højeste hastighed</string>
   <string name="plan_id_professional_header">Professional</string>
-  <string name="plan_id_professional_multiuser">Flerbrugerunderstøttelse</string>
+  <string name="plan_id_professional_multiuser">Flerbruger-understøttelse</string>
   <string name="plan_id_visionary_header">Visionary</string>
   <string name="plan_id_family_header">Family</string>
   <string name="plan_id_mail2022_header" comment="new_plans">Sikker e-mail med avancerede funktioner til din daglige kommunikation.</string>
-  <string name="plan_id_vpn2022_header" comment="new_plans">Beskyttelse af dit privatliv og din sikkerhed er vores førsteprioritet.</string>
+  <string name="plan_id_vpn2022_header" comment="new_plans">Vi prioriterer dit privatliv og din sikkerhed.</string>
   <string name="plan_id_drive2022_header" comment="new_plans">Sikker lagring i skyen der lader dig gemme, synkronisere og dele dine filer nemt og sikkert.</string>
-  <string name="plan_id_bundle2022_header" comment="new_plans">Omfattende privatlivsbeskyttelse og sikkerhed med alle Proton-tjenester kombineret.</string>
-  <string name="plan_id_pass2023_header" comment="new_plans">For avanceret adgangskodestyring og identitetsbeskyttelse.</string>
+  <string name="plan_id_bundle2022_header" comment="new_plans">Altomfattende privatsfære og sikkerhed kombineret med alle Proton-tjenester.</string>
+  <string name="plan_id_pass2023_header" comment="new_plans">Til videreudviklet adgangskodestyring og identitetsbeskyttelse.</string>
   <!-- endregion -->
   <string-array name="supported_currencies">
     <item>EUR</item>
@@ -147,26 +147,25 @@
   <string name="unlimited_folders_labels_filters" comment="new_plans">Ubegrænsede mapper, etiketter og filtre</string>
   <string name="highest_vpn_speed" comment="new_plans">Højeste VPN-hastighed</string>
   <string name="servers_in_countries" comment="new_plans">1500+ servere i 63 lande</string>
-  <string name="ad_blocker" comment="new_plans">Indbygget annonceblokering (Netshield)</string>
-  <string name="streaming_services_access" comment="new_plans">Adgang til streamingtjenester i hele verden</string>
-  <string name="secure_core" comment="new_plans">Secure Core servere</string>
+  <string name="ad_blocker" comment="new_plans">Indbygget reklameblokering (NetShield)</string>
+  <string name="streaming_services_access" comment="new_plans">Adgang til globale streamingtjenester</string>
+  <string name="secure_core" comment="new_plans">Sikre Core-servere</string>
   <string name="tor_vpn" comment="new_plans">Tor over VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>
-  <string name="unlimited_logins_and_notes">Ubegrænset antal logins og noter</string>
+  <string name="unlimited_logins_and_notes">Ubegrænset antal indlogninger og notater</string>
   <string name="unlimited_devices">Ubegrænset antal enheder</string>
   <string name="integrated_2fa_authenticator">Integreret 2FA-godkendelse</string>
-  <string name="multiple_vaults">Flere bokse</string>
-  <string name="unlimited_email_alias">Ubegrænsede Hide My Email-aliasser</string>
-  <string name="custom_email_alias_domains">Brugerdomæner til e-mailaliasser</string>
-  <string name="multiple_forwarding_mailboxes">Flere postkasser til videresendelse</string>
+  <string name="multiple_vaults">Adskillige bokse</string>
+  <string name="unlimited_email_alias">Ubegrænsede Skjul min e-mail-aliasser</string>
+  <string name="custom_email_alias_domains">Egenskabte domæner til e-mail-aliasser</string>
+  <string name="multiple_forwarding_mailboxes">Adskillige viderestillede mailbokse</string>
   <string name="priority_support">Prioriteret support</string>
   <string name="one_vault">1 boks</string>
-  <string name="ten_hide_my_email_aliases">10 Hide My Email-aliasser</string>
+  <string name="ten_hide_my_email_aliases">10 Skjul mine e-mail-aliasser</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Lagerplads %d%% fuld</string>
-  <string name="upgrade_storage_current_mail_storage">Mail lager: %d%% fuld</string>
-  <string name="upgrade_storage_subtitle">Få mere lagerplads</string>
-  <string name="upgrade_storage_cta_button">Opgradering</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Upgrade storage</string>
   <!-- endregion -->
 </resources>

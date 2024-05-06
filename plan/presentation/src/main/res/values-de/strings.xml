@@ -164,9 +164,8 @@
   <string name="ten_hide_my_email_aliases">10 Hide-my-email-Aliasse</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive-Speicherplatz: %d%% voll</string>
-  <string name="upgrade_storage_current_mail_storage">E-Mail-Speicherplatz: %d%% voll</string>
-  <string name="upgrade_storage_subtitle">Mehr Speicherplatz erhalten</string>
-  <string name="upgrade_storage_cta_button">Upgrade</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
+  <string name="upgrade_storage_subtitle">Mehr Speicher hinzufügen</string>
   <!-- endregion -->
 </resources>

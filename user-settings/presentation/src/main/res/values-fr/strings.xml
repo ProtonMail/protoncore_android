@@ -32,16 +32,17 @@
   <string name="settings_validation_email">L\'adresse e-mail n\'est pas valide.</string>
   <string name="settings_general_error">Une erreur s’est produite.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Mot de passe de connexion</string>
-  <string name="settings_password_management_tab_mailbox_password">Mot de passe de la messagerie</string>
-  <string name="settings_password_management_change_login_password">Changer le mot de passe</string>
-  <string name="settings_password_management_change_mailbox_password">Modifier le mot de passe de la messagerie</string>
-  <string name="settings_password_management_header">Gestion des mots de passe</string>
-  <string name="settings_login_password_hint_current">Mot de passe de connexion actuel</string>
-  <string name="settings_login_password_hint_new">Nouveau mot de passe de connexion</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmer le nouveau mot de passe de connexion</string>
-  <string name="settings_mailbox_password_hint_new">Nouveau mot de passe de messagerie</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmer le nouveau mot de passe de la messagerie</string>
+  <string name="settings_password_management_tab_login_password">Mot de passe du compte</string>
+  <string name="settings_password_management_tab_mailbox_password">Mot de passe de chiffrement</string>
+  <string name="settings_password_management_change_login_password">Dans le mode deux mots de passe, vous utilisez le mot de passe du compte pour vous connecter à votre compte Proton.</string>
+  <string name="settings_password_management_change_mailbox_password">Dans le mode deux mots de passe, vous utilisez le mot de passe de chiffrement pour chiffrer et déchiffrer vos données.</string>
+  <string name="settings_password_management_header">Changer le mot de passe</string>
+  <string name="settings_login_password_hint_current">Mot de passe actuel</string>
+  <string name="settings_login_password_hint_new">Nouveau mot de passe</string>
+  <string name="settings_login_password_hint_new_confirm">Confirmer le nouveau mot de passe</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Mot de passe du compte actuel</string>
+  <string name="settings_mailbox_password_hint_new">Nouveau mot de passe de chiffrement</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirmez le nouveau mot de passe de chiffrement.</string>
   <string name="settings_change_password_error">Une erreur s\'est produite pendant le changement du mot de passe.</string>
   <string name="settings_recovery_email_success">L\'adresse e-mail de récupération a été mise à jour.</string>
   <string name="settings_password_management_success">Le mot de passe a été mis à jour.</string>

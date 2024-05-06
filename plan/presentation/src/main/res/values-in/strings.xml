@@ -149,9 +149,8 @@
   <string name="ten_hide_my_email_aliases">10 alias Hide My Email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Penyimpanan Drive: %d%% penuh</string>
-  <string name="upgrade_storage_current_mail_storage">Penyimpanan Mail: %d%% penuh</string>
-  <string name="upgrade_storage_subtitle">Dapatkan ruang penyimpanan tambahan</string>
-  <string name="upgrade_storage_cta_button">Tingkatkan</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% penuh</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% penuh</string>
+  <string name="upgrade_storage_subtitle">Tingkatkan ruang penyimpanan</string>
   <!-- endregion -->
 </resources>

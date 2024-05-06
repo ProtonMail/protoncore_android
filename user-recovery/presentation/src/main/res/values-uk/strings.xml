@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">Відновлення за допомогою довіреного пристрою</string>
-  <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
+  <string name="user_recovery_notification_body">Ми автоматично відновили дані вашого облікового запису.</string>
   <string name="user_recovery_dialog_title">Відновлення за допомогою довіреного пристрою</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Got it</string>
+  <string name="user_recovery_dialog_text">Після скидання пароля ми автоматично відновили дані для %1s.</string>
+  <string name="user_recovery_dialog_dismiss">Зрозуміло</string>
 </resources>

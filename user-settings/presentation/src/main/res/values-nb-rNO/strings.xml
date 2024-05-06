@@ -32,16 +32,17 @@
   <string name="settings_validation_email">E-postadressen er ugyldig</string>
   <string name="settings_general_error">En feil oppstod</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Påloggingspassord</string>
-  <string name="settings_password_management_tab_mailbox_password">Postbokspassord</string>
-  <string name="settings_password_management_change_login_password">Endre passord</string>
-  <string name="settings_password_management_change_mailbox_password">Endre postbokspassord</string>
-  <string name="settings_password_management_header">Passordhåndtering</string>
-  <string name="settings_login_password_hint_current">Gjeldende påloggingspassord</string>
-  <string name="settings_login_password_hint_new">Nytt påloggingspassord</string>
-  <string name="settings_login_password_hint_new_confirm">Bekreft nytt påloggingspassord</string>
-  <string name="settings_mailbox_password_hint_new">Nytt postbokspassord</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Bekreft nytt postbokspassord</string>
+  <string name="settings_password_management_tab_login_password">Kontopassord</string>
+  <string name="settings_password_management_tab_mailbox_password">Krypteringspassord</string>
+  <string name="settings_password_management_change_login_password">I topassordmodus brukes kontopassordet til å logge på Proton-kontoen din.</string>
+  <string name="settings_password_management_change_mailbox_password">I topassordmodus brukes krypteringspassordet til å kryptere og dekryptere dataene dine.</string>
+  <string name="settings_password_management_header">Endre passord</string>
+  <string name="settings_login_password_hint_current">Nåværende passord</string>
+  <string name="settings_login_password_hint_new">Nytt passord</string>
+  <string name="settings_login_password_hint_new_confirm">Bekreft nytt passord</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Gjeldende kontopassord</string>
+  <string name="settings_mailbox_password_hint_new">Nytt krypteringspassord</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Bekreft nytt krypteringspassord</string>
   <string name="settings_change_password_error">Det har oppstått en feil ved endring av passord.</string>
   <string name="settings_recovery_email_success">Gjennopprettings-e-postadressen oppdatert</string>
   <string name="settings_password_management_success">Passord oppdatert</string>

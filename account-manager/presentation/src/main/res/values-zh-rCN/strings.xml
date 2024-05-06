@@ -27,14 +27,14 @@
   <string name="account_settings_header">账户设置</string>
   <string name="account_settings_item_header">用户</string>
   <string name="account_settings_list_header">账户</string>
-  <string name="account_settings_list_item_password_header">密码管理</string>
+  <string name="account_settings_list_item_password_header">Change password</string>
   <string name="account_settings_list_item_password_hint_grace">密码重置请求等待中</string>
   <string name="account_settings_list_item_password_hint_insecure">密码重置请求准备就绪</string>
   <string name="account_settings_list_item_recovery_header">密保邮箱</string>
   <string name="account_settings_list_item_recovery_hint_not_set">尚未设置</string>
-  <string name="account_signout_dialog_title">Sign out?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
-  <string name="account_signout_dialog_delete_information">Remove all associated data</string>
-  <string name="account_signout_dialog_action_signout">Sign out</string>
-  <string name="account_signout_dialog_action_cancel">Cancel</string>
+  <string name="account_signout_dialog_title">退出账户?</string>
+  <string name="account_signout_dialog_text">除非您选择删除，否则与您账户相关的数据将保留在此设备上。</string>
+  <string name="account_signout_dialog_delete_information">删除所有相关数据</string>
+  <string name="account_signout_dialog_action_signout">退出账户</string>
+  <string name="account_signout_dialog_action_cancel">取消</string>
 </resources>

@@ -132,6 +132,11 @@
   <string name="auth_signup_set_recovery">回復手段を設定</string>
   <string name="auth_signup_no_connectivity">利用規約を表示するための接続がありません。</string>
   <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">キャンセル</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">ユーザー名を空白にすることはできません。</string>
   <string name="auth_signup_error_passwords_do_not_match">パスワードが一致しません.</string>
   <string name="auth_signup_validation_password_length">パスワードは 8 文字以上必要です。</string>

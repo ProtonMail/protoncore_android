@@ -32,16 +32,17 @@
   <string name="settings_validation_email">La dirección de correo no es válida.</string>
   <string name="settings_general_error">Ocurrió un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Contraseña de inicio de sesión</string>
-  <string name="settings_password_management_tab_mailbox_password">Contraseña del buzón</string>
-  <string name="settings_password_management_change_login_password">Cambiar contraseña</string>
-  <string name="settings_password_management_change_mailbox_password">Cambiar contraseña del buzón</string>
-  <string name="settings_password_management_header">Gestión de contraseñas</string>
-  <string name="settings_login_password_hint_current">Contraseña de inicio de sesión actual</string>
-  <string name="settings_login_password_hint_new">Contraseña nueva de inicio de sesión</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmar contraseña nueva de inicio de sesión</string>
-  <string name="settings_mailbox_password_hint_new">Contraseña nueva del buzón</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmar contraseña nueva del buzón</string>
+  <string name="settings_password_management_tab_login_password">Contraseña de la cuenta</string>
+  <string name="settings_password_management_tab_mailbox_password">Contraseña de cifrado</string>
+  <string name="settings_password_management_change_login_password">En modo de dos contraseñas, se usa la contraseña de la cuenta para iniciar sesión en la cuenta de Proton</string>
+  <string name="settings_password_management_change_mailbox_password">En modo de dos contraseñas, se usa la contraseña de cifrado para cifrar y descifrar los datos.</string>
+  <string name="settings_password_management_header">Cambiar la contraseña</string>
+  <string name="settings_login_password_hint_current">Contraseña actual</string>
+  <string name="settings_login_password_hint_new">Contraseña nueva</string>
+  <string name="settings_login_password_hint_new_confirm">Confirme la contraseña nueva</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Contraseña de cifrado actual</string>
+  <string name="settings_mailbox_password_hint_new">Contraseña de cifrado nueva</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirme la contraseña de cifrado nueva</string>
   <string name="settings_change_password_error">Ocurrió un error al cambiar la contraseña.</string>
   <string name="settings_recovery_email_success">La dirección de correo de recuperación fue actualizada.</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>
@@ -49,6 +50,6 @@
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetría anónima</string>
   <string name="device_settings_telemetry_hint">Para mejorar nuestros servicios, a veces recolectamos datos de uso anónimos.</string>
-  <string name="device_settings_crashreport_title">Reportes anónimos de errores</string>
+  <string name="device_settings_crashreport_title">Informes anónimos de errores</string>
   <string name="device_settings_crashreport_hint">Si la aplicación no funciona, se enviará un informe a nuestros ingenieros con los detalles del motivo. Solo lo utilizaremos para mejorar la aplicación.</string>
 </resources>

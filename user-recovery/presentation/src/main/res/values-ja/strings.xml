@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">信頼できるデバイスによる回復</string>
-  <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
+  <string name="user_recovery_notification_body">アカウントデータを自動的に回復しました。</string>
   <string name="user_recovery_dialog_title">信頼できるデバイスによる回復</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Got it</string>
+  <string name="user_recovery_dialog_text">パスワードをリセットした後、%1s のデータが自動的に回復されました。</string>
+  <string name="user_recovery_dialog_dismiss">わかった</string>
 </resources>

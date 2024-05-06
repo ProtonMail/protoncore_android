@@ -65,15 +65,15 @@
     <item quantity="other">%d segundos</item>
   </plurals>
   <plurals name="presentation_datetime_millisecond">
-    <item quantity="one">%d millisecond</item>
-    <item quantity="other">%d milliseconds</item>
+    <item quantity="one">%d milissegundo</item>
+    <item quantity="other">%d milissegundos</item>
   </plurals>
   <plurals name="presentation_datetime_microsecond">
-    <item quantity="one">%d microsecond</item>
-    <item quantity="other">%d microseconds</item>
+    <item quantity="one">%d microsegundo</item>
+    <item quantity="other">%d microsegundos</item>
   </plurals>
   <plurals name="presentation_datetime_nanosecond">
-    <item quantity="one">%d nanosecond</item>
-    <item quantity="other">%d nanoseconds</item>
+    <item quantity="one">%d nanosegundo</item>
+    <item quantity="other">%d nanosegundos</item>
   </plurals>
 </resources>

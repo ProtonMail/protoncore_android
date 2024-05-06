@@ -32,16 +32,17 @@
   <string name="settings_validation_email">Tansa imayl mačči d tameɣtut.</string>
   <string name="settings_general_error">Ylla-d neẓri.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Login password</string>
-  <string name="settings_password_management_tab_mailbox_password">Awal uffir n Tnaka n yimayl</string>
-  <string name="settings_password_management_change_login_password">Snifel awal uffir</string>
-  <string name="settings_password_management_change_mailbox_password">Snifel awal uffir n tnaka n yimayl</string>
-  <string name="settings_password_management_header">Asefrek n wawal uffir</string>
-  <string name="settings_login_password_hint_current">Awal uffir amiran</string>
-  <string name="settings_login_password_hint_new">Awal uffir n tuqqna amaynut</string>
-  <string name="settings_login_password_hint_new_confirm">Sentem awal uffir amaynut</string>
-  <string name="settings_mailbox_password_hint_new">Awal uffir n tnaka n yimayl amaynut</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Sentem awal uffir n tnaka n yimayl amaynut</string>
+  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
+  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_header">Change password</string>
+  <string name="settings_login_password_hint_current">Current password</string>
+  <string name="settings_login_password_hint_new">New password</string>
+  <string name="settings_login_password_hint_new_confirm">Confirm new password</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_new">New encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
   <string name="settings_change_password_error">Tella-d tuccḍa deg lawan n usenfel n wawal uffir.</string>
   <string name="settings_recovery_email_success">Recovery email address updated</string>
   <string name="settings_password_management_success">Awal uffir yettwaleqqem</string>
