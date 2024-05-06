@@ -132,7 +132,7 @@ interface UserManager {
     suspend fun lock(userId: UserId)
 
     /**
-     * Change password for a [userId].
+     * Change password for a [userId]. User must be unlocked to perform this operation.
      *
      * Note: This function takes care to adapt any needed passphrase or key.
      */

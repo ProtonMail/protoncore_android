@@ -26,7 +26,9 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.user.domain.extension.nameNotNull
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
@@ -71,6 +73,11 @@ class PerformUpdateUserPassword @Inject constructor(
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
                 ) else null
+
+                // Unlock user if locked/inactive.
+                if (user.hasKeys() && user.keys.areAllInactive()) {
+                    userManager.unlockWithPassword(userId, decryptedLoginPassword)
+                }
 
                 return userManager.changePassword(
                     userId = userId,
