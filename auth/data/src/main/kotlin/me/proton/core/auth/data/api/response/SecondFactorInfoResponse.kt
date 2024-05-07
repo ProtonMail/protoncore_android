@@ -20,6 +20,9 @@ package me.proton.core.auth.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
+import me.proton.core.auth.data.api.fido2.Fido2RegisteredKeyData
+import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.util.kotlin.hasFlag
@@ -27,11 +30,14 @@ import me.proton.core.util.kotlin.hasFlag
 @Serializable
 data class SecondFactorInfoResponse(
     @SerialName("Enabled")
-    val enabled: Int
+    val enabled: Int,
+
+    @SerialName("FIDO2")
+    val fido2: Fido2Response
 ) {
     fun toSecondFactor(): SecondFactor {
         return if (enabled != 0) {
-            SecondFactor.Enabled(mapSupportedMethods(enabled))
+            SecondFactor.Enabled(mapSupportedMethods(enabled), fido2.toFido2Info())
         } else {
             SecondFactor.Disabled
         }
@@ -43,4 +49,18 @@ data class SecondFactorInfoResponse(
             if (enabled.hasFlag(0b10)) add(SecondFactorMethod.Authenticator)
         }.toSet()
     }
+}
+
+@Serializable
+data class Fido2Response(
+    @SerialName("AuthenticationOptions")
+    val authenticationOptions: AuthenticationOptionsData? = null,
+
+    @SerialName("RegisteredKeys")
+    val registeredKeys: List<Fido2RegisteredKeyData> = emptyList()
+) {
+    fun toFido2Info(): Fido2Info = Fido2Info(
+        authenticationOptions = authenticationOptions?.toFido2AuthenticationOptions(),
+        registeredKeys = registeredKeys.map { it.toFido2RegisteredKey() }
+    )
 }

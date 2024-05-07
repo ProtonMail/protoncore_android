@@ -30,7 +30,7 @@ protonBuild {
 
 protonCoverage {
     branchCoveragePercentage.set(61)
-    lineCoveragePercentage.set(58)
+    lineCoveragePercentage.set(60)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -50,6 +50,7 @@ dependencies {
         project(Module.networkDomain),
         project(Module.featureFlagDomain),
         `serialization-core`,
+        `serialization-json`,
         `hilt-android`,
         `javax-inject`,
         retrofit,

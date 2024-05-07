@@ -29,6 +29,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.domain.entity.SessionInfo
@@ -77,7 +78,7 @@ class CreateLoginSessionTest {
 
     @Test
     fun `login session with 2fa`() = runTest {
-        setupMocks(SecondFactor.Enabled(setOf(SecondFactorMethod.Authenticator)))
+        setupMocks(SecondFactor.Enabled(setOf(SecondFactorMethod.Authenticator), Fido2Info(null, emptyList())))
 
         val sessionInfo = tested.invoke(testUsername, testPassword, AccountType.Internal)
         coVerify { performLogin.invoke(testUsername, testPassword) }

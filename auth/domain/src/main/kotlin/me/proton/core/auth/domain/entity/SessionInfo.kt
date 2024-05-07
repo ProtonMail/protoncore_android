@@ -18,6 +18,8 @@
 
 package me.proton.core.auth.domain.entity
 
+import me.proton.core.account.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.account.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 
@@ -43,11 +45,28 @@ data class SessionInfo(
     val isTwoPassModeNeeded = passwordMode == 2
 }
 
+fun SessionInfo.getFido2AuthOptions(): Fido2AuthenticationOptions? {
+    val secondFactorEnabled = secondFactor as? SecondFactor.Enabled
+    return secondFactorEnabled
+        ?.fido2
+        ?.authenticationOptions
+        ?.takeIf { secondFactorEnabled.supportedMethods.contains(SecondFactorMethod.Authenticator) }
+}
+
 sealed class SecondFactor {
-    data class Enabled(val supportedMethods: Set<SecondFactorMethod>) : SecondFactor()
+    data class Enabled(
+        val supportedMethods: Set<SecondFactorMethod>,
+        val fido2: Fido2Info
+    ) : SecondFactor()
+
     object Disabled : SecondFactor()
 }
 
 enum class SecondFactorMethod {
     Totp, Authenticator
 }
+
+data class Fido2Info(
+    val authenticationOptions: Fido2AuthenticationOptions?,
+    val registeredKeys: List<Fido2RegisteredKey>
+)

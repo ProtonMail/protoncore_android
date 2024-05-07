@@ -36,6 +36,138 @@ public abstract interface class me/proton/core/auth/data/api/AuthenticationApi :
 	public abstract fun validatePhone (Lme/proton/core/auth/data/api/request/PhoneValidationRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/auth/data/api/fido2/AuthenticationOptionsData {
+	public static final field Companion Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData$Companion;
+	public fun <init> (Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;)V
+	public final fun component1 ()Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;
+	public final fun copy (Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;)Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;ILjava/lang/Object;)Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getPublicKey ()Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;
+	public fun hashCode ()I
+	public final fun toFido2AuthenticationOptions ()Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/data/api/fido2/AuthenticationOptionsData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/AuthenticationOptionsData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData {
+	public static final field Companion Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData$Companion;
+	public synthetic fun <init> (Ljava/lang/String;[BLjava/lang/String;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2-TcUX1vc ()[B
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy-Coi6ktg (Ljava/lang/String;[BLjava/lang/String;)Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData;
+	public static synthetic fun copy-Coi6ktg$default (Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData;Ljava/lang/String;[BLjava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAttestationFormat ()Ljava/lang/String;
+	public final fun getCredentialID-TcUX1vc ()[B
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toFido2RegisteredKey ()Lme/proton/core/account/domain/entity/Fido2RegisteredKey;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData {
+	public static final field Companion Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData$Companion;
+	public synthetic fun <init> (Ljava/lang/String;[BLjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Ljava/lang/String;[BLjava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2-TcUX1vc ()[B
+	public final fun component3 ()Ljava/util/List;
+	public final fun copy-Coi6ktg (Ljava/lang/String;[BLjava/util/List;)Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData;
+	public static synthetic fun copy-Coi6ktg$default (Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData;Ljava/lang/String;[BLjava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getId-TcUX1vc ()[B
+	public final fun getTransports ()Ljava/util/List;
+	public final fun getType ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toFido2PublicKeyCredentialDescriptor ()Lme/proton/core/account/domain/entity/Fido2PublicKeyCredentialDescriptor;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialDescriptorData$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse {
+	public static final field Companion Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse$Companion;
+	public synthetic fun <init> ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-TcUX1vc ()[B
+	public final fun component2-6VbMDqA ()Lkotlin/ULong;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/lang/String;
+	public final fun component6 ()Lkotlinx/serialization/json/JsonObject;
+	public final fun copy-ebjZ_cE ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;)Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;
+	public static synthetic fun copy-ebjZ_cE$default (Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;[BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lkotlinx/serialization/json/JsonObject;ILjava/lang/Object;)Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAllowCredentials ()Ljava/util/List;
+	public final fun getChallenge-TcUX1vc ()[B
+	public final fun getExtensions ()Lkotlinx/serialization/json/JsonObject;
+	public final fun getRpId ()Ljava/lang/String;
+	public final fun getTimeout-6VbMDqA ()Lkotlin/ULong;
+	public final fun getUserVerification ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun toFido2PublicKeyCredentialRequestOptions ()Lme/proton/core/account/domain/entity/Fido2PublicKeyCredentialRequestOptions;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public final class me/proton/core/auth/data/api/request/AuthInfoRequest {
 	public static final field Companion Lme/proton/core/auth/data/api/request/AuthInfoRequest$Companion;
 	public fun <init> ()V
@@ -91,6 +223,41 @@ public final class me/proton/core/auth/data/api/request/EmailValidationRequest$$
 }
 
 public final class me/proton/core/auth/data/api/request/EmailValidationRequest$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/request/Fido2Request {
+	public static final field Companion Lme/proton/core/auth/data/api/request/Fido2Request$Companion;
+	public synthetic fun <init> (Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[BLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5-TcUX1vc ()[B
+	public final fun copy-UeLq8oA (Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[B)Lme/proton/core/auth/data/api/request/Fido2Request;
+	public static synthetic fun copy-UeLq8oA$default (Lme/proton/core/auth/data/api/request/Fido2Request;Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;[BILjava/lang/Object;)Lme/proton/core/auth/data/api/request/Fido2Request;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAuthenticationOptions ()Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public final fun getAuthenticatorData ()Ljava/lang/String;
+	public final fun getClientData ()Ljava/lang/String;
+	public final fun getCredentialID-TcUX1vc ()[B
+	public final fun getSignature ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/data/api/request/Fido2Request$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/request/Fido2Request$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/request/Fido2Request;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/request/Fido2Request;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/request/Fido2Request$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -276,13 +443,15 @@ public final class me/proton/core/auth/data/api/request/RequestSessionRequest$Co
 public final class me/proton/core/auth/data/api/request/SecondFactorRequest {
 	public static final field Companion Lme/proton/core/auth/data/api/request/SecondFactorRequest$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;)V
-	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;Lme/proton/core/auth/data/api/request/Fido2Request;)V
+	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;Lme/proton/core/auth/data/api/request/Fido2Request;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;
-	public final fun copy (Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;)Lme/proton/core/auth/data/api/request/SecondFactorRequest;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/SecondFactorRequest;Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/SecondFactorRequest;
+	public final fun component3 ()Lme/proton/core/auth/data/api/request/Fido2Request;
+	public final fun copy (Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;Lme/proton/core/auth/data/api/request/Fido2Request;)Lme/proton/core/auth/data/api/request/SecondFactorRequest;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/request/SecondFactorRequest;Ljava/lang/String;Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;Lme/proton/core/auth/data/api/request/Fido2Request;ILjava/lang/Object;)Lme/proton/core/auth/data/api/request/SecondFactorRequest;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFido2 ()Lme/proton/core/auth/data/api/request/Fido2Request;
 	public final fun getSecondFactorCode ()Ljava/lang/String;
 	public final fun getUniversalTwoFactorRequest ()Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest;
 	public fun hashCode ()I
@@ -374,6 +543,38 @@ public final class me/proton/core/auth/data/api/response/AuthInfoResponse$$seria
 }
 
 public final class me/proton/core/auth/data/api/response/AuthInfoResponse$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/response/Fido2Response {
+	public static final field Companion Lme/proton/core/auth/data/api/response/Fido2Response$Companion;
+	public fun <init> ()V
+	public fun <init> (Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/util/List;)V
+	public synthetic fun <init> (Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/util/List;)Lme/proton/core/auth/data/api/response/Fido2Response;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/response/Fido2Response;Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/data/api/response/Fido2Response;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAuthenticationOptions ()Lme/proton/core/auth/data/api/fido2/AuthenticationOptionsData;
+	public final fun getRegisteredKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public final fun toFido2Info ()Lme/proton/core/auth/domain/entity/Fido2Info;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/data/api/response/Fido2Response$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/auth/data/api/response/Fido2Response$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/auth/data/api/response/Fido2Response;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/auth/data/api/response/Fido2Response;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/auth/data/api/response/Fido2Response$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
@@ -521,12 +722,14 @@ public final class me/proton/core/auth/data/api/response/ScopesResponse$Companio
 
 public final class me/proton/core/auth/data/api/response/SecondFactorInfoResponse {
 	public static final field Companion Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse$Companion;
-	public fun <init> (I)V
+	public fun <init> (ILme/proton/core/auth/data/api/response/Fido2Response;)V
 	public final fun component1 ()I
-	public final fun copy (I)Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
-	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;IILjava/lang/Object;)Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
+	public final fun component2 ()Lme/proton/core/auth/data/api/response/Fido2Response;
+	public final fun copy (ILme/proton/core/auth/data/api/response/Fido2Response;)Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
+	public static synthetic fun copy$default (Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;ILme/proton/core/auth/data/api/response/Fido2Response;ILjava/lang/Object;)Lme/proton/core/auth/data/api/response/SecondFactorInfoResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getEnabled ()I
+	public final fun getFido2 ()Lme/proton/core/auth/data/api/response/Fido2Response;
 	public fun hashCode ()I
 	public final fun toSecondFactor ()Lme/proton/core/auth/domain/entity/SecondFactor;
 	public fun toString ()Ljava/lang/String;

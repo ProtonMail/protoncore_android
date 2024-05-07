@@ -26,6 +26,7 @@ import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.entity.getFido2AuthOptions
 import me.proton.core.network.domain.session.Session
 import javax.inject.Inject
 
@@ -60,7 +61,8 @@ class CreateLoginSsoSession @Inject constructor(
                     requiredAccountType = requiredAccountType,
                     secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
                     twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
-                    password = null
+                    password = null,
+                    fido2AuthenticationOptions = sessionInfo.getFido2AuthOptions()
                 )
             )
         )

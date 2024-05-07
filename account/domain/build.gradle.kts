@@ -21,6 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonKotlinLibrary
+    kotlin("plugin.serialization")
 }
 
 protonBuild {
@@ -37,7 +38,8 @@ dependencies {
     )
 
     implementation(
-        `coroutines-core`
+        `coroutines-core`,
+        `serialization-core`
     )
 }
 

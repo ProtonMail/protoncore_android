@@ -75,6 +75,19 @@ public final class me/proton/core/auth/domain/entity/BillingDetails {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/auth/domain/entity/Fido2Info {
+	public fun <init> (Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;)Lme/proton/core/auth/domain/entity/Fido2Info;
+	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/Fido2Info;Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/Fido2Info;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAuthenticationOptions ()Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public final fun getRegisteredKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/proton/core/auth/domain/entity/Modulus {
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -110,11 +123,13 @@ public final class me/proton/core/auth/domain/entity/SecondFactor$Disabled : me/
 }
 
 public final class me/proton/core/auth/domain/entity/SecondFactor$Enabled : me/proton/core/auth/domain/entity/SecondFactor {
-	public fun <init> (Ljava/util/Set;)V
+	public fun <init> (Ljava/util/Set;Lme/proton/core/auth/domain/entity/Fido2Info;)V
 	public final fun component1 ()Ljava/util/Set;
-	public final fun copy (Ljava/util/Set;)Lme/proton/core/auth/domain/entity/SecondFactor$Enabled;
-	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/SecondFactor$Enabled;Ljava/util/Set;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/SecondFactor$Enabled;
+	public final fun component2 ()Lme/proton/core/auth/domain/entity/Fido2Info;
+	public final fun copy (Ljava/util/Set;Lme/proton/core/auth/domain/entity/Fido2Info;)Lme/proton/core/auth/domain/entity/SecondFactor$Enabled;
+	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/SecondFactor$Enabled;Ljava/util/Set;Lme/proton/core/auth/domain/entity/Fido2Info;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/SecondFactor$Enabled;
 	public fun equals (Ljava/lang/Object;)Z
+	public final fun getFido2 ()Lme/proton/core/auth/domain/entity/Fido2Info;
 	public final fun getSupportedMethods ()Ljava/util/Set;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -192,6 +207,10 @@ public final class me/proton/core/auth/domain/entity/SessionInfo {
 	public final fun isSecondFactorNeeded ()Z
 	public final fun isTwoPassModeNeeded ()Z
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/domain/entity/SessionInfoKt {
+	public static final fun getFido2AuthOptions (Lme/proton/core/auth/domain/entity/SessionInfo;)Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
 }
 
 public final class me/proton/core/auth/domain/exception/InvalidServerAuthenticationException : java/lang/IllegalArgumentException {

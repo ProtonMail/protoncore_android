@@ -20,13 +20,16 @@ package me.proton.core.auth.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
 
 @Serializable
 data class SecondFactorRequest(
     @SerialName("TwoFactorCode")
     val secondFactorCode: String? = null,
     @SerialName("U2F")
-    val universalTwoFactorRequest: UniversalTwoFactorRequest? = null
+    val universalTwoFactorRequest: UniversalTwoFactorRequest? = null,
+    @SerialName("FIDO2")
+    val fido2: Fido2Request? = null
 )
 
 @Serializable
@@ -37,4 +40,19 @@ data class UniversalTwoFactorRequest(
     val clientData: String,
     @SerialName("SignatureData")
     val signatureData: String
+)
+
+@OptIn(ExperimentalUnsignedTypes::class)
+@Serializable
+data class Fido2Request(
+    @SerialName("AuthenticationOptions")
+    val authenticationOptions: AuthenticationOptionsData,
+    @SerialName("ClientData")
+    val clientData: String, // base64
+    @SerialName("AuthenticatorData")
+    val authenticatorData: String, // base64
+    @SerialName("Signature")
+    val signature: String, // base64
+    @SerialName("CredentialID")
+    val credentialID: UByteArray
 )

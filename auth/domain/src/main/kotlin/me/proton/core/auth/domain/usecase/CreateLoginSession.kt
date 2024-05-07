@@ -25,7 +25,10 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.SecondFactor
+import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.entity.getFido2AuthOptions
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.network.domain.session.Session
 import javax.inject.Inject
@@ -70,7 +73,8 @@ class CreateLoginSession @Inject constructor(
                     requiredAccountType = requiredAccountType,
                     secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
                     twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
-                    password = password
+                    password = password,
+                    fido2AuthenticationOptions = sessionInfo.getFido2AuthOptions()
                 )
             )
         )

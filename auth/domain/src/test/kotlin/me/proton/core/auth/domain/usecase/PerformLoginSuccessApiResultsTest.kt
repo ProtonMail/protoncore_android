@@ -24,6 +24,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
@@ -144,7 +145,7 @@ class PerformLoginSuccessApiResultsTest {
     @Test
     fun `correct handling single password account second factor returned`() = runTest {
         coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
-            secondFactor = SecondFactor.Enabled(emptySet())
+            secondFactor = SecondFactor.Enabled(emptySet(), Fido2Info(null, emptyList()))
         )
 
         val sessionInfo = useCase.invoke(testUsername, testPassword)
@@ -155,7 +156,7 @@ class PerformLoginSuccessApiResultsTest {
     fun `correct handling two password account second factor returned`() = runTest {
         coEvery { authRepository.performLogin(any(), any(), any(), any()) } returns sessionInfoResult.copy(
             passwordMode = 2,
-            secondFactor = SecondFactor.Enabled(emptySet())
+            secondFactor = SecondFactor.Enabled(emptySet(), Fido2Info(null, emptyList()))
         )
         val sessionInfo = useCase.invoke(testUsername, testPassword)
         assertNotNull(sessionInfo)
