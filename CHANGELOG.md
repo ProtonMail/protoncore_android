@@ -11,6 +11,19 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [23.0.1] - 2024-05-07
+
+### Bug Fixes
+
+- plan:
+  - Fixed Subscription Update error handling (400 status code).
+- user-settings:
+  - Unlock user if locked before changing password (e.g. Vpn).
+
+### Internationalization
+
+- Upgrade translations from crowdin (e585e157).
+
 ## [23.0.0] - 2024-04-30
 
 ### Breaking Changes
