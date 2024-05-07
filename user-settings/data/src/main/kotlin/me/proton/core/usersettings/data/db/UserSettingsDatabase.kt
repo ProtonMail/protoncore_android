@@ -118,5 +118,15 @@ interface UserSettingsDatabase : Database {
                 )
             }
         }
+
+        val MIGRATION_7 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserSettingsEntity",
+                    column = "twoFA_registeredKeys",
+                    type = "TEXT"
+                )
+            }
+        }
     }
 }

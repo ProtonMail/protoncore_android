@@ -140,18 +140,25 @@ public final class me/proton/core/usersettings/domain/entity/RecoverySetting {
 }
 
 public final class me/proton/core/usersettings/domain/entity/TwoFASetting {
-	public fun <init> (Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;)V
+	public static final field Companion Lme/proton/core/usersettings/domain/entity/TwoFASetting$Companion;
+	public fun <init> (Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;)V
 	public final fun component1 ()Ljava/lang/Boolean;
 	public final fun component2 ()Ljava/lang/Integer;
 	public final fun component3 ()Ljava/lang/Integer;
-	public final fun copy (Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;)Lme/proton/core/usersettings/domain/entity/TwoFASetting;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/TwoFASetting;
+	public final fun component4 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;)Lme/proton/core/usersettings/domain/entity/TwoFASetting;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/domain/entity/TwoFASetting;Ljava/lang/Boolean;Ljava/lang/Integer;Ljava/lang/Integer;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/usersettings/domain/entity/TwoFASetting;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowed ()Ljava/lang/Integer;
 	public final fun getEnabled ()Ljava/lang/Boolean;
 	public final fun getExpirationTime ()Ljava/lang/Integer;
+	public final fun getRegisteredKeys ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/domain/entity/TwoFASetting$Companion {
+	public final fun nil ()Lme/proton/core/usersettings/domain/entity/TwoFASetting;
 }
 
 public final class me/proton/core/usersettings/domain/entity/UserSettings {

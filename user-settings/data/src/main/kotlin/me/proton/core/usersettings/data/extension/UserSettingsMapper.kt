@@ -18,6 +18,7 @@
 
 package me.proton.core.usersettings.data.extension
 
+import me.proton.core.account.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.data.api.response.PasswordResponse
 import me.proton.core.usersettings.data.api.response.RecoverySettingResponse
@@ -25,6 +26,7 @@ import me.proton.core.usersettings.data.api.response.TwoFAResponse
 import me.proton.core.usersettings.data.api.response.UserSettingsResponse
 import me.proton.core.usersettings.data.entity.PasswordEntity
 import me.proton.core.usersettings.data.entity.RecoverySettingEntity
+import me.proton.core.usersettings.data.entity.RegisteredKeyEntity
 import me.proton.core.usersettings.data.entity.TwoFAEntity
 import me.proton.core.usersettings.data.entity.UserSettingsEntity
 import me.proton.core.usersettings.domain.entity.PasswordSetting
@@ -78,6 +80,7 @@ internal fun TwoFAResponse.fromResponse() = TwoFASetting(
     enabled = enabled.toBooleanOrTrue(),
     allowed = allowed,
     expirationTime = expirationTime,
+    registeredKeys = registeredKeys?.map { it.toFido2RegisteredKey() } ?: emptyList()
 )
 
 internal fun UserSettingsEntity.fromEntity() = UserSettings(
@@ -148,10 +151,26 @@ internal fun TwoFAEntity.fromEntity() = TwoFASetting(
     enabled = enabled?.toBooleanOrTrue(),
     allowed = allowed,
     expirationTime = expirationTime,
+    registeredKeys = registeredKeys?.map { it.fromEntity() } ?: emptyList()
+)
+
+@OptIn(ExperimentalUnsignedTypes::class)
+internal fun RegisteredKeyEntity.fromEntity() = Fido2RegisteredKey(
+    attestationFormat = attestationFormat,
+    credentialID = credentialID,
+    name = name
+)
+
+@OptIn(ExperimentalUnsignedTypes::class)
+internal fun Fido2RegisteredKey.toEntity() = RegisteredKeyEntity(
+    attestationFormat = attestationFormat,
+    credentialID = credentialID,
+    name = name
 )
 
 internal fun TwoFASetting.toEntity() = TwoFAEntity(
     enabled = enabled?.toInt(),
     allowed = allowed,
     expirationTime = expirationTime,
+    registeredKeys = registeredKeys.map { it.toEntity() }
 )

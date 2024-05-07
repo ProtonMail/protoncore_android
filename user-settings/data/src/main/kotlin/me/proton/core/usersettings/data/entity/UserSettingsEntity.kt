@@ -83,12 +83,14 @@ data class TwoFAEntity(
     val enabled: Int?,
     val allowed: Int?,
     val expirationTime: Int?,
+    val registeredKeys: List<RegisteredKeyEntity>?
 )
 
+@OptIn(ExperimentalUnsignedTypes::class)
 @Serializable
 data class RegisteredKeyEntity(
     val attestationFormat: String,
-    val credentialID: List<Int>,
+    val credentialID: UByteArray,
     val name: String,
 )
 

@@ -20,6 +20,7 @@ package me.proton.core.usersettings.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.auth.data.api.fido2.Fido2RegisteredKeyData
 
 @Serializable
 data class UserSettingsResponse(
@@ -61,7 +62,7 @@ data class UserSettingsResponse(
             email = null,
             phone = null,
             password = PasswordResponse(0, null),
-            twoFA = TwoFAResponse(0, 0, null),
+            twoFA = TwoFAResponse(0, 0, null, null),
             news = 0,
             locale = "en",
             logAuth = 0,
@@ -106,4 +107,6 @@ data class TwoFAResponse(
     val allowed: Int,
     @SerialName("ExpirationTime")
     val expirationTime: Int?,
+    @SerialName("RegisteredKeys")
+    val registeredKeys: List<Fido2RegisteredKeyData>?
 )

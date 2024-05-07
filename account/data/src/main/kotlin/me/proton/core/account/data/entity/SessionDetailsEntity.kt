@@ -25,6 +25,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.deserializeOrNull
 
 @Entity(
     primaryKeys = ["sessionId"],
@@ -44,13 +45,15 @@ data class SessionDetailsEntity(
     val requiredAccountType: AccountType,
     val secondFactorEnabled: Boolean,
     val twoPassModeEnabled: Boolean,
-    val password: EncryptedString?
+    val password: EncryptedString?,
+    val fido2AuthenticationOptionsJson: String? = null
 ) {
     fun toSessionDetails() = SessionDetails(
         initialEventId = initialEventId,
         requiredAccountType = requiredAccountType,
         secondFactorEnabled = secondFactorEnabled,
         twoPassModeEnabled = twoPassModeEnabled,
-        password = password
+        password = password,
+        fido2AuthenticationOptions = fido2AuthenticationOptionsJson?.deserializeOrNull()
     )
 }

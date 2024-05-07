@@ -18,6 +18,7 @@
 
 package me.proton.core.usersettings.domain.entity
 
+import me.proton.core.account.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 
@@ -46,7 +47,7 @@ data class UserSettings(
             email = null,
             phone = null,
             password = PasswordSetting(null, null),
-            twoFA = TwoFASetting(false, 0, null),
+            twoFA = TwoFASetting.nil(),
             news = 0,
             locale = "en",
             logAuth = IntEnum(UserSettings.LogAuth.Disabled.value, UserSettings.LogAuth.Disabled),
@@ -135,4 +136,14 @@ data class TwoFASetting(
     val enabled: Boolean?,
     val allowed: Int?,
     val expirationTime: Int?,
-)
+    val registeredKeys: List<Fido2RegisteredKey>
+) {
+    companion object {
+        fun nil() = TwoFASetting(
+            enabled = null,
+            allowed = null,
+            expirationTime = null,
+            registeredKeys = emptyList()
+        )
+    }
+}

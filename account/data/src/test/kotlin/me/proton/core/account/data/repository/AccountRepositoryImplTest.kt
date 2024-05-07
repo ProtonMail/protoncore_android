@@ -278,7 +278,8 @@ class AccountRepositoryImplTest {
             requiredAccountType = AccountType.Internal,
             secondFactorEnabled = true,
             twoPassModeEnabled = true,
-            password = "encrypted-password"
+            password = "encrypted-password",
+            fido2AuthenticationOptionsJson = null
         )
 
         val expectedAccount = testAccount.copy(
@@ -292,7 +293,8 @@ class AccountRepositoryImplTest {
                     requiredAccountType = AccountType.Internal,
                     secondFactorEnabled = true,
                     twoPassModeEnabled = true,
-                    password = "encrypted-password"
+                    password = "encrypted-password",
+                    fido2AuthenticationOptions = null
                 )
             )
         )
@@ -498,7 +500,8 @@ class AccountRepositoryImplTest {
                 requiredAccountType = AccountType.Internal,
                 secondFactorEnabled = true,
                 twoPassModeEnabled = true,
-                password = "encrypted-password"
+                password = "encrypted-password",
+                fido2AuthenticationOptions = null
             )
         )
 
@@ -510,7 +513,8 @@ class AccountRepositoryImplTest {
                     requiredAccountType = AccountType.Internal,
                     secondFactorEnabled = true,
                     twoPassModeEnabled = true,
-                    password = "encrypted-password"
+                    password = "encrypted-password",
+                    fido2AuthenticationOptionsJson = null
                 )
             )
         }

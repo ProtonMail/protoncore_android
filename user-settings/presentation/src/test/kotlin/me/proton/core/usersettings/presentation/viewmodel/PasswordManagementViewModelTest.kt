@@ -140,7 +140,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     fun `get current settings 2 Pass handled correctly`() = coroutinesTest {
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
             testUserSettingsResponse.copy(
-                twoFA = TwoFASetting(true, 1, null),
+                twoFA = TwoFASetting.nil().copy(enabled = true, allowed = 1),
                 password = PasswordSetting(mode = 2, expirationTime = null)
             )
         )
@@ -160,7 +160,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     fun `get current settings 1 Pass handled correctly`() = coroutinesTest {
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
             testUserSettingsResponse.copy(
-                twoFA = TwoFASetting(true, 1, null),
+                twoFA = TwoFASetting.nil().copy(enabled = true, allowed = 1),
                 password = PasswordSetting(mode = 1, expirationTime = null)
             )
         )
@@ -185,7 +185,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
 
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
             testUserSettingsResponse.copy(
-                twoFA = TwoFASetting(false, 1, null),
+                twoFA = TwoFASetting.nil().copy(enabled = false, allowed = 1),
                 password = PasswordSetting(mode = 1, expirationTime = null)
             )
         )
@@ -229,7 +229,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
 
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
             testUserSettingsResponse.copy(
-                twoFA = TwoFASetting(false, 1, null),
+                twoFA = TwoFASetting.nil().copy(enabled = false, allowed = 1),
                 password = PasswordSetting(mode = 2, expirationTime = null)
             )
         )
@@ -273,7 +273,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
 
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
             testUserSettingsResponse.copy(
-                twoFA = TwoFASetting(false, 0, null),
+                twoFA = TwoFASetting.nil().copy(enabled = false, allowed = 1),
                 password = PasswordSetting(mode = 1, expirationTime = null)
             )
         )
@@ -317,7 +317,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
 
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(
             testUserSettingsResponse.copy(
-                twoFA = TwoFASetting(true, 0, null),
+                twoFA = TwoFASetting.nil().copy(enabled = true, allowed = 0),
                 password = PasswordSetting(mode = 1, expirationTime = null)
             )
         )

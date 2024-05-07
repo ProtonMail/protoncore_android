@@ -165,5 +165,15 @@ interface AccountDatabase : Database {
                 )
             }
         }
+
+        val MIGRATION_8 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "SessionDetailsEntity",
+                    column = "fido2AuthenticationOptionsJson",
+                    type = "TEXT"
+                )
+            }
+        }
     }
 }

@@ -329,4 +329,11 @@ object AccountManagerDatabaseMigrations {
             DeviceRecoveryDatabase.MIGRATION_1.migrate(db)
         }
     }
+
+    val MIGRATION_46_47 = object : Migration(46, 47) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            AccountDatabase.MIGRATION_8.migrate(db)
+            UserSettingsDatabase.MIGRATION_7.migrate(db)
+        }
+    }
 }
