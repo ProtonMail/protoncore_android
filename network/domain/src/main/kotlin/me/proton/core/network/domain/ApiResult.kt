@@ -197,6 +197,11 @@ fun ApiException.isUnauthorized(): Boolean = isHttpError(HttpResponseCodes.HTTP_
 fun ApiException.isUnprocessable() = isHttpError(HttpResponseCodes.HTTP_UNPROCESSABLE)
 
 /**
+ * Return true if [ApiException.error] is a bad request error (400).
+ */
+fun ApiException.isBadRequest() = isHttpError(HttpResponseCodes.HTTP_BAD_REQUEST)
+
+/**
  * Return true if [ApiException.error] is a force update error (5003/5005).
  *
  * @see ApiResult.isForceUpdate

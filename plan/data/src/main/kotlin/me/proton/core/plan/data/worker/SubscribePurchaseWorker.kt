@@ -30,6 +30,7 @@ import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.isBadRequest
 import me.proton.core.network.domain.isRetryable
 import me.proton.core.network.domain.isUnprocessable
 import me.proton.core.network.domain.session.SessionProvider
@@ -94,7 +95,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
         return when {
             error is ApiException && error.isRetryable() -> Result.retry()
 
-            error is ApiException && error.isUnprocessable() -> {
+            error is ApiException && (error.isUnprocessable() || error.isBadRequest()) -> {
                 val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
                 val plans = plansRepository.getSubscription(userId)?.plans.orEmpty()
                 when {
