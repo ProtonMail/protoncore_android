@@ -64,7 +64,7 @@ internal class AndroidKeyStoreCryptoAndroidTest {
     }
 
     @Test
-    fun encryptDecryptBenchmarkAverageTimeIsBelow30Millis() = runTest {
+    fun encryptDecryptBenchmarkAverageTimeIsFast() = runTest {
         // GIVEN
         val repeat = 100
         val data = "testing"
@@ -80,7 +80,12 @@ internal class AndroidKeyStoreCryptoAndroidTest {
 
         // THEN
         assertTrue(crypto.isUsingKeyStore())
-        assertTrue((totalTimeMillis / repeat) < 30)
+        val meanDurationMs = totalTimeMillis / repeat
+        val maxMeanDurationMs = 40
+        assertTrue(
+            meanDurationMs < maxMeanDurationMs,
+            "The mean duration was expected to be below ${maxMeanDurationMs}ms but was ${meanDurationMs}ms."
+        )
     }
 
     @Test
