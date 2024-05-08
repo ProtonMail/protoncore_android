@@ -17,7 +17,8 @@ public abstract interface class me/proton/core/userrecovery/dagger/CoreDeviceRec
 	public abstract fun bindIsDeviceRecoveryEnabled (Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl;)Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;
 }
 
-public final class me/proton/core/userrecovery/dagger/CoreDeviceRecoveryModule {
-	public static final field INSTANCE Lme/proton/core/userrecovery/dagger/CoreDeviceRecoveryModule;
+public abstract interface class me/proton/core/userrecovery/dagger/CoreDeviceRecoveryModule {
+	public abstract fun bindDeviceRecoveryRepository (Lme/proton/core/userrecovery/data/repository/DeviceRecoveryRepositoryImpl;)Lme/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository;
+	public abstract fun bindUserRecoveryWorkerManager (Lme/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl;)Lme/proton/core/userrecovery/domain/worker/UserRecoveryWorkerManager;
 }
 

@@ -545,6 +545,7 @@ open class TestCryptoContext : CryptoContext {
         override fun getJsonSHA256Fingerprints(key: Armored): String = "jsonSHA256Fingerprint($key)"
 
         override fun getBase64Encoded(array: ByteArray): String = array.toString()
+        override fun getBase64EncodedNoWrap(array: ByteArray): String = array.toString()
 
         override fun getBase64Decoded(string: String): ByteArray = string.toByteArray()
 

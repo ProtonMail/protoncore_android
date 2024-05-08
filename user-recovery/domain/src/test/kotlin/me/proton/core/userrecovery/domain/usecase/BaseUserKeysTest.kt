@@ -29,6 +29,7 @@ import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
+import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 import me.proton.core.key.domain.fingerprint
@@ -66,11 +67,13 @@ abstract class BaseUserKeysTest {
         every { this@mockk.privateKey } returns testPrivateKeyPrimary
         every { this@mockk.recoverySecret } returns testSecretValid
         every { this@mockk.active } returns true
+        every { this@mockk.keyId } returns KeyId("testKey1")
     }
     internal val testKey2 = mockk<UserKey> {
         every { this@mockk.privateKey } returns testPrivateKeyInactive
         every { this@mockk.recoverySecret } returns testSecretInvalid
         every { this@mockk.active } returns false
+        every { this@mockk.keyId } returns KeyId("testKey2")
     }
     internal val testUser = mockk<User> {
         every { this@mockk.userId } returns UserId("userId")

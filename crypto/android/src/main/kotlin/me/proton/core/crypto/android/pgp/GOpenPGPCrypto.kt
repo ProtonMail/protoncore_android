@@ -1175,6 +1175,9 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun getBase64Encoded(array: ByteArray): String =
         Base64.encodeToString(array, Base64.DEFAULT)
 
+    override fun getBase64EncodedNoWrap(array: ByteArray): String =
+        Base64.encodeToString(array, Base64.NO_WRAP)
+
     override fun getBase64Decoded(string: String): ByteArray =
         Base64.decode(string, Base64.DEFAULT)
 

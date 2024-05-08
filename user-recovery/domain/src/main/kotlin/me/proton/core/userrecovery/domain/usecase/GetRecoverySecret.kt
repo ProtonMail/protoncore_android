@@ -22,8 +22,8 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.generateNewToken
-import me.proton.core.key.domain.getBase64Encoded
+import me.proton.core.key.domain.generateRandomBytes
+import me.proton.core.key.domain.getBase64EncodedNoWrap
 import me.proton.core.key.domain.signText
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.UserManager
@@ -40,8 +40,8 @@ class GetRecoverySecret @Inject constructor(
         userId: UserId
     ): Pair<Based64Encoded, EncryptedSignature> {
         return userManager.getUser(userId).useKeys(cryptoContext) {
-            val token = generateNewToken(32)
-            val secret = getBase64Encoded(token)
+            val token = generateRandomBytes(32)
+            val secret = getBase64EncodedNoWrap(token)
             val signature = signText(secret)
             secret to signature
         }

@@ -29,6 +29,11 @@ protonBuild {
     apiModeDisabled()
 }
 
+protonCoverage {
+    branchCoveragePercentage.set(0)
+    lineCoveragePercentage.set(21)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 android {
@@ -82,5 +87,11 @@ dependencies {
         `junit`,
         `junit-ktx`,
         `kotlin-test`
+    )
+
+    testImplementation(
+        project(Module.kotlinTest),
+        `kotlin-test`,
+        mockk,
     )
 }

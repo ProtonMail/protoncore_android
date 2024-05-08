@@ -195,7 +195,7 @@ public final class me/proton/core/user/data/UserManagerImpl : me/proton/core/use
 	public fun lock (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observeAddresses (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public fun observeUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
-	public fun reactivateKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun reactivateKey (Lme/proton/core/user/domain/entity/UserKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun resetPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setupPrimaryKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun unlockWithPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1016,7 +1016,8 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl_Factor
 
 public final class me/proton/core/user/data/usecase/GenerateSignedKeyList {
 	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;)V
-	public final fun invoke (Lme/proton/core/user/domain/entity/UserAddress;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
+	public final fun invoke (Lme/proton/core/user/domain/entity/UserAddress;Lkotlin/jvm/functions/Function1;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
+	public static synthetic fun invoke$default (Lme/proton/core/user/data/usecase/GenerateSignedKeyList;Lme/proton/core/user/domain/entity/UserAddress;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/key/PublicSignedKeyList;
 }
 
 public final class me/proton/core/user/data/usecase/GenerateSignedKeyList_Factory : dagger/internal/Factory {

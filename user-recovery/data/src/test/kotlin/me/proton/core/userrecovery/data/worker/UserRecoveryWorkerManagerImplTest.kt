@@ -54,4 +54,18 @@ class UserRecoveryWorkerManagerImplTest {
             )
         }
     }
+
+    @Test
+    fun recoverPrivateKeys() = runTest {
+        // WHEN
+        tested.enqueueRecoverInactivePrivateKeys(UserId(testUserId))
+        // THEN
+        verify {
+            workManager.enqueueUniqueWork(
+                "recoverInactivePrivateKeys-test-user-id",
+                ExistingWorkPolicy.KEEP,
+                any<OneTimeWorkRequest>()
+            )
+        }
+    }
 }

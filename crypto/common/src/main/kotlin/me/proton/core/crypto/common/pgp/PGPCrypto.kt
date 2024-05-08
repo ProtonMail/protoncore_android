@@ -786,6 +786,13 @@ interface PGPCrypto {
     fun getBase64Encoded(array: ByteArray): String
 
     /**
+     * Get Base64 encoded string from [array] no wrap.
+     *
+     * @see getBase64Decoded
+     */
+    fun getBase64EncodedNoWrap(array: ByteArray): String
+
+    /**
      * Get Base64 decoded array from [string].
      *
      * @see getBase64Encoded

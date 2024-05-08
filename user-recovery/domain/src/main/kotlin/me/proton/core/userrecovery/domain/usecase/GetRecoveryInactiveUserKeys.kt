@@ -24,20 +24,26 @@ import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.fingerprint
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.UserKey
 import javax.inject.Inject
 
-class GetRecoveryInactivePrivateKeys @Inject constructor(
+class GetRecoveryInactiveUserKeys @Inject constructor(
     private val userManager: UserManager,
     private val cryptoContext: CryptoContext
 ) {
     suspend operator fun invoke(
         userId: UserId,
         keys: List<PrivateKey>,
-    ): List<PrivateKey> {
+    ): List<UserKey> {
         val user = userManager.getUser(userId)
-        val inactive = user.keys.filter { it.active?.not() ?: false }
-        val fingerprint = inactive.associateBy { it.privateKey.fingerprint(cryptoContext) }
-        val recoverable = keys.filter { it.fingerprint(cryptoContext) in fingerprint }
-        return recoverable.filter { it.canUnlock(cryptoContext) }
+        val inactiveMap = user.keys.associateBy { it.privateKey.fingerprint(cryptoContext) }
+            .filter { it.value.active?.not() ?: false }
+        val recoverableMap = keys.associateBy { it.fingerprint(cryptoContext) }
+            .filter { it.key in inactiveMap }
+            .filter { it.value.canUnlock(cryptoContext) }
+        return recoverableMap.mapNotNull {
+            // Get UserKey and replace recovered PrivateKey.
+            inactiveMap[it.key]?.copy(privateKey = it.value)
+        }
     }
 }

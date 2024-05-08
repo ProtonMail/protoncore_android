@@ -436,6 +436,12 @@ class UserManagerImplTest {
             every { canEncrypt } returns true
             every { canVerify } returns true
         }
+        val testUserKeyMock = mockk<UserKey> {
+            every { userId } returns userIdMigrated
+            every { keyId } returns KeyId("keyId")
+            every { privateKey } returns testPrivateKeyMock
+        }
+
         val userAddressKey = mockk<UserAddressKey>(relaxed = true) {
             every { keyId } returns KeyId("keyId")
             every { token } returns "token"
@@ -466,7 +472,7 @@ class UserManagerImplTest {
             signedKeyListChangeListener = mockk(relaxed = true)
         )
         // When
-        val result = manager.reactivateKey(userIdMigrated, KeyId("user-key-id"), testPrivateKeyMock)
+        val result = manager.reactivateKey(testUserKeyMock)
         // Then
         assertNotNull(result)
     }

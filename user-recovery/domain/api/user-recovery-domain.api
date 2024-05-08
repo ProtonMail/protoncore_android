@@ -10,12 +10,35 @@ public final class me/proton/core/userrecovery/domain/LogTag {
 	public static final field INSTANCE Lme/proton/core/userrecovery/domain/LogTag;
 }
 
+public final class me/proton/core/userrecovery/domain/entity/RecoveryFile {
+	public fun <init> (Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
+	public final fun component2 ()J
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/lang/String;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Ljava/lang/String;)Lme/proton/core/userrecovery/domain/entity/RecoveryFile;
+	public static synthetic fun copy$default (Lme/proton/core/userrecovery/domain/entity/RecoveryFile;Lme/proton/core/domain/entity/UserId;JLjava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/userrecovery/domain/entity/RecoveryFile;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCreatedAtUtcMillis ()J
+	public final fun getRecoveryFile ()Ljava/lang/String;
+	public final fun getRecoverySecretHash ()Ljava/lang/String;
+	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public abstract interface class me/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository {
+	public abstract fun deleteAll (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getRecoveryFiles (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun insertRecoveryFile (Lme/proton/core/userrecovery/domain/entity/RecoveryFile;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public final class me/proton/core/userrecovery/domain/usecase/GetRecoveryFile {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/crypto/common/context/CryptoContext;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
-public final class me/proton/core/userrecovery/domain/usecase/GetRecoveryInactivePrivateKeys {
+public final class me/proton/core/userrecovery/domain/usecase/GetRecoveryInactiveUserKeys {
 	public fun <init> (Lme/proton/core/user/domain/UserManager;Lme/proton/core/crypto/common/context/CryptoContext;)V
 	public final fun invoke (Lme/proton/core/domain/entity/UserId;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
@@ -36,6 +59,7 @@ public final class me/proton/core/userrecovery/domain/usecase/SetRecoverySecretR
 }
 
 public abstract interface class me/proton/core/userrecovery/domain/worker/UserRecoveryWorkerManager {
+	public abstract fun enqueueRecoverInactivePrivateKeys (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun enqueueSetRecoverySecret (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 

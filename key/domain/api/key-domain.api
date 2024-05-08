@@ -90,10 +90,13 @@ public final class me/proton/core/key/domain/KeyHolderCryptoKt {
 	public static final fun generateNewSessionKey (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)Lme/proton/core/crypto/common/pgp/SessionKey;
 	public static final fun generateNewToken (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;J)[B
 	public static synthetic fun generateNewToken$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;JILjava/lang/Object;)[B
+	public static final fun generateRandomBytes (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;J)[B
+	public static synthetic fun generateRandomBytes$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;JILjava/lang/Object;)[B
 	public static final fun getArmored (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/crypto/common/pgp/PGPHeader;)Ljava/lang/String;
 	public static synthetic fun getArmored$default (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLme/proton/core/crypto/common/pgp/PGPHeader;ILjava/lang/Object;)Ljava/lang/String;
 	public static final fun getBase64Decoded (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;)[B
 	public static final fun getBase64Encoded (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B)Ljava/lang/String;
+	public static final fun getBase64EncodedNoWrap (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[B)Ljava/lang/String;
 	public static final fun getEncryptedPackets (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;)Ljava/util/List;
 	public static final fun getUnarmored (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;Ljava/lang/String;)[B
 	public static final fun getVerifiedTimestampOfData (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;[BLjava/lang/String;Lme/proton/core/crypto/common/pgp/VerificationTime;Lme/proton/core/crypto/common/pgp/VerificationContext;)Ljava/lang/Long;
@@ -617,6 +620,10 @@ public final class me/proton/core/key/domain/extension/GetPublicKeyRingKt {
 	public static final fun publicKeyRing (Lme/proton/core/key/domain/entity/keyholder/KeyHolderContext;)Lme/proton/core/key/domain/entity/key/PublicKeyRing;
 }
 
+public final class me/proton/core/key/domain/extension/KeyHolderPrivateKeyKt {
+	public static final fun keyHolder (Lme/proton/core/key/domain/entity/keyholder/KeyHolderPrivateKey;)Lme/proton/core/key/domain/entity/keyholder/KeyHolder;
+}
+
 public final class me/proton/core/key/domain/extension/KeyHolderPrivateKeyListKt {
 	public static final fun areAllInactive (Ljava/util/List;)Z
 	public static final fun primary (Ljava/util/List;)Lme/proton/core/key/domain/entity/keyholder/KeyHolderPrivateKey;
@@ -625,11 +632,6 @@ public final class me/proton/core/key/domain/extension/KeyHolderPrivateKeyListKt
 public final class me/proton/core/key/domain/extension/NestedPrivateKeyKt {
 	public static final fun keyHolder (Lme/proton/core/key/domain/entity/key/NestedPrivateKey;Lme/proton/core/key/domain/entity/key/KeyId;)Lme/proton/core/key/domain/entity/keyholder/KeyHolder;
 	public static synthetic fun keyHolder$default (Lme/proton/core/key/domain/entity/key/NestedPrivateKey;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/keyholder/KeyHolder;
-}
-
-public final class me/proton/core/key/domain/extension/PrivateKeyKt {
-	public static final fun keyHolder (Lme/proton/core/key/domain/entity/key/PrivateKey;Lme/proton/core/key/domain/entity/key/KeyId;)Lme/proton/core/key/domain/entity/keyholder/KeyHolder;
-	public static synthetic fun keyHolder$default (Lme/proton/core/key/domain/entity/key/PrivateKey;Lme/proton/core/key/domain/entity/key/KeyId;ILjava/lang/Object;)Lme/proton/core/key/domain/entity/keyholder/KeyHolder;
 }
 
 public final class me/proton/core/key/domain/extension/PublicKeyRingKt {

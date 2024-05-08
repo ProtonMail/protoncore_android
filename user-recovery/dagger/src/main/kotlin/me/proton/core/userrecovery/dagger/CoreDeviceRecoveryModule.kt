@@ -23,7 +23,11 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.userrecovery.data.IsDeviceRecoveryEnabledImpl
+import me.proton.core.userrecovery.data.repository.DeviceRecoveryRepositoryImpl
+import me.proton.core.userrecovery.data.worker.UserRecoveryWorkerManagerImpl
 import me.proton.core.userrecovery.domain.IsDeviceRecoveryEnabled
+import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
+import me.proton.core.userrecovery.domain.worker.UserRecoveryWorkerManager
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -36,6 +40,10 @@ public interface CoreDeviceRecoveryFeaturesModule {
 
 @Module
 @InstallIn(SingletonComponent::class)
-public object CoreDeviceRecoveryModule {
+public interface CoreDeviceRecoveryModule {
+    @Binds
+    public fun bindDeviceRecoveryRepository(impl: DeviceRecoveryRepositoryImpl): DeviceRecoveryRepository
 
+    @Binds
+    public fun bindUserRecoveryWorkerManager(impl: UserRecoveryWorkerManagerImpl): UserRecoveryWorkerManager
 }

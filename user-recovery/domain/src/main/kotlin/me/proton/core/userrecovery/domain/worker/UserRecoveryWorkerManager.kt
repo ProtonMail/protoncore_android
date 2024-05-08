@@ -27,4 +27,11 @@ interface UserRecoveryWorkerManager {
      * Note: Once remotely set, local will be updated asap.
      */
     suspend fun enqueueSetRecoverySecret(userId: UserId)
+
+    /**
+     * Enqueues a worker that will try to recover user's inactive private keys.
+     *
+     * Note: the user object will be automatically refreshed, after the keys are recovered.
+     */
+    suspend fun enqueueRecoverInactivePrivateKeys(userId: UserId)
 }

@@ -32,9 +32,12 @@ class GenerateSignedKeyList @Inject constructor(
     private val cryptoContext: CryptoContext
 ) {
 
-    operator fun invoke(userAddress: UserAddress): PublicSignedKeyList = with(userAddress) {
+    operator fun invoke(
+        userAddress: UserAddress,
+        predicate: (UserAddressKey) -> Boolean = { it.active }
+    ): PublicSignedKeyList = with(userAddress) {
         keys
-            .filter { it.active }
+            .filter(predicate)
             .joinToString(",") { key ->
                 "{" +
                     "\"Fingerprint\": \"${key.privateKey.fingerprint(cryptoContext)}\"," +

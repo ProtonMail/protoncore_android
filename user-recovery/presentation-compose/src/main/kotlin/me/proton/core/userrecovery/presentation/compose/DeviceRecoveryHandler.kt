@@ -18,41 +18,70 @@
 
 package me.proton.core.userrecovery.presentation.compose
 
-import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.user.domain.UserManager
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import me.proton.core.userrecovery.data.usecase.DeleteRecoveryFiles
+import me.proton.core.userrecovery.data.usecase.ObserveUserDeviceRecovery
+import me.proton.core.userrecovery.data.usecase.ObserveUsersWithInactiveKeysForRecovery
+import me.proton.core.userrecovery.data.usecase.ObserveUsersWithRecoverySecretButNoFile
+import me.proton.core.userrecovery.data.usecase.ObserveUsersWithoutRecoverySecret
+import me.proton.core.userrecovery.data.usecase.StoreRecoveryFile
+import me.proton.core.userrecovery.domain.LogTag
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryFile
-import me.proton.core.userrecovery.domain.usecase.GetRecoveryInactivePrivateKeys
-import me.proton.core.userrecovery.domain.usecase.GetRecoveryPrivateKeys
+import me.proton.core.userrecovery.domain.worker.UserRecoveryWorkerManager
 import me.proton.core.userrecovery.presentation.compose.usecase.ShowDeviceRecoveryNotification
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
+@Suppress("LongParameterList")
 class DeviceRecoveryHandler @Inject constructor(
-    internal val scopeProvider: CoroutineScopeProvider,
-    internal val cryptoContext: CryptoContext,
-    internal val accountManager: AccountManager,
-    internal val userManager: UserManager,
-    internal val getRecoveryFile: GetRecoveryFile,
-    internal val getRecoveryPrivateKeys: GetRecoveryPrivateKeys,
-    internal val getRecoveryInactivePrivateKeys: GetRecoveryInactivePrivateKeys,
-    internal val showDeviceRecoveryNotification: ShowDeviceRecoveryNotification,
+    private val scopeProvider: CoroutineScopeProvider,
+    private val deleteRecoveryFiles: DeleteRecoveryFiles,
+    private val getRecoveryFile: GetRecoveryFile,
+    private val observeUserDeviceRecovery: ObserveUserDeviceRecovery,
+    private val observeUsersWithInactiveKeysForRecovery: ObserveUsersWithInactiveKeysForRecovery,
+    private val observeUsersWithoutRecoverySecret: ObserveUsersWithoutRecoverySecret,
+    private val observeUsersWithRecoverySecretButNoFile: ObserveUsersWithRecoverySecretButNoFile,
+    private val showDeviceRecoveryNotification: ShowDeviceRecoveryNotification,
+    private val storeRecoveryFile: StoreRecoveryFile,
+    private val userRecoveryWorkerManager: UserRecoveryWorkerManager,
 ) {
     fun start() {
-        /*
-        scopeProvider.GlobalDefaultSupervisedScope.launch {
-            val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
-            val message = getRecoveryFile(userId)
-            CoreLogger.d(LogTag.DEFAULT, "Recovery file: $message")
-            val keys = getRecoveryPrivateKeys(userId, message)
-            CoreLogger.d(LogTag.DEFAULT, "Recovery Private Keys: $keys")
-            val recoverable = getRecoveryInactivePrivateKeys(userId, keys)
-            CoreLogger.d(LogTag.DEFAULT, "Recovery inactive keys: $recoverable")
+        // Upload a recovery secret if needed:
+        observeUsersWithoutRecoverySecret()
+            .onEach { userRecoveryWorkerManager.enqueueSetRecoverySecret(it) }
+            .catch { CoreLogger.e(LogTag.DEFAULT, it) }
+            .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
 
-            showDeviceRecoveryNotification(userId)
-        }
-        */
+        // Generate a recovery file if needed:
+        observeUsersWithRecoverySecretButNoFile()
+            .onEach {
+                val recoveryFile = getRecoveryFile(it)
+                storeRecoveryFile(encodedRecoveryFile = recoveryFile, userId = it)
+            }
+            .catch { CoreLogger.e(LogTag.DEFAULT, it) }
+            .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+
+        // Recover private keys if possible:
+        // TODO `recoverInactivePrivateKeys` will likely refresh the user..
+        //  so we need to avoid scheduling duplicate worker
+        observeUsersWithInactiveKeysForRecovery()
+            .onEach { userRecoveryWorkerManager.enqueueRecoverInactivePrivateKeys(it) }
+            .catch { CoreLogger.e(LogTag.DEFAULT, it) }
+            .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+
+        // Remove local recovery files, if device recovery user setting is disabled:
+        observeUserDeviceRecovery()
+            .filter { (_, deviceRecovery) -> deviceRecovery == false }
+            .onEach { (user, _) -> deleteRecoveryFiles(user.userId) }
+            .catch { CoreLogger.e(LogTag.DEFAULT, it) }
+            .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
+
+        // TODO showDeviceRecoveryNotification(userId)
     }
 }

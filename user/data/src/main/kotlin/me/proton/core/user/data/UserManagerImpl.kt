@@ -47,6 +47,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
+import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.extension.generateNewKeyFormat
 import me.proton.core.user.domain.extension.hasMigratedKey
 import me.proton.core.user.domain.repository.PassphraseRepository
@@ -173,8 +174,10 @@ class UserManagerImpl @Inject constructor(
                     userKeys = updatedUserKeys
                 )
 
-                refreshUser(userId, newPassphrase.encrypt(keyStore))
-
+                lock(userId)
+                userAddressRepository.getAddresses(userId, refresh = true)
+                userRepository.getUser(userId, refresh = true)
+                unlockWithPassphrase(userId, newPassphrase.encrypt(keyStore))
                 return result
             }
         }
@@ -275,56 +278,57 @@ class UserManagerImpl @Inject constructor(
     }
 
     override suspend fun reactivateKey(
-        sessionUserId: SessionUserId,
-        userKeyId: KeyId,
-        privateKey: PrivateKey
+        userKey: UserKey
     ): User {
-        // find all addresses.
-        val userAddresses = userAddressRepository
-            .getAddresses(sessionUserId, refresh = true)
+        val userId = userKey.userId
 
-        privateKey.keyHolder().useKeysAs(cryptoContext) { keyHolderContext ->
-            // find all disabled addresses that can be decrypted with the private/user key we are reactivating
-            val privateKeyUserAddresses = userAddresses
-                .filter { userAddress ->
-                    userAddress.keys.any {
-                        !it.active && userAddressKeySecretProvider.getPassphrase(
-                            sessionUserId,
-                            keyHolderContext,
-                            it.copy(active = true)
-                        ) != null
-                    }
-                }
+        // Refresh addresses first.
+        val addresses = userAddressRepository.getAddresses(userId, refresh = true)
 
-            // get fingerprints
-            val privateKeyUserAddressesFingerprints = privateKeyUserAddresses
+        // Find disabled address keys that can be decrypted with the user key we are reactivating.
+        val decryptedAddressKeys = userKey.keyHolder().useKeysAs(cryptoContext) { context ->
+            addresses
                 .flatMap { it.keys }
-                .map { pgp.getFingerprint(it.privateKey.key) }
-
-            // get the signed key list
-            val signedKeyLists = privateKeyUserAddresses.associate {
-                it.addressId.id to generateSignedKeyList(it)
-            }
-
-            privateKeyRepository.reactivatePrivateKey(
-                sessionUserId = sessionUserId,
-                privateKeyId = userKeyId.id,
-                privateKey = privateKey,
-                addressKeysFingerprints = privateKeyUserAddressesFingerprints,
-                signedKeyLists = signedKeyLists
-            )
-
-            // refresh the user
-            refreshUser(sessionUserId)
-            return checkNotNull(userRepository.getUser(sessionUserId))
+                .filter { !it.active }
+                .filter { key ->
+                    val decryptedPassphrase = userAddressKeySecretProvider.getPassphrase(
+                        userId = userId,
+                        userContext = context,
+                        key = key.copy(active = true)
+                    )
+                    decryptedPassphrase != null
+                }
         }
+
+        // Get fingerprint for the key(s) we want to reactivate.
+        val decryptedAddressKeysFingerprints =
+            decryptedAddressKeys.map { pgp.getFingerprint(it.privateKey.key) }
+
+        // Generate the signed key list (desired active keys).
+        val signedKeyLists = decryptedAddressKeys.groupBy { it.addressId }.map {
+            val userAddress = userAddressRepository.getAddress(userId, it.key)
+            it.key.id to generateSignedKeyList(requireNotNull(userAddress)) { key ->
+                // all current active + reactivating
+                key.active || key in decryptedAddressKeys
+            }
+        }.toMap()
+
+        privateKeyRepository.reactivatePrivateKey(
+            sessionUserId = userId,
+            privateKeyId = userKey.keyId.id,
+            privateKey = userKey.privateKey,
+            addressKeysFingerprints = decryptedAddressKeysFingerprints,
+            signedKeyLists = signedKeyLists
+        )
+
+        return checkNotNull(userRepository.getUser(userId, refresh = true))
     }
 
     override suspend fun resetPassword(
         sessionUserId: SessionUserId,
         newPassword: EncryptedString,
         auth: Auth?
-    ): Boolean =
+    ): Boolean {
         newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
             val keySalt = pgp.generateNewKeySalt()
 
@@ -342,23 +346,10 @@ class UserManagerImpl @Inject constructor(
                     userKeys = updatedUserKeys
                 )
 
-                refreshUser(sessionUserId, newPassphrase.encrypt(keyStore))
-
+                passphraseRepository.setPassphrase(sessionUserId, newPassphrase.encrypt(keyStore))
+                userRepository.getUser(sessionUserId, refresh = true)
                 return result
             }
         }
-
-    private suspend fun refreshUser(userId: UserId, passphrase: EncryptedByteArray? = null) {
-        val tempPassphrase = checkNotNull(passphrase ?: passphraseRepository.getPassphrase(userId))
-
-        // Lock, refresh and unlock.
-        lock(userId)
-
-        // Refresh User and Addresses.
-        userAddressRepository.getAddresses(userId, refresh = true)
-        userRepository.getUser(userId, refresh = true)
-
-        // Unlock.
-        unlockWithPassphrase(userId, tempPassphrase)
     }
 }

@@ -415,6 +415,10 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: getBase64Encoded")
     }
 
+    override fun getBase64EncodedNoWrap(array: ByteArray): String {
+        TODO("Not yet implemented: getBase64EncodedNoWrap")
+    }
+
     override fun getBase64Decoded(string: String): ByteArray {
         TODO("Not yet implemented: getBase64Decoded")
     }

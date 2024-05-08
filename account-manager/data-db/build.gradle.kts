@@ -66,6 +66,7 @@ dependencies {
         project(Module.telemetry),
         project(Module.userData),
         project(Module.userDomain),
+        project(Module.userRecoveryData),
         project(Module.userSettingsData),
         project(Module.observabilityData),
         project(Module.keyTransparencyData),

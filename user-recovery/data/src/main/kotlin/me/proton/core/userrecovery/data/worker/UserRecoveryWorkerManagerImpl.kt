@@ -35,4 +35,12 @@ class UserRecoveryWorkerManagerImpl @Inject constructor(
             SetRecoverySecretWorker.getRequest(userId)
         )
     }
+
+    override suspend fun enqueueRecoverInactivePrivateKeys(userId: UserId) {
+        workManager.enqueueUniqueWork(
+            "recoverInactivePrivateKeys-${userId.id}",
+            ExistingWorkPolicy.KEEP,
+            RecoverInactivePrivateKeysWorker.getRequest(userId)
+        )
+    }
 }

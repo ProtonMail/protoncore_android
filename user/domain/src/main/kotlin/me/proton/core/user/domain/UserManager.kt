@@ -167,12 +167,10 @@ interface UserManager {
     ): User
 
     /**
-     * Tries to reactivate a user private key.
+     * Tries to reactivate a user key.
      */
     suspend fun reactivateKey(
-        sessionUserId: SessionUserId,
-        userKeyId: KeyId,
-        privateKey: PrivateKey
+        userKey: UserKey
     ): User
 
     /**

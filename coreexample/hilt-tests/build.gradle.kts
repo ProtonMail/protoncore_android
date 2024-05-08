@@ -123,6 +123,7 @@ dependencies {
         project(Module.report),
         project(Module.telemetry),
         project(Module.user),
+        project(Module.userRecovery),
         project(Module.userSettings),
         project(Module.keyTransparency),
         project(Module.configurationData)

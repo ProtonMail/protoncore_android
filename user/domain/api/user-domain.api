@@ -57,7 +57,7 @@ public abstract interface class me/proton/core/user/domain/UserManager {
 	public abstract fun lock (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun observeAddresses (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun observeUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
-	public abstract fun reactivateKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/KeyId;Lme/proton/core/key/domain/entity/key/PrivateKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun reactivateKey (Lme/proton/core/user/domain/entity/UserKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun resetPassword (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun setupPrimaryKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;[BLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun unlockWithPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

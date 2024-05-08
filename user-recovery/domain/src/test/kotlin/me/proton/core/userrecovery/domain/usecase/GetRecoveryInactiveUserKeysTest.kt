@@ -21,19 +21,20 @@ package me.proton.core.userrecovery.domain.usecase
 import io.mockk.every
 import kotlinx.coroutines.test.runTest
 import me.proton.core.key.domain.canUnlock
+import me.proton.core.key.domain.entity.key.KeyId
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertContains
 import kotlin.test.assertTrue
 
-class GetRecoveryInactivePrivateKeysTest : BaseUserKeysTest() {
+class GetRecoveryInactiveUserKeysTest : BaseUserKeysTest() {
 
-    private lateinit var tested: GetRecoveryInactivePrivateKeys
+    private lateinit var tested: GetRecoveryInactiveUserKeys
 
     @Before
     override fun before() {
         super.before()
-        tested = GetRecoveryInactivePrivateKeys(
+        tested = GetRecoveryInactiveUserKeys(
             userManager = testUserManager,
             cryptoContext = testCryptoContext
         )
@@ -49,7 +50,7 @@ class GetRecoveryInactivePrivateKeysTest : BaseUserKeysTest() {
 
         // THEN
         assertTrue(result.size == 1)
-        assertContains(result, testPrivateKeyInactive)
+        assertContains(result, testKey2)
     }
 
     @Test

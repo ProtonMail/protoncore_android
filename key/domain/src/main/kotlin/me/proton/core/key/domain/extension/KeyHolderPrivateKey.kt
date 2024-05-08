@@ -24,16 +24,16 @@ import me.proton.core.key.domain.entity.keyholder.KeyHolder
 import me.proton.core.key.domain.entity.keyholder.KeyHolderPrivateKey
 
 /**
- * Create a [KeyHolder] instance based on [PrivateKey].
+ * Create a [KeyHolder] instance based on [KeyHolderPrivateKey].
  *
- * @throws [IllegalStateException] if there is no valid passphrase for the [PrivateKey].
+ * @throws [IllegalStateException] if there is no valid passphrase for the [KeyHolderPrivateKey.privateKey].
  */
-fun PrivateKey.keyHolder(keyId: KeyId = KeyId.unused): KeyHolder {
-    checkNotNull(passphrase) { "No valid passphrase for private key." }
+fun KeyHolderPrivateKey.keyHolder(): KeyHolder {
+    checkNotNull(privateKey.passphrase) { "No valid passphrase for private key." }
     return object : KeyHolder {
         override val keys: List<KeyHolderPrivateKey> = listOf(object : KeyHolderPrivateKey {
-            override val keyId: KeyId = keyId
-            override val privateKey: PrivateKey = this@keyHolder
+            override val keyId: KeyId = this@keyHolder.keyId
+            override val privateKey: PrivateKey = this@keyHolder.privateKey
         })
     }
 }

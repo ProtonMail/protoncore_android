@@ -94,6 +94,18 @@ class GenerateSignedKeyListTests {
                         isPrimary = false,
                         passphrase = EncryptedByteArray(TestKeys.Key2.passphrase)
                     )
+                ),
+                UserAddressKey(
+                    addressId = AddressId("addressId"),
+                    version = 0,
+                    flags = 1,
+                    active = false,             // <---- inactive
+                    keyId = KeyId("key3"),
+                    privateKey = PrivateKey(
+                        key = TestKeys.Key2.privateKey,
+                        isPrimary = false,
+                        passphrase = EncryptedByteArray(TestKeys.Key2.passphrase)
+                    )
                 )
             ),
             signedKeyList = null

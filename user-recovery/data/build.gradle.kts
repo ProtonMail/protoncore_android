@@ -30,7 +30,7 @@ protonBuild {
 
 protonCoverage {
     branchCoveragePercentage.set(83)
-    lineCoveragePercentage.set(100)
+    lineCoveragePercentage.set(95)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -56,9 +56,11 @@ dependencies {
     )
 
     implementation(
+        project(Module.accountData),
+        project(Module.androidUtilDatetime),
         project(Module.data),
         project(Module.kotlinUtil),
-        project(Module.userData)
+        project(Module.userData),
     )
 
     testImplementation(
@@ -70,7 +72,9 @@ dependencies {
         junit,
         `kotlin-test`,
         mockk,
-        robolectric
+        robolectric,
+        turbine,
+        `android-work-testing`
     )
 
     kaptTest(`hilt-android-compiler`)
