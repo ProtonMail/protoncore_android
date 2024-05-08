@@ -80,6 +80,8 @@ import me.proton.core.user.data.entity.AddressEntity
 import me.proton.core.user.data.entity.AddressKeyEntity
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.entity.UserKeyEntity
+import me.proton.core.userrecovery.data.db.DeviceRecoveryDatabase
+import me.proton.core.userrecovery.data.entity.RecoveryFileEntity
 import me.proton.core.usersettings.data.db.OrganizationDatabase
 import me.proton.core.usersettings.data.db.UserSettingsConverters
 import me.proton.core.usersettings.data.db.UserSettingsDatabase
@@ -138,7 +140,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         AddressChangeEntity::class,
         SelfAuditResultEntity::class,
         // notifications
-        NotificationEntity::class
+        NotificationEntity::class,
+        // user-recovery
+        RecoveryFileEntity::class
     ],
     version = AppDatabase.version,
     exportSchema = true
@@ -178,11 +182,12 @@ abstract class AppDatabase :
     ObservabilityDatabase,
     TelemetryDatabase,
     KeyTransparencyDatabase,
-    NotificationDatabase {
+    NotificationDatabase,
+    DeviceRecoveryDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 45
+        const val version = 46
 
         val migrations = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
@@ -228,7 +233,8 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_41_42,
             AppDatabaseMigrations.MIGRATION_42_43,
             AppDatabaseMigrations.MIGRATION_43_44,
-            AppDatabaseMigrations.MIGRATION_44_45
+            AppDatabaseMigrations.MIGRATION_44_45,
+            AppDatabaseMigrations.MIGRATION_45_46,
         )
 
         fun buildDatabase(context: Context): AppDatabase =
