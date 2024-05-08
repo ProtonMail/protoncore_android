@@ -18,6 +18,7 @@
 
 package me.proton.core.userrecovery.data.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
@@ -42,6 +43,7 @@ import me.proton.core.userrecovery.domain.entity.RecoveryFile
 data class RecoveryFileEntity(
     val userId: UserId,
     val createdAtUtcMillis: Long,
+    val keyCount: Int? = null,
     val recoveryFile: String,
     val recoverySecretHash: String
 )
@@ -49,6 +51,7 @@ data class RecoveryFileEntity(
 fun RecoveryFileEntity.toRecoveryFile(): RecoveryFile = RecoveryFile(
     userId = userId,
     createdAtUtcMillis = createdAtUtcMillis,
+    keyCount = keyCount ?: 0,
     recoveryFile = recoveryFile,
     recoverySecretHash = recoverySecretHash
 )
@@ -56,6 +59,7 @@ fun RecoveryFileEntity.toRecoveryFile(): RecoveryFile = RecoveryFile(
 fun RecoveryFile.toRecoveryFileEntity(): RecoveryFileEntity = RecoveryFileEntity(
     userId = userId,
     createdAtUtcMillis = createdAtUtcMillis,
+    keyCount = keyCount,
     recoveryFile = recoveryFile,
     recoverySecretHash = recoverySecretHash
 )

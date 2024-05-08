@@ -20,18 +20,20 @@ package me.proton.core.userrecovery.domain.usecase
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
-import me.proton.core.key.domain.unlockOrNull
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class GetRecoveryFileTest : BaseUserKeysTest() {
     @MockK
     private lateinit var getExistingVerifiedRecoverySecret: GetExistingVerifiedRecoverySecret
+
+    @MockK
+    private lateinit var getUnlockedUserKeys: GetUnlockedUserKeys
 
     private lateinit var tested: GetRecoveryFile
 
@@ -40,9 +42,9 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
         super.before()
         MockKAnnotations.init(this)
         tested = GetRecoveryFile(
-            userManager = testUserManager,
             cryptoContext = testCryptoContext,
-            getExistingVerifiedRecoverySecret = getExistingVerifiedRecoverySecret
+            getExistingVerifiedRecoverySecret = getExistingVerifiedRecoverySecret,
+            getUnlockedUserKeys = getUnlockedUserKeys
         )
     }
 
@@ -50,13 +52,14 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
     fun getRecoverFileHappyPath() = runTest {
         // GIVEN
         coEvery { getExistingVerifiedRecoverySecret(any()) } returns testSecretValid
+        coEvery { getUnlockedUserKeys(any()) } returns listOf(testUnlockedKey)
 
         // WHEN
-        tested.invoke(testUser.userId)
+        val result = tested.invoke(testUser.userId)
 
         // THEN
-        verify(exactly = 1) { testPrivateKeyPrimary.unlockOrNull(any()) }
-        verify(exactly = 0) { testPrivateKeyInactive.unlockOrNull(any()) }
+        assertEquals(1, result.keyCount)
+
         verify(exactly = 1) { testPgpCrypto.getBase64Decoded(testSecretValid) }
         verify(exactly = 0) { testPgpCrypto.getBase64Decoded(testSecretInvalid) }
         verify(exactly = 1) { testPgpCrypto.encryptDataWithPassword(any(), testDecodedSecret1) }
@@ -79,8 +82,7 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
     fun getRecoverFileThrowIllegalStateWhenNoActive() = runTest {
         // GIVEN
         coEvery { getExistingVerifiedRecoverySecret(any()) } returns testSecretValid
-        every { testKey1.active } returns false
-        every { testKey2.active } returns false
+        coEvery { getUnlockedUserKeys(any()) } returns listOf()
 
         // WHEN
         assertFailsWith<IllegalStateException> {

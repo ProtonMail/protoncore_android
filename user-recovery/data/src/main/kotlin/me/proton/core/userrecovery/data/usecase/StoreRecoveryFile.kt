@@ -18,6 +18,7 @@
 
 package me.proton.core.userrecovery.data.usecase
 
+import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.userrecovery.domain.entity.RecoveryFile
@@ -32,7 +33,8 @@ class StoreRecoveryFile @Inject constructor(
     private val userManager: UserManager
 ) {
     suspend operator fun invoke(
-        encodedRecoveryFile: String,
+        encodedRecoveryFile: EncryptedMessage,
+        keyCount: Int,
         userId: UserId
     ) {
         val user = userManager.getUser(userId)
@@ -45,6 +47,7 @@ class StoreRecoveryFile @Inject constructor(
         val recoveryFile = RecoveryFile(
             userId = userId,
             createdAtUtcMillis = clock.currentEpochMillis(),
+            keyCount = keyCount,
             recoveryFile = encodedRecoveryFile,
             recoverySecretHash = recoverySecretHash
         )

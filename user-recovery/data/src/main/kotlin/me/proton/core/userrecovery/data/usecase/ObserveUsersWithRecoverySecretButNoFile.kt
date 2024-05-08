@@ -24,10 +24,12 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.domain.entity.UserId
 import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
+import me.proton.core.userrecovery.domain.usecase.GetUnlockedUserKeys
 import javax.inject.Inject
 
 class ObserveUsersWithRecoverySecretButNoFile @Inject constructor(
     private val deviceRecoveryRepository: DeviceRecoveryRepository,
+    private val getUnlockedUserKeys: GetUnlockedUserKeys,
     private val observeUserDeviceRecovery: ObserveUserDeviceRecovery
 ) {
     operator fun invoke(): Flow<UserId> = observeUserDeviceRecovery()
@@ -40,14 +42,21 @@ class ObserveUsersWithRecoverySecretButNoFile @Inject constructor(
         }
         .filter { (user, primaryRecoverySecretHash) ->
             val recoveryFiles = deviceRecoveryRepository.getRecoveryFiles(user.userId)
-            val isPrimaryRecoverySecretKnown = recoveryFiles.any {
+            val recoveryFile = recoveryFiles.firstOrNull {
                 it.recoverySecretHash.equals(primaryRecoverySecretHash, ignoreCase = true)
             }
 
-            // If we don't know the recoverySecret of the primary key (no corresponding recovery file),
+            // If there is no recovery file corresponding to the recovery secret,
+            // or the keyCount of the recovery file is different than expected
+            // (e.g. if a new key has been activated after the recovery file has been created),
             // then return this user, so we can create a new recovery file.
-            !isPrimaryRecoverySecretKnown
+            recoveryFile == null || getUnlockedUserKeyCount(user.userId) > recoveryFile.keyCount
         }.map { (user, _) ->
             user.userId
         }
+
+    private suspend fun getUnlockedUserKeyCount(userId: UserId): Int {
+        val keys = getUnlockedUserKeys(userId).map { it.close() }
+        return keys.size
+    }
 }

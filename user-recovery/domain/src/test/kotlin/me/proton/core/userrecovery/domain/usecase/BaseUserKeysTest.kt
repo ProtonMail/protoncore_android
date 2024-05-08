@@ -23,20 +23,15 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.just
 import io.mockk.mockk
-import io.mockk.mockkConstructor
 import io.mockk.mockkStatic
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.pgp.UnlockedKey
-import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
-import me.proton.core.key.domain.fingerprint
-import me.proton.core.key.domain.lock
 import me.proton.core.key.domain.unlockOrNull
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -109,13 +104,10 @@ abstract class BaseUserKeysTest {
 
     internal val testDecodedSecret1 = "decodedSecret1".toByteArray()
     internal val testDecodedSecret2 = "decodedSecret2".toByteArray()
-    internal val testFingerprint1 = "fingerprint1"
-    internal val testFingerprint2 = "fingerprint2"
+
     internal val testPgpCrypto = mockk<PGPCrypto>(relaxed = true) {
         every { this@mockk.getBase64Decoded(testSecretValid) } returns testDecodedSecret1
         every { this@mockk.getBase64Decoded(testSecretInvalid) } returns testDecodedSecret2
-        every { this@mockk.decryptDataWithPassword(any(), testDecodedSecret1) } returns "{\"keys\":[[0]]}".toByteArray()
-        every { this@mockk.decryptDataWithPassword(any(), testDecodedSecret2) } throws CryptoException()
         every { this@mockk.deserializeKeys(any()) } returns listOf(testUnlockedKey.value)
     }
     internal val testCryptoContext = mockk<CryptoContext>(relaxed = true) {
@@ -131,15 +123,5 @@ abstract class BaseUserKeysTest {
         mockkStatic(PrivateKey::unlockOrNull)
         every { testPrivateKeyPrimary.unlockOrNull(any()) } returns testUnlockedKeyPrivateKey
         every { testPrivateKeyInactive.unlockOrNull(any()) } returns testUnlockedKeyPrivateKey
-
-        every { testPrivateKeyPrimary.fingerprint(any()) } returns testFingerprint1
-        every { testPrivateKeyInactive.fingerprint(any()) } returns testFingerprint2
-
-        every { testPrivateKeyPrimary.canUnlock(any()) } returns true
-        every { testPrivateKeyInactive.canUnlock(any()) } returns true
-
-        mockkStatic(UnlockedPrivateKey::lock)
-        mockkConstructor(UnlockedPrivateKey::class)
-        every { anyConstructed<UnlockedPrivateKey>().lock(any(), any()) } returns testPrivateKeyInactive
     }
 }

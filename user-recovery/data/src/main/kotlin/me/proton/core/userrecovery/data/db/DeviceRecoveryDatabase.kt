@@ -20,6 +20,7 @@ package me.proton.core.userrecovery.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.userrecovery.data.dao.DeviceRecoveryDao
 
@@ -31,6 +32,16 @@ interface DeviceRecoveryDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `RecoveryFileEntity` (`userId` TEXT NOT NULL, `createdAtUtcMillis` INTEGER NOT NULL, `recoveryFile` TEXT NOT NULL, `recoverySecretHash` TEXT NOT NULL, PRIMARY KEY(`recoverySecretHash`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_RecoveryFileEntity_userId` ON `RecoveryFileEntity` (`userId`)")
+            }
+        }
+
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "RecoveryFileEntity",
+                    column = "keyCount",
+                    type = "INTEGER"
+                )
             }
         }
     }

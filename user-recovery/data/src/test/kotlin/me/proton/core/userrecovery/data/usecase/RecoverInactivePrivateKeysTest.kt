@@ -77,7 +77,13 @@ class RecoverInactivePrivateKeysTest {
         val userKeyMock = mockUserKey()
 
         coEvery { deviceRecoveryRepository.getRecoveryFiles(testUserId) } returns listOf(
-            RecoveryFile(testUserId, 100, "recoveryFile", "hash")
+            RecoveryFile(
+                userId = testUserId,
+                createdAtUtcMillis = 100,
+                keyCount = 1,
+                recoveryFile = "recoveryFile",
+                recoverySecretHash = "hash"
+            )
         )
         coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(userKeyMock.privateKey)
         coEvery { getRecoveryInactiveUserKeys(testUserId, any()) } returns listOf(userKeyMock)
@@ -98,7 +104,13 @@ class RecoverInactivePrivateKeysTest {
         val userKeyMock2 = mockUserKey()
 
         coEvery { deviceRecoveryRepository.getRecoveryFiles(testUserId) } returns listOf(
-            RecoveryFile(testUserId, 100, "recoveryFile", "hash")
+            RecoveryFile(
+                userId = testUserId,
+                createdAtUtcMillis = 100,
+                keyCount = 2,
+                recoveryFile = "recoveryFile",
+                recoverySecretHash = "hash"
+            )
         )
         coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(
             userKeyMock1.privateKey,
@@ -122,7 +134,13 @@ class RecoverInactivePrivateKeysTest {
         val userKeyMock = mockUserKey()
 
         coEvery { deviceRecoveryRepository.getRecoveryFiles(testUserId) } returns listOf(
-            RecoveryFile(testUserId, 100, "recoveryFile", "hash")
+            RecoveryFile(
+                userId = testUserId,
+                createdAtUtcMillis = 100,
+                keyCount = 1,
+                recoveryFile = "recoveryFile",
+                recoverySecretHash = "hash"
+            )
         )
         coEvery { getRecoveryPrivateKeys(testUserId, any()) } returns listOf(userKeyMock.privateKey)
         coEvery { getRecoveryInactiveUserKeys(testUserId, any()) } returns emptyList()

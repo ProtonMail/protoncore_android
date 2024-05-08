@@ -59,8 +59,8 @@ class DeviceRecoveryHandler @Inject constructor(
         // Generate a recovery file if needed:
         observeUsersWithRecoverySecretButNoFile()
             .onEach {
-                val recoveryFile = getRecoveryFile(it)
-                storeRecoveryFile(encodedRecoveryFile = recoveryFile, userId = it)
+                val result = getRecoveryFile(it)
+                storeRecoveryFile(encodedRecoveryFile = result.recoveryFile, keyCount = result.keyCount, userId = it)
             }
             .catch { CoreLogger.e(LogTag.DEFAULT, it) }
             .launchIn(scopeProvider.GlobalDefaultSupervisedScope)

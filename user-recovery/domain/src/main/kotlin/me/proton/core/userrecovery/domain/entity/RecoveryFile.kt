@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 data class RecoveryFile(
     val userId: UserId,
     val createdAtUtcMillis: Long,
+    val keyCount: Int,
     val recoveryFile: String,
     val recoverySecretHash: String
 )

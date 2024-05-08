@@ -32,12 +32,14 @@ class RecoveryFileEntityKtTest {
             RecoveryFile(
                 userId = testUserId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = "hash"
             ),
             RecoveryFileEntity(
                 userId = testUserId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = "hash"
             ).toRecoveryFile()
@@ -50,12 +52,14 @@ class RecoveryFileEntityKtTest {
             RecoveryFileEntity(
                 userId = testUserId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = "hash"
             ),
             RecoveryFile(
                 userId = testUserId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = "hash"
             ).toRecoveryFileEntity()

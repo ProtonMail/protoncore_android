@@ -72,7 +72,7 @@ class StoreRecoveryFileTest {
         // THEN
         val throwable = assertFailsWith<IllegalArgumentException> {
             // WHEN
-            tested("recoveryFile", mockk())
+            tested(encodedRecoveryFile = "recoveryFile", keyCount = 1, userId = mockk())
         }
         assertEquals("Primary key is missing.", throwable.message)
     }
@@ -92,7 +92,7 @@ class StoreRecoveryFileTest {
         // THEN
         val throwable = assertFailsWith<IllegalArgumentException> {
             // WHEN
-            tested("recoveryFile", mockk())
+            tested(encodedRecoveryFile = "recoveryFile", keyCount = 1, userId = mockk())
         }
         assertEquals("Recovery secret is missing.", throwable.message)
     }
@@ -111,7 +111,7 @@ class StoreRecoveryFileTest {
         coJustRun { deviceRecoveryRepository.insertRecoveryFile(any()) }
 
         // WHEN
-        tested("recoveryFile", userId)
+        tested(encodedRecoveryFile = "recoveryFile", keyCount = 1, userId = userId)
 
         // THEN
         val recoveryFileSlot = slot<RecoveryFile>()
@@ -120,6 +120,7 @@ class StoreRecoveryFileTest {
             RecoveryFile(
                 userId = userId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = TEST_RECOVERY_SECRET_HASH
             ), recoveryFileSlot.captured

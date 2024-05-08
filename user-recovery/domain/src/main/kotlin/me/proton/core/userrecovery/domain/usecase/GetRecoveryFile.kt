@@ -21,6 +21,7 @@ package me.proton.core.userrecovery.domain.usecase
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.EncryptedMessage
+import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.unlockOrNull
 import me.proton.core.user.domain.UserManager
@@ -30,27 +31,36 @@ import javax.inject.Inject
  * Generate a recovery file encrypted with primary recovery secret.
  */
 class GetRecoveryFile @Inject constructor(
-    private val cryptoContext: CryptoContext,
+    cryptoContext: CryptoContext,
     private val getExistingVerifiedRecoverySecret: GetExistingVerifiedRecoverySecret,
-    private val userManager: UserManager,
+    private val getUnlockedUserKeys: GetUnlockedUserKeys,
 ) {
     private val pgpCrypto = cryptoContext.pgpCrypto
 
     suspend operator fun invoke(
         userId: UserId
-    ): EncryptedMessage {
+    ): Result {
         val recoverySecret = requireNotNull(getExistingVerifiedRecoverySecret(userId)) {
             "The signature of recovery secret is invalid."
         }
-        val user = userManager.getUser(userId)
-        val activeKeys = user.keys.filter { it.active ?: false }
-        val privateKeys = activeKeys.map { it.privateKey }
-        val unlockedKeys = privateKeys.mapNotNull { it.unlockOrNull(cryptoContext)?.unlockedKey }
+        val unlockedKeys = getUnlockedUserKeys(userId)
         check(unlockedKeys.isNotEmpty())
         pgpCrypto.serializeKeys(unlockedKeys.map { it.value }).use {
             unlockedKeys.forEach { unlockedKey -> unlockedKey.close() }
             val secret = pgpCrypto.getBase64Decoded(recoverySecret)
-            return pgpCrypto.encryptDataWithPassword(it.array, secret)
+            return Result(
+                keyCount = unlockedKeys.size,
+                recoveryFile = pgpCrypto.encryptDataWithPassword(it.array, secret)
+            )
         }
     }
+
+    /**
+     * @param keyCount The number of keys that the [recoveryFile] can recover.
+     * @param recoveryFile The recovery file encrypted with a recovery secret.
+     */
+    data class Result(
+        val keyCount: Int,
+        val recoveryFile: EncryptedMessage
+    )
 }

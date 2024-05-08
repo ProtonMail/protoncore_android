@@ -75,7 +75,7 @@ class DeviceRecoveryHandlerTest {
         testScopeProvider = TestCoroutineScopeProvider()
 
         coJustRun { deleteRecoveryFiles(any()) }
-        coJustRun { storeRecoveryFile(any(), any()) }
+        coJustRun { storeRecoveryFile(any(), any(), any()) }
         coJustRun { userRecoveryWorkerManager.enqueueSetRecoverySecret(any()) }
 
         tested = DeviceRecoveryHandler(
@@ -97,7 +97,7 @@ class DeviceRecoveryHandlerTest {
         val testUserId = UserId("user_id")
         val testUser = mockk<User> { every { userId } returns testUserId }
 
-        coEvery { getRecoveryFile(testUserId) } returns "recoveryFile"
+        coEvery { getRecoveryFile(testUserId) } returns GetRecoveryFile.Result(1, "recoveryFile")
         every { observeUsersWithInactiveKeysForRecovery() } returns MutableStateFlow(testUserId)
         every { observeUsersWithoutRecoverySecret() } returns MutableStateFlow(testUserId)
         every { observeUsersWithRecoverySecretButNoFile() } returns MutableStateFlow(testUserId)
@@ -111,6 +111,6 @@ class DeviceRecoveryHandlerTest {
         coVerify { deleteRecoveryFiles(testUserId) }
         coVerify { userRecoveryWorkerManager.enqueueSetRecoverySecret(testUserId) }
         coVerify { userRecoveryWorkerManager.enqueueRecoverInactivePrivateKeys(testUserId) }
-        coVerify { storeRecoveryFile("recoveryFile", testUserId) }
+        coVerify { storeRecoveryFile("recoveryFile", 1, testUserId) }
     }
 }

@@ -33,6 +33,7 @@ import me.proton.core.userrecovery.data.mock.mockUser
 import me.proton.core.userrecovery.data.mock.mockUserKey
 import me.proton.core.userrecovery.domain.entity.RecoveryFile
 import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
+import me.proton.core.userrecovery.domain.usecase.GetUnlockedUserKeys
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -40,6 +41,9 @@ import kotlin.test.assertEquals
 class ObserveUsersWithRecoverySecretButNoFileTest {
     @MockK
     private lateinit var deviceRecoveryRepository: DeviceRecoveryRepository
+
+    @MockK
+    private lateinit var getUnlockedUserKeys: GetUnlockedUserKeys
 
     @MockK
     private lateinit var observeUserDeviceRecovery: ObserveUserDeviceRecovery
@@ -51,6 +55,7 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
         MockKAnnotations.init(this)
         tested = ObserveUsersWithRecoverySecretButNoFile(
             deviceRecoveryRepository,
+            getUnlockedUserKeys,
             observeUserDeviceRecovery
         )
     }
@@ -59,7 +64,10 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
     fun `observe user without recovery secret`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = null)))
+        val privateKey = mockk<PrivateKey> { every { isPrimary } returns true }
+        val user = mockUser(
+            userId, listOf(mockUserKey(testPrivateKey = privateKey, testRecoverySecretHash = null))
+        )
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -93,10 +101,11 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
     }
 
     @Test
-    fun `observe single user without recovery file and no active key`() = runTest {
+    fun `observe single user without recovery file and no primary key`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(isActive = false)))
+        val privateKey = mockk<PrivateKey> { every { isPrimary } returns false }
+        val user = mockUser(userId, listOf(mockUserKey(testPrivateKey = privateKey)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -113,7 +122,8 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
     fun `observe single user with existing recovery file`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey()))
+        val privateKey = mockk<PrivateKey> { every { isPrimary } returns true }
+        val user = mockUser(userId, listOf(mockUserKey(testPrivateKey = privateKey)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -121,6 +131,7 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
             RecoveryFile(
                 userId = userId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = TEST_RECOVERY_SECRET_HASH
             )
@@ -130,6 +141,40 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
         tested().test {
             // THEN
             expectNoEvents()
+        }
+    }
+
+    @Test
+    fun `observe single user with existing recovery file but unmatched key count`() = runTest {
+        // GIVEN
+        val userId = UserId("user-1")
+        val privateKey1 = mockk<PrivateKey> { every { isPrimary } returns true }
+        val privateKey2 = mockk<PrivateKey> { every { isPrimary } returns false }
+        val user = mockUser(
+            userId,
+            listOf(mockUserKey(testPrivateKey = privateKey1), mockUserKey(testPrivateKey = privateKey2))
+        )
+        val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
+
+        coEvery { getUnlockedUserKeys(userId) } returns listOf(
+            mockk(relaxed = true),
+            mockk(relaxed = true)
+        ) // returns 2 items
+        every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
+        coEvery { deviceRecoveryRepository.getRecoveryFiles(userId) } returns listOf(
+            RecoveryFile(
+                userId = userId,
+                createdAtUtcMillis = 100,
+                keyCount = 1, // only a single item
+                recoveryFile = "recoveryFile",
+                recoverySecretHash = TEST_RECOVERY_SECRET_HASH
+            )
+        )
+
+        // WHEN
+        tested().test {
+            // THEN
+            assertEquals(userId, awaitItem())
         }
     }
 
@@ -148,6 +193,7 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
             RecoveryFile(
                 userId = userId,
                 createdAtUtcMillis = 100,
+                keyCount = 1,
                 recoveryFile = "recoveryFile",
                 recoverySecretHash = "oldRecoverySecretHash"
             )
