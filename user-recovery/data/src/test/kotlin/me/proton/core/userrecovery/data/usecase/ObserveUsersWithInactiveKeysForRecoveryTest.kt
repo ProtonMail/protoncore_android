@@ -53,7 +53,7 @@ class ObserveUsersWithInactiveKeysForRecoveryTest {
     fun `user with disabled device recovery setting`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecret = "secret", isActive = false)))
+        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = "hash", isActive = false)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, /* user recovery setting */false))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -69,7 +69,7 @@ class ObserveUsersWithInactiveKeysForRecoveryTest {
     fun `user with inactive keys and recovery file`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecret = "secret", isActive = false)))
+        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = "hash", isActive = false)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -85,7 +85,7 @@ class ObserveUsersWithInactiveKeysForRecoveryTest {
     fun `user with no inactive keys and recovery file`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecret = "secret", isActive = true)))
+        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = "hash", isActive = true)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -101,7 +101,7 @@ class ObserveUsersWithInactiveKeysForRecoveryTest {
     fun `user with inactive keys and no recovery file`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecret = "secret", isActive = false)))
+        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = "secret", isActive = false)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
@@ -117,7 +117,7 @@ class ObserveUsersWithInactiveKeysForRecoveryTest {
     fun `user with inactive keys and recovery file but no recovery secret`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecret = null, isActive = false)))
+        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = null, isActive = false)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow

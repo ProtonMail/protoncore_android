@@ -157,7 +157,7 @@ UserManagerImplTests {
         keySaltRepository = KeySaltRepositoryImpl(db, apiProvider, scopeProvider)
         privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider, validateServerProof)
 
-        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db, keyStoreCrypto)
+        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db)
         userRemoteDataSource = UserRemoteDataSourceImpl(apiProvider, userLocalDataSource)
 
         // UserRepositoryImpl implements PassphraseRepository.

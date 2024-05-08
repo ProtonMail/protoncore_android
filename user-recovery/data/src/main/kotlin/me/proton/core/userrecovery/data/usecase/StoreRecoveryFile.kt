@@ -20,7 +20,6 @@ package me.proton.core.userrecovery.data.usecase
 
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
-import me.proton.core.userrecovery.data.entity.recoverySecretHash
 import me.proton.core.userrecovery.domain.entity.RecoveryFile
 import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
 import me.proton.core.util.android.datetime.Clock
@@ -40,14 +39,14 @@ class StoreRecoveryFile @Inject constructor(
         val primaryKey = requireNotNull(user.keys.firstOrNull { it.privateKey.isPrimary }) {
             "Primary key is missing."
         }
-        val recoverySecretHash = primaryKey.recoverySecretHash()
+        val recoverySecretHash = requireNotNull(primaryKey.recoverySecretHash) {
+            "Recovery secret is missing."
+        }
         val recoveryFile = RecoveryFile(
             userId = userId,
             createdAtUtcMillis = clock.currentEpochMillis(),
             recoveryFile = encodedRecoveryFile,
-            recoverySecretHash = requireNotNull(recoverySecretHash) {
-                "Recovery secret is missing."
-            }
+            recoverySecretHash = recoverySecretHash
         )
         deviceRecoveryRepository.insertRecoveryFile(recoveryFile)
     }

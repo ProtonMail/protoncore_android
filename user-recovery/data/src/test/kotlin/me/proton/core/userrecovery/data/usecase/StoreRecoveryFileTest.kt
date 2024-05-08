@@ -80,7 +80,7 @@ class StoreRecoveryFileTest {
     @Test
     fun `no recovery secret`() = runTest {
         // GIVEN
-        val userKey = mockUserKey(testRecoverySecret = null)
+        val userKey = mockUserKey(testRecoverySecretHash = null)
         every { userKey.privateKey } returns mockk {
             every { isPrimary } returns true
         }
@@ -101,7 +101,7 @@ class StoreRecoveryFileTest {
     fun `store recovery file`() = runTest {
         // GIVEN
         val userId = UserId("test-user")
-        val userKey = mockUserKey(testRecoverySecret = TEST_RECOVERY_SECRET)
+        val userKey = mockUserKey(testRecoverySecretHash = TEST_RECOVERY_SECRET_HASH)
         every { userKey.privateKey } returns mockk {
             every { isPrimary } returns true
         }

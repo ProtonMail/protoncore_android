@@ -24,6 +24,7 @@ import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.unlockOrNull
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.repository.UserRemoteDataSource
 import javax.inject.Inject
 
 /**
@@ -31,6 +32,7 @@ import javax.inject.Inject
  */
 class GetRecoveryFile @Inject constructor(
     private val userManager: UserManager,
+    private val userRemoteDataSource: UserRemoteDataSource,
     private val cryptoContext: CryptoContext
 ) {
     private val pgpCrypto = cryptoContext.pgpCrypto
@@ -38,9 +40,12 @@ class GetRecoveryFile @Inject constructor(
     suspend operator fun invoke(
         userId: UserId
     ): EncryptedMessage {
-        val user = userManager.getUser(userId)
-        val primaryKey = user.keys.firstOrNull { it.privateKey.isPrimary }
+        // Get recoverySecret from remote.
+        val remoteUser = userRemoteDataSource.fetch(userId)
+        val primaryKey = remoteUser.keys.firstOrNull { it.privateKey.isPrimary }
         val primaryKeyRecoverySecret = requireNotNull(primaryKey?.recoverySecret)
+        // Continue with local User (with unlockable keys).
+        val user = userManager.getUser(userId)
         val activeKeys = user.keys.filter { it.active ?: false }
         val privateKeys = activeKeys.map { it.privateKey }
         val unlockedKeys = privateKeys.mapNotNull { it.unlockOrNull(cryptoContext)?.unlockedKey }

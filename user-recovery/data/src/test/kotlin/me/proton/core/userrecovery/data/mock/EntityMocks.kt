@@ -43,12 +43,14 @@ fun mockUser(testUserId: UserId, testKeys: List<UserKey> = emptyList()): User = 
 
 fun mockUserKey(
     testRecoverySecret: String? = TEST_RECOVERY_SECRET,
+    testRecoverySecretHash: String? = TEST_RECOVERY_SECRET_HASH,
     isActive: Boolean = true,
     testPrivateKey: PrivateKey? = null
 ): UserKey = mockk {
     every { active } returns isActive
     testPrivateKey?.let { every { privateKey } returns testPrivateKey }
     every { recoverySecret } returns testRecoverySecret
+    every { recoverySecretHash } returns testRecoverySecretHash
 }
 
 fun mockUserSettings(testUserId: UserId, testDeviceRecovery: Boolean?): UserSettings = mockk {

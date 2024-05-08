@@ -37,13 +37,16 @@ import javax.inject.Inject
 class UserLocalDataSourceImpl @Inject constructor(
     private val cryptoContext: CryptoContext,
     private val db: UserDatabase,
-    private val keyStoreCrypto: KeyStoreCrypto,
 ) : UserLocalDataSource {
     private val userDao = db.userDao()
     private val userKeyDao = db.userKeyDao()
     private val userWithKeysDao = db.userWithKeysDao()
 
-    override suspend fun getPassphrase(userId: UserId): EncryptedByteArray? = userDao.getPassphrase(userId)
+    override suspend fun getPassphrase(
+        userId: UserId
+    ): EncryptedByteArray? {
+        return userDao.getPassphrase(userId)
+    }
 
     override suspend fun setPassphrase(
         userId: UserId,
@@ -59,10 +62,10 @@ class UserLocalDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUser(userId: UserId): User? = userWithKeysDao.getByUserId(userId)?.toUser(keyStoreCrypto)
+    override suspend fun getUser(userId: UserId): User? = userWithKeysDao.getByUserId(userId)?.toUser()
 
     override fun observe(userId: UserId): Flow<User?> =
-        userWithKeysDao.observeByUserId(userId).map { user -> user?.toUser(keyStoreCrypto) }
+        userWithKeysDao.observeByUserId(userId).map { user -> user?.toUser() }
 
     override suspend fun upsert(user: User, onSuccess: (suspend () -> Unit)?) {
         db.inTransaction {
@@ -73,7 +76,7 @@ class UserLocalDataSourceImpl @Inject constructor(
             // Insert in Database.
             userDao.insertOrUpdate(user.toEntity(passphrase))
             userKeyDao.deleteAllByUserId(user.userId)
-            userKeyDao.insertOrUpdate(*userKeys.toEntityList(keyStoreCrypto).toTypedArray())
+            userKeyDao.insertOrUpdate(*userKeys.toEntityList().toTypedArray())
             onSuccess?.invoke()
         }
     }

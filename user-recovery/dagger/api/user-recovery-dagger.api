@@ -14,11 +14,11 @@ public final class me/proton/core/userrecovery/dagger/BuildConfig {
 }
 
 public abstract interface class me/proton/core/userrecovery/dagger/CoreDeviceRecoveryFeaturesModule {
-	public abstract fun bindCanUserDeviceRecover (Lme/proton/core/userrecovery/data/CanUserDeviceRecoverImpl;)Lme/proton/core/userrecovery/domain/CanUserDeviceRecover;
 	public abstract fun bindIsDeviceRecoveryEnabled (Lme/proton/core/userrecovery/data/IsDeviceRecoveryEnabledImpl;)Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;
 }
 
 public abstract interface class me/proton/core/userrecovery/dagger/CoreDeviceRecoveryModule {
+	public abstract fun bindCanUserDeviceRecover (Lme/proton/core/userrecovery/data/CanUserDeviceRecoverImpl;)Lme/proton/core/userrecovery/domain/CanUserDeviceRecover;
 	public abstract fun bindDeviceRecoveryRepository (Lme/proton/core/userrecovery/data/repository/DeviceRecoveryRepositoryImpl;)Lme/proton/core/userrecovery/domain/repository/DeviceRecoveryRepository;
 	public abstract fun bindShowDeviceRecoveryNotification (Lme/proton/core/userrecovery/presentation/compose/usecase/ShowDeviceRecoveryNotificationImpl;)Lme/proton/core/userrecovery/domain/usecase/ShowDeviceRecoveryNotification;
 	public abstract fun bindUserRecoveryWorkerManager (Lme/proton/core/userrecovery/data/worker/UserRecoveryWorkerManagerImpl;)Lme/proton/core/userrecovery/domain/worker/UserRecoveryWorkerManager;

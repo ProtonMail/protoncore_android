@@ -18,14 +18,17 @@
 
 package me.proton.core.userrecovery.domain.usecase
 
+import io.mockk.Runs
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
 import io.mockk.mockkConstructor
 import io.mockk.mockkStatic
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.PGPCrypto
+import me.proton.core.crypto.common.pgp.UnlockedKey
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
@@ -39,6 +42,8 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.user.domain.repository.UserRemoteDataSource
+import me.proton.core.util.kotlin.HashUtils
 import org.junit.Before
 
 /**
@@ -47,10 +52,18 @@ import org.junit.Before
 abstract class BaseUserKeysTest {
 
     internal val testSecretValid = "valid"
+    internal val testSecretValidHash = HashUtils.sha256(testSecretValid)
     internal val testSecretInvalid = "invalid"
+    internal val testSecretInvalidHash = HashUtils.sha256(testSecretInvalid)
 
-    internal val unlockedKey = mockk<UnlockedPrivateKey> {
-        every { this@mockk.unlockedKey } returns mockk { every { value } returns "unlocked".toByteArray() }
+    internal val testUnlockedKey = mockk<UnlockedKey> {
+        every { this@mockk.value } returns "unlocked".toByteArray()
+        every { this@mockk.close() } just Runs
+    }
+
+    internal val testUnlockedKeyPrivateKey = mockk<UnlockedPrivateKey> {
+        every { this@mockk.unlockedKey } returns testUnlockedKey
+        every { this@mockk.close() } just Runs
     }
 
     internal val testPrivateKeyInactive = mockk<PrivateKey> {
@@ -63,15 +76,17 @@ abstract class BaseUserKeysTest {
         every { this@mockk.isPrimary } returns true
         every { this@mockk.key } returns "active.key"
     }
-    internal val testKey1 = mockk<UserKey> {
+    internal val testKey1 = mockk<UserKey>(relaxed = true) {
         every { this@mockk.privateKey } returns testPrivateKeyPrimary
         every { this@mockk.recoverySecret } returns testSecretValid
+        every { this@mockk.recoverySecretHash } returns testSecretValidHash
         every { this@mockk.active } returns true
         every { this@mockk.keyId } returns KeyId("testKey1")
     }
-    internal val testKey2 = mockk<UserKey> {
+    internal val testKey2 = mockk<UserKey>(relaxed = true) {
         every { this@mockk.privateKey } returns testPrivateKeyInactive
         every { this@mockk.recoverySecret } returns testSecretInvalid
+        every { this@mockk.recoverySecretHash } returns testSecretInvalidHash
         every { this@mockk.active } returns false
         every { this@mockk.keyId } returns KeyId("testKey2")
     }
@@ -84,6 +99,10 @@ abstract class BaseUserKeysTest {
         coEvery { this@mockk.getUser(any(), any()) } returns testUser
     }
 
+    internal val testUserRemoteDataSource = mockk<UserRemoteDataSource> {
+        coEvery { this@mockk.fetch(any()) } returns testUser
+    }
+
     internal val testDecodedSecret1 = "decodedSecret1".toByteArray()
     internal val testDecodedSecret2 = "decodedSecret2".toByteArray()
     internal val testFingerprint1 = "fingerprint1"
@@ -93,20 +112,21 @@ abstract class BaseUserKeysTest {
         every { this@mockk.getBase64Decoded(testSecretInvalid) } returns testDecodedSecret2
         every { this@mockk.decryptDataWithPassword(any(), testDecodedSecret1) } returns "{\"keys\":[[0]]}".toByteArray()
         every { this@mockk.decryptDataWithPassword(any(), testDecodedSecret2) } throws CryptoException()
+        every { this@mockk.deserializeKeys(any()) } returns listOf(testUnlockedKey.value)
     }
     internal val testCryptoContext = mockk<CryptoContext>(relaxed = true) {
         every { this@mockk.pgpCrypto } returns testPgpCrypto
     }
-    internal val encryptedPassphrase = EncryptedByteArray("passphrase".toByteArray())
+    internal val testEncryptedPassphrase = EncryptedByteArray("passphrase".toByteArray())
     internal val testPassphraseRepository = mockk<PassphraseRepository> {
-        coEvery { this@mockk.getPassphrase(any()) } returns encryptedPassphrase
+        coEvery { this@mockk.getPassphrase(any()) } returns testEncryptedPassphrase
     }
 
     @Before
     open fun before() {
         mockkStatic(PrivateKey::unlockOrNull)
-        every { testPrivateKeyPrimary.unlockOrNull(any()) } returns unlockedKey
-        every { testPrivateKeyInactive.unlockOrNull(any()) } returns unlockedKey
+        every { testPrivateKeyPrimary.unlockOrNull(any()) } returns testUnlockedKeyPrivateKey
+        every { testPrivateKeyInactive.unlockOrNull(any()) } returns testUnlockedKeyPrivateKey
 
         every { testPrivateKeyPrimary.fingerprint(any()) } returns testFingerprint1
         every { testPrivateKeyInactive.fingerprint(any()) } returns testFingerprint2

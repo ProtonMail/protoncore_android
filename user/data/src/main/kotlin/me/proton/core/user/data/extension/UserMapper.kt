@@ -19,7 +19,6 @@
 package me.proton.core.user.data.extension
 
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.response.UserResponse
 import me.proton.core.user.data.entity.UserEntity
@@ -110,5 +109,5 @@ internal fun UserEntity.toUser(keys: List<UserKey>) = User(
     usedDriveSpace = usedDriveSpace,
 )
 
-internal fun UserWithKeys.toUser(keyStoreCrypto: KeyStoreCrypto) =
-    entity.toUser(keys.toUserKeyList(entity.passphrase, keyStoreCrypto))
+internal fun UserWithKeys.toUser() =
+    entity.toUser(keys.toUserKeyList(entity.passphrase))

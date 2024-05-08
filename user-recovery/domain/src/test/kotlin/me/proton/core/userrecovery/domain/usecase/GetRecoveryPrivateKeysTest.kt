@@ -21,12 +21,9 @@ package me.proton.core.userrecovery.domain.usecase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
-import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
-import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.pgp.exception.CryptoException
-import me.proton.core.user.domain.repository.PassphraseRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
@@ -40,7 +37,7 @@ class GetRecoveryPrivateKeysTest : BaseUserKeysTest() {
     override fun before() {
         super.before()
         tested = GetRecoveryPrivateKeys(
-            userManager = testUserManager,
+            userRemoteDataSource = testUserRemoteDataSource,
             passphraseRepository = testPassphraseRepository,
             cryptoContext = testCryptoContext
         )
@@ -61,12 +58,12 @@ class GetRecoveryPrivateKeysTest : BaseUserKeysTest() {
     }
 
     @Test
-    fun getRecoveryPrivateKeysRefreshUser() = runTest {
+    fun getRecoveryPrivateKeysGetSecretFromRemote() = runTest {
         // WHEN
         tested.invoke(testUser.userId, "encryptedMessage")
 
         // THEN
-        coVerify { testUserManager.getUser(any(), refresh = true) }
+        coVerify { testUserRemoteDataSource.fetch(any()) }
     }
 
     @Test

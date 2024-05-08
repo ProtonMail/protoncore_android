@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.runTest
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.data.db.UserDatabase
 import me.proton.core.user.data.db.dao.UserDao
@@ -32,9 +31,6 @@ import kotlin.test.assertTrue
 class UserLocalDataSourceImplTest {
     @MockK
     private lateinit var cryptoContext: CryptoContext
-
-    @MockK
-    private lateinit var keyStoreCrypto: KeyStoreCrypto
 
     @MockK
     private lateinit var userDao: UserDao
@@ -60,7 +56,7 @@ class UserLocalDataSourceImplTest {
         coEvery { userDatabase.inTransaction<Any?>(any()) } coAnswers {
             (firstArg() as (suspend () -> Any?)).invoke()
         }
-        tested = UserLocalDataSourceImpl(cryptoContext, userDatabase, keyStoreCrypto)
+        tested = UserLocalDataSourceImpl(cryptoContext, userDatabase)
     }
 
     @Test
@@ -128,7 +124,7 @@ class UserLocalDataSourceImplTest {
         val user = tested.getUser(testUserId)
 
         // THEN
-        assertEquals(userWithKeys.toUser(keyStoreCrypto), user)
+        assertEquals(userWithKeys.toUser(), user)
     }
 
     @Test
@@ -145,7 +141,7 @@ class UserLocalDataSourceImplTest {
             val userWithKeys = mockk<UserWithKeys>(relaxed = true)
             flow.value = userWithKeys
 
-            assertEquals(userWithKeys.toUser(keyStoreCrypto), awaitItem())
+            assertEquals(userWithKeys.toUser(), awaitItem())
         }
     }
 

@@ -116,11 +116,11 @@ public final class me/proton/core/userrecovery/presentation/compose/DeviceRecove
 }
 
 public final class me/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup;
-	public static fun newInstance (Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/userrecovery/domain/CanUserDeviceRecover;Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup;
+	public static fun newInstance (Lme/proton/core/userrecovery/domain/IsDeviceRecoveryEnabled;Lme/proton/core/notification/presentation/deeplink/DeeplinkManager;)Lme/proton/core/userrecovery/presentation/compose/DeviceRecoveryNotificationSetup;
 }
 
 public abstract class me/proton/core/userrecovery/presentation/compose/Hilt_DeviceRecoveryDialogActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {

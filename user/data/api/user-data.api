@@ -649,6 +649,7 @@ public abstract interface class me/proton/core/user/data/db/UserKeyDatabase : me
 
 public final class me/proton/core/user/data/db/UserKeyDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/user/data/db/dao/AddressDao : me/proton/core/data/room/db/BaseDao {
@@ -859,7 +860,7 @@ public final class me/proton/core/user/data/entity/UserKeyEntity {
 	public final fun getFingerprint ()Ljava/lang/String;
 	public final fun getKeyId ()Lme/proton/core/key/domain/entity/key/KeyId;
 	public final fun getPrivateKey ()Ljava/lang/String;
-	public final fun getRecoverySecret ()Ljava/lang/String;
+	public final fun getRecoverySecretHash ()Ljava/lang/String;
 	public final fun getRecoverySecretSignature ()Ljava/lang/String;
 	public final fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public final fun getVersion ()I
@@ -952,7 +953,7 @@ public final class me/proton/core/user/data/repository/UserAddressRepositoryImpl
 }
 
 public final class me/proton/core/user/data/repository/UserLocalDataSourceImpl : me/proton/core/user/domain/repository/UserLocalDataSource {
-	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)V
+	public fun <init> (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/db/UserDatabase;)V
 	public fun getPassphrase (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getUser (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun observe (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/flow/Flow;
@@ -964,11 +965,11 @@ public final class me/proton/core/user/data/repository/UserLocalDataSourceImpl :
 }
 
 public final class me/proton/core/user/data/repository/UserLocalDataSourceImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserLocalDataSourceImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/user/data/repository/UserLocalDataSourceImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/user/data/repository/UserLocalDataSourceImpl;
-	public static fun newInstance (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/db/UserDatabase;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;)Lme/proton/core/user/data/repository/UserLocalDataSourceImpl;
+	public static fun newInstance (Lme/proton/core/crypto/common/context/CryptoContext;Lme/proton/core/user/data/db/UserDatabase;)Lme/proton/core/user/data/repository/UserLocalDataSourceImpl;
 }
 
 public final class me/proton/core/user/data/repository/UserRemoteDataSourceImpl : me/proton/core/user/domain/repository/UserRemoteDataSource {

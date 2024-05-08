@@ -19,7 +19,6 @@
 package me.proton.core.user.domain.entity
 
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
@@ -31,7 +30,8 @@ data class UserKey(
     val version: Int,
     val activation: Armored? = null,
     val active: Boolean? = null,
-    val recoverySecret: Based64Encoded? = null,
+    val recoverySecret: String? = null,
+    val recoverySecretHash: String? = null,
     val recoverySecretSignature: EncryptedSignature? = null,
     override val keyId: KeyId,
     override val privateKey: PrivateKey,

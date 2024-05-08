@@ -38,4 +38,4 @@ class ObserveUsersWithoutRecoverySecret @Inject constructor(
 
 private fun User.isRecoverySecretMissingForPrimaryKey(): Boolean = keys
     .filter { it.active == true && it.privateKey.isPrimary }
-    .any { it.recoverySecret == null }
+    .any { it.recoverySecretHash == null }

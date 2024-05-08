@@ -43,7 +43,7 @@ class ObserveUsersWithInactiveKeysForRecovery @Inject constructor(
 
 private fun User.hasInactiveKeys(): Boolean = keys.any { it.active == false }
 
-private fun User.hasRecoverySecret(): Boolean = keys.any { it.recoverySecret != null }
+private fun User.hasRecoverySecret(): Boolean = keys.any { it.recoverySecretHash != null }
 
 private suspend fun DeviceRecoveryRepository.hasRecoveryFiles(userId: UserId): Boolean =
     getRecoveryFiles(userId).isNotEmpty()

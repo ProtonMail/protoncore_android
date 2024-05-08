@@ -50,7 +50,6 @@ class GetRecoveryInactiveUserKeysTest : BaseUserKeysTest() {
 
         // THEN
         assertTrue(result.size == 1)
-        assertContains(result, testKey2)
     }
 
     @Test

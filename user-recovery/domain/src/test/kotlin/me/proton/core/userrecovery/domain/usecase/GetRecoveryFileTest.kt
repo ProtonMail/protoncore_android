@@ -35,6 +35,7 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
         super.before()
         tested = GetRecoveryFile(
             userManager = testUserManager,
+            userRemoteDataSource = testUserRemoteDataSource,
             cryptoContext = testCryptoContext
         )
     }
@@ -51,6 +52,7 @@ class GetRecoveryFileTest : BaseUserKeysTest() {
         verify(exactly = 0) { testPgpCrypto.getBase64Decoded(testSecretInvalid) }
         verify(exactly = 1) { testPgpCrypto.encryptDataWithPassword(any(), testDecodedSecret1) }
         verify(exactly = 0) { testPgpCrypto.encryptDataWithPassword(any(), testDecodedSecret2) }
+        verify(exactly = 1) { testUnlockedKey.close() }
     }
 
     @Test

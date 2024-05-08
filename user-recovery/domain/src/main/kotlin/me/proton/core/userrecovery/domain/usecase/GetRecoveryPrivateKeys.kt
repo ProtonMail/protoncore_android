@@ -27,12 +27,12 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.entity.key.UnlockedPrivateKey
 import me.proton.core.key.domain.lock
-import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.user.domain.repository.UserRemoteDataSource
 import javax.inject.Inject
 
 class GetRecoveryPrivateKeys @Inject constructor(
-    private val userManager: UserManager,
+    private val userRemoteDataSource: UserRemoteDataSource,
     private val passphraseRepository: PassphraseRepository,
     private val cryptoContext: CryptoContext
 ) {
@@ -42,7 +42,8 @@ class GetRecoveryPrivateKeys @Inject constructor(
         userId: UserId,
         message: EncryptedMessage,
     ): List<PrivateKey> {
-        val user = userManager.getUser(userId, refresh = true)
+        // Get recoverySecret from remote.
+        val user = userRemoteDataSource.fetch(userId)
         val secrets = user.keys.mapNotNull { key -> key.recoverySecret }
         secrets.forEach { secret ->
             val decodedSecret = pgpCrypto.getBase64Decoded(secret)

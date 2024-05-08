@@ -23,7 +23,6 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import me.proton.core.domain.entity.UserId
-import me.proton.core.userrecovery.data.entity.recoverySecretHash
 import me.proton.core.userrecovery.domain.repository.DeviceRecoveryRepository
 import javax.inject.Inject
 
@@ -36,7 +35,7 @@ class ObserveUsersWithRecoverySecretButNoFile @Inject constructor(
         .mapNotNull { (user, _) ->
             val primaryRecoverySecretHash = user.keys
                 .firstOrNull { it.privateKey.isPrimary }
-                ?.recoverySecretHash()
+                ?.recoverySecretHash
             primaryRecoverySecretHash?.let { Pair(user, it) }
         }
         .filter { (user, primaryRecoverySecretHash) ->

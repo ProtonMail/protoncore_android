@@ -59,7 +59,7 @@ class ObserveUsersWithRecoverySecretButNoFileTest {
     fun `observe user without recovery secret`() = runTest {
         // GIVEN
         val userId = UserId("user-1")
-        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecret = null)))
+        val user = mockUser(userId, listOf(mockUserKey(testRecoverySecretHash = null)))
         val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
 
         every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow

@@ -78,7 +78,6 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -98,9 +97,6 @@ class UserAddressRepositoryImplTests {
 
     @MockK(relaxed = true)
     private lateinit var addressApi: AddressApi
-
-    @MockK(relaxed = true)
-    private lateinit var keyStoreCrypto: KeyStoreCrypto
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
         keyStoreCrypto = object : KeyStoreCrypto {
@@ -147,7 +143,7 @@ class UserAddressRepositoryImplTests {
 
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
 
-        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db, keyStoreCrypto)
+        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db)
         userRemoteDataSource = UserRemoteDataSourceImpl(apiProvider, userLocalDataSource)
         userRepository = UserRepositoryImpl(
             apiProvider,

@@ -21,9 +21,7 @@ package me.proton.core.user.data.entity
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.KeyId
@@ -53,6 +51,6 @@ data class UserKeyEntity(
     val fingerprint: String? = null,
     val activation: Armored? = null,
     val active: Boolean? = null,
-    val recoverySecret: Based64Encoded? = null,
+    val recoverySecretHash: String? = null,
     val recoverySecretSignature: EncryptedSignature? = null
 )
