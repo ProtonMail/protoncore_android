@@ -1,1 +1,3 @@
 -keeppackagenames me.proton.core.**
+-keep class me.proton.core.configuration.EnvironmentConfigurationDefaults { *; }
+-keep @interface me.proton.core.telemetry.presentation.annotation.**
