@@ -16,6 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import com.android.build.api.dsl.VariantDimension
 import com.android.build.gradle.TestedExtension
 import configuration.extensions.protonEnvironment
 import studio.forface.easygradle.dsl.*
@@ -79,6 +80,7 @@ android {
                 arguments["room.incremental"] = "true"
             }
         }
+        setAssetLinksResValue("proton.me")
         version = Version(1, 18, 10)
         versionName = version.toString()
     }
@@ -111,16 +113,19 @@ fun setupFlavors(testedExtension: TestedExtension) {
         }
 
         productFlavors.register("dev") {
+            val protonHost = "proton.black"
             dimension = flavorDimensions.env
 
             applicationIdSuffix = ".dev"
             protonEnvironment {
-                host = "proton.black"
+                host = protonHost
             }
 
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
+
+            setAssetLinksResValue(protonHost)
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
@@ -162,6 +167,8 @@ fun setupFlavors(testedExtension: TestedExtension) {
             )
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, sentryDsn.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, accountSentryDsn.toBuildConfigValue())
+
+            setAssetLinksResValue(atlasHost)
         }
         productFlavors.register("mock") {
             protonEnvironment {
@@ -323,4 +330,16 @@ dependencies {
 
     // Lint - off temporary
     // lintChecks(project(Module.lint))
+}
+
+fun VariantDimension.setAssetLinksResValue(host: String) {
+    resValue(
+        type = "string", name = "asset_statements",
+        value = """
+            [{
+              "relation": ["delegate_permission/common.handle_all_urls", "delegate_permission/common.get_login_creds"],
+              "target": { "namespace": "web", "site": "https://$host" }
+            }]
+        """.trimIndent()
+    )
 }

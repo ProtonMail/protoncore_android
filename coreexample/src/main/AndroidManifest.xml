@@ -32,6 +32,9 @@
         android:theme="@style/ProtonTheme"
         tools:replace="android:theme">
         <meta-data
+            android:name="asset_statements"
+            android:resource="@string/asset_statements" />
+        <meta-data
             android:name="io.sentry.auto-init"
             android:value="false" />
         <provider
