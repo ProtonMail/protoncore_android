@@ -144,6 +144,7 @@ public abstract class me/proton/core/accountmanager/presentation/compose/Hilt_Si
 
 public final class me/proton/core/accountmanager/presentation/compose/SignOutDialogActivity : me/proton/core/presentation/ui/ProtonActivity {
 	public static final field $stable I
+	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/accountmanager/presentation/compose/SignOutDialogActivity$Companion;
 	public field accountManager Lme/proton/core/accountmanager/domain/AccountManager;
 	public fun <init> ()V
@@ -152,7 +153,8 @@ public final class me/proton/core/accountmanager/presentation/compose/SignOutDia
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/SignOutDialogActivity$Companion {
-	public final fun start (Landroid/app/Activity;)V
+	public final fun start (Landroid/app/Activity;Lme/proton/core/domain/entity/UserId;)V
+	public static synthetic fun start$default (Lme/proton/core/accountmanager/presentation/compose/SignOutDialogActivity$Companion;Landroid/app/Activity;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
 }
 
 public abstract interface class me/proton/core/accountmanager/presentation/compose/SignOutDialogActivity_GeneratedInjector {
@@ -170,6 +172,29 @@ public final class me/proton/core/accountmanager/presentation/compose/SignOutDia
 public final class me/proton/core/accountmanager/presentation/compose/SignOutDialogKt {
 	public static final fun DeviceRecoveryDialogPreview (Landroidx/compose/runtime/Composer;I)V
 	public static final fun SignOutDialog (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput;
+	public static synthetic fun copy$default (Lme/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput;
 }
 
 public final class me/proton/core/accountmanager/presentation/compose/viewmodel/AccountSettingsViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/telemetry/presentation/ProductMetricsDelegate {

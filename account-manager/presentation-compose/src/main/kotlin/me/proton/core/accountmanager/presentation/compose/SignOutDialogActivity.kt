@@ -28,7 +28,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.accountmanager.presentation.compose.entity.SignOutDialogInput
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import javax.inject.Inject
 
@@ -37,6 +39,16 @@ class SignOutDialogActivity : ProtonActivity() {
 
     @Inject
     lateinit var accountManager: AccountManager
+
+    private val input: SignOutDialogInput by lazy {
+        requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
+    }
+
+    private val userId by lazy {
+        input.userId?.let {
+            UserId(it)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,25 +64,28 @@ class SignOutDialogActivity : ProtonActivity() {
     }
 
     private fun onRemoveAccount() = lifecycleScope.launch {
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+        val userId = userId ?: accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
         accountManager.removeAccount(userId)
         finish()
     }
 
     private fun onDisableAccount() = lifecycleScope.launch {
-        val userId = accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
+        val userId = userId ?: accountManager.getPrimaryUserId().firstOrNull() ?: return@launch
         accountManager.disableAccount(userId)
         finish()
     }
 
     companion object {
-        fun start(context: Activity) {
-            context.startActivityForResult(getIntent(context), 0)
+
+        const val ARG_INPUT = "arg.signOutDialogInput"
+
+        fun start(context: Activity, userId: UserId? = null) {
+            context.startActivityForResult(getIntent(context, SignOutDialogInput(userId?.id)), 0)
         }
 
-        private fun getIntent(context: Context): Intent = Intent(
-            context,
-            SignOutDialogActivity::class.java
-        )
+        private fun getIntent(context: Context, input: SignOutDialogInput): Intent =
+            Intent(context, SignOutDialogActivity::class.java).apply {
+                putExtra(ARG_INPUT, input)
+            }
     }
 }
