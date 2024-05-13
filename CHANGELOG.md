@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [23.1.0] - 2024-05-13
+
+### Features
+
+- account-manager:
+  - Add SignOutDialogActivity userid.
+
 ## [23.0.1] - 2024-05-07
 
 ### Bug Fixes
