@@ -135,7 +135,7 @@
   <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Zpět</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Zrušit</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">Uživatelské jméno nesmí být prázdné.</string>
   <string name="auth_signup_error_passwords_do_not_match">Hesla se neshodují.</string>

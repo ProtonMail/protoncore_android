@@ -32,17 +32,17 @@
   <string name="settings_validation_email">E-Mail-Adresse ist ungültig.</string>
   <string name="settings_general_error">Ein Fehler ist aufgetreten.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Account password</string>
-  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
+  <string name="settings_password_management_tab_login_password">Kontopasswort</string>
+  <string name="settings_password_management_tab_mailbox_password">Verschlüsselungspasswort</string>
   <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
   <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
   <string name="settings_password_management_header">Passwort ändern</string>
   <string name="settings_login_password_hint_current">Aktuelles Passwort</string>
-  <string name="settings_login_password_hint_new">New password</string>
+  <string name="settings_login_password_hint_new">Neues Passwort</string>
   <string name="settings_login_password_hint_new_confirm">Neues Passwort bestätigen</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
-  <string name="settings_mailbox_password_hint_new">New encryption password</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Aktuelles Kontopasswort</string>
+  <string name="settings_mailbox_password_hint_new">Neues Verschlüsselungspasswort</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Neues Verschlüsselungspasswort bestätigen</string>
   <string name="settings_change_password_error">Das Ändern des Passworts ist fehlgeschlagen.</string>
   <string name="settings_recovery_email_success">E-Mail-Adresse für die Wiederherstellung aktualisiert</string>
   <string name="settings_password_management_success">Passwort wurde aktualisiert</string>

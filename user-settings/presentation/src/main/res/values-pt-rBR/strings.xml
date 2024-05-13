@@ -40,9 +40,9 @@
   <string name="settings_login_password_hint_current">Senha atual</string>
   <string name="settings_login_password_hint_new">Nova senha</string>
   <string name="settings_login_password_hint_new_confirm">Confirmar nova senha</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Senha atual da conta</string>
   <string name="settings_mailbox_password_hint_new">Nova senha de criptografia</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirmar nova senha de criptografia</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da senha.</string>
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação atualizado</string>
   <string name="settings_password_management_success">Senha atualizada</string>

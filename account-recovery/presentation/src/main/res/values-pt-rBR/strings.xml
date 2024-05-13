@@ -35,7 +35,7 @@
   <string name="account_recovery_cancelled_subtitle">Se você nunca solicitou a alteração da sua senha, sua conta pode estar em risco.\n\nProteja sua conta alterando sua senha.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">A redefinição de senha está disponível</string>
-  <string name="account_recovery_password_started_subtitle">Para redefinir sua senha, retorne ao dispositivo, aplicativo ou navegador no qual você solicitou a redefinição de senha.\n\nVocê precisará fazer isso antes de %s.\n\nSe você não pediu a redefinição da sua senha, cancele agora a solicitação.</string>
+  <string name="account_recovery_password_started_subtitle">Para redefinir a sua senha, volte ao dispositivo e navegador em que fez a sua solicitação de redefinição de senha. \n\nTerá que fazer isto antes de %s.\n\n Se não pediu para redefinir a sua senha, cancele a redefinição agora.</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">Você agora pode redefinir a sua senha.\n\nVocê precisará fazer isso antes de %s.\n\nISe você não solicitou a redefinição da senha, cancele agora.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Redefinição de senha expirada</string>
@@ -50,7 +50,7 @@
   <string name="account_recovery_info_grace_description">Para termos a certeza de que é realmente você que está tentando redefinir sua senha, aguardamos 72 horas antes de aprovar solicitações.\n\nSe você não pediu para redefinir sua senha, cancele agora esta solicitação.</string>
   <string name="account_recovery_info_cancelled_title">A redefinição de senha foi cancelada</string>
   <string name="account_recovery_info_cancelled_subtitle">Um pedido de redefinição de senha foi feito em %1s.</string>
-  <string name="account_recovery_info_cancelled_description">Se você não reconhece essa solicitação, isto pode significar que uma outra pessoa tem acesso à sua conta Proton.\n\nProteja agora sua conta.</string>
+  <string name="account_recovery_info_cancelled_description">Se você não reconhece essa solicitação, isso pode significar que outra pessoa tem acesso à sua conta Proton.\n\nProteja sua conta agora.</string>
   <string name="account_recovery_info_insecure_title">A redefinição de senha está disponível</string>
   <string name="account_recovery_info_insecure_subtitle">Você pode redefinir sua senha agora. A redefinição de senha está disponível até %1s.</string>
   <string name="account_recovery_info_insecure_description">Não fez essa solicitação?\n\nSe você não solicitou a redefinição da sua senha, cancele agora a solicitação.</string>

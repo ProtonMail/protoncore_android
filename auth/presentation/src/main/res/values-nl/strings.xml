@@ -132,11 +132,11 @@
   <string name="auth_signup_set_recovery">Herstelmethode instellen</string>
   <string name="auth_signup_no_connectivity">Geen connectiviteit om Voorwaarden en Condities te tonen.</string>
   <string name="auth_signup_error_create_to_continue">Maak een account aan om verder te gaan</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Meer informatie</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Annuleren</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Doorgaan</string>
   <string name="auth_signup_error_username_blank">De gebruikersnaam mag niet leeg zijn.</string>
   <string name="auth_signup_error_passwords_do_not_match">Wachtwoorden komen niet overeen.</string>
   <string name="auth_signup_validation_password_length">Wachtwoord moet ten minste 8 tekens bevatten.</string>

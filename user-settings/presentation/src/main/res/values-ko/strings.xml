@@ -32,7 +32,7 @@
   <string name="settings_validation_email">올바르지 않은 이메일 주소입니다.</string>
   <string name="settings_general_error">오류 발생.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Account password</string>
+  <string name="settings_password_management_tab_login_password">계정 비밀번호</string>
   <string name="settings_password_management_tab_mailbox_password">암호화 비밀번호</string>
   <string name="settings_password_management_change_login_password">두 개의 비밀번호 모드에서는 Proton 계정에 로그인할 때 계정 비밀번호를 사용합니다.</string>
   <string name="settings_password_management_change_mailbox_password">두 개의 비밀번호 모드에서는 데이터의 암호화와 복호화에 암호화 비밀번호를 사용합니다.</string>

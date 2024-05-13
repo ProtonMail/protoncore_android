@@ -66,7 +66,7 @@
   <string name="plans_subscription_drive_storage_full_title">Vaša shramba v storitvi Drive je polna</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">Vaša shramba v storitvi Drive je skoraj polna</string>
   <string name="plans_subscription_storage_get_more">Pridobite več prostora</string>
-  <string name="plans_subscription_storage_full_description">Nadgradite svoj načrt, če želite še naprej uporabljati svoj račun brez prekinitev.</string>
+  <string name="plans_subscription_storage_full_description">Nadgradite obstoječi paket in še naprej uporabljajte račun brez prekinitev.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# shramb</item>
