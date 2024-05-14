@@ -22,11 +22,13 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.coJustRun
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.spyk
 import io.mockk.verify
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
@@ -61,7 +63,7 @@ import kotlin.test.assertTrue
 class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
 
     // region mocks
-    private val accountHandler = mockk<AccountWorkflowHandler>()
+    private val accountHandler = mockk<AccountWorkflowHandler>(relaxed = true)
 
     private val keyStoreCrypto = mockk<KeyStoreCrypto>()
     private val savedStateHandle = mockk<SavedStateHandle>(relaxed = true)
@@ -164,6 +166,9 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     fun `login get user error flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val sessionInfo = mockSessionInfo()
+        val viewModel = spyk(viewModel, recordPrivateCalls = true)
+        every { viewModel.userId } answers { testUserId }
+
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
@@ -194,6 +199,9 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     @Test
     fun `login error path flow states are handled correctly`() = coroutinesTest {
         // GIVEN
+        val viewModel = spyk(viewModel, recordPrivateCalls = true)
+        every { viewModel.userId } answers { testUserId }
+
         coEvery { createLoginSession.invoke(any(), any(), any()) } throws ApiException(
             ApiResult.Error.Http(
                 httpCode = 123,
@@ -256,6 +264,10 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     @Test
     fun `login is retried on Primary Key Exists error`() = coroutinesTest {
         val sessionInfo = mockSessionInfo()
+        val viewModel = spyk(viewModel, recordPrivateCalls = true)
+        every { viewModel.userId } answers { testUserId }
+
+        coJustRun { accountHandler.handleAccountDisabled(any()) }
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
@@ -526,7 +538,8 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
             result("unlockUserPrimaryKey") { UserManager.UnlockResult.Success }
             PostLoginAccountSetup.Result.UserUnlocked(mockk())
         }
-        val viewModel = makeLoginViewModel()
+        val viewModel = spyk(makeLoginViewModel(), recordPrivateCalls = true)
+        every { viewModel.userId } answers { testUserId }
 
         viewModel.startLoginWorkflow(
             username = testUserName,
@@ -546,8 +559,10 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         )
     }
 
-    private fun makeLoginViewModel(isSsoEnabled: IsSsoEnabled = IsSsoEnabled { false }): LoginViewModel =
-        LoginViewModel(
+    private fun makeLoginViewModel(isSsoEnabled: IsSsoEnabled = IsSsoEnabled { false }): LoginViewModel {
+        coJustRun { accountHandler.handleAccountDisabled(any()) }
+
+        return LoginViewModel(
             savedStateHandle,
             accountHandler,
             createLoginSession,
@@ -557,6 +572,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
             observabilityManager,
             telemetryManager
         )
+    }
 
     private fun mockSessionInfo(
         isSecondFactorNeeded: Boolean = false,

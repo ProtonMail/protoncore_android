@@ -160,6 +160,7 @@ internal class LoginViewModel @Inject constructor(
         }.catchWhen(Throwable::isSwitchToSso) {
             emit(State.SignInWithSso(username, it))
         }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
+            userId?.let { accountWorkflow.handleAccountDisabled(it) }
             emit(State.Error(it, it.isPotentialBlocking()))
         }.collect { state ->
             _state.tryEmit(state)
