@@ -41,6 +41,14 @@ protonDagger {
 
 protonTestsOptions.unitTestFlavor = "dev"
 
+val localProperties = Properties().apply {
+    try {
+        load(rootDir.resolve("local.properties").inputStream())
+    } catch (e: FileNotFoundException) {
+        logger.warn("No local.properties found")
+    }
+}
+
 android {
     namespace = "me.proton.android.core.coreexample"
 
@@ -54,10 +62,10 @@ android {
     }
     signingConfigs {
         create("release") {
-            storeFile = file("coreexample.jks")
-            storePassword = "coreexample"
-            keyAlias = "coreexample"
-            keyPassword = "coreexample"
+            storeFile = file("test-key-store.jks")
+            storePassword = localProperties.getProperty("testStorePassword")
+            keyAlias = localProperties.getProperty("testKeyAlias")
+            keyPassword = localProperties.getProperty("testKeyPassword")
         }
     }
     buildTypes {
@@ -142,13 +150,6 @@ fun setupFlavors(testedExtension: TestedExtension) {
         productFlavors.register("localProperties") {
             dimension = flavorDimensions.env
             applicationIdSuffix = ".local.properties"
-            val localProperties = Properties().apply {
-                try {
-                    load(rootDir.resolve("local.properties").inputStream())
-                } catch (e: FileNotFoundException) {
-                    logger.warn("No local.properties found")
-                }
-            }
 
             val atlasHost: String = localProperties.getProperty("HOST") ?: "proton.black"
             val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
