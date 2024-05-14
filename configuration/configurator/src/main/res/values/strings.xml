@@ -23,6 +23,9 @@
     <string name="configuration_title_network_configuration" translatable="false">Network Configuration</string>
     <string name="configuration_text_advanced" translatable="false">Advanced</string>
     <string name="configuration_error_unknown" translatable="false">Could not save configuration. Unknown error</string>
+    <string name="configuration_title" translatable="false">Configuration</string>
+    <string name="feature_flags_title" translatable="false">Feature Flags</string>
+    <string name="feature_flags_manage" translatable="false">Manage Feature Flags</string>
     <string-array name="domains" translatable="false">
         <item>production</item>
         <item>payments</item>

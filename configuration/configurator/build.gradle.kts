@@ -20,12 +20,28 @@ import studio.forface.easygradle.dsl.android.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import java.util.*
 
 plugins {
     protonAndroidApp
     protonDagger
     id("me.proton.core.gradle-plugins.environment-config")
     kotlin("plugin.serialization")
+}
+
+val rootDirPath = rootDir.path
+// Load properties from file
+val privateProperties = Properties().apply {
+    val propertiesFile = file("$rootDirPath/local.properties")
+    if (propertiesFile.exists()) {
+        load(propertiesFile.inputStream())
+    }
+}
+
+// Function to get a property by key with a fallback to an environment variable
+fun getProperty(key: String): String {
+    // Try to get the property from the environment first, if it's not set, get from the properties file
+    return System.getenv(key) ?: privateProperties.getProperty(key, "")
 }
 
 protonCoverage {
@@ -39,8 +55,9 @@ android {
         protonEnvironment {
             host = "proton.black"
         }
-
         buildConfigField("String", "PROXY_URL", "https://proxy.proton.black".toBuildConfigValue())
+        buildConfigField("String", "UNLEASH_API_TOKEN", getProperty("UNLEASH_API_TOKEN").toBuildConfigValue())
+        buildConfigField("String", "UNLEASH_URL", getProperty("UNLEASH_URL").toBuildConfigValue())
     }
 
     buildFeatures.compose = true
@@ -72,6 +89,7 @@ dependencies {
         `lifecycle-viewModel-compose`,
         appcompat,
         `kotlin-reflect`,
-        preference
+        preference,
+        `serialization-json`
     )
 }

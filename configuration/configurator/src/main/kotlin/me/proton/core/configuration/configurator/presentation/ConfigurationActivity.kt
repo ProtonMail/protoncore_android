@@ -21,21 +21,24 @@ package me.proton.core.configuration.configurator.presentation
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.compose.component.ProtonSnackbarHost
-import me.proton.core.compose.component.ProtonSnackbarHostState
+import me.proton.core.compose.component.NavigationTab
+import me.proton.core.compose.component.ProtonBottomNavigation
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
-import me.proton.core.configuration.configurator.presentation.components.ConfigurationScreen
+import me.proton.core.configuration.configurator.presentation.components.NavigationContent
 import me.proton.core.presentation.ui.ProtonActivity
 
 @AndroidEntryPoint
@@ -44,24 +47,49 @@ class ConfigurationActivity : ProtonActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val snackbarHostState = remember { ProtonSnackbarHostState() }
+            val currentScreen = remember { mutableStateOf(Screen.Home) }
+
+            val tabs = listOf(
+                NavigationTab(
+                    R.string.configuration_title, Icons.Filled.Home
+                ), NavigationTab(
+                    R.string.feature_flags_title, Icons.Filled.Settings
+                )
+            )
 
             ProtonTheme {
-                Box(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(horizontal = 16.dp)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    Column {
-                        ConfigurationScreen(
-                            snackbarHostState = snackbarHostState,
-                            title = stringResource(id = R.string.configuration_title_network_configuration)
+
+                Scaffold(
+                    bottomBar = {
+                        ProtonBottomNavigation(
+                            tabs = tabs,
+                            onSelectedTabIndex = { index ->
+                                currentScreen.value = when (index) {
+                                    0 -> Screen.Home
+                                    1 -> Screen.FeatureFlag  // Assuming this is the index for the Feature Flag screen
+                                    else -> Screen.Home
+                                }
+                            },
+                            initialSelectedTabIndex = 0
                         )
                     }
+                ) { innerPadding ->
+                    Box(
+                        modifier = Modifier
+                            .padding(innerPadding)
+                            .fillMaxHeight()
+                            .padding(horizontal = ProtonDimens.DefaultSpacing)
+                            .verticalScroll(rememberScrollState())
+                    ) {
+                        NavigationContent(currentScreen = currentScreen.value)
+                    }
                 }
-                ProtonSnackbarHost(snackbarHostState)
             }
         }
     }
+}
+
+enum class Screen {
+    Home,
+    FeatureFlag,
 }

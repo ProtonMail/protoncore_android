@@ -38,9 +38,25 @@ import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
+import me.proton.core.configuration.configurator.presentation.Screen
 import me.proton.core.configuration.configurator.presentation.viewModel.ConfigurationScreenViewModel
+import me.proton.core.configuration.configurator.presentation.viewModel.FeatureFlagsViewModel
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.presentation.R.drawable as CoreDrawable
+
+@Composable
+fun NavigationContent(currentScreen: Screen) {
+    val snackbarHostState = remember { ProtonSnackbarHostState() }
+
+    when (currentScreen) {
+        Screen.Home -> ConfigurationScreen(
+            snackbarHostState = snackbarHostState,
+            title = stringResource(id = R.string.configuration_title_network_configuration)
+        )
+
+        Screen.FeatureFlag -> AppNavigation()
+    }
+}
 
 @Composable
 fun ConfigurationScreen(
