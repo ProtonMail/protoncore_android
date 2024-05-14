@@ -90,6 +90,7 @@ dependencies {
         appcompat,
         `kotlin-reflect`,
         preference,
-        `serialization-json`
+        `serialization-json`,
+        `retrofit-kotlin-serialization`
     )
 }

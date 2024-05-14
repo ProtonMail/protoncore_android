@@ -66,7 +66,7 @@ class ConfigurationActivity : ProtonActivity() {
                             onSelectedTabIndex = { index ->
                                 currentScreen.value = when (index) {
                                     0 -> Screen.Home
-                                    1 -> Screen.FeatureFlag  // Assuming this is the index for the Feature Flag screen
+                                    1 -> Screen.FeatureFlag
                                     else -> Screen.Home
                                 }
                             },
