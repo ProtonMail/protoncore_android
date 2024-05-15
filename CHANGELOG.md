@@ -11,6 +11,25 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [23.2.0] - 2024-05-15
+
+### Features
+
+- coreexample:
+  - Configure asset links for FIDO2.
+
+### Bug Fixes
+
+- auth:
+  - Fix HV activity orientation.
+  - Fix account state after human verification dismiss on login.
+- proguard-rules:
+  - Add missing proguard rules for `configuration` and `telemetry` modules.
+
+### Internationalization
+
+- Upgrade translations from crowdin (1e764907).
+
 ## [23.1.0] - 2024-05-13
 
 ### Features
