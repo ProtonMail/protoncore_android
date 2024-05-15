@@ -23,6 +23,7 @@
 
         <activity
             android:name=".ui.HumanVerificationActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/ProtonTheme.DialogWhenLarge" />
 
         <provider
