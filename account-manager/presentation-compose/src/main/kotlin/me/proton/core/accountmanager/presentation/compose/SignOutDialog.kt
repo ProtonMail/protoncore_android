@@ -36,6 +36,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import me.proton.core.compose.component.ProtonAlertDialog
@@ -66,7 +67,9 @@ fun SignOutDialog(
                 Row(modifier = Modifier.clickable { removeAccount = !removeAccount }) {
                     CompositionLocalProvider(LocalMinimumInteractiveComponentEnforcement provides false) {
                         Checkbox(
-                            modifier = Modifier.align(Alignment.CenterVertically),
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .testTag(SignOutDialogTestTag.REMOVE_DATA),
                             checked = removeAccount,
                             onCheckedChange = { removeAccount = !removeAccount }
                         )
@@ -84,18 +87,28 @@ fun SignOutDialog(
         confirmButton = {
             ProtonAlertDialogButton(
                 titleResId = R.string.account_signout_dialog_action_signout,
-                loading = signingOut
+                loading = signingOut,
+                modifier = Modifier.testTag(SignOutDialogTestTag.CONFIRM_SIGN_OUT)
             ) {
                 signingOut = true
                 if (removeAccount) onRemoveAccount() else onDisableAccount()
             }
         },
         dismissButton = {
-            ProtonAlertDialogButton(R.string.account_signout_dialog_action_cancel) {
+            ProtonAlertDialogButton(
+                R.string.account_signout_dialog_action_cancel,
+                modifier = Modifier.testTag(SignOutDialogTestTag.CANCEL_SIGN_OUT)
+            ) {
                 onDismiss()
             }
         }
     )
+}
+
+object SignOutDialogTestTag {
+    const val CANCEL_SIGN_OUT = "cancelSingOut"
+    const val CONFIRM_SIGN_OUT = "confirmSignOut"
+    const val REMOVE_DATA = "removeData"
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO)

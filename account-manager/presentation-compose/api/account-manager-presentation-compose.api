@@ -174,6 +174,14 @@ public final class me/proton/core/accountmanager/presentation/compose/SignOutDia
 	public static final fun SignOutDialog (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
 }
 
+public final class me/proton/core/accountmanager/presentation/compose/SignOutDialogTestTag {
+	public static final field $stable I
+	public static final field CANCEL_SIGN_OUT Ljava/lang/String;
+	public static final field CONFIRM_SIGN_OUT Ljava/lang/String;
+	public static final field INSTANCE Lme/proton/core/accountmanager/presentation/compose/SignOutDialogTestTag;
+	public static final field REMOVE_DATA Ljava/lang/String;
+}
+
 public final class me/proton/core/accountmanager/presentation/compose/entity/SignOutDialogInput : android/os/Parcelable {
 	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;

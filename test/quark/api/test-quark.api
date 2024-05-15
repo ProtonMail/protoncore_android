@@ -13,6 +13,8 @@ public final class me/proton/core/test/quark/Quark {
 	public final fun getDefaultVerificationCode ()Ljava/lang/String;
 	public final fun jailUnban ()V
 	public final fun populateUserWithData (Lme/proton/core/test/quark/data/User;)Lme/proton/core/test/quark/data/User;
+	public final fun resetPassword (JLjava/lang/String;Lme/proton/core/test/quark/Quark$GenKeys;)V
+	public static synthetic fun resetPassword$default (Lme/proton/core/test/quark/Quark;JLjava/lang/String;Lme/proton/core/test/quark/Quark$GenKeys;ILjava/lang/Object;)V
 	public final fun seedNewSubscriber (Lme/proton/core/test/quark/data/User;)Lme/proton/core/test/quark/data/User;
 	public static synthetic fun seedNewSubscriber$default (Lme/proton/core/test/quark/Quark;Lme/proton/core/test/quark/data/User;ILjava/lang/Object;)Lme/proton/core/test/quark/data/User;
 	public final fun seedNewSubscriberWithCycle (Lme/proton/core/test/quark/data/User;I)Lme/proton/core/test/quark/data/User;
@@ -104,6 +106,7 @@ public final class me/proton/core/test/quark/Quark$InternalApiEndpoint : java/la
 	public static final field SYSTEM_ENV Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field USER_CREATE Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static final field USER_CREATE_ADDRESS Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
+	public static final field USER_RESET_PASSWORD Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/test/quark/Quark$InternalApiEndpoint;
 	public static fun values ()[Lme/proton/core/test/quark/Quark$InternalApiEndpoint;

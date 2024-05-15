@@ -37,7 +37,9 @@ android {
 
 dependencies {
     api(
+        project(Module.authTest),
         project(Module.quark),
+        project(Module.userRecoveryPresentationCompose),
         junit
     )
 

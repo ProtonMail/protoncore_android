@@ -30,6 +30,7 @@ import me.proton.core.test.quark.Quark.InternalApiEndpoint.PAYMENTS_SEED_SUBSCRI
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.SYSTEM_ENV
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_CREATE_ADDRESS
+import me.proton.core.test.quark.Quark.InternalApiEndpoint.USER_RESET_PASSWORD
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.randomPaidPlan
 import me.proton.core.test.quark.response.CreateUserAddressQuarkResponse
@@ -60,6 +61,7 @@ public class Quark constructor(
         JAIL_UNBAN,
         USER_CREATE,
         USER_CREATE_ADDRESS,
+        USER_RESET_PASSWORD,
         PAYMENTS_SEED_PAYMENT_METHOD,
         PAYMENTS_SEED_SUBSCRIBER,
         DRIVE_POPULATE_USER_WITH_DATA,
@@ -237,6 +239,20 @@ public class Quark constructor(
             AppStore.GooglePlay -> internalApi.constants["ENV_PAYMENT_STATUS_STORE_GOOGLE"]
         }
         systemEnv(requireNotNull(env), "$value")
+    }
+
+    public fun resetPassword(
+        userID: Long,
+        newPassword: String,
+        genKeys: GenKeys = GenKeys.Curve25519,
+    ) {
+        val args = arrayOf(
+            "-k=${genKeys.name}",
+            "userID=$userID",
+            "newPassword=$newPassword"
+        )
+        val response = quarkRequest(USER_RESET_PASSWORD, args)
+        println("Reset password: $response")
     }
 
     public sealed class CreateAddress {
