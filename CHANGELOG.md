@@ -11,6 +11,55 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [24.0.0] - 2024-05-15
+
+### Breaking Changes
+
+**Features**
+
+- Added Device Recovery Handler.
+
+  - If user has no recovery secret, create it and upload to BE.
+  - If there is no recovery file, create it and store locally.
+  
+  MIGRATION:
+  - Add `DeviceRecoveryDatabase.MIGRATION_0`.
+  - Provide `DeviceRecoveryDatabase` via dagger.
+  - Add `RecoveryFileEntity` to your `@Database.entities`.
+- user-recovery:
+  - Overwrite RecoveryFile if its key count different than expected.
+
+    MIGRATION: DeviceRecoveryDatabase.MIGRATION_1
+
+**Bug Fixes**
+
+- user-recovery:
+  - Remove RecoverySecret from DB.
+
+    MIGRATION:
+    - Add `UserKeyDatabase.MIGRATION_1`.
+
+### Chores
+
+- Add DB migrations for device recovery into CoreExample.
+
+  DeviceRecoveryDatabase.MIGRATION_0
+  UserKeyDatabase.MIGRATION_1
+  DeviceRecoveryDatabase.MIGRATION_1
+
+### Features
+
+- user-recovery:
+  - Show a notification if a user key has been recovered.
+
+### Bug Fixes
+
+- account-manager:
+  - SessionForceLogout disable/lock the Account.
+  - AccountManager remove/disable Account must not be cancelled by caller.
+- user-recovery:
+  - Verify recovery secret signature before generating recovery file.
+
 ## [23.2.0] - 2024-05-15
 
 ### Features
