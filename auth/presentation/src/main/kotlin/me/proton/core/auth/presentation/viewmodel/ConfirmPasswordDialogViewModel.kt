@@ -30,7 +30,10 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
+import me.proton.core.auth.domain.entity.SecondFactorMethod
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
@@ -42,17 +45,21 @@ import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
 
 @HiltViewModel
+@Suppress("LongParameterList")
 class ConfirmPasswordDialogViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val getAuthInfoSrp: GetAuthInfoSrp,
+    private val isFido2Enabled: IsFido2Enabled,
     private val obtainLockedScope: ObtainLockedScope,
     private val obtainPasswordScope: ObtainPasswordScope,
     private val missingScopeListener: MissingScopeListener
 ) : ProtonViewModel() {
+    var fido2Info: Fido2Info? = null
 
     private val _state = MutableStateFlow<State>(State.Idle)
     val state = _state.asSharedFlow()
@@ -62,7 +69,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         object ProcessingSecondFactor : State()
         object ProcessingObtainScope : State()
         data class Success(val state: MissingScopeState) : State()
-        data class SecondFactorResult(val needed: Boolean) : State()
+        data class SecondFactorResult(val methods: List<SecondFactorMethod>) : State()
 
         sealed class Error : State() {
             object InvalidAccount : Error()
@@ -79,18 +86,29 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             return@flow
         }
         val authInfo = getAuthInfoSrp(requireNotNull(account.sessionId), requireNotNull(account.username))
-        val isSecondFactorNeeded = when (missingScope) {
-            Scope.PASSWORD -> authInfo.secondFactor is SecondFactor.Enabled
-            Scope.LOCKED -> false
-        }.exhaustive
-        emit(State.SecondFactorResult(isSecondFactorNeeded))
+        val secondFactor = authInfo.secondFactor as? SecondFactor.Enabled
+        val fido2Enabled = isFido2Enabled(userId)
+        val secondFactorMethods = when (missingScope) {
+            Scope.PASSWORD -> secondFactor?.supportedMethods.orEmpty()
+            Scope.LOCKED -> emptySet()
+        }.filter {
+            it != SecondFactorMethod.Authenticator || fido2Enabled
+        }.sortedDescending()
+        fido2Info = secondFactor?.fido2
+
+        emit(State.SecondFactorResult(secondFactorMethods))
     }.catch { error ->
         emit(State.Error.General(error))
     }.onEach {
         _state.tryEmit(it)
     }.launchIn(viewModelScope)
 
-    fun unlock(userId: UserId, missingScope: Scope, password: String, twoFactorCode: String?) = flow {
+    fun unlock(
+        userId: UserId,
+        missingScope: Scope,
+        password: String,
+        twoFactorCode: String?
+    ) = flow {
         emit(State.ProcessingObtainScope)
         val account = accountManager.getAccount(userId).firstOrNull()
         if (account == null) {
@@ -103,8 +121,9 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
                 sessionId = requireNotNull(account.sessionId),
                 username = requireNotNull(account.username),
                 password = password.encrypt(keyStoreCrypto),
-                twoFactorCode = twoFactorCode
+                twoFactorCode = twoFactorCode?.takeIfNotEmpty()
             )
+
             Scope.LOCKED -> obtainLockedScope(
                 userId = account.userId,
                 sessionId = requireNotNull(account.sessionId),

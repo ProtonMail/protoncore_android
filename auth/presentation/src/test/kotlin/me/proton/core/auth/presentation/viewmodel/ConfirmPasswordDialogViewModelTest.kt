@@ -18,8 +18,10 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
@@ -30,6 +32,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
@@ -62,6 +65,9 @@ class ConfirmPasswordDialogViewModelTest :
     private val obtainLockedScope = mockk<ObtainLockedScope>(relaxed = true)
     private val obtainPasswordScope = mockk<ObtainPasswordScope>(relaxed = true)
     private val missingScopeListener = mockk<MissingScopeListener>(relaxed = true)
+
+    @MockK
+    private lateinit var isFido2Enabled: IsFido2Enabled
     // endregion
 
     // region test data
@@ -102,6 +108,7 @@ class ConfirmPasswordDialogViewModelTest :
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
         mockkStatic("me.proton.core.accountmanager.domain.AccountManagerExtensionsKt")
         every { keyStoreCrypto.encrypt(testPassword) } returns testPasswordEncrypted
         every { keyStoreCrypto.decrypt(testPasswordEncrypted) } returns testPassword
@@ -111,6 +118,7 @@ class ConfirmPasswordDialogViewModelTest :
             accountManager,
             keyStoreCrypto,
             obtainAuthInfo,
+            isFido2Enabled,
             obtainLockedScope,
             obtainPasswordScope,
             missingScopeListener

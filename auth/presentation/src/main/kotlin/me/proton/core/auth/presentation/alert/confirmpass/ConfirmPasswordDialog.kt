@@ -22,9 +22,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
-import android.view.LayoutInflater
-import android.view.View.GONE
-import android.view.View.VISIBLE
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
@@ -32,9 +30,9 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.DialogConfirmPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
@@ -46,8 +44,7 @@ import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.errorToast
-import me.proton.core.presentation.utils.onClick
-import me.proton.core.util.kotlin.exhaustive
+import me.proton.core.presentation.utils.openBrowserLink
 
 /**
  * This dialog handles only [Scope.PASSWORD] or [Scope.LOCKED]. Any other scope will be ignored.
@@ -82,69 +79,82 @@ class ConfirmPasswordDialog : DialogFragment() {
         UserId(input.userId)
     }
 
+    private val viewController by lazy {
+        ConfirmPasswordDialogViewController(
+            DialogConfirmPasswordBinding.inflate(layoutInflater),
+            lifecycleOwner = this,
+            onEnterButtonClick = { selectedSecondFactorMethod ->
+                when (selectedSecondFactorMethod) {
+                    SecondFactorMethod.Totp -> onTotpSubmitted()
+                    SecondFactorMethod.Authenticator -> onSecurityKeySubmitted()
+                    null -> Unit
+                }
+            },
+            onCancelButtonClick = {
+                setResultAndDismiss(null)
+            },
+            onSecurityKeyInfoClick = {
+                context?.let {
+                    it.openBrowserLink(it.getString(R.string.confirm_password_2fa_security_key))
+                }
+            }
+        )
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
         screenProtector.protect(requireActivity())
 
-        val binding = DialogConfirmPasswordBinding.inflate(LayoutInflater.from(requireContext()))
-        val builder = MaterialAlertDialogBuilder(requireContext())
-            .setTitle(R.string.presentation_signin_to_continue)
-            .setOnKeyListener { _, keyCode, keyEvent ->
-                if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.action == KeyEvent.ACTION_UP && !keyEvent.isCanceled) {
-                    setResultAndDismiss(null)
-                    true
-                } else false
-            }
-            .setView(binding.root)
-        val alertDialog = builder.create()
+        val alertDialog = buildAlertDialog()
 
         viewModel.state
             .flowWithLifecycle(lifecycle)
-            .onEach {
-                when (it) {
-                    is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(it.state)
-                    is ConfirmPasswordDialogViewModel.State.ProcessingObtainScope ->
-                        binding.enterButton.setLoading()
-                    is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> {
-                        // noop
-                    }
-                    is ConfirmPasswordDialogViewModel.State.Error.Unknown,
-                    is ConfirmPasswordDialogViewModel.State.Error.General -> {
-                        setResultAndDismiss(MissingScopeState.ScopeObtainFailed)
-                        binding.enterButton.setIdle()
-                    }
-                    is ConfirmPasswordDialogViewModel.State.Idle -> Unit
-                    is ConfirmPasswordDialogViewModel.State.SecondFactorResult -> {
-                        binding.twoFA.visibility = if (it.needed) VISIBLE else GONE
-                    }
-                    is ConfirmPasswordDialogViewModel.State.Error.InvalidAccount -> {
-                        context.errorToast(getString(R.string.auth_account_not_found_error))
-                    }
-                }.exhaustive
-            }.launchIn(lifecycleScope)
-
-        binding.enterButton.onClick {
-            val password = binding.password.text.toString()
-            val twoFactorCode = binding.twoFA.text.toString()
-            when (missingScope) {
-                Scope.PASSWORD -> viewModel.unlock(
-                    userId,
-                    missingScope,
-                    password,
-                    if (twoFactorCode.isEmpty()) null else twoFactorCode
-                )
-                Scope.LOCKED -> viewModel.unlock(userId, missingScope, password, null)
-            }.exhaustive
-        }
-
-        binding.cancelButton.onClick {
-            setResultAndDismiss(null)
-        }
-
+            .onEach(this::handleState)
+            .launchIn(lifecycleScope)
         viewModel.checkForSecondFactorInput(userId, missingScope)
 
         return alertDialog.apply {
             setCanceledOnTouchOutside(false)
+        }
+    }
+
+    private fun buildAlertDialog(): AlertDialog = MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.presentation_signin_to_continue)
+        .setOnKeyListener { _, keyCode, keyEvent ->
+            if (keyCode == KeyEvent.KEYCODE_BACK && keyEvent.action == KeyEvent.ACTION_UP && !keyEvent.isCanceled) {
+                setResultAndDismiss(null)
+                true
+            } else false
+        }
+        .setView(viewController.root)
+        .create()
+
+    private fun onTotpSubmitted() {
+        val password = viewController.password
+        val twoFactorCode = viewController.twoFactorCode
+        viewModel.unlock(userId, missingScope, password.orEmpty(), twoFactorCode)
+    }
+
+    private fun onSecurityKeySubmitted() {
+        // TODO Launch Fido2ApiClient (with data from viewModel.fido2Info),
+        //  get the result and pass it back to the view model for final processing.
+    }
+
+    private fun handleState(state: ConfirmPasswordDialogViewModel.State) = when (state) {
+        is ConfirmPasswordDialogViewModel.State.Success -> setResultAndDismiss(state.state)
+        is ConfirmPasswordDialogViewModel.State.ProcessingObtainScope -> viewController.setLoading()
+        is ConfirmPasswordDialogViewModel.State.ProcessingSecondFactor -> viewController.setLoading()
+        is ConfirmPasswordDialogViewModel.State.Idle -> viewController.setIdle()
+        is ConfirmPasswordDialogViewModel.State.SecondFactorResult -> viewController.setSecondFactorResult(state)
+        is ConfirmPasswordDialogViewModel.State.Error.InvalidAccount -> {
+            viewController.setIdle()
+            context.errorToast(getString(R.string.auth_account_not_found_error))
+        }
+
+        is ConfirmPasswordDialogViewModel.State.Error.Unknown,
+        is ConfirmPasswordDialogViewModel.State.Error.General -> {
+            setResultAndDismiss(MissingScopeState.ScopeObtainFailed)
+            viewController.setIdle()
         }
     }
 

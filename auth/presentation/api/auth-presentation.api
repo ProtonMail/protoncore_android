@@ -607,8 +607,13 @@ public final class me/proton/core/auth/presentation/databinding/DialogCancelCrea
 public final class me/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding : androidx/viewbinding/ViewBinding {
 	public final field cancelButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field enterButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field oneTimeCodeContainer Landroid/widget/FrameLayout;
 	public final field password Lme/proton/core/presentation/ui/view/ProtonInput;
+	public final field securityKeyContainer Landroid/widget/LinearLayout;
+	public final field securityKeyInfo Landroid/widget/TextView;
 	public final field twoFA Lme/proton/core/presentation/ui/view/ProtonInput;
+	public final field twoFaContainer Landroidx/constraintlayout/widget/ConstraintLayout;
+	public final field twoFaTabs Lcom/google/android/material/tabs/TabLayout;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/DialogConfirmPasswordBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -2353,10 +2358,12 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
 	public final fun checkForSecondFactorInput (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;)Lkotlinx/coroutines/Job;
+	public final fun getFido2Info ()Lme/proton/core/auth/domain/entity/Fido2Info;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun onConfirmPasswordResult (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lkotlinx/coroutines/Job;
+	public final fun setFido2Info (Lme/proton/core/auth/domain/entity/Fido2Info;)V
 	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
 }
 
@@ -2398,12 +2405,12 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult : me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
-	public fun <init> (Z)V
-	public final fun component1 ()Z
-	public final fun copy (Z)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State$SecondFactorResult;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getNeeded ()Z
+	public final fun getMethods ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
@@ -2420,11 +2427,11 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules {
