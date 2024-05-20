@@ -23,9 +23,18 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import kotlinx.coroutines.flow.flowOf
+import me.proton.core.account.domain.entity.Account
+import me.proton.core.account.domain.entity.AccountDetails
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.account.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.account.domain.entity.SessionDetails
+import me.proton.core.account.domain.entity.SessionState
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.entity.SessionResult
@@ -40,13 +49,17 @@ import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
+import kotlin.test.assertTrue
 
 class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
     // region mocks
-    private val accountManager = mockk<AccountWorkflowHandler>(relaxed = true)
+    private val accountWorkflowHandler = mockk<AccountWorkflowHandler>(relaxed = true)
+    private val accountManager = mockk<AccountManager>(relaxed = true)
     private val sessionProvider = mockk<SessionProvider>(relaxed = true)
     private val performSecondFactor = mockk<PerformSecondFactor>()
     private val postLoginAccountSetup = mockk<PostLoginAccountSetup>(relaxed = true)
+    private val isFido2Enabled = mockk<IsFido2Enabled>(relaxed = true)
 
     private val testSessionResult = mockk<SessionResult>(relaxed = true)
     private val testScopeInfo = mockk<ScopeInfo>(relaxed = true)
@@ -67,14 +80,17 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     @Before
     fun beforeEveryTest() {
         viewModel = SecondFactorViewModel(
-            accountManager,
+            accountWorkflowHandler,
             performSecondFactor,
             postLoginAccountSetup,
-            sessionProvider
+            sessionProvider,
+            accountManager,
+            isFido2Enabled,
         )
         coEvery { sessionProvider.getSessionId(any()) } returns testSessionId
         every { testSessionResult.sessionId } returns testSessionId.id
         every { testSessionResult.isTwoPassModeNeeded } returns false
+        every { isFido2Enabled(any()) } returns false
     }
 
     @Test
@@ -121,8 +137,8 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
             // THEN
             val accountManagerArguments = slot<SessionId>()
 
-            coVerify(exactly = 1) { accountManager.handleSecondFactorSuccess(capture(accountManagerArguments), any()) }
-            coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(any()) }
+            coVerify(exactly = 1) { accountWorkflowHandler.handleSecondFactorSuccess(capture(accountManagerArguments), any()) }
+            coVerify(exactly = 0) { accountWorkflowHandler.handleSecondFactorFailed(any()) }
 
             assertIs<SecondFactorViewModel.State.Processing>(awaitItem())
             assertIs<SecondFactorViewModel.State.AccountSetupResult>(awaitItem())
@@ -162,8 +178,8 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
         viewModel.stopSecondFactorFlow(testUserId)
         // THEN
         val arguments = slot<SessionId>()
-        coVerify(exactly = 1) { accountManager.handleSecondFactorFailed(capture(arguments)) }
-        coVerify(exactly = 0) { accountManager.handleSecondFactorSuccess(any(), any()) }
+        coVerify(exactly = 1) { accountWorkflowHandler.handleSecondFactorFailed(capture(arguments)) }
+        coVerify(exactly = 0) { accountWorkflowHandler.handleSecondFactorSuccess(any(), any()) }
     }
 
     @Test
@@ -182,8 +198,8 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
         viewModel.stopSecondFactorFlow(testUserId)
         // THEN
         val arguments = slot<SessionId>()
-        coVerify(exactly = 0) { accountManager.handleSecondFactorFailed(capture(arguments)) }
-        coVerify(exactly = 0) { accountManager.handleSecondFactorSuccess(any(), any()) }
+        coVerify(exactly = 0) { accountWorkflowHandler.handleSecondFactorFailed(capture(arguments)) }
+        coVerify(exactly = 0) { accountWorkflowHandler.handleSecondFactorSuccess(any(), any()) }
     }
 
     @Test
@@ -192,7 +208,91 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
         viewModel.stopSecondFactorFlow(testUserId)
         // THEN
         val arguments = slot<SessionId>()
-        coVerify(exactly = 1) { accountManager.handleSecondFactorFailed(capture(arguments)) }
-        coVerify(exactly = 0) { accountManager.handleSecondFactorSuccess(any(), any()) }
+        coVerify(exactly = 1) { accountWorkflowHandler.handleSecondFactorFailed(capture(arguments)) }
+        coVerify(exactly = 0) { accountWorkflowHandler.handleSecondFactorSuccess(any(), any()) }
+    }
+
+    @Test
+    fun `setup 2fa happy flow states are handled correctly`() = coroutinesTest {
+        // GIVEN
+        flowTest(viewModel.state) {
+            // WHEN
+            viewModel.setup(userId = testUserId)
+
+            // THEN
+            val item = awaitItem()
+            assertIs<SecondFactorViewModel.State.Idle>(item)
+
+            cancelAndIgnoreRemainingEvents()
+
+            assertFalse((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+        }
+    }
+
+    @Test
+    fun `setup 2fa happy flow flag enabled states are handled correctly`() = coroutinesTest {
+        // GIVEN
+        every { isFido2Enabled(any()) } returns true
+        coEvery { accountManager.getAccount(userId = any()) } returns flowOf(
+            mockk(relaxed = true) {
+                every { this@mockk.details } returns mockk(relaxed = true) {
+                    every { this@mockk.session } returns mockk(relaxed = true) {
+                        every { this@mockk.fido2AuthenticationOptions } returns mockk(relaxed = true)
+                    }
+                }
+            }
+        )
+        flowTest(viewModel.state) {
+            // WHEN
+            viewModel.setup(userId = testUserId)
+
+            // THEN
+            val item = awaitItem()
+            assertIs<SecondFactorViewModel.State.Idle>(item)
+
+            cancelAndIgnoreRemainingEvents()
+
+            assertTrue((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+        }
+    }
+
+    @Test
+    fun `setup 2fa happy flow flag enabled session null states are handled correctly`() = coroutinesTest {
+        // GIVEN
+        every { isFido2Enabled(any()) } returns true
+        coEvery { sessionProvider.getSessionId(any()) } returns null
+
+        flowTest(viewModel.state) {
+            // WHEN
+            viewModel.setup(userId = testUserId)
+
+            // THEN
+            val item = awaitItem()
+            assertIs<SecondFactorViewModel.State.Idle>(item)
+
+            cancelAndIgnoreRemainingEvents()
+
+            assertFalse((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+        }
+    }
+
+    @Test
+    fun `setup 2fa happy flow flag enabled session not account null states are handled correctly`() = coroutinesTest {
+        // GIVEN
+        every { isFido2Enabled(any()) } returns true
+        coEvery { accountManager.getAccount(userId = any()) } returns flowOf(null)
+
+        flowTest(viewModel.state) {
+            // WHEN
+            viewModel.setup(userId = testUserId)
+
+            // THEN
+            val item = awaitItem()
+            assertIs<SecondFactorViewModel.State.Idle>(item)
+
+            cancelAndIgnoreRemainingEvents()
+
+            assertFalse((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+        }
     }
 }

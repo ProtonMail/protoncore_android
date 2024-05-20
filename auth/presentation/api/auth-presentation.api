@@ -435,9 +435,14 @@ public final class me/proton/core/auth/presentation/alert/confirmpass/StartConfi
 
 public final class me/proton/core/auth/presentation/databinding/Activity2faBinding : androidx/viewbinding/ViewBinding {
 	public final field authenticateButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field oneTimeCodeGroup Landroid/widget/LinearLayout;
 	public final field recoveryCodeButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field scrollContent Landroidx/core/widget/NestedScrollView;
 	public final field secondFactorInput Lme/proton/core/presentation/ui/view/ProtonInput;
+	public final field securityKeyGroup Landroid/widget/LinearLayout;
+	public final field securityKeyText Landroid/widget/TextView;
+	public final field subtitleText Landroid/widget/TextView;
+	public final field tabLayout Lcom/google/android/material/tabs/TabLayout;
 	public final field titleText Landroid/widget/TextView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/Activity2faBinding;
@@ -1714,13 +1719,16 @@ public final class me/proton/core/auth/presentation/ui/LoginSsoActivity_MembersI
 	public static fun injectSessionProvider (Lme/proton/core/auth/presentation/ui/LoginSsoActivity;Lme/proton/core/network/domain/session/SessionProvider;)V
 }
 
-public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me/proton/core/auth/presentation/ui/AuthActivity {
+public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me/proton/core/auth/presentation/ui/AuthActivity, com/google/android/material/tabs/TabLayout$OnTabSelectedListener {
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/SecondFactorActivity$Companion;
 	public fun <init> ()V
 	public fun onBackPressed ()V
 	public fun onError (ZLjava/lang/String;Z)V
+	public fun onTabReselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public fun onTabSelected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public fun onTabUnselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
 	public fun showLoading (Z)V
 }
 
@@ -2606,8 +2614,9 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public static final field Companion Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$Companion;
 	public static final field HTTP_ERROR_BAD_REQUEST I
 	public static final field HTTP_ERROR_UNAUTHORIZED I
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)V
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun setup (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun stopSecondFactorFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 }
@@ -2655,7 +2664,14 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State {
-	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getShowSecurityKey ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Processing : me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State {
@@ -2663,11 +2679,11 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_HiltModules {

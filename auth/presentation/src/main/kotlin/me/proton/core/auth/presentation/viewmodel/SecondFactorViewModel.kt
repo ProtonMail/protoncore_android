@@ -24,12 +24,15 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
@@ -50,14 +53,16 @@ class SecondFactorViewModel @Inject constructor(
     private val performSecondFactor: PerformSecondFactor,
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val sessionProvider: SessionProvider,
-) : ProtonViewModel() {
+    private val accountManager: AccountManager,
+    private val isFido2Enabled: IsFido2Enabled
+    ) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
     val state = _state.asSharedFlow()
 
     sealed class State {
-        object Idle : State()
+        data class Idle(val showSecurityKey: Boolean) : State()
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
 
@@ -66,6 +71,24 @@ class SecondFactorViewModel @Inject constructor(
             data class Message(val error: Throwable) : Error()
         }
     }
+
+    fun setup(userId: UserId) = flow {
+        when {
+            !isFido2Enabled(userId = null) -> emit(State.Idle(false))
+            else -> {
+                val account = accountManager.getAccount(userId).firstOrNull()
+                emit(
+                    State.Idle(
+                        account?.details?.session?.fido2AuthenticationOptions != null
+                    )
+                )
+            }
+        }
+    }.catch { _ ->
+        emit(State.Idle(false))
+    }.onEach { state ->
+        _state.tryEmit(state)
+    }.launchIn(viewModelScope)
 
     fun stopSecondFactorFlow(userId: UserId): Job = viewModelScope.launch {
         val sessionId = sessionProvider.getSessionId(userId)

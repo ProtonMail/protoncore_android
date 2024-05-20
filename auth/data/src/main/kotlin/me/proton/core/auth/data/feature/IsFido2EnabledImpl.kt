@@ -26,9 +26,10 @@ import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
+import javax.inject.Inject
 
 @ExcludeFromCoverage
-class IsFido2EnabledImpl(
+class IsFido2EnabledImpl @Inject constructor(
     @ApplicationContext context: Context,
     featureFlagManager: FeatureFlagManager,
 ) : IsFido2Enabled, IsFeatureFlagEnabledImpl(

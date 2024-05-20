@@ -56,15 +56,83 @@
                 android:layout_height="wrap_content"
                 android:text="@string/auth_2fa_title" />
 
-            <me.proton.core.presentation.ui.view.ProtonInput
-                android:id="@+id/secondFactorInput"
+            <TextView
+                android:id="@+id/subtitleText"
+                style="@style/ProtonTextView.Subtitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/auth_content_top_margin"
-                android:inputType="number"
-                android:importantForAutofill="no"
-                app:help="@string/auth_2fa_assistive_text"
-                app:label="@string/auth_2fa_label" />
+                android:visibility="gone"
+                android:text="@string/auth_2fa_subtitle" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabLayout"
+                style="@style/ProtonTabStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_content_top_margin">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:text="@string/auth_2fa_tab_security_key" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_2fa_tab_one_time_code" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+            <LinearLayout
+                android:id="@+id/oneTimeCodeGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_gap"
+                android:layout_marginBottom="@dimen/default_gap"
+                android:orientation="vertical"
+                tools:visibility="visible">
+
+                <me.proton.core.presentation.ui.view.ProtonInput
+                    android:id="@+id/secondFactorInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/auth_content_top_margin"
+                    android:importantForAutofill="no"
+                    android:inputType="number"
+                    app:help="@string/auth_2fa_assistive_text"
+                    app:label="@string/auth_2fa_label" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/securityKeyGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_content_separator_top_margin"
+                android:layout_marginBottom="@dimen/default_gap"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/gap_large"
+                    app:srcCompat="@drawable/ic_fido" />
+
+                <TextView
+                    android:id="@+id/securityKeyText"
+                    style="@style/Proton.Text.Default"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/gap_large"
+                    android:text="@string/auth_2fa_insert_security_key" />
+
+            </LinearLayout>
 
             <me.proton.core.presentation.ui.view.ProtonProgressButton
                 android:id="@+id/authenticateButton"

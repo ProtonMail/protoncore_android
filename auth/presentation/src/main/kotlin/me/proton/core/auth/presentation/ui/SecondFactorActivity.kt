@@ -22,20 +22,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
+import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.errorToast
@@ -44,6 +46,8 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validate
 import me.proton.core.util.kotlin.exhaustive
 
@@ -53,7 +57,7 @@ import me.proton.core.util.kotlin.exhaustive
  * Optional, only shown for accounts with 2FA login enabled.
  */
 @AndroidEntryPoint
-class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding::inflate) {
+class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding::inflate), TabLayout.OnTabSelectedListener {
 
     private val input: SecondFactorInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -71,6 +75,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             toolbar.setNavigationOnClickListener {
                 onBackPressed()
             }
+
+            tabLayout.addOnTabSelectedListener(this@SecondFactorActivity)
 
             recoveryCodeButton.onClick {
                 when (mode) {
@@ -92,7 +98,10 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is SecondFactorViewModel.State.Idle -> showLoading(false)
+                    is SecondFactorViewModel.State.Idle -> {
+                        showLoading(false)
+                        setupTabs(it.showSecurityKey)
+                    }
                     is SecondFactorViewModel.State.Processing -> showLoading(true)
                     is SecondFactorViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
                     is SecondFactorViewModel.State.Error.Message ->
@@ -100,6 +109,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                     is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
                 }.exhaustive
             }.launchIn(lifecycleScope)
+
+        viewModel.setup(UserId(input.userId))
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
@@ -114,6 +125,16 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         }.exhaustive
     }
 
+    private fun setupTabs(showSecurityKeyTab: Boolean) = with(binding) {
+        tabLayout.isVisible = showSecurityKeyTab
+        subtitleText.isVisible = showSecurityKeyTab
+        if (showSecurityKeyTab) {
+            selectSecurityKeyTab()
+        } else {
+            selectOneTimeCodeTab()
+        }
+    }
+
     override fun showLoading(loading: Boolean) = with(binding) {
         if (loading) {
             authenticateButton.setLoading()
@@ -124,6 +145,19 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     }
 
     private fun onAuthenticateClicked() {
+        val selectedTab = binding.tabLayout.selectedTabPosition
+        when (selectedTab) {
+            TwoFAMechanisms.SECURITY_KEY.ordinal -> onAuthenticateSecurityKeyClicked()
+            TwoFAMechanisms.ONE_TIME_CODE.ordinal -> onAuthenticateOneTimeCodeClicked()
+        }
+    }
+
+    private fun onAuthenticateSecurityKeyClicked() {
+        // todo: call fido2 api for android
+        showToast("Fido2 Android")
+    }
+
+    private fun onAuthenticateOneTimeCodeClicked() {
         hideKeyboard()
         with(binding) {
             secondFactorInput.validate()
@@ -205,6 +239,38 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     private enum class Mode {
         TWO_FACTOR,
         RECOVERY_CODE
+    }
+
+    private enum class TwoFAMechanisms {
+        SECURITY_KEY,
+        ONE_TIME_CODE
+    }
+
+    override fun onTabSelected(tab: TabLayout.Tab?) {
+        when (tab?.position) {
+            TwoFAMechanisms.SECURITY_KEY.ordinal -> selectSecurityKeyTab()
+            TwoFAMechanisms.ONE_TIME_CODE.ordinal -> selectOneTimeCodeTab()
+        }
+    }
+
+    override fun onTabUnselected(tab: TabLayout.Tab?) { }
+
+    override fun onTabReselected(p0: TabLayout.Tab?) { }
+
+    private fun selectSecurityKeyTab() = with (binding) {
+        oneTimeCodeGroup.isVisible = false
+        securityKeyGroup.isVisible = true
+        recoveryCodeButton.isVisible = false
+
+        securityKeyText.setTextWithAnnotatedLink(R.string.auth_2fa_insert_security_key, "more") {
+            openBrowserLink(getString(R.string.confirm_password_2fa_security_key))
+        }
+    }
+
+    private fun selectOneTimeCodeTab() = with (binding) {
+        oneTimeCodeGroup.isVisible = true
+        securityKeyGroup.isVisible = false
+        recoveryCodeButton.isVisible = true
     }
 
     companion object {

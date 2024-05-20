@@ -52,7 +52,7 @@ class DynamicUpgradePlanViewModelTest : CoroutinesTest by CoroutinesTest() {
     private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
     private val accountManager = mockk<AccountManager>(relaxed = true) {
         coEvery { this@mockk.getPrimaryUserId() } returns mutablePrimaryUserIdFlow
-        coEvery { this@mockk.getAccount(any()) } answers {
+        coEvery { this@mockk.getAccount(userId = any()) } answers {
             flowOf(
                 when (firstArg<UserId>()) {
                     userId1 -> mockk<Account> { every { userId } returns userId1 }

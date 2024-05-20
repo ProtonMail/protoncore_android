@@ -40,7 +40,7 @@ class ObserveUserIdTest : CoroutinesTest by CoroutinesTest() {
 
     private val accountManager = mockk<AccountManager>(relaxed = true) {
         coEvery { getPrimaryUserId() } returns flowOf(primaryUserId)
-        coEvery { getAccount(any()) } answers { flowOf(mockk { every { userId } returns firstArg() }) }
+        coEvery { getAccount(userId = any()) } answers { flowOf(mockk { every { userId } returns firstArg() }) }
         coEvery { getAccount(unknown) } answers { flowOf(null) }
     }
 
