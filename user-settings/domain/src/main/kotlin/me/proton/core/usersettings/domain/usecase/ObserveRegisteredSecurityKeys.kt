@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2023 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,16 +18,25 @@
 
 package me.proton.core.usersettings.domain.usecase
 
-import me.proton.core.domain.arch.mapSuccessValueOrNull
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
+import me.proton.core.account.domain.entity.Fido2RegisteredKey
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.domain.entity.UserId
-import me.proton.core.usersettings.domain.repository.UserSettingsRepository
 import javax.inject.Inject
 
-class ObserveUserSettings @Inject constructor(
-    private val repository: UserSettingsRepository,
+/**
+ * Returns a list of registered FIDO2 security keys for the given user.
+ */
+class ObserveRegisteredSecurityKeys @Inject constructor(
+    private val isFido2Enabled: IsFido2Enabled,
+    private val observeUserSettings: ObserveUserSettings
 ) {
     operator fun invoke(
         userId: UserId,
         refresh: Boolean = false
-    ) = repository.getUserSettingsFlow(userId, refresh).mapSuccessValueOrNull()
+    ): Flow<List<Fido2RegisteredKey>> = observeUserSettings(userId, refresh)
+        .filter { isFido2Enabled(userId) }
+        .map { it?.twoFA?.registeredKeys ?: emptyList() }
 }
