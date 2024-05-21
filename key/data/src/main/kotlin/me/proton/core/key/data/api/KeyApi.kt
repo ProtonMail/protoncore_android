@@ -24,6 +24,7 @@ import me.proton.core.key.data.api.request.ReactivateKeysRequest
 import me.proton.core.key.data.api.request.SetupInitialKeysRequest
 import me.proton.core.key.data.api.request.UpdateKeysForPasswordChangeRequest
 import me.proton.core.key.data.api.response.CreateAddressKeyResponse
+import me.proton.core.key.data.api.response.ActivePublicKeysResponse
 import me.proton.core.key.data.api.response.KeySaltsResponse
 import me.proton.core.key.data.api.response.PublicAddressKeysResponse
 import me.proton.core.key.data.api.response.SetupInitialKeysResponse
@@ -46,10 +47,17 @@ interface KeyApi : BaseRetrofitApi {
     suspend fun getSalts(): KeySaltsResponse
 
     @GET("core/v4/keys")
+    @Deprecated("Deprecated on BE; use getAllActivePublicKeys instead.")
     suspend fun getPublicAddressKeys(
         @Query("Email") email: String,
         @Tag cacheOverride: CacheOverride? = null
     ): PublicAddressKeysResponse
+
+    @GET("/core/v4/keys/all")
+    suspend fun getAllActivePublicKeys(
+        @Query("Email") email: String,
+        @Query("InternalOnly") internalOnly: Int? = null
+    ): ActivePublicKeysResponse
 
     @POST("core/v4/keys/address")
     suspend fun createAddressKey(@Body request: CreateAddressKeyRequest): CreateAddressKeyResponse

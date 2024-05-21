@@ -30,7 +30,7 @@ protonBuild {
 
 protonCoverage {
     branchCoveragePercentage.set(58)
-    lineCoveragePercentage.set(91)
+    lineCoveragePercentage.set(92)
 }
 
 android {
