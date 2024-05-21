@@ -376,6 +376,8 @@ uitest:hilt-tests:
 
 androidTest:user-data:
   variables:
+    DEVICE_MODEL: "SmallPhone.arm,version=28"
+    DEVICE_MODEL_RESULTS_DIR: "SmallPhone.arm-28-en-portrait"
     TEST_APK: "user/data/build/outputs/apk/androidTest/debug/user-data-debug-androidTest.apk"
     TEST_TARGET: "package me.proton.core.user.data"
   extends: .firebase-tests-common
