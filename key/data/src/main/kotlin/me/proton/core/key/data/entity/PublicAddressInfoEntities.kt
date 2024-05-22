@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,40 @@
 
 package me.proton.core.key.data.entity
 
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
+import androidx.room.Relation
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.key.domain.entity.key.PublicAddressKeyFlags
+
+data class PublicAddressInfoWithKeys(
+    @Embedded
+    val entity: PublicAddressInfoEntity,
+    @Relation(
+        parentColumn = "email",
+        entityColumn = "email"
+    )
+    val keys: List<PublicAddressKeyDataEntity>
+)
+
+@Entity(
+    primaryKeys = ["email"],
+    indices = [
+        Index("email")
+    ]
+)
+data class PublicAddressInfoEntity(
+    val email: String,
+    val warnings: List<String>,
+    val protonMx: Boolean,
+    val isProton: Int,
+    @Embedded(prefix = "addressSignedKeyList_")
+    val addressSignedKeyList: SignedKeyListEntity?,
+    @Embedded(prefix = "catchAllSignedKeyList_")
+    val catchAllSignedKeyList: SignedKeyListEntity?,
+)
 
 @Entity(
     primaryKeys = ["email", "publicKey"],
@@ -31,17 +60,24 @@ import me.proton.core.key.domain.entity.key.PublicAddressKeyFlags
     ],
     foreignKeys = [
         ForeignKey(
-            entity = PublicAddressEntity::class,
+            entity = PublicAddressInfoEntity::class,
             parentColumns = ["email"],
             childColumns = ["email"],
             onDelete = ForeignKey.CASCADE
         )
     ]
 )
-@Deprecated("Use PublicAddressInfoEntity and PublicAddressKeyDataEntity.")
-data class PublicAddressKeyEntity(
+data class PublicAddressKeyDataEntity(
     val email: String,
+    val emailAddressType: Int,
     val flags: PublicAddressKeyFlags,
     val publicKey: Armored,
-    val isPrimary: Boolean
+    val isPrimary: Boolean,
+    val source: Int?,
 )
+
+object EmailAddressType {
+    const val REGULAR = 0
+    const val CATCH_ALL = 1
+    const val UNVERIFIED = 2
+}

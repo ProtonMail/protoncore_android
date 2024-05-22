@@ -20,6 +20,7 @@ package me.proton.core.key.domain.entity.key
 
 import me.proton.core.crypto.common.pgp.exception.CryptoException
 
+@Deprecated("Deprecated on BE.")
 data class PublicAddress(
     val email: String,
     val recipientType: Int,

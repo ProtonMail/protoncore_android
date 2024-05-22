@@ -20,6 +20,9 @@ package me.proton.core.key.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.key.data.extension.toPublicSignedKeyList
+import me.proton.core.key.domain.entity.key.PublicAddressInfo
+import me.proton.core.key.domain.entity.key.PublicAddressKeyData
 
 @Serializable
 data class ActivePublicKeysResponse(
@@ -43,4 +46,19 @@ data class AddressDataResponse(
     val keys: List<PublicAddressKeyResponse>,
     @SerialName("SignedKeyList")
     val signedKeyList: SignedKeyListResponse? = null
+)
+
+fun ActivePublicKeysResponse.toPublicAddressInfo(email: String): PublicAddressInfo = PublicAddressInfo(
+    email = email,
+    address = address.toAddressData(email),
+    catchAll = catchAll?.toAddressData(email),
+    unverified = unverified?.toAddressData(email),
+    warnings = warnings,
+    protonMx = protonMx,
+    isProton = isProton,
+)
+
+fun AddressDataResponse.toAddressData(email: String): PublicAddressKeyData = PublicAddressKeyData(
+    keys = keys.mapIndexed { i, response -> response.toPublicAddressKey(email = email, isPrimary = i == 0) },
+    signedKeyList = signedKeyList?.toPublicSignedKeyList()
 )

@@ -21,6 +21,7 @@ package me.proton.core.key.domain.repository
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.entity.key.PublicAddress
+import me.proton.core.key.domain.entity.key.PublicAddressInfo
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 
@@ -35,11 +36,22 @@ interface PublicAddressRepository {
      *
      * @see [getPublicAddressOrNull]
      */
+    @Deprecated(
+        "Deprecated on BE.",
+        ReplaceWith("getPublicKeysInfo(sessionUserId, email, internalOnly = TODO(), source)")
+    )
     suspend fun getPublicAddress(
         sessionUserId: SessionUserId,
         email: String,
         source: Source = Source.RemoteNoCache,
     ): PublicAddress
+
+    suspend fun getPublicAddressInfo(
+        sessionUserId: SessionUserId,
+        email: String,
+        internalOnly: Boolean = true,
+        source: Source = Source.RemoteNoCache
+    ): PublicAddressInfo
 
     /**
      * Get signed key lists published for [email] after [epochId], using [userId].
@@ -85,12 +97,25 @@ interface PublicAddressRepository {
  *
  * @see [PublicAddressRepository.getPublicAddress]
  */
+@Deprecated(
+    "Deprecated on BE.",
+    ReplaceWith("getPublicKeysInfoOrNull(sessionUserId, email, internalOnly = TODO(), source)")
+)
 suspend fun PublicAddressRepository.getPublicAddressOrNull(
     sessionUserId: SessionUserId,
     email: String,
     source: Source = Source.RemoteNoCache,
 ): PublicAddress? = runCatching {
     getPublicAddress(sessionUserId, email, source)
+}.getOrNull()
+
+suspend fun PublicAddressRepository.getPublicKeysInfoOrNull(
+    sessionUserId: SessionUserId,
+    email: String,
+    internalOnly: Boolean = true,
+    source: Source = Source.RemoteNoCache
+): PublicAddressInfo? = runCatching {
+    getPublicAddressInfo(sessionUserId, email, internalOnly, source)
 }.getOrNull()
 
 enum class Source { LocalIfAvailable, RemoteOrCached, RemoteNoCache }

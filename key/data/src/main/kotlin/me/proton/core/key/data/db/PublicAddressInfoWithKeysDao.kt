@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.data.entity
+package me.proton.core.key.data.db
 
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Transaction
+import kotlinx.coroutines.flow.Flow
+import me.proton.core.key.data.entity.PublicAddressInfoWithKeys
 
-@Deprecated("Use PublicAddressInfoWithKeys.")
-data class PublicAddressWithKeys(
-    @Embedded
-    val entity: PublicAddressEntity,
-    @Relation(
-        parentColumn = "email",
-        entityColumn = "email"
-    )
-    val keys: List<PublicAddressKeyEntity>
-)
+@Dao
+abstract class PublicAddressInfoWithKeysDao {
+    @Transaction
+    @Query("SELECT * FROM PublicAddressInfoEntity WHERE email = :email")
+    abstract fun findWithKeysByEmail(email: String): Flow<PublicAddressInfoWithKeys?>
+}

@@ -47,7 +47,7 @@ interface KeyApi : BaseRetrofitApi {
     suspend fun getSalts(): KeySaltsResponse
 
     @GET("core/v4/keys")
-    @Deprecated("Deprecated on BE; use getAllActivePublicKeys instead.")
+    @Deprecated("Deprecated on BE", ReplaceWith("getAllActivePublicKeys(email, internalOnly = TODO(), cacheOverride)"))
     suspend fun getPublicAddressKeys(
         @Query("Email") email: String,
         @Tag cacheOverride: CacheOverride? = null
@@ -56,7 +56,8 @@ interface KeyApi : BaseRetrofitApi {
     @GET("/core/v4/keys/all")
     suspend fun getAllActivePublicKeys(
         @Query("Email") email: String,
-        @Query("InternalOnly") internalOnly: Int? = null
+        @Query("InternalOnly") internalOnly: Int? = null,
+        @Tag cacheOverride: CacheOverride? = null
     ): ActivePublicKeysResponse
 
     @POST("core/v4/keys/address")

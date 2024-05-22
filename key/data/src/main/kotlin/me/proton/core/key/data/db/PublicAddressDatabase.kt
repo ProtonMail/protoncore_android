@@ -27,6 +27,9 @@ interface PublicAddressDatabase : Database {
     fun publicAddressDao(): PublicAddressDao
     fun publicAddressKeyDao(): PublicAddressKeyDao
     fun publicAddressWithKeysDao(): PublicAddressWithKeysDao
+    fun publicAddressInfoDao(): PublicAddressInfoDao
+    fun publicAddressKeyDataDao(): PublicAddressKeyDataDao
+    fun publicAddressInfoWithKeysDao(): PublicAddressInfoWithKeysDao
 
     companion object {
         /**
@@ -88,6 +91,16 @@ interface PublicAddressDatabase : Database {
                     column = "ignoreKT",
                     type = "INTEGER"
                 )
+            }
+        }
+
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressInfoEntity` (`email` TEXT NOT NULL, `warnings` TEXT NOT NULL, `protonMx` INTEGER NOT NULL, `isProton` INTEGER NOT NULL, `addressSignedKeyList_data` TEXT, `addressSignedKeyList_signature` TEXT, `addressSignedKeyList_minEpochId` INTEGER, `addressSignedKeyList_maxEpochId` INTEGER, `addressSignedKeyList_expectedMinEpochId` INTEGER, `catchAllSignedKeyList_data` TEXT, `catchAllSignedKeyList_signature` TEXT, `catchAllSignedKeyList_minEpochId` INTEGER, `catchAllSignedKeyList_maxEpochId` INTEGER, `catchAllSignedKeyList_expectedMinEpochId` INTEGER, PRIMARY KEY(`email`))")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressInfoEntity_email` ON `PublicAddressInfoEntity` (`email`)")
+
+                database.execSQL("CREATE TABLE IF NOT EXISTS `PublicAddressKeyDataEntity` (`email` TEXT NOT NULL, `emailAddressType` INTEGER NOT NULL, `flags` INTEGER NOT NULL, `publicKey` TEXT NOT NULL, `isPrimary` INTEGER NOT NULL, `source` INTEGER, PRIMARY KEY(`email`, `publicKey`), FOREIGN KEY(`email`) REFERENCES `PublicAddressInfoEntity`(`email`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_PublicAddressKeyDataEntity_email` ON `PublicAddressKeyDataEntity` (`email`)")
             }
         }
     }

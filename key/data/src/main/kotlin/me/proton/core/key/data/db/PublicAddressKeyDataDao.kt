@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.data.entity
+package me.proton.core.key.data.db
 
-import androidx.room.Embedded
-import androidx.room.Relation
+import androidx.room.Dao
+import androidx.room.Query
+import me.proton.core.data.room.db.BaseDao
+import me.proton.core.key.data.entity.PublicAddressKeyDataEntity
 
-@Deprecated("Use PublicAddressInfoWithKeys.")
-data class PublicAddressWithKeys(
-    @Embedded
-    val entity: PublicAddressEntity,
-    @Relation(
-        parentColumn = "email",
-        entityColumn = "email"
-    )
-    val keys: List<PublicAddressKeyEntity>
-)
+@Dao
+abstract class PublicAddressKeyDataDao : BaseDao<PublicAddressKeyDataEntity>() {
+    @Query("DELETE FROM PublicAddressKeyDataEntity WHERE email = :email")
+    abstract suspend fun deleteByEmail(email: String)
+}

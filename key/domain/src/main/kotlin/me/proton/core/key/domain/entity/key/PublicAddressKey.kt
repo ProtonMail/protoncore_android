@@ -21,7 +21,8 @@ package me.proton.core.key.domain.entity.key
 data class PublicAddressKey(
     val email: String,
     val flags: PublicAddressKeyFlags,
-    val publicKey: PublicKey
+    val publicKey: PublicKey,
+    val source: PublicAddressKeySource? = null
 )
 
 fun PublicAddressKey.canEncrypt(): Boolean = flags.canEncrypt()

@@ -8,7 +8,7 @@ public final class me/proton/core/key/data/BuildConfig {
 public abstract interface class me/proton/core/key/data/api/KeyApi : me/proton/core/network/data/protonApi/BaseRetrofitApi {
 	public abstract fun createAddressKey (Lme/proton/core/key/data/api/request/CreateAddressKeyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun createAddressKeyOld (Lme/proton/core/key/data/api/request/CreateAddressKeyRequest;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun getAllActivePublicKeys (Ljava/lang/String;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun getAllActivePublicKeys (Ljava/lang/String;Ljava/lang/Integer;Lme/proton/core/network/domain/CacheOverride;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getPublicAddressKeys (Ljava/lang/String;Lme/proton/core/network/domain/CacheOverride;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSKLAtEpoch (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun getSKLsAfterEpoch (Ljava/lang/String;ILkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -19,7 +19,7 @@ public abstract interface class me/proton/core/key/data/api/KeyApi : me/proton/c
 }
 
 public final class me/proton/core/key/data/api/KeyApi$DefaultImpls {
-	public static synthetic fun getAllActivePublicKeys$default (Lme/proton/core/key/data/api/KeyApi;Ljava/lang/String;Ljava/lang/Integer;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
+	public static synthetic fun getAllActivePublicKeys$default (Lme/proton/core/key/data/api/KeyApi;Ljava/lang/String;Ljava/lang/Integer;Lme/proton/core/network/domain/CacheOverride;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 	public static synthetic fun getPublicAddressKeys$default (Lme/proton/core/key/data/api/KeyApi;Ljava/lang/String;Lme/proton/core/network/domain/CacheOverride;Lkotlin/coroutines/Continuation;ILjava/lang/Object;)Ljava/lang/Object;
 }
 
@@ -299,6 +299,11 @@ public final class me/proton/core/key/data/api/response/ActivePublicKeysResponse
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/key/data/api/response/ActivePublicKeysResponseKt {
+	public static final fun toAddressData (Lme/proton/core/key/data/api/response/AddressDataResponse;Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/PublicAddressKeyData;
+	public static final fun toPublicAddressInfo (Lme/proton/core/key/data/api/response/ActivePublicKeysResponse;Ljava/lang/String;)Lme/proton/core/key/domain/entity/key/PublicAddressInfo;
+}
+
 public final class me/proton/core/key/data/api/response/AddressDataResponse {
 	public static final field Companion Lme/proton/core/key/data/api/response/AddressDataResponse$Companion;
 	public fun <init> (Ljava/util/List;Lme/proton/core/key/data/api/response/SignedKeyListResponse;)V
@@ -544,14 +549,17 @@ public final class me/proton/core/key/data/api/response/KeySaltsResponse$Compani
 
 public final class me/proton/core/key/data/api/response/PublicAddressKeyResponse {
 	public static final field Companion Lme/proton/core/key/data/api/response/PublicAddressKeyResponse$Companion;
-	public fun <init> (ILjava/lang/String;)V
+	public fun <init> (ILjava/lang/String;Ljava/lang/Integer;)V
+	public synthetic fun <init> (ILjava/lang/String;Ljava/lang/Integer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()I
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (ILjava/lang/String;)Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;ILjava/lang/String;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;
+	public final fun component3 ()Ljava/lang/Integer;
+	public final fun copy (ILjava/lang/String;Ljava/lang/Integer;)Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;ILjava/lang/String;Ljava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/data/api/response/PublicAddressKeyResponse;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getFlags ()I
 	public final fun getPublicKey ()Ljava/lang/String;
+	public final fun getSource ()Ljava/lang/Integer;
 	public fun hashCode ()I
 	public final fun toPublicAddressKey (Ljava/lang/String;Z)Lme/proton/core/key/domain/entity/key/PublicAddressKey;
 	public fun toString ()Ljava/lang/String;
@@ -956,7 +964,10 @@ public abstract class me/proton/core/key/data/db/PublicAddressDao : me/proton/co
 public abstract interface class me/proton/core/key/data/db/PublicAddressDatabase : me/proton/core/data/room/db/Database {
 	public static final field Companion Lme/proton/core/key/data/db/PublicAddressDatabase$Companion;
 	public abstract fun publicAddressDao ()Lme/proton/core/key/data/db/PublicAddressDao;
+	public abstract fun publicAddressInfoDao ()Lme/proton/core/key/data/db/PublicAddressInfoDao;
+	public abstract fun publicAddressInfoWithKeysDao ()Lme/proton/core/key/data/db/PublicAddressInfoWithKeysDao;
 	public abstract fun publicAddressKeyDao ()Lme/proton/core/key/data/db/PublicAddressKeyDao;
+	public abstract fun publicAddressKeyDataDao ()Lme/proton/core/key/data/db/PublicAddressKeyDataDao;
 	public abstract fun publicAddressWithKeysDao ()Lme/proton/core/key/data/db/PublicAddressWithKeysDao;
 }
 
@@ -964,6 +975,18 @@ public final class me/proton/core/key/data/db/PublicAddressDatabase$Companion {
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_3 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+}
+
+public abstract class me/proton/core/key/data/db/PublicAddressInfoDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun deleteByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public abstract class me/proton/core/key/data/db/PublicAddressInfoWithKeysDao {
+	public fun <init> ()V
+	public abstract fun findWithKeysByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 }
 
 public abstract class me/proton/core/key/data/db/PublicAddressKeyDao : me/proton/core/data/room/db/BaseDao {
@@ -973,10 +996,22 @@ public abstract class me/proton/core/key/data/db/PublicAddressKeyDao : me/proton
 	public abstract fun findAllByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 }
 
+public abstract class me/proton/core/key/data/db/PublicAddressKeyDataDao : me/proton/core/data/room/db/BaseDao {
+	public fun <init> ()V
+	public abstract fun deleteByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
 public abstract class me/proton/core/key/data/db/PublicAddressWithKeysDao : me/proton/core/data/room/db/BaseDao {
 	public fun <init> ()V
 	public abstract fun findWithKeysByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun getWithKeysByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/entity/EmailAddressType {
+	public static final field CATCH_ALL I
+	public static final field INSTANCE Lme/proton/core/key/data/entity/EmailAddressType;
+	public static final field REGULAR I
+	public static final field UNVERIFIED I
 }
 
 public final class me/proton/core/key/data/entity/KeySaltEntity {
@@ -1011,6 +1046,61 @@ public final class me/proton/core/key/data/entity/PublicAddressEntity {
 	public final fun getRecipientType ()I
 	public final fun getSignedKeyListEntity ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
 	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/key/data/entity/PublicAddressInfoEntity {
+	public fun <init> (Ljava/lang/String;Ljava/util/List;ZILme/proton/core/key/data/entity/SignedKeyListEntity;Lme/proton/core/key/data/entity/SignedKeyListEntity;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/util/List;
+	public final fun component3 ()Z
+	public final fun component4 ()I
+	public final fun component5 ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun component6 ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun copy (Ljava/lang/String;Ljava/util/List;ZILme/proton/core/key/data/entity/SignedKeyListEntity;Lme/proton/core/key/data/entity/SignedKeyListEntity;)Lme/proton/core/key/data/entity/PublicAddressInfoEntity;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Ljava/lang/String;Ljava/util/List;ZILme/proton/core/key/data/entity/SignedKeyListEntity;Lme/proton/core/key/data/entity/SignedKeyListEntity;ILjava/lang/Object;)Lme/proton/core/key/data/entity/PublicAddressInfoEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAddressSignedKeyList ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun getCatchAllSignedKeyList ()Lme/proton/core/key/data/entity/SignedKeyListEntity;
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getProtonMx ()Z
+	public final fun getWarnings ()Ljava/util/List;
+	public fun hashCode ()I
+	public final fun isProton ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/key/data/entity/PublicAddressInfoWithKeys {
+	public fun <init> (Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/key/data/entity/PublicAddressInfoEntity;
+	public final fun component2 ()Ljava/util/List;
+	public final fun copy (Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Ljava/util/List;)Lme/proton/core/key/data/entity/PublicAddressInfoWithKeys;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/PublicAddressInfoWithKeys;Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/key/data/entity/PublicAddressInfoWithKeys;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEntity ()Lme/proton/core/key/data/entity/PublicAddressInfoEntity;
+	public final fun getKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/key/data/entity/PublicAddressKeyDataEntity {
+	public fun <init> (Ljava/lang/String;IILjava/lang/String;ZLjava/lang/Integer;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()I
+	public final fun component3 ()I
+	public final fun component4 ()Ljava/lang/String;
+	public final fun component5 ()Z
+	public final fun component6 ()Ljava/lang/Integer;
+	public final fun copy (Ljava/lang/String;IILjava/lang/String;ZLjava/lang/Integer;)Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;Ljava/lang/String;IILjava/lang/String;ZLjava/lang/Integer;ILjava/lang/Object;)Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getEmail ()Ljava/lang/String;
+	public final fun getEmailAddressType ()I
+	public final fun getFlags ()I
+	public final fun getPublicKey ()Ljava/lang/String;
+	public final fun getSource ()Ljava/lang/Integer;
+	public fun hashCode ()I
+	public final fun isPrimary ()Z
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -1063,6 +1153,14 @@ public final class me/proton/core/key/data/entity/SignedKeyListEntity {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/proton/core/key/data/extension/PublicAddressInfoMapperKt {
+	public static final fun toEntity (Lme/proton/core/key/domain/entity/key/PublicAddressInfo;)Lme/proton/core/key/data/entity/PublicAddressInfoWithKeys;
+	public static final fun toPublicAddressInfo (Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Ljava/util/List;)Lme/proton/core/key/domain/entity/key/PublicAddressInfo;
+	public static final fun toPublicAddressInfoEntity (Lme/proton/core/key/domain/entity/key/PublicAddressInfo;)Lme/proton/core/key/data/entity/PublicAddressInfoEntity;
+	public static final fun toPublicAddressKey (Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;)Lme/proton/core/key/domain/entity/key/PublicAddressKey;
+	public static final fun toPublicAddressKeyDataEntity (Lme/proton/core/key/domain/entity/key/PublicAddressKey;I)Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;
+}
+
 public final class me/proton/core/key/data/repository/KeySaltRepositoryImpl : me/proton/core/key/domain/repository/KeySaltRepository {
 	public fun <init> (Lme/proton/core/key/data/db/KeySaltDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;)V
 	public fun clear (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -1082,6 +1180,7 @@ public final class me/proton/core/key/data/repository/PublicAddressRepositoryImp
 	public fun <init> (Lme/proton/core/key/data/db/PublicAddressDatabase;Lme/proton/core/network/data/ApiProvider;Lme/proton/core/util/kotlin/CoroutineScopeProvider;Ljava/util/Optional;)V
 	public fun clearAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getPublicAddress (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/repository/Source;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun getPublicAddressInfo (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ZLme/proton/core/key/domain/repository/Source;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSKLAtEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getSKLsAfterEpoch (Lme/proton/core/domain/entity/UserId;ILjava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

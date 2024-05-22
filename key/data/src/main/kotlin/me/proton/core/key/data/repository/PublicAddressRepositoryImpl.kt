@@ -27,12 +27,15 @@ import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.KeyApi
+import me.proton.core.key.data.api.response.toPublicAddressInfo
 import me.proton.core.key.data.db.PublicAddressDatabase
 import me.proton.core.key.data.extension.toEntity
 import me.proton.core.key.data.extension.toEntityList
 import me.proton.core.key.data.extension.toPublicAddress
+import me.proton.core.key.data.extension.toPublicAddressInfo
 import me.proton.core.key.data.extension.toPublicSignedKeyList
 import me.proton.core.key.domain.entity.key.PublicAddress
+import me.proton.core.key.domain.entity.key.PublicAddressInfo
 import me.proton.core.key.domain.entity.key.PublicSignedKeyList
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.Source
@@ -40,6 +43,7 @@ import me.proton.core.key.domain.repository.PublicAddressVerifier
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.CacheOverride
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.util.kotlin.toInt
 import java.util.Optional
 import javax.inject.Inject
 
@@ -54,8 +58,18 @@ class PublicAddressRepositoryImpl @Inject constructor(
     private val publicAddressKeyDao = db.publicAddressKeyDao()
     private val publicAddressWithKeysDao = db.publicAddressWithKeysDao()
 
-    private data class StoreKey(val userId: UserId, val email: String, val forceNoCache: Boolean)
+    private val publicAddressInfoDao = db.publicAddressInfoDao()
+    private val publicAddressKeyDataDao = db.publicAddressKeyDataDao()
+    private val publicAddressInfoWithKeysDao = db.publicAddressInfoWithKeysDao()
 
+    private data class StoreKey(
+        val userId: UserId,
+        val email: String,
+        val forceNoCache: Boolean,
+        val internalOnly: Boolean = false
+    )
+
+    @Deprecated("Using getPublicAddressKeys is deprecated")
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: StoreKey ->
             provider.get<KeyApi>(key.userId).invoke {
@@ -84,6 +98,37 @@ class PublicAddressRepositoryImpl @Inject constructor(
         )
     ).buildProtonStore(scopeProvider)
 
+    private val publicAddressInfoStore = StoreBuilder.from(
+        fetcher = Fetcher.of { key: StoreKey ->
+            provider.get<KeyApi>(key.userId).invoke {
+                getAllActivePublicKeys(
+                    key.email,
+                    key.internalOnly.toInt(),
+                    if (key.forceNoCache) CacheOverride().noCache() else null
+                ).toPublicAddressInfo(key.email)
+            }.valueOrThrow
+            // WARNING: missing KT verification
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { key -> getPublicAddressInfoLocal(key.email) },
+            writer = { _, input -> insertOrUpdate(input) },
+            delete = { publicAddressInfoDao.deleteByEmail(it.email) },
+            deleteAll = { publicAddressInfoDao.deleteAll() }
+        )
+    ).buildProtonStore(scopeProvider)
+
+    private fun getPublicAddressInfoLocal(email: String): Flow<PublicAddressInfo?> =
+        publicAddressInfoWithKeysDao.findWithKeysByEmail(email)
+            .map { it?.entity?.toPublicAddressInfo(it.keys) }
+
+    private suspend fun insertOrUpdate(publicAddressInfo: PublicAddressInfo) =
+        db.inTransaction {
+            val entityWithKeys = publicAddressInfo.toEntity()
+            publicAddressInfoDao.insertOrUpdate(entityWithKeys.entity)
+            publicAddressKeyDataDao.deleteByEmail(publicAddressInfo.email)
+            publicAddressKeyDataDao.insertOrUpdate(*entityWithKeys.keys.toTypedArray())
+        }
+
     private fun getPublicAddressLocal(email: String): Flow<PublicAddress?> =
         publicAddressWithKeysDao.findWithKeysByEmail(email)
             .map { it?.entity?.toPublicAddress(it.keys) }
@@ -99,12 +144,30 @@ class PublicAddressRepositoryImpl @Inject constructor(
 
     private suspend fun deleteAll() = publicAddressDao.deleteAll()
 
+    @Deprecated(
+        "Deprecated on BE.",
+        ReplaceWith("getPublicKeysInfo(sessionUserId, email, internalOnly = TODO(), source)")
+    )
     override suspend fun getPublicAddress(
         sessionUserId: SessionUserId,
         email: String,
         source: Source
     ): PublicAddress = StoreKey(sessionUserId, email, source == Source.RemoteNoCache)
         .let { if (source == Source.LocalIfAvailable) store.get(it) else store.fresh(it) }
+
+    override suspend fun getPublicAddressInfo(
+        sessionUserId: SessionUserId,
+        email: String,
+        internalOnly: Boolean,
+        source: Source
+    ): PublicAddressInfo {
+        val storeKey = StoreKey(sessionUserId, email, forceNoCache = source == Source.RemoteNoCache)
+        return if (source == Source.LocalIfAvailable) {
+            publicAddressInfoStore.get(storeKey)
+        } else {
+            publicAddressInfoStore.fresh(storeKey)
+        }
+    }
 
     override suspend fun getSKLsAfterEpoch(
         userId: UserId,
@@ -124,5 +187,8 @@ class PublicAddressRepositoryImpl @Inject constructor(
         sklListResponse.signedKeyList.toPublicSignedKeyList()
     }.valueOrThrow
 
-    override suspend fun clearAll() = store.clearAll()
+    override suspend fun clearAll() {
+        publicAddressInfoStore.clearAll()
+        store.clearAll()
+    }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,18 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.key.data.entity
+package me.proton.core.key.domain.entity.key
 
-import androidx.room.Embedded
-import androidx.room.Relation
+enum class PublicAddressKeySource(val code: Int) {
+    Internal(0),
 
-@Deprecated("Use PublicAddressInfoWithKeys.")
-data class PublicAddressWithKeys(
-    @Embedded
-    val entity: PublicAddressEntity,
-    @Relation(
-        parentColumn = "email",
-        entityColumn = "email"
-    )
-    val keys: List<PublicAddressKeyEntity>
-)
+    /** Web Key Directory */
+    Wkd(1),
+
+    /** keys.openpgp.org */
+    Koo(2);
+
+    companion object {
+        fun fromCode(code: Int?): PublicAddressKeySource? =
+            PublicAddressKeySource.entries.firstOrNull { it.code == code }
+    }
+}

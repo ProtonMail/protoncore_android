@@ -24,11 +24,13 @@ import me.proton.core.key.data.extension.toPublicSignedKeyList
 import me.proton.core.key.domain.entity.key.PublicAddress
 import me.proton.core.key.domain.entity.key.PublicAddressKey
 import me.proton.core.key.domain.entity.key.PublicAddressKeyFlags
+import me.proton.core.key.domain.entity.key.PublicAddressKeySource
 import me.proton.core.key.domain.entity.key.PublicKey
 import me.proton.core.key.domain.entity.key.isCompromised
 import me.proton.core.key.domain.entity.key.isObsolete
 
 @Serializable
+@Deprecated("Deprecated on BE.")
 data class PublicAddressKeysResponse(
     @SerialName("RecipientType")
     val recipientType: Int = 0,
@@ -56,7 +58,9 @@ data class PublicAddressKeyResponse(
     @SerialName("Flags")
     val flags: PublicAddressKeyFlags,
     @SerialName("PublicKey")
-    val publicKey: String
+    val publicKey: String,
+    @SerialName("Source")
+    val source: Int? = null
 ) {
     fun toPublicAddressKey(email: String, isPrimary: Boolean) = PublicAddressKey(
         email = email,
@@ -67,6 +71,7 @@ data class PublicAddressKeyResponse(
             isActive = true,
             canEncrypt = flags.isObsolete().not(),
             canVerify = flags.isCompromised().not()
-        )
+        ),
+        source = PublicAddressKeySource.fromCode(source)
     )
 }

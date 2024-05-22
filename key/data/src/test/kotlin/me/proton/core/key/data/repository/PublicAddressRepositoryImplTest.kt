@@ -29,11 +29,21 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.data.api.KeyApi
+import me.proton.core.key.data.api.response.ActivePublicKeysResponse
+import me.proton.core.key.data.api.response.AddressDataResponse
+import me.proton.core.key.data.api.response.PublicAddressKeyResponse
+import me.proton.core.key.data.api.response.SignedKeyListResponse
+import me.proton.core.key.data.api.response.toPublicAddressInfo
 import me.proton.core.key.data.db.PublicAddressDao
 import me.proton.core.key.data.db.PublicAddressDatabase
+import me.proton.core.key.data.db.PublicAddressInfoDao
+import me.proton.core.key.data.db.PublicAddressInfoWithKeysDao
 import me.proton.core.key.data.db.PublicAddressKeyDao
+import me.proton.core.key.data.db.PublicAddressKeyDataDao
 import me.proton.core.key.data.db.PublicAddressWithKeysDao
 import me.proton.core.key.data.entity.PublicAddressKeyEntity
+import me.proton.core.key.data.extension.toEntity
+import me.proton.core.key.domain.entity.key.KeyFlags
 import me.proton.core.key.domain.repository.PublicAddressVerifier
 import me.proton.core.network.data.ApiManagerFactory
 import me.proton.core.network.data.ApiProvider
@@ -66,6 +76,10 @@ class PublicAddressRepositoryImplTest {
     private val publicAddressWithKeysDao = mockk<PublicAddressWithKeysDao>()
     private val publicAddressKeyDao = mockk<PublicAddressKeyDao>()
 
+    private val publicAddressInfoDao = mockk<PublicAddressInfoDao>()
+    private val publicAddressKeyDataDao = mockk<PublicAddressKeyDataDao>()
+    private val publicAddressInfoWithKeysDao = mockk<PublicAddressInfoWithKeysDao>()
+
     private val publicAddressVerifier = mockk<PublicAddressVerifier>()
 
     @Before
@@ -80,9 +94,15 @@ class PublicAddressRepositoryImplTest {
         coEvery { sessionProvider.getSessionId(testUserId) } returns testSessionId
         apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
         every { apiFactory.create(testSessionId, interfaceClass = KeyApi::class) } returns apiManager
+
         coEvery { db.publicAddressDao() } returns publicAddressDao
         coEvery { db.publicAddressKeyDao() } returns publicAddressKeyDao
         coEvery { db.publicAddressWithKeysDao() } returns publicAddressWithKeysDao
+
+        coEvery { db.publicAddressInfoDao() } returns publicAddressInfoDao
+        coEvery { db.publicAddressKeyDataDao() } returns publicAddressKeyDataDao
+        coEvery { db.publicAddressInfoWithKeysDao() } returns publicAddressInfoWithKeysDao
+
         val transactionLambda = slot<suspend () -> Unit>()
         coEvery { db.inTransaction(capture(transactionLambda)) } coAnswers {
             transactionLambda.captured.invoke()
@@ -185,8 +205,11 @@ class PublicAddressRepositoryImplTest {
                 )
             }
         }
+        coJustRun { publicAddressInfoDao.deleteAll() }
+
         repositoryImpl.clearAll()
         coVerify(exactly = 1) { publicAddressDao.deleteAll() }
+        coVerify(exactly = 1) { publicAddressInfoDao.deleteAll() }
     }
 
     @Test
@@ -203,5 +226,37 @@ class PublicAddressRepositoryImplTest {
         coEvery { keyApi.getSKLsAfterEpoch(testEmail, 1) } returns mockk(relaxed = true)
         repositoryImpl.getSKLsAfterEpoch(testUserId, 1, testEmail)
         coVerify { keyApi.getSKLsAfterEpoch(testEmail, 1) }
+    }
+
+    @Test
+    fun `get PublicAddressInfo`() = runTest {
+        // GIVEN
+        val testEmail = "email@example.test"
+        val testResponse = ActivePublicKeysResponse(
+            address = AddressDataResponse(
+                listOf(PublicAddressKeyResponse(KeyFlags.NotCompromised, "publicKey", source = 0)),
+                SignedKeyListResponse("data", "signature", 1, 2, null)
+            ),
+            warnings = emptyList(),
+            protonMx = true,
+            isProton = 1
+        )
+
+        coEvery { keyApi.getAllActivePublicKeys(any(), any(), any()) } returns testResponse
+        coEvery { publicAddressInfoWithKeysDao.findWithKeysByEmail(testEmail) } returns flowOf(
+            null,
+            testResponse.toPublicAddressInfo(testEmail).toEntity()
+        )
+        coJustRun { publicAddressInfoDao.deleteByEmail(testEmail) }
+        coJustRun { publicAddressInfoDao.insertOrUpdate(any()) }
+        coJustRun { publicAddressKeyDataDao.deleteByEmail(testEmail) }
+        coJustRun { publicAddressKeyDataDao.insertOrUpdate(any()) }
+
+        // WHEN
+        val result = repositoryImpl.getPublicAddressInfo(testUserId, email = testEmail)
+
+        // THEN
+        assertEquals(testEmail, result.email)
+        coVerify(exactly = 1) { keyApi.getAllActivePublicKeys(testEmail, internalOnly = 0, any()) }
     }
 }

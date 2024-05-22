@@ -28,6 +28,7 @@ import androidx.room.Index
         Index("email")
     ]
 )
+@Deprecated("Use PublicAddressInfoEntity.")
 data class PublicAddressEntity(
     val email: String,
     val recipientType: Int,
