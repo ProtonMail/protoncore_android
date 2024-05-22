@@ -34,7 +34,11 @@ class FeatureFlagsViewModel : ViewModel() {
 
     fun loadFeatureFlagsByProject(project: String) = viewModelScope.launch {
         currentProject = project
-        val flags = FeatureFlagsCacheManager().getFeatureFlags()
-        _featureFlags.value = flags.filter { it.project == project }
+        try {
+            val flags = FeatureFlagsCacheManager().getFeatureFlags()
+            _featureFlags.value = flags.filter { it.project == project }
+        } catch (e: Exception) {
+            _featureFlags.value = emptyList()
+        }
     }
 }

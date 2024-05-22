@@ -21,9 +21,9 @@ package me.proton.core.configuration.configurator.featureflag.data
 import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import me.proton.core.configuration.configurator.BuildConfig
 import me.proton.core.configuration.configurator.featureflag.data.api.Feature
 import me.proton.core.configuration.configurator.network.RetrofitInstance
-import me.proton.core.network.data.BuildConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.time.Duration.Companion.minutes
@@ -42,16 +42,12 @@ class FeatureFlagsCacheManager @Inject constructor() {
     }
 
     private suspend fun fetchFeatureFlagsFromApi(): List<Feature> {
-        return try {
-            val apiToken = BuildConfig.UNLEASH_API_TOKEN
-            if (apiToken.isNotEmpty()) {
-                val response = RetrofitInstance.api.getFeatureFlags(apiToken)
-                response.features
-            } else {
-                emptyList()
-            }
-        } catch (e: Exception) {
-            emptyList()
+        val apiToken = BuildConfig.UNLEASH_API_TOKEN
+        if (apiToken.isNotEmpty()) {
+            val response = RetrofitInstance.api.getFeatureFlags(apiToken)
+            return response.features
+        } else {
+            return emptyList()
         }
     }
 }
