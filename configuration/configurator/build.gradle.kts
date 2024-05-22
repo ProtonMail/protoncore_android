@@ -91,6 +91,7 @@ dependencies {
         `kotlin-reflect`,
         preference,
         `serialization-json`,
-        `retrofit-kotlin-serialization`
+        `retrofit-kotlin-serialization`,
+        cache4k
     )
 }

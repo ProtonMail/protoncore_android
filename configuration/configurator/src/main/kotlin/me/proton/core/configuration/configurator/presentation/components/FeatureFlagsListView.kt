@@ -64,7 +64,7 @@ import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.R
-import me.proton.core.configuration.configurator.presentation.viewModel.Feature
+import me.proton.core.configuration.configurator.featureflag.data.api.Feature
 import me.proton.core.configuration.configurator.presentation.viewModel.FeatureFlagsViewModel
 import java.util.regex.Pattern
 
