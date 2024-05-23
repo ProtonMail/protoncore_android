@@ -20,14 +20,18 @@ package me.proton.core.configuration.configurator.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.proton.core.configuration.configurator.featureflag.data.FeatureFlagsCacheManager
 import me.proton.core.configuration.configurator.featureflag.data.api.Feature
+import javax.inject.Inject
 
-class FeatureFlagsViewModel : ViewModel() {
+@HiltViewModel
+class FeatureFlagsViewModel @Inject constructor(private val featureFlagsCacheManager: FeatureFlagsCacheManager) :
+    ViewModel() {
     private val _featureFlags = MutableStateFlow<List<Feature>>(emptyList())
     val featureFlags: StateFlow<List<Feature>> = _featureFlags.asStateFlow()
     private var currentProject: String? = null
@@ -35,7 +39,7 @@ class FeatureFlagsViewModel : ViewModel() {
     fun loadFeatureFlagsByProject(project: String) = viewModelScope.launch {
         currentProject = project
         try {
-            val flags = FeatureFlagsCacheManager().getFeatureFlags()
+            val flags = featureFlagsCacheManager.getFeatureFlags()
             _featureFlags.value = flags.filter { it.project == project }
         } catch (e: Exception) {
             _featureFlags.value = emptyList()

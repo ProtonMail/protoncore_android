@@ -19,6 +19,7 @@
 package me.proton.core.configuration.configurator.presentation.components
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -27,9 +28,8 @@ import me.proton.core.configuration.configurator.featureflag.entity.FeatureFlags
 import me.proton.core.configuration.configurator.presentation.viewModel.FeatureFlagsViewModel
 
 @Composable
-fun AppNavigation() {
+fun AppNavigation(viewModel: FeatureFlagsViewModel = hiltViewModel()) {
     val navController = rememberNavController()
-    val featureFlagsViewModel = FeatureFlagsViewModel()
 
     NavHost(navController = navController, startDestination = "home") {
         composable("home") {
@@ -37,7 +37,7 @@ fun AppNavigation() {
         }
         composable("featureFlags/{configType}") { backStackEntry ->
             val project = backStackEntry.arguments?.getString("configType") ?: "Default"
-            FeatureFlagsScreen(featureFlagsViewModel, project, navController)
+            FeatureFlagsScreen(viewModel, project, navController)
         }
     }
 }
