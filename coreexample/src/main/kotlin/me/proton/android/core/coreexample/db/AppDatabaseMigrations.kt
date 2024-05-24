@@ -323,7 +323,7 @@ object AppDatabaseMigrations {
         }
     }
 
-    val MIGRATION_45_46 = object: Migration(45, 46) {
+    val MIGRATION_45_46 = object : Migration(45, 46) {
         override fun migrate(db: SupportSQLiteDatabase) {
             DeviceRecoveryDatabase.MIGRATION_0.migrate(db)
             UserKeyDatabase.MIGRATION_1.migrate(db)
@@ -341,6 +341,12 @@ object AppDatabaseMigrations {
     val MIGRATION_47_48 = object : Migration(47, 48) {
         override fun migrate(db: SupportSQLiteDatabase) {
             EventMetadataDatabase.MIGRATION_3.migrate(db)
+        }
+    }
+
+    val MIGRATION_48_49 = object : Migration(48, 49) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            PublicAddressDatabase.MIGRATION_3.migrate(db)
         }
     }
 }

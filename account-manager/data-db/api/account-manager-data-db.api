@@ -134,6 +134,7 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabaseM
 	public final fun getMIGRATION_45_46 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_46_47 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_47_48 ()Landroidx/room/migration/Migration;
+	public final fun getMIGRATION_48_49 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_4_5 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_5_6 ()Landroidx/room/migration/Migration;
 	public final fun getMIGRATION_6_7 ()Landroidx/room/migration/Migration;
@@ -171,7 +172,10 @@ public final class me/proton/core/accountmanager/data/db/AccountManagerDatabase_
 	public fun organizationDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationDao;
 	public fun organizationKeysDao ()Lme/proton/core/usersettings/data/db/dao/OrganizationKeysDao;
 	public fun publicAddressDao ()Lme/proton/core/key/data/db/PublicAddressDao;
+	public fun publicAddressInfoDao ()Lme/proton/core/key/data/db/PublicAddressInfoDao;
+	public fun publicAddressInfoWithKeysDao ()Lme/proton/core/key/data/db/PublicAddressInfoWithKeysDao;
 	public fun publicAddressKeyDao ()Lme/proton/core/key/data/db/PublicAddressKeyDao;
+	public fun publicAddressKeyDataDao ()Lme/proton/core/key/data/db/PublicAddressKeyDataDao;
 	public fun publicAddressWithKeysDao ()Lme/proton/core/key/data/db/PublicAddressWithKeysDao;
 	public fun purchaseDao ()Lme/proton/core/payment/data/local/db/dao/PurchaseDao;
 	public fun pushDao ()Lme/proton/core/push/data/local/db/PushDao;
@@ -371,6 +375,27 @@ public final class me/proton/core/key/data/db/PublicAddressDao_Impl : me/proton/
 	public fun update ([Lme/proton/core/key/data/entity/PublicAddressEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
+public final class me/proton/core/key/data/db/PublicAddressInfoDao_Impl : me/proton/core/key/data/db/PublicAddressInfoDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteAll (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/key/data/entity/PublicAddressInfoEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/db/PublicAddressInfoWithKeysDao_Impl : me/proton/core/key/data/db/PublicAddressInfoWithKeysDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public fun findWithKeysByEmail (Ljava/lang/String;)Lkotlinx/coroutines/flow/Flow;
+	public static fun getRequiredConverters ()Ljava/util/List;
+}
+
 public final class me/proton/core/key/data/db/PublicAddressKeyDao_Impl : me/proton/core/key/data/db/PublicAddressKeyDao {
 	public fun <init> (Landroidx/room/RoomDatabase;)V
 	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
@@ -385,6 +410,20 @@ public final class me/proton/core/key/data/db/PublicAddressKeyDao_Impl : me/prot
 	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun update ([Lme/proton/core/key/data/entity/PublicAddressKeyEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/key/data/db/PublicAddressKeyDataDao_Impl : me/proton/core/key/data/db/PublicAddressKeyDataDao {
+	public fun <init> (Landroidx/room/RoomDatabase;)V
+	public synthetic fun delete ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun delete ([Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun deleteByEmail (Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public static fun getRequiredConverters ()Ljava/util/List;
+	public synthetic fun insertOrIgnore ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrIgnore ([Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun insertOrUpdate ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun insertOrUpdate ([Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public synthetic fun update ([Ljava/lang/Object;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun update ([Lme/proton/core/key/data/entity/PublicAddressKeyDataEntity;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/key/data/db/PublicAddressWithKeysDao_Impl : me/proton/core/key/data/db/PublicAddressWithKeysDao {
