@@ -28,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
@@ -43,6 +44,8 @@ import me.proton.core.presentation.utils.inTransaction
 @AndroidEntryPoint
 class AddAccountActivity :
     ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {
+
+    private var foregroundCall: (() -> Unit)? = null
 
     private val input: AddAccountInput by lazy {
         intent?.extras?.getParcelable(ARG_INPUT) ?: AddAccountInput(
@@ -68,13 +71,31 @@ class AddAccountActivity :
         binding.progressIndicator.isVisible = true
         lifecycleScope.launch {
             when (viewModel.getNextScreen()) {
-                AddAccountViewModel.Screen.AddAccountFragment ->
+                AddAccountViewModel.Screen.AddAccountFragment -> updateView(
                     supportFragmentManager.showAddAccountFragment(input)
+                )
 
-                AddAccountViewModel.Screen.CredentialLessFragment ->
+                AddAccountViewModel.Screen.CredentialLessFragment -> updateView(
                     supportFragmentManager.showCredentialLessFragment(input)
+                )
             }
             binding.progressIndicator.isVisible = false
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        foregroundCall?.let {
+            updateView(it)
+            foregroundCall = null
+        }
+    }
+
+    private fun updateView(action: () -> Unit){
+        if (!activityInForeground){
+            foregroundCall = action
+        } else {
+            action.invoke()
         }
     }
 
@@ -96,14 +117,18 @@ class AddAccountActivity :
     }
 }
 
-private fun FragmentManager.showAddAccountFragment(input: AddAccountInput) = inTransaction {
-    replace(R.id.fragment_container, AddAccountFragment(input))
-    setTransition(TRANSIT_FRAGMENT_FADE)
+private fun FragmentManager.showAddAccountFragment(input: AddAccountInput): () -> Unit  = {
+    inTransaction {
+        replace(R.id.fragment_container, AddAccountFragment(input))
+        setTransition(TRANSIT_FRAGMENT_FADE)
+    }
 }
 
-private fun FragmentManager.showCredentialLessFragment(input: AddAccountInput) = inTransaction {
-    replace(R.id.fragment_container, CredentialLessWelcomeFragment(input))
-    setTransition(TRANSIT_FRAGMENT_FADE)
+private fun FragmentManager.showCredentialLessFragment(input: AddAccountInput): () -> Unit = {
+    inTransaction {
+        replace(R.id.fragment_container, CredentialLessWelcomeFragment(input))
+        setTransition(TRANSIT_FRAGMENT_FADE)
+    }
 }
 
 private fun FragmentManager.onAddAccountFragmentResult(

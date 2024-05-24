@@ -169,8 +169,12 @@ public abstract class me/proton/core/presentation/ui/Hilt_ProtonWebViewActivity 
 
 public abstract class me/proton/core/presentation/ui/ProtonActivity : androidx/appcompat/app/AppCompatActivity, me/proton/core/presentation/utils/OnUiComponentCreatedListener {
 	public fun <init> ()V
+	protected final fun getActivityInForeground ()Z
 	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onPause ()V
+	protected fun onResume ()V
 	public fun onUiComponentCreated (Landroidx/lifecycle/LifecycleOwner;Landroidx/activity/OnBackPressedDispatcherOwner;Landroidx/savedstate/SavedStateRegistryOwner;Lme/proton/core/presentation/utils/UiComponent;)V
+	protected final fun setActivityInForeground (Z)V
 }
 
 public abstract class me/proton/core/presentation/ui/ProtonDialogFragment : androidx/fragment/app/DialogFragment, me/proton/core/presentation/utils/OnUiComponentCreatedListener {

@@ -27,8 +27,21 @@ import me.proton.core.presentation.utils.UiComponent
  * Base Proton Activity from which all project activities should extend.
  */
 abstract class ProtonActivity : AppCompatActivity(), OnUiComponentCreatedListener {
+
+    protected var activityInForeground = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         onUiComponentCreated(this, this, this, UiComponent.UiActivity(this))
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activityInForeground = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activityInForeground = true
     }
 }
