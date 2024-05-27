@@ -70,7 +70,7 @@ class EventManagerImpl @AssistedInject constructor(
     private val eventWorkerManager: EventWorkerManager,
     private val database: EventMetadataDatabase,
     internal val eventMetadataRepository: EventMetadataRepository,
-    @Assisted val deserializer: EventDeserializer
+    @Assisted val deserializer: EventDeserializer,
 ) : EventManager {
 
     private val lock = Mutex()
@@ -131,7 +131,10 @@ class EventManagerImpl @AssistedInject constructor(
 
     private suspend fun fetch(metadata: EventMetadata) {
         CoreLogger.i(LogTag.DEFAULT, "EventManager fetch: $config")
-        val eventId = metadata.eventId ?: getLatestEventId()
+        val eventId = metadata.eventId ?: runCatching { getLatestEventId() }
+            .onFailure {
+                processFetchFailure(metadata, it)
+            }.getOrThrow()
         eventMetadataRepository.updateEventId(config, metadata.eventId, eventId)
         runCatching(
             config = config,
@@ -145,17 +148,22 @@ class EventManagerImpl @AssistedInject constructor(
             eventMetadataRepository.update(deserializedMetadata.copy(state = State.Persisted), response)
             deserializedMetadata
         }.onFailure {
-            when {
-                // Note: throw it = Use the WorkManager RETRY mechanism (backoff + network constraint).
-                it is ApiException && it.isForceUpdate() -> throw it
-                it is ApiException && it.isUnauthorized() -> throw it
-                it is ApiException && it.isRetryable().not() -> permanentFetchFailure(metadata, it)
-                it is SerializationException -> permanentFetchFailure(metadata, it)
-                else -> throw it
-            }.exhaustive
+            processFetchFailure(metadata, it)
         }.onSuccess {
             notify(it)
         }
+    }
+
+    private suspend fun processFetchFailure(metadata: EventMetadata, throwable: Throwable) {
+        notifyFetchError(throwable)
+        when {
+            // Note: throw it = Use the WorkManager RETRY mechanism (backoff + network constraint).
+            throwable is ApiException && throwable.isForceUpdate() -> throw throwable
+            throwable is ApiException && throwable.isUnauthorized() -> throw throwable
+            throwable is ApiException && throwable.isRetryable().not() -> permanentFetchFailure(metadata, throwable)
+            throwable is SerializationException -> permanentFetchFailure(metadata, throwable)
+            else -> throw throwable
+        }.exhaustive
     }
 
     private suspend fun permanentFetchFailure(metadata: EventMetadata, error: Throwable) {
@@ -311,6 +319,17 @@ class EventManagerImpl @AssistedInject constructor(
             enqueueOrStop(immediately = metadata.more ?: true, failure = true)
         }.onSuccess {
             enqueueOrStop(immediately = metadata.more ?: true, failure = false)
+        }
+    }
+
+    private suspend fun notifyFetchError(throwable: Throwable) {
+        CoreLogger.i(LogTag.DEFAULT, throwable, "EventManager notifyFetchError: $config")
+        runCatching {
+            eventListenersByOrder.values.flatten().forEach { eventListener ->
+                eventListener.onFetchError(config, throwable)
+            }
+        }.onFailure {
+            CoreLogger.e(LogTag.NOTIFY_ERROR, it)
         }
     }
 

@@ -256,4 +256,9 @@ abstract class EventListener<K : Any, T : Any> : TransactionHandler {
      * @see onFailure
      */
     open suspend fun onComplete(config: EventManagerConfig) {}
+
+    /**
+     * Called in case of a failure during fetching for event.
+     */
+    open suspend fun onFetchError(config: EventManagerConfig, error: Throwable) {}
 }

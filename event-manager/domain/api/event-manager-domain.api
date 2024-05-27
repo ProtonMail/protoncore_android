@@ -15,6 +15,7 @@ public abstract class me/proton/core/eventmanager/domain/EventListener : me/prot
 	public fun onCreate (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onDelete (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onFailure (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onFetchError (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/Throwable;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onPartial (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onPrepare (Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun onResetAll (Lme/proton/core/eventmanager/domain/EventManagerConfig;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
