@@ -40,6 +40,7 @@ dependencies {
     api(
         project(Module.kotlinUtil),
         appcompat,
+        certificateTransparency,
         `hilt-android`,
         `startup-runtime`
     )

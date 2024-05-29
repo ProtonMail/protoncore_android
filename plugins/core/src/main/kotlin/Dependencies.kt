@@ -99,6 +99,8 @@ public val DependencyHandler.okhttp: Any
     get() = squareup("okhttp3", "okhttp") version `okHttp version`
 public val DependencyHandler.mockWebServer: Any
     get() = squareup("okhttp3", "mockwebserver") version `okHttp version`
+public val DependencyHandler.certificateTransparency: Any
+    get() = dependency("com.appmattus.certificatetransparency", module = "certificatetransparency-android") version `certificate-transparency version`
 
 // Other
 public val DependencyHandler.`activity-noktx`: Any
