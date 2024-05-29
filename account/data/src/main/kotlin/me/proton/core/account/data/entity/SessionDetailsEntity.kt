@@ -54,6 +54,6 @@ data class SessionDetailsEntity(
         secondFactorEnabled = secondFactorEnabled,
         twoPassModeEnabled = twoPassModeEnabled,
         password = password,
-        fido2AuthenticationOptions = fido2AuthenticationOptionsJson?.deserializeOrNull()
+        fido2AuthenticationOptionsJson = fido2AuthenticationOptionsJson
     )
 }

@@ -20,10 +20,7 @@ package me.proton.core.auth.data.api.fido2
 
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonObject
-import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.booleanOrNull
-import me.proton.core.account.domain.entity.Fido2AuthenticationExtensionsClientInputs
-import me.proton.core.account.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 
 /**
  * Defined by [PublicKeyCredentialRequestOptions](https://www.w3.org/TR/webauthn-2/#dictionary-assertion-options).
@@ -70,16 +67,6 @@ data class PublicKeyCredentialRequestOptionsResponse(
         rpId = rpId,
         allowCredentials = allowCredentials?.map { it.toFido2PublicKeyCredentialDescriptor() },
         userVerification = userVerification,
-        extensions = Fido2AuthenticationExtensionsClientInputs(
-            appId = extensions?.get("appid")?.let { jsonElement ->
-                (jsonElement as? JsonPrimitive)?.takeIf { it.isString }?.content?.takeIf { it.isNotEmpty() }
-            },
-            thirdPartyPayment = extensions?.get("thirdPartyPayment")?.let { jsonElement ->
-                (jsonElement as? JsonPrimitive)?.booleanOrNull
-            },
-            uvm = extensions?.get("uvm")?.let { jsonElement ->
-                (jsonElement as? JsonPrimitive)?.booleanOrNull
-            },
-        )
+        extensions = toFido2AuthenticationExtensionsClientInputs()
     )
 }

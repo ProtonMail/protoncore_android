@@ -45,7 +45,7 @@ public final class me/proton/core/auth/data/api/fido2/AuthenticationOptionsData 
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPublicKey ()Lme/proton/core/auth/data/api/fido2/PublicKeyCredentialRequestOptionsResponse;
 	public fun hashCode ()I
-	public final fun toFido2AuthenticationOptions ()Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public final fun toFido2AuthenticationOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -77,7 +77,7 @@ public final class me/proton/core/auth/data/api/fido2/Fido2RegisteredKeyData {
 	public final fun getCredentialID-TcUX1vc ()[B
 	public final fun getName ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun toFido2RegisteredKey ()Lme/proton/core/account/domain/entity/Fido2RegisteredKey;
+	public final fun toFido2RegisteredKey ()Lme/proton/core/auth/fido/domain/entity/Fido2RegisteredKey;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -110,7 +110,7 @@ public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialDescrip
 	public final fun getTransports ()Ljava/util/List;
 	public final fun getType ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun toFido2PublicKeyCredentialDescriptor ()Lme/proton/core/account/domain/entity/Fido2PublicKeyCredentialDescriptor;
+	public final fun toFido2PublicKeyCredentialDescriptor ()Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialDescriptor;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -149,7 +149,7 @@ public final class me/proton/core/auth/data/api/fido2/PublicKeyCredentialRequest
 	public final fun getTimeout-6VbMDqA ()Lkotlin/ULong;
 	public final fun getUserVerification ()Ljava/lang/String;
 	public fun hashCode ()I
-	public final fun toFido2PublicKeyCredentialRequestOptions ()Lme/proton/core/account/domain/entity/Fido2PublicKeyCredentialRequestOptions;
+	public final fun toFido2PublicKeyCredentialRequestOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
 	public fun toString ()Ljava/lang/String;
 }
 
@@ -818,15 +818,16 @@ public final class me/proton/core/auth/data/api/response/SessionResponse$Compani
 }
 
 public final class me/proton/core/auth/data/feature/IsFido2EnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/auth/domain/feature/IsFido2Enabled {
-	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)V
+	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;Ljava/util/Optional;)V
+	public fun isLocalEnabled ()Z
 }
 
 public final class me/proton/core/auth/data/feature/IsFido2EnabledImpl_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/data/feature/IsFido2EnabledImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/data/feature/IsFido2EnabledImpl_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/data/feature/IsFido2EnabledImpl;
-	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;)Lme/proton/core/auth/data/feature/IsFido2EnabledImpl;
+	public static fun newInstance (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;Ljava/util/Optional;)Lme/proton/core/auth/data/feature/IsFido2EnabledImpl;
 }
 
 public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/proton/core/auth/domain/repository/AuthRepository {

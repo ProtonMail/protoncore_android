@@ -31,12 +31,12 @@ class PerformSecondFactor @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     /**
-     * Currently only supported Second Factor Code.
+     * Currently only supported Second Factor Code and FIDO2.
      * U2F still not supported.
      */
-    suspend operator fun invoke(sessionId: SessionId, secondFactorCode: String): ScopeInfo =
+    suspend operator fun invoke(sessionId: SessionId, proof: SecondFactorProof): ScopeInfo =
         authRepository.performSecondFactor(
             sessionId = sessionId,
-            secondFactorProof = SecondFactorProof.SecondFactorCode(secondFactorCode),
+            secondFactorProof = proof,
         )
 }

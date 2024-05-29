@@ -28,6 +28,7 @@ import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.getFido2AuthOptions
 import me.proton.core.network.domain.session.Session
+import me.proton.core.util.kotlin.serialize
 import javax.inject.Inject
 
 /**
@@ -67,7 +68,7 @@ class CreateLoginLessSession @Inject constructor(
                     secondFactorEnabled = sessionInfo.isSecondFactorNeeded,
                     twoPassModeEnabled = sessionInfo.isTwoPassModeNeeded,
                     password = null,
-                    fido2AuthenticationOptions = sessionInfo.getFido2AuthOptions()
+                    fido2AuthenticationOptionsJson = sessionInfo.getFido2AuthOptions()?.serialize()
                 )
             )
         )

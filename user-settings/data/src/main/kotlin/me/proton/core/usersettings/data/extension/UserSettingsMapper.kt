@@ -18,7 +18,7 @@
 
 package me.proton.core.usersettings.data.extension
 
-import me.proton.core.account.domain.entity.Fido2RegisteredKey
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.data.api.response.PasswordResponse
 import me.proton.core.usersettings.data.api.response.RecoverySettingResponse

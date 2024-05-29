@@ -32,10 +32,13 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.SecondFactorProof
+import me.proton.core.auth.domain.entity.fido2AuthenticationOptions
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
+import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
@@ -55,14 +58,14 @@ class SecondFactorViewModel @Inject constructor(
     private val sessionProvider: SessionProvider,
     private val accountManager: AccountManager,
     private val isFido2Enabled: IsFido2Enabled
-    ) : ProtonViewModel() {
+) : ProtonViewModel() {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
     val state = _state.asSharedFlow()
 
     sealed class State {
-        data class Idle(val showSecurityKey: Boolean) : State()
+        data class Idle(val fido2AuthenticationOptions: Fido2AuthenticationOptions?) : State()
         object Processing : State()
         data class AccountSetupResult(val result: PostLoginAccountSetup.Result) : State()
 
@@ -74,18 +77,14 @@ class SecondFactorViewModel @Inject constructor(
 
     fun setup(userId: UserId) = flow {
         when {
-            !isFido2Enabled(userId = null) -> emit(State.Idle(false))
+            !isFido2Enabled(userId = null) -> emit(State.Idle(fido2AuthenticationOptions = null))
             else -> {
                 val account = accountManager.getAccount(userId).firstOrNull()
-                emit(
-                    State.Idle(
-                        account?.details?.session?.fido2AuthenticationOptions != null
-                    )
-                )
+                emit(State.Idle(account?.details?.session?.fido2AuthenticationOptions))
             }
         }
     }.catch { _ ->
-        emit(State.Idle(false))
+        emit(State.Idle(fido2AuthenticationOptions = null))
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -101,6 +100,20 @@ class SecondFactorViewModel @Inject constructor(
         requiredAccountType: AccountType,
         isTwoPassModeNeeded: Boolean,
         secondFactorCode: String
+    ) = startSecondFactorFlow(
+        userId = userId,
+        encryptedPassword = encryptedPassword,
+        requiredAccountType = requiredAccountType,
+        isTwoPassModeNeeded = isTwoPassModeNeeded,
+        proof = SecondFactorProof.SecondFactorCode(secondFactorCode)
+    )
+
+    fun startSecondFactorFlow(
+        userId: UserId,
+        encryptedPassword: EncryptedString,
+        requiredAccountType: AccountType,
+        isTwoPassModeNeeded: Boolean,
+        proof: SecondFactorProof
     ) = flow {
         emit(State.Processing)
 
@@ -110,7 +123,7 @@ class SecondFactorViewModel @Inject constructor(
             return@flow
         }
 
-        val scopeInfo = performSecondFactor.invoke(sessionId, secondFactorCode)
+        val scopeInfo = performSecondFactor.invoke(sessionId, proof)
         accountWorkflow.handleSecondFactorSuccess(sessionId, scopeInfo.scopes)
 
         val result = postLoginAccountSetup(

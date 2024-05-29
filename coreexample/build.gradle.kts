@@ -69,7 +69,10 @@ android {
         }
     }
     buildTypes {
-        debug {}
+        debug {
+            signingConfig =
+                signingConfigs.getByName("release").takeIf { it.storeFile?.exists() == true } ?: signingConfig
+        }
         release {
             postprocessing {
                 isRemoveUnusedCode = true
@@ -232,6 +235,7 @@ dependencies {
         project(Module.accountManager),
         project(Module.accountRecovery),
         project(Module.auth),
+        project(Module.authFido),
         project(Module.challenge),
         project(Module.contact),
         project(Module.crypto),

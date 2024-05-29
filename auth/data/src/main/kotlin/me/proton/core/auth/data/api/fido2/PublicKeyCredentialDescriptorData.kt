@@ -19,7 +19,7 @@
 package me.proton.core.auth.data.api.fido2
 
 import kotlinx.serialization.Serializable
-import me.proton.core.account.domain.entity.Fido2PublicKeyCredentialDescriptor
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialDescriptor
 
 @OptIn(ExperimentalUnsignedTypes::class)
 @Serializable

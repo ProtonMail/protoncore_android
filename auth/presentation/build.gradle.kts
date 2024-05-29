@@ -31,7 +31,7 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(46)
+    branchCoveragePercentage.set(45)
     lineCoveragePercentage.set(63)
 }
 
@@ -46,6 +46,7 @@ dependencies {
         project(Module.accountDomain),
         project(Module.accountManagerDomain),
         project(Module.authDomain),
+        project(Module.authFidoDomain),
         project(Module.challengeDomain),
         project(Module.challengePresentation),
         project(Module.countryDomain),

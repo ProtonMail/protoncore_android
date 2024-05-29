@@ -80,6 +80,12 @@ public object Module {
     public const val authData: String = "$auth:auth-data"
     public const val authTest: String = "$auth:auth-test"
 
+    // Authentication Fido
+    public const val authFido: String = ":auth-fido"
+    public const val authFidoDagger: String = "$authFido:auth-fido-dagger"
+    public const val authFidoDomain: String = "$authFido:auth-fido-domain"
+    public const val authFidoPlay: String = "$authFido:auth-fido-play"
+
     // Account
     public const val account: String = ":account"
     public const val accountDagger: String = "$account:account-dagger"

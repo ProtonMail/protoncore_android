@@ -24,16 +24,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.flow.flowOf
-import me.proton.core.account.domain.entity.Account
-import me.proton.core.account.domain.entity.AccountDetails
-import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.account.domain.entity.Fido2AuthenticationOptions
-import me.proton.core.account.domain.entity.SessionDetails
-import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
+import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
@@ -49,8 +44,8 @@ import me.proton.core.test.kotlin.flowTest
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertTrue
+import kotlin.test.assertNotNull
+import kotlin.test.assertNull
 
 class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by UnconfinedCoroutinesTest() {
     // region mocks
@@ -69,6 +64,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     private val testUserId = UserId("test-user-id")
     private val testSessionId = SessionId("test-session-id")
     private val testSecondFactorCode = "123456"
+    private val testSecondFactorProof = SecondFactorProof.SecondFactorCode(testSecondFactorCode)
     private val testLoginPassword = "123456"
     private val success = PostLoginAccountSetup.Result.UserUnlocked(testUserId)
     private val twoPassNeeded = PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId)
@@ -97,7 +93,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     fun `submit 2fa happy flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val requiredAccountType = AccountType.Internal
-        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
+        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorProof) } returns testScopeInfo
         coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
         flowTest(viewModel.state) {
             // WHEN
@@ -122,7 +118,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
         // GIVEN
         val requiredAccountType = AccountType.Internal
         every { testSessionResult.isTwoPassModeNeeded } returns true
-        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorCode) } returns testScopeInfo
+        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorProof) } returns testScopeInfo
         coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns twoPassNeeded
         // WHEN
         flowTest(viewModel.state) {
@@ -225,7 +221,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
 
             cancelAndIgnoreRemainingEvents()
 
-            assertFalse((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+            assertNull((item as SecondFactorViewModel.State.Idle).fido2AuthenticationOptions)
         }
     }
 
@@ -237,7 +233,13 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
             mockk(relaxed = true) {
                 every { this@mockk.details } returns mockk(relaxed = true) {
                     every { this@mockk.session } returns mockk(relaxed = true) {
-                        every { this@mockk.fido2AuthenticationOptions } returns mockk(relaxed = true)
+                        every { this@mockk.fido2AuthenticationOptionsJson } returns """
+                            {
+                                "publicKey": {
+                                    "challenge": [1, 2, 3]
+                                }
+                            }
+                        """.trimIndent()
                     }
                 }
             }
@@ -252,7 +254,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
 
             cancelAndIgnoreRemainingEvents()
 
-            assertTrue((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+            assertNotNull((item as SecondFactorViewModel.State.Idle).fido2AuthenticationOptions)
         }
     }
 
@@ -272,7 +274,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
 
             cancelAndIgnoreRemainingEvents()
 
-            assertFalse((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+            assertNull((item as SecondFactorViewModel.State.Idle).fido2AuthenticationOptions)
         }
     }
 
@@ -292,7 +294,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
 
             cancelAndIgnoreRemainingEvents()
 
-            assertFalse((item as SecondFactorViewModel.State.Idle).showSecurityKey)
+            assertNull((item as SecondFactorViewModel.State.Idle).fido2AuthenticationOptions)
         }
     }
 }

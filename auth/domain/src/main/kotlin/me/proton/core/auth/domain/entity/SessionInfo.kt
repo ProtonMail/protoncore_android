@@ -18,8 +18,8 @@
 
 package me.proton.core.auth.domain.entity
 
-import me.proton.core.account.domain.entity.Fido2AuthenticationOptions
-import me.proton.core.account.domain.entity.Fido2RegisteredKey
+import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 

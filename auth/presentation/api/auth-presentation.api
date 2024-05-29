@@ -311,6 +311,7 @@ public abstract interface class me/proton/core/auth/presentation/HelpOptionHandl
 }
 
 public final class me/proton/core/auth/presentation/LogTag {
+	public static final field FLOW_ERROR_2FA Ljava/lang/String;
 	public static final field FLOW_ERROR_LOGIN Ljava/lang/String;
 	public static final field FLOW_ERROR_RETRY Ljava/lang/String;
 	public static final field INSTANCE Lme/proton/core/auth/presentation/LogTag;
@@ -1823,12 +1824,15 @@ public final class me/proton/core/auth/presentation/ui/SecondFactorActivity : me
 	public static final field ARG_INPUT Ljava/lang/String;
 	public static final field ARG_RESULT Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/ui/SecondFactorActivity$Companion;
+	public field performTwoFaWithSecurityKey Ljava/util/Optional;
 	public fun <init> ()V
+	public final fun getPerformTwoFaWithSecurityKey ()Ljava/util/Optional;
 	public fun onBackPressed ()V
 	public fun onError (ZLjava/lang/String;Z)V
 	public fun onTabReselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
 	public fun onTabSelected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
 	public fun onTabUnselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public final fun setPerformTwoFaWithSecurityKey (Ljava/util/Optional;)V
 	public fun showLoading (Z)V
 }
 
@@ -1837,6 +1841,14 @@ public final class me/proton/core/auth/presentation/ui/SecondFactorActivity$Comp
 
 public abstract interface class me/proton/core/auth/presentation/ui/SecondFactorActivity_GeneratedInjector {
 	public abstract fun injectSecondFactorActivity (Lme/proton/core/auth/presentation/ui/SecondFactorActivity;)V
+}
+
+public final class me/proton/core/auth/presentation/ui/SecondFactorActivity_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/ui/SecondFactorActivity;)V
+	public static fun injectPerformTwoFaWithSecurityKey (Lme/proton/core/auth/presentation/ui/SecondFactorActivity;Ljava/util/Optional;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/StartAddAccount : androidx/activity/result/contract/ActivityResultContract {
@@ -2716,6 +2728,7 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun setup (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;)Lkotlinx/coroutines/Job;
+	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLme/proton/core/auth/domain/entity/SecondFactorProof;)Lkotlinx/coroutines/Job;
 	public final fun stopSecondFactorFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 }
 
@@ -2762,12 +2775,12 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State {
-	public fun <init> (Z)V
-	public final fun component1 ()Z
-	public final fun copy (Z)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
+	public fun <init> (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;)V
+	public final fun component1 ()Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
+	public final fun copy (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;ILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$State$Idle;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getShowSecurityKey ()Z
+	public final fun getFido2AuthenticationOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

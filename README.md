@@ -95,6 +95,10 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:auth-dagger                           |
 | me.proton.core:auth-data                             |
 | me.proton.core:auth-domain                           |
+| me.proton.core:auth-fido                             |
+| me.proton.core:auth-fido-dagger                      |
+| me.proton.core:auth-fido-domain                      |
+| me.proton.core:auth-fido-play                        |
 | me.proton.core:auth-presentation                     |
 | me.proton.core:auth-test                             |
 | me.proton.core:contact                               |

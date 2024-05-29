@@ -48,7 +48,7 @@ data class SessionDetails(
     val secondFactorEnabled: Boolean,
     val twoPassModeEnabled: Boolean,
     val password: EncryptedString?,
-    val fido2AuthenticationOptions: Fido2AuthenticationOptions?
+    val fido2AuthenticationOptionsJson: String?
 )
 
 fun Account.isReady() = state == AccountState.Ready

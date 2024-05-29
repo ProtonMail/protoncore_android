@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.ui
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import androidx.activity.ComponentActivity
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -31,7 +32,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
@@ -41,6 +48,7 @@ import me.proton.core.auth.presentation.entity.TwoFAMechanisms
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
@@ -48,9 +56,12 @@ import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.openBrowserLink
-import me.proton.core.presentation.utils.showToast
 import me.proton.core.presentation.utils.validate
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
+import java.util.Optional
+import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * Second Factor Activity responsible for entering the second factor code.
@@ -58,7 +69,8 @@ import me.proton.core.util.kotlin.exhaustive
  * Optional, only shown for accounts with 2FA login enabled.
  */
 @AndroidEntryPoint
-class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding::inflate), TabLayout.OnTabSelectedListener {
+class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding::inflate),
+    TabLayout.OnTabSelectedListener {
 
     private val input: SecondFactorInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -69,8 +81,13 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
 
     private val viewModel by viewModels<SecondFactorViewModel>()
 
+    @Inject
+    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ComponentActivity>>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        performTwoFaWithSecurityKey.getOrNull()?.register(this, this::onTwoFaWithSecurityKeyResult)
 
         binding.apply {
             toolbar.setNavigationOnClickListener {
@@ -86,7 +103,6 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 }
             }
 
-            authenticateButton.onClick(::onAuthenticateClicked)
             secondFactorInput.setOnFocusLostListener { _, _ ->
                 secondFactorInput.validate()
                     .onFailure { secondFactorInput.setInputError() }
@@ -101,12 +117,14 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 when (it) {
                     is SecondFactorViewModel.State.Idle -> {
                         showLoading(false)
-                        setupTabs(it.showSecurityKey)
+                        setupTabs(it.fido2AuthenticationOptions)
                     }
+
                     is SecondFactorViewModel.State.Processing -> showLoading(true)
                     is SecondFactorViewModel.State.AccountSetupResult -> onAccountSetupResult(it.result)
                     is SecondFactorViewModel.State.Error.Message ->
                         onError(false, it.error.getUserMessage(resources))
+
                     is SecondFactorViewModel.State.Error.Unrecoverable -> onUnrecoverableError(it.message)
                 }.exhaustive
             }.launchIn(lifecycleScope)
@@ -126,13 +144,18 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         }.exhaustive
     }
 
-    private fun setupTabs(showSecurityKeyTab: Boolean) = with(binding) {
+    private fun setupTabs(fido2AuthenticationOptions: Fido2AuthenticationOptions?) = with(binding) {
+        val showSecurityKeyTab = fido2AuthenticationOptions != null
         tabLayout.isVisible = showSecurityKeyTab
         subtitleText.isVisible = showSecurityKeyTab
         if (showSecurityKeyTab) {
             selectSecurityKeyTab()
         } else {
             selectOneTimeCodeTab()
+        }
+
+        authenticateButton.onClick {
+            onAuthenticateClicked(fido2AuthenticationOptions)
         }
     }
 
@@ -145,9 +168,12 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         secondFactorInput.isEnabled = !loading
     }
 
-    private fun onAuthenticateClicked() {
+    private fun onAuthenticateClicked(fido2AuthenticationOptions: Fido2AuthenticationOptions?) {
         when (selectedTwoFAOption()) {
-            TwoFAMechanisms.SECURITY_KEY -> onAuthenticateSecurityKeyClicked()
+            TwoFAMechanisms.SECURITY_KEY -> onAuthenticateSecurityKeyClicked(
+                requireNotNull(fido2AuthenticationOptions)
+            )
+
             TwoFAMechanisms.ONE_TIME_CODE -> onAuthenticateOneTimeCodeClicked()
         }
     }
@@ -158,9 +184,73 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         }
         else TwoFAMechanisms.ONE_TIME_CODE
 
-    private fun onAuthenticateSecurityKeyClicked() {
-        // todo: call fido2 api for android
-        showToast("Fido2 Android")
+    private fun onAuthenticateSecurityKeyClicked(options: Fido2AuthenticationOptions) {
+        val performTwoFaWithSecurityKey = performTwoFaWithSecurityKey.getOrNull() ?: return
+        showLoading(true)
+
+        lifecycleScope.launch {
+            val launchResult = performTwoFaWithSecurityKey.invoke(
+                this@SecondFactorActivity,
+                options.publicKey
+            )
+
+            when (launchResult) {
+                is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> {
+                    showLoading(false)
+                    binding.root.errorSnack(
+                        message = launchResult.exception.localizedMessage
+                            ?: getString(R.string.auth_login_general_error)
+                    )
+                }
+
+                is PerformTwoFaWithSecurityKey.LaunchResult.Success -> Unit
+            }
+        }
+    }
+
+    private fun onSecurityKeyAuthSuccess(
+        result: PerformTwoFaWithSecurityKey.Result.Success,
+        options: Fido2PublicKeyCredentialRequestOptions
+    ) {
+        val proof = SecondFactorProof.Fido2(
+            publicKeyOptions = options,
+            clientData = result.response.clientDataJSON,
+            authenticatorData = result.response.authenticatorData,
+            signature = result.response.signature,
+            credentialID = result.rawId
+        )
+        viewModel.startSecondFactorFlow(
+            userId = UserId(input.userId),
+            encryptedPassword = input.password,
+            requiredAccountType = input.requiredAccountType,
+            isTwoPassModeNeeded = input.isTwoPassModeNeeded,
+            proof = proof
+        )
+    }
+
+    private fun onTwoFaWithSecurityKeyResult(
+        result: PerformTwoFaWithSecurityKey.Result,
+        options: Fido2PublicKeyCredentialRequestOptions
+    ) {
+        showLoading(false)
+        when (result) {
+            is PerformTwoFaWithSecurityKey.Result.Success -> onSecurityKeyAuthSuccess(result, options)
+
+            is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
+
+            is PerformTwoFaWithSecurityKey.Result.EmptyResult -> binding.root.errorSnack(
+                getString(R.string.auth_login_general_error)
+            )
+
+            is PerformTwoFaWithSecurityKey.Result.Error -> binding.root.errorSnack(
+                result.error.message ?: getString(R.string.auth_login_general_error)
+            )
+
+            is PerformTwoFaWithSecurityKey.Result.UnknownResult -> {
+                getString(R.string.auth_login_general_error)
+                CoreLogger.e(LogTag.FLOW_ERROR_2FA, result.toString())
+            }
+        }
     }
 
     private fun onAuthenticateOneTimeCodeClicked() {
@@ -254,11 +344,11 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         }
     }
 
-    override fun onTabUnselected(tab: TabLayout.Tab?) { }
+    override fun onTabUnselected(tab: TabLayout.Tab?) {}
 
-    override fun onTabReselected(p0: TabLayout.Tab?) { }
+    override fun onTabReselected(p0: TabLayout.Tab?) {}
 
-    private fun selectSecurityKeyTab() = with (binding) {
+    private fun selectSecurityKeyTab() = with(binding) {
         oneTimeCodeGroup.isVisible = false
         securityKeyGroup.isVisible = true
         recoveryCodeButton.isVisible = false
@@ -268,7 +358,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         }
     }
 
-    private fun selectOneTimeCodeTab() = with (binding) {
+    private fun selectOneTimeCodeTab() = with(binding) {
         oneTimeCodeGroup.isVisible = true
         securityKeyGroup.isVisible = false
         recoveryCodeButton.isVisible = true

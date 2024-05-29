@@ -19,9 +19,15 @@
 package me.proton.core.auth.data.repository
 
 import android.content.Context
+import android.util.Base64
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
+import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
+import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
+import me.proton.core.auth.data.api.fido2.toJson
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
+import me.proton.core.auth.data.api.request.Fido2Request
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
@@ -130,6 +136,7 @@ class AuthRepositoryImpl(
         return mapOf(name to frame)
     }
 
+    @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun performSecondFactor(
         sessionId: SessionId,
         secondFactorProof: SecondFactorProof
@@ -139,11 +146,37 @@ class AuthRepositoryImpl(
                 is SecondFactorProof.SecondFactorCode -> SecondFactorRequest(
                     secondFactorCode = secondFactorProof.code
                 )
+
                 is SecondFactorProof.SecondFactorSignature -> SecondFactorRequest(
                     universalTwoFactorRequest = UniversalTwoFactorRequest(
                         keyHandle = secondFactorProof.keyHandle,
                         clientData = secondFactorProof.clientData,
                         signatureData = secondFactorProof.signatureData
+                    )
+                )
+
+                is SecondFactorProof.Fido2 -> SecondFactorRequest(
+                    fido2 = Fido2Request(
+                        authenticationOptions = AuthenticationOptionsData(
+                            PublicKeyCredentialRequestOptionsResponse(
+                                challenge = secondFactorProof.publicKeyOptions.challenge,
+                                timeout = secondFactorProof.publicKeyOptions.timeout,
+                                rpId = secondFactorProof.publicKeyOptions.rpId,
+                                allowCredentials = secondFactorProof.publicKeyOptions.allowCredentials?.map {
+                                    PublicKeyCredentialDescriptorData(
+                                        type = it.type,
+                                        id = it.id,
+                                        transports = it.transports
+                                    )
+                                },
+                                userVerification = secondFactorProof.publicKeyOptions.userVerification,
+                                extensions = secondFactorProof.publicKeyOptions.extensions?.toJson()
+                            )
+                        ),
+                        clientData = secondFactorProof.clientData.toBase64(),
+                        authenticatorData = secondFactorProof.authenticatorData.toBase64(),
+                        signature = secondFactorProof.signature.toBase64(),
+                        credentialID = secondFactorProof.credentialID.toUByteArray()
                     )
                 )
             }
@@ -199,3 +232,5 @@ class AuthRepositoryImpl(
         }.valueOrThrow
     }
 }
+
+private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

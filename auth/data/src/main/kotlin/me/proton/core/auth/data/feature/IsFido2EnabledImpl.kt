@@ -19,22 +19,30 @@
 package me.proton.core.auth.data.feature
 
 import android.content.Context
+import androidx.activity.ComponentActivity
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.auth.data.R
 import me.proton.core.auth.domain.feature.IsFido2Enabled
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
+import java.util.Optional
 import javax.inject.Inject
 
 @ExcludeFromCoverage
 class IsFido2EnabledImpl @Inject constructor(
     @ApplicationContext context: Context,
     featureFlagManager: FeatureFlagManager,
+    private val performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ComponentActivity>>
 ) : IsFido2Enabled, IsFeatureFlagEnabledImpl(
     context,
     featureFlagManager,
     featureId = FeatureId("FIDO2Mobile"),
     localFlagId = R.bool.core_feature_fido2_enabled,
-)
+) {
+    override fun isLocalEnabled(): Boolean {
+        return super.isLocalEnabled() && performTwoFaWithSecurityKey.isPresent
+    }
+}

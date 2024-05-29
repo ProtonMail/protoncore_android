@@ -16,41 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.account.domain.entity
+package me.proton.core.auth.fido.domain.entity
 
 import kotlinx.serialization.Serializable
-
-@OptIn(ExperimentalUnsignedTypes::class)
-@Serializable
-data class Fido2RegisteredKey(
-    val attestationFormat: String,
-    val credentialID: UByteArray,
-    val name: String
-)
-
-@Serializable
-data class Fido2AuthenticationOptions(
-    val publicKey: Fido2PublicKeyCredentialRequestOptions
-)
-
-@OptIn(ExperimentalUnsignedTypes::class)
-@Serializable
-data class Fido2PublicKeyCredentialRequestOptions(
-    val challenge: UByteArray,
-    val timeout: ULong?, // milliseconds
-    val rpId: String?,
-    val allowCredentials: List<Fido2PublicKeyCredentialDescriptor>? = null,
-    val userVerification: String? = null,
-    val extensions: Fido2AuthenticationExtensionsClientInputs? = null
-)
-
-@OptIn(ExperimentalUnsignedTypes::class)
-@Serializable
-data class Fido2PublicKeyCredentialDescriptor(
-    val type: String,
-    val id: UByteArray,
-    val transports: List<String>?
-)
 
 /**
  * https://www.w3.org/TR/webauthn-2/#iface-authentication-extensions-client-inputs
@@ -58,7 +26,7 @@ data class Fido2PublicKeyCredentialDescriptor(
  * Extensions supported by FIDO2 API: https://developers.google.com/android/reference/com/google/android/gms/fido/fido2/api/common/AuthenticationExtensions.Builder
  */
 @Serializable
-data class Fido2AuthenticationExtensionsClientInputs(
+public data class Fido2AuthenticationExtensionsClientInputs(
     val appId: String?,
     val thirdPartyPayment: Boolean?,
     val uvm: Boolean?,

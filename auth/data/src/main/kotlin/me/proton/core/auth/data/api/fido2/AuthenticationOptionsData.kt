@@ -19,7 +19,7 @@
 package me.proton.core.auth.data.api.fido2
 
 import kotlinx.serialization.Serializable
-import me.proton.core.account.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
 
 /**
  * Corresponds to [CredentialRequestOptions Dictionary Extension](https://www.w3.org/TR/webauthn-2/#sctn-credentialrequestoptions-extension).

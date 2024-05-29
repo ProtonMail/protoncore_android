@@ -76,13 +76,13 @@ public final class me/proton/core/auth/domain/entity/BillingDetails {
 }
 
 public final class me/proton/core/auth/domain/entity/Fido2Info {
-	public fun <init> (Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;)V
-	public final fun component1 ()Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public fun <init> (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;)V
+	public final fun component1 ()Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
 	public final fun component2 ()Ljava/util/List;
-	public final fun copy (Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;)Lme/proton/core/auth/domain/entity/Fido2Info;
-	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/Fido2Info;Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/Fido2Info;
+	public final fun copy (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;)Lme/proton/core/auth/domain/entity/Fido2Info;
+	public static synthetic fun copy$default (Lme/proton/core/auth/domain/entity/Fido2Info;Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/domain/entity/Fido2Info;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAuthenticationOptions ()Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public final fun getAuthenticationOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
 	public final fun getRegisteredKeys ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -146,6 +146,15 @@ public final class me/proton/core/auth/domain/entity/SecondFactorMethod : java/l
 public abstract class me/proton/core/auth/domain/entity/SecondFactorProof {
 }
 
+public final class me/proton/core/auth/domain/entity/SecondFactorProof$Fido2 : me/proton/core/auth/domain/entity/SecondFactorProof {
+	public fun <init> (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;[B[B[B[B)V
+	public final fun getAuthenticatorData ()[B
+	public final fun getClientData ()[B
+	public final fun getCredentialID ()[B
+	public final fun getPublicKeyOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
+	public final fun getSignature ()[B
+}
+
 public final class me/proton/core/auth/domain/entity/SecondFactorProof$SecondFactorCode : me/proton/core/auth/domain/entity/SecondFactorProof {
 	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
@@ -170,6 +179,10 @@ public final class me/proton/core/auth/domain/entity/SecondFactorProof$SecondFac
 	public final fun getSignatureData ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/domain/entity/SessionDetailsExtKt {
+	public static final fun getFido2AuthenticationOptions (Lme/proton/core/account/domain/entity/SessionDetails;)Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
 }
 
 public final class me/proton/core/auth/domain/entity/SessionInfo {
@@ -210,7 +223,7 @@ public final class me/proton/core/auth/domain/entity/SessionInfo {
 }
 
 public final class me/proton/core/auth/domain/entity/SessionInfoKt {
-	public static final fun getFido2AuthOptions (Lme/proton/core/auth/domain/entity/SessionInfo;)Lme/proton/core/account/domain/entity/Fido2AuthenticationOptions;
+	public static final fun getFido2AuthOptions (Lme/proton/core/auth/domain/entity/SessionInfo;)Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationOptions;
 }
 
 public final class me/proton/core/auth/domain/exception/InvalidServerAuthenticationException : java/lang/IllegalArgumentException {
@@ -339,7 +352,7 @@ public final class me/proton/core/auth/domain/usecase/PerformLogout {
 
 public final class me/proton/core/auth/domain/usecase/PerformSecondFactor {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;)V
-	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/PostLoginAccountSetup {

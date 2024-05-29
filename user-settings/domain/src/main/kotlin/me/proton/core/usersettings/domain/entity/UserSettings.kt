@@ -18,7 +18,7 @@
 
 package me.proton.core.usersettings.domain.entity
 
-import me.proton.core.account.domain.entity.Fido2RegisteredKey
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.type.IntEnum
 

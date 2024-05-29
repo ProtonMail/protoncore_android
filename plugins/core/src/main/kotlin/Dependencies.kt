@@ -125,6 +125,8 @@ public val DependencyHandler.datastorePreferences: Any
     get() = dependency("androidx.datastore", module = "datastore-preferences") version `datastore version`
 public val DependencyHandler.drawerLayout: Any
     get() = androidx("drawerlayout") version `drawerLayout version`
+public val DependencyHandler.googlePlayFido: Any
+    get() = dependency("com.google.android.gms", module = "play-services-fido") version `googlePlayFido version`
 public val DependencyHandler.googlePlayBilling: Any
     get() = dependency("com.android.billingclient", module = "billing-ktx") version `googlePlayBilling version`
 public val DependencyHandler.googleTink: Any

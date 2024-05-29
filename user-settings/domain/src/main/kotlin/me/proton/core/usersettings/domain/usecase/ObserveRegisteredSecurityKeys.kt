@@ -21,7 +21,7 @@ package me.proton.core.usersettings.domain.usecase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
-import me.proton.core.account.domain.entity.Fido2RegisteredKey
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject

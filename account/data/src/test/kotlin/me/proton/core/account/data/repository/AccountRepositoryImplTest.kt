@@ -294,7 +294,7 @@ class AccountRepositoryImplTest {
                     secondFactorEnabled = true,
                     twoPassModeEnabled = true,
                     password = "encrypted-password",
-                    fido2AuthenticationOptions = null
+                    fido2AuthenticationOptionsJson = null
                 )
             )
         )
@@ -501,7 +501,7 @@ class AccountRepositoryImplTest {
                 secondFactorEnabled = true,
                 twoPassModeEnabled = true,
                 password = "encrypted-password",
-                fido2AuthenticationOptions = null
+                fido2AuthenticationOptionsJson = null
             )
         )
 

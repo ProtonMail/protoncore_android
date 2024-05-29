@@ -7,7 +7,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
-import me.proton.core.account.domain.entity.Fido2RegisteredKey
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.domain.entity.UserId
 import kotlin.test.BeforeTest

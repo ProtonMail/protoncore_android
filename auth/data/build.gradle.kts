@@ -29,8 +29,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(61)
-    lineCoveragePercentage.set(60)
+    branchCoveragePercentage.set(67)
+    lineCoveragePercentage.set(68)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -42,6 +42,7 @@ android {
 dependencies {
     api(
         project(Module.authDomain),
+        project(Module.authFidoDagger),
         project(Module.challengeData),
         project(Module.challengeDomain),
         project(Module.cryptoCommon),

@@ -18,6 +18,8 @@
 
 package me.proton.core.auth.domain.entity
 
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+
 sealed class SecondFactorProof {
 
     /**
@@ -31,5 +33,13 @@ sealed class SecondFactorProof {
         val keyHandle: String,
         val clientData: String,
         val signatureData: String
+    ) : SecondFactorProof()
+
+    class Fido2(
+        val publicKeyOptions: Fido2PublicKeyCredentialRequestOptions,
+        val clientData: ByteArray,
+        val authenticatorData: ByteArray,
+        val signature: ByteArray,
+        val credentialID: ByteArray
     ) : SecondFactorProof()
 }

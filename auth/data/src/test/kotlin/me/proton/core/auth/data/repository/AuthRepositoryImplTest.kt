@@ -19,13 +19,17 @@
 package me.proton.core.auth.data.repository
 
 import android.content.Context
+import android.util.Base64
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkObject
+import io.mockk.mockkStatic
 import io.mockk.slot
+import io.mockk.unmockkAll
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.response.SecondFactorResponse
 import me.proton.core.auth.data.api.response.SessionResponse
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.ScopeInfo
@@ -33,6 +37,7 @@ import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -47,9 +52,11 @@ import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.runTestWithResultContext
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.net.ConnectException
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
@@ -100,6 +107,7 @@ class AuthRepositoryImplTest {
     @Before
     fun beforeEveryTest() {
         mockkObject(ChallengeFrame.Device.Companion)
+        mockkStatic(Base64::class)
         coEvery { ChallengeFrame.Device.build(any()) } returns mockk()
 
         // GIVEN
@@ -117,6 +125,11 @@ class AuthRepositoryImplTest {
             )
         } returns apiManager
         repository = AuthRepositoryImpl(apiProvider, context, product, validateServerProof)
+    }
+
+    @After
+    fun tearDown() {
+        unmockkAll()
     }
 
     @Test
@@ -390,6 +403,42 @@ class AuthRepositoryImplTest {
         assertEquals(successScopeInfo, responseScopeInfo)
         assertEquals("test-scope", responseScopeInfo.scope)
         assertEquals(2, responseScopeInfo.scopes.size)
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    @Test
+    fun `performSecondFactor fido2`() = runTest(testDispatcherProvider.Main) {
+        // GIVEN
+        val blockSlot = slot<suspend AuthenticationApi.() -> ScopeInfo>()
+        val authenticationApi = mockk<AuthenticationApi> {
+            coEvery { performSecondFactor(any()) } returns SecondFactorResponse(
+                "test-scope", scopes = listOf("scope1", "scope2")
+            )
+        }
+        coEvery { apiManager.invoke(capture(blockSlot)) } coAnswers {
+            ApiResult.Success(blockSlot.captured.invoke(authenticationApi))
+        }
+        every { Base64.encodeToString(any(), any()) } returns "encoded"
+
+        // WHEN
+        val responseScopeInfo = repository.performSecondFactor(
+            testSessionId,
+            SecondFactorProof.Fido2(
+                publicKeyOptions = Fido2PublicKeyCredentialRequestOptions(
+                    challenge = ubyteArrayOf(1U, 2U, 3U),
+                    timeout = 600_000U,
+                    rpId = "example.test"
+                ),
+                clientData = byteArrayOf(4, 5, 6),
+                authenticatorData = byteArrayOf(7, 8, 9),
+                signature = byteArrayOf(10, 11, 12),
+                credentialID = byteArrayOf(13, 14, 15)
+            )
+        )
+
+        // THEN
+        assertEquals("test-scope", responseScopeInfo.scope)
+        assertContentEquals(listOf("scope1", "scope2"), responseScopeInfo.scopes)
     }
 
     @Test

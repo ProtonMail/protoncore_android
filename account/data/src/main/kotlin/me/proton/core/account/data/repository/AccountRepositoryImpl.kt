@@ -46,7 +46,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.exhaustive
-import me.proton.core.util.kotlin.serialize
 import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
@@ -277,7 +276,7 @@ class AccountRepositoryImpl @Inject constructor(
                 secondFactorEnabled = details.secondFactorEnabled,
                 twoPassModeEnabled = details.twoPassModeEnabled,
                 password = details.password,
-                fido2AuthenticationOptionsJson = details.fido2AuthenticationOptions?.serialize()
+                fido2AuthenticationOptionsJson = details.fido2AuthenticationOptionsJson
             )
         )
 

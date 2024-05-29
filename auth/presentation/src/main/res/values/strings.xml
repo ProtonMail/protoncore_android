@@ -58,7 +58,7 @@
     <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
     <string name="auth_2fa_tab_one_time_code">One-time code</string>
     <string name="auth_2fa_tab_security_key">Security key</string>
-    <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+    <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
     <string name="auth_2fa_label">Two-factor code</string>
     <string name="auth_2fa_recovery_code_label">Recovery code</string>
     <string name="auth_2fa_assistive_text">Enter the 6-digit code.</string>

@@ -42,7 +42,7 @@ class PerformSecondFactorTest {
 
     private lateinit var useCase: PerformSecondFactor
     private val testSessionId = "test-session-id"
-    private val testSecondFactorCode = "123456"
+    private val testSecondFactorCode = SecondFactorProof.SecondFactorCode("123456")
     private val testScope = "test-scope"
     private val testScope2 = "test-scope2"
     private val testScope3 = "test-scope3"
@@ -77,7 +77,7 @@ class PerformSecondFactorTest {
         coVerify(exactly = 1) {
             authRepository.performSecondFactor(
                 SessionId(testSessionId),
-                SecondFactorProof.SecondFactorCode(testSecondFactorCode)
+                testSecondFactorCode
             )
         }
     }
