@@ -26,6 +26,7 @@ object ResponseCodes {
     const val INVALID_REQUIREMENTS = 2000
     const val INVALID_VALUE = 2001
     const val VALUE_OUT_OF_BOUNDS = 2003
+    const val NOT_NULL = 2004
     const val NOT_SAME_AS_FIELD = 2010
     const val NOT_ALLOWED = 2011
     const val BANNED = 2028

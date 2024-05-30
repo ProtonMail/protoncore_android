@@ -294,6 +294,7 @@ public final class me/proton/core/network/domain/ResponseCodes {
 	public static final field INVALID_VALUE I
 	public static final field NOT_ALLOWED I
 	public static final field NOT_EXISTS I
+	public static final field NOT_NULL I
 	public static final field NOT_SAME_AS_FIELD I
 	public static final field OK I
 	public static final field PASSWORD_WRONG I

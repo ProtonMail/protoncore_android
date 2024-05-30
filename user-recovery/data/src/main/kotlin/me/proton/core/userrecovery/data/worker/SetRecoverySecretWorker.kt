@@ -31,7 +31,12 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNPROCESSABLE
+import me.proton.core.network.domain.ResponseCodes.NOT_NULL
+import me.proton.core.network.domain.hasProtonErrorCode
+import me.proton.core.network.domain.isHttpError
 import me.proton.core.network.domain.isRetryable
+import me.proton.core.user.domain.usecase.GetUser
 import me.proton.core.userrecovery.domain.usecase.SetRecoverySecretRemote
 import me.proton.core.userrecovery.domain.LogTag
 import me.proton.core.util.kotlin.CoreLogger
@@ -40,7 +45,8 @@ import me.proton.core.util.kotlin.CoreLogger
 class SetRecoverySecretWorker @AssistedInject constructor(
     @Assisted val context: Context,
     @Assisted params: WorkerParameters,
-    private val setRecoverySecretRemote: SetRecoverySecretRemote
+    private val setRecoverySecretRemote: SetRecoverySecretRemote,
+    private val getUser: GetUser
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -51,11 +57,16 @@ class SetRecoverySecretWorker @AssistedInject constructor(
         }.fold(
             onSuccess = { Result.success() },
             onFailure = { error ->
-                if (error is ApiException && error.isRetryable()) {
-                    Result.retry()
-                } else {
-                    CoreLogger.e(LogTag.DEFAULT, error)
-                    Result.failure()
+                when {
+                    error is ApiException && error.isRecoverySecretSetError() -> {
+                        getUser(userId,  refresh =true)
+                        Result.success()
+                    }
+                    error is ApiException && error.isRetryable() -> Result.retry()
+                    else -> {
+                        CoreLogger.e(LogTag.DEFAULT, error)
+                        Result.failure()
+                    }
                 }
             }
         )
@@ -74,3 +85,6 @@ class SetRecoverySecretWorker @AssistedInject constructor(
             .build()
     }
 }
+
+private fun ApiException.isRecoverySecretSetError() =
+    hasProtonErrorCode(NOT_NULL) && error.isHttpError(HTTP_UNPROCESSABLE)
