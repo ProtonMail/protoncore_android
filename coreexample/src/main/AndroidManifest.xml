@@ -111,7 +111,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:launchMode="singleInstance"
+            android:launchMode="standard"
             android:theme="@style/ProtonTheme.Splash.CoreExample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
