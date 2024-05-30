@@ -50,6 +50,7 @@ class AccountManagerImplTest {
     private val userId1 = UserId("user1")
     private val userId2 = UserId("user2")
     private val userId3 = UserId("user3")
+    private val userId4 = UserId("user4")
 
     private val user1 = mockk<User> {
         every { this@mockk.userId } returns userId1
@@ -61,6 +62,10 @@ class AccountManagerImplTest {
     }
     private val user3 = mockk<User> {
         every { this@mockk.userId } returns userId3
+        every { this@mockk.type } returns Type.CredentialLess
+    }
+    private val user4 = mockk<User> {
+        every { this@mockk.userId } returns userId4
         every { this@mockk.type } returns Type.CredentialLess
     }
 
@@ -112,6 +117,15 @@ class AccountManagerImplTest {
         sessionState = SessionState.Authenticated,
         details = AccountDetails(null, null)
     )
+    private val account4 = Account(
+        userId = userId4,
+        username = null,
+        email = null,
+        state = AccountState.Disabled,
+        sessionId = null,
+        sessionState = null,
+        details = AccountDetails(null, null)
+    )
 
     private val mocks = RepositoryMocks(account1, session1)
 
@@ -133,6 +147,7 @@ class AccountManagerImplTest {
         coEvery { mocks.userManager.getUser(userId1) } returns user1
         coEvery { mocks.userManager.getUser(userId2) } returns user2
         coEvery { mocks.userManager.getUser(userId3) } returns user3
+        coEvery { mocks.userManager.getUser(userId4) } returns user4
     }
 
     @Test
@@ -278,23 +293,26 @@ class AccountManagerImplTest {
     }
 
     @Test
-    fun `on handleAccountReady with existing credentialLess`() = runTest {
+    fun `on handleAccountReady with 1 existing credentialLess`() = runTest {
         mocks.setupAccountRepository(listOf(account2), listOf(session2))
         mocks.setupAuthRepository()
 
         accountManager.handleAccountReady(account1.userId)
 
-        coVerify(exactly = 1) { accountManager.disableAccount(userId2, keepSession = true) }
+        coVerify(exactly = 0) { accountManager.disableAccount(userId1, keepSession = any()) } // Self / Non-CredLess
+        coVerify(exactly = 1) { accountManager.disableAccount(userId2, keepSession = true) }  // Existing Ready
     }
 
     @Test
-    fun `on handleAccountReady with credentialLess`() = runTest {
-        mocks.setupAccountRepository(listOf(account2, account3), listOf(session2, session3))
+    fun `on handleAccountReady with self + 2 existing credentialLess`() = runTest {
+        mocks.setupAccountRepository(listOf(account2, account3, account4), listOf(session2, session3))
         mocks.setupAuthRepository()
 
         accountManager.handleAccountReady(account3.userId)
 
-        coVerify(exactly = 1) { accountManager.disableAccount(userId2, keepSession = false) }
+        coVerify(exactly = 1) { accountManager.disableAccount(userId2, keepSession = false) } // Ready
+        coVerify(exactly = 0) { accountManager.disableAccount(userId3, keepSession = any()) } // Self / CredLess
+        coVerify(exactly = 0) { accountManager.disableAccount(userId4, keepSession = any()) } // Disabled
     }
 
     @Test

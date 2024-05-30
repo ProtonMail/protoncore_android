@@ -227,7 +227,7 @@ class AccountManagerImpl @Inject constructor(
 
     private suspend fun disableCredentialLessAccounts(readyUserId: UserId) {
         val isReadyUserCredentialLess = userManager.getUser(readyUserId).isCredentialLess()
-        accountRepository.getAccounts().first().forEach { account ->
+        accountRepository.getAccounts().first().filter { it.state == Ready }.forEach { account ->
             val user = userManager.getUser(account.userId)
             when {
                 user.userId == readyUserId -> Unit // Ignore self.
