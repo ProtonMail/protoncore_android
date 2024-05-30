@@ -95,6 +95,10 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) as SignUpInput
     }
 
+    private val showCongrats: Boolean by lazy {
+        applicationContext.resources.getBoolean(R.bool.core_feature_auth_signup_show_congrats)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -264,15 +268,15 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     }
 
     private fun onLoginSuccess(userId: UserId) {
-        if (product == Product.Vpn) {
-            signupDone(userId)
-        } else {
+        if (showCongrats) {
             supportFragmentManager.showCongrats()
             supportFragmentManager.setFragmentResultListener(
                 SignupFinishedFragment.KEY_START_USING_SELECTED, this
             ) { _, _ ->
                 signupDone(userId)
             }
+        } else {
+            signupDone(userId)
         }
     }
 
