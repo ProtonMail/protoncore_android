@@ -26,7 +26,9 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.View
+import android.webkit.ConsoleMessage
 import android.webkit.JavascriptInterface
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.annotation.MainThread
 import androidx.core.os.bundleOf
@@ -41,6 +43,7 @@ import kotlinx.coroutines.launch
 import me.proton.core.humanverification.domain.utils.NetworkRequestOverrider
 import me.proton.core.humanverification.presentation.BuildConfig
 import me.proton.core.humanverification.presentation.HumanVerificationApiHost
+import me.proton.core.humanverification.presentation.LogTag
 import me.proton.core.humanverification.presentation.R
 import me.proton.core.humanverification.presentation.databinding.DialogHumanVerificationV3Binding
 import me.proton.core.humanverification.presentation.entity.HumanVerificationResult
@@ -69,6 +72,7 @@ import me.proton.core.presentation.utils.successSnack
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.deserializeOrNull
 import java.net.URLEncoder
 import javax.inject.Inject
@@ -153,6 +157,15 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
         // Workaround to get transparent webview background
         webView.setBackgroundColor(Color.argb(1, 255, 255, 255))
 
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onConsoleMessage(message: ConsoleMessage): Boolean {
+                CoreLogger.i(
+                    LogTag.DEFAULT,
+                    "Web console: ${message.message()} -- file ${message.sourceId()}(${message.lineNumber()})")
+                return true
+            }
+        }
+
         lifecycleScope.launch {
             val verificationParams = viewModel.getHumanVerificationExtraParams()
             loadWebView(webView, baseUrl, verificationParams)
@@ -162,7 +175,7 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     private fun loadWebView(webView: WebView, baseUrl: String, params: HV3ExtraParams?) {
         // At the moment, this is enough to properly load the Captcha with the extra headers.
         // This behavior could change and we might need to implement a WebViewClient to act as an interceptor.
-        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG)
+        WebView.setWebContentsDebuggingEnabled(BuildConfig.DEBUG || isDebuggingModeEnabled())
         val extraHeaders = extraHeaderProvider.headers.toMap().toMutableMap()
         val darkMode = context?.resources?.configuration?.isUsingDarkMode() ?: false
         val url = buildUrl(
@@ -247,9 +260,11 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
     }
 
     private fun setLoading(loading: Boolean) {
+        // Always display WebView when in debugging mode.
+        val showLoadingUi = if (isDebuggingModeEnabled()) false else loading
         with(binding) {
-            humanVerificationWebView.isVisible = !loading
-            progress.isVisible = loading
+            humanVerificationWebView.isVisible = !showLoadingUi
+            progress.isVisible = showLoadingUi
         }
     }
 
@@ -348,6 +363,8 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
 
     override val productMetricsDelegate: ProductMetricsDelegate
         get() = viewModel
+
+    private fun isDebuggingModeEnabled() = resources.getBoolean(R.bool.core_feature_human_verification_debugging_mode)
 }
 
 private fun Configuration.isUsingDarkMode(): Boolean =
