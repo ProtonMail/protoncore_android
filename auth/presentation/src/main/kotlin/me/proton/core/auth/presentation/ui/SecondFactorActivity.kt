@@ -145,12 +145,17 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     }
 
     private fun onAuthenticateClicked() {
-        val selectedTab = binding.tabLayout.selectedTabPosition
-        when (selectedTab) {
-            TwoFAMechanisms.SECURITY_KEY.ordinal -> onAuthenticateSecurityKeyClicked()
-            TwoFAMechanisms.ONE_TIME_CODE.ordinal -> onAuthenticateOneTimeCodeClicked()
+        when (selectedTwoFAOption()) {
+            TwoFAMechanisms.SECURITY_KEY -> onAuthenticateSecurityKeyClicked()
+            TwoFAMechanisms.ONE_TIME_CODE -> onAuthenticateOneTimeCodeClicked()
         }
     }
+
+    private fun selectedTwoFAOption(): TwoFAMechanisms =
+        if (binding.tabLayout.isVisible) {
+            TwoFAMechanisms.enumOf(binding.tabLayout.selectedTabPosition)
+        }
+        else TwoFAMechanisms.ONE_TIME_CODE
 
     private fun onAuthenticateSecurityKeyClicked() {
         // todo: call fido2 api for android
@@ -241,15 +246,20 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         RECOVERY_CODE
     }
 
-    private enum class TwoFAMechanisms {
-        SECURITY_KEY,
-        ONE_TIME_CODE
+    private enum class TwoFAMechanisms(val value: Int) {
+        SECURITY_KEY(0),
+        ONE_TIME_CODE(1);
+
+        companion object {
+            val map = values().associateBy { it.value }
+            fun enumOf(value: Int?) = value?.let { map[it] } ?: ONE_TIME_CODE
+        }
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {
-        when (tab?.position) {
-            TwoFAMechanisms.SECURITY_KEY.ordinal -> selectSecurityKeyTab()
-            TwoFAMechanisms.ONE_TIME_CODE.ordinal -> selectOneTimeCodeTab()
+        when (TwoFAMechanisms.enumOf(tab?.position)) {
+            TwoFAMechanisms.SECURITY_KEY -> selectSecurityKeyTab()
+            TwoFAMechanisms.ONE_TIME_CODE -> selectOneTimeCodeTab()
         }
     }
 
