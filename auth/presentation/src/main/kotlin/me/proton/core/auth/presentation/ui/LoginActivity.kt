@@ -30,6 +30,7 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -106,6 +107,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         if (it != null) onSuccess(UserId(it.userId), it.nextStep)
     }
 
+    private val showLongLogin: Boolean by lazy {
+        applicationContext.resources.getBoolean(R.bool.core_feature_auth_signin_show_long_login_toast)
+    }
+
     override val productMetricsDelegate: ProductMetricsDelegate get() = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -150,7 +155,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
             .onLongState(LoginViewModel.State.Processing) {
-                showToast(getString(R.string.auth_long_login))
+                if (showLongLogin) showToast(getString(R.string.auth_long_login))
             }
             .launchIn(lifecycleScope)
 

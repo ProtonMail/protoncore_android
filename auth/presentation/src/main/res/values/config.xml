@@ -18,5 +18,6 @@
 
 <resources>
     <bool name="core_feature_auth_signup_show_congrats">true</bool>
+    <bool name="core_feature_auth_signin_show_long_login_toast">true</bool>
     <string name="core_feature_auth_sso_redirect_scheme" translatable="false">proton</string>
 </resources>

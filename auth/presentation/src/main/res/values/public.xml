@@ -2,4 +2,5 @@
 <resources>
     <public name="core_feature_auth_sso_redirect_scheme" type="string" />
     <public name="core_feature_auth_signup_show_congrats" type="bool" />
+    <public name="core_feature_auth_signin_show_long_login_toast" type="bool" />
 </resources>
