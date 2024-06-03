@@ -55,12 +55,17 @@
   <string name="auth_help_other">Har du brug for hjælp? Kontakt os direkte.</string>
   <string name="auth_help_option_customer_support">Kundeservice</string>
   <string name="auth_2fa_title">To-faktor-godkendelse</string>
+  <string name="auth_2fa_subtitle">Din konto har flere 2FA-mekanismer konfigureret. Vælg, hvordan du vil bekræfte din identitet</string>
+  <string name="auth_2fa_tab_one_time_code">Engangskode</string>
+  <string name="auth_2fa_tab_security_key">Sikkerhedsnøgle</string>
+  <string name="auth_2fa_insert_security_key">Indsæt en sikkerhedsnøgle, der er tilknyttet din Proton-konto. <annotation link="more">Lær mere</annotation>.</string>
   <string name="auth_2fa_label">To-faktor-kode</string>
   <string name="auth_2fa_recovery_code_label">Gendannelseskode</string>
   <string name="auth_2fa_assistive_text">Indtast den sekscifrede kode.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Indtast en 8-tegns gendannelseskode.</string>
   <string name="auth_2fa_action">Godkend</string>
   <string name="auth_2fa_use_recovery_code">Brug gendannelseskode</string>
+  <string name="auth_2fa_learn_more">Lær mere</string>
   <string name="auth_2fa_use_2fa_code">Brug to-faktor-kode</string>
   <string name="auth_2fa_error_empty_code">Indtast den 6-cifrede kode.</string>
   <string name="auth_mailbox_title">Lås din postkasse op</string>

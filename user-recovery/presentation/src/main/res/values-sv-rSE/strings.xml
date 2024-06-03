@@ -20,6 +20,6 @@
   <string name="user_recovery_notification_title">Återställning av betrodd enhet</string>
   <string name="user_recovery_notification_body">Vi återställde automatiskt dina kontodata.</string>
   <string name="user_recovery_dialog_title">Återställning av betrodd enhet</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
+  <string name="user_recovery_dialog_text">Efter en lösenordsåterställning återställde vi data automatiskt för %1s.</string>
   <string name="user_recovery_dialog_dismiss">Jag förstår</string>
 </resources>

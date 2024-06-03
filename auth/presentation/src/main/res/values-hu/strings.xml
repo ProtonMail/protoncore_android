@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Egyéb bejelentkezési problémák</string>
   <string name="auth_help_other">További segítségre van szüksége? Lépjen velünk kapcsolatba.</string>
   <string name="auth_help_option_customer_support">Vevőszolgálat</string>
-  <string name="auth_2fa_title">Kétlépcsős hitelesítés</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Kétlépcsős kód</string>
   <string name="auth_2fa_recovery_code_label">Helyreállítási kód</string>
   <string name="auth_2fa_assistive_text">Írja be a hatjegyű kódot.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Írjon be egy 8 karakteres helyreállítási kódot.</string>
   <string name="auth_2fa_action">Azonosítás</string>
   <string name="auth_2fa_use_recovery_code">Helyreállító kód használata</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">Kétlépcsős kód használata</string>
   <string name="auth_2fa_error_empty_code">Írja be a hatjegyű kódot.</string>
   <string name="auth_mailbox_title">E-mail fiók feloldása</string>

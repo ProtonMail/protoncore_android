@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Otras cuestiones relacionadas con el registro</string>
   <string name="auth_help_other">¿Aún necesita ayuda? Contacta con nosotros directamente.</string>
   <string name="auth_help_option_customer_support">Soporte técnico</string>
-  <string name="auth_2fa_title">Autenticación de doble factor</string>
+  <string name="auth_2fa_title">Autenticación de dos factores</string>
+  <string name="auth_2fa_subtitle">Tu cuenta tiene varios mecanismos de 2FA configurados. Elige cómo deseas confirmar tu identidad.</string>
+  <string name="auth_2fa_tab_one_time_code">Código de un solo uso</string>
+  <string name="auth_2fa_tab_security_key">Clave de seguridad</string>
+  <string name="auth_2fa_insert_security_key">Inserta una clave de seguridad vinculada con tu cuenta de Proton. <annotation link="more">Más información</annotation></string>
   <string name="auth_2fa_label">Código de doble factor</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperación</string>
   <string name="auth_2fa_assistive_text">Introduce el código de 6 dígitos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduce un código de recuperación de 8 caracteres.</string>
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Utilizar un código de recuperación</string>
+  <string name="auth_2fa_learn_more">Más información</string>
   <string name="auth_2fa_use_2fa_code">Utilizar código de doble factor</string>
   <string name="auth_2fa_error_empty_code">Introduce el código de 6 dígitos.</string>
   <string name="auth_mailbox_title">Desbloquea tu buzón de correo</string>

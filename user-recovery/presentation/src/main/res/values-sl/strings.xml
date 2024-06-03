@@ -20,6 +20,6 @@
   <string name="user_recovery_notification_title">Obnovitev zaupanja vredne naprave.</string>
   <string name="user_recovery_notification_body">Podatke o računu smo samodejno obnovili.</string>
   <string name="user_recovery_dialog_title">Obnovitev zaupanja vredne naprave.</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
+  <string name="user_recovery_dialog_text">Po ponastavitvi gesla, smo samodejno obnovili podatke za %1s.</string>
   <string name="user_recovery_dialog_dismiss">Razumem</string>
 </resources>

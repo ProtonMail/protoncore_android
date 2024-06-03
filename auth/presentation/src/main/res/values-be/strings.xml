@@ -55,12 +55,17 @@
   <string name="auth_help_other">Усё яшчэ неабходна дапамога? Вы можаце звязацца непасрэдна з намі.</string>
   <string name="auth_help_option_customer_support">Падтрымка кліентаў</string>
   <string name="auth_2fa_title">Двухфактарная аўтэнтыфікацыя</string>
+  <string name="auth_2fa_subtitle">Ваш уліковы запіс мае некалькі механізмаў канфігурацыі 2ФА. Выберыце спосаб пацвярджэння вашай ідэнтычнасці.</string>
+  <string name="auth_2fa_tab_one_time_code">Аднаразовы код</string>
+  <string name="auth_2fa_tab_security_key">Ключ бяспекі</string>
+  <string name="auth_2fa_insert_security_key">Устаўце ключ бяспекі, які звязаны з вашым уліковым запісам Proton. <annotation link="more">Даведацца больш</annotation></string>
   <string name="auth_2fa_label">Двухфактарны код</string>
   <string name="auth_2fa_recovery_code_label">Код аднаўлення</string>
   <string name="auth_2fa_assistive_text">Увядзіце код з 6 лічбаў.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Увядзіце код аднаўлення з 8 сімвалаў.</string>
   <string name="auth_2fa_action">Аўтэнтыфікацыя</string>
   <string name="auth_2fa_use_recovery_code">Выкарыстоўваць код аднаўлення</string>
+  <string name="auth_2fa_learn_more">Даведацца больш</string>
   <string name="auth_2fa_use_2fa_code">Выкарыстоўваць двухфактарны код</string>
   <string name="auth_2fa_error_empty_code">Увядзіце код з 6 лічбаў.</string>
   <string name="auth_mailbox_title">Разблакіруйце вашу паштовую скрыню</string>

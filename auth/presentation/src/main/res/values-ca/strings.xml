@@ -25,7 +25,7 @@
   <string name="welcome_subtitle_drive_alt">La manera més segura d\'emmagatzemar fitxers. Pugeu-ne, sincronitzeu i compartiu amb el xifratge més potent disponible.</string>
   <string name="welcome_subtitle_calendar">Calendari xifrat que manté les vostres dades privades, segures i protegides.</string>
   <string name="welcome_subtitle_calendar_alt">El nostre calendari xifrat d\'extrem a extrem us ajuda a mantenir-vos organitzat, al dia i en control.</string>
-  <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat mitjançant el xifratge de la vostra connexió a Internet.</string>
+  <string name="welcome_subtitle_vpn">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat mitjançant el xifratge de la connexió a Internet.</string>
   <string name="welcome_subtitle_vpn_alt">VPN suïssa d\'alta velocitat que protegeix la vostra privacitat. Seguretat màxima, més de 1600 servidors i sense restriccions.</string>
   <string name="welcome_subtitle_pass">Manteniu les vostres contrasenyes segures, en un sol lloc i protegides per l\'empresa més fiable en privacitat.</string>
   <string name="welcome_subtitle_pass_alt">Manteniu les vostres contrasenyes segures, en un sol lloc i protegides per l\'empresa més fiable en privacitat.</string>
@@ -55,12 +55,17 @@
   <string name="auth_help_other">Encara necessiteu ajuda? Contacteu amb nosaltres directament.</string>
   <string name="auth_help_option_customer_support">Atenció al client</string>
   <string name="auth_2fa_title">Autenticació de dos factors</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">Codi d\'un sol ús</string>
+  <string name="auth_2fa_tab_security_key">Clau de seguretat</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Codi de dos factors</string>
   <string name="auth_2fa_recovery_code_label">Codi de recuperació</string>
   <string name="auth_2fa_assistive_text">Introduïu el codi de 6 dígits.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduïu un codi de recuperació de 8 caràcters.</string>
   <string name="auth_2fa_action">Autentica</string>
   <string name="auth_2fa_use_recovery_code">Utilitza un codi de recuperació</string>
+  <string name="auth_2fa_learn_more">Saber-ne més</string>
   <string name="auth_2fa_use_2fa_code">Utilitza un codi de dos factors</string>
   <string name="auth_2fa_error_empty_code">Introduïu el codi de 6 dígits.</string>
   <string name="auth_mailbox_title">Desbloquegeu la vostra bústia de correu</string>
@@ -115,7 +120,7 @@
   <string name="auth_signup_email">Correu electrònic</string>
   <string name="auth_signup_next">Següent</string>
   <string name="auth_signup_choose_password">Creeu la vostra contrasenya</string>
-  <string name="auth_signup_repeat_password">Repetir contrasenya</string>
+  <string name="auth_signup_repeat_password">Repeteix la contrasenya</string>
   <string name="auth_signup_recovery_method_title">Establiu el mètode de recuperació (opcional)</string>
   <string name="auth_signup_recovery_method_title_mandatory">Establir un mètode de recuperació</string>
   <string name="auth_signup_recovery_method_subtitle">Enviarem instruccions de recuperació a aquest correu electrònic o número de telèfon si no podeu accedir al vostre compte.</string>

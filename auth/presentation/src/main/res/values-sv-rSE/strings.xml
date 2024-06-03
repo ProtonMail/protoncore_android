@@ -55,12 +55,17 @@
   <string name="auth_help_other">Behöver du fortfarande hjälp? Kontakta oss direkt.</string>
   <string name="auth_help_option_customer_support">Kundsupport</string>
   <string name="auth_2fa_title">Tvåfaktorsautentisering</string>
+  <string name="auth_2fa_subtitle">Ditt konto har flera 2FA-mekanismer konfigurerade. Välj hur du vill bekräfta din identitet.</string>
+  <string name="auth_2fa_tab_one_time_code">Engångskod</string>
+  <string name="auth_2fa_tab_security_key">Säkerhetsnyckel</string>
+  <string name="auth_2fa_insert_security_key">Infoga en säkerhetsnyckel länkad till ditt Proton-konto. <annotation link="more">Lär dig mer</annotation></string>
   <string name="auth_2fa_label">Tvåfaktorskod</string>
   <string name="auth_2fa_recovery_code_label">Återställningskod</string>
   <string name="auth_2fa_assistive_text">Ange den 6-siffriga koden.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Ange en återställningskod på 8 tecken.</string>
   <string name="auth_2fa_action">Autentisera</string>
   <string name="auth_2fa_use_recovery_code">Använd återställningskod</string>
+  <string name="auth_2fa_learn_more">Lär dig mer</string>
   <string name="auth_2fa_use_2fa_code">Använd tvåfaktorskod</string>
   <string name="auth_2fa_error_empty_code">Ange den 6-siffriga koden.</string>
   <string name="auth_mailbox_title">Lås upp din brevlåda</string>

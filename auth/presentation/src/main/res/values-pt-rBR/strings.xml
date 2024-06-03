@@ -55,12 +55,17 @@
   <string name="auth_help_other">Ainda precisa de ajuda? Contate-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Suporte ao cliente</string>
   <string name="auth_2fa_title">Autenticação de dois fatores</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">Código de uso único</string>
+  <string name="auth_2fa_tab_security_key">Chave de segurança</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Código de dois fatores</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperação</string>
   <string name="auth_2fa_assistive_text">Insira o código de 6 dígitos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Insira um código de recuperação de 8 caracteres.</string>
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Usar código de recuperação</string>
+  <string name="auth_2fa_learn_more">Saiba mais</string>
   <string name="auth_2fa_use_2fa_code">Usar código de dois fatores</string>
   <string name="auth_2fa_error_empty_code">Insira o código de 6 dígitos.</string>
   <string name="auth_mailbox_title">Desbloqueie sua caixa de correio</string>
@@ -134,7 +139,7 @@
   <string name="auth_signup_error_create_to_continue">Crie uma conta para continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saiba mais</string>
   <string name="auth_signup_create_account_dialog_title">Ativar sua assinatura</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_text">Seu pagamento no Google Pay foi processado. Para ativar sua assinatura, crie sua conta da Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Cancelar</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continuar</string>
   <string name="auth_signup_error_username_blank">Nome de usuário não pode ficar em branco.</string>

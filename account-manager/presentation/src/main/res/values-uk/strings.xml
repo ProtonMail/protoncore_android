@@ -32,9 +32,9 @@
   <string name="account_settings_list_item_password_hint_insecure">Скидання пароля готове</string>
   <string name="account_settings_list_item_recovery_header">Резервна е-пошта</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не встановлено</string>
-  <string name="account_signout_dialog_title">Вийти з облікового запису?</string>
+  <string name="account_signout_dialog_title">Вийти?</string>
   <string name="account_signout_dialog_text">Дані, пов\'язані з вашим обліковим записом, залишаться на цьому пристрої, якщо ви не вирішите їх видалити.</string>
   <string name="account_signout_dialog_delete_information">Видалити всі пов\'язані дані</string>
-  <string name="account_signout_dialog_action_signout">Вийти з облікового запису</string>
+  <string name="account_signout_dialog_action_signout">Вийти</string>
   <string name="account_signout_dialog_action_cancel">Скасувати</string>
 </resources>

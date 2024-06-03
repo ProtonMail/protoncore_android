@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Autres problèmes de connexion</string>
   <string name="auth_help_other">Vous avez toujours besoin d\'aide ? Contactez-nous.</string>
   <string name="auth_help_option_customer_support">Service client</string>
-  <string name="auth_2fa_title">Authentification à deux facteurs</string>
+  <string name="auth_2fa_title">Authentification à deux facteurs (A2F)</string>
+  <string name="auth_2fa_subtitle">Plusieurs mécanismes A2F sont configurés sur votre compte. Choisissez la manière dont vous voulez confirmer votre identité.</string>
+  <string name="auth_2fa_tab_one_time_code">Code à usage unique</string>
+  <string name="auth_2fa_tab_security_key">Clé de sécurité</string>
+  <string name="auth_2fa_insert_security_key">Insérez une clé de sécurité liée à votre compte Proton. <annotation link="more">En savoir plus</annotation></string>
   <string name="auth_2fa_label">Code à deux facteurs</string>
   <string name="auth_2fa_recovery_code_label">Code de récupération</string>
   <string name="auth_2fa_assistive_text">Saisissez le code à 6 chiffres.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Saisissez un code de récupération de 8 caractères.</string>
   <string name="auth_2fa_action">S\'authentifier</string>
   <string name="auth_2fa_use_recovery_code">Utiliser un code de récupération</string>
+  <string name="auth_2fa_learn_more">En savoir plus</string>
   <string name="auth_2fa_use_2fa_code">Utiliser un code à deux facteurs</string>
   <string name="auth_2fa_error_empty_code">Saisissez le code à 6 chiffres.</string>
   <string name="auth_mailbox_title">Déverrouillez votre messagerie</string>
@@ -164,5 +169,5 @@
   <string name="auth_credentialless_guest_button">Continuer comme invité</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En utilisant cette application, vous acceptez nos <annotation link="terms">conditions générales</annotation>.</string>
   <string name="auth_credentialless_settings_title">Commencez à protéger votre vie privée.</string>
-  <string name="auth_credentialless_settings_subtitle">Obtenez un gestionnaire de mots de passe, Mail chiffré, Calendar et 1 Go de stockage sur le cloud gratuitement avec un compte Proton.</string>
+  <string name="auth_credentialless_settings_subtitle">Bénéficiez gratuitement d\'un gestionnaire de mots de passe, d\'une boite mail et d\'un calendrier chiffrés, ainsi que de 1 Go d\'espace de stockage cloud avec un compte Proton.</string>
 </resources>

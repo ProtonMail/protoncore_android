@@ -56,7 +56,7 @@
   <string name="account_recovery_info_insecure_description">Vous n\'êtes pas à l\'origine de cette demande ? \n\nSi vous n\'avez pas demandé à réinitialiser votre mot de passe, annulez-la immédiatement.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Réinitialiser le mot de passe ?</string>
-  <string name="account_recovery_reset_dialog_text">"Pour des raisons de sécurité, vous devrez attendre 72 heures avant de changer le mot de passe pour %1s. \n\nSi vous avez une méthode de récupération activée, essayez la récupération de compte à la place. Cela vous permet de changer votre mot de passe tout de suite."</string>
+  <string name="account_recovery_reset_dialog_text">"Pour des raisons de sécurité, vous devrez attendre 72 heures avant de changer le mot de passe pour %1s.\n\nSi vous avez activé une méthode de récupération, essayez la récupération de compte à la place. Cela vous permet de changer votre mot de passe tout de suite."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Demander une réinitialisation du mot de passe</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Utiliser une méthode de récupération</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Changez votre mot de passe dans votre navigateur web sans avoir à attendre la fin de la période de sécurité.</string>

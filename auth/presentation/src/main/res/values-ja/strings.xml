@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">その他のサインインに関する問題</string>
   <string name="auth_help_other">問題が解決しませんか？ 私達に直接お問い合わせください。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
-  <string name="auth_2fa_title">2 要素認証</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">2 要素認証コード</string>
   <string name="auth_2fa_recovery_code_label">回復用コード</string>
   <string name="auth_2fa_assistive_text">6 桁のコードを入力します。</string>
   <string name="auth_2fa_recovery_code_assistive_text">8 文字の回復コードを入力してください。</string>
   <string name="auth_2fa_action">認証</string>
   <string name="auth_2fa_use_recovery_code">回復用コードを使用</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">2 要素認証コードを使用</string>
   <string name="auth_2fa_error_empty_code">6桁のコードを入力してください</string>
   <string name="auth_mailbox_title">メールボックスのロック解除</string>

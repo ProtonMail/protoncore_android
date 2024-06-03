@@ -141,8 +141,8 @@
   <string name="unlimited_devices">기기 개수 무제한</string>
   <string name="integrated_2fa_authenticator">통합된 2단계 인증기</string>
   <string name="multiple_vaults">다중 금고</string>
-  <string name="unlimited_email_alias">무제한 나의 이메일 숨기기 별명</string>
-  <string name="custom_email_alias_domains">이메일 별명을 위한 지정 도메인</string>
+  <string name="unlimited_email_alias">무제한 Hide-my-email 별칭</string>
+  <string name="custom_email_alias_domains">이메일 별칭을 위한 커스텀 도메인</string>
   <string name="multiple_forwarding_mailboxes">다중 포워딩 메일함</string>
   <string name="priority_support">우선 지원</string>
   <string name="one_vault">1개 금고</string>

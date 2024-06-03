@@ -20,12 +20,12 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">S\'ha sol·licitat un restabliment de la contrasenya.</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">Ha estat sol·licitat un restabliment de contrasenya per a <b>%1$s</b>. Podrà canviar la seva contrasenya d\'aquí a %2$d hores.\n\nSi no ha estat vostè qui ha fet la sol·licitud, cancel·li-la ara.</item>
-    <item quantity="other">Ha estat sol·licitat un restabliment de contrasenya per a <b>%1$s</b>. Podrà canviar la seva contrasenya d\'aquí a %2$d hores.\n\nSi no ha estat vostè qui ha fet la sol·licitud, cancel·li-la ara.</item>
+    <item quantity="one">S\'ha sol·licitat un restabliment de contrasenya per a <b>%1$s</b>. Podrà canviar la seva contrasenya d\'aquí a %2$d hora.\n\nSi no ha estat vostè qui ha fet la sol·licitud, cancel·li-la ara.</item>
+    <item quantity="other">S\'ha sol·licitat un restabliment de contrasenya per a <b>%1$s</b>. Podrà canviar la seva contrasenya d\'aquí a %2$d hores.\n\nSi no ha estat vostè qui ha fet la sol·licitud, cancel·li-la ara.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Cancel·la el restabliment de contrasenya?</string>
-  <string name="account_recovery_cancel_subtitle">Introduïu la vostra contrasenya per a cancel·lar.</string>
+  <string name="account_recovery_cancel_subtitle">Introduexi la seva contrasenya per a cancel·lar.</string>
   <string name="account_recovery_cancel_password_label">Contrasenya actual</string>
   <string name="account_recovery_cancel_password_placeholder">Contrasenya</string>
   <string name="account_recovery_cancel_now">Cancel·la el restabliment de contrasenya</string>
@@ -55,7 +55,7 @@
   <string name="account_recovery_info_insecure_subtitle">Ara podeu restablir la contrasenya. El restabliment de la contrasenya està disponible fins a %1s.</string>
   <string name="account_recovery_info_insecure_description">No heu fet aquesta sol·licitud?\n\nSi no heu demanat restablir la contrasenya, cancel·leu la sol·licitud ara.</string>
   <!-- Password Reset Dialog -->
-  <string name="account_recovery_reset_dialog_title">Restableix la contrasenya?</string>
+  <string name="account_recovery_reset_dialog_title">Voleu restablir la contrasenya?</string>
   <string name="account_recovery_reset_dialog_text">"Per motius de seguretat, haurà d'esperar 72 hores abans de poder canviar la contrasenya de %1s.\n\nSi té configurat un mètode de recuperació, provi de recuperar el compte. Això li permetrà canviar la seva contrasenya immediatament."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Sol·licita el restabliment de contrasenya</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Utilitza un mètode de recuperació</string>

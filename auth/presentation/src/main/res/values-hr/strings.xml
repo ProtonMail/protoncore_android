@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Drugi problemi s prijavom</string>
   <string name="auth_help_other">Još trebate pomoć? Javite nam se izravno.</string>
   <string name="auth_help_option_customer_support">Korisnička podrška</string>
-  <string name="auth_2fa_title">Dvofaktorska autentikacija</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Kȏd dvofaktorske autentikacije</string>
   <string name="auth_2fa_recovery_code_label">Kȏd za oporavak</string>
   <string name="auth_2fa_assistive_text">Unesite 6-znamenkasti kôd.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Unesite 8-znamenkasti kod za oporavak.</string>
   <string name="auth_2fa_action">Autenticiraj</string>
   <string name="auth_2fa_use_recovery_code">Koristi kȏd za oporavak</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">Koristi kȏd dvofaktorske autentikacije</string>
   <string name="auth_2fa_error_empty_code">Unesite 6-znamenkasti kod.</string>
   <string name="auth_mailbox_title">Otključajte vaš poštanski sandučić</string>
@@ -135,7 +140,7 @@
   <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Poništi</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
   <string name="auth_signup_error_username_blank">Korisničko ime ne smije biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lozinke se ne poklapaju.</string>

@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Andere inlogproblemen</string>
   <string name="auth_help_other">Meer hulp nodig? Neem dan rechtstreeks contact me ons op.</string>
   <string name="auth_help_option_customer_support">Klantondersteuning</string>
-  <string name="auth_2fa_title">Tweestapsverificatie</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Tweestapsverificatiecode</string>
   <string name="auth_2fa_recovery_code_label">Herstelcode</string>
   <string name="auth_2fa_assistive_text">Voer de 6-cijferige code in.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Voer een herstelcode van 8 tekens in.</string>
   <string name="auth_2fa_action">Authenticeren</string>
   <string name="auth_2fa_use_recovery_code">Herstelcode gebruiken</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">Tweestapsverificatiecode gebruiken</string>
   <string name="auth_2fa_error_empty_code">Voer de 6-cijferige code in.</string>
   <string name="auth_mailbox_title">Ontgrendel uw mailbox</string>

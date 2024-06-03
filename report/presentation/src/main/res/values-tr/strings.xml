@@ -17,7 +17,7 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="core_report_bug_activity_title">Bir sorun bildireceğim</string>
+  <string name="core_report_bug_activity_title">Sorun bildireceğim</string>
   <string name="core_report_bug_close">Kapat</string>
   <string name="core_report_bug_subject_field_hint">Konu</string>
   <string name="core_report_bug_subject_field_required">Bir konu yazın</string>

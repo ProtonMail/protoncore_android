@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Uguren niḍen n tuqqna</string>
   <string name="auth_help_other">Mazal tesriḍ tallalt? Nermes-aɣ-d srid</string>
   <string name="auth_help_option_customer_support">Tallalt tudmawant</string>
-  <string name="auth_2fa_title">Asesteb s snat n tarrayin</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Tangalt n snat n tarayin</string>
   <string name="auth_2fa_recovery_code_label">Tangalt n tririt</string>
   <string name="auth_2fa_assistive_text">Sekcem tangalt n 6 n yizwilen.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Sekcem tangalt n tririt n 8 yisekkilen.</string>
   <string name="auth_2fa_action">Asesteb</string>
   <string name="auth_2fa_use_recovery_code">Seqdec tangalt n tririt</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">Seqdec tangalt n snat n tarayin</string>
   <string name="auth_2fa_error_empty_code">Sekcem tangalt n 6 n yizwilen.</string>
   <string name="auth_mailbox_title">Kkes asekker i tbewwaḍt-ik·im n ymayl</string>

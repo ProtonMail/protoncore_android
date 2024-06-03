@@ -36,5 +36,5 @@
   <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
   <string name="account_signout_dialog_delete_information">Remove all associated data</string>
   <string name="account_signout_dialog_action_signout">Sign out</string>
-  <string name="account_signout_dialog_action_cancel">Cancel</string>
+  <string name="account_signout_dialog_action_cancel">Poništi</string>
 </resources>

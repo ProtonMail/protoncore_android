@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Masalah masuk lainnya</string>
   <string name="auth_help_other">Masih perlu bantuan? Hubungi kami secara langsung.</string>
   <string name="auth_help_option_customer_support">Layanan pelanggan</string>
-  <string name="auth_2fa_title">Autentikasi dua faktor</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Akun Anda memiliki beberapa mekanisme 2FA yang terpasang. Silakan tentukan bagaimana Anda ingin mengonfirmasi identitas Anda.</string>
+  <string name="auth_2fa_tab_one_time_code">Kode sekali pakai</string>
+  <string name="auth_2fa_tab_security_key">Kunci keamanan</string>
+  <string name="auth_2fa_insert_security_key">Masukkan kunci keamanan yang terhubung dengan Akun Proton Anda. <annotation link="more">Pelajari lebih lanjut</annotation></string>
   <string name="auth_2fa_label">Kode dua faktor</string>
   <string name="auth_2fa_recovery_code_label">Kode pemulihan</string>
   <string name="auth_2fa_assistive_text">Masukkan kode 6 digit.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Masukkan kode pemulihan 8 karakter.</string>
   <string name="auth_2fa_action">Autentikasi</string>
   <string name="auth_2fa_use_recovery_code">Gunakan kode pemulihan</string>
+  <string name="auth_2fa_learn_more">Pelajari lebih lanjut</string>
   <string name="auth_2fa_use_2fa_code">Gunakan kode dua faktor</string>
   <string name="auth_2fa_error_empty_code">Masukkan kode 6 digit yang Anda miliki.</string>
   <string name="auth_mailbox_title">Buka kunci kotak surat Anda</string>

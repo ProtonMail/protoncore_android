@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">سایر مشکلات ورود</string>
   <string name="auth_help_other">هنوز به کمک نیاز دارید؟ با ما به صورت مستقیم تماس بگیرید.</string>
   <string name="auth_help_option_customer_support">پشتیبانی مشتری</string>
-  <string name="auth_2fa_title">احراز هویت دو مرحله‌ای</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">کد دو مرحله‌ای</string>
   <string name="auth_2fa_recovery_code_label">کد بازیابی</string>
   <string name="auth_2fa_assistive_text">کد ۶-رقمی را وارد کنید.</string>
   <string name="auth_2fa_recovery_code_assistive_text">یک کد بازیابی 8 نویسه ای را وارد کنید.</string>
   <string name="auth_2fa_action">احراز هویت</string>
   <string name="auth_2fa_use_recovery_code">از کد بازیابی استفاده کنید</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">استفاده از کد دو مرحله ای</string>
   <string name="auth_2fa_error_empty_code">کد ۶-رقمی را وارد کنید.</string>
   <string name="auth_mailbox_title">قفل صندوق پیام خود را باز کنید</string>

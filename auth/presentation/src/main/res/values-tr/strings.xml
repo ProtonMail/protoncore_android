@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Diğer oturum açma sorunları</string>
   <string name="auth_help_other">Hala yardım gerekiyor mu? Doğrudan bizimle görüşün.</string>
   <string name="auth_help_option_customer_support">Müşteri desteği</string>
-  <string name="auth_2fa_title">İki adımlı doğrulama</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">İki adımlı doğrulama kodu</string>
   <string name="auth_2fa_recovery_code_label">Kurtarma kodu</string>
   <string name="auth_2fa_assistive_text">6 rakamlı kodu yazın.</string>
   <string name="auth_2fa_recovery_code_assistive_text">8 karakterli kurtarma kodunu yazın.</string>
   <string name="auth_2fa_action">Kimliği doğrula</string>
   <string name="auth_2fa_use_recovery_code">Kurtarma kodunu kullan</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">İki adımlı doğrulama kodu kullanılsın</string>
   <string name="auth_2fa_error_empty_code">6 rakamlı kodu yazın.</string>
   <string name="auth_mailbox_title">Posta kutunuzun kilidini açın</string>

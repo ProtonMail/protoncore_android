@@ -56,7 +56,7 @@
   <string name="account_recovery_info_insecure_description">Não fez essa solicitação?\n\nSe você não solicitou a redefinição da sua senha, cancele agora a solicitação.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Redefinir senha?</string>
-  <string name="account_recovery_reset_dialog_text">"Por razões de segurança, você terá de esperar 72 horas antes de poder mudar a senha de %1s.\n\nSe você tem um método de recuperação configurado, tente recuperar sua conta. Isso permitirá que você mude sua senha imediatamente"</string>
+  <string name="account_recovery_reset_dialog_text">"Por razões de segurança, você terá de esperar 72 horas antes de poder mudar a senha de %1s.\n\nSe você tem um método de recuperação configurado, tente recuperar sua conta. Isso permitirá que você mude sua senha imediatamente."</string>
   <string name="account_recovery_reset_dialog_action_request_reset">Solicitar redefinição de senha</string>
   <string name="account_recovery_reset_dialog_action_use_recovery">Usar um método de recuperação</string>
   <string name="account_recovery_reset_dialog_action_use_recovery_hint">Altere sua senha no seu navegador sem ter de esperar o período de segurança</string>

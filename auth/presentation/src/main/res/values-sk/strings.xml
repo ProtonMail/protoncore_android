@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Iné prihlasovacie problémy</string>
   <string name="auth_help_other">Stále potrebujete pomoc? Kontaktujte nás ihneď.</string>
   <string name="auth_help_option_customer_support">Zákaznická podpora</string>
-  <string name="auth_2fa_title">Dvojstupňové overenie</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Kód pre dvojstupňové overenie</string>
   <string name="auth_2fa_recovery_code_label">Kód pre obnovenie</string>
   <string name="auth_2fa_assistive_text">Zadajte 6-miestny kód.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Zadajte 8-miestny obnovovací kód.</string>
   <string name="auth_2fa_action">Overiť</string>
   <string name="auth_2fa_use_recovery_code">Použiť kód pre obnovenie</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">Použiť kód pre dvojstupňové overenie</string>
   <string name="auth_2fa_error_empty_code">Zadajte 6-miestny kód.</string>
   <string name="auth_mailbox_title">Odomknúť vašu poštovú schránku</string>

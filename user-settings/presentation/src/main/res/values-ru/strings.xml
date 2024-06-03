@@ -39,7 +39,7 @@
   <string name="settings_password_management_header">Изменить пароль</string>
   <string name="settings_login_password_hint_current">Текущий пароль</string>
   <string name="settings_login_password_hint_new">Новый пароль</string>
-  <string name="settings_login_password_hint_new_confirm">Confirm new password</string>
+  <string name="settings_login_password_hint_new_confirm">Подтвердите новый пароль</string>
   <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
   <string name="settings_mailbox_password_hint_new">New encryption password</string>
   <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>

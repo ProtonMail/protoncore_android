@@ -37,9 +37,9 @@
     <item quantity="other">Pagament per %d mesos</item>
   </plurals>
   <string name="plans_billed_yearly">*Facturat anualment a %s</string>
-  <string name="plans_billed_monthly">Facturat cada mesc</string>
+  <string name="plans_billed_monthly">Facturat mensualment</string>
   <string name="plans_billing_monthly">Durant 1 mes</string>
-  <string name="plans_billing_yearly">1 any</string>
+  <string name="plans_billing_yearly">Durant 1 any</string>
   <string name="plans_billing_two_years">Durant 2 anys</string>
   <plurals name="plans_billing_other_period">
     <item quantity="one">Per a %d mes</item>
@@ -164,8 +164,8 @@
   <string name="ten_hide_my_email_aliases">10 àlies de Hide-my-email</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Upgrade storage</string>
+  <string name="upgrade_storage_current_drive_storage">Drive: %d%% ple</string>
+  <string name="upgrade_storage_current_mail_storage">Mail: %d%% ple</string>
+  <string name="upgrade_storage_subtitle">Millora l\'emmagatzematge</string>
   <!-- endregion -->
 </resources>

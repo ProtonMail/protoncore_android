@@ -22,7 +22,7 @@
   <string name="welcome_subtitle_mail">O e-mail encriptado que mantém as suas conversas privadas. A caixa de entrada pertence apenas a si.</string>
   <string name="welcome_subtitle_mail_alt">Privacidade. Segurança. Conveniência. E-mail encriptado que lhe dá controle completo dos seus dados pessoais.</string>
   <string name="welcome_subtitle_drive">A conveniência de armazenamento em nuvem e a segurança de tecnologia de encriptação. Finalmente uma solução de armazenamento em nuvem em que pode confiar.</string>
-  <string name="welcome_subtitle_drive_alt">A forma mais segura de armazenar os seus ficheiros. Carregar, sincronizar e partilhar com a mais forte encriptação disponível.</string>
+  <string name="welcome_subtitle_drive_alt">A forma mais segura de armazenar os seus ficheiros. Enviar, sincronizar e partilhar com a mais forte encriptação disponível.</string>
   <string name="welcome_subtitle_calendar">Calendário encriptado que mantém os eventos da sua vida privados e seguros.</string>
   <string name="welcome_subtitle_calendar_alt">O nosso calendário encriptado ponta a ponta ajuda-o a estar organizado, na rota e em controle.</string>
   <string name="welcome_subtitle_vpn">VPN suiça de alta velocidade que salvaguarda a sua privacidade através da encriptação da ligação da internet.</string>
@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">Outros problemas de acesso</string>
   <string name="auth_help_other">Ainda precisa de ajuda? Contacte-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Apoio ao cliente</string>
-  <string name="auth_2fa_title">Autenticação em dois passos</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">Código de uso único</string>
+  <string name="auth_2fa_tab_security_key">Chave de segurança</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Código de dois passos</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperação</string>
   <string name="auth_2fa_assistive_text">Inserir o código de 6 algarismos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduza um código de recuperação de 8 carateres.</string>
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Usar código de recuperação</string>
+  <string name="auth_2fa_learn_more">Saiba mais</string>
   <string name="auth_2fa_use_2fa_code">Usar código em dois passos</string>
   <string name="auth_2fa_error_empty_code">Introduza o código de 6 dígitos.</string>
   <string name="auth_mailbox_title">Desbloqueie a sua caixa de correio</string>
@@ -132,15 +137,15 @@
   <string name="auth_signup_set_recovery">Definir método de recuperação</string>
   <string name="auth_signup_no_connectivity">Sem ligação para exibir os Termos e Condições.</string>
   <string name="auth_signup_error_create_to_continue">Por favor, crie uma conta para continuar</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Saiba mais</string>
+  <string name="auth_signup_create_account_dialog_title">Ativar a sua subscrição</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Cancelar</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continuar</string>
   <string name="auth_signup_error_username_blank">O nome de utilizador não pode estar em branco.</string>
   <string name="auth_signup_error_passwords_do_not_match">As palavras-passe não correspondem.</string>
   <string name="auth_signup_validation_password_length">A palavra-passe deve ter pelo menos 8 carateres.</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">A palavra-passe não é permitida.</string>
   <string name="auth_signup_validation_password">A palavra-passe é obrigatória.</string>
   <string name="auth_signup_your_account_is_being_setup">A sua conta está a ser criada…</string>
   <string name="auth_signup_please_wait">Normalmente, não demora mais do que um minuto.</string>
@@ -162,7 +167,7 @@
   <string name="auth_credentialless_vpn_title">Bem-vindo à Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Navegue em privado, aceda a conteúdos bloqueados e desfrute da liberdade digital.</string>
   <string name="auth_credentialless_guest_button">Continuar como convidado</string>
-  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao usar este aplicativo, aceita os nossos <annotation link="terms">Termos e Condições</annotation>.</string>
+  <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao usar esta aplicação, aceita os nossos <annotation link="terms">Termos e Condições</annotation>.</string>
   <string name="auth_credentialless_settings_title">Faça a mudança para a privacidade.</string>
   <string name="auth_credentialless_settings_subtitle">Obtenha um gestor de palavras-passe, Mail e Calendar encriptados e 1 GB de armazenamento na nuvem gratuitamente com uma Conta Proton.</string>
 </resources>

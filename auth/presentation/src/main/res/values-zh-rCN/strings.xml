@@ -54,13 +54,18 @@
   <string name="auth_help_option_other">其他登录问题</string>
   <string name="auth_help_other">仍需帮助？请直接联系我们。</string>
   <string name="auth_help_option_customer_support">客服</string>
-  <string name="auth_2fa_title">双重验证</string>
+  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">双重验证码</string>
   <string name="auth_2fa_recovery_code_label">恢复码</string>
   <string name="auth_2fa_assistive_text">请输入 6 位验证码。</string>
   <string name="auth_2fa_recovery_code_assistive_text">请输入 8 位恢复码。</string>
   <string name="auth_2fa_action">验证账户</string>
   <string name="auth_2fa_use_recovery_code">使用恢复码</string>
+  <string name="auth_2fa_learn_more">Learn more</string>
   <string name="auth_2fa_use_2fa_code">输入一次性密码</string>
   <string name="auth_2fa_error_empty_code">请输入 6 位验证码。</string>
   <string name="auth_mailbox_title">解锁您的邮箱</string>

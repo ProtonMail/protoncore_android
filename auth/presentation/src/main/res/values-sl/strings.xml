@@ -55,12 +55,17 @@
   <string name="auth_help_other">Še vedno potrebuješ pomoč? Kontaktirajte nas neposredno.</string>
   <string name="auth_help_option_customer_support">Podporo strankam</string>
   <string name="auth_2fa_title">Dvojno preverjanja pristnosti</string>
+  <string name="auth_2fa_subtitle">V vašem računu je konfiguriranih več 2FA mehanizmov. Izberite, s katerim želite potrditi svojo identiteto.</string>
+  <string name="auth_2fa_tab_one_time_code">Enkratno geslo</string>
+  <string name="auth_2fa_tab_security_key">Varnostni ključ</string>
+  <string name="auth_2fa_insert_security_key">Vstavite varnostni ključ, povezan z vašim Proton računom. <annotation link="more">Več informacij</annotation></string>
   <string name="auth_2fa_label">Geslo za dvojno preverjanje pristnosti</string>
   <string name="auth_2fa_recovery_code_label">Koda za obnovitev</string>
   <string name="auth_2fa_assistive_text">Vnesite 6-mestno kodo.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Vnesite 8-mestno kodo za obnovitev.</string>
   <string name="auth_2fa_action">Preverjanje pristnosti</string>
   <string name="auth_2fa_use_recovery_code">Uporabite kodo za obnovitev</string>
+  <string name="auth_2fa_learn_more">Več informacij</string>
   <string name="auth_2fa_use_2fa_code">Uporabite kodo za dvostopenjsko preverjanje</string>
   <string name="auth_2fa_error_empty_code">Vnesite 6-mestno kodo.</string>
   <string name="auth_mailbox_title">Odklepanje nabiralnika</string>
@@ -132,15 +137,15 @@
   <string name="auth_signup_set_recovery">Nastavitev načina obnovitve</string>
   <string name="auth_signup_no_connectivity">Ni povezave za prikaz Pogojev storitve.</string>
   <string name="auth_signup_error_create_to_continue">Za nadaljevanje ustvarite račun</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Več informacij</string>
+  <string name="auth_signup_create_account_dialog_title">Aktivirajte naročnino</string>
+  <string name="auth_signup_create_account_dialog_text">Vaše Google Pay plačilo je bilo obdelano. Če želite aktivirati naročnino, morate ustvariti svoj Proton račun.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Prekliči</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Nadaljuj</string>
   <string name="auth_signup_error_username_blank">Uporabniško ime ne sme biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Gesli se ne ujemata.</string>
   <string name="auth_signup_validation_password_length">Vaše geslo mora imeti najmanj 8 znakov</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">Nedovoljeno geslo</string>
   <string name="auth_signup_validation_password">Geslo ne sme biti prazno.</string>
   <string name="auth_signup_your_account_is_being_setup">Vaš račun se ustvarja ...</string>
   <string name="auth_signup_please_wait">Običajno traja največ minuto.</string>
@@ -163,6 +168,6 @@
   <string name="auth_credentialless_vpn_subtitle">Brskajte zasebno, dostopajte do blokirane vsebine in uživajte v digitalni svobodi.</string>
   <string name="auth_credentialless_guest_button">Nadaljujte kot gost</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Z uporabo te aplikacije sprejemate naše <annotation link="terms">Pogoje storitve</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Naredite korak v večji zasebnosti.</string>
-  <string name="auth_credentialless_settings_subtitle">Z brezplačnim računom Proton dobite upravitelja gesel, šifrirano e-pošto, koledar ter 1 GB shrambe v oblaku.</string>
+  <string name="auth_credentialless_settings_title">Zakorakajte v zasebnost.</string>
+  <string name="auth_credentialless_settings_subtitle">Z brezplačnim računom Proton dobite upravljalnik gesel, šifrirano e-pošto in koledar ter 1 GB shrambe v oblaku.</string>
 </resources>
