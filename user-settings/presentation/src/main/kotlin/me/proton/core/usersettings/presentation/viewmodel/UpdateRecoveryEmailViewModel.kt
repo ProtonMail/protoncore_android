@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
@@ -45,15 +46,44 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
 
     val state = _state.asStateFlow()
 
-    var secondFactorEnabled: Boolean? = null
+    private var secondFactorEnabled: Boolean? = null
+
+    private var inputPassword: EncryptedString? = null
+        set(value) {
+            field = value?.encrypt(keyStoreCrypto)
+        }
+
+    private var recoveryEmail: String? = null
+    private var userId: UserId? = null
 
     sealed class State {
         object Idle : State()
         object LoadingCurrent : State()
         object UpdatingCurrent : State()
+        object PasswordNeeded : State()
+        object SecondFactorNeeded : State()
         data class LoadingSuccess(val recoveryEmail: String?) : State()
         data class UpdatingSuccess(val recoveryEmail: String?) : State()
         data class Error(val error: Throwable) : State()
+    }
+
+    fun setNewRecoveryEmail(id: UserId, email: String) {
+        recoveryEmail = email
+        userId = id
+        _state.tryEmit(State.PasswordNeeded)
+    }
+
+    fun setPassword(password: String) {
+        inputPassword = password
+        if (secondFactorEnabled == true) {
+            _state.tryEmit(State.SecondFactorNeeded)
+        } else {
+            updateRecoveryEmail()
+        }
+    }
+
+    fun setSecondFactor(secondFactor: String) {
+        updateRecoveryEmail(secondFactor)
     }
 
     /**
@@ -70,22 +100,19 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
 
+
     /**
      * Updates (replaces) the user's recovery email address.
      */
-    fun updateRecoveryEmail(
-        userId: UserId,
-        newRecoveryEmail: String,
-        password: String,
-        secondFactorCode: String
+    private fun updateRecoveryEmail(
+        secondFactorCode: String? = null
     ) = flow {
         emit(State.UpdatingCurrent)
-        val encryptedPassword = password.encrypt(keyStoreCrypto)
         val updateRecoveryEmailResult = performUpdateRecoveryEmail(
-            sessionUserId = userId,
-            newRecoveryEmail = newRecoveryEmail,
-            password = encryptedPassword,
-            secondFactorCode = secondFactorCode
+            sessionUserId = checkNotNull(userId),
+            newRecoveryEmail = checkNotNull(recoveryEmail),
+            password = checkNotNull(inputPassword),
+            secondFactorCode = secondFactorCode ?: "" // default
         )
         emit(State.UpdatingSuccess(updateRecoveryEmailResult.email?.value))
     }.catch { error ->

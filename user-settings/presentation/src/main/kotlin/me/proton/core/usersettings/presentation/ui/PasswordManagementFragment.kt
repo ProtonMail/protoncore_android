@@ -115,7 +115,7 @@ class PasswordManagementFragment :
             }
         }
 
-        val twoFactorLauncher = childFragmentManager.registerShowPasswordDialogResultLauncher(this) { result ->
+        val twoFactorLauncher = childFragmentManager.registerShowTwoFADialogResultLauncher(this, userId) { result ->
             if (result != null) {
                 viewModel.perform(Action.SetTwoFactor(userId, result.twoFA))
             } else {
@@ -149,7 +149,7 @@ class PasswordManagementFragment :
                     }
 
                     is PasswordManagementViewModel.State.TwoFactorNeeded -> {
-                        twoFactorLauncher.show(ShowPasswordInput(showPassword = false, showTwoFA = true))
+                        twoFactorLauncher.show(Unit)
                     }
 
                     is PasswordManagementViewModel.State.Success -> {

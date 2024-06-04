@@ -216,6 +216,7 @@ class PasswordManagementViewModel @Inject constructor(
             null -> flowOf(State.Idle)
         }
     }.retryWhen { cause, _ ->
+        pendingUpdate = null
         emit(State.Error(cause))
         perform(Action.ObserveState(requireNotNull(currentUserId.value)))
     }.stateIn(

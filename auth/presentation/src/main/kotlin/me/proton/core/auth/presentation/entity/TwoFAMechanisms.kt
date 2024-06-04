@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,11 +18,12 @@
 
 package me.proton.core.auth.presentation.entity
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+enum class TwoFAMechanisms(val value: Int) {
+    SECURITY_KEY(0),
+    ONE_TIME_CODE(1);
 
-@Parcelize
-data class PasswordAnd2FAInput(
-    val password: String,
-    val twoFA: String
-): Parcelable
+    companion object {
+        val map = values().associateBy { it.value }
+        fun enumOf(value: Int?) = value?.let { map[it] } ?: ONE_TIME_CODE
+    }
+}

@@ -22,47 +22,27 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import me.proton.core.auth.presentation.databinding.DialogEnterPasswordBinding
-import me.proton.core.auth.presentation.entity.PasswordAnd2FAInput
+import me.proton.core.auth.presentation.entity.PasswordInput
 import me.proton.core.presentation.R
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.onClick
 
-class PasswordAnd2FADialog : DialogFragment() {
+class ConfirmPasswordInputDialog : DialogFragment() {
 
     companion object {
-        private const val ARG_SHOW_TWO_FA = "arg.showTwoFA"
-        private const val ARG_SHOW_PASSWORD = "arg.showPassword"
+        const val KEY_PASS_SET = "key.pass_set"
+        const val BUNDLE_KEY_PASS_DATA = "bundle.pass_data"
 
-        const val KEY_PASS_2FA_SET = "key.pass_2fa_set"
-        const val BUNDLE_KEY_PASS_2FA_DATA = "bundle.pass_2fa_data"
-
-        operator fun invoke(
-            showPassword: Boolean,
-            showTwoFA: Boolean
-        ) = PasswordAnd2FADialog().apply {
-            arguments = bundleOf(
-                ARG_SHOW_TWO_FA to showTwoFA,
-                ARG_SHOW_PASSWORD to showPassword
-            )
-        }
+        operator fun invoke() = ConfirmPasswordInputDialog()
     }
 
     private val screenProtector = ScreenContentProtector(ProtectScreenConfiguration())
-
-    private val twoFAVisibility: Int by lazy {
-        if (requireArguments().getBoolean(ARG_SHOW_TWO_FA)) View.VISIBLE else View.GONE
-    }
-
-    private val passwordVisibility: Int by lazy {
-        if (requireArguments().getBoolean(ARG_SHOW_PASSWORD)) View.VISIBLE else View.GONE
-    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
@@ -70,8 +50,6 @@ class PasswordAnd2FADialog : DialogFragment() {
         screenProtector.protect(requireActivity())
 
         val binding = DialogEnterPasswordBinding.inflate(LayoutInflater.from(requireContext()))
-        binding.twoFA.visibility = twoFAVisibility
-        binding.password.visibility = passwordVisibility
         val builder = MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.presentation_authenticate)
             // passing null to the listeners is a workaround to prevent the dialog to auto-dismiss on button click
@@ -88,10 +66,8 @@ class PasswordAnd2FADialog : DialogFragment() {
                     onClick {
                         with(binding) {
                             parentFragmentManager.setFragmentResult(
-                                KEY_PASS_2FA_SET, bundleOf(
-                                    BUNDLE_KEY_PASS_2FA_DATA to PasswordAnd2FAInput(
-                                        password.text.toString(), twoFA.text.toString()
-                                    )
+                                KEY_PASS_SET, bundleOf(
+                                    BUNDLE_KEY_PASS_DATA to PasswordInput(password.text.toString())
                                 )
                             )
 
@@ -102,8 +78,6 @@ class PasswordAnd2FADialog : DialogFragment() {
                 getButton(AlertDialog.BUTTON_NEGATIVE).apply {
                     isAllCaps = false
                     onClick {
-                        parentFragmentManager.setFragmentResult(KEY_PASS_2FA_SET, bundleOf())
-
                         dismissAllowingStateLoss()
                     }
                 }

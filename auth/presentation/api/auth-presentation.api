@@ -6,6 +6,10 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_alert_Cancel
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_alert_TwoFAInputDialog_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_alert_confirmpass_ConfirmPasswordDialog_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -151,6 +155,14 @@ public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_Se
 }
 
 public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_SecondFactorViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_TwoFAInputDialogViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_auth_presentation_viewmodel_TwoFAInputDialogViewModel_HiltModules_KeyModule {
 	public fun <init> ()V
 }
 
@@ -350,8 +362,10 @@ public final class me/proton/core/auth/presentation/alert/AlertUtilsKt {
 	public static synthetic fun registerConfirmPasswordResultLauncher$default (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 	public static final fun showConfirmPasswordDialog (Landroidx/fragment/app/FragmentManager;ZLjava/lang/String;Ljava/util/List;)V
 	public static synthetic fun showConfirmPasswordDialog$default (Landroidx/fragment/app/FragmentManager;ZLjava/lang/String;Ljava/util/List;ILjava/lang/Object;)V
-	public static final fun showPasswordEnterDialog (Landroidx/fragment/app/FragmentManager;ZZZ)V
-	public static synthetic fun showPasswordEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZZZILjava/lang/Object;)V
+	public static final fun showPasswordEnterDialog (Landroidx/fragment/app/FragmentManager;Z)V
+	public static synthetic fun showPasswordEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZILjava/lang/Object;)V
+	public static final fun showTwoFAEnterDialog (Landroidx/fragment/app/FragmentManager;ZLme/proton/core/domain/entity/UserId;)V
+	public static synthetic fun showTwoFAEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZLme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
 }
 
 public final class me/proton/core/auth/presentation/alert/CancelCreateAccountDialog : androidx/fragment/app/DialogFragment {
@@ -362,6 +376,19 @@ public final class me/proton/core/auth/presentation/alert/CancelCreateAccountDia
 
 public abstract interface class me/proton/core/auth/presentation/alert/CancelCreateAccountDialog_GeneratedInjector {
 	public abstract fun injectCancelCreateAccountDialog (Lme/proton/core/auth/presentation/alert/CancelCreateAccountDialog;)V
+}
+
+public final class me/proton/core/auth/presentation/alert/ConfirmPasswordInputDialog : androidx/fragment/app/DialogFragment {
+	public static final field BUNDLE_KEY_PASS_DATA Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/alert/ConfirmPasswordInputDialog$Companion;
+	public static final field KEY_PASS_SET Ljava/lang/String;
+	public fun <init> ()V
+	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
+	public fun onDismiss (Landroid/content/DialogInterface;)V
+}
+
+public final class me/proton/core/auth/presentation/alert/ConfirmPasswordInputDialog$Companion {
+	public final fun invoke ()Lme/proton/core/auth/presentation/alert/ConfirmPasswordInputDialog;
 }
 
 public abstract class me/proton/core/auth/presentation/alert/Hilt_CancelCreateAccountDialog : androidx/fragment/app/DialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -377,17 +404,37 @@ public abstract class me/proton/core/auth/presentation/alert/Hilt_CancelCreateAc
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
-public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog : androidx/fragment/app/DialogFragment {
-	public static final field BUNDLE_KEY_PASS_2FA_DATA Ljava/lang/String;
-	public static final field Companion Lme/proton/core/auth/presentation/alert/PasswordAnd2FADialog$Companion;
-	public static final field KEY_PASS_2FA_SET Ljava/lang/String;
+public abstract class me/proton/core/auth/presentation/alert/Hilt_TwoFAInputDialog : androidx/fragment/app/DialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/FragmentComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getContext ()Landroid/content/Context;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	public fun onAttach (Landroid/app/Activity;)V
+	public fun onAttach (Landroid/content/Context;)V
+	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
+}
+
+public final class me/proton/core/auth/presentation/alert/TwoFAInputDialog : androidx/fragment/app/DialogFragment, com/google/android/material/tabs/TabLayout$OnTabSelectedListener {
+	public static final field BUNDLE_KEY_2FA_DATA Ljava/lang/String;
+	public static final field Companion Lme/proton/core/auth/presentation/alert/TwoFAInputDialog$Companion;
+	public static final field KEY_2FA_SET Ljava/lang/String;
 	public fun <init> ()V
 	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
 	public fun onDismiss (Landroid/content/DialogInterface;)V
+	public fun onTabReselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public fun onTabSelected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
+	public fun onTabUnselected (Lcom/google/android/material/tabs/TabLayout$Tab;)V
 }
 
-public final class me/proton/core/auth/presentation/alert/PasswordAnd2FADialog$Companion {
-	public final fun invoke (ZZ)Lme/proton/core/auth/presentation/alert/PasswordAnd2FADialog;
+public final class me/proton/core/auth/presentation/alert/TwoFAInputDialog$Companion {
+	public final fun invoke (Ljava/lang/String;)Lme/proton/core/auth/presentation/alert/TwoFAInputDialog;
+}
+
+public abstract interface class me/proton/core/auth/presentation/alert/TwoFAInputDialog_GeneratedInjector {
+	public abstract fun injectTwoFAInputDialog (Lme/proton/core/auth/presentation/alert/TwoFAInputDialog;)V
 }
 
 public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog : androidx/fragment/app/DialogFragment {
@@ -594,6 +641,20 @@ public final class me/proton/core/auth/presentation/databinding/ContentHelpItemO
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/ContentHelpItemOtherIssuesBinding;
 }
 
+public final class me/proton/core/auth/presentation/databinding/Dialog2faInputBinding : androidx/viewbinding/ViewBinding {
+	public final field oneTimeCodeGroup Landroid/widget/LinearLayout;
+	public final field progressLayout Landroid/widget/FrameLayout;
+	public final field securityKeyGroup Landroid/widget/LinearLayout;
+	public final field securityKeyText Landroid/widget/TextView;
+	public final field tabLayout Lcom/google/android/material/tabs/TabLayout;
+	public final field twoFA Lme/proton/core/presentation/ui/view/ProtonInput;
+	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/Dialog2faInputBinding;
+	public synthetic fun getRoot ()Landroid/view/View;
+	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
+	public static fun inflate (Landroid/view/LayoutInflater;)Lme/proton/core/auth/presentation/databinding/Dialog2faInputBinding;
+	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;Z)Lme/proton/core/auth/presentation/databinding/Dialog2faInputBinding;
+}
+
 public final class me/proton/core/auth/presentation/databinding/DialogCancelCreationBinding : androidx/viewbinding/ViewBinding {
 	public final field cancelButton Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field continueButton Lme/proton/core/presentation/ui/view/ProtonButton;
@@ -623,7 +684,6 @@ public final class me/proton/core/auth/presentation/databinding/DialogConfirmPas
 
 public final class me/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding : androidx/viewbinding/ViewBinding {
 	public final field password Lme/proton/core/presentation/ui/view/ProtonInput;
-	public final field twoFA Lme/proton/core/presentation/ui/view/ProtonInput;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/auth/presentation/databinding/DialogEnterPasswordBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
 	public fun getRoot ()Landroidx/constraintlayout/widget/ConstraintLayout;
@@ -1060,28 +1120,26 @@ public final class me/proton/core/auth/presentation/entity/NextStep$Creator : an
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/NextStep;
 }
 
-public final class me/proton/core/auth/presentation/entity/PasswordAnd2FAInput : android/os/Parcelable {
+public final class me/proton/core/auth/presentation/entity/PasswordInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;)V
 	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/PasswordInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/PasswordInput;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/PasswordInput;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getPassword ()Ljava/lang/String;
-	public final fun getTwoFA ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/auth/presentation/entity/PasswordAnd2FAInput$Creator : android/os/Parcelable$Creator {
+public final class me/proton/core/auth/presentation/entity/PasswordInput$Creator : android/os/Parcelable$Creator {
 	public fun <init> ()V
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/PasswordInput;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/PasswordAnd2FAInput;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/PasswordInput;
 }
 
 public final class me/proton/core/auth/presentation/entity/SecondFactorInput : android/os/Parcelable {
@@ -1209,6 +1267,43 @@ public final class me/proton/core/auth/presentation/entity/SessionResult$Creator
 	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SessionResult;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SessionResult;
+}
+
+public final class me/proton/core/auth/presentation/entity/TwoFAInput : android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/TwoFAInput;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getTwoFA ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/TwoFAInput$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/TwoFAInput;
+}
+
+public final class me/proton/core/auth/presentation/entity/TwoFAMechanisms : java/lang/Enum {
+	public static final field Companion Lme/proton/core/auth/presentation/entity/TwoFAMechanisms$Companion;
+	public static final field ONE_TIME_CODE Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
+	public static final field SECURITY_KEY Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getValue ()I
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
+	public static fun values ()[Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
+}
+
+public final class me/proton/core/auth/presentation/entity/TwoFAMechanisms$Companion {
+	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
+	public final fun getMap ()Ljava/util/Map;
 }
 
 public final class me/proton/core/auth/presentation/entity/TwoPassModeInput : android/os/Parcelable {
@@ -2703,6 +2798,53 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
 	public fun <init> ()V
 	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public fun <init> (Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)V
+	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public final fun setup (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State {
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State {
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getShowSecurityKey ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel;
+	public static fun newInstance (Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_HiltModules_KeyModule_ProvideFactory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Ljava/lang/String;
 	public static fun provide ()Ljava/lang/String;

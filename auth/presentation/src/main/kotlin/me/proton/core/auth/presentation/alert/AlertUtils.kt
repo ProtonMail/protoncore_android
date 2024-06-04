@@ -23,24 +23,24 @@ import androidx.fragment.app.FragmentManager
 import me.proton.core.auth.presentation.alert.confirmpass.ConfirmPasswordDialog
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.inTransaction
 
 private const val TAG_PASSWORD_ENTER_DIALOG = "password_enter_dialog"
+private const val TAG_TWO_FA_ENTER_DIALOG = "twofa_enter_dialog"
 private const val TAG_CONFIRM_PASSWORD_DIALOG = "confirm_password_dialog"
 
 /**
- * Presents to the user a dialog to ask for a password (and 2FA code).
+ * Presents to the user a dialog to ask for a password confirmation.
  *
  * @param largeLayout how to present the dialog (default false)
  */
 fun FragmentManager.showPasswordEnterDialog(
-    largeLayout: Boolean = false,
-    password: Boolean = true,
-    secondFactor: Boolean = false
+    largeLayout: Boolean = false
 ) {
     findFragmentByTag(TAG_PASSWORD_ENTER_DIALOG) ?: run {
-        val fragment = PasswordAnd2FADialog(password, secondFactor)
+        val fragment = ConfirmPasswordInputDialog()
         if (largeLayout) {
             // For large screens (tablets), we show the fragment as a dialog
             fragment.show(this, TAG_PASSWORD_ENTER_DIALOG)
@@ -48,6 +48,29 @@ fun FragmentManager.showPasswordEnterDialog(
             // The smaller screens (phones), we show the fragment fullscreen
             inTransaction {
                 add(fragment, TAG_PASSWORD_ENTER_DIALOG)
+            }
+        }
+    }
+}
+
+/**
+ * Presents to the user a dialog to ask for a 2FA code).
+ *
+ * @param largeLayout how to present the dialog (default false)
+ */
+fun FragmentManager.showTwoFAEnterDialog(
+    largeLayout: Boolean = false,
+    userId: UserId
+) {
+    findFragmentByTag(TAG_TWO_FA_ENTER_DIALOG) ?: run {
+        val fragment = TwoFAInputDialog(userId.id)
+        if (largeLayout) {
+            // For large screens (tablets), we show the fragment as a dialog
+            fragment.show(this, TAG_TWO_FA_ENTER_DIALOG)
+        } else {
+            // The smaller screens (phones), we show the fragment fullscreen
+            inTransaction {
+                add(fragment, TAG_TWO_FA_ENTER_DIALOG)
             }
         }
     }

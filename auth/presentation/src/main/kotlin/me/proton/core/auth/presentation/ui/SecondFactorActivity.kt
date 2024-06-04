@@ -37,6 +37,7 @@ import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
+import me.proton.core.auth.presentation.entity.TwoFAMechanisms
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
@@ -244,16 +245,6 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     private enum class Mode {
         TWO_FACTOR,
         RECOVERY_CODE
-    }
-
-    private enum class TwoFAMechanisms(val value: Int) {
-        SECURITY_KEY(0),
-        ONE_TIME_CODE(1);
-
-        companion object {
-            val map = values().associateBy { it.value }
-            fun enumOf(value: Int?) = value?.let { map[it] } ?: ONE_TIME_CODE
-        }
     }
 
     override fun onTabSelected(tab: TabLayout.Tab?) {

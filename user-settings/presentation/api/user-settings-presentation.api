@@ -278,23 +278,10 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Pass
 	public abstract fun injectPasswordManagementFragment (Lme/proton/core/usersettings/presentation/ui/PasswordManagementFragment;)V
 }
 
-public final class me/proton/core/usersettings/presentation/ui/ShowPasswordInput {
-	public static final field $stable I
-	public fun <init> (ZZ)V
-	public final fun component1 ()Z
-	public final fun component2 ()Z
-	public final fun copy (ZZ)Lme/proton/core/usersettings/presentation/ui/ShowPasswordInput;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/ui/ShowPasswordInput;ZZILjava/lang/Object;)Lme/proton/core/usersettings/presentation/ui/ShowPasswordInput;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getShowPassword ()Z
-	public final fun getShowTwoFA ()Z
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-}
-
 public final class me/proton/core/usersettings/presentation/ui/ShowPasswordLauncherKt {
 	public static final fun registerShowPasswordDialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 	public static synthetic fun registerShowPasswordDialogResultLauncher$default (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public static final fun registerShowTwoFADialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 }
 
 public final class me/proton/core/usersettings/presentation/ui/StartPasswordManagement : androidx/activity/result/contract/ActivityResultContract {
@@ -541,10 +528,10 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 	public static final field $stable I
 	public fun <init> (Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/usersettings/domain/usecase/PerformUpdateRecoveryEmail;)V
 	public final fun getCurrentRecoveryAddress (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
-	public final fun getSecondFactorEnabled ()Ljava/lang/Boolean;
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
-	public final fun setSecondFactorEnabled (Ljava/lang/Boolean;)V
-	public final fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
+	public final fun setNewRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
+	public final fun setPassword (Ljava/lang/String;)V
+	public final fun setSecondFactor (Ljava/lang/String;)V
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
@@ -583,6 +570,16 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 	public final fun getRecoveryEmail ()Ljava/lang/String;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$PasswordNeeded : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$PasswordNeeded;
+}
+
+public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$SecondFactorNeeded : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$SecondFactorNeeded;
 }
 
 public final class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State$UpdatingCurrent : me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {

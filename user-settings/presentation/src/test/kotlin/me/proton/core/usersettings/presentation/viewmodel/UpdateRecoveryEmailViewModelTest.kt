@@ -33,6 +33,7 @@ import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
+import me.proton.core.usersettings.domain.entity.TwoFASetting
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateRecoveryEmail
@@ -153,9 +154,11 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         flowTest(viewModel.state) {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "", testPassword, "")
+            viewModel.setNewRecoveryEmail(testUserId, "")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.PasswordNeeded>(awaitItem())
+            viewModel.setPassword(testPassword)
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
             val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
@@ -179,9 +182,11 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         flowTest(viewModel.state) {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
+            viewModel.setNewRecoveryEmail(testUserId, "new-email")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.PasswordNeeded>(awaitItem())
+            viewModel.setPassword(testPassword)
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
             val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
@@ -198,16 +203,34 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 password = "encrypted-test-password",
                 secondFactorCode = "123456"
             )
-        } returns testUserSettingsResponse.copy(email = RecoverySetting("new-email", 1, notify = true, reset = true))
+        } returns testUserSettingsResponse.copy(
+            email = RecoverySetting("new-email", 1, notify = true, reset = true)
+        )
+
+        coEvery { getUserSettingsUseCase.invoke(testUserId, any()) } returns testUserSettingsResponse.copy(
+            twoFA = TwoFASetting(
+                enabled = true,
+                allowed = null,
+                expirationTime = null,
+                registeredKeys = emptyList()
+            )
+        )
 
         every { keyStoreCrypto.decrypt("encrypted-test-password") } returns testPassword
         every { keyStoreCrypto.encrypt(testPassword) } returns "encrypted-test-password"
 
         flowTest(viewModel.state) {
-            // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "123456")
-            // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            viewModel.getCurrentRecoveryAddress(testUserId)
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingCurrent>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.LoadingSuccess>(awaitItem())
+            // WHEN
+            viewModel.setNewRecoveryEmail(testUserId, "new-email")
+            // THEN
+            assertIs<UpdateRecoveryEmailViewModel.State.PasswordNeeded>(awaitItem())
+            viewModel.setPassword(testPassword)
+            assertIs<UpdateRecoveryEmailViewModel.State.SecondFactorNeeded>(awaitItem())
+            viewModel.setSecondFactor("123456")
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
             val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
@@ -240,9 +263,11 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
 
         flowTest(viewModel.state) {
             // WHEN
-            viewModel.updateRecoveryEmail(testUserId, "new-email", testPassword, "")
+            viewModel.setNewRecoveryEmail(testUserId, "new-email")
             // THEN
             assertIs<UpdateRecoveryEmailViewModel.State.Idle>(awaitItem())
+            assertIs<UpdateRecoveryEmailViewModel.State.PasswordNeeded>(awaitItem())
+            viewModel.setPassword(testPassword)
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
             val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.Error)

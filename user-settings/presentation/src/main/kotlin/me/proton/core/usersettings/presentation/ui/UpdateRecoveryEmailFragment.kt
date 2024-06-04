@@ -53,7 +53,8 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
     private val viewModel by viewModels<UpdateRecoveryEmailViewModel>()
     private val binding by viewBinding(FragmentUpdateRecoveryEmailBinding::bind)
 
-    private lateinit var showPasswordDialogResultLauncher: FragmentDialogResultLauncher<ShowPasswordInput>
+    private lateinit var showPasswordDialogResultLauncher: FragmentDialogResultLauncher<Unit>
+    private lateinit var showTwoFADialogResultLauncher: FragmentDialogResultLauncher<Unit>
 
     private val input: SettingsInput by lazy {
         requireArguments().get(ARG_INPUT) as SettingsInput
@@ -69,15 +70,16 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        showTwoFADialogResultLauncher = childFragmentManager.registerShowTwoFADialogResultLauncher(this, userId) { result ->
+            if (result != null) {
+                viewModel.setSecondFactor(result.twoFA)
+            }
+        }
+
         showPasswordDialogResultLauncher =
             childFragmentManager.registerShowPasswordDialogResultLauncher(this) { result ->
                 if (result != null) {
-                    viewModel.updateRecoveryEmail(
-                        userId = input.user,
-                        newRecoveryEmail = binding.confirmNewEmailInput.text.toString(),
-                        password = result.password,
-                        secondFactorCode = result.twoFA
-                    )
+                    viewModel.setPassword(result.password)
                 }
             }
 
@@ -106,6 +108,12 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
                         findOutCurrentRecoveryAddress()
                         finish(success = true)
                     }
+                    is UpdateRecoveryEmailViewModel.State.PasswordNeeded -> {
+                        showPasswordDialogResultLauncher.show(Unit)
+                    }
+                    is UpdateRecoveryEmailViewModel.State.SecondFactorNeeded -> {
+                        showTwoFADialogResultLauncher.show(Unit)
+                    }
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)
 
@@ -126,12 +134,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
     ) = with(binding) {
         val confirmedRecoveryEmail = confirmNewEmailInput.text.toString()
         if (newRecoveryEmail == confirmedRecoveryEmail) {
-            showPasswordDialogResultLauncher.show(
-                ShowPasswordInput(
-                    showPassword = true,
-                    showTwoFA = viewModel.secondFactorEnabled!!
-                )
-            )
+            viewModel.setNewRecoveryEmail(userId, confirmedRecoveryEmail)
         } else {
             confirmNewEmailInput.setInputError(getString(R.string.settings_recovery_email_error_no_match))
         }
