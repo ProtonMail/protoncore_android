@@ -82,7 +82,7 @@ class EventMetadataRepositoryImplTest : CoroutinesTest by UnconfinedCoroutinesTe
     private fun newMetadata(
         config: EventManagerConfig,
         eventId: EventId
-    ) = EventMetadata.newFrom(config, eventId)
+    ) = EventMetadata.newFrom(config).copy(eventId = eventId)
 
     private fun newEventsResponse(
         config: EventManagerConfig

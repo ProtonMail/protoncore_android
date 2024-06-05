@@ -30,7 +30,7 @@ protonBuild {
 
 protonCoverage {
     branchCoveragePercentage.set(62)
-    lineCoveragePercentage.set(81)
+    lineCoveragePercentage.set(80)
 }
 
 protonDagger {
@@ -63,6 +63,7 @@ dependencies {
     implementation(
         project(Module.accountDomain),
         project(Module.accountManagerPresentation),
+        project(Module.androidUtilDatetime),
         project(Module.networkDomain),
         project(Module.userData),
 

@@ -53,7 +53,7 @@ private val eventsResponse = """
 class EventListenerTest {
     private val testUserId = UserId("user_id")
     private val testConfig = EventManagerConfig.Core(testUserId)
-    private val testEventMetadata = EventMetadata.newFrom(testConfig, eventId = null)
+    private val testEventMetadata = EventMetadata.newFrom(testConfig)
 
     private lateinit var tested: EventListener<String, TestResource>
 

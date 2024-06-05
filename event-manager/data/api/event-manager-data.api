@@ -58,7 +58,7 @@ public final class me/proton/core/eventmanager/data/EventManagerImpl : me/proton
 	public static final field retriesBeforeDeleteAllMetadata I
 	public static final field retriesBeforeNotifyFailure I
 	public static final field retriesBeforeNotifyResetAll I
-	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)V
+	public fun <init> (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;Lme/proton/core/util/android/datetime/Clock;)V
 	public fun deserializeEventMetadata (Lme/proton/core/eventmanager/domain/entity/EventId;Lme/proton/core/eventmanager/domain/entity/EventsResponse;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
 	public final fun getDeserializer ()Lme/proton/core/eventmanager/data/EventDeserializer;
@@ -76,10 +76,10 @@ public final class me/proton/core/eventmanager/data/EventManagerImpl$Companion {
 }
 
 public final class me/proton/core/eventmanager/data/EventManagerImpl_Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/EventManagerImpl_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/eventmanager/data/EventManagerImpl_Factory;
 	public fun get (Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
-	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;)Lme/proton/core/eventmanager/data/EventManagerImpl;
+	public static fun newInstance (Lme/proton/core/util/kotlin/CoroutineScopeProvider;Lme/proton/core/presentation/app/AppLifecycleProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/eventmanager/domain/work/EventWorkerManager;Lme/proton/core/eventmanager/data/db/EventMetadataDatabase;Lme/proton/core/eventmanager/domain/repository/EventMetadataRepository;Lme/proton/core/eventmanager/data/EventDeserializer;Lme/proton/core/util/android/datetime/Clock;)Lme/proton/core/eventmanager/data/EventManagerImpl;
 }
 
 public final class me/proton/core/eventmanager/data/EventManagerProviderImpl : me/proton/core/eventmanager/domain/EventManagerProvider {
@@ -312,6 +312,7 @@ public final class me/proton/core/eventmanager/data/db/EventMetadataDatabase$Com
 	public final fun getMIGRATION_0 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_1 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 	public final fun getMIGRATION_2 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
+	public final fun getMIGRATION_3 ()Lme/proton/core/data/room/db/migration/DatabaseMigration;
 }
 
 public abstract class me/proton/core/eventmanager/data/db/dao/EventMetadataDao : me/proton/core/data/room/db/BaseDao {
@@ -331,9 +332,10 @@ public abstract class me/proton/core/eventmanager/data/db/dao/EventMetadataDao :
 }
 
 public final class me/proton/core/eventmanager/data/entity/EventMetadataEntity {
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;Ljava/lang/Long;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component10 ()Ljava/lang/Long;
+	public final fun component11 ()Ljava/lang/Long;
 	public final fun component2 ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
@@ -342,12 +344,13 @@ public final class me/proton/core/eventmanager/data/entity/EventMetadataEntity {
 	public final fun component7 ()I
 	public final fun component8 ()Lme/proton/core/eventmanager/domain/entity/State;
 	public final fun component9 ()J
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
-	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;Ljava/lang/Long;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
+	public static synthetic fun copy$default (Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;Lme/proton/core/domain/entity/UserId;Lme/proton/core/eventmanager/domain/EventManagerConfig;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/eventmanager/domain/entity/RefreshType;Ljava/lang/Boolean;ILme/proton/core/eventmanager/domain/entity/State;JLjava/lang/Long;Ljava/lang/Long;ILjava/lang/Object;)Lme/proton/core/eventmanager/data/entity/EventMetadataEntity;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getConfig ()Lme/proton/core/eventmanager/domain/EventManagerConfig;
 	public final fun getCreatedAt ()J
 	public final fun getEventId ()Ljava/lang/String;
+	public final fun getFetchedAt ()Ljava/lang/Long;
 	public final fun getMore ()Ljava/lang/Boolean;
 	public final fun getNextEventId ()Ljava/lang/String;
 	public final fun getRefresh ()Lme/proton/core/eventmanager/domain/entity/RefreshType;

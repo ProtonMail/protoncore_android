@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,38 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
+package me.proton.core.eventmanager.data.extension
 
-plugins {
-    protonKotlinLibrary
-    kotlin("plugin.serialization")
-}
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.entity.EventMetadata
+import me.proton.core.util.android.datetime.Clock
 
-protonBuild {
-    apiModeDisabled()
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-protonCoverage {
-    branchCoveragePercentage.set(53)
-    lineCoveragePercentage.set(75)
-}
-
-dependencies {
-    api(
-        project(Module.domain),
-        serialization("core")
-    )
-
-    implementation(
-        project(Module.kotlinUtil),
-        `coroutines-core`,
-    )
-
-    testImplementation(
-        `coroutines-test`,
-        `kotlin-test`,
-        mockk
-    )
+internal fun EventManagerConfig.isFetchAllowed(metadata: EventMetadata, clock: Clock): Boolean {
+    val lastFetch = metadata.fetchedAt ?: return true
+    val now = clock.currentEpochMillis()
+    val minDelta = minimumFetchInterval.inWholeMilliseconds
+    val currentDelta = now - lastFetch
+    return currentDelta > minDelta
 }

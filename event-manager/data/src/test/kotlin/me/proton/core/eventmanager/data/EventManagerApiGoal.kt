@@ -22,6 +22,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.extension.suspend
+import kotlin.time.Duration
 
 class EventManagerApiGoal {
 
@@ -55,10 +56,10 @@ class EventManagerApiGoal {
     }
 
     suspend fun onDriveVolumeActive(userId: UserId, volumeId: String) {
-        provider.get(EventManagerConfig.Drive.Volume(userId, volumeId)).start()
+        provider.get(EventManagerConfig.Drive.Volume(userId, volumeId, Duration.ZERO)).start()
     }
 
     suspend fun onDriveVolumeInactive(userId: UserId, volumeId: String) {
-        provider.get(EventManagerConfig.Drive.Volume(userId, volumeId)).stop()
+        provider.get(EventManagerConfig.Drive.Volume(userId, volumeId, Duration.ZERO)).stop()
     }
 }

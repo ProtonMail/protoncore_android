@@ -32,7 +32,8 @@ fun EventMetadata.toEntity() = EventMetadataEntity(
     retry = retry,
     state = state,
     createdAt = createdAt,
-    updatedAt = updatedAt ?: System.currentTimeMillis()
+    updatedAt = updatedAt ?: System.currentTimeMillis(),
+    fetchedAt = fetchedAt,
 )
 
 fun EventMetadataEntity.fromEntity() = EventMetadata(
@@ -45,5 +46,6 @@ fun EventMetadataEntity.fromEntity() = EventMetadata(
     retry = retry,
     state = state,
     createdAt = createdAt,
-    updatedAt = updatedAt
+    updatedAt = updatedAt,
+    fetchedAt = fetchedAt,
 )

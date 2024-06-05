@@ -4,6 +4,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.eventmanager.domain.EventManagerConfig
 import org.junit.Test
 import kotlin.test.assertEquals
+import kotlin.time.Duration.Companion.minutes
 
 class EventWorkerTest {
 
@@ -44,10 +45,11 @@ class EventWorkerTest {
 
     @Test
     fun driveVolumeEventManagerConfigSerializationForTag() {
-        val expected = "{\"type\":\"me.proton.core.eventmanager.domain.EventManagerConfig.Drive.Volume\",\"userId\":{\"id\":\"userId\"},\"volumeId\":\"volumeId\"}"
+        val expected = "{\"type\":\"me.proton.core.eventmanager.domain.EventManagerConfig.Drive.Volume\",\"userId\":{\"id\":\"userId\"},\"volumeId\":\"volumeId\",\"minimumFetchInterval\":\"PT0S\"}"
         val userId = UserId("userId")
         val volumeId = "volumeId"
-        val config = EventManagerConfig.Drive.Volume(userId, volumeId)
+        val minimumFetchInterval = 0.minutes
+        val config = EventManagerConfig.Drive.Volume(userId, volumeId, minimumFetchInterval)
         val actual = EventWorker.getRequestTagFor(config)
         assertEquals(expected = expected, actual = actual)
     }

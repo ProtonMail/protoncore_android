@@ -20,6 +20,7 @@ package me.proton.core.eventmanager.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.extension.dropTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.eventmanager.data.db.dao.EventMetadataDao
@@ -69,6 +70,19 @@ interface EventMetadataDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Change state to Enqueued -> Force fetch again.
                 database.execSQL("UPDATE `EventMetadataEntity` SET state = 'Enqueued' WHERE state != 'Cancelled' ")
+            }
+        }
+
+        /**
+         * - Added EventMetadataEntity fetchedAt nullable column
+         */
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "EventMetadataEntity",
+                    column = "fetchedAt",
+                    type = "INTEGER",
+                )
             }
         }
     }

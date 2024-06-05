@@ -35,6 +35,7 @@ import kotlinx.serialization.SerializationException
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.eventmanager.data.db.EventMetadataDatabase
+import me.proton.core.eventmanager.data.extension.isFetchAllowed
 import me.proton.core.eventmanager.data.extension.runCatching
 import me.proton.core.eventmanager.data.extension.runInTransaction
 import me.proton.core.eventmanager.domain.EventListener
@@ -53,6 +54,8 @@ import me.proton.core.network.domain.isForceUpdate
 import me.proton.core.network.domain.isRetryable
 import me.proton.core.network.domain.isUnauthorized
 import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.UtcClock
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import me.proton.core.util.kotlin.exhaustive
@@ -71,6 +74,7 @@ class EventManagerImpl @AssistedInject constructor(
     private val database: EventMetadataDatabase,
     internal val eventMetadataRepository: EventMetadataRepository,
     @Assisted val deserializer: EventDeserializer,
+    @UtcClock private val clock: Clock
 ) : EventManager {
 
     private val lock = Mutex()
@@ -131,6 +135,16 @@ class EventManagerImpl @AssistedInject constructor(
 
     private suspend fun fetch(metadata: EventMetadata) {
         CoreLogger.i(LogTag.DEFAULT, "EventManager fetch: $config")
+        if (config.isFetchAllowed(metadata, clock).not()) {
+            val message = buildString {
+                append("EventManager fetch skipped: ")
+                append("lastFetchedAt=${metadata.fetchedAt}, ")
+                append("minimumFetchInterval=${config.minimumFetchInterval.inWholeMilliseconds}ms, ")
+            }
+            CoreLogger.i(LogTag.DEFAULT, message)
+            enqueueOrStop(immediately = false, failure = false)
+            return
+        }
         val eventId = metadata.eventId ?: runCatching { getLatestEventId() }
             .onFailure {
                 processFetchFailure(metadata, it)
@@ -145,7 +159,8 @@ class EventManagerImpl @AssistedInject constructor(
         ) {
             val response = getEventResponse(eventId)
             val deserializedMetadata = deserializeEventMetadata(eventId, response)
-            eventMetadataRepository.update(deserializedMetadata.copy(state = State.Persisted), response)
+                .copy(state = State.Persisted, fetchedAt = clock.currentEpochMillis())
+            eventMetadataRepository.update(deserializedMetadata, response)
             deserializedMetadata
         }.onFailure {
             processFetchFailure(metadata, it)
@@ -342,14 +357,16 @@ class EventManagerImpl @AssistedInject constructor(
                 account == null -> Action.Stop
                 account.state != AccountState.Ready -> Action.Stop
                 else -> {
+                    val lastCompleted = getMetadataLastCompleted()
                     val update = when (val metadata = getMetadataFirstUncompleted()) {
-                        null -> EventMetadata.newFrom(config, eventId = getMetadataLastCompleted()?.nextEventId)
+                        null -> lastCompleted?.let { EventMetadata.nextFrom(metadata = lastCompleted) }
+                            ?: EventMetadata.newFrom(config = config)
                         else -> when (metadata.state) {
                             // Paused states should not change metadata.
                             State.Cancelled,
                             State.Enqueued -> metadata
                             // Final states should enqueue nextEventId.
-                            State.Completed -> EventMetadata.newFrom(config, metadata.nextEventId)
+                            State.Completed -> EventMetadata.nextFrom(metadata)
                             else -> when {
                                 // Any failure should be retried.
                                 failure -> metadata.copy(retry = metadata.retry + 1)

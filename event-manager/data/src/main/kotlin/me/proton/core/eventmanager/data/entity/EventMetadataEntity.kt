@@ -54,5 +54,6 @@ data class EventMetadataEntity(
     val retry: Int,
     val state: State,
     val createdAt: Long,
-    val updatedAt: Long?
+    val updatedAt: Long?,
+    val fetchedAt: Long?,
 )

@@ -21,12 +21,14 @@ package me.proton.core.eventmanager.domain
 import kotlinx.serialization.Serializable
 import me.proton.core.domain.entity.UniqueId
 import me.proton.core.domain.entity.UserId
+import kotlin.time.Duration
 
 @Serializable
 sealed class EventManagerConfig : UniqueId {
 
     abstract val listenerType: EventListener.Type
     abstract val userId: UserId
+    open val minimumFetchInterval: Duration get() = Duration.ZERO
 
     @Serializable
     data class Core(
@@ -64,6 +66,7 @@ sealed class EventManagerConfig : UniqueId {
         data class Volume(
             override val userId: UserId,
             val volumeId: String,
+            override val minimumFetchInterval: Duration,
         ) : Drive() {
             override val id = "user/${userId.id}/drive/volumes/$volumeId"
             override val endpoint = "drive/volumes/${volumeId}/events"

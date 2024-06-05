@@ -59,6 +59,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes.APP_VERSION_BAD
 import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.test.kotlin.TestCoroutineScopeProvider
+import me.proton.core.util.android.datetime.Clock
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -148,7 +149,8 @@ class EventManagerImplTest {
                     eventWorkerManager,
                     database,
                     eventMetadataRepository,
-                    deserializerSlot.captured
+                    deserializerSlot.captured,
+                    Clock.systemUtc(),
                 )
             }
         }

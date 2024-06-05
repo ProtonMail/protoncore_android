@@ -31,16 +31,28 @@ data class EventMetadata(
     val retry: Int = 0,
     val state: State = State.Enqueued,
     val createdAt: Long,
-    val updatedAt: Long? = null
+    val updatedAt: Long? = null,
+    val fetchedAt: Long? = null,
 ) {
     companion object {
-        fun newFrom(config: EventManagerConfig, eventId: EventId?) = EventMetadata(
+        fun newFrom(config: EventManagerConfig) = EventMetadata(
             userId = config.userId,
-            eventId = eventId,
+            eventId = null,
             config = config,
             retry = 0,
             state = State.Enqueued,
-            createdAt = System.currentTimeMillis()
+            createdAt = System.currentTimeMillis(),
+            fetchedAt = null,
+        )
+
+        fun nextFrom(metadata: EventMetadata) = EventMetadata(
+            userId = metadata.userId,
+            eventId = metadata.nextEventId,
+            config = metadata.config,
+            retry = 0,
+            state = State.Enqueued,
+            createdAt = System.currentTimeMillis(),
+            fetchedAt = metadata.fetchedAt,
         )
     }
 }
