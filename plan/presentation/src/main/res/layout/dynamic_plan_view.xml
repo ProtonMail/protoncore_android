@@ -27,47 +27,57 @@
     android:paddingBottom="@dimen/gap_large"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/ProtonTextView.Body1.Bold"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/title_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/gap_large_plus"
-        android:gravity="center_vertical"
-        android:maxLines="1"
+        android:layout_marginEnd="@dimen/gap_medium"
+        app:layout_constraintEnd_toStartOf="@id/price_layout"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Proton Mail PLUS" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/promo_percentage"
-        style="@style/Proton.Text.DefaultSmall.PromoPercentage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginStart="@dimen/gap_small"
-        android:gravity="center_vertical"
-        android:maxLines="1"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/title"
-        app:layout_constraintStart_toEndOf="@id/title"
-        app:layout_constraintTop_toTopOf="@id/title"
-        tools:text="-50%"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/title"
+            style="@style/ProtonTextView.Body1.Bold"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="2"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Proton Mail PLUS" />
 
-    <ImageView
-        android:id="@+id/starred"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/gap_tiny"
-        android:layout_marginEnd="@dimen/gap_tiny"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/promo_percentage"
-        app:layout_constraintStart_toEndOf="@id/promo_percentage"
-        app:layout_constraintTop_toTopOf="@id/promo_percentage"
-        app:srcCompat="@drawable/ic_proton_star_filled"
-        app:tint="?proton_icon_accent"
-        tools:visibility="visible" />
+        <TextView
+            android:id="@+id/promo_percentage"
+            style="@style/Proton.Text.DefaultSmall.PromoPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/gap_small"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/title"
+            app:layout_constraintStart_toEndOf="@id/title"
+            app:layout_constraintTop_toTopOf="@id/title"
+            tools:text="-50%"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/starred"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/gap_tiny"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/promo_percentage"
+            app:layout_constraintStart_toEndOf="@id/promo_percentage"
+            app:layout_constraintTop_toTopOf="@id/promo_percentage"
+            app:srcCompat="@drawable/ic_proton_star_filled"
+            app:tint="?proton_icon_accent"
+            tools:visibility="visible" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/price_layout"
@@ -128,7 +138,7 @@
         android:text="@string/plans_limited_offer"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title_container"
         tools:text="Limited time offer"
         tools:visibility="visible" />
 

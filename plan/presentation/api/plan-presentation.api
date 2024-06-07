@@ -251,6 +251,7 @@ public final class me/proton/core/plan/presentation/databinding/DynamicPlanViewB
 	public final field promoTitle Landroid/widget/TextView;
 	public final field starred Landroid/widget/ImageView;
 	public final field title Landroid/widget/TextView;
+	public final field titleContainer Landroidx/constraintlayout/widget/ConstraintLayout;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/plan/presentation/databinding/DynamicPlanViewBinding;
 	public fun getRoot ()Landroid/view/View;
 	public static fun inflate (Landroid/view/LayoutInflater;Landroid/view/ViewGroup;)Lme/proton/core/plan/presentation/databinding/DynamicPlanViewBinding;
