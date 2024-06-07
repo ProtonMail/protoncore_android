@@ -43,10 +43,7 @@ import javax.inject.Inject
 class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_terms_conditions) {
 
     @Inject
-    lateinit var networkPrefs: NetworkPrefs
-
-    @Inject
-    lateinit var extraHeaderProvider: ExtraHeaderProvider
+    internal lateinit var customWebViewClient: CustomWebViewClient
 
     private val viewModel by viewModels<TermsConditionsViewModel>()
     private val binding by viewBinding(FragmentTermsConditionsBinding::bind)
@@ -56,13 +53,14 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
 
         binding.toolbar.setNavigationOnClickListener { dismissAllowingStateLoss() }
         binding.termsConditionsWebView.setAllowForceDark()
+        customWebViewClient.progress = binding.progress
 
         viewModel.networkState
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .onEach { connected ->
                 if (connected) {
                     binding.termsConditionsWebView.apply {
-                        webViewClient = CustomWebViewClient()
+                        webViewClient = customWebViewClient
                         loadUrl(TERMS_CONDITIONS_URL)
                     }
                 } else {
@@ -72,20 +70,29 @@ class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_ter
             .launchIn(lifecycleScope)
     }
 
+    override fun onDestroyView() {
+        customWebViewClient.progress = null
+        super.onDestroyView()
+    }
+
     override fun onBackPressed() {
         dismissAllowingStateLoss()
     }
 
-    inner class CustomWebViewClient : ProtonWebViewClient(networkPrefs, extraHeaderProvider) {
+    internal class CustomWebViewClient @Inject constructor(
+        extraHeaderProvider: ExtraHeaderProvider,
+        networkPrefs: NetworkPrefs
+    ) : ProtonWebViewClient(networkPrefs, extraHeaderProvider) {
+        var progress: View? = null
 
         override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
             super.onPageStarted(view, url, favicon)
-            binding.progress.visibility = View.VISIBLE
+            progress?.visibility = View.VISIBLE
         }
 
         override fun onPageFinished(view: WebView?, url: String?) {
             super.onPageFinished(view, url)
-            binding.progress.visibility = View.GONE
+            progress?.visibility = View.GONE
         }
     }
 

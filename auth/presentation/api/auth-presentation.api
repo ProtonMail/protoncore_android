@@ -2139,23 +2139,20 @@ public abstract class me/proton/core/auth/presentation/ui/signup/SignupFragment 
 public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment : me/proton/core/presentation/ui/ProtonDialogFragment {
 	public static final field Companion Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion;
 	public static final field TERMS_CONDITIONS_URL Ljava/lang/String;
-	public field extraHeaderProvider Lme/proton/core/network/domain/client/ExtraHeaderProvider;
-	public field networkPrefs Lme/proton/core/network/domain/NetworkPrefs;
 	public fun <init> ()V
-	public final fun getExtraHeaderProvider ()Lme/proton/core/network/domain/client/ExtraHeaderProvider;
-	public final fun getNetworkPrefs ()Lme/proton/core/network/domain/NetworkPrefs;
+	public fun onDestroyView ()V
 	public fun onViewCreated (Landroid/view/View;Landroid/os/Bundle;)V
-	public final fun setExtraHeaderProvider (Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
-	public final fun setNetworkPrefs (Lme/proton/core/network/domain/NetworkPrefs;)V
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$Companion {
 }
 
-public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$CustomWebViewClient : me/proton/core/presentation/ui/webview/ProtonWebViewClient {
-	public fun <init> (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
-	public fun onPageFinished (Landroid/webkit/WebView;Ljava/lang/String;)V
-	public fun onPageStarted (Landroid/webkit/WebView;Ljava/lang/String;Landroid/graphics/Bitmap;)V
+public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_CustomWebViewClient_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_CustomWebViewClient_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$CustomWebViewClient;
+	public static fun newInstance (Lme/proton/core/network/domain/client/ExtraHeaderProvider;Lme/proton/core/network/domain/NetworkPrefs;)Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$CustomWebViewClient;
 }
 
 public abstract interface class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_GeneratedInjector {
@@ -2163,12 +2160,11 @@ public abstract interface class me/proton/core/auth/presentation/ui/signup/Terms
 }
 
 public final class me/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment_MembersInjector : dagger/MembersInjector {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Ldagger/MembersInjector;
-	public static fun injectExtraHeaderProvider (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/network/domain/client/ExtraHeaderProvider;)V
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectCustomWebViewClient (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment$CustomWebViewClient;)V
 	public synthetic fun injectMembers (Ljava/lang/Object;)V
 	public fun injectMembers (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;)V
-	public static fun injectNetworkPrefs (Lme/proton/core/auth/presentation/ui/signup/TermsConditionsDialogFragment;Lme/proton/core/network/domain/NetworkPrefs;)V
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/AddAccountViewModel_Factory : dagger/internal/Factory {
