@@ -28,23 +28,22 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.extension.findGooglePurchase
-import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
+import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.paymentiap.domain.LogTag
-import me.proton.core.paymentiap.domain.isRetryable
 import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Provider
 
 @HiltWorker
-internal class AcknowledgePurchaseWorker @AssistedInject constructor(
+internal class DeletePurchaseWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val purchaseRepository: PurchaseRepository,
+    private val googlePurchaseRepository: GooglePurchaseRepository,
     private val googleBillingRepository: Provider<GoogleBillingRepository<Activity>>
 ) : CoroutineWorker(context, params) {
 
@@ -56,42 +55,36 @@ internal class AcknowledgePurchaseWorker @AssistedInject constructor(
             googleBillingRepository.get().use {
                 val googlePurchase = it.findGooglePurchase(purchase)
                 checkNotNull(googlePurchase) { "Cannot find google purchase: $purchase" }
-                check(!googlePurchase.isAcknowledged) { "Google Purchase already acknowledged: $purchase" }
-                it.acknowledgePurchase(googlePurchase.purchaseToken)
+                googlePurchaseRepository.deleteByGooglePurchaseToken(googlePurchase.purchaseToken)
              }
         }.fold(
             onSuccess = {
-                CoreLogger.w(LogTag.GIAP_INFO,"$TAG, acknowledged: $purchase")
-                purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Acknowledged))
+                CoreLogger.w(LogTag.GIAP_INFO,"$TAG, deleted: $purchase")
+                purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Deleted))
                 Result.success()
             },
             onFailure = {
-                if (it is BillingClientError && it.isRetryable()) {
-                    CoreLogger.w(LogTag.GIAP_INFO, it, "$TAG, retrying: $purchase")
-                    Result.retry()
-                } else {
-                    CoreLogger.e(LogTag.GIAP_ERROR, it, "$TAG, failed: $purchase")
-                    purchaseRepository.upsertPurchase(
-                        purchase.copy(
-                            purchaseFailure = it.localizedMessage,
-                            purchaseState = PurchaseState.Failed
-                        )
+                CoreLogger.e(LogTag.GIAP_ERROR, it, "$TAG, failed: $purchase")
+                purchaseRepository.upsertPurchase(
+                    purchase.copy(
+                        purchaseFailure = it.localizedMessage,
+                        purchaseState = PurchaseState.Failed
                     )
-                    Result.failure()
-                }
+                )
+                Result.failure()
             }
         )
     }
 
     companion object {
-        private const val TAG = "AcknowledgePurchaseWorker"
+        private const val TAG = "DeletePurchaseWorker"
         private const val INPUT_PLAN_NAME = "arg.planName"
 
         fun getOneTimeUniqueWorkName(planName: String) = "$TAG-$planName"
 
         fun getRequest(planName: String): OneTimeWorkRequest {
             val inputData = workDataOf(INPUT_PLAN_NAME to planName)
-            return OneTimeWorkRequestBuilder<AcknowledgePurchaseWorker>()
+            return OneTimeWorkRequestBuilder<DeletePurchaseWorker>()
                 .setInputData(inputData)
                 .build()
         }
