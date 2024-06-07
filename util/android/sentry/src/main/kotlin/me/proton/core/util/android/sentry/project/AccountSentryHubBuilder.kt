@@ -69,8 +69,10 @@ public class AccountSentryHubBuilder @Inject constructor(
         "me.proton.core.presentation-compose",
         "me.proton.core.push",
         "me.proton.core.report",
+        "me.proton.core.telemetry",
         "me.proton.core.user",
         "me.proton.core.usersettings",
+        "me.proton.core.userrecovery",
         "me.proton.core.util"
     )
 
@@ -97,8 +99,10 @@ public class AccountSentryHubBuilder @Inject constructor(
         "core.presentation-compose",
         "core.push",
         "core.report",
+        "core.telemetry",
         "core.user",
         "core.usersettings",
+        "core.userrecovery",
         "core.util"
     )
 

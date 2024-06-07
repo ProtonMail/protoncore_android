@@ -70,8 +70,10 @@ class AccountSentryHubBuilderTest {
         "me.proton.core.presentation-compose",
         "me.proton.core.push",
         "me.proton.core.report",
+        "me.proton.core.telemetry",
         "me.proton.core.user",
         "me.proton.core.usersettings",
+        "me.proton.core.userrecovery",
         "me.proton.core.util"
     )
 
@@ -98,8 +100,10 @@ class AccountSentryHubBuilderTest {
         "core.presentation-compose",
         "core.push",
         "core.report",
+        "core.telemetry",
         "core.user",
         "core.usersettings",
+        "core.userrecovery",
         "core.util"
     )
     // endregion
