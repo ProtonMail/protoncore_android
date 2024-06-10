@@ -92,7 +92,7 @@ class PasswordManagementViewModel @Inject constructor(
         State.ChangePassword(
             userId = userId,
             loginPasswordAvailable = true,
-            mailboxPasswordAvailable = isMailboxPassword,
+            mailboxPasswordAvailable = isMailboxPassword && product != Product.Vpn,
             recoveryResetAvailable = recoveryResetAvailable(userId),
             recoveryResetEnabled = isRecoveryResetEnabled,
             currentLoginPasswordNeeded = !isRecoveryResetEnabled || !isRecoveryInsecure || !isSelfInitiated,
@@ -192,7 +192,7 @@ class PasswordManagementViewModel @Inject constructor(
     private val userRecovery get() = currentUserRecovery.value
     private val userSettings get() = currentUserSettings.value
     private val isSelfInitiated get() = currentSelfInitiated.value
-    private val isMailboxPassword get() = userSettings?.password?.mode == 2 && product != Product.Vpn
+    private val isMailboxPassword get() = userSettings?.password?.mode == 2
     private val isTwoFactorEnabled get() = userSettings?.twoFA?.enabled ?: false
     private val isRecoveryResetEnabled get() = isAccountRecoveryResetEnabled(currentUserId.value)
     private val isRecoveryInsecure get() = userRecovery?.state?.enum == UserRecovery.State.Insecure
