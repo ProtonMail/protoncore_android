@@ -54,18 +54,18 @@
   <string name="auth_help_option_other">其他登录问题</string>
   <string name="auth_help_other">仍需帮助？请直接联系我们。</string>
   <string name="auth_help_option_customer_support">客服</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">双因素身份验证</string>
+  <string name="auth_2fa_subtitle">您的账户配置了多种 2FA 机制。请选择确认身份的方式。</string>
+  <string name="auth_2fa_tab_one_time_code">一次性验证码</string>
+  <string name="auth_2fa_tab_security_key">安全密钥</string>
+  <string name="auth_2fa_insert_security_key">插入与您的 Proton 帐户关联的安全密钥。 <annotation link="more">了解更多信息</annotation></string>
   <string name="auth_2fa_label">双重验证码</string>
   <string name="auth_2fa_recovery_code_label">恢复码</string>
   <string name="auth_2fa_assistive_text">请输入 6 位验证码。</string>
   <string name="auth_2fa_recovery_code_assistive_text">请输入 8 位恢复码。</string>
   <string name="auth_2fa_action">验证账户</string>
   <string name="auth_2fa_use_recovery_code">使用恢复码</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">了解更多信息</string>
   <string name="auth_2fa_use_2fa_code">输入一次性密码</string>
   <string name="auth_2fa_error_empty_code">请输入 6 位验证码。</string>
   <string name="auth_mailbox_title">解锁您的邮箱</string>
@@ -137,15 +137,15 @@
   <string name="auth_signup_set_recovery">设置恢复方法</string>
   <string name="auth_signup_no_connectivity">网络未连接，无法显示服务条款。</string>
   <string name="auth_signup_error_create_to_continue">请创建一个账户以继续</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">了解更多信息</string>
+  <string name="auth_signup_create_account_dialog_title">激活您的订阅</string>
+  <string name="auth_signup_create_account_dialog_text">已成功处理您的谷歌支付。要激活您的订阅，请创建您的 Proton 账户。</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">取消</string>
+  <string name="auth_signup_create_account_dialog_action_continue">继续</string>
   <string name="auth_signup_error_username_blank">用户名不能为空。</string>
   <string name="auth_signup_error_passwords_do_not_match">两次输入的密码不一致。</string>
   <string name="auth_signup_validation_password_length">密码长度至少应为 8 个字符。</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">密码未被允许</string>
   <string name="auth_signup_validation_password">密码不能为空。</string>
   <string name="auth_signup_your_account_is_being_setup">正在创建您的账户…</string>
   <string name="auth_signup_please_wait">通常不会超过一分钟。</string>

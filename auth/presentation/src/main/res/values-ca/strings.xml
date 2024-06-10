@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Altres problemes d\'inici de sessió</string>
   <string name="auth_help_other">Encara necessiteu ajuda? Contacteu amb nosaltres directament.</string>
   <string name="auth_help_option_customer_support">Atenció al client</string>
-  <string name="auth_2fa_title">Autenticació de dos factors</string>
+  <string name="auth_2fa_title">Autenticació de doble factor</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">Codi d\'un sol ús</string>
   <string name="auth_2fa_tab_security_key">Clau de seguretat</string>
@@ -74,7 +74,7 @@
   <string name="auth_forgot_password">He oblidat la contrasenya</string>
   <string name="auth_login_general_error">S\'ha produït un error.</string>
   <string name="auth_login_external_account_unsupported_title">Es requereix una adreça de Proton</string>
-  <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton enllaçada amb aquest compte a les preferències de la web de Proton.</string>
+  <string name="auth_login_external_account_unsupported_message">Obteniu una adreça de correu de Proton enllaçada amb aquest compte a les preferències del web de Proton.</string>
   <string name="auth_login_external_account_unsupported_help_action">Més informació</string>
   <string name="auth_login_empty_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_mailbox_empty_credentials">Les credencials no poden estar buides.</string>
@@ -88,7 +88,7 @@
   <string name="auth_create_address_result_recovery_title">La vostra adreça de correu electrònic de recuperació és:</string>
   <string name="auth_create_address_create">Crea una adreça</string>
   <string name="auth_create_address_creating">S\'està creant l\'adreça</string>
-  <string name="auth_create_address_terms">Fent clic a Crear adreça, accepteu els <a href="https://proton.me/legal/terms">Termes i Condicions</a> de Proton.</string>
+  <string name="auth_create_address_terms">Fent clic a Crea una adreça, accepteu els <a href="https://proton.me/legal/terms">Termes i Condicions</a> de Proton.</string>
   <string name="auth_create_address_error_credentials">Les credencials no poden estar buides.</string>
   <string name="auth_create_address_error_no_available_domain">Cap domini disponible.</string>
   <string name="auth_create_address_error_private_key">No s\'ha pogut generar la clau privada.</string>
@@ -138,7 +138,7 @@
   <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>
   <string name="auth_signup_error_create_to_continue">Creeu un compte per a continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saber-ne més</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_title">Activeu la vostra subscripció</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Cancel·la</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continua</string>

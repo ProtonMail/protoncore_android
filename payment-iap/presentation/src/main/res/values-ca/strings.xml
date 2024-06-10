@@ -18,11 +18,11 @@
   -->
 <resources>
   <string name="payments_iap_surcharge_info">* Inclou recàrrec per taxes i impostos addicionals del proveïdor.</string>
-  <string name="payments_iap_terms_conditions">En tocar \"Compra amb Google Pay\", acceptes els termes i condicions de Google Pay i acceptes configurar un pagament recurrent amb Google.</string>
-  <string name="payments_iap_invalid_google_plan">S\'ha seleccionat un nom de pla no vàlid. Si us plau, reinicieu el procés.</string>
-  <string name="payments_iap_error_google_plan_price">Problema amb el preu del producte de Google. Si us plau, reinicieu el procés.</string>
-  <string name="payments_iap_error_fetching_google_plan">Un problema està sortit carregant el producte de Google. Recomenceu.</string>
-  <string name="payments_iap_error_already_owned">Ja teniu el producte. Seleccioneu-en un altre.</string>
-  <string name="payments_iap_error_billing_client_unavailable">Actualment, el client de facturació de Google no està disponible o està desconnectat.</string>
+  <string name="payments_iap_terms_conditions">En tocar \"Compra amb Google Pay\", accepteu els termes i condicions de Google Pay i accepteu configurar un pagament recurrent amb Google.</string>
+  <string name="payments_iap_invalid_google_plan">S\'ha seleccionat un nom de pla no vàlid. Reinicieu el procés.</string>
+  <string name="payments_iap_error_google_plan_price">Problema amb el preu del producte de Google. Reinicieu el procés.</string>
+  <string name="payments_iap_error_fetching_google_plan">Hi ha hagut un problema en recuperar el producte de Google. Reinicieu el procés.</string>
+  <string name="payments_iap_error_already_owned">Ja teniu aquest producte. Seleccioneu-ne un altre.</string>
+  <string name="payments_iap_error_billing_client_unavailable">El client de facturació de Google no està disponible o està desconnectat.</string>
   <string name="payments_iap_general_error">S\'ha produït un error. Reinicieu el procés.</string>
 </resources>

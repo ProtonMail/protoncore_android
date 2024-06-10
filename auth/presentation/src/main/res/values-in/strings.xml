@@ -54,7 +54,7 @@
   <string name="auth_help_option_other">Masalah masuk lainnya</string>
   <string name="auth_help_other">Masih perlu bantuan? Hubungi kami secara langsung.</string>
   <string name="auth_help_option_customer_support">Layanan pelanggan</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_title">Autentikasi Dua Faktor</string>
   <string name="auth_2fa_subtitle">Akun Anda memiliki beberapa mekanisme 2FA yang terpasang. Silakan tentukan bagaimana Anda ingin mengonfirmasi identitas Anda.</string>
   <string name="auth_2fa_tab_one_time_code">Kode sekali pakai</string>
   <string name="auth_2fa_tab_security_key">Kunci keamanan</string>

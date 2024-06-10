@@ -149,8 +149,8 @@
   <string name="ten_hide_my_email_aliases">10个 Hide-my-email 别名</string>
   <!-- endregion -->
   <!-- region Plan entitlement tags -->
-  <string name="upgrade_storage_current_drive_storage">Drive: %d%% full</string>
-  <string name="upgrade_storage_current_mail_storage">Mail: %d%% full</string>
-  <string name="upgrade_storage_subtitle">Upgrade storage</string>
+  <string name="upgrade_storage_current_drive_storage">磁盘: %d%% 已占用</string>
+  <string name="upgrade_storage_current_mail_storage">邮件: %d%% 已占用</string>
+  <string name="upgrade_storage_subtitle">付费扩容</string>
   <!-- endregion -->
 </resources>

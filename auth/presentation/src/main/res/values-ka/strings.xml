@@ -54,10 +54,10 @@
   <string name="auth_help_option_other">შესვლის სხვა პრობლემები</string>
   <string name="auth_help_other">ჯერ კიდევ გჭირდებათ დახმარება? პირდაპირ დაგვიკავშირდით.</string>
   <string name="auth_help_option_customer_support">მხარდაჭერის გუნდი</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
+  <string name="auth_2fa_title">2FA</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_tab_one_time_code">ერთჯერადი კოდი</string>
+  <string name="auth_2fa_tab_security_key">უსაფრთხოების გასაღები</string>
   <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">2FA კოდი</string>
   <string name="auth_2fa_recovery_code_label">აღდგენის კოდი</string>
@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">შეიყვანეთ აღდგენის 8-სიმბოლოიანი კოდი.</string>
   <string name="auth_2fa_action">ავთენტიკაცია</string>
   <string name="auth_2fa_use_recovery_code">აღდგენის კოდის გამოყენება</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">გაიგეთ მეტი</string>
   <string name="auth_2fa_use_2fa_code">2FA კოდის გამოყენება</string>
   <string name="auth_2fa_error_empty_code">შეიყვანეთ 6-ციფრიანი კოდი.</string>
   <string name="auth_mailbox_title">განბლოკეთ თქვენი საფოსტო ყუთი</string>
@@ -137,15 +137,15 @@
   <string name="auth_signup_set_recovery">აღდგენის მეთოდის დაყენება</string>
   <string name="auth_signup_no_connectivity">წესებისა და პირობების საჩვენებლად შეერთება არ არსებობს.</string>
   <string name="auth_signup_error_create_to_continue">გასაგრძელებლად შექმენით ანგარიში</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">გაიგეთ მეტი</string>
+  <string name="auth_signup_create_account_dialog_title">თქვენი გამოწერის გააქტიურება</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">გაუქმება</string>
+  <string name="auth_signup_create_account_dialog_action_continue">გაგრძელება</string>
   <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>
   <string name="auth_signup_error_passwords_do_not_match">პაროლები არ ემთხვევა.</string>
   <string name="auth_signup_validation_password_length">პაროლი 8 სიმბოლო მაინც უნდა იყოს.</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">პაროლი დაშვებული არაა.</string>
   <string name="auth_signup_validation_password">პაროლი ცარიელი არ შეიძლება, იყოს.</string>
   <string name="auth_signup_your_account_is_being_setup">მიმდინარეობს თქვენი ანგარიშის შექმნა…</string>
   <string name="auth_signup_please_wait">ჩვეულებრივ წუთზე მეტი არ სჭირდება ხოლმე.</string>

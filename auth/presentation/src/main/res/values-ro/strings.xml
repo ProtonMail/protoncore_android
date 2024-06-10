@@ -54,18 +54,18 @@
   <string name="auth_help_option_other">Alte probleme la conectare</string>
   <string name="auth_help_other">Încă aveți nevoie de ajutor? Contactați-ne direct.</string>
   <string name="auth_help_option_customer_support">Asistență clienți</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">Autentificare cu doi factori</string>
+  <string name="auth_2fa_subtitle">Contul are mai multe mecanisme de A2F. Alegeți cum doriți să vă confirmați identitatea.</string>
+  <string name="auth_2fa_tab_one_time_code">Cod de unică folosință</string>
+  <string name="auth_2fa_tab_security_key">Cheie de securitate</string>
+  <string name="auth_2fa_insert_security_key">Introduceți o cheie de securitate conectată la contul Proton. <annotation link="more">Detalii</annotation></string>
   <string name="auth_2fa_label">Cod autentificare cu doi factori</string>
   <string name="auth_2fa_recovery_code_label">Cod de recuperare</string>
   <string name="auth_2fa_assistive_text">Introduceți codul din 6 cifre.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduceți codul din 8 caractere pentru recuperare.</string>
   <string name="auth_2fa_action">Autentificare</string>
   <string name="auth_2fa_use_recovery_code">Folosire cod de recuperare</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">Detalii</string>
   <string name="auth_2fa_use_2fa_code">Folosire cod doi factori</string>
   <string name="auth_2fa_error_empty_code">Introduceți codul din 6 cifre.</string>
   <string name="auth_mailbox_title">Deblocare mesaje</string>
@@ -137,15 +137,15 @@
   <string name="auth_signup_set_recovery">Setare metodă de recuperare</string>
   <string name="auth_signup_no_connectivity">Nu există conectivitate pentru a afișa termenii și condițiile.</string>
   <string name="auth_signup_error_create_to_continue">Creați un cont pentru a continua</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Detalii</string>
+  <string name="auth_signup_create_account_dialog_title">Activați-vă abonamentul</string>
+  <string name="auth_signup_create_account_dialog_text">Plata prin Google Pay a fost procesată cu succes. Pentru a vă activa abonamentul, creați-vă contul Proton.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Anulare</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Continuare</string>
   <string name="auth_signup_error_username_blank">Numele de utilizator nu poate fi gol.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parolele nu coincid.</string>
   <string name="auth_signup_validation_password_length">Parola trebuie să fie de cel puțin 8 caractere.</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">Parolă nepermisă.</string>
   <string name="auth_signup_validation_password">Parola nu poate fi goală.</string>
   <string name="auth_signup_your_account_is_being_setup">Vi se creează contul…</string>
   <string name="auth_signup_please_wait">De obicei nu durează mai mult de un minut.</string>

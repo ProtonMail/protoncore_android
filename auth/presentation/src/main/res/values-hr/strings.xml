@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">Unesite 8-znamenkasti kod za oporavak.</string>
   <string name="auth_2fa_action">Autenticiraj</string>
   <string name="auth_2fa_use_recovery_code">Koristi kȏd za oporavak</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">Saznajte više</string>
   <string name="auth_2fa_use_2fa_code">Koristi kȏd dvofaktorske autentikacije</string>
   <string name="auth_2fa_error_empty_code">Unesite 6-znamenkasti kod.</string>
   <string name="auth_mailbox_title">Otključajte vaš poštanski sandučić</string>
@@ -137,7 +137,7 @@
   <string name="auth_signup_set_recovery">Postavite metodu oporavka</string>
   <string name="auth_signup_no_connectivity">Nema veze za prikaz Uvjeta i Odredbi.</string>
   <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Saznajte više</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Poništi</string>

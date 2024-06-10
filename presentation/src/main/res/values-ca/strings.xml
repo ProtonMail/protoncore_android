@@ -23,7 +23,7 @@
   <string name="presentation_force_update_message">Aquesta versió de l\'aplicació ja no està suportada. Actualitzeu-la per continuar utilitzant-la.</string>
   <string name="presentation_force_update_learn_more">Més informació</string>
   <string name="presentation_force_update_update">Actualitza</string>
-  <string name="presentation_market_missing">No es troba l\'aplicació al dispositiu. Aneu a la botiga d\'aplicacions per a instal·lar-la.</string>
+  <string name="presentation_market_missing">No es pot trobar l\'aplicació al dispositiu. Aneu a la botiga d\'aplicacions per a instal·lar-la.</string>
   <string name="presentation_authenticate">Autentica</string>
   <string name="presentation_signin_to_continue">Inicieu la sessió per a continuar</string>
   <string name="presentation_alert_title">Alerta</string>

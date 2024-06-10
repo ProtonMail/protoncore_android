@@ -54,18 +54,18 @@
   <string name="auth_help_option_other">その他のサインインに関する問題</string>
   <string name="auth_help_other">問題が解決しませんか？ 私達に直接お問い合わせください。</string>
   <string name="auth_help_option_customer_support">カスタマーサポート</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">2要素認証</string>
+  <string name="auth_2fa_subtitle">あなたのアカウントには複数の 2FA メカニズムが設定されています。本人確認の方法を選択してください。</string>
+  <string name="auth_2fa_tab_one_time_code">ワンタイムコード</string>
+  <string name="auth_2fa_tab_security_key">セキュリティキー</string>
+  <string name="auth_2fa_insert_security_key">Proton アカウントにリンクされたセキュリティ キーを挿入します。<annotation link="more">詳細を見る</annotation></string>
   <string name="auth_2fa_label">2 要素認証コード</string>
   <string name="auth_2fa_recovery_code_label">回復用コード</string>
   <string name="auth_2fa_assistive_text">6 桁のコードを入力します。</string>
   <string name="auth_2fa_recovery_code_assistive_text">8 文字の回復コードを入力してください。</string>
   <string name="auth_2fa_action">認証</string>
   <string name="auth_2fa_use_recovery_code">回復用コードを使用</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">より詳しく</string>
   <string name="auth_2fa_use_2fa_code">2 要素認証コードを使用</string>
   <string name="auth_2fa_error_empty_code">6桁のコードを入力してください</string>
   <string name="auth_mailbox_title">メールボックスのロック解除</string>
@@ -136,16 +136,16 @@
   <string name="auth_signup_skip_recovery">スキップ</string>
   <string name="auth_signup_set_recovery">回復手段を設定</string>
   <string name="auth_signup_no_connectivity">利用規約を表示するための接続がありません。</string>
-  <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_error_create_to_continue">続行するにはアカウントを作成してください</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">より詳しく</string>
+  <string name="auth_signup_create_account_dialog_title">サブスクリプションを有効にする</string>
+  <string name="auth_signup_create_account_dialog_text">Google Pay のお支払いが正常に処理されました。サブスクリプションを有効にするには、Proton アカウントを作成してください。</string>
   <string name="auth_signup_create_account_dialog_action_cancel">キャンセル</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_continue">続ける</string>
   <string name="auth_signup_error_username_blank">ユーザー名を空白にすることはできません。</string>
   <string name="auth_signup_error_passwords_do_not_match">パスワードが一致しません.</string>
   <string name="auth_signup_validation_password_length">パスワードは 8 文字以上必要です。</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">パスワードは許可されません。</string>
   <string name="auth_signup_validation_password">パスワードを空にすることはできません。</string>
   <string name="auth_signup_your_account_is_being_setup">アカウントを作成しています…</string>
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>
@@ -168,6 +168,6 @@
   <string name="auth_credentialless_vpn_subtitle">プライベートなブラウジング、ブロックされたコンテンツへのアクセス、デジタルの自由を楽しんでください。</string>
   <string name="auth_credentialless_guest_button">ゲストとして続ける</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">このアプリを使用することで私達の<annotation link="terms">利用規約</annotation>に同意したことになります。</string>
-  <string name="auth_credentialless_settings_title">Make the move to privacy.</string>
-  <string name="auth_credentialless_settings_subtitle">Get a password manager, encrypted Mail and Calendar, and 1 GB of cloud storage for free with a Proton Account.</string>
+  <string name="auth_credentialless_settings_title">プライバシーに移行しましょう。</string>
+  <string name="auth_credentialless_settings_subtitle">Proton アカウントを使用すると、パスワード マネージャー、暗号化されたメールとカレンダー、1 GB のクラウド ストレージを無料で入手できます。</string>
 </resources>

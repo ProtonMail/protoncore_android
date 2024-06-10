@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">可信设备恢复</string>
-  <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
+  <string name="user_recovery_notification_body">我们已自动恢复了您的账户数据。</string>
   <string name="user_recovery_dialog_title">可信设备恢复</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
+  <string name="user_recovery_dialog_text">在重置密码后，我们自动恢复了 %1s 的数据。</string>
   <string name="user_recovery_dialog_dismiss">好</string>
 </resources>

@@ -54,18 +54,18 @@
   <string name="auth_help_option_other">다른 로그인 문제</string>
   <string name="auth_help_other">여전히 도움이 필요한가요? 저희에게 바로 연락해보세요.</string>
   <string name="auth_help_option_customer_support">고객 지원</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">2단계 인증</string>
+  <string name="auth_2fa_subtitle">계정에 여러 2단계 인증 매커니즘이 구성되어 있습니다. 어떤 방식으로 신원을 확인할 것인지 선택해 주세요.</string>
+  <string name="auth_2fa_tab_one_time_code">일회용 코드</string>
+  <string name="auth_2fa_tab_security_key">보안 키</string>
+  <string name="auth_2fa_insert_security_key">Proton 계정에 연결된 보안 키를 삽입하세요. <annotation link="more">더 알아보기</annotation></string>
   <string name="auth_2fa_label">2단계 인증 코드</string>
   <string name="auth_2fa_recovery_code_label">복구 코드</string>
   <string name="auth_2fa_assistive_text">6자리 인증 코드를 입력하세요.</string>
   <string name="auth_2fa_recovery_code_assistive_text">8자 복구 코드를 입력해주세요.</string>
   <string name="auth_2fa_action">인증</string>
   <string name="auth_2fa_use_recovery_code">복구 코드 사용</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">더 알아보기</string>
   <string name="auth_2fa_use_2fa_code">2단계 인증 코드 사용</string>
   <string name="auth_2fa_error_empty_code">6자리 인증 코드를 입력하세요</string>
   <string name="auth_mailbox_title">메일함 잠금해제</string>

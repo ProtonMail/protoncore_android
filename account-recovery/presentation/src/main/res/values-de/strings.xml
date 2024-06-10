@@ -35,7 +35,7 @@
   <string name="account_recovery_cancelled_subtitle">Falls du nie eine Passwort-Änderung beantragt hast, könnte dein Konto gefährdet sein.\n\nSichere dein Konto, indem du dein Passwort änderst.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Passwortzurücksetzung verfügbar</string>
-  <string name="account_recovery_password_started_subtitle">Um dein Passwort zurückzusetzen, kehre zu dem Gerät, der App oder dem Browser zurück, von dem aus du die Anfrage zur Passwortzurücksetzung gestellt hast.\n\nDu musst dies vor dem %s tun.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
+  <string name="account_recovery_password_started_subtitle">Um dein Passwort zurückzusetzen, kehre zu dem Gerät, der App oder dem Browser zurück, von dem du die Anfrage zur Passwortzurücksetzung gestellt hast.\n\nDu musst dies vor dem %s tun.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">Du kannst dein Passwort jetzt zurücksetzen.\n\nDu musst dies vor dem %s tun.\n\nWenn du nicht darum gebeten hast, dein Passwort zurückzusetzen, brich die Anfrage jetzt ab.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Passwortzurücksetzung abgelaufen</string>

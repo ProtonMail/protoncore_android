@@ -54,18 +54,18 @@
   <string name="auth_help_option_other">Άλλα προβλήματα εισόδου</string>
   <string name="auth_help_other">Χρειάζεστε ακόμα βοήθεια; Επικοινωνήστε απευθείας με εμάς.</string>
   <string name="auth_help_option_customer_support">Εξυπηρέτηση πελατών</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">Ελεγχος Ταυτότητας δυο παραγόντων</string>
+  <string name="auth_2fa_subtitle">Ο λογαριασμός σας έχει διαμορφώσει αρκετούς μηχανισμούς 2FA. Επιλέξτε πώς θέλετε να επιβεβαιώσετε την ταυτότητά σας.</string>
+  <string name="auth_2fa_tab_one_time_code">Κωδικός μίας χρήσης</string>
+  <string name="auth_2fa_tab_security_key">Κλειδί ασφαλείας</string>
+  <string name="auth_2fa_insert_security_key">Εισαγάγετε ένα κλειδί ασφαλείας συνδεδεμένο με τον λογαριασμό Proton. <annotation link="more">Μάθετε περισσότερα</annotation></string>
   <string name="auth_2fa_label">Κωδικός Δύο Παραγόντων (2FA)</string>
   <string name="auth_2fa_recovery_code_label">Κωδικός ανάκτησης</string>
   <string name="auth_2fa_assistive_text">Εισάγετε τον 6-ψήφιο κωδικό.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Εισαγάγετε έναν κωδικό ανάκτησης 8 χαρακτήρων.</string>
   <string name="auth_2fa_action">Ταυτοποίηση</string>
   <string name="auth_2fa_use_recovery_code">Χρησιμοποιήστε κωδικό ανάκτησης</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">Μάθετε περισσότερα</string>
   <string name="auth_2fa_use_2fa_code">Χρησιμοποιήστε κωδικό Δύο Παραγόντων (2FA)</string>
   <string name="auth_2fa_error_empty_code">Εισάγετε τον 6-ψήφιο κωδικό.</string>
   <string name="auth_mailbox_title">Ξεκλειδώστε τη θυρίδα σας</string>
@@ -137,15 +137,15 @@
   <string name="auth_signup_set_recovery">Ορισμός μεθόδου ανάκτησης</string>
   <string name="auth_signup_no_connectivity">Δεν υπάρχει συνδεσιμότητα για την εμφάνιση των Όρων και Προϋποθέσεων.</string>
   <string name="auth_signup_error_create_to_continue">Παρακαλούμε δημιουργήστε έναν λογαριασμό για να συνεχίσετε</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Μάθετε περισσότερα</string>
+  <string name="auth_signup_create_account_dialog_title">Ενεργοποιήστε τη συνδρομή σας</string>
+  <string name="auth_signup_create_account_dialog_text">Η επεξεργασία της πληρωμής σας στο Google Pay ολοκληρώθηκε με επιτυχία. Για να ενεργοποιήσετε τη συνδρομή σας, παρακαλούμε δημιουργήστε τον Proton λογαριασμό σας.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Ακύρωση</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Συνέχεια</string>
   <string name="auth_signup_error_username_blank">Το Όνομα Χρήστη δεν πρέπει να είναι κενό.</string>
   <string name="auth_signup_error_passwords_do_not_match">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
   <string name="auth_signup_validation_password_length">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">Ο κωδικός πρόσβασης δεν επιτρέπεται.</string>
   <string name="auth_signup_validation_password">Ο κωδικός πρόσβασης δεν γίνεται να είναι κενός.</string>
   <string name="auth_signup_your_account_is_being_setup">Ο λογαριασμός σας δημιουγείται…</string>
   <string name="auth_signup_please_wait">Συνήθως δεν διαρκεί περισσότερο από ένα λεπτό.</string>

@@ -54,11 +54,11 @@
   <string name="auth_help_option_other">Другие проблемы с входом</string>
   <string name="auth_help_other">Все еще нужна помощь? Свяжитесь с нами напрямую.</string>
   <string name="auth_help_option_customer_support">Поддержка клиентов</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">Двухфакторная аутентификация</string>
+  <string name="auth_2fa_subtitle">В вашем аккаунте настроено несколько способов 2FA. Пожалуйста, выберите, как вы хотите подтвердить свою личность.</string>
+  <string name="auth_2fa_tab_one_time_code">Одноразовый код</string>
+  <string name="auth_2fa_tab_security_key">Ключ безопасности</string>
+  <string name="auth_2fa_insert_security_key">Вставьте ключ безопасности, связанный с вашим аккаунтом Proton. <annotation link="more">Подробнее</annotation>.</string>
   <string name="auth_2fa_label">Код двухфакторной аутентификации</string>
   <string name="auth_2fa_recovery_code_label">Код восстановления</string>
   <string name="auth_2fa_assistive_text">Введите код из шести цифр.</string>
@@ -138,14 +138,14 @@
   <string name="auth_signup_no_connectivity">Нет подключения, чтобы посмотреть условия.</string>
   <string name="auth_signup_error_create_to_continue">Создайте аккаунт, чтобы продолжить</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Подробнее</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_title">Активируйте свою подписку</string>
+  <string name="auth_signup_create_account_dialog_text">Ваш платеж Google Pay был успешно обработан. Чтобы активировать подписку, создайте свой аккаунт в Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Отменить</string>
   <string name="auth_signup_create_account_dialog_action_continue">Продолжить</string>
   <string name="auth_signup_error_username_blank">Имя пользователя не может быть пустым.</string>
   <string name="auth_signup_error_passwords_do_not_match">Пароли не совпадают.</string>
   <string name="auth_signup_validation_password_length">Пароль должен содержать минимум 8 символов.</string>
-  <string name="auth_signup_password_not_allowed">Password not allowed.</string>
+  <string name="auth_signup_password_not_allowed">Недопустимый пароль.</string>
   <string name="auth_signup_validation_password">Пароль не может быть пустым.</string>
   <string name="auth_signup_your_account_is_being_setup">Создается ваш аккаунт…</string>
   <string name="auth_signup_please_wait">Обычно на это требуется не больше минуты.</string>

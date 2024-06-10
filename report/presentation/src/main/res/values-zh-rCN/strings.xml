@@ -36,5 +36,5 @@
   <string name="core_report_bug_general_error">出错了，请过几分钟再试。</string>
   <string name="core_report_bug_send">提交反馈</string>
   <string name="core_report_bug_success">感谢您的反馈</string>
-  <string name="core_report_bug_attach_log">Attach log</string>
+  <string name="core_report_bug_attach_log">附上日志</string>
 </resources>

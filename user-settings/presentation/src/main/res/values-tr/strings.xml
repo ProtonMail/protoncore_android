@@ -32,17 +32,17 @@
   <string name="settings_validation_email">E-posta adresi geçersiz.</string>
   <string name="settings_general_error">Bir sorun çıktı.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Account password</string>
-  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
-  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
-  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_tab_login_password">Hesap parolası</string>
+  <string name="settings_password_management_tab_mailbox_password">Şifreleme parolası</string>
+  <string name="settings_password_management_change_login_password">İki parola kipinde, hesap parolası Proton hesabınızda oturum açmak için kullanılır.</string>
+  <string name="settings_password_management_change_mailbox_password">İki parola kipinde, şifreleme parolası verilerinizi şifrelemek ve şifreyi çözmek için kullanılır.</string>
   <string name="settings_password_management_header">Parolayı değiştir</string>
-  <string name="settings_login_password_hint_current">Mevcut parola</string>
-  <string name="settings_login_password_hint_new">New password</string>
-  <string name="settings_login_password_hint_new_confirm">Confirm new password</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
-  <string name="settings_mailbox_password_hint_new">New encryption password</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
+  <string name="settings_login_password_hint_current">Geçerli parola</string>
+  <string name="settings_login_password_hint_new">Yeni parola</string>
+  <string name="settings_login_password_hint_new_confirm">Yeni parola onayı</string>
+  <string name="settings_mailbox_password_hint_current_account_password">Geçerli hesap parolası</string>
+  <string name="settings_mailbox_password_hint_new">Yeni şifreleme parolası</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Yeni şifreleme parolası onayı</string>
   <string name="settings_change_password_error">Parola değiştirilirken bir sorun çıktı.</string>
   <string name="settings_recovery_email_success">Kurtarma e-posta adresi güncellendi</string>
   <string name="settings_password_management_success">Parola güncellendi</string>
