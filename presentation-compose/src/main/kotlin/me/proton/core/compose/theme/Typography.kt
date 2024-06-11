@@ -342,6 +342,7 @@ fun ProtonTypography.overlineStrong(enabled: Boolean = true): TextStyle = overli
 
 @Immutable
 data class ProtonTypography(
+    val hero: TextStyle,
     val headline: TextStyle,
     val subheadline: TextStyle,
     val body1Regular: TextStyle,
@@ -357,6 +358,12 @@ data class ProtonTypography(
 
     constructor(
         defaultFontFamily: FontFamily = FontFamily.SansSerif,
+        hero: TextStyle = TextStyle(
+            fontSize = 28.sp,
+            fontWeight = FontWeight.W700,
+            letterSpacing = 0.45.sp,
+            lineHeight = 34.sp,
+        ),
         headline: TextStyle = TextStyle(
             fontSize = 20.sp,
             fontWeight = FontWeight.W700,
@@ -409,6 +416,7 @@ data class ProtonTypography(
             fontWeight = FontWeight.W500
         ),
     ) : this(
+        hero = hero.withDefaultFontFamily(defaultFontFamily),
         headline = headline.withDefaultFontFamily(defaultFontFamily),
         subheadline = subheadline.withDefaultFontFamily(defaultFontFamily),
         body1Regular = body1Regular.withDefaultFontFamily(defaultFontFamily),
