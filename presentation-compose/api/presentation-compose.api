@@ -481,6 +481,7 @@ public final class me/proton/core/compose/theme/AccentColors {
 }
 
 public final class me/proton/core/compose/theme/ColorsKt {
+	public static final fun getLocalColors ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun intenseVariant-8_81llA (J)J
 	public static final fun interactionNorm (Lme/proton/core/compose/theme/ProtonColors;Z)J
 	public static synthetic fun interactionNorm$default (Lme/proton/core/compose/theme/ProtonColors;ZILjava/lang/Object;)J
@@ -491,6 +492,7 @@ public final class me/proton/core/compose/theme/ColorsKt {
 	public static synthetic fun textNorm$default (Lme/proton/core/compose/theme/ProtonColors;ZILjava/lang/Object;)J
 	public static final fun textWeak (Lme/proton/core/compose/theme/ProtonColors;Z)J
 	public static synthetic fun textWeak$default (Lme/proton/core/compose/theme/ProtonColors;ZILjava/lang/Object;)J
+	public static final fun updateColorsFrom (Lme/proton/core/compose/theme/ProtonColors;Lme/proton/core/compose/theme/ProtonColors;)V
 }
 
 public final class me/proton/core/compose/theme/ColorsThemeCompatKt {
@@ -679,6 +681,7 @@ public final class me/proton/core/compose/theme/ProtonTypography$Companion {
 }
 
 public final class me/proton/core/compose/theme/ShapeKt {
+	public static final fun getLocalShapes ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun toMaterialThemeShapes (Lme/proton/core/compose/theme/ProtonShapes;)Landroidx/compose/material/Shapes;
 }
 
@@ -745,6 +748,7 @@ public final class me/proton/core/compose/theme/TypographyKt {
 	public static final fun getHeadlineSmallNorm (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getHeadlineSmallUnspecified (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getHeadlineUnspecified (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
+	public static final fun getLocalTypography ()Landroidx/compose/runtime/ProvidableCompositionLocal;
 	public static final fun getOverline (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getOverlineNorm (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;
 	public static final fun getOverlineStrong (Lme/proton/core/compose/theme/ProtonTypography;Landroidx/compose/runtime/Composer;I)Landroidx/compose/ui/text/TextStyle;

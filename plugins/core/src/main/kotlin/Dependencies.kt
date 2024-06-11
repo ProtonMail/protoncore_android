@@ -42,6 +42,10 @@ public val DependencyHandler.`lifecycle-viewModel-compose`: Any
     get() = androidx("lifecycle", moduleSuffix = "viewmodel-compose") version `lifecycle version`
 public val DependencyHandler.`lifecycle-runtime-compose`: Any
     get() = androidx("lifecycle", moduleSuffix = "runtime-compose") version `lifecycle version`
+public val DependencyHandler.`androidx-tv-foundation`: Any
+    get() = androidx("tv", moduleSuffix = "foundation") version `tv-foundation version`
+public val DependencyHandler.`androidx-tv-material`: Any
+    get() = androidx("tv", moduleSuffix = "material") version `tv-material version`
 public fun DependencyHandler.compose(
     module: String,
     moduleSuffix: String? = null,

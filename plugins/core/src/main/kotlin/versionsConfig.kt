@@ -106,6 +106,8 @@ public const val `material3 version`: String =                 "1.2.0"
 public const val `navigation version`: String =                "2.7.7"
 public const val `recyclerview version`: String =              "1.2.1"
 public const val `startup-runtime version`: String =           "1.1.1"
+public const val `tv-foundation version`: String =             "1.0.0-alpha10"
+public const val `tv-material version`: String =               "1.0.0-beta01"
 // endregion
 
 // region Other

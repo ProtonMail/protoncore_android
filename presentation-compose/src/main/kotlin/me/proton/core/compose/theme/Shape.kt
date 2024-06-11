@@ -44,4 +44,4 @@ fun ProtonShapes.toMaterialThemeShapes() = Shapes(
     large = large,
 )
 
-internal val LocalShapes = staticCompositionLocalOf { ProtonShapes() }
+val LocalShapes = staticCompositionLocalOf { ProtonShapes() }

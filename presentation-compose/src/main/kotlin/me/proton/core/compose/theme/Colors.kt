@@ -650,7 +650,7 @@ internal fun ProtonColors.toMaterialThemeColors() = Colors(
     isLight = !isDark,
 )
 
-internal fun ProtonColors.updateColorsFrom(other: ProtonColors) {
+fun ProtonColors.updateColorsFrom(other: ProtonColors) {
     isDark = other.isDark
 
     shade100 = other.shade100
@@ -752,4 +752,4 @@ data class ProtonAccentColor(
 fun Color.strongVariant(): Color = Color(strongColorVariant(toArgb()))
 fun Color.intenseVariant(): Color = Color(intenseColorVariant(toArgb()))
 
-internal val LocalColors = staticCompositionLocalOf { ProtonColors.Light }
+val LocalColors = staticCompositionLocalOf { ProtonColors.Light }

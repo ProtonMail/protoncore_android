@@ -461,4 +461,4 @@ internal fun ProtonTypography.toMaterialThemeTypography() = Typography(
     overline = overlineMedium
 )
 
-internal val LocalTypography = staticCompositionLocalOf { ProtonTypography() }
+val LocalTypography = staticCompositionLocalOf { ProtonTypography() }
