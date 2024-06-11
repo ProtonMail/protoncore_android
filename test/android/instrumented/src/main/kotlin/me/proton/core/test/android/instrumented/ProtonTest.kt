@@ -21,14 +21,20 @@ package me.proton.core.test.android.instrumented
 
 import android.app.Activity
 import android.app.Instrumentation
+import android.app.UiAutomation
+import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.rule.GrantPermissionRule
 import me.proton.core.test.android.instrumented.rules.RetryRule
 import me.proton.core.test.android.instrumented.utils.FileUtils
 import me.proton.core.test.android.instrumented.utils.Shell
+import me.proton.core.test.performance.MeasurementConfig
+import me.proton.core.test.performance.MeasurementRule
 import org.hamcrest.CoreMatchers
 import org.junit.After
 import org.junit.Before
@@ -59,13 +65,15 @@ open class ProtonTest(
         override fun failed(e: Throwable?, description: Description?) = Shell.saveToFile(description)
     }
 
+    val measurementRule = MeasurementRule()
+
     private val retryRule = RetryRule(activity, tries)
 
-    // Order: in some tests, we want to execute the `HiltAndroidRule` first, and then the `ruleChain`.
     @Rule(order = Rule.DEFAULT_ORDER + 1)
     @JvmField
     val ruleChain = RuleChain
         .outerRule(testName)
+        .around(measurementRule)
         .around(testWatcher)
         .around(retryRule)
         .around(activityScenarioRule)!!

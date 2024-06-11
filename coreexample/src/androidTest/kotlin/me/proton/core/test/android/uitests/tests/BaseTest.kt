@@ -23,6 +23,7 @@ import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.runBlocking
+import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
@@ -32,17 +33,19 @@ import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
+import me.proton.core.test.performance.MeasurementConfig
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.User.Users
 import org.junit.After
 import org.junit.BeforeClass
+import java.util.UUID
 
 open class BaseTest(
     private val logoutAllAfterTest: Boolean = true,
     defaultTimeout: Long = 30_000L,
-) : ProtonTest(MainActivity::class.java, defaultTimeout, 2) {
+) : ProtonTest(MainActivity::class.java, defaultTimeout, 1) {
 
     @After
     fun logoutUsers() {
@@ -75,6 +78,12 @@ open class BaseTest(
                 ProtonTestEntryPoint::class.java
             )
         }
+
+        val measurementConfig = MeasurementConfig
+            .setEnvironment(BuildConfig.DYNAMIC_DOMAIN)
+            .setLokiEndpoint(BuildConfig.LOKI_ENDPOINT)
+            .setLokiPrivateKey(BuildConfig.LOKI_PRIVATE_KEY)
+            .setLokiCertificate(BuildConfig.LOKI_CERTIFICATE)
 
         @JvmStatic
         @BeforeClass

@@ -57,6 +57,8 @@ class LoginRobot : CoreRobot() {
             .signIn()
     }
 
+    fun clickSignInButton(): LoginRobot = clickElement(R.id.signInButton)
+
     class Verify : CoreVerify() {
         fun loginElementsDisplayed() {
             view.withId(R.id.usernameInput).closeKeyboard().checkDisplayed()

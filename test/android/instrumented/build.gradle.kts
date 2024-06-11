@@ -65,6 +65,7 @@ dependencies {
         project(Module.planPresentation),
         project(Module.presentation),
         project(Module.userSettings),
+        project(Module.testPerformance),
         `android-ktx`,
         `androidx-test-monitor`,
         appcompat,

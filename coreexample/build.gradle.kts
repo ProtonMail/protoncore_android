@@ -100,16 +100,23 @@ android {
 }
 
 fun setupFlavors(testedExtension: TestedExtension) {
+    val protonBlack = "proton.black"
+
     testedExtension.apply {
         val buildConfigFieldKeys = object {
             val CAN_USE_DOH = "USE_DOH"
             val KEY_TRANSPARENCY_ENV = "KEY_TRANSPARENCY_ENV"
             val SENTRY_DSN = "SENTRY_DSN"
             val ACCOUNT_SENTRY_DSN = "ACCOUNT_SENTRY_DSN"
+            val DYNAMIC_DOMAIN = "DYNAMIC_DOMAIN"
+            val LOKI_TENANT = "LOKI_TENANT"
         }
         val flavorDimensions = object {
             val env = "env"
         }
+
+        val atlasHost: String = localProperties.getProperty("HOST") ?: protonBlack
+        val lokiTenant = localProperties.getProperty(buildConfigFieldKeys.LOKI_TENANT)
 
         flavorDimensions(flavorDimensions.env)
 
@@ -118,22 +125,25 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", "LOKI_ENDPOINT", localProperties.getProperty("LOKI_ENDPOINT").toBuildConfigValue())
+            buildConfigField("String", "LOKI_PRIVATE_KEY", localProperties.getProperty("LOKI_PRIVATE_KEY").toBuildConfigValue())
+            buildConfigField("String", "LOKI_CERTIFICATE", localProperties.getProperty("LOKI_CERTIFICATE").toBuildConfigValue())
         }
 
         productFlavors.register("dev") {
-            val protonHost = "proton.black"
             dimension = flavorDimensions.env
 
             applicationIdSuffix = ".dev"
             protonEnvironment {
-                host = protonHost
+                host = protonBlack
             }
-
+            buildConfigField("String", buildConfigFieldKeys.DYNAMIC_DOMAIN, protonBlack.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "black".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.LOKI_TENANT, lokiTenant.toBuildConfigValue())
 
-            setAssetLinksResValue(protonHost)
+            setAssetLinksResValue(protonBlack)
         }
         productFlavors.register("prod") {
             dimension = flavorDimensions.env
@@ -145,13 +155,15 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("Boolean", buildConfigFieldKeys.CAN_USE_DOH, true.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, "production".toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
-            buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, System.getenv("ACCOUNT_SENTRY_DSN").toBuildConfigValue())
+            buildConfigField(
+                "String",
+                buildConfigFieldKeys.ACCOUNT_SENTRY_DSN,
+                System.getenv("ACCOUNT_SENTRY_DSN").toBuildConfigValue()
+            )
         }
         productFlavors.register("localProperties") {
             dimension = flavorDimensions.env
             applicationIdSuffix = ".local.properties"
-
-            val atlasHost: String = localProperties.getProperty("HOST") ?: "proton.black"
             val keyTransparencyEnv: String? = localProperties.getProperty(buildConfigFieldKeys.KEY_TRANSPARENCY_ENV)
             val sentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.SENTRY_DSN)
             val accountSentryDsn: String? = localProperties.getProperty(buildConfigFieldKeys.ACCOUNT_SENTRY_DSN)
@@ -168,6 +180,8 @@ fun setupFlavors(testedExtension: TestedExtension) {
             )
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, sentryDsn.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, accountSentryDsn.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.DYNAMIC_DOMAIN, atlasHost.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.LOKI_TENANT, lokiTenant.toBuildConfigValue())
 
             setAssetLinksResValue(atlasHost)
         }
@@ -179,6 +193,9 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.DYNAMIC_DOMAIN, atlasHost.toBuildConfigValue())
+            buildConfigField("String", buildConfigFieldKeys.LOKI_TENANT, lokiTenant.toBuildConfigValue())
+
 
             dimension = flavorDimensions.env
             testInstrumentationRunner = "me.proton.core.test.android.ProtonHiltTestRunner"
@@ -318,6 +335,7 @@ dependencies {
         project(Module.paymentIapTest),
         project(Module.planTest),
         project(Module.quark),
+        project(Module.testPerformance),
         `android-test-runner`,
         `hilt-android-testing`,
         `kotlin-test-junit`,
