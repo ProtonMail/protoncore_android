@@ -1,0 +1,34 @@
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:autoMirrored="true"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M19.5,3H4.5C3.672,3 3,3.672 3,4.5V19.5C3,20.328 3.672,21 4.5,21H19.5C20.328,21 21,20.328 21,19.5V4.5C21,3.672 20.328,3 19.5,3ZM4.5,1.5C2.843,1.5 1.5,2.843 1.5,4.5V19.5C1.5,21.157 2.843,22.5 4.5,22.5H19.5C21.157,22.5 22.5,21.157 22.5,19.5V4.5C22.5,2.843 21.157,1.5 19.5,1.5H4.5Z"/>
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M9.75,6.75H6.75V9.75H9.75V6.75ZM6.75,5.25C5.922,5.25 5.25,5.922 5.25,6.75V9.75C5.25,10.578 5.922,11.25 6.75,11.25H9.75C10.578,11.25 11.25,10.578 11.25,9.75V6.75C11.25,5.922 10.578,5.25 9.75,5.25H6.75Z"/>
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M9.75,14.25H6.75V17.25H9.75V14.25ZM6.75,12.75C5.922,12.75 5.25,13.422 5.25,14.25V17.25C5.25,18.078 5.922,18.75 6.75,18.75H9.75C10.578,18.75 11.25,18.078 11.25,17.25V14.25C11.25,13.422 10.578,12.75 9.75,12.75H6.75Z"/>
+      
+    <path android:fillColor="@color/icon_norm" android:fillType="evenOdd" android:pathData="M17.25,6.75H14.25V9.75H17.25V6.75ZM14.25,5.25C13.422,5.25 12.75,5.922 12.75,6.75V9.75C12.75,10.578 13.422,11.25 14.25,11.25H17.25C18.078,11.25 18.75,10.578 18.75,9.75V6.75C18.75,5.922 18.078,5.25 17.25,5.25H14.25Z"/>
+    
+</vector>
