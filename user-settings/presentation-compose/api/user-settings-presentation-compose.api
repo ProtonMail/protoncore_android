@@ -1,3 +1,15 @@
+public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_view_SecurityKeysActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_SecurityKeysInfoViewModel_HiltModules_BindsModule {
+	public fun <init> ()V
+}
+
+public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_SecurityKeysInfoViewModel_HiltModules_KeyModule {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_compose_viewmodel_UserSettingsViewModel_HiltModules_BindsModule {
 	public fun <init> ()V
 }
@@ -24,6 +36,42 @@ public final class me/proton/core/usersettings/presentation/compose/view/Composa
 	public final fun getLambda-3$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
 }
 
+public final class me/proton/core/usersettings/presentation/compose/view/ComposableSingletons$SecurityKeysListKt {
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/view/ComposableSingletons$SecurityKeysListKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-2 Lkotlin/jvm/functions/Function3;
+	public static field lambda-3 Lkotlin/jvm/functions/Function3;
+	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+	public static field lambda-5 Lkotlin/jvm/functions/Function2;
+	public static field lambda-6 Lkotlin/jvm/functions/Function2;
+	public static field lambda-7 Lkotlin/jvm/functions/Function2;
+	public static field lambda-8 Lkotlin/jvm/functions/Function2;
+	public static field lambda-9 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-2$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-3$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-4$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-5$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-6$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-7$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-8$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-9$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/view/ComposableSingletons$SecurityKeysScreenKt {
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/view/ComposableSingletons$SecurityKeysScreenKt;
+	public static field lambda-1 Lkotlin/jvm/functions/Function3;
+	public static field lambda-2 Lkotlin/jvm/functions/Function2;
+	public static field lambda-3 Lkotlin/jvm/functions/Function2;
+	public static field lambda-4 Lkotlin/jvm/functions/Function2;
+	public fun <init> ()V
+	public final fun getLambda-1$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function3;
+	public final fun getLambda-2$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-3$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+	public final fun getLambda-4$user_settings_presentation_compose_release ()Lkotlin/jvm/functions/Function2;
+}
+
 public final class me/proton/core/usersettings/presentation/compose/view/ComposableSingletons$TelemetrySettingToggleItemKt {
 	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/view/ComposableSingletons$TelemetrySettingToggleItemKt;
 	public static field lambda-1 Lkotlin/jvm/functions/Function2;
@@ -41,10 +89,116 @@ public final class me/proton/core/usersettings/presentation/compose/view/CrashRe
 	public static final fun CrashReportSettingToggleItemPreview (Landroidx/compose/runtime/Composer;I)V
 }
 
+public abstract class me/proton/core/usersettings/presentation/compose/view/Hilt_SecurityKeysActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
+}
+
+public final class me/proton/core/usersettings/presentation/compose/view/SecurityKeysActivity : me/proton/core/presentation/ui/ProtonActivity {
+	public static final field $stable I
+	public static final field Companion Lme/proton/core/usersettings/presentation/compose/view/SecurityKeysActivity$Companion;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/usersettings/presentation/compose/view/SecurityKeysActivity$Companion {
+	public final fun getIntent (Landroid/content/Context;)Landroid/content/Intent;
+	public final fun start (Landroid/content/Context;)V
+}
+
+public abstract interface class me/proton/core/usersettings/presentation/compose/view/SecurityKeysActivity_GeneratedInjector {
+	public abstract fun injectSecurityKeysActivity (Lme/proton/core/usersettings/presentation/compose/view/SecurityKeysActivity;)V
+}
+
+public final class me/proton/core/usersettings/presentation/compose/view/SecurityKeysListKt {
+	public static final fun SecurityKeysList (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel;Landroidx/compose/runtime/Composer;II)V
+	public static final fun SecurityKeysList (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class me/proton/core/usersettings/presentation/compose/view/SecurityKeysScreenKt {
+	public static final fun SecurityKeysListFooter (Landroidx/compose/runtime/Composer;I)V
+	public static final fun SecurityKeysListHeader (Landroidx/compose/runtime/Composer;I)V
+	public static final fun SecurityKeysScreen (Landroidx/compose/ui/Modifier;Lkotlin/jvm/functions/Function0;Landroidx/compose/runtime/Composer;II)V
+}
+
 public final class me/proton/core/usersettings/presentation/compose/view/TelemetrySettingToggleItemKt {
 	public static final fun TelemetrySettingToggleItem (Landroidx/compose/ui/Modifier;Lme/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun TelemetrySettingToggleItem (Landroidx/compose/ui/Modifier;ZLkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function2;Landroidx/compose/runtime/Composer;II)V
 	public static final fun TelemetrySettingToggleItemPreview (Landroidx/compose/runtime/Composer;I)V
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+	public static final field $stable I
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/usersettings/domain/usecase/ObserveRegisteredSecurityKeys;)V
+	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_Factory : dagger/internal/Factory {
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_Factory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/usersettings/domain/usecase/ObserveRegisteredSecurityKeys;)Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_HiltModules {
+}
+
+public abstract class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_HiltModules$BindsModule {
+	public abstract fun binds (Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel;)Landroidx/lifecycle/ViewModel;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_HiltModules$KeyModule {
+	public static fun provide ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_HiltModules_KeyModule_ProvideFactory : dagger/internal/Factory {
+	public fun <init> ()V
+	public static fun create ()Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysInfoViewModel_HiltModules_KeyModule_ProvideFactory;
+	public synthetic fun get ()Ljava/lang/Object;
+	public fun get ()Ljava/lang/String;
+	public static fun provide ()Ljava/lang/String;
+}
+
+public abstract class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState {
+	public static final field $stable I
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Error : me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState {
+	public static final field $stable I
+	public fun <init> (Ljava/lang/Throwable;)V
+	public final fun component1 ()Ljava/lang/Throwable;
+	public final fun copy (Ljava/lang/Throwable;)Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Error;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Error;Ljava/lang/Throwable;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Error;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getThrowable ()Ljava/lang/Throwable;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Loading : me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState {
+	public static final field $stable I
+	public static final field INSTANCE Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Loading;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Success : me/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState {
+	public static final field $stable I
+	public fun <init> (Ljava/util/List;)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun copy (Ljava/util/List;)Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Success;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Success;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/compose/viewmodel/SecurityKeysState$Success;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getKeys ()Ljava/util/List;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/usersettings/presentation/compose/viewmodel/UserSettingsViewModel : androidx/lifecycle/ViewModel {

@@ -16,6 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import Module.kotlinTest
 import studio.forface.easygradle.dsl.*
 import studio.forface.easygradle.dsl.android.*
 
@@ -26,6 +27,11 @@ plugins {
 
 protonBuild {
     apiModeDisabled()
+}
+
+protonCoverage {
+    branchCoveragePercentage.set(17)
+    lineCoveragePercentage.set(42)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -79,5 +85,13 @@ dependencies {
         `junit`,
         `junit-ktx`,
         `kotlin-test`
+    )
+
+    testImplementation(
+        project(kotlinTest),
+        `coroutines-test`,
+        `kotlin-test`,
+        mockk,
+        turbine,
     )
 }

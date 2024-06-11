@@ -47,6 +47,7 @@ android {
 dependencies {
     api(
         project(Module.authPresentation),
+        project(Module.authFidoDomain),
         project(Module.cryptoCommon),
         project(Module.domain),
         project(Module.presentation),
