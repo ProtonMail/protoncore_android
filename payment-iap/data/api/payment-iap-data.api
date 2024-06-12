@@ -146,10 +146,10 @@ public final class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWork
 }
 
 public final class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_Factory;
 	public fun get (Landroid/content/Context;Landroidx/work/WorkerParameters;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker;
-	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/payment/domain/repository/PurchaseRepository;Ljavax/inject/Provider;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker;
+	public static fun newInstance (Landroid/content/Context;Landroidx/work/WorkerParameters;Lme/proton/core/payment/domain/repository/PurchaseRepository;Ljavax/inject/Provider;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker;
 }
 
 public abstract interface class me/proton/core/paymentiap/data/worker/AcknowledgePurchaseWorker_HiltModule {

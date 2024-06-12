@@ -28,6 +28,10 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CancellationException
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.CheckoutGiapBillingAcknowledgeTotal
 import me.proton.core.payment.domain.entity.Purchase
 import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.extension.findGooglePurchase
@@ -37,7 +41,9 @@ import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.isRetryable
+import me.proton.core.paymentiap.domain.toGiapStatus
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.coroutine.withResultContext
 import javax.inject.Provider
 
 @HiltWorker
@@ -45,13 +51,18 @@ internal class AcknowledgePurchaseWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val purchaseRepository: PurchaseRepository,
-    private val googleBillingRepository: Provider<GoogleBillingRepository<Activity>>
-) : CoroutineWorker(context, params) {
+    private val googleBillingRepository: Provider<GoogleBillingRepository<Activity>>,
+    override val observabilityManager: ObservabilityManager
+) : CoroutineWorker(context, params), ObservabilityContext {
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = withResultContext {
+        onResultEnqueueObservability("acknowledgePurchase") {
+            CheckoutGiapBillingAcknowledgeTotal(toGiapStatus())
+        }
+
         val planName = requireNotNull(inputData.getString(INPUT_PLAN_NAME))
         val purchase = requireNotNull(purchaseRepository.getPurchase(planName))
-        return runCatching {
+        runCatching {
             require(purchase.paymentProvider == PaymentProvider.GoogleInAppPurchase)
             googleBillingRepository.get().use {
                 val googlePurchase = it.findGooglePurchase(purchase)
@@ -60,27 +71,38 @@ internal class AcknowledgePurchaseWorker @AssistedInject constructor(
                 it.acknowledgePurchase(googlePurchase.purchaseToken)
              }
         }.fold(
-            onSuccess = {
-                CoreLogger.w(LogTag.GIAP_INFO,"$TAG, acknowledged: $purchase")
-                purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Acknowledged))
-                Result.success()
-            },
-            onFailure = {
-                if (it is BillingClientError && it.isRetryable()) {
-                    CoreLogger.w(LogTag.GIAP_INFO, it, "$TAG, retrying: $purchase")
-                    Result.retry()
-                } else {
-                    CoreLogger.e(LogTag.GIAP_ERROR, it, "$TAG, failed: $purchase")
-                    purchaseRepository.upsertPurchase(
-                        purchase.copy(
-                            purchaseFailure = it.localizedMessage,
-                            purchaseState = PurchaseState.Failed
-                        )
-                    )
-                    Result.failure()
-                }
-            }
+            onSuccess = { onSuccess(purchase) },
+            onFailure = { onFailure(purchase, it)}
         )
+    }
+
+    private suspend fun onSuccess(purchase: Purchase): Result {
+        CoreLogger.w(LogTag.GIAP_INFO,"$TAG, acknowledged: $purchase")
+        purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Acknowledged))
+        return Result.success()
+    }
+
+    private suspend fun onFailure(purchase: Purchase, error: Throwable): Result {
+        return when {
+            error is CancellationException -> {
+                CoreLogger.w(LogTag.GIAP_INFO, error, "$TAG, retrying: $purchase")
+                Result.retry()
+            }
+            error is BillingClientError && error.isRetryable() -> {
+                CoreLogger.w(LogTag.GIAP_INFO, error, "$TAG, retrying: $purchase")
+                Result.retry()
+            }
+            else -> {
+                CoreLogger.e(LogTag.GIAP_ERROR, error, "$TAG, failed: $purchase")
+                purchaseRepository.upsertPurchase(
+                    purchase.copy(
+                        purchaseFailure = error.localizedMessage,
+                        purchaseState = PurchaseState.Failed
+                    )
+                )
+                Result.failure()
+            }
+        }
     }
 
     companion object {
