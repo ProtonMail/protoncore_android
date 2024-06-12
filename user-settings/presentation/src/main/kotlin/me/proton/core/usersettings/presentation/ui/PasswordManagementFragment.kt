@@ -32,15 +32,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
+import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonSecureFragment
 import me.proton.core.presentation.ui.view.ProtonInput
 import me.proton.core.presentation.ui.view.ProtonProgressButton
+import me.proton.core.presentation.utils.InputValidationResult
+import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.getUserMessage
@@ -48,6 +52,8 @@ import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
+import me.proton.core.presentation.utils.then
+import me.proton.core.presentation.utils.validateInvalidPassword
 import me.proton.core.presentation.utils.validatePassword
 import me.proton.core.presentation.utils.validatePasswordMatch
 import me.proton.core.presentation.utils.validatePasswordMinLength
@@ -59,14 +65,20 @@ import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.Action
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType
+import me.proton.core.util.kotlin.orEmpty
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PasswordManagementFragment :
     ProtonSecureFragment(R.layout.fragment_password_management),
     TabLayout.OnTabSelectedListener {
 
+    @Inject
+    internal lateinit var isCommonPasswordCheckEnabled: IsCommonPasswordCheckEnabled
+
     private val viewModel by viewModels<PasswordManagementViewModel>()
     private val binding by viewBinding(FragmentPasswordManagementBinding::bind)
+    private val invalidPasswordProvider by lazy { InvalidPasswordProvider(requireContext()) }
 
     private val input: SettingsInput by lazy {
         requireArguments().get(ARG_INPUT) as SettingsInput
@@ -80,6 +92,9 @@ class PasswordManagementFragment :
             finish()
         }
         viewModel.perform(Action.ObserveState(userId))
+        lifecycleScope.launch {
+            invalidPasswordProvider.init()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -187,7 +202,7 @@ class PasswordManagementFragment :
         hideKeyboard()
         if (currentLoginPasswordInput.isVisible) {
             currentLoginPasswordInput.validatePassword()
-                .onFailure { currentLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
+                .onFailure { currentLoginPasswordInput.setInputError(R.string.auth_signup_validation_password) }
                 .onSuccess { onLoginPasswordValidationSuccess() }
         } else {
             onLoginPasswordValidationSuccess()
@@ -196,15 +211,12 @@ class PasswordManagementFragment :
 
     private fun onLoginPasswordValidationSuccess() = with(binding) {
         newLoginPasswordInput.validatePasswordMinLength()
-            .onFailure { newLoginPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
-            .onSuccess { onNewLoginPasswordValidationSuccess() }
-    }
-
-    private fun onNewLoginPasswordValidationSuccess() = with(binding) {
-        val confirmPassword = confirmNewLoginPasswordInput.text.toString()
-        newLoginPasswordInput.validatePasswordMatch(confirmPassword)
-            .onFailure { confirmNewLoginPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match)) }
-            .onSuccess { onLoginPasswordConfirmed(it) }
+            .onFailure { newLoginPasswordInput.setInputError(R.string.auth_signup_validation_password_length) }
+            .then(newLoginPasswordInput.validateCommonPassword())
+            ?.onFailure { newLoginPasswordInput.setInputError(R.string.auth_signup_password_not_allowed) }
+            ?.then(newLoginPasswordInput.validatePasswordMatch(confirmNewLoginPasswordInput.text.orEmpty()))
+            ?.onFailure { confirmNewLoginPasswordInput.setInputError(R.string.auth_signup_error_passwords_do_not_match) }
+            ?.onSuccess { onLoginPasswordConfirmed(it) }
     }
 
     private fun onLoginPasswordConfirmed(confirmedPassword: String) = with(binding) {
@@ -212,7 +224,7 @@ class PasswordManagementFragment :
             Action.UpdatePassword(
                 userId = userId,
                 type = PasswordType.Login,
-                password = currentLoginPasswordInput.text.toString(),
+                password = currentLoginPasswordInput.text.orEmpty(),
                 newPassword = confirmedPassword
             )
         )
@@ -222,7 +234,7 @@ class PasswordManagementFragment :
         hideKeyboard()
         if (currentMailboxPasswordInput.isVisible) {
             currentMailboxPasswordInput.validatePassword()
-                .onFailure { currentMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password)) }
+                .onFailure { currentMailboxPasswordInput.setInputError(R.string.auth_signup_validation_password) }
                 .onSuccess { onMailboxPasswordValidationSuccess() }
         } else {
             onMailboxPasswordValidationSuccess()
@@ -231,15 +243,12 @@ class PasswordManagementFragment :
 
     private fun onMailboxPasswordValidationSuccess() = with(binding) {
         newMailboxPasswordInput.validatePasswordMinLength()
-            .onFailure { newMailboxPasswordInput.setInputError(getString(R.string.auth_signup_validation_password_length)) }
-            .onSuccess { onNewMailboxPasswordValidationSuccess() }
-    }
-
-    private fun onNewMailboxPasswordValidationSuccess() = with(binding) {
-        val confirmPassword = confirmNewMailboxPasswordInput.text.toString()
-        newMailboxPasswordInput.validatePasswordMatch(confirmPassword)
-            .onFailure { confirmNewMailboxPasswordInput.setInputError(getString(R.string.auth_signup_error_passwords_do_not_match)) }
-            .onSuccess { onMailboxPasswordConfirmed(it) }
+            .onFailure { newMailboxPasswordInput.setInputError(R.string.auth_signup_validation_password_length) }
+            .then(newMailboxPasswordInput.validateCommonPassword())
+            ?.onFailure { newMailboxPasswordInput.setInputError(R.string.auth_signup_password_not_allowed) }
+            ?.then(newMailboxPasswordInput.validatePasswordMatch(confirmNewMailboxPasswordInput.text.orEmpty()))
+            ?.onFailure { confirmNewMailboxPasswordInput.setInputError(R.string.auth_signup_error_passwords_do_not_match) }
+            ?.onSuccess { onMailboxPasswordConfirmed(it) }
     }
 
     private fun onMailboxPasswordConfirmed(confirmedPassword: String) = with(binding) {
@@ -247,7 +256,7 @@ class PasswordManagementFragment :
             Action.UpdatePassword(
                 userId = userId,
                 type = PasswordType.Mailbox,
-                password = currentMailboxPasswordInput.text.toString(),
+                password = currentMailboxPasswordInput.text.orEmpty(),
                 newPassword = confirmedPassword
             )
         )
@@ -269,12 +278,20 @@ class PasswordManagementFragment :
             }
             validation.onFailure {
                 if (validateLength) {
-                    setInputError(getString(R.string.auth_signup_validation_password_length))
+                    setInputError(R.string.auth_signup_validation_password_length)
                 } else {
-                    setInputError(getString(R.string.auth_signup_validation_password))
+                    setInputError(R.string.auth_signup_validation_password)
                 }
             }.onSuccess { clearInputError() }
         }
+    }
+
+    private fun ProtonInput.validateCommonPassword(): InputValidationResult {
+        val provider = when (isCommonPasswordCheckEnabled(userId)) {
+            true -> invalidPasswordProvider
+            false -> null
+        }
+        return validateInvalidPassword(provider)
     }
 
     private fun ProtonProgressButton.showLoading(loading: Boolean) {

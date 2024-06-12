@@ -649,6 +649,7 @@ public class me/proton/core/presentation/ui/view/ProtonInput : android/widget/Li
 	public final fun setHelpText (Ljava/lang/CharSequence;)V
 	public final fun setHintText (Ljava/lang/CharSequence;)V
 	public final fun setImeOptions (I)V
+	public final fun setInputError (I)V
 	public final fun setInputError (Ljava/lang/String;)V
 	public static synthetic fun setInputError$default (Lme/proton/core/presentation/ui/view/ProtonInput;Ljava/lang/String;ILjava/lang/Object;)V
 	public final fun setInputType (I)V
@@ -1170,6 +1171,7 @@ public final class me/proton/core/presentation/utils/ValidationType : java/lang/
 public final class me/proton/core/presentation/utils/ValidationUtilsKt {
 	public static final fun onFailure (Lme/proton/core/presentation/utils/InputValidationResult;Lkotlin/jvm/functions/Function0;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun onSuccess (Lme/proton/core/presentation/utils/InputValidationResult;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/utils/InputValidationResult;
+	public static final fun then (Lme/proton/core/presentation/utils/InputValidationResult;Lme/proton/core/presentation/utils/InputValidationResult;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun validate (Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;Lme/proton/core/presentation/utils/ValidationType;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static final fun validate (Lme/proton/core/presentation/ui/view/ProtonInput;Lme/proton/core/presentation/utils/ValidationType;)Lme/proton/core/presentation/utils/InputValidationResult;
 	public static synthetic fun validate$default (Lme/proton/core/presentation/ui/view/ProtonAutoCompleteInput;Lme/proton/core/presentation/utils/ValidationType;ILjava/lang/Object;)Lme/proton/core/presentation/utils/InputValidationResult;

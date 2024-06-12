@@ -38,6 +38,7 @@ import me.proton.android.core.coreexample.databinding.ActivityMainBinding
 import me.proton.android.core.coreexample.ui.ComposeViewsActivity
 import me.proton.android.core.coreexample.ui.ContactsActivity
 import me.proton.android.core.coreexample.ui.CustomViewsActivity
+import me.proton.android.core.coreexample.ui.FeatureFlagsActivity
 import me.proton.android.core.coreexample.ui.LabelsActivity
 import me.proton.android.core.coreexample.ui.PushesActivity
 import me.proton.android.core.coreexample.ui.TextStylesActivity
@@ -132,6 +133,7 @@ class MainActivity : ProtonViewBindingActivity<ActivityMainBinding>(ActivityMain
                 }
             }
             sendDirect.onClick { mailMessageViewModel.sendDirect() }
+            featureFlags.onClick { startActivity(FeatureFlagsActivity.intent(this@MainActivity)) }
             plans.onClick { plansViewModel.onPlansClicked() }
             plansUpgrade.onClick { plansViewModel.onPlansUpgradeClicked(this@MainActivity) }
             plansCurrent.onClick { plansViewModel.onCurrentPlanClicked(this@MainActivity) }

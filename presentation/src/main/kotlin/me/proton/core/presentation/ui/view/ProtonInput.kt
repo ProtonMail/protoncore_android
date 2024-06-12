@@ -33,6 +33,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import androidx.core.view.isVisible
@@ -399,6 +400,10 @@ open class ProtonInput : LinearLayout {
      */
     fun clearTextAndOverwriteMemory() {
         input.clearTextAndOverwriteMemory()
+    }
+
+    fun setInputError(@StringRes errorRes: Int) {
+        setInputError(context.getString(errorRes))
     }
 
     /**

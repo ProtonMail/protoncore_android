@@ -172,12 +172,28 @@
 
             </LinearLayout>
 
-            <me.proton.core.presentation.ui.view.ProtonProgressButton
-                android:id="@+id/sendDirect"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/default_top_margin"
-                android:text="Send Direct" />
+                android:orientation="horizontal">
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/featureFlags"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Feature flags" />
+
+                <me.proton.core.presentation.ui.view.ProtonProgressButton
+                    android:id="@+id/sendDirect"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_top_margin"
+                    android:layout_weight="1"
+                    android:text="Send Direct" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/contacts_labels_layout"

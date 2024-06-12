@@ -37,18 +37,25 @@ class PasswordManagementTests : BaseTest() {
         val freeUser = quark.userCreate().first
     }
 
-    private fun navigateToPasswordManagement(user: User) {
+    private fun prepareUser(user: User) {
         quark.jailUnban()
         login(user)
+    }
 
+    private fun navigateToPasswordManagement() {
         CoreexampleRobot()
             .settingsPasswordManagement()
             .verify { passwordManagementElementsDisplayed() }
     }
 
+    private fun prepareTest(user: User) {
+        prepareUser(user)
+        navigateToPasswordManagement()
+    }
+
     @Test
     fun passwordMismatch() {
-        navigateToPasswordManagement(freeUser)
+        prepareTest(freeUser)
 
         passwordManagementRobot
             .changePassword<PasswordManagementRobot>(freeUser.password, String.random(), String.random())
@@ -58,7 +65,7 @@ class PasswordManagementTests : BaseTest() {
     @Test
     fun incorrectPassword() {
         val password = String.random()
-        navigateToPasswordManagement(freeUser)
+        prepareTest(freeUser)
 
         passwordManagementRobot
             .changePassword<PasswordManagementRobot>(String.random(), password, password)
@@ -68,7 +75,7 @@ class PasswordManagementTests : BaseTest() {
     @Test
     fun incompletePassword() {
         val password = String.random(length = 3)
-        navigateToPasswordManagement(freeUser)
+        prepareTest(freeUser)
 
         passwordManagementRobot
             .save<PasswordManagementRobot>()
@@ -82,7 +89,7 @@ class PasswordManagementTests : BaseTest() {
     @Test
     @SmokeTest
     fun updatePassword() {
-        navigateToPasswordManagement(freeUser)
+        prepareTest(freeUser)
 
         passwordManagementRobot
             .changePassword<CoreexampleRobot>(freeUser.password, freeUser.password, freeUser.password)
@@ -90,5 +97,22 @@ class PasswordManagementTests : BaseTest() {
                 accountSwitcherDisplayed()
                 userStateIs(freeUser, AccountState.Ready, SessionState.Authenticated)
             }
+    }
+
+    @Test
+    @SmokeTest
+    fun passwordTooCommon() {
+        prepareUser(freeUser)
+
+        CoreexampleRobot()
+            .featureFlags()
+            .apply { verifyFlagsFetched() }
+            .back<CoreexampleRobot>()
+
+        navigateToPasswordManagement()
+
+        passwordManagementRobot
+            .changePassword<PasswordManagementRobot>(freeUser.password, "password", "password")
+            .verify { inputErrorDisplayed(R.string.auth_signup_password_not_allowed) }
     }
 }

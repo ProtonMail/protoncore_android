@@ -36,7 +36,7 @@ fun ProtonInput.validateUsername() =
 fun ProtonInput.validatePassword() =
     InputValidationResult(this.text.orEmpty(), ValidationType.Password)
 
-fun ProtonInput.validateInvalidPassword(provider: InvalidPasswordProvider) =
+fun ProtonInput.validateInvalidPassword(provider: InvalidPasswordProvider?) =
     InputValidationResult(text = this.text.orEmpty(), validationType = ValidationType.InvalidPassword, provider = provider)
 
 fun ProtonInput.validatePasswordMinLength() =
@@ -176,4 +176,8 @@ inline fun InputValidationResult.onFailure(action: () -> Unit): InputValidationR
 inline fun InputValidationResult.onSuccess(action: (text: String) -> Unit): InputValidationResult {
     if (isValid) action(text)
     return this
+}
+
+fun InputValidationResult.then(next: InputValidationResult): InputValidationResult? {
+    return if (isValid) next else null
 }

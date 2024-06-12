@@ -43,7 +43,7 @@ class IsCommonPasswordCheckEnabledImpl @Inject constructor(
 
     @OptIn(ExperimentalProtonFeatureFlag::class)
     override fun isRemoteEnabled(userId: UserId?): Boolean {
-        return featureFlagManager.getValue(userId = null, featureId)
+        return featureFlagManager.getValue(userId = userId, featureId)
     }
 
     internal companion object {

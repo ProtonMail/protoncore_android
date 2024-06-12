@@ -19,6 +19,7 @@
 package me.proton.core.test.quark.data
 
 import kotlinx.serialization.Serializable
+import me.proton.core.test.quark.util.randomString
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.deserializeList
 import me.proton.core.util.kotlin.random
@@ -26,7 +27,7 @@ import me.proton.core.util.kotlin.random
 @Serializable
 public data class User(
     val name: String = randomUsername(),
-    val password: String = "11111111",
+    val password: String = randomString(length = 8),
     val email: String = EMPTY_STRING,
 
     val passphrase: String = EMPTY_STRING,

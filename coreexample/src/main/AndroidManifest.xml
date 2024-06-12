@@ -159,6 +159,7 @@
         <activity
             android:name=".ui.PushDetailsActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.FeatureFlagsActivity" />
 
     </application>
 

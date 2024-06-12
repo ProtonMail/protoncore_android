@@ -278,6 +278,14 @@ public abstract interface class me/proton/core/usersettings/presentation/ui/Pass
 	public abstract fun injectPasswordManagementFragment (Lme/proton/core/usersettings/presentation/ui/PasswordManagementFragment;)V
 }
 
+public final class me/proton/core/usersettings/presentation/ui/PasswordManagementFragment_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public static fun injectIsCommonPasswordCheckEnabled (Lme/proton/core/usersettings/presentation/ui/PasswordManagementFragment;Lme/proton/core/auth/domain/IsCommonPasswordCheckEnabled;)V
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/usersettings/presentation/ui/PasswordManagementFragment;)V
+}
+
 public final class me/proton/core/usersettings/presentation/ui/ShowPasswordLauncherKt {
 	public static final fun registerShowPasswordDialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 	public static synthetic fun registerShowPasswordDialogResultLauncher$default (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
