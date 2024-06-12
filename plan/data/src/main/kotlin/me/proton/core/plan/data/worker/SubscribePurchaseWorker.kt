@@ -29,6 +29,7 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.CancellationException
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isBadRequest
 import me.proton.core.network.domain.isRetryable
@@ -44,6 +45,7 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.extension.getSubscribeObservabilityData
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
 import me.proton.core.util.kotlin.CoreLogger
@@ -87,15 +89,24 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
     }
 
     private suspend fun onSuccess(purchase: Purchase): Result {
+        CoreLogger.w(LogTag.PURCHASE_INFO, "$TAG, subscribed: $purchase")
         purchaseRepository.upsertPurchase(purchase.copy(purchaseState = PurchaseState.Subscribed))
         return Result.success()
     }
 
     private suspend fun onFailure(purchase: Purchase, error: Throwable): Result {
         return when {
-            error is ApiException && error.isRetryable() -> Result.retry()
+            error is CancellationException -> {
+                CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
+                Result.retry()
+            }
+            error is ApiException && error.isRetryable() -> {
+                CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, retrying: $purchase")
+                Result.retry()
+            }
 
             error is ApiException && (error.isUnprocessable() || error.isBadRequest()) -> {
+                CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, fetching current subscription: $purchase")
                 val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
                 val plans = plansRepository.getSubscription(userId)?.plans.orEmpty()
                 when {
@@ -109,7 +120,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
     }
 
     private suspend fun onPermanentFailure(purchase: Purchase, error: Throwable): Result {
-        CoreLogger.e(TAG, error)
+        CoreLogger.e(LogTag.PURCHASE_ERROR, error, "$TAG, permanent failure: $purchase")
         purchaseRepository.upsertPurchase(
             purchase.copy(
                 purchaseFailure = error.localizedMessage,

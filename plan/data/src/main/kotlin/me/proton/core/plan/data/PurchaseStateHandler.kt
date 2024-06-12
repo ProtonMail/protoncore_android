@@ -3,6 +3,7 @@ package me.proton.core.plan.data
 import androidx.work.ExistingWorkPolicy
 import androidx.work.WorkManager
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
@@ -15,8 +16,10 @@ import me.proton.core.payment.domain.entity.PurchaseState
 import me.proton.core.payment.domain.entity.humanVerificationDetails
 import me.proton.core.payment.domain.onPurchaseState
 import me.proton.core.plan.data.worker.SubscribePurchaseWorker
+import me.proton.core.plan.domain.LogTag
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Type
+import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -42,15 +45,19 @@ class PurchaseStateHandler @Inject constructor(
         }
     }
 
-    private suspend fun addHumanVerificationToken(purchase: Purchase) {
+    private suspend fun addHumanVerificationToken(purchase: Purchase) = runCatching {
         val token = requireNotNull(purchase.paymentToken)
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         humanVerificationManager.addDetails(token.humanVerificationDetails(clientId))
+    }.onFailure {
+        CoreLogger.e(LogTag.PURCHASE_ERROR, it)
     }
 
-    private suspend fun clearHumanVerificationToken() {
+    private suspend fun clearHumanVerificationToken() = runCatching {
         val clientId = requireNotNull(clientIdProvider.getClientId(sessionId = null))
         humanVerificationManager.clearDetails(clientId)
+    }.onFailure {
+        CoreLogger.e(LogTag.PURCHASE_ERROR, it)
     }
 
     private suspend fun PurchaseStateHandler.handlePurchased(purchase: Purchase) {
@@ -80,6 +87,7 @@ fun PurchaseStateHandler.onPurchased(
 ): Job = purchaseManager
     .onPurchaseState(PurchaseState.Purchased, planName = planName, initialState = true)
     .onEach { purchase -> block(purchase) }
+    .catch { CoreLogger.e(LogTag.PURCHASE_ERROR, it) }
     .launchIn(scopeProvider.GlobalDefaultSupervisedScope)
 
 fun PurchaseStateHandler.onSubscribed(
@@ -88,4 +96,5 @@ fun PurchaseStateHandler.onSubscribed(
 ): Job = purchaseManager
     .onPurchaseState(PurchaseState.Subscribed, planName = planName, initialState = true)
     .onEach { purchase -> block(purchase) }
+    .catch { CoreLogger.e(LogTag.PURCHASE_ERROR, it) }
     .launchIn(scopeProvider.GlobalDefaultSupervisedScope)

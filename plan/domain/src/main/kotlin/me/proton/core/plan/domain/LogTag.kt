@@ -24,4 +24,10 @@ object LogTag {
 
     /** Tag for dynamic plans parsing error. */
     const val DYN_PLANS_PARSE: String = "core.plan.dynamic.parse"
+
+    /** Errors related to Purchases. */
+    const val PURCHASE_ERROR: String = "core.plan.purchase.error"
+
+    /** Info related to Purchases. */
+    const val PURCHASE_INFO: String = "core.plan.purchase.info"
 }
