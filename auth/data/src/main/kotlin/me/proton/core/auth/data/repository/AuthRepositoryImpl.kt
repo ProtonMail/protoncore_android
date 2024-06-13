@@ -24,7 +24,7 @@ import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
-import me.proton.core.auth.data.api.fido2.toJson
+import me.proton.core.auth.fido.domain.ext.toJson
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.Fido2Request

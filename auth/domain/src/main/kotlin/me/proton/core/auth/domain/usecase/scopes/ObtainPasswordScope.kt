@@ -25,6 +25,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -38,7 +39,8 @@ class ObtainPasswordScope @Inject constructor(
         sessionId: SessionId,
         username: String,
         password: EncryptedString,
-        twoFactorCode: String?
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?
     ): Boolean {
         val authInfo = authRepository.getAuthInfoSrp(
             sessionId = sessionId,
@@ -57,7 +59,8 @@ class ObtainPasswordScope @Inject constructor(
                 userId,
                 clientProofs,
                 authInfo.srpSession,
-                twoFactorCode
+                secondFactorCode = secondFactorCode,
+                secondFactorFido = secondFactorFido
             )
         }
     }

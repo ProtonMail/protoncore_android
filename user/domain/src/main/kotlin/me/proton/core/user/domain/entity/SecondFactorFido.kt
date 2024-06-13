@@ -1,5 +1,3 @@
-import studio.forface.easygradle.dsl.*
-
 /*
  * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -18,16 +16,14 @@ import studio.forface.easygradle.dsl.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonKotlinLibrary
-    kotlin("plugin.serialization")
-}
+package me.proton.core.user.domain.entity
 
-publishOption.shouldBePublishedAsLib = true
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 
-dependencies {
-    implementation(
-        `serialization-core`,
-        `serialization-json`
-    )
-}
+class SecondFactorFido(
+    val publicKeyOptions: Fido2PublicKeyCredentialRequestOptions,
+    val clientData: ByteArray,
+    val authenticatorData: ByteArray,
+    val signature: ByteArray,
+    val credentialID: ByteArray
+)

@@ -29,6 +29,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.Domain
+import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.User
 
 @Suppress("TooManyFunctions")
@@ -154,7 +155,8 @@ interface UserRepository : PassphraseRepository {
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        twoFactorCode: String?
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?
     ): Boolean
 
     /**

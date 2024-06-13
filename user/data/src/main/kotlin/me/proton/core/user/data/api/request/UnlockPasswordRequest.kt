@@ -20,6 +20,7 @@ package me.proton.core.user.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.auth.data.api.request.Fido2Request
 
 @Serializable
 data class UnlockPasswordRequest(
@@ -30,5 +31,7 @@ data class UnlockPasswordRequest(
     @SerialName("SRPSession")
     val srpSession: String,
     @SerialName("TwoFactorCode")
-    val twoFactorCode: String? = null
+    val twoFactorCode: String? = null,
+    @SerialName("FIDO2")
+    val fido2: Fido2Request? = null
 )

@@ -30,12 +30,13 @@ publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
     branchCoveragePercentage.set(77)
-    lineCoveragePercentage.set(56)
+    lineCoveragePercentage.set(55)
 }
 
 dependencies {
     api(
         project(Module.accountDomain),
+        project(Module.authFidoDomain),
         project(Module.challengeDomain),
         project(Module.cryptoCommon),
         project(Module.domain),

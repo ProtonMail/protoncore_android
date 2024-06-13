@@ -205,6 +205,15 @@ public final class me/proton/core/user/domain/entity/Role$Companion {
 	public final fun getMap ()Ljava/util/Map;
 }
 
+public final class me/proton/core/user/domain/entity/SecondFactorFido {
+	public fun <init> (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;[B[B[B[B)V
+	public final fun getAuthenticatorData ()[B
+	public final fun getClientData ()[B
+	public final fun getCredentialID ()[B
+	public final fun getPublicKeyOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
+	public final fun getSignature ()[B
+}
+
 public final class me/proton/core/user/domain/entity/Type : java/lang/Enum {
 	public static final field Companion Lme/proton/core/user/domain/entity/Type$Companion;
 	public static final field CredentialLess Lme/proton/core/user/domain/entity/Type;
@@ -551,7 +560,7 @@ public abstract interface class me/proton/core/user/domain/repository/UserReposi
 	public abstract fun observeUser (Lme/proton/core/domain/entity/UserId;Z)Lkotlinx/coroutines/flow/Flow;
 	public abstract fun removeLockedAndPasswordScopes (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun unlockUserForLockedScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public abstract fun unlockUserForPasswordScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public abstract fun unlockUserForPasswordScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateUserUsedBaseSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun updateUserUsedDriveSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;

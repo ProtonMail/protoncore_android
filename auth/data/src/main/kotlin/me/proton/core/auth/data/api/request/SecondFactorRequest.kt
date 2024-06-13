@@ -55,4 +55,28 @@ data class Fido2Request(
     val signature: String, // base64
     @SerialName("CredentialID")
     val credentialID: UByteArray
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Fido2Request
+
+        if (authenticationOptions != other.authenticationOptions) return false
+        if (clientData != other.clientData) return false
+        if (authenticatorData != other.authenticatorData) return false
+        if (signature != other.signature) return false
+        if (credentialID != other.credentialID) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = authenticationOptions.hashCode()
+        result = 31 * result + clientData.hashCode()
+        result = 31 * result + authenticatorData.hashCode()
+        result = 31 * result + signature.hashCode()
+        result = 31 * result + credentialID.hashCode()
+        return result
+    }
+}

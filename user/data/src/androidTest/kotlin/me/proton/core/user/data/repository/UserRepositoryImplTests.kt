@@ -25,6 +25,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import io.mockk.slot
 import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.firstOrNull
@@ -35,9 +36,15 @@ import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
+import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
+import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
+import me.proton.core.auth.data.api.request.Fido2Request
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialDescriptor
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
@@ -68,6 +75,7 @@ import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.CreateUserType
+import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
@@ -75,6 +83,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
@@ -90,7 +99,7 @@ class UserRepositoryImplTests {
     @MockK(relaxed = true)
     private lateinit var apiManagerFactory: ApiManagerFactory
 
-    @MockK(relaxed = true)
+    @MockK
     private lateinit var userApi: UserApi
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
@@ -477,6 +486,7 @@ class UserRepositoryImplTests {
             TestUsers.User1.id,
             testSrpProofs,
             "test-srp-session",
+            null,
             null
         )
         assertNotNull(response)
@@ -507,10 +517,73 @@ class UserRepositoryImplTests {
             TestUsers.User1.id,
             testSrpProofs,
             "test-srp-session",
-            "test-2fa"
+            "test-2fa",
+            null
         )
         assertNotNull(response)
         assertTrue(response)
+    }
+
+    @OptIn(ExperimentalUnsignedTypes::class)
+    @Test
+    fun unlockUser_2fa_fido_passwordScope() = runTest {
+        // GIVEN
+        val credentialId = ubyteArrayOf(7U, 8U)
+        val challenge = ubyteArrayOf(9U, 10U)
+        val credentialType = "credential-type"
+        val unlockPasswordRequestSlot = slot<UnlockPasswordRequest>()
+
+        coEvery {
+            userApi.unlockPasswordScope(capture(unlockPasswordRequestSlot))
+        } answers {
+            SRPAuthenticationResponse(
+                code = 1000,
+                serverProof = testSrpProofs.expectedServerProof,
+            )
+        }
+
+        // WHEN
+        val response = userRepository.unlockUserForPasswordScope(
+            TestUsers.User1.id,
+            testSrpProofs,
+            "test-srp-session",
+            null,
+            SecondFactorFido(
+                publicKeyOptions = Fido2PublicKeyCredentialRequestOptions(
+                    challenge = challenge,
+                    allowCredentials = listOf(
+                        Fido2PublicKeyCredentialDescriptor(
+                            type = credentialType,
+                            id = credentialId,
+                            transports = null
+                        )
+                    )
+                ),
+                clientData = byteArrayOf(1, 2),
+                authenticatorData = byteArrayOf(3, 4),
+                signature = byteArrayOf(5, 6),
+                credentialID = credentialId.toByteArray()
+            )
+        )
+        assertNotNull(response)
+        assertTrue(response)
+
+        val capturedFido2Request = unlockPasswordRequestSlot.captured.fido2!!
+        val capturedPublicKey = capturedFido2Request.authenticationOptions.publicKey
+        assertEquals("AQI=", capturedFido2Request.clientData)
+        assertEquals("AwQ=", capturedFido2Request.authenticatorData)
+        assertEquals("BQY=", capturedFido2Request.signature)
+        assertContentEquals(credentialId, capturedFido2Request.credentialID)
+        assertContentEquals(challenge, capturedPublicKey.challenge)
+        assertContentEquals(
+            listOf(
+                PublicKeyCredentialDescriptorData(
+                    type = credentialType,
+                    id = credentialId,
+                    transports = null
+                )
+            ), capturedPublicKey.allowCredentials
+        )
     }
 
     @Test

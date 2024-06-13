@@ -16,14 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.fido2
+package me.proton.core.auth.fido.domain.ext
 
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.booleanOrNull
 import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationExtensionsClientInputs
 
-internal fun Fido2AuthenticationExtensionsClientInputs.toJson(): JsonObject? = JsonObject(
+public fun Fido2AuthenticationExtensionsClientInputs.toJson(): JsonObject? = JsonObject(
     buildMap {
         if (appId != null) {
             put("appid", JsonPrimitive(appId))
@@ -36,16 +35,3 @@ internal fun Fido2AuthenticationExtensionsClientInputs.toJson(): JsonObject? = J
         }
     }
 ).takeIf { it.isNotEmpty() }
-
-internal fun PublicKeyCredentialRequestOptionsResponse.toFido2AuthenticationExtensionsClientInputs() =
-    Fido2AuthenticationExtensionsClientInputs(
-        appId = extensions?.get("appid")?.let { jsonElement ->
-            (jsonElement as? JsonPrimitive)?.takeIf { it.isString }?.content?.takeIf { it.isNotEmpty() }
-        },
-        thirdPartyPayment = extensions?.get("thirdPartyPayment")?.let { jsonElement ->
-            (jsonElement as? JsonPrimitive)?.booleanOrNull
-        },
-        uvm = extensions?.get("uvm")?.let { jsonElement ->
-            (jsonElement as? JsonPrimitive)?.booleanOrNull
-        },
-    )

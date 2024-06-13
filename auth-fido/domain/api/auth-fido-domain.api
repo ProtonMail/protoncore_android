@@ -157,6 +157,10 @@ public final class me/proton/core/auth/fido/domain/entity/Fido2RegisteredKey$Com
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/auth/fido/domain/ext/Fido2AuthenticationExtensionsClientInputsExtKt {
+	public static final fun toJson (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationExtensionsClientInputs;)Lkotlinx/serialization/json/JsonObject;
+}
+
 public abstract interface class me/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey {
 	public abstract fun invoke (Ljava/lang/Object;Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public abstract fun register (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)V

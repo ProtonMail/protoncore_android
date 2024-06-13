@@ -22,6 +22,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
+import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -32,7 +33,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.entity.SecondFactorMethod
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.DialogConfirmPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
@@ -43,14 +48,22 @@ import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.user.domain.entity.SecondFactorFido
+import me.proton.core.util.kotlin.CoreLogger
+import java.util.Optional
+import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 /**
  * This dialog handles only [Scope.PASSWORD] or [Scope.LOCKED]. Any other scope will be ignored.
  */
 @AndroidEntryPoint
 class ConfirmPasswordDialog : DialogFragment() {
+    @Inject
+    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ComponentActivity>>
 
     private val viewModel by viewModels<ConfirmPasswordDialogViewModel>()
 
@@ -83,22 +96,19 @@ class ConfirmPasswordDialog : DialogFragment() {
         ConfirmPasswordDialogViewController(
             DialogConfirmPasswordBinding.inflate(layoutInflater),
             lifecycleOwner = this,
-            onEnterButtonClick = { selectedSecondFactorMethod ->
-                when (selectedSecondFactorMethod) {
-                    SecondFactorMethod.Totp -> onTotpSubmitted()
-                    SecondFactorMethod.Authenticator -> onSecurityKeySubmitted()
-                    null -> Unit
-                }
-            },
-            onCancelButtonClick = {
-                setResultAndDismiss(null)
-            },
+            onEnterButtonClick = this::onEnterButtonClick,
+            onCancelButtonClick = { setResultAndDismiss(null) },
             onSecurityKeyInfoClick = {
                 context?.let {
                     it.openBrowserLink(it.getString(R.string.confirm_password_2fa_security_key))
                 }
             }
         )
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        performTwoFaWithSecurityKey.getOrNull()?.register(requireActivity(), this::onTwoFaWithSecurityKeyResult)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -129,15 +139,45 @@ class ConfirmPasswordDialog : DialogFragment() {
         .setView(viewController.root)
         .create()
 
+    private fun onEnterButtonClick(selectedSecondFactorMethod: SecondFactorMethod?) {
+        val password = viewController.password.orEmpty()
+        when (missingScope) {
+            Scope.PASSWORD -> when (selectedSecondFactorMethod) {
+                SecondFactorMethod.Totp -> onTotpSubmitted()
+                SecondFactorMethod.Authenticator -> onSecurityKeySubmitted()
+                null -> viewModel.unlock(userId, missingScope, password)
+            }
+
+            Scope.LOCKED -> viewModel.unlock(userId, missingScope, password)
+        }
+    }
+
     private fun onTotpSubmitted() {
-        val password = viewController.password
+        val password = viewController.password.orEmpty()
         val twoFactorCode = viewController.twoFactorCode
-        viewModel.unlock(userId, missingScope, password.orEmpty(), twoFactorCode)
+        viewModel.unlock(userId, missingScope, password, secondFactorCode = twoFactorCode)
     }
 
     private fun onSecurityKeySubmitted() {
-        // TODO Launch Fido2ApiClient (with data from viewModel.fido2Info),
-        //  get the result and pass it back to the view model for final processing.
+        val performTwoFaWithSecurityKey = performTwoFaWithSecurityKey.getOrNull() ?: return
+        val requestOptions = requireNotNull(viewModel.fido2Info?.authenticationOptions?.publicKey)
+
+        viewController.setLoading()
+
+        lifecycleScope.launch {
+            val activity = activity ?: return@launch
+            when (val launchResult = performTwoFaWithSecurityKey.invoke(activity, requestOptions)) {
+                is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> {
+                    viewController.setIdle()
+                    viewController.root.errorSnack(
+                        message = launchResult.exception.localizedMessage
+                            ?: getString(R.string.auth_login_general_error)
+                    )
+                }
+
+                is PerformTwoFaWithSecurityKey.LaunchResult.Success -> Unit
+            }
+        }
     }
 
     private fun handleState(state: ConfirmPasswordDialogViewModel.State) = when (state) {
@@ -175,6 +215,49 @@ class ConfirmPasswordDialog : DialogFragment() {
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         screenProtector.unprotect(requireActivity())
+    }
+
+    private fun onTwoFaWithSecurityKeyResult(
+        result: PerformTwoFaWithSecurityKey.Result,
+        options: Fido2PublicKeyCredentialRequestOptions
+    ) {
+        viewController.setIdle()
+
+        when (result) {
+            is PerformTwoFaWithSecurityKey.Result.Success -> onSecurityKeyAuthSuccess(result, options)
+            is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
+            is PerformTwoFaWithSecurityKey.Result.EmptyResult -> viewController.root.errorSnack(
+                getString(R.string.auth_login_general_error)
+            )
+
+            is PerformTwoFaWithSecurityKey.Result.Error -> viewController.root.errorSnack(
+                result.error.message ?: getString(R.string.auth_login_general_error)
+            )
+
+            is PerformTwoFaWithSecurityKey.Result.UnknownResult -> {
+                getString(R.string.auth_login_general_error)
+                CoreLogger.e(LogTag.FLOW_ERROR_2FA, result.toString())
+            }
+        }
+    }
+
+    private fun onSecurityKeyAuthSuccess(
+        result: PerformTwoFaWithSecurityKey.Result.Success,
+        options: Fido2PublicKeyCredentialRequestOptions
+    ) {
+        val password = viewController.password.orEmpty()
+        viewModel.unlock(
+            userId = userId,
+            missingScope = missingScope,
+            password = password,
+            secondFactorFido = SecondFactorFido(
+                publicKeyOptions = options,
+                clientData = result.response.clientDataJSON,
+                authenticatorData = result.response.authenticatorData,
+                signature = result.response.signature,
+                credentialID = result.rawId
+            )
+        )
     }
 
     companion object {

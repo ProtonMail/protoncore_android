@@ -195,6 +195,7 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
+                null,
                 null
             )
         } returns true
@@ -220,6 +221,7 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
+                null,
                 null
             )
         } throws ApiException(
@@ -253,7 +255,8 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
-                test2FACode
+                test2FACode,
+                null
             )
         } returns true
         flowTest(viewModel.state) {
@@ -278,7 +281,8 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
-                test2FACode
+                test2FACode,
+                null
             )
         } throws ApiException(
             ApiResult.Error.Http(

@@ -442,9 +442,13 @@ public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPas
 	public static final field BUNDLE_CONFIRM_PASS_DATA Ljava/lang/String;
 	public static final field CONFIRM_PASS_SET Ljava/lang/String;
 	public static final field Companion Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog$Companion;
+	public field performTwoFaWithSecurityKey Ljava/util/Optional;
 	public fun <init> ()V
+	public final fun getPerformTwoFaWithSecurityKey ()Ljava/util/Optional;
+	public fun onCreate (Landroid/os/Bundle;)V
 	public fun onCreateDialog (Landroid/os/Bundle;)Landroid/app/Dialog;
 	public fun onDismiss (Landroid/content/DialogInterface;)V
+	public final fun setPerformTwoFaWithSecurityKey (Ljava/util/Optional;)V
 }
 
 public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog$Companion {
@@ -453,6 +457,14 @@ public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPas
 
 public abstract interface class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog_GeneratedInjector {
 	public abstract fun injectConfirmPasswordDialog (Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog;)V
+}
+
+public final class me/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog_MembersInjector : dagger/MembersInjector {
+	public fun <init> (Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;)Ldagger/MembersInjector;
+	public synthetic fun injectMembers (Ljava/lang/Object;)V
+	public fun injectMembers (Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog;)V
+	public static fun injectPerformTwoFaWithSecurityKey (Lme/proton/core/auth/presentation/alert/confirmpass/ConfirmPasswordDialog;Ljava/util/Optional;)V
 }
 
 public abstract class me/proton/core/auth/presentation/alert/confirmpass/Hilt_ConfirmPasswordDialog : androidx/fragment/app/DialogFragment, dagger/hilt/internal/GeneratedComponentManagerHolder {
@@ -2467,7 +2479,8 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
 	public final fun onConfirmPasswordResult (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lkotlinx/coroutines/Job;
 	public final fun setFido2Info (Lme/proton/core/auth/domain/entity/Fido2Info;)V
-	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;)Lkotlinx/coroutines/Job;
+	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;)Lkotlinx/coroutines/Job;
+	public static synthetic fun unlock$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {

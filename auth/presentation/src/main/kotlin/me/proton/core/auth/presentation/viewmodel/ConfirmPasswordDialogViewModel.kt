@@ -44,6 +44,7 @@ import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.presentation.viewmodel.ProtonViewModel
+import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
@@ -107,7 +108,8 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         userId: UserId,
         missingScope: Scope,
         password: String,
-        twoFactorCode: String?
+        secondFactorCode: String? = null,
+        secondFactorFido: SecondFactorFido? = null
     ) = flow {
         emit(State.ProcessingObtainScope)
         val account = accountManager.getAccount(userId).firstOrNull()
@@ -121,7 +123,8 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
                 sessionId = requireNotNull(account.sessionId),
                 username = requireNotNull(account.username),
                 password = password.encrypt(keyStoreCrypto),
-                twoFactorCode = twoFactorCode?.takeIfNotEmpty()
+                secondFactorCode = secondFactorCode?.takeIfNotEmpty(),
+                secondFactorFido = secondFactorFido
             )
 
             Scope.LOCKED -> obtainLockedScope(

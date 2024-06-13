@@ -426,17 +426,19 @@ public final class me/proton/core/user/data/api/request/CreateUserRequest$Compan
 
 public final class me/proton/core/user/data/api/request/UnlockPasswordRequest {
 	public static final field Companion Lme/proton/core/user/data/api/request/UnlockPasswordRequest$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
-	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
+	public final fun component5 ()Lme/proton/core/auth/data/api/request/Fido2Request;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
+	public static synthetic fun copy$default (Lme/proton/core/user/data/api/request/UnlockPasswordRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;ILjava/lang/Object;)Lme/proton/core/user/data/api/request/UnlockPasswordRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClientEphemeral ()Ljava/lang/String;
 	public final fun getClientProof ()Ljava/lang/String;
+	public final fun getFido2 ()Lme/proton/core/auth/data/api/request/Fido2Request;
 	public final fun getSrpSession ()Ljava/lang/String;
 	public final fun getTwoFactorCode ()Ljava/lang/String;
 	public fun hashCode ()I
@@ -1000,7 +1002,7 @@ public final class me/proton/core/user/data/repository/UserRepositoryImpl : me/p
 	public fun removeLockedAndPasswordScopes (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setPassphrase (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/keystore/EncryptedByteArray;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun unlockUserForLockedScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun unlockUserForPasswordScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun unlockUserForPasswordScope (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUser (Lme/proton/core/user/domain/entity/User;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUserUsedBaseSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUserUsedDriveSpace (Lme/proton/core/domain/entity/UserId;JLkotlin/coroutines/Continuation;)Ljava/lang/Object;
