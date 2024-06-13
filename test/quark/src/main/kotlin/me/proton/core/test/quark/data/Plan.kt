@@ -36,7 +36,13 @@ public enum class Plan(public var planName: String, public var text: String) {
     PassPlus("pass2023", "Pass Plus"),
     Unlimited("bundle2022", "Proton Unlimited"),
     VpnPlus("vpn2022", "VPN Plus"),
-    Dev("", "")
+    Dev("", "");
+
+    public companion object {
+        public fun fromString(planName: String): Plan {
+            return entries.find { it.planName == planName } ?: Dev
+        }
+    }
 }
 
 internal fun randomPaidPlan(): Plan = arrayOf(Plan.MailPlus, Plan.Unlimited).random()

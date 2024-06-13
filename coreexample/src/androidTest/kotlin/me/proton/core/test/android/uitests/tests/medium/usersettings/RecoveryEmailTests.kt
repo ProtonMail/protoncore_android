@@ -25,7 +25,6 @@ import me.proton.core.test.android.robots.settings.RecoveryEmailRobot
 import me.proton.core.test.android.robots.settings.RecoveryEmailRobot.AuthenticationRobot
 import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
-import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.usersettings.R
 import org.junit.Before
 import org.junit.Test

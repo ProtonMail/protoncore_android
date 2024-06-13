@@ -27,6 +27,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Create
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +55,8 @@ class ConfigurationActivity : ProtonActivity() {
                     R.string.configuration_title, Icons.Filled.Home
                 ), NavigationTab(
                     R.string.feature_flags_title, Icons.Filled.Settings
+                ), NavigationTab(
+                    R.string.quark_title, Icons.Filled.Create
                 )
             )
 
@@ -67,6 +70,7 @@ class ConfigurationActivity : ProtonActivity() {
                                 currentScreen.value = when (index) {
                                     0 -> Screen.Home
                                     1 -> Screen.FeatureFlag
+                                    2 -> Screen.Quark
                                     else -> Screen.Home
                                 }
                             },
@@ -92,4 +96,5 @@ class ConfigurationActivity : ProtonActivity() {
 enum class Screen {
     Home,
     FeatureFlag,
+    Quark,
 }

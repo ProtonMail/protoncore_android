@@ -26,8 +26,34 @@
     <string name="configuration_title" translatable="false">Configuration</string>
     <string name="feature_flags_title" translatable="false">Feature Flags</string>
     <string name="feature_flags_manage" translatable="false">Manage Feature Flags</string>
+    <string name="quark_title" translatable="false">Quark</string>
+    <string-array name="plans" translatable="false">
+        <item>free</item>
+        <item>bundle2022</item>
+        <item>bundlepro2022</item>
+        <item>bundlepro2024</item>
+        <item>drive2022</item>
+        <item>drivelite2024</item>
+        <item>drivepro2022</item>
+        <item>enterprise2022</item>
+        <item>family2022</item>
+        <item>mail2022</item>
+        <item>mailbiz2024</item>
+        <item>mailpro2022</item>
+        <item>pass2023</item>
+        <item>passbiz2024</item>
+        <item>passpro2024</item>
+        <item>visionary2022</item>
+        <item>vpn2022</item>
+        <item>vpn2024</item>
+        <item>vpnbiz2023</item>
+        <item>vpnpass2023</item>
+        <item>vpnpro2023</item>
+        <item>wallet2024</item>
+    </string-array>
     <string-array name="domains" translatable="false">
         <item>production</item>
+        <item>black</item>
         <item>payments</item>
         <item>agassiz</item>
         <item>al-khalili</item>
@@ -61,7 +87,6 @@
         <item>binet</item>
         <item>birdseye</item>
         <item>birkeland</item>
-        <item>black</item>
         <item>blackwell</item>
         <item>blalock</item>
         <item>boas</item>

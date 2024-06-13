@@ -19,7 +19,6 @@
 package me.proton.core.test.quark
 
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.Quark.InternalApiEndpoint.DRIVE_POPULATE_USER_WITH_DATA

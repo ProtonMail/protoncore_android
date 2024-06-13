@@ -40,7 +40,6 @@ import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.configuration.configurator.presentation.Screen
 import me.proton.core.configuration.configurator.presentation.viewModel.ConfigurationScreenViewModel
-import me.proton.core.configuration.configurator.presentation.viewModel.FeatureFlagsViewModel
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.presentation.R.drawable as CoreDrawable
 
@@ -55,6 +54,7 @@ fun NavigationContent(currentScreen: Screen) {
         )
 
         Screen.FeatureFlag -> AppNavigation()
+        Screen.Quark -> CreateUserScreen()
     }
 }
 
@@ -197,7 +197,7 @@ private fun ConfigurationFields(
 }
 
 @Composable
-private fun ConfigurationTextField(
+fun ConfigurationTextField(
     configField: ConfigurationUseCase.ConfigField,
     onValueChange: (String) -> Unit,
     fetchAction: (() -> Unit)? = null,
