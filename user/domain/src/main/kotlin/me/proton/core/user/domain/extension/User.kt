@@ -99,7 +99,7 @@ private fun getUsedPercentage(used: Long?, max: Long?): Int? {
     if (used == null || max == null) return null
     require(used >= 0)
     require(max >= 0)
-    require(used <= max)
+    // require(used <= max) -> not always true
     return round(used.toDouble() / max * 100.0).toInt()
 }
 

@@ -160,13 +160,16 @@ class UserTest {
     @Test
     fun usedSpaceIsGreaterThanMaxSpace() {
         val user = mockk<User> {
+            every { usedSpace } returns 1250
+            every { maxSpace } returns 1000
             every { usedBaseSpace } returns 300
             every { maxBaseSpace } returns 200
-            every { usedDriveSpace } returns 1001
-            every { maxDriveSpace } returns 1000
+            every { usedDriveSpace } returns 101
+            every { maxDriveSpace } returns 100
         }
-        assertFailsWith<IllegalArgumentException> { user.getUsedBaseSpacePercentage() }
-        assertFailsWith<IllegalArgumentException> { user.getUsedDriveSpacePercentage() }
+        assertEquals(125, user.getUsedTotalSpacePercentage())
+        assertEquals(150, user.getUsedBaseSpacePercentage())
+        assertEquals(101, user.getUsedDriveSpacePercentage())
     }
 
     @Test
