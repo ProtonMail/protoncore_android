@@ -22,22 +22,22 @@
   <string name="payments_no_connectivity">No hi ha connexió per mostrar la pàgina de confirmació de 3DS.</string>
   <string name="payments_3ds_not_approved">L\'aprovació 3DS ha estat rebutjada.</string>
   <string name="payments_error_card_name">Es requereix el nom a la targeta.</string>
-  <string name="payments_error_card_number">Número de targeta incorrecte.</string>
+  <string name="payments_error_card_number">El número de targeta no és vàlid.</string>
   <string name="payments_error_cvc">Introduïu un codi de seguretat vàlid.</string>
-  <string name="payments_error_session">Es necessita una ID de sessió vàlida per subscriure a un usuari connectat.</string>
-  <string name="payments_error_signup_paymentmethod">No es pot procedir al registre amb el mètode de pagament existent.</string>
+  <string name="payments_error_session">Es necessita un ID de sessió vàlid per a subscriure a un usuari que ha iniciat la sessió.</string>
+  <string name="payments_error_signup_paymentmethod">No s\'ha pogut crear el compte amb el mètode de pagament existent.</string>
   <string name="payments_error_invalid_session">Sessió invàlida.</string>
-  <string name="payments_no_payment_provider">No s\'ha trobat cap mitjà de pagament.</string>
-  <string name="payments_error_google_prices">Problema per recuperar els preus de Google Play Store en aquest moment.</string>
+  <string name="payments_no_payment_provider">No s\'ha trobat cap proveïdor de pagament actiu.</string>
+  <string name="payments_error_google_prices">Hi ha hagut un problema en recuperar els preus de Google Play Store en aquest moment.</string>
   <!-- endregion -->
   <!-- region payment options -->
-  <string name="payments_choose_payment_method">Trieu la vostra forma de pagament</string>
-  <string name="payments_add_credit_debit_card">Afegir nova targeta de crèdit/dèbit</string>
+  <string name="payments_choose_payment_method">Trieu el vostre mètode de pagament</string>
+  <string name="payments_add_credit_debit_card">Afegeix nova targeta de crèdit/dèbit</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga amb</string>
   <string name="payments_method_icon">Icona de mètode de pagament.</string>
-  <string name="payments_method_surcharge">*Les compres realitzades amb aquesta forma de pagament tenen un recàrrec.</string>
-  <string name="payments_method_terms_conditions">Comprar amb Google Pay vol dir que acceptes els termes i condicions de Google Pay i que acceptes configurar un pagament recurrent amb Google.</string>
+  <string name="payments_method_surcharge">*Les compres realitzades amb aquest mètode de pagament tenen un recàrrec.</string>
+  <string name="payments_method_terms_conditions">Comprar amb Google Pay vol dir que accepteu els termes i condicions de Google Pay i que accepteu configurar un pagament recurrent amb Google.</string>
   <string name="payments_method_google">Google</string>
   <string name="payments_method_continue">Continua</string>
   <!-- endregion -->
@@ -61,14 +61,14 @@
   <string name="payments_billing_monthly">Per 1 mes</string>
   <string name="payments_billing_yearly">Durant 1 any</string>
   <string name="payments_billing_two_years">Per 2 anys</string>
-  <string name="payment_use_google_pay_instead">Utilitza Google Pay</string>
-  <string name="payment_use_credit_card_instead">Utilitzeu una targeta de crèdit/dèbit</string>
+  <string name="payment_use_google_pay_instead">Utilitza Google Pay en el seu lloc</string>
+  <string name="payment_use_credit_card_instead">Utilitzeu una targeta de crèdit/dèbit en el seu lloc</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirmar actualització de categoria</string>
-  <string name="payments_giap_unredeemed_description">El vostre pagament de Google Pay s\'ha processat correctament, però el procés d\'actualització del compte s\'ha interromput. Voleu aplicar el pagament per actualitzar el vostre compte ara?</string>
+  <string name="payments_giap_unredeemed_title">Confirma la millora del compte</string>
+  <string name="payments_giap_unredeemed_description">S\'ha processat el vostre pagament de Google Pay, però el procés d\'actualització del compte s\'ha interromput. Voleu aplicar el pagament per millorar el vostre compte ara?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmar actualització</string>
-  <string name="payments_giap_redeem_success">El teu compte s\'ha actualitzat correctament</string>
-  <string name="payments_giap_redeem_error">No es pot completar la compra. Torna a provar-ho més tard.</string>
+  <string name="payments_giap_redeem_success">S\'ha actualitzat el vostre compte</string>
+  <string name="payments_giap_redeem_error">No s\'ha pogut completar la millora. Torneu a provar-ho més tard.</string>
   <!-- endregion -->
 </resources>

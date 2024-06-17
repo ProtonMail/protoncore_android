@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Contul are mai multe mecanisme de A2F. Alegeți cum doriți să vă confirmați identitatea.</string>
   <string name="auth_2fa_tab_one_time_code">Cod de unică folosință</string>
   <string name="auth_2fa_tab_security_key">Cheie de securitate</string>
-  <string name="auth_2fa_insert_security_key">Introduceți o cheie de securitate conectată la contul Proton. <annotation link="more">Detalii</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Cod autentificare cu doi factori</string>
   <string name="auth_2fa_recovery_code_label">Cod de recuperare</string>
   <string name="auth_2fa_assistive_text">Introduceți codul din 6 cifre.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Numele de utilizator nu poate fi gol.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parolele nu coincid.</string>
   <string name="auth_signup_validation_password_length">Parola trebuie să fie de cel puțin 8 caractere.</string>
-  <string name="auth_signup_password_not_allowed">Parolă nepermisă.</string>
+  <string name="auth_signup_password_not_allowed">Parolă prea comună. Folosiți o altă parolă.</string>
   <string name="auth_signup_validation_password">Parola nu poate fi goală.</string>
   <string name="auth_signup_your_account_is_being_setup">Vi se creează contul…</string>
   <string name="auth_signup_please_wait">De obicei nu durează mai mult de un minut.</string>

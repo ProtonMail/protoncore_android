@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">あなたのアカウントには複数の 2FA メカニズムが設定されています。本人確認の方法を選択してください。</string>
   <string name="auth_2fa_tab_one_time_code">ワンタイムコード</string>
   <string name="auth_2fa_tab_security_key">セキュリティキー</string>
-  <string name="auth_2fa_insert_security_key">Proton アカウントにリンクされたセキュリティ キーを挿入します。<annotation link="more">詳細を見る</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">2 要素認証コード</string>
   <string name="auth_2fa_recovery_code_label">回復用コード</string>
   <string name="auth_2fa_assistive_text">6 桁のコードを入力します。</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">ユーザー名を空白にすることはできません。</string>
   <string name="auth_signup_error_passwords_do_not_match">パスワードが一致しません.</string>
   <string name="auth_signup_validation_password_length">パスワードは 8 文字以上必要です。</string>
-  <string name="auth_signup_password_not_allowed">パスワードは許可されません。</string>
+  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
   <string name="auth_signup_validation_password">パスワードを空にすることはできません。</string>
   <string name="auth_signup_your_account_is_being_setup">アカウントを作成しています…</string>
   <string name="auth_signup_please_wait">通常 1 分以内に完了します。</string>

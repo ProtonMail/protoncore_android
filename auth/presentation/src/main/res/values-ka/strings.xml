@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">ერთჯერადი კოდი</string>
   <string name="auth_2fa_tab_security_key">უსაფრთხოების გასაღები</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">2FA კოდი</string>
   <string name="auth_2fa_recovery_code_label">აღდგენის კოდი</string>
   <string name="auth_2fa_assistive_text">შეიყვანეთ 6-ციფრიანი კოდი.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>
   <string name="auth_signup_error_passwords_do_not_match">პაროლები არ ემთხვევა.</string>
   <string name="auth_signup_validation_password_length">პაროლი 8 სიმბოლო მაინც უნდა იყოს.</string>
-  <string name="auth_signup_password_not_allowed">პაროლი დაშვებული არაა.</string>
+  <string name="auth_signup_password_not_allowed">პაროლი მეტისმეტად ჩვეულებრივია. სხვა სცადეთ.</string>
   <string name="auth_signup_validation_password">პაროლი ცარიელი არ შეიძლება, იყოს.</string>
   <string name="auth_signup_your_account_is_being_setup">მიმდინარეობს თქვენი ანგარიშის შექმნა…</string>
   <string name="auth_signup_please_wait">ჩვეულებრივ წუთზე მეტი არ სჭირდება ხოლმე.</string>

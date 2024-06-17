@@ -55,10 +55,10 @@
   <string name="auth_help_other">Ainda precisa de ajuda? Contate-nos diretamente.</string>
   <string name="auth_help_option_customer_support">Suporte ao cliente</string>
   <string name="auth_2fa_title">Autenticação de dois fatores</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_subtitle">A sua conta tem vários mecanismos de A2F configurados. Escolha como confirmar a sua identidade.</string>
   <string name="auth_2fa_tab_one_time_code">Código de uso único</string>
   <string name="auth_2fa_tab_security_key">Chave de segurança</string>
-  <string name="auth_2fa_insert_security_key">Insert a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Apresente uma chave de segurança vinculada à sua conta da Proton. <annotation link="more">Saiba mais</annotation></string>
   <string name="auth_2fa_label">Código de dois fatores</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperação</string>
   <string name="auth_2fa_assistive_text">Insira o código de 6 dígitos.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Nome de usuário não pode ficar em branco.</string>
   <string name="auth_signup_error_passwords_do_not_match">As senhas não correspondem.</string>
   <string name="auth_signup_validation_password_length">A senha deve ter pelo menos 8 caracteres.</string>
-  <string name="auth_signup_password_not_allowed">A senha não é permitida.</string>
+  <string name="auth_signup_password_not_allowed">Senha muito comum. Use uma senha diferente</string>
   <string name="auth_signup_validation_password">A senha não pode ser vazia.</string>
   <string name="auth_signup_your_account_is_being_setup">Sua conta está sendo criada…</string>
   <string name="auth_signup_please_wait">Em geral isto não leva mais de um minuto.</string>

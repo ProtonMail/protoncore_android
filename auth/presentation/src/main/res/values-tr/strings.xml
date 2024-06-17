@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Hesabınızda yapılandırılmış birkaç iki adımlı doğrulama yöntemi var. Lütfen kimliğinizi nasıl doğrulamak istediğinizi seçin.</string>
   <string name="auth_2fa_tab_one_time_code">Tek kullanımlık kod</string>
   <string name="auth_2fa_tab_security_key">Güvenlik anahtarı</string>
-  <string name="auth_2fa_insert_security_key">Proton hesabınıza bağlı bir güvenlik anahtarı ekleyin. <annotation link="more">Ayrıntılı bilgi alın</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">İki adımlı doğrulama kodu</string>
   <string name="auth_2fa_recovery_code_label">Kurtarma kodu</string>
   <string name="auth_2fa_assistive_text">6 rakamlı kodu yazın.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Kullanıcı adı boş olamaz.</string>
   <string name="auth_signup_error_passwords_do_not_match">Parola ile onayı aynı değil.</string>
   <string name="auth_signup_validation_password_length">Parola en az 8 karakter uzunluğunda olmalıdır.</string>
-  <string name="auth_signup_password_not_allowed">Bu parola kullanılamaz.</string>
+  <string name="auth_signup_password_not_allowed">Parola çok kolay. Farklı bir parola kullanın.</string>
   <string name="auth_signup_validation_password">Parola boş olamaz.</string>
   <string name="auth_signup_your_account_is_being_setup">Hesabınız oluşturuluyor…</string>
   <string name="auth_signup_please_wait">Genellikle bir dakikadan kısa sürer.</string>

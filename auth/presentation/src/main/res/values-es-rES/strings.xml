@@ -34,7 +34,7 @@
   <string name="auth_password_help">La contraseña debe contener al menos $ caracteres</string>
   <string name="auth_current_login_password">Contraseña de inicio de sesión actual</string>
   <string name="auth_enter_six_digit_code">Introduce el código de 6 dígitos</string>
-  <string name="auth_second_factor_code">Código de doble factor</string>
+  <string name="auth_second_factor_code">Código de dos factores</string>
   <string name="auth_email">Correo electrónico</string>
   <string name="auth_email_username">Nombre de usuario o correo electrónico</string>
   <string name="auth_account_details">Introduce los datos de tu cuenta de Proton.</string>
@@ -58,15 +58,15 @@
   <string name="auth_2fa_subtitle">Tu cuenta tiene varios mecanismos de 2FA configurados. Elige cómo deseas confirmar tu identidad.</string>
   <string name="auth_2fa_tab_one_time_code">Código de un solo uso</string>
   <string name="auth_2fa_tab_security_key">Clave de seguridad</string>
-  <string name="auth_2fa_insert_security_key">Inserta una clave de seguridad vinculada con tu cuenta de Proton. <annotation link="more">Más información</annotation></string>
-  <string name="auth_2fa_label">Código de doble factor</string>
+  <string name="auth_2fa_insert_security_key">Presenta una clave de seguridad vinculada con tu cuenta de Proton. <annotation link="more">Más información</annotation></string>
+  <string name="auth_2fa_label">Código de dos factores</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperación</string>
   <string name="auth_2fa_assistive_text">Introduce el código de 6 dígitos.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Introduce un código de recuperación de 8 caracteres.</string>
   <string name="auth_2fa_action">Autenticar</string>
   <string name="auth_2fa_use_recovery_code">Utilizar un código de recuperación</string>
   <string name="auth_2fa_learn_more">Más información</string>
-  <string name="auth_2fa_use_2fa_code">Utilizar código de doble factor</string>
+  <string name="auth_2fa_use_2fa_code">Utilizar código de dos factores</string>
   <string name="auth_2fa_error_empty_code">Introduce el código de 6 dígitos.</string>
   <string name="auth_mailbox_title">Desbloquea tu buzón de correo</string>
   <string name="auth_mailbox_password_label">Contraseña del buzón</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">El nombre de usuario no puede estar vacío.</string>
   <string name="auth_signup_error_passwords_do_not_match">Las contraseñas no coinciden.</string>
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>
-  <string name="auth_signup_password_not_allowed">La contraseña no está admitida.</string>
+  <string name="auth_signup_password_not_allowed">La contraseña es demasiado muy común. Usa otra contraseña.</string>
   <string name="auth_signup_validation_password">La contraseña no debe estar vacía.</string>
   <string name="auth_signup_your_account_is_being_setup">Tu cuenta está siendo creada…</string>
   <string name="auth_signup_please_wait">Normalmente no llevará más de un minuto.</string>

@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">V vašem računu je konfiguriranih več 2FA mehanizmov. Izberite, s katerim želite potrditi svojo identiteto.</string>
   <string name="auth_2fa_tab_one_time_code">Enkratno geslo</string>
   <string name="auth_2fa_tab_security_key">Varnostni ključ</string>
-  <string name="auth_2fa_insert_security_key">Vstavite varnostni ključ, povezan z vašim Proton računom. <annotation link="more">Več informacij</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Geslo za dvojno preverjanje pristnosti</string>
   <string name="auth_2fa_recovery_code_label">Koda za obnovitev</string>
   <string name="auth_2fa_assistive_text">Vnesite 6-mestno kodo.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Uporabniško ime ne sme biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Gesli se ne ujemata.</string>
   <string name="auth_signup_validation_password_length">Vaše geslo mora imeti najmanj 8 znakov</string>
-  <string name="auth_signup_password_not_allowed">Nedovoljeno geslo</string>
+  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
   <string name="auth_signup_validation_password">Geslo ne sme biti prazno.</string>
   <string name="auth_signup_your_account_is_being_setup">Vaš račun se ustvarja ...</string>
   <string name="auth_signup_please_wait">Običajno traja največ minuto.</string>

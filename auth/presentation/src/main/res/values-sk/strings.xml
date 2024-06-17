@@ -54,11 +54,11 @@
   <string name="auth_help_option_other">Iné prihlasovacie problémy</string>
   <string name="auth_help_other">Stále potrebujete pomoc? Kontaktujte nás ihneď.</string>
   <string name="auth_help_option_customer_support">Zákaznická podpora</string>
-  <string name="auth_2fa_title">Dvojfaktorová autentizácia</string>
+  <string name="auth_2fa_title">Dvojstupňové overenie</string>
   <string name="auth_2fa_subtitle">Váš účet má nakonfigurovaných niekoľko mechanizmov 2FA. Vyberte si, ako chcete potvrdiť svoju totožnosť.</string>
   <string name="auth_2fa_tab_one_time_code">Jednorazový kód</string>
   <string name="auth_2fa_tab_security_key">Bezpečnostný kľúč</string>
-  <string name="auth_2fa_insert_security_key">Vložte bezpečnostný kľúč spojený s vaším Proton účtom <annotation link="more">Viac informácií</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Kód pre dvojstupňové overenie</string>
   <string name="auth_2fa_recovery_code_label">Kód pre obnovenie</string>
   <string name="auth_2fa_assistive_text">Zadajte 6-miestny kód.</string>
@@ -139,13 +139,13 @@
   <string name="auth_signup_error_create_to_continue">Pre pokračovanie si vytvorte účet</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Zistiť viac</string>
   <string name="auth_signup_create_account_dialog_title">Aktivujte svoje predplatné</string>
-  <string name="auth_signup_create_account_dialog_text">Vaša platba cez Google Pay bola úspešne spracovaná. Ak chcete aktivovať predplatné, vytvorte si účet Proton.</string>
+  <string name="auth_signup_create_account_dialog_text">Vaša platba cez Google Pay bola úspešne spracovaná. Ak chcete aktivovať predplatné, vytvorte si Proton účet.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Zrušiť</string>
   <string name="auth_signup_create_account_dialog_action_continue">Pokračovať</string>
   <string name="auth_signup_error_username_blank">Používateľské meno nesmie byť prázdne.</string>
   <string name="auth_signup_error_passwords_do_not_match">Heslá sa nezhodujú.</string>
   <string name="auth_signup_validation_password_length">Heslo by malo mať aspoň 8 znakov.</string>
-  <string name="auth_signup_password_not_allowed">Heslo nie je povolené.</string>
+  <string name="auth_signup_password_not_allowed">Príliš bežné heslo. Použite iné heslo.</string>
   <string name="auth_signup_validation_password">Heslo nesmie byť prázdne.</string>
   <string name="auth_signup_your_account_is_being_setup">Váš účet sa vytvára…</string>
   <string name="auth_signup_please_wait">Zvyčajne to netrvá dlhšie ako minútu.</string>

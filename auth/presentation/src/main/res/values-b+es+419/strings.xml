@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Su cuenta tiene varios mecanismos de 2FA configurados. Elija cómo desea confirmar su identidad.</string>
   <string name="auth_2fa_tab_one_time_code">Código de un solo uso</string>
   <string name="auth_2fa_tab_security_key">Llave de seguridad</string>
-  <string name="auth_2fa_insert_security_key">Inserte una clave de seguridad vinculada con su cuenta de Proton. <annotation link="more">Más información</annotation></string>
+  <string name="auth_2fa_insert_security_key">Presente una clave de seguridad vinculada con su cuenta de Proton. <annotation link="more">Más información</annotation></string>
   <string name="auth_2fa_label">Código de dos factores</string>
   <string name="auth_2fa_recovery_code_label">Código de recuperación</string>
   <string name="auth_2fa_assistive_text">Ingrese el código de 6 dígitos.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">El nombre de usuario no puede estar en blanco.</string>
   <string name="auth_signup_error_passwords_do_not_match">Las contraseñas no coinciden.</string>
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>
-  <string name="auth_signup_password_not_allowed">La contraseña no está admitida.</string>
+  <string name="auth_signup_password_not_allowed">La contraseña es demasiado muy común. Use otra contraseña.</string>
   <string name="auth_signup_validation_password">La contraseña no debe estar vacía.</string>
   <string name="auth_signup_your_account_is_being_setup">La cuenta está siendo creada…</string>
   <string name="auth_signup_please_wait">Usualmente no tarda más de un minuto.</string>

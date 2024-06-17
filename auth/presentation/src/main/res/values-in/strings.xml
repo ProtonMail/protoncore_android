@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Nama pengguna tidak boleh kosong.</string>
   <string name="auth_signup_error_passwords_do_not_match">Kata sandi tidak cocok.</string>
   <string name="auth_signup_validation_password_length">Kata sandi harus mengandung minimal 8 karakter.</string>
-  <string name="auth_signup_password_not_allowed">Kata sandi tidak diizinkan.</string>
+  <string name="auth_signup_password_not_allowed">Kata sandi terlalu umum. Gunakan kata sandi yang berbeda.</string>
   <string name="auth_signup_validation_password">Kata sandi tidak boleh kosong.</string>
   <string name="auth_signup_your_account_is_being_setup">Akun Anda sedang dibuat…</string>
   <string name="auth_signup_please_wait">Biasanya tidak sampai satu menit.</string>

@@ -44,7 +44,7 @@
   <!-- Other -->
   <string name="account_recovery_cancel">Poništi zahtjev</string>
   <string name="account_recovery_dismiss">Razumijem</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">Ponovno postavljanje lozinke</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Zatražen zahtjev za ponovno postavljanje lozinke</string>
   <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>

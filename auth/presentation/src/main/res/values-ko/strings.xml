@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">계정에 여러 2단계 인증 매커니즘이 구성되어 있습니다. 어떤 방식으로 신원을 확인할 것인지 선택해 주세요.</string>
   <string name="auth_2fa_tab_one_time_code">일회용 코드</string>
   <string name="auth_2fa_tab_security_key">보안 키</string>
-  <string name="auth_2fa_insert_security_key">Proton 계정에 연결된 보안 키를 삽입하세요. <annotation link="more">더 알아보기</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">2단계 인증 코드</string>
   <string name="auth_2fa_recovery_code_label">복구 코드</string>
   <string name="auth_2fa_assistive_text">6자리 인증 코드를 입력하세요.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">사용자 이름은 비울 수 없습니다.</string>
   <string name="auth_signup_error_passwords_do_not_match">비밀번호가 일치하지 않습니다.</string>
   <string name="auth_signup_validation_password_length">비밀번호는 8글자 이상이어야 합니다.</string>
-  <string name="auth_signup_password_not_allowed">사용할 수 없는 비밀번호입니다.</string>
+  <string name="auth_signup_password_not_allowed">너무 흔한 비밀번호입니다. 다른 비밀번호를 사용하세요.</string>
   <string name="auth_signup_validation_password">비밀번호는 비워둘 수 없습니다.</string>
   <string name="auth_signup_your_account_is_being_setup">사용자의 계정이 곧 생성됩니다…</string>
   <string name="auth_signup_please_wait">1분 이상 걸리지 않습니다.</string>

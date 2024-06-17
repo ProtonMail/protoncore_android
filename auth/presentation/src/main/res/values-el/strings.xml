@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Ο λογαριασμός σας έχει διαμορφώσει αρκετούς μηχανισμούς 2FA. Επιλέξτε πώς θέλετε να επιβεβαιώσετε την ταυτότητά σας.</string>
   <string name="auth_2fa_tab_one_time_code">Κωδικός μίας χρήσης</string>
   <string name="auth_2fa_tab_security_key">Κλειδί ασφαλείας</string>
-  <string name="auth_2fa_insert_security_key">Εισαγάγετε ένα κλειδί ασφαλείας συνδεδεμένο με τον λογαριασμό Proton. <annotation link="more">Μάθετε περισσότερα</annotation></string>
+  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Κωδικός Δύο Παραγόντων (2FA)</string>
   <string name="auth_2fa_recovery_code_label">Κωδικός ανάκτησης</string>
   <string name="auth_2fa_assistive_text">Εισάγετε τον 6-ψήφιο κωδικό.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Το Όνομα Χρήστη δεν πρέπει να είναι κενό.</string>
   <string name="auth_signup_error_passwords_do_not_match">Οι κωδικοί πρόσβασης δεν ταιριάζουν.</string>
   <string name="auth_signup_validation_password_length">Ο κωδικός πρόσβασης πρέπει να είναι τουλάχιστον 8 χαρακτήρες.</string>
-  <string name="auth_signup_password_not_allowed">Ο κωδικός πρόσβασης δεν επιτρέπεται.</string>
+  <string name="auth_signup_password_not_allowed">Ο κωδικός πρόσβασης είναι πολύ συνηθισμένος. Χρησιμοποιήστε διαφορετικό κωδικό πρόσβασης.</string>
   <string name="auth_signup_validation_password">Ο κωδικός πρόσβασης δεν γίνεται να είναι κενός.</string>
   <string name="auth_signup_your_account_is_being_setup">Ο λογαριασμός σας δημιουγείται…</string>
   <string name="auth_signup_please_wait">Συνήθως δεν διαρκεί περισσότερο από ένα λεπτό.</string>

@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Din konto har flere 2FA-mekanismer konfigureret. Vælg, hvordan du vil bekræfte din identitet</string>
   <string name="auth_2fa_tab_one_time_code">Engangskode</string>
   <string name="auth_2fa_tab_security_key">Sikkerhedsnøgle</string>
-  <string name="auth_2fa_insert_security_key">Indsæt en sikkerhedsnøgle, der er tilknyttet din Proton-konto. <annotation link="more">Lær mere</annotation>.</string>
+  <string name="auth_2fa_insert_security_key">Fremvis en sikkerhedsnøgle knyttet til din Proton-konto. <annotation link="more">Lær mere</annotation>.</string>
   <string name="auth_2fa_label">To-faktor-kode</string>
   <string name="auth_2fa_recovery_code_label">Gendannelseskode</string>
   <string name="auth_2fa_assistive_text">Indtast den sekscifrede kode.</string>
@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Brugernavn må ikke være tomt.</string>
   <string name="auth_signup_error_passwords_do_not_match">Adgangskoderne er ikke ens.</string>
   <string name="auth_signup_validation_password_length">Adgangskode skal være mindst 8 tegn lang.</string>
-  <string name="auth_signup_password_not_allowed">Adgangskode er ikke tilladt.</string>
+  <string name="auth_signup_password_not_allowed">Adgangskode for almindelig. Brug en anden adgangskode.</string>
   <string name="auth_signup_validation_password">Adgangskode må ikke være tom.</string>
   <string name="auth_signup_your_account_is_being_setup">Din konto oprettes…</string>
   <string name="auth_signup_please_wait">Det tager normalt ikke mere end et minut.</string>
