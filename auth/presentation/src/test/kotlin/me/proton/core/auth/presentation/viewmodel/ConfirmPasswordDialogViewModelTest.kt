@@ -44,6 +44,7 @@ import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.Scope
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -68,6 +69,9 @@ class ConfirmPasswordDialogViewModelTest :
 
     @MockK
     private lateinit var isFido2Enabled: IsFido2Enabled
+
+    @MockK(relaxed = true)
+    private lateinit var observabilityManager: ObservabilityManager
     // endregion
 
     // region test data
@@ -121,7 +125,8 @@ class ConfirmPasswordDialogViewModelTest :
             isFido2Enabled,
             obtainLockedScope,
             obtainPasswordScope,
-            missingScopeListener
+            missingScopeListener,
+            observabilityManager
         )
     }
 

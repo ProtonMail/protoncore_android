@@ -39,14 +39,25 @@ import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.fido.domain.usecase.toStatus
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
+import me.proton.core.observability.domain.metrics.LoginSecondFactorFidoLaunchResultTotal
+import me.proton.core.observability.domain.metrics.LoginSecondFactorFidoSignResultTotal
+import me.proton.core.observability.domain.metrics.LoginSecondFactorSubmissionTotal
+import me.proton.core.observability.domain.metrics.LoginSecondFactorSubmissionTotal.SecondFactorProofType
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoreLogger
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import me.proton.core.util.kotlin.retryOnceWhen
 import javax.inject.Inject
 
@@ -57,8 +68,9 @@ class SecondFactorViewModel @Inject constructor(
     private val postLoginAccountSetup: PostLoginAccountSetup,
     private val sessionProvider: SessionProvider,
     private val accountManager: AccountManager,
-    private val isFido2Enabled: IsFido2Enabled
-) : ProtonViewModel() {
+    private val isFido2Enabled: IsFido2Enabled,
+    override val observabilityManager: ObservabilityManager,
+) : ProtonViewModel(), ObservabilityContext {
 
     private val _state = MutableSharedFlow<State>(replay = 1, extraBufferCapacity = 3)
 
@@ -114,13 +126,15 @@ class SecondFactorViewModel @Inject constructor(
         requiredAccountType: AccountType,
         isTwoPassModeNeeded: Boolean,
         proof: SecondFactorProof
-    ) = flow {
-        emit(State.Processing)
+    ) = flowWithResultContext {
+        it.onResultEnqueueObservability("performSecondFactor") { onPerformSecondFactorResult(proof, this) }
+
+        send(State.Processing)
 
         val sessionId = sessionProvider.getSessionId(userId)
         if (sessionId == null) {
-            emit(State.Error.Unrecoverable("No session for this user."))
-            return@flow
+            send(State.Error.Unrecoverable("No session for this user."))
+            return@flowWithResultContext
         }
 
         val scopeInfo = performSecondFactor.invoke(sessionId, proof)
@@ -134,7 +148,7 @@ class SecondFactorViewModel @Inject constructor(
             isTwoPassModeNeeded = isTwoPassModeNeeded,
             temporaryPassword = false
         )
-        emit(State.AccountSetupResult(result))
+        send(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying second factor flow")
     }.catch { error ->
@@ -154,6 +168,27 @@ class SecondFactorViewModel @Inject constructor(
             return httpCode in listOf(HTTP_ERROR_UNAUTHORIZED, HTTP_ERROR_BAD_REQUEST)
         }
         return false
+    }
+
+    private fun onPerformSecondFactorResult(proof: SecondFactorProof, result: Result<*>): ObservabilityData {
+        val type = when (proof) {
+            is SecondFactorProof.Fido2 -> SecondFactorProofType.securityKey
+            is SecondFactorProof.SecondFactorCode -> SecondFactorProofType.totp
+            is SecondFactorProof.SecondFactorSignature -> SecondFactorProofType.u2f
+        }
+        return LoginSecondFactorSubmissionTotal(result, type)
+    }
+
+    internal fun onFidoLaunchResult(result: PerformTwoFaWithSecurityKey.LaunchResult) {
+        observabilityManager.enqueue(LoginSecondFactorFidoLaunchResultTotal(result.toStatus()))
+    }
+
+    internal fun onFidoSignResult(result: PerformTwoFaWithSecurityKey.Result) {
+        observabilityManager.enqueue(LoginSecondFactorFidoSignResultTotal(result.toStatus()))
+    }
+
+    internal fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
+        observabilityManager.enqueue(LoginScreenViewTotal(screenId))
     }
 
     companion object {

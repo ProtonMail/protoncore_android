@@ -207,7 +207,7 @@ class UserRepositoryImpl @Inject constructor(
         srpSession: String,
         secondFactorCode: String?,
         secondFactorFido: SecondFactorFido?
-    ): Boolean =
+    ): Boolean = result("unlockUserForPasswordScope") {
         provider.get<UserApi>(sessionUserId).invoke {
             val request = UnlockPasswordRequest(
                 srpProofs.clientEphemeral,
@@ -223,6 +223,7 @@ class UserRepositoryImpl @Inject constructor(
             ) { "getting password scope failed" }
             response.isSuccess()
         }.valueOrThrow
+    }
 
     override suspend fun checkUsernameAvailable(
         sessionUserId: SessionUserId?,

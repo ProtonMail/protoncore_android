@@ -1267,6 +1267,140 @@ public final class me/proton/core/observability/domain/metrics/CheckoutScreenVie
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/CheckoutScreenViewTotal$ScreenId;
 }
 
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;)V
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;
+	public fun getValue ()J
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordFidoLaunchResultTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;)V
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;
+	public fun getValue ()J
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordFidoSignResultTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Companion;
+	public fun <init> (Ljava/lang/Object;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;
+	public fun getValue ()J
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType : java/lang/Enum {
+	public static final field none Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+	public static final field securityKey Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+	public static final field totp Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http401PasswordWrong Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http422PasswordWrong Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field invalidServerAuthentication Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field notConnected Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field parseError Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public final fun component2 ()Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$Status;
+	public final fun getType ()Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$SecondFactorProofType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/ConfirmPasswordSubmissionTotal$StatusLabels$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
 public abstract class me/proton/core/observability/domain/metrics/CoreObservabilityData : me/proton/core/observability/domain/metrics/ObservabilityData {
 	public static final field Companion Lme/proton/core/observability/domain/metrics/CoreObservabilityData$Companion;
 	public synthetic fun <init> (ILkotlinx/serialization/internal/SerializationConstructorMarker;)V
@@ -1910,11 +2044,145 @@ public final class me/proton/core/observability/domain/metrics/LoginScreenViewTo
 
 public final class me/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId : java/lang/Enum {
 	public static final field chooseInternalAddress Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+	public static final field secondFactor Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
 	public static final field signInWithSso Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
 	public static final field ssoIdentityProvider Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
 	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginScreenViewTotal$ScreenId;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;)V
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;
+	public fun getValue ()J
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorFidoLaunchResultTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;)V
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;
+	public fun getValue ()J
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorFidoSignResultTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$Companion;
+	public fun <init> (Ljava/lang/Object;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;)V
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;J)V
+	public synthetic fun <init> (Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;JILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun getLabels ()Ljava/lang/Object;
+	public fun getLabels ()Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;
+	public fun getValue ()J
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus : java/lang/Enum {
+	public static final field cancellation Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field connectionError Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http1xx Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http2xx Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http3xx Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http401PasswordWrong Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http422PasswordWrong Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http4xx Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field http5xx Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field notConnected Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field parseError Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field sslError Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType : java/lang/Enum {
+	public static final field securityKey Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+	public static final field totp Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+	public static final field u2f Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public final fun component2 ()Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$ApiStatus;
+	public final fun getType ()Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$SecondFactorProofType;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/LoginSecondFactorSubmissionTotal$StatusLabels$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
 public final class me/proton/core/observability/domain/metrics/LoginSsoIdentityProviderPageLoadTotal : me/proton/core/observability/domain/metrics/CoreObservabilityData {
@@ -2729,6 +2997,79 @@ public final class me/proton/core/observability/domain/metrics/common/EmptyStatu
 
 public final class me/proton/core/observability/domain/metrics/common/EmptyStatusLabels$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoLaunchLabels {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;)Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoLaunchLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/common/FidoLaunchLabels;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoLaunchLabels$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoLaunchStatus : java/lang/Enum {
+	public static final field failure Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+	public static final field success Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoSignLabels {
+	public static final field Companion Lme/proton/core/observability/domain/metrics/common/FidoSignLabels$Companion;
+	public fun <init> (Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;)V
+	public final fun component1 ()Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public final fun copy (Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;)Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;
+	public static synthetic fun copy$default (Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;ILjava/lang/Object;)Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getStatus ()Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoSignLabels$$serializer : kotlinx/serialization/internal/GeneratedSerializer {
+	public static final field INSTANCE Lme/proton/core/observability/domain/metrics/common/FidoSignLabels$$serializer;
+	public fun childSerializers ()[Lkotlinx/serialization/KSerializer;
+	public synthetic fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Ljava/lang/Object;
+	public fun deserialize (Lkotlinx/serialization/encoding/Decoder;)Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;
+	public fun getDescriptor ()Lkotlinx/serialization/descriptors/SerialDescriptor;
+	public synthetic fun serialize (Lkotlinx/serialization/encoding/Encoder;Ljava/lang/Object;)V
+	public fun serialize (Lkotlinx/serialization/encoding/Encoder;Lme/proton/core/observability/domain/metrics/common/FidoSignLabels;)V
+	public fun typeParametersSerializers ()[Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoSignLabels$Companion {
+	public final fun serializer ()Lkotlinx/serialization/KSerializer;
+}
+
+public final class me/proton/core/observability/domain/metrics/common/FidoSignStatus : java/lang/Enum {
+	public static final field empty Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public static final field failure Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public static final field success Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public static final field unknown Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public static final field userCancelled Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+	public static fun values ()[Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
 }
 
 public final class me/proton/core/observability/domain/metrics/common/GiapLabels {

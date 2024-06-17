@@ -166,7 +166,11 @@ class ConfirmPasswordDialog : DialogFragment() {
 
         lifecycleScope.launch {
             val activity = activity ?: return@launch
-            when (val launchResult = performTwoFaWithSecurityKey.invoke(activity, requestOptions)) {
+
+            val launchResult = performTwoFaWithSecurityKey.invoke(activity, requestOptions)
+            viewModel.onLaunchResult(launchResult)
+
+            when (launchResult) {
                 is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> {
                     viewController.setIdle()
                     viewController.root.errorSnack(
@@ -222,6 +226,7 @@ class ConfirmPasswordDialog : DialogFragment() {
         options: Fido2PublicKeyCredentialRequestOptions
     ) {
         viewController.setIdle()
+        viewModel.onSignResult(result)
 
         when (result) {
             is PerformTwoFaWithSecurityKey.Result.Success -> onSecurityKeyAuthSuccess(result, options)

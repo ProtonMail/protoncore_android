@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -22,27 +22,15 @@ import io.swagger.v3.oas.annotations.media.Schema
 import kotlinx.serialization.Required
 import kotlinx.serialization.Serializable
 import me.proton.core.observability.domain.entity.SchemaId
+import me.proton.core.observability.domain.metrics.common.FidoLaunchLabels
+import me.proton.core.observability.domain.metrics.common.FidoLaunchStatus
 
 @Serializable
-@Schema(description = "Screen views during the login.")
-@SchemaId("https://proton.me/android_core_login_screenView_total_v1.schema.json")
-public data class LoginScreenViewTotal(
-    override val Labels: LabelsData,
+@Schema(description = "The result of launching the dialog to sign a request using fido2 security key.")
+@SchemaId("https://proton.me/android_core_login_secondFactor_fidoLaunchResult_total_v1.schema.json")
+public class LoginSecondFactorFidoLaunchResultTotal(
+    override val Labels: FidoLaunchLabels,
     @Required override val Value: Long = 1
 ) : CoreObservabilityData() {
-    public constructor(screenId: ScreenId) : this(LabelsData(screenId))
-
-    @Serializable
-    @Suppress("ConstructorParameterNaming")
-    public data class LabelsData constructor(
-        val screen_id: ScreenId
-    )
-
-    @Suppress("EnumNaming", "EnumEntryName")
-    public enum class ScreenId {
-        chooseInternalAddress,
-        signInWithSso,
-        ssoIdentityProvider,
-        secondFactor
-    }
+    public constructor(status: FidoLaunchStatus) : this(FidoLaunchLabels(status))
 }

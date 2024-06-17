@@ -271,3 +271,8 @@ public final class me/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecur
 	public final fun getSignature ()[B
 }
 
+public final class me/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKeyKt {
+	public static final fun toStatus (Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$LaunchResult;)Lme/proton/core/observability/domain/metrics/common/FidoLaunchStatus;
+	public static final fun toStatus (Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$Result;)Lme/proton/core/observability/domain/metrics/common/FidoSignStatus;
+}
+

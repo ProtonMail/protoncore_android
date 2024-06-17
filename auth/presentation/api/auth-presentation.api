@@ -2472,12 +2472,19 @@ public final class me/proton/core/auth/presentation/viewmodel/ChooseAddressViewM
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)V
+public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/observability/domain/ObservabilityManager;)V
 	public final fun checkForSecondFactorInput (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;)Lkotlinx/coroutines/Job;
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun getFido2Info ()Lme/proton/core/auth/domain/entity/Fido2Info;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onConfirmPasswordResult (Lme/proton/core/network/domain/scopes/MissingScopeState;)Lkotlinx/coroutines/Job;
+	public final fun onLaunchResult (Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$LaunchResult;)V
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun onSignResult (Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$Result;)V
 	public final fun setFido2Info (Lme/proton/core/auth/domain/entity/Fido2Info;)V
 	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;)Lkotlinx/coroutines/Job;
 	public static synthetic fun unlock$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
@@ -2543,11 +2550,11 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/crypto/common/keystore/KeyStoreCrypto;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/auth/domain/usecase/scopes/ObtainLockedScope;Lme/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope;Lme/proton/core/network/domain/scopes/MissingScopeListener;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel_HiltModules {
@@ -2733,12 +2740,17 @@ public final class me/proton/core/auth/presentation/viewmodel/LoginViewModel_Hil
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
+public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
 	public static final field Companion Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel$Companion;
 	public static final field HTTP_ERROR_BAD_REQUEST I
 	public static final field HTTP_ERROR_UNAUTHORIZED I
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)V
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setup (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;)Lkotlinx/coroutines/Job;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLme/proton/core/auth/domain/entity/SecondFactorProof;)Lkotlinx/coroutines/Job;
@@ -2803,11 +2815,11 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountWorkflowHandler;Lme/proton/core/auth/domain/usecase/PerformSecondFactor;Lme/proton/core/auth/domain/usecase/PostLoginAccountSetup;Lme/proton/core/network/domain/session/SessionProvider;Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/SecondFactorViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewModel_HiltModules {

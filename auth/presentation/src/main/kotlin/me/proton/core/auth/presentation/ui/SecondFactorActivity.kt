@@ -48,10 +48,12 @@ import me.proton.core.auth.presentation.entity.TwoFAMechanisms
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
+import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -130,6 +132,10 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
             }.launchIn(lifecycleScope)
 
         viewModel.setup(UserId(input.userId))
+
+        launchOnScreenView {
+            viewModel.onScreenView(LoginScreenViewTotal.ScreenId.secondFactor)
+        }
     }
 
     private fun onAccountSetupResult(result: PostLoginAccountSetup.Result) {
@@ -181,8 +187,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     private fun selectedTwoFAOption(): TwoFAMechanisms =
         if (binding.tabLayout.isVisible) {
             TwoFAMechanisms.enumOf(binding.tabLayout.selectedTabPosition)
-        }
-        else TwoFAMechanisms.ONE_TIME_CODE
+        } else TwoFAMechanisms.ONE_TIME_CODE
 
     private fun onAuthenticateSecurityKeyClicked(options: Fido2AuthenticationOptions) {
         val performTwoFaWithSecurityKey = performTwoFaWithSecurityKey.getOrNull() ?: return
@@ -193,6 +198,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
                 this@SecondFactorActivity,
                 options.publicKey
             )
+
+            viewModel.onFidoLaunchResult(launchResult)
 
             when (launchResult) {
                 is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> {
@@ -233,6 +240,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         options: Fido2PublicKeyCredentialRequestOptions
     ) {
         showLoading(false)
+        viewModel.onFidoSignResult(result)
+
         when (result) {
             is PerformTwoFaWithSecurityKey.Result.Success -> onSecurityKeyAuthSuccess(result, options)
 

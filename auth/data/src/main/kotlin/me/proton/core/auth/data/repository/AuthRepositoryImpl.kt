@@ -136,52 +136,15 @@ class AuthRepositoryImpl(
         return mapOf(name to frame)
     }
 
-    @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun performSecondFactor(
         sessionId: SessionId,
         secondFactorProof: SecondFactorProof
-    ): ScopeInfo =
+    ): ScopeInfo = result("performSecondFactor") {
         provider.get<AuthenticationApi>(sessionId).invoke {
-            val request = when (secondFactorProof) {
-                is SecondFactorProof.SecondFactorCode -> SecondFactorRequest(
-                    secondFactorCode = secondFactorProof.code
-                )
-
-                is SecondFactorProof.SecondFactorSignature -> SecondFactorRequest(
-                    universalTwoFactorRequest = UniversalTwoFactorRequest(
-                        keyHandle = secondFactorProof.keyHandle,
-                        clientData = secondFactorProof.clientData,
-                        signatureData = secondFactorProof.signatureData
-                    )
-                )
-
-                is SecondFactorProof.Fido2 -> SecondFactorRequest(
-                    fido2 = Fido2Request(
-                        authenticationOptions = AuthenticationOptionsData(
-                            PublicKeyCredentialRequestOptionsResponse(
-                                challenge = secondFactorProof.publicKeyOptions.challenge,
-                                timeout = secondFactorProof.publicKeyOptions.timeout,
-                                rpId = secondFactorProof.publicKeyOptions.rpId,
-                                allowCredentials = secondFactorProof.publicKeyOptions.allowCredentials?.map {
-                                    PublicKeyCredentialDescriptorData(
-                                        type = it.type,
-                                        id = it.id,
-                                        transports = it.transports
-                                    )
-                                },
-                                userVerification = secondFactorProof.publicKeyOptions.userVerification,
-                                extensions = secondFactorProof.publicKeyOptions.extensions?.toJson()
-                            )
-                        ),
-                        clientData = secondFactorProof.clientData.toBase64(),
-                        authenticatorData = secondFactorProof.authenticatorData.toBase64(),
-                        signature = secondFactorProof.signature.toBase64(),
-                        credentialID = secondFactorProof.credentialID.toUByteArray()
-                    )
-                )
-            }
+            val request = secondFactorProof.toSecondFactorRequest()
             performSecondFactor(request).toScopeInfo()
         }.valueOrThrow
+    }
 
     override suspend fun revokeSession(sessionId: SessionId): Boolean =
         provider.get<AuthenticationApi>(sessionId).invoke(forceNoRetryOnConnectionErrors = true) {
@@ -234,3 +197,43 @@ class AuthRepositoryImpl(
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
+
+private fun SecondFactorProof.toSecondFactorRequest() = when (this) {
+    is SecondFactorProof.SecondFactorCode -> SecondFactorRequest(secondFactorCode = code)
+
+    is SecondFactorProof.SecondFactorSignature -> SecondFactorRequest(
+        universalTwoFactorRequest = UniversalTwoFactorRequest(
+            keyHandle = keyHandle,
+            clientData = clientData,
+            signatureData = signatureData
+        )
+    )
+
+    is SecondFactorProof.Fido2 -> toSecondFactorRequest()
+}
+
+@OptIn(ExperimentalUnsignedTypes::class)
+private fun SecondFactorProof.Fido2.toSecondFactorRequest() = SecondFactorRequest(
+    fido2 = Fido2Request(
+        authenticationOptions = AuthenticationOptionsData(
+            PublicKeyCredentialRequestOptionsResponse(
+                challenge = publicKeyOptions.challenge,
+                timeout = publicKeyOptions.timeout,
+                rpId = publicKeyOptions.rpId,
+                allowCredentials = publicKeyOptions.allowCredentials?.map {
+                    PublicKeyCredentialDescriptorData(
+                        type = it.type,
+                        id = it.id,
+                        transports = it.transports
+                    )
+                },
+                userVerification = publicKeyOptions.userVerification,
+                extensions = publicKeyOptions.extensions?.toJson()
+            )
+        ),
+        clientData = clientData.toBase64(),
+        authenticatorData = authenticatorData.toBase64(),
+        signature = signature.toBase64(),
+        credentialID = credentialID.toUByteArray()
+    )
+)

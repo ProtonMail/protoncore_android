@@ -19,7 +19,8 @@
 package me.proton.core.auth.fido.domain.usecase
 
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
-import java.lang.Exception
+import me.proton.core.observability.domain.metrics.common.FidoLaunchStatus
+import me.proton.core.observability.domain.metrics.common.FidoSignStatus
 
 /**
  * Performs 2FA using a FIDO2 security key.
@@ -88,4 +89,17 @@ public interface PerformTwoFaWithSecurityKey<A : Any> {
         public val authenticatorData: ByteArray,
         public val signature: ByteArray
     )
+}
+
+public fun PerformTwoFaWithSecurityKey.LaunchResult.toStatus(): FidoLaunchStatus = when (this) {
+    is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> FidoLaunchStatus.failure
+    is PerformTwoFaWithSecurityKey.LaunchResult.Success -> FidoLaunchStatus.success
+}
+
+public fun PerformTwoFaWithSecurityKey.Result.toStatus(): FidoSignStatus = when (this) {
+    is PerformTwoFaWithSecurityKey.Result.Cancelled -> FidoSignStatus.userCancelled
+    is PerformTwoFaWithSecurityKey.Result.EmptyResult -> FidoSignStatus.empty
+    is PerformTwoFaWithSecurityKey.Result.Error -> FidoSignStatus.failure
+    is PerformTwoFaWithSecurityKey.Result.Success -> FidoSignStatus.success
+    is PerformTwoFaWithSecurityKey.Result.UnknownResult -> FidoSignStatus.unknown
 }

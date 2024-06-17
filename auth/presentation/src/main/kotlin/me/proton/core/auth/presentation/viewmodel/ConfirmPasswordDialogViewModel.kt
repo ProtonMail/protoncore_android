@@ -29,22 +29,33 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.yield
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.entity.SecondFactorMethod
+import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.fido.domain.usecase.toStatus
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.MissingScopeState
 import me.proton.core.network.domain.scopes.Scope
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.ConfirmPasswordFidoLaunchResultTotal
+import me.proton.core.observability.domain.metrics.ConfirmPasswordFidoSignResultTotal
+import me.proton.core.observability.domain.metrics.ConfirmPasswordSubmissionTotal
+import me.proton.core.observability.domain.metrics.ConfirmPasswordSubmissionTotal.SecondFactorProofType
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.SecondFactorFido
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
@@ -58,8 +69,9 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
     private val isFido2Enabled: IsFido2Enabled,
     private val obtainLockedScope: ObtainLockedScope,
     private val obtainPasswordScope: ObtainPasswordScope,
-    private val missingScopeListener: MissingScopeListener
-) : ProtonViewModel() {
+    private val missingScopeListener: MissingScopeListener,
+    override val observabilityManager: ObservabilityManager
+) : ProtonViewModel(), ObservabilityContext {
     var fido2Info: Fido2Info? = null
 
     private val _state = MutableStateFlow<State>(State.Idle)
@@ -110,12 +122,22 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         password: String,
         secondFactorCode: String? = null,
         secondFactorFido: SecondFactorFido? = null
-    ) = flow {
-        emit(State.ProcessingObtainScope)
+    ) = flowWithResultContext {
+        check(secondFactorCode == null || secondFactorFido == null) {
+            "Cannot unlock ${missingScope.value} scope using both 2FA code and security key."
+        }
+
+        it.onResultEnqueueObservability("unlockUserForPasswordScope") {
+            toConfirmPasswordSubmissionTotal(secondFactorCode, secondFactorFido)
+        }
+
+        send(State.ProcessingObtainScope)
+        yield()
+
         val account = accountManager.getAccount(userId).firstOrNull()
         if (account == null) {
-            emit(State.Error.InvalidAccount)
-            return@flow
+            send(State.Error.InvalidAccount)
+            return@flowWithResultContext
         }
         val result = when (missingScope) {
             Scope.PASSWORD -> obtainPasswordScope(
@@ -136,9 +158,9 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         }.exhaustive
 
         if (result) {
-            emit(State.Success(MissingScopeState.ScopeObtainSuccess))
+            send(State.Success(MissingScopeState.ScopeObtainSuccess))
         } else {
-            emit(State.Error.Unknown)
+            send(State.Error.Unknown)
         }
     }.catch { error ->
         emit(State.Error.General(error))
@@ -151,5 +173,32 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
             MissingScopeState.ScopeObtainSuccess -> missingScopeListener.onMissingScopeSuccess()
             else -> missingScopeListener.onMissingScopeFailure()
         }.exhaustive
+    }
+
+    fun onLaunchResult(launchResult: PerformTwoFaWithSecurityKey.LaunchResult) {
+        enqueueObservability(ConfirmPasswordFidoLaunchResultTotal(launchResult.toStatus()))
+    }
+
+    fun onSignResult(result: PerformTwoFaWithSecurityKey.Result) {
+        enqueueObservability(ConfirmPasswordFidoSignResultTotal(result.toStatus()))
+    }
+}
+
+private fun Result<*>.toConfirmPasswordSubmissionTotal(
+    secondFactorCode: String?,
+    secondFactorFido: SecondFactorFido?
+): ConfirmPasswordSubmissionTotal {
+    val secondFactorProofType = when {
+        secondFactorCode != null -> SecondFactorProofType.totp
+        secondFactorFido != null -> SecondFactorProofType.securityKey
+        else -> SecondFactorProofType.none
+    }
+    return if (exceptionOrNull() is InvalidServerAuthenticationException) {
+        ConfirmPasswordSubmissionTotal(
+            ConfirmPasswordSubmissionTotal.Status.invalidServerAuthentication,
+            secondFactorProofType
+        )
+    } else {
+        ConfirmPasswordSubmissionTotal(this, secondFactorProofType)
     }
 }

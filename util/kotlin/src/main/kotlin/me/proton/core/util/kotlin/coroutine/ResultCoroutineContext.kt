@@ -201,7 +201,7 @@ fun <T> CoroutineScope.launchWithResultContext(
  *
  * @see channelFlow
  */
-suspend fun <T> flowWithResultContext(
+fun <T> flowWithResultContext(
     block: suspend ProducerScope<T>.(ResultCollector<*>) -> Unit
 ): Flow<T> = channelFlow {
     val producerScope = this

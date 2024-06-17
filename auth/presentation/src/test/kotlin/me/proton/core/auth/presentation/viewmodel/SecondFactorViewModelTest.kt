@@ -23,6 +23,7 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
+import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
@@ -36,11 +37,15 @@ import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSecondFactorSubmissionTotal
+import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.UnconfinedCoroutinesTest
 import me.proton.core.test.kotlin.assertIs
 import me.proton.core.test.kotlin.flowTest
+import me.proton.core.util.kotlin.coroutine.result
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -55,6 +60,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     private val performSecondFactor = mockk<PerformSecondFactor>()
     private val postLoginAccountSetup = mockk<PostLoginAccountSetup>(relaxed = true)
     private val isFido2Enabled = mockk<IsFido2Enabled>(relaxed = true)
+    private val observabilityManager = mockk<ObservabilityManager>(relaxed = true)
 
     private val testSessionResult = mockk<SessionResult>(relaxed = true)
     private val testScopeInfo = mockk<ScopeInfo>(relaxed = true)
@@ -82,6 +88,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
             sessionProvider,
             accountManager,
             isFido2Enabled,
+            observabilityManager
         )
         coEvery { sessionProvider.getSessionId(any()) } returns testSessionId
         every { testSessionResult.sessionId } returns testSessionId.id
@@ -93,7 +100,9 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     fun `submit 2fa happy flow states are handled correctly`() = coroutinesTest {
         // GIVEN
         val requiredAccountType = AccountType.Internal
-        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorProof) } returns testScopeInfo
+        coEvery { performSecondFactor.invoke(testSessionId, testSecondFactorProof) } coAnswers {
+            result("performSecondFactor") { testScopeInfo }
+        }
         coEvery { postLoginAccountSetup.invoke(any(), any(), any(), any(), any(), any()) } returns success
         flowTest(viewModel.state) {
             // WHEN
@@ -108,6 +117,11 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
             // THEN
             assertIs<SecondFactorViewModel.State.Processing>(awaitItem())
             assertIs<SecondFactorViewModel.State.AccountSetupResult>(awaitItem())
+
+            val dataSlot = slot<ObservabilityData>()
+            verify { observabilityManager.enqueue(capture(dataSlot), any()) }
+            val observabilityData = dataSlot.captured
+            assertIs<LoginSecondFactorSubmissionTotal>(observabilityData)
 
             cancelAndIgnoreRemainingEvents()
         }

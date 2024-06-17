@@ -1,5 +1,3 @@
-import studio.forface.easygradle.dsl.*
-
 /*
  * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
@@ -18,19 +16,13 @@ import studio.forface.easygradle.dsl.*
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-plugins {
-    protonKotlinLibrary
-    kotlin("plugin.serialization")
-}
+package me.proton.core.observability.domain.metrics.common
 
-publishOption.shouldBePublishedAsLib = true
+import io.swagger.v3.oas.annotations.media.Schema
+import kotlinx.serialization.Serializable
 
-dependencies {
-    api(
-        project(Module.observabilityDomain)
-    )
-    implementation(
-        `serialization-core`,
-        `serialization-json`
-    )
-}
+@Serializable
+public data class FidoLaunchLabels(
+    @get:Schema(required = true)
+    val status: FidoLaunchStatus
+)
