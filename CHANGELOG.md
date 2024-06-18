@@ -11,6 +11,72 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.0.0] - 2024-06-18
+
+### Breaking Changes
+
+**Migrations**
+
+- AccountDatabase.MIGRATION_8.
+- UserSettingsDatabase.MIGRATION_7.
+- PublicAddressDatabase.MIGRATION_3.
+- EventMetadataDatabase.MIGRATION_3.
+- New Entities: PublicAddressInfoEntity + PublicAddressKeyDataEntity.
+
+**Features**
+
+- key:
+  - Store info about active public keys for a given email address.
+
+### Chores
+
+- auth:
+  - Update error message when a password is too common.
+- event-manager:
+  - Extend event listener with notification when fetching events fails.
+
+### Features
+
+- test:
+  - Implemented android client performance sdk with test examples.
+- configurator:
+  - Improved Configurator app (e.g. Retrofit + display FFs).
+- event-manager:
+  - Control fetching duration per event manager configuration.
+- key:
+  - Deprecate old `core/v4/keys` endpoint, and add a new one (`/core/v4/keys/all`).
+- presentation:
+  - Add two icons.
+  - Add text style "hero".
+  - Add ProtonThemeTv.
+- user-settings:
+  - Validate if password is too common, when changing password.
+
+### Bug Fixes
+
+- account-manager:
+  - Fixed disableCredentialLessAccounts (filter Ready accounts).
+- account-recovery:
+  - Fixed recovery session consume endpoint version.
+- auth:
+  - Allow Product to show/hide Long Login Toast.
+  - Allow Product to show/hide Congrats screen after successful Sign Up.
+  - Fix IllegalState exception add account activity
+- auth-presentation:
+  - Fixed crash in `TermsConditionsDialogFragment`.
+- plan-presentation:
+  - Fixed Title in "Current subscription" view overlapping with the price.
+- user:
+  - Remove User getUsedPercentage `require(used <= max)` check.
+- user-settings:
+  - Changing password was not possible in VPN, if the user had two-password mode enabled.
+
+### Internationalization
+
+- Upgrade translations from crowdin (e96f506a).
+- Upgrade translations from crowdin (39c70b27).
+- Upgrade translations from crowdin (2ad2f908).
+
 ## [24.0.0] - 2024-05-15
 
 ### Breaking Changes
