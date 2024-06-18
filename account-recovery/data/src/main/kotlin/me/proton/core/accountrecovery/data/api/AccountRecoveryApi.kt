@@ -33,6 +33,6 @@ internal interface AccountRecoveryApi : BaseRetrofitApi {
     @POST("account/v1/recovery/session/abort")
     suspend fun cancelRecoveryAttempt(@Body request: CancelRecoveryAttemptRequest): CancelRecoveryAttemptResponse
 
-    @POST("account/v4/recovery/session/consume")
+    @POST("account/v1/recovery/session/consume")
     suspend fun resetPassword(@Body request: ResetPasswordRequest): GenericResponse
 }
