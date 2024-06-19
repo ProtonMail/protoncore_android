@@ -33,12 +33,14 @@ import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.LaunchGiapBillingFlow
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
+import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.usecase.CreatePaymentTokenForGooglePurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase.Result.Error
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 
 /**
@@ -152,13 +154,21 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         purchase: GooglePurchase,
         userId: UserId?
     ): Result {
-        val createTokenResult = createPaymentTokenForGooglePurchase(
-            cycle = cycle,
-            googleProductId = googleProductId,
-            plan = plan,
-            purchase = purchase,
-            userId = userId
-        )
+        CoreLogger.w(LogTag.GIAP_INFO, "$TAG, billing success: $purchase")
+
+        val createTokenResult = runCatching {
+            createPaymentTokenForGooglePurchase(
+                cycle = cycle,
+                googleProductId = googleProductId,
+                plan = plan,
+                purchase = purchase,
+                userId = userId
+            )
+        }.onFailure {
+            CoreLogger.e(LogTag.GIAP_ERROR, "$TAG, proton token failure: $purchase")
+        }.onSuccess {
+            CoreLogger.w(LogTag.GIAP_INFO, "$TAG, proton token success: $it -> $purchase")
+        }.getOrThrow()
 
         purchaseRepository.upsertPurchase(
             Purchase(
@@ -187,4 +197,8 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         requireNotNull(instances[cycle]?.vendors?.get(AppStore.GooglePlay)) {
             "Missing vendor details for ${AppStore.GooglePlay}."
         }
+
+    public companion object {
+        private const val TAG = "PerformGiapPurchaseImpl"
+    }
 }

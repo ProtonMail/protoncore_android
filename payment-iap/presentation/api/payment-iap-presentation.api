@@ -162,9 +162,13 @@ public final class me/proton/core/paymentiap/presentation/usecase/LaunchGiapBill
 }
 
 public final class me/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl : me/proton/core/plan/domain/usecase/PerformGiapPurchase {
+	public static final field Companion Lme/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl$Companion;
 	public fun <init> (Lme/proton/core/plan/domain/usecase/CreatePaymentTokenForGooglePurchase;Lme/proton/core/payment/domain/usecase/LaunchGiapBillingFlow;Lme/proton/core/payment/domain/usecase/PrepareGiapPurchase;Lme/proton/core/payment/domain/repository/PurchaseRepository;Lme/proton/core/network/domain/session/SessionProvider;)V
 	public fun invoke (Landroid/app/Activity;ILme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;ILme/proton/core/plan/domain/entity/DynamicPlan;Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+}
+
+public final class me/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl$Companion {
 }
 
 public final class me/proton/core/paymentiap/presentation/usecase/PerformGiapPurchaseImpl_Factory : dagger/internal/Factory {
