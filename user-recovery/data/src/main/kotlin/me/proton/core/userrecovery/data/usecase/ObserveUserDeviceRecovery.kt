@@ -52,6 +52,9 @@ class ObserveUserDeviceRecovery @Inject constructor(
      */
     operator fun invoke(): Flow<Pair<User, Boolean?>> = accountManager
         .getAccounts(AccountState.Ready)
+        .map { accounts -> accounts.filter { isDeviceRecoveryEnabled(it.userId) } }
+        .map { accounts -> accounts.filter { canUserDeviceRecover(it.userId) } }
+        .filter { it.isNotEmpty() }
         .flatMapLatest { accounts ->
             accounts.map { account ->
                 observeUser(account.userId).filterNotNull().flatMapLatest { user ->
@@ -60,8 +63,5 @@ class ObserveUserDeviceRecovery @Inject constructor(
                     }.distinctUntilChanged()
                 }
             }.merge()
-        }
-        .filter { (user, _) ->
-            isDeviceRecoveryEnabled(user.userId) && canUserDeviceRecover(user.userId)
         }
 }

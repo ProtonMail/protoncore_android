@@ -28,6 +28,7 @@ import me.proton.core.userrecovery.data.usecase.ObserveUsersWithInactiveKeysForR
 import me.proton.core.userrecovery.data.usecase.ObserveUsersWithRecoverySecretButNoFile
 import me.proton.core.userrecovery.data.usecase.ObserveUsersWithoutRecoverySecret
 import me.proton.core.userrecovery.data.usecase.StoreRecoveryFile
+import me.proton.core.userrecovery.domain.IsDeviceRecoveryEnabled
 import me.proton.core.userrecovery.domain.LogTag
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryFile
 import me.proton.core.userrecovery.domain.worker.UserRecoveryWorkerManager
@@ -42,6 +43,7 @@ class DeviceRecoveryHandler @Inject constructor(
     private val scopeProvider: CoroutineScopeProvider,
     private val deleteRecoveryFiles: DeleteRecoveryFiles,
     private val getRecoveryFile: GetRecoveryFile,
+    private val isDeviceRecoveryEnabled: IsDeviceRecoveryEnabled,
     private val observeUserDeviceRecovery: ObserveUserDeviceRecovery,
     private val observeUsersWithInactiveKeysForRecovery: ObserveUsersWithInactiveKeysForRecovery,
     private val observeUsersWithoutRecoverySecret: ObserveUsersWithoutRecoverySecret,
@@ -50,6 +52,9 @@ class DeviceRecoveryHandler @Inject constructor(
     private val userRecoveryWorkerManager: UserRecoveryWorkerManager,
 ) {
     fun start() {
+        // Check the local flag only. The full flag (local + remote) is checked in `ObserveUserDeviceRecovery`.
+        if (!isDeviceRecoveryEnabled.isLocalEnabled()) return
+
         // Upload a recovery secret if needed:
         observeUsersWithoutRecoverySecret()
             .onEach { userRecoveryWorkerManager.enqueueSetRecoverySecret(it) }

@@ -35,6 +35,7 @@ import me.proton.core.userrecovery.data.usecase.ObserveUsersWithInactiveKeysForR
 import me.proton.core.userrecovery.data.usecase.ObserveUsersWithRecoverySecretButNoFile
 import me.proton.core.userrecovery.data.usecase.ObserveUsersWithoutRecoverySecret
 import me.proton.core.userrecovery.data.usecase.StoreRecoveryFile
+import me.proton.core.userrecovery.domain.IsDeviceRecoveryEnabled
 import me.proton.core.userrecovery.domain.usecase.GetRecoveryFile
 import me.proton.core.userrecovery.domain.worker.UserRecoveryWorkerManager
 import kotlin.test.BeforeTest
@@ -46,6 +47,9 @@ class DeviceRecoveryHandlerTest {
 
     @MockK
     private lateinit var getRecoveryFile: GetRecoveryFile
+
+    @MockK
+    private lateinit var isDeviceRecoveryEnabled: IsDeviceRecoveryEnabled
 
     @MockK
     private lateinit var observeUserDeviceRecovery: ObserveUserDeviceRecovery
@@ -77,11 +81,13 @@ class DeviceRecoveryHandlerTest {
         coJustRun { deleteRecoveryFiles(any()) }
         coJustRun { storeRecoveryFile(any(), any(), any()) }
         coJustRun { userRecoveryWorkerManager.enqueueSetRecoverySecret(any()) }
+        every { isDeviceRecoveryEnabled.isLocalEnabled() } returns true
 
         tested = DeviceRecoveryHandler(
             testScopeProvider,
             deleteRecoveryFiles,
             getRecoveryFile,
+            isDeviceRecoveryEnabled,
             observeUserDeviceRecovery,
             observeUsersWithInactiveKeysForRecovery,
             observeUsersWithoutRecoverySecret,
@@ -112,5 +118,20 @@ class DeviceRecoveryHandlerTest {
         coVerify { userRecoveryWorkerManager.enqueueSetRecoverySecret(testUserId) }
         coVerify { userRecoveryWorkerManager.enqueueRecoverInactivePrivateKeys(testUserId) }
         coVerify { storeRecoveryFile("recoveryFile", 1, testUserId) }
+    }
+
+    @Test
+    fun `local flag is disabled`() {
+        every { isDeviceRecoveryEnabled.isLocalEnabled() } returns false
+
+        // WHEN
+        tested.start()
+        testScopeProvider.GlobalDefaultSupervisedScope.testScheduler.runCurrent()
+
+        // THEN
+        coVerify(exactly = 0) { deleteRecoveryFiles(any()) }
+        coVerify(exactly = 0) { userRecoveryWorkerManager.enqueueSetRecoverySecret(any()) }
+        coVerify(exactly = 0) { userRecoveryWorkerManager.enqueueRecoverInactivePrivateKeys(any()) }
+        coVerify(exactly = 0) { storeRecoveryFile(any(), any(), any()) }
     }
 }
