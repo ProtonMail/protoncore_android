@@ -28,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.presentation.entity.fromParcelable
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
@@ -54,7 +55,11 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
     private val binding by viewBinding(FragmentUpdateRecoveryEmailBinding::bind)
 
     private lateinit var showPasswordDialogResultLauncher: FragmentDialogResultLauncher<Unit>
-    private lateinit var showTwoFADialogResultLauncher: FragmentDialogResultLauncher<Unit>
+    private val showTwoFADialogResultLauncher = registerForActivityResult(StartTwoFAInputDialog()) { result ->
+        if (result != null) {
+            viewModel.setSecondFactor(result.twoFA, result.twoFAFido?.fromParcelable())
+        }
+    }
 
     private val input: SettingsInput by lazy {
         requireArguments().get(ARG_INPUT) as SettingsInput
@@ -69,12 +74,6 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        showTwoFADialogResultLauncher = childFragmentManager.registerShowTwoFADialogResultLauncher(this, userId) { result ->
-            if (result != null) {
-                viewModel.setSecondFactor(result.twoFA)
-            }
-        }
 
         showPasswordDialogResultLauncher =
             childFragmentManager.registerShowPasswordDialogResultLauncher(this) { result ->
@@ -112,7 +111,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
                         showPasswordDialogResultLauncher.show(Unit)
                     }
                     is UpdateRecoveryEmailViewModel.State.SecondFactorNeeded -> {
-                        showTwoFADialogResultLauncher.show(Unit)
+                        showTwoFADialogResultLauncher.launch(userId.id)
                     }
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)

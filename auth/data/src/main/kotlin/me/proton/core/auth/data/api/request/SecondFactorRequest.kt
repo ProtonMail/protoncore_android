@@ -18,9 +18,14 @@
 
 package me.proton.core.auth.data.api.request
 
+import android.util.Base64
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
+import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
+import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.ext.toJson
 
 @Serializable
 data class SecondFactorRequest(
@@ -80,3 +85,32 @@ data class Fido2Request(
         return result
     }
 }
+
+@OptIn(ExperimentalUnsignedTypes::class)
+fun SecondFactorFido.toFido2Request(): Fido2Request {
+    val optionsData = AuthenticationOptionsData(
+        PublicKeyCredentialRequestOptionsResponse(
+            challenge = publicKeyOptions.challenge,
+            timeout = publicKeyOptions.timeout,
+            rpId = publicKeyOptions.rpId,
+            allowCredentials = publicKeyOptions.allowCredentials?.map {
+                PublicKeyCredentialDescriptorData(
+                    type = it.type,
+                    id = it.id,
+                    transports = it.transports
+                )
+            },
+            userVerification = publicKeyOptions.userVerification,
+            extensions = publicKeyOptions.extensions?.toJson()
+        )
+    )
+    return Fido2Request(
+        authenticationOptions = optionsData,
+        clientData = clientData.toBase64(),
+        authenticatorData = authenticatorData.toBase64(),
+        signature = signature.toBase64(),
+        credentialID = credentialID.toUByteArray()
+    )
+}
+
+private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

@@ -18,8 +18,10 @@
 
 package me.proton.core.key.data.repository
 
+import me.proton.core.auth.data.api.request.toFido2Request
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -100,7 +102,8 @@ class PrivateKeyRepositoryImpl @Inject constructor(
         keySalt: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String,
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?,
         auth: Auth?,
         keys: List<Key>?,
         userKeys: List<Key>?
@@ -113,6 +116,7 @@ class PrivateKeyRepositoryImpl @Inject constructor(
                     clientProof = srpProofs.clientProof,
                     srpSession = srpSession,
                     twoFactorCode = secondFactorCode,
+                    fido2 = secondFactorFido?.toFido2Request(),
                     auth = if (auth != null) AuthRequest.from(auth) else null,
                     keys = keys?.map {
                         PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)

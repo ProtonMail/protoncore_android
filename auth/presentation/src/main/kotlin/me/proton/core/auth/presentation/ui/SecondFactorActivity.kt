@@ -18,10 +18,11 @@
 
 package me.proton.core.auth.presentation.ui
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
-import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -84,7 +85,7 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
     private val viewModel by viewModels<SecondFactorViewModel>()
 
     @Inject
-    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ComponentActivity>>
+    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

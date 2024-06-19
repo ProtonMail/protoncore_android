@@ -19,10 +19,12 @@
 package me.proton.core.auth.fido.play.usecase
 
 import android.app.Activity
-import androidx.activity.ComponentActivity
+import android.content.Context
+import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
 import com.google.android.gms.fido.Fido
 import com.google.android.gms.fido.common.Transport
 import com.google.android.gms.fido.fido2.api.common.AuthenticationExtensions
@@ -40,10 +42,12 @@ import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOpt
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey.ErrorCode as ProtonErrorCode
 import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.coroutines.resume
 import kotlin.time.Duration.Companion.milliseconds
 
-public class PerformTwoFaWithSecurityKeyImpl @Inject constructor() : PerformTwoFaWithSecurityKey<ComponentActivity> {
+@Singleton
+public class PerformTwoFaWithSecurityKeyImpl @Inject constructor() : PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity> {
     private lateinit var launcher: ActivityResultLauncher<IntentSenderRequest>
 
     /**
@@ -54,7 +58,7 @@ public class PerformTwoFaWithSecurityKeyImpl @Inject constructor() : PerformTwoF
 
     @OptIn(ExperimentalUnsignedTypes::class)
     override suspend fun invoke(
-        activity: ComponentActivity,
+        activity: Activity,
         publicKey: Fido2PublicKeyCredentialRequestOptions
     ): PerformTwoFaWithSecurityKey.LaunchResult {
         publicKeyOptions = publicKey
@@ -111,11 +115,11 @@ public class PerformTwoFaWithSecurityKeyImpl @Inject constructor() : PerformTwoF
     }
 
     override fun register(
-        activity: ComponentActivity,
+        caller: ActivityResultCaller,
         onResult: (PerformTwoFaWithSecurityKey.Result, Fido2PublicKeyCredentialRequestOptions) -> Unit
     ) {
         launcher =
-            activity.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { activityResult ->
+            caller.registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { activityResult ->
                 val bytes = activityResult.data?.getByteArrayExtra(Fido.FIDO2_KEY_CREDENTIAL_EXTRA)
                 val result = if (activityResult.resultCode != Activity.RESULT_OK) {
                     PerformTwoFaWithSecurityKey.Result.Cancelled

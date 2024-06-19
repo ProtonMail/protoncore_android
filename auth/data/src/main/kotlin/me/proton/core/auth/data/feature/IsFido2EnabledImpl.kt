@@ -18,12 +18,14 @@
 
 package me.proton.core.auth.data.feature
 
+import android.app.Activity
 import android.content.Context
-import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.auth.data.R
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.data.IsFeatureFlagEnabledImpl
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId
@@ -35,7 +37,7 @@ import javax.inject.Inject
 class IsFido2EnabledImpl @Inject constructor(
     @ApplicationContext context: Context,
     featureFlagManager: FeatureFlagManager,
-    private val performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ComponentActivity>>
+    private val performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>>
 ) : IsFido2Enabled, IsFeatureFlagEnabledImpl(
     context,
     featureFlagManager,

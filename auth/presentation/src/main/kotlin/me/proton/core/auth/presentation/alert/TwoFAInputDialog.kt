@@ -18,10 +18,12 @@
 
 package me.proton.core.auth.presentation.alert
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.result.ActivityResultCaller
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -36,23 +38,36 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.auth.presentation.alert.confirmpass.ConfirmPasswordDialog
+import kotlinx.coroutines.launch
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.databinding.Dialog2faInputBinding
 import me.proton.core.auth.presentation.entity.TwoFAInput
 import me.proton.core.auth.presentation.entity.TwoFAMechanisms
-import me.proton.core.auth.presentation.ui.SecondFactorActivity
+import me.proton.core.auth.presentation.entity.TwoFaFido
+import me.proton.core.auth.presentation.entity.toParcelable
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
-import me.proton.core.auth.presentation.viewmodel.CancelCreateAccountDialogViewModel
 import me.proton.core.auth.presentation.viewmodel.TwoFAInputDialogViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.R
 import me.proton.core.presentation.utils.ProtectScreenConfiguration
 import me.proton.core.presentation.utils.ScreenContentProtector
+import me.proton.core.presentation.utils.errorSnack
+import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.util.kotlin.CoreLogger
+import java.util.Optional
+import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
 @AndroidEntryPoint
 class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
+
+    @Inject
+    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>>
 
     private val viewModel by viewModels<TwoFAInputDialogViewModel>()
 
@@ -78,9 +93,13 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
         Dialog2faInputBinding.inflate(LayoutInflater.from(requireContext()))
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        performTwoFaWithSecurityKey.getOrNull()?.register(requireActivity(), ::onTwoFaWithSecurityKeyResult)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         super.onCreateDialog(savedInstanceState)
-
         screenProtector.protect(requireActivity())
 
         binding.tabLayout.addOnTabSelectedListener(this@TwoFAInputDialog)
@@ -109,6 +128,9 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
                                 selectOneTimeCodeTab()
                             }
                         }
+
+                        is TwoFAInputDialogViewModel.State.Error.InvalidAccount ->
+                            requireContext().errorToast(getString(R.string.presentation_error_general))
                     }
                 }.launchIn(lifecycleScope)
 
@@ -120,13 +142,18 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
                     isAllCaps = false
                     onClick {
                         with(binding) {
-                            parentFragmentManager.setFragmentResult(
-                                KEY_2FA_SET, bundleOf(
-                                    BUNDLE_KEY_2FA_DATA to TwoFAInput(twoFA.text.toString())
-                                )
-                            )
+                            when (selectedTwoFAOption()) {
+                                TwoFAMechanisms.SECURITY_KEY -> onSecurityKeySubmitted()
 
-                            dismissAllowingStateLoss()
+                                TwoFAMechanisms.ONE_TIME_CODE -> {
+                                    parentFragmentManager.setFragmentResult(
+                                        KEY_2FA_SET, bundleOf(
+                                            BUNDLE_KEY_2FA_DATA to TwoFAInput(twoFA.text.toString())
+                                        )
+                                    )
+                                    dismissAllowingStateLoss()
+                                }
+                            }
                         }
                     }
                 }
@@ -145,7 +172,6 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
-
         screenProtector.unprotect(requireActivity())
     }
 
@@ -160,10 +186,51 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
 
     override fun onTabReselected(p0: TabLayout.Tab?) { }
 
+    private fun onTwoFaWithSecurityKeyResult(
+        result: PerformTwoFaWithSecurityKey.Result,
+        options: Fido2PublicKeyCredentialRequestOptions
+    ) {
+        when (result) {
+            is PerformTwoFaWithSecurityKey.Result.Success -> {
+                val secondFactorFido = SecondFactorFido(
+                    publicKeyOptions = options,
+                    clientData = result.response.clientDataJSON,
+                    authenticatorData = result.response.authenticatorData,
+                    signature = result.response.signature,
+                    credentialID = result.rawId
+                )
+
+                parentFragmentManager.setFragmentResult(
+                    KEY_2FA_SET, bundleOf(
+                        BUNDLE_KEY_2FA_DATA to TwoFAInput(twoFAFido = TwoFaFido(
+                            secondFactorFido.publicKeyOptions.toParcelable(),
+                            secondFactorFido.clientData,
+                            secondFactorFido.authenticatorData,
+                            secondFactorFido.signature,
+                            secondFactorFido.credentialID
+                        ))
+                    )
+                )
+            }
+            is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
+            is PerformTwoFaWithSecurityKey.Result.EmptyResult -> binding.root.errorSnack(
+                getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
+            )
+
+            is PerformTwoFaWithSecurityKey.Result.Error -> binding.root.errorSnack(
+                result.error.message ?: getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
+            )
+
+            is PerformTwoFaWithSecurityKey.Result.UnknownResult -> {
+                getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
+                CoreLogger.e(LogTag.FLOW_ERROR_2FA, result.toString())
+            }
+        }
+    }
+
     private fun selectSecurityKeyTab() = with (binding) {
         oneTimeCodeGroup.isVisible = false
         securityKeyGroup.isVisible = true
-//        recoveryCodeButton.isVisible = false
 
         securityKeyText.setTextWithAnnotatedLink(me.proton.core.auth.presentation.R.string.auth_2fa_insert_security_key, "more") {
             context?.openBrowserLink(getString(me.proton.core.auth.presentation.R.string.confirm_password_2fa_security_key))
@@ -173,6 +240,29 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
     private fun selectOneTimeCodeTab() = with (binding) {
         oneTimeCodeGroup.isVisible = true
         securityKeyGroup.isVisible = false
-//        recoveryCodeButton.isVisible = true
+    }
+
+    private fun selectedTwoFAOption(): TwoFAMechanisms =
+        if (binding.tabLayout.isVisible) {
+            TwoFAMechanisms.enumOf(binding.tabLayout.selectedTabPosition)
+        }
+        else TwoFAMechanisms.ONE_TIME_CODE
+
+    private fun onSecurityKeySubmitted() {
+        val requestOptions = requireNotNull(viewModel.fido2Info?.authenticationOptions?.publicKey)
+
+        lifecycleScope.launch {
+            when (val launchResult = performTwoFaWithSecurityKey.getOrNull()?.invoke(requireActivity(), requestOptions)) {
+                is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> {
+                    binding.root.errorSnack(
+                        message = launchResult.exception.localizedMessage
+                            ?: getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
+                    )
+                }
+
+                is PerformTwoFaWithSecurityKey.LaunchResult.Success,
+                null -> Unit
+            }
+        }
     }
 }

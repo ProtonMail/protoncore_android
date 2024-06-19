@@ -190,7 +190,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             )
         )
 
-        coEvery { performUpdateMailboxPassword.invoke(any(), testUserId, any(), any(), any()) } returns true
+        coEvery { performUpdateMailboxPassword.invoke(any(), testUserId, any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
@@ -211,6 +211,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",
+                    secondFactorFido = null,
                     twoPasswordMode = false
                 )
             }
@@ -234,7 +235,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             )
         )
 
-        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
+        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
@@ -255,6 +256,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",
+                    secondFactorFido = null,
                     twoPasswordMode = true
                 )
             }
@@ -278,7 +280,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             )
         )
 
-        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
+        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
@@ -299,6 +301,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
                     secondFactorCode = "",
+                    secondFactorFido = null,
                     twoPasswordMode = false
                 )
             }

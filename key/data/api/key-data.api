@@ -221,22 +221,24 @@ public final class me/proton/core/key/data/api/request/SignedKeyListRequest$Comp
 
 public final class me/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest {
 	public static final field Companion Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest$Companion;
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Lme/proton/core/key/data/api/request/AuthRequest;
-	public final fun component7 ()Ljava/util/List;
+	public final fun component6 ()Lme/proton/core/auth/data/api/request/Fido2Request;
+	public final fun component7 ()Lme/proton/core/key/data/api/request/AuthRequest;
 	public final fun component8 ()Ljava/util/List;
-	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;)Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;
-	public static synthetic fun copy$default (Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;
+	public final fun component9 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;)Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;
+	public static synthetic fun copy$default (Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/data/api/request/Fido2Request;Lme/proton/core/key/data/api/request/AuthRequest;Ljava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/proton/core/key/data/api/request/UpdateKeysForPasswordChangeRequest;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAuth ()Lme/proton/core/key/data/api/request/AuthRequest;
 	public final fun getClientEphemeral ()Ljava/lang/String;
 	public final fun getClientProof ()Ljava/lang/String;
+	public final fun getFido2 ()Lme/proton/core/auth/data/api/request/Fido2Request;
 	public final fun getKeySalt ()Ljava/lang/String;
 	public final fun getKeys ()Ljava/util/List;
 	public final fun getSrpSession ()Ljava/lang/String;
@@ -1173,7 +1175,7 @@ public final class me/proton/core/key/data/repository/PrivateKeyRepositoryImpl :
 	public fun createAddressKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/PrivateAddressKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun reactivatePrivateKey (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PrivateKey;Ljava/util/List;Ljava/util/Map;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setupInitialKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updatePrivateKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updatePrivateKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/key/data/repository/PublicAddressRepositoryImpl : me/proton/core/key/domain/repository/PublicAddressRepository {

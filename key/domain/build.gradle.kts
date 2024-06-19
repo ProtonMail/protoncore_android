@@ -38,6 +38,7 @@ dependencies {
     api(
         project(Module.cryptoCommon),
         project(Module.domain),
+        project(Module.authFidoDomain),
     )
 
     testImplementation(

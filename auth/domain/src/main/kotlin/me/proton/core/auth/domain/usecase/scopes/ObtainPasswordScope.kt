@@ -19,13 +19,13 @@
 package me.proton.core.auth.domain.usecase.scopes
 
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 

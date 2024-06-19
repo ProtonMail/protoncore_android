@@ -19,6 +19,7 @@
 package me.proton.core.usersettings.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.arch.DataResult
@@ -68,7 +69,8 @@ interface UserSettingsRepository {
         email: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?
     ): UserSettings
 
     /**
@@ -78,7 +80,8 @@ interface UserSettingsRepository {
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String,
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?,
         auth: Auth
     ): UserSettings
 

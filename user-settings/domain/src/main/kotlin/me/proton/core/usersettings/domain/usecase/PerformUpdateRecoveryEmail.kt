@@ -20,6 +20,7 @@ package me.proton.core.usersettings.domain.usecase
 
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
@@ -45,7 +46,8 @@ class PerformUpdateRecoveryEmail @Inject constructor(
         sessionUserId: SessionUserId,
         newRecoveryEmail: String,
         password: EncryptedString,
-        secondFactorCode: String = ""
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?
     ): UserSettings {
         val user = userRepository.getUser(sessionUserId)
         val username = user.nameNotNull()
@@ -65,7 +67,8 @@ class PerformUpdateRecoveryEmail @Inject constructor(
                 email = newRecoveryEmail,
                 srpProofs = clientProofs,
                 srpSession = loginInfo.srpSession,
-                secondFactorCode = secondFactorCode
+                secondFactorCode = secondFactorCode,
+                secondFactorFido = secondFactorFido
             )
         }
     }

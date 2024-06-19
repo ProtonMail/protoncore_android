@@ -19,7 +19,6 @@
 package me.proton.core.user.data.repository
 
 import android.content.Context
-import android.util.Base64
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -28,13 +27,10 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
-import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
-import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
-import me.proton.core.auth.data.api.request.Fido2Request
+import me.proton.core.auth.data.api.request.toFido2Request
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.usecase.ValidateServerProof
-import me.proton.core.auth.fido.domain.ext.toJson
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
@@ -56,7 +52,6 @@ import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.api.request.UnlockRequest
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.CreateUserType
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserLocalDataSource
@@ -286,32 +281,3 @@ class UserRepositoryImpl @Inject constructor(
 
     // endregion
 }
-
-@OptIn(ExperimentalUnsignedTypes::class)
-private fun SecondFactorFido.toFido2Request(): Fido2Request {
-    val optionsData = AuthenticationOptionsData(
-        PublicKeyCredentialRequestOptionsResponse(
-            challenge = publicKeyOptions.challenge,
-            timeout = publicKeyOptions.timeout,
-            rpId = publicKeyOptions.rpId,
-            allowCredentials = publicKeyOptions.allowCredentials?.map {
-                PublicKeyCredentialDescriptorData(
-                    type = it.type,
-                    id = it.id,
-                    transports = it.transports
-                )
-            },
-            userVerification = publicKeyOptions.userVerification,
-            extensions = publicKeyOptions.extensions?.toJson()
-        )
-    )
-    return Fido2Request(
-        authenticationOptions = optionsData,
-        clientData = clientData.toBase64(),
-        authenticatorData = authenticatorData.toBase64(),
-        signature = signature.toBase64(),
-        credentialID = credentialID.toUByteArray()
-    )
-}
-
-private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

@@ -19,18 +19,14 @@
 package me.proton.core.user.domain
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
-import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.entity.key.Key
-import me.proton.core.key.domain.entity.key.KeyId
-import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.entity.UserAddress
@@ -139,7 +135,8 @@ interface UserManager {
     suspend fun changePassword(
         userId: UserId,
         newPassword: EncryptedString,
-        secondFactorCode: String = "",
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?,
         proofs: SrpProofs,
         srpSession: String,
         auth: Auth?

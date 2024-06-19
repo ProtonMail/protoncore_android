@@ -157,7 +157,8 @@ class UserSettingsRepositoryImplTest {
             email = "test-email2",
             srpProofs = testSrpProofs,
             srpSession = "test-srp-session",
-            secondFactorCode = ""
+            secondFactorCode = "",
+            secondFactorFido = null
         )
         // THEN
         assertNotNull(response)
@@ -178,7 +179,8 @@ class UserSettingsRepositoryImplTest {
                 email = "test-email2",
                 srpProofs = testSrpProofs,
                 srpSession = "test-srp-session",
-                secondFactorCode = ""
+                secondFactorCode = "",
+                secondFactorFido = null
             )
         }
         assertEquals(
@@ -221,6 +223,7 @@ class UserSettingsRepositoryImplTest {
             srpProofs = testSrpProofs,
             srpSession = "test-srp-session",
             secondFactorCode = "",
+            secondFactorFido = null,
             auth = testAuth
         )
         // THEN
@@ -242,6 +245,7 @@ class UserSettingsRepositoryImplTest {
                 srpProofs = testSrpProofs,
                 srpSession = "test-srp-session",
                 secondFactorCode = "",
+                secondFactorFido = null,
                 auth = testAuth
             )
         }

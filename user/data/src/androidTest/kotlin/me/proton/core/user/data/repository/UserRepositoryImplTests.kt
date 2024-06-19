@@ -36,15 +36,13 @@ import me.proton.core.account.data.repository.AccountRepositoryImpl
 import me.proton.core.accountmanager.data.AccountManagerImpl
 import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
-import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
-import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
-import me.proton.core.auth.data.api.request.Fido2Request
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialDescriptor
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
@@ -75,7 +73,6 @@ import me.proton.core.user.data.api.request.UnlockPasswordRequest
 import me.proton.core.user.data.entity.UserEntity
 import me.proton.core.user.data.extension.toUser
 import me.proton.core.user.domain.entity.CreateUserType
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource

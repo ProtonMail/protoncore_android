@@ -18,11 +18,12 @@
 
 package me.proton.core.auth.presentation.alert.confirmpass
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
@@ -36,6 +37,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
@@ -51,7 +53,6 @@ import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.util.kotlin.CoreLogger
 import java.util.Optional
 import javax.inject.Inject
@@ -63,7 +64,7 @@ import kotlin.jvm.optionals.getOrNull
 @AndroidEntryPoint
 class ConfirmPasswordDialog : DialogFragment() {
     @Inject
-    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ComponentActivity>>
+    lateinit var performTwoFaWithSecurityKey: Optional<PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>>
 
     private val viewModel by viewModels<ConfirmPasswordDialogViewModel>()
 

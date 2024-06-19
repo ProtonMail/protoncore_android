@@ -18,7 +18,10 @@
 
 package me.proton.core.auth.fido.play.di
 
+import android.app.Activity
+import android.content.Context
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -32,5 +35,5 @@ public interface CoreAuthFidoDataPlayModule {
     @Binds
     public fun bindPerformTwoFaWithSecurityKey(
         impl: PerformTwoFaWithSecurityKeyImpl
-    ): PerformTwoFaWithSecurityKey<ComponentActivity>
+    ): PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>
 }

@@ -16,14 +16,12 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.user.domain.entity
+package me.proton.core.auth.fido.domain.entity
 
-import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
-
-class SecondFactorFido(
-    val publicKeyOptions: Fido2PublicKeyCredentialRequestOptions,
-    val clientData: ByteArray,
-    val authenticatorData: ByteArray,
-    val signature: ByteArray,
-    val credentialID: ByteArray
+public class SecondFactorFido(
+    public val publicKeyOptions: Fido2PublicKeyCredentialRequestOptions,
+    public val clientData: ByteArray,
+    public val authenticatorData: ByteArray,
+    public val signature: ByteArray,
+    public val credentialID: ByteArray
 )

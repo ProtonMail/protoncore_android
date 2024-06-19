@@ -574,7 +574,7 @@ public final class me/proton/core/auth/domain/usecase/scopes/ObtainLockedScope {
 
 public final class me/proton/core/auth/domain/usecase/scopes/ObtainPasswordScope {
 	public fun <init> (Lme/proton/core/auth/domain/repository/AuthRepository;Lme/proton/core/user/domain/repository/UserRepository;Lme/proton/core/crypto/common/context/CryptoContext;)V
-	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/user/domain/entity/SecondFactorFido;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun invoke (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/session/SessionId;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/auth/domain/usecase/scopes/RemoveSecurityScopes {

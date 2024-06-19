@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -82,8 +83,8 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
         }
     }
 
-    fun setSecondFactor(secondFactor: String) {
-        updateRecoveryEmail(secondFactor)
+    fun setSecondFactor(secondFactorCode: String?, secondFactorFido: SecondFactorFido?) {
+        updateRecoveryEmail(secondFactorCode, secondFactorFido)
     }
 
     /**
@@ -105,14 +106,16 @@ class UpdateRecoveryEmailViewModel @Inject constructor(
      * Updates (replaces) the user's recovery email address.
      */
     private fun updateRecoveryEmail(
-        secondFactorCode: String? = null
+        secondFactorCode: String? = null,
+        secondFactorFido: SecondFactorFido? = null
     ) = flow {
         emit(State.UpdatingCurrent)
         val updateRecoveryEmailResult = performUpdateRecoveryEmail(
             sessionUserId = checkNotNull(userId),
             newRecoveryEmail = checkNotNull(recoveryEmail),
             password = checkNotNull(inputPassword),
-            secondFactorCode = secondFactorCode ?: "" // default
+            secondFactorCode = secondFactorCode,
+            secondFactorFido = secondFactorFido
         )
         emit(State.UpdatingSuccess(updateRecoveryEmailResult.email?.value))
     }.catch { error ->

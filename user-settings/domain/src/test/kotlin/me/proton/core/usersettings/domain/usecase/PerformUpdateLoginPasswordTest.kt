@@ -22,11 +22,14 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
+import io.mockk.spyk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
@@ -138,6 +141,7 @@ class PerformUpdateLoginPasswordTest {
                 srpProofs = any(),
                 srpSession = any(),
                 secondFactorCode = testSecondFactor,
+                secondFactorFido = null,
                 auth = testAuth
             )
         } returns testUserSettingsResponse
@@ -190,7 +194,8 @@ class PerformUpdateLoginPasswordTest {
             userId = testUserId,
             password = keyStoreCrypto.encrypt(testPassword),
             newPassword = keyStoreCrypto.encrypt(testNewPassword),
-            secondFactorCode = testSecondFactor
+            secondFactorCode = testSecondFactor,
+            secondFactorFido = null
         )
         // THEN
         coVerify(exactly = 1) {
@@ -199,6 +204,34 @@ class PerformUpdateLoginPasswordTest {
                 srpProofs = any(),
                 srpSession = any(),
                 secondFactorCode = testSecondFactor,
+                secondFactorFido = null,
+                auth = testAuth
+            )
+        }
+        assertNotNull(result)
+    }
+
+    @Test
+    fun `update login password with fido2 returns success`() = runTest {
+        // GIVEN
+        val testSecondFactorFido = mockk<SecondFactorFido>(relaxed = true)
+
+        // WHEN
+        val result = useCase.invoke(
+            userId = testUserId,
+            password = keyStoreCrypto.encrypt(testPassword),
+            newPassword = keyStoreCrypto.encrypt(testNewPassword),
+            secondFactorCode = null,
+            secondFactorFido = testSecondFactorFido
+        )
+        // THEN
+        coVerify(exactly = 1) {
+            repository.updateLoginPassword(
+                sessionUserId = testUserId,
+                srpProofs = any(),
+                srpSession = any(),
+                secondFactorCode = null,
+                secondFactorFido = testSecondFactorFido,
                 auth = testAuth
             )
         }

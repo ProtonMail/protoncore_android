@@ -19,17 +19,15 @@
 package me.proton.core.user.domain.repository
 
 import kotlinx.coroutines.flow.Flow
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.CreateUserType
 import me.proton.core.user.domain.entity.Domain
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.user.domain.entity.User
 
 @Suppress("TooManyFunctions")

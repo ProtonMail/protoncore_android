@@ -25,5 +25,7 @@
         <activity
             android:name="me.proton.core.usersettings.presentation.ui.PasswordManagementActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.TwoFaInputActivity"
+            android:theme="@style/ProtonTheme.Transparent" />
     </application>
 </manifest>

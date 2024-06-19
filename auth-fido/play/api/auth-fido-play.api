@@ -15,9 +15,9 @@ public abstract interface class me/proton/core/auth/fido/play/di/CoreAuthFidoDat
 
 public final class me/proton/core/auth/fido/play/usecase/PerformTwoFaWithSecurityKeyImpl : me/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey {
 	public fun <init> ()V
-	public fun invoke (Landroidx/activity/ComponentActivity;Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun invoke (Landroid/app/Activity;Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public synthetic fun invoke (Ljava/lang/Object;Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun register (Landroidx/activity/ComponentActivity;Lkotlin/jvm/functions/Function2;)V
+	public fun register (Landroidx/activity/result/ActivityResultCaller;Lkotlin/jvm/functions/Function2;)V
 	public synthetic fun register (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;)V
 }
 

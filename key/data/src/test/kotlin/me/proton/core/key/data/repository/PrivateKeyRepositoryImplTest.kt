@@ -107,6 +107,7 @@ class PrivateKeyRepositoryImplTest {
                 srpProofs = testSrpProofs,
                 srpSession = "test-srp-session",
                 secondFactorCode = "test-2fa-code",
+                secondFactorFido = null,
                 auth = mockk(relaxed = true),
                 keys = listOf(mockk(relaxed = true)),
                 userKeys = listOf(mockk(relaxed = true))

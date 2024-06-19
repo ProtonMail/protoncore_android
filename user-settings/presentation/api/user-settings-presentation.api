@@ -6,6 +6,10 @@ public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_ui_P
 	public fun <init> ()V
 }
 
+public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_ui_TwoFaInputActivity_GeneratedInjector {
+	public fun <init> ()V
+}
+
 public class hilt_aggregated_deps/_me_proton_core_usersettings_presentation_ui_UpdateRecoveryEmailActivity_GeneratedInjector {
 	public fun <init> ()V
 }
@@ -82,7 +86,6 @@ public final class me/proton/core/usersettings/presentation/databinding/Activity
 }
 
 public final class me/proton/core/usersettings/presentation/databinding/FragmentPasswordManagementBinding : androidx/viewbinding/ViewBinding {
-	public final field accountPasswordNote Landroid/widget/TextView;
 	public final field accountRecoveryInfo Landroidx/compose/ui/platform/ComposeView;
 	public final field confirmNewLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field confirmNewMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
@@ -91,11 +94,13 @@ public final class me/proton/core/usersettings/presentation/databinding/Fragment
 	public final field dontKnowYourCurrentPassword Lme/proton/core/presentation/ui/view/ProtonButton;
 	public final field loginPasswordGroup Landroid/widget/LinearLayout;
 	public final field mailboxPasswordGroup Landroid/widget/LinearLayout;
+	public final field mainPasswordNote Landroid/widget/TextView;
 	public final field newLoginPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field newMailboxPasswordInput Lme/proton/core/presentation/ui/view/ProtonInput;
 	public final field progress Landroid/widget/ProgressBar;
 	public final field saveLoginPasswordButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
 	public final field saveMailboxPasswordButton Lme/proton/core/presentation/ui/view/ProtonProgressButton;
+	public final field secondPasswordNote Landroid/widget/TextView;
 	public final field tabLayout Lcom/google/android/material/tabs/TabLayout;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/usersettings/presentation/databinding/FragmentPasswordManagementBinding;
 	public synthetic fun getRoot ()Landroid/view/View;
@@ -217,6 +222,17 @@ public abstract class me/proton/core/usersettings/presentation/ui/Hilt_PasswordM
 	public fun onGetLayoutInflater (Landroid/os/Bundle;)Landroid/view/LayoutInflater;
 }
 
+public abstract class me/proton/core/usersettings/presentation/ui/Hilt_TwoFaInputActivity : me/proton/core/presentation/ui/ProtonActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
+	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
+	protected fun createComponentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
+	public final fun generatedComponent ()Ljava/lang/Object;
+	public fun getDefaultViewModelProviderFactory ()Landroidx/lifecycle/ViewModelProvider$Factory;
+	protected fun inject ()V
+	protected fun onCreate (Landroid/os/Bundle;)V
+	protected fun onDestroy ()V
+}
+
 public abstract class me/proton/core/usersettings/presentation/ui/Hilt_UpdateRecoveryEmailActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity, dagger/hilt/internal/GeneratedComponentManagerHolder {
 	public final fun componentManager ()Ldagger/hilt/android/internal/managers/ActivityComponentManager;
 	public synthetic fun componentManager ()Ldagger/hilt/internal/GeneratedComponentManager;
@@ -289,6 +305,7 @@ public final class me/proton/core/usersettings/presentation/ui/PasswordManagemen
 public final class me/proton/core/usersettings/presentation/ui/ShowPasswordLauncherKt {
 	public static final fun registerShowPasswordDialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 	public static synthetic fun registerShowPasswordDialogResultLauncher$default (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public static final fun registerShowTwoFADialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 	public static final fun registerShowTwoFADialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 }
 
@@ -301,6 +318,20 @@ public final class me/proton/core/usersettings/presentation/ui/StartPasswordMana
 	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/usersettings/presentation/entity/PasswordManagementResult;
 }
 
+public final class me/proton/core/usersettings/presentation/ui/StartTwoFAInputDialog : androidx/activity/result/contract/ActivityResultContract {
+	public static final field $stable I
+	public static final field Companion Lme/proton/core/usersettings/presentation/ui/StartTwoFAInputDialog$Companion;
+	public fun <init> ()V
+	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Ljava/lang/String;)Landroid/content/Intent;
+	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
+	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
+}
+
+public final class me/proton/core/usersettings/presentation/ui/StartTwoFAInputDialog$Companion {
+	public final fun getIntent (Landroid/content/Context;Ljava/lang/String;)Landroid/content/Intent;
+}
+
 public final class me/proton/core/usersettings/presentation/ui/StartUpdateRecoveryEmail : androidx/activity/result/contract/ActivityResultContract {
 	public static final field $stable I
 	public fun <init> ()V
@@ -308,6 +339,21 @@ public final class me/proton/core/usersettings/presentation/ui/StartUpdateRecove
 	public fun createIntent (Landroid/content/Context;Lme/proton/core/usersettings/presentation/entity/SettingsInput;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
 	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult;
+}
+
+public final class me/proton/core/usersettings/presentation/ui/TwoFaInputActivity : me/proton/core/presentation/ui/ProtonActivity {
+	public static final field $stable I
+	public static final field ARG_INPUT Ljava/lang/String;
+	public static final field ARG_RESULT Ljava/lang/String;
+	public static final field Companion Lme/proton/core/usersettings/presentation/ui/TwoFaInputActivity$Companion;
+	public fun <init> ()V
+}
+
+public final class me/proton/core/usersettings/presentation/ui/TwoFaInputActivity$Companion {
+}
+
+public abstract interface class me/proton/core/usersettings/presentation/ui/TwoFaInputActivity_GeneratedInjector {
+	public abstract fun injectTwoFaInputActivity (Lme/proton/core/usersettings/presentation/ui/TwoFaInputActivity;)V
 }
 
 public final class me/proton/core/usersettings/presentation/ui/UpdateRecoveryEmailActivity : me/proton/core/presentation/ui/ProtonViewBindingActivity {
@@ -388,13 +434,15 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;
+	public final fun component3 ()Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$SetTwoFactor;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getCode ()Ljava/lang/String;
+	public final fun getTwoFAFido ()Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -402,19 +450,21 @@ public final class me/proton/core/usersettings/presentation/viewmodel/PasswordMa
 
 public final class me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword : me/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action {
 	public static final field $stable I
-	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)V
+	public synthetic fun <init> (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/proton/core/domain/entity/UserId;
 	public final fun component2 ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/lang/String;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;
-	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;
+	public final fun component6 ()Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;
+	public final fun copy (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$Action$UpdatePassword;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getNewPassword ()Ljava/lang/String;
 	public final fun getPassword ()Ljava/lang/String;
 	public final fun getSecondFactorCode ()Ljava/lang/String;
+	public final fun getSecondFactorFido ()Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;
 	public final fun getType ()Lme/proton/core/usersettings/presentation/viewmodel/PasswordManagementViewModel$PasswordType;
 	public fun getUserId ()Lme/proton/core/domain/entity/UserId;
 	public fun hashCode ()I
@@ -539,7 +589,7 @@ public final class me/proton/core/usersettings/presentation/viewmodel/UpdateReco
 	public final fun getState ()Lkotlinx/coroutines/flow/StateFlow;
 	public final fun setNewRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;)V
 	public final fun setPassword (Ljava/lang/String;)V
-	public final fun setSecondFactor (Ljava/lang/String;)V
+	public final fun setSecondFactor (Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)V
 }
 
 public abstract class me/proton/core/usersettings/presentation/viewmodel/UpdateRecoveryEmailViewModel$State {

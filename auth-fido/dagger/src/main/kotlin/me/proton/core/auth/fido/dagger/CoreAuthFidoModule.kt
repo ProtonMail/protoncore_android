@@ -18,7 +18,10 @@
 
 package me.proton.core.auth.fido.dagger
 
+import android.app.Activity
+import android.content.Context
 import androidx.activity.ComponentActivity
+import androidx.activity.result.ActivityResultCaller
 import dagger.BindsOptionalOf
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -29,5 +32,5 @@ import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 @InstallIn(SingletonComponent::class)
 public interface CoreAuthFidoModule {
     @BindsOptionalOf
-    public fun bindPerformTwoFaWithSecurityKey(): PerformTwoFaWithSecurityKey<ComponentActivity>
+    public fun bindPerformTwoFaWithSecurityKey(): PerformTwoFaWithSecurityKey<ActivityResultCaller, Activity>
 }

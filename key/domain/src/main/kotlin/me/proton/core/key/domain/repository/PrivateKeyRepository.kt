@@ -18,6 +18,7 @@
 
 package me.proton.core.key.domain.repository
 
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -55,7 +56,8 @@ interface PrivateKeyRepository {
         keySalt: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String,
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?,
         auth: Auth?,
         keys: List<Key>? = null,
         userKeys: List<Key>? = null

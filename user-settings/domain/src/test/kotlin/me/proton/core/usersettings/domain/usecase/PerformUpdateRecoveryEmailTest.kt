@@ -105,6 +105,7 @@ class PerformUpdateRecoveryEmailTest {
                 any(),
                 any(),
                 any(),
+                any(),
                 any()
             )
         } returns testUserSettingsResponse
@@ -143,7 +144,8 @@ class PerformUpdateRecoveryEmailTest {
             sessionUserId = testUserId,
             newRecoveryEmail = "",
             password = keyStoreCrypto.encrypt(testPassword),
-            secondFactorCode = testSecondFactor
+            secondFactorCode = testSecondFactor,
+            secondFactorFido = null
         )
         coVerify(exactly = 1) {
             userSettingsRepository.updateRecoveryEmail(
@@ -151,7 +153,8 @@ class PerformUpdateRecoveryEmailTest {
                 email = "",
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = testSecondFactor
+                secondFactorCode = testSecondFactor,
+                secondFactorFido = null
             )
         }
         assertNotNull(result)
@@ -186,7 +189,8 @@ class PerformUpdateRecoveryEmailTest {
             sessionUserId = testUserId,
             newRecoveryEmail = "",
             password = testPassword,
-            secondFactorCode = testSecondFactor
+            secondFactorCode = testSecondFactor,
+            secondFactorFido = null
         )
         coVerify(exactly = 1) {
             userSettingsRepository.updateRecoveryEmail(
@@ -194,7 +198,8 @@ class PerformUpdateRecoveryEmailTest {
                 email = "",
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = testSecondFactor
+                secondFactorCode = testSecondFactor,
+                secondFactorFido = null
             )
         }
         assertNotNull(result)

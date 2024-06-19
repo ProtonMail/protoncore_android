@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.os.bundleOf
+import androidx.core.text.method.LinkMovementMethodCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.flowWithLifecycle
@@ -38,6 +39,7 @@ import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDia
 import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
 import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
+import me.proton.core.auth.presentation.entity.fromParcelable
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonSecureFragment
@@ -79,6 +81,14 @@ class PasswordManagementFragment :
     private val viewModel by viewModels<PasswordManagementViewModel>()
     private val binding by viewBinding(FragmentPasswordManagementBinding::bind)
     private val invalidPasswordProvider by lazy { InvalidPasswordProvider(requireContext()) }
+
+    private val twoFactorLauncher = registerForActivityResult(StartTwoFAInputDialog()) { result ->
+        if (result != null) {
+            viewModel.perform(Action.SetTwoFactor(userId, result.twoFA, result.twoFAFido?.fromParcelable()))
+        } else {
+            viewModel.perform(Action.CancelTwoFactor(userId))
+        }
+    }
 
     private val input: SettingsInput by lazy {
         requireArguments().get(ARG_INPUT) as SettingsInput
@@ -130,14 +140,6 @@ class PasswordManagementFragment :
             }
         }
 
-        val twoFactorLauncher = childFragmentManager.registerShowTwoFADialogResultLauncher(this, userId) { result ->
-            if (result != null) {
-                viewModel.perform(Action.SetTwoFactor(userId, result.twoFA))
-            } else {
-                viewModel.perform(Action.CancelTwoFactor(userId))
-            }
-        }
-
         viewModel.state
             .flowWithLifecycle(viewLifecycleOwner.lifecycle)
             .distinctUntilChanged()
@@ -151,7 +153,14 @@ class PasswordManagementFragment :
                         binding.tabLayout.isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
                         binding.loginPasswordGroup.isVisible = binding.tabLayout.selectedTabPosition == 0
                         binding.mailboxPasswordGroup.isVisible = binding.tabLayout.selectedTabPosition == 1
-                        binding.accountPasswordNote.isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
+                        binding.mainPasswordNote.apply {
+                            isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
+                            movementMethod = LinkMovementMethodCompat.getInstance()
+                        }
+                        binding.secondPasswordNote.apply {
+                            isVisible = it.loginPasswordAvailable && it.mailboxPasswordAvailable
+                            movementMethod = LinkMovementMethodCompat.getInstance()
+                        }
 
                         binding.dontKnowYourCurrentPassword.isVisible = it.recoveryResetAvailable
                         binding.currentLoginPasswordInput.isVisible = it.currentLoginPasswordNeeded
@@ -164,7 +173,7 @@ class PasswordManagementFragment :
                     }
 
                     is PasswordManagementViewModel.State.TwoFactorNeeded -> {
-                        twoFactorLauncher.show(Unit)
+                        twoFactorLauncher.launch(userId.id)
                     }
 
                     is PasswordManagementViewModel.State.Success -> {

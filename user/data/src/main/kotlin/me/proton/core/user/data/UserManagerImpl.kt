@@ -20,6 +20,7 @@ package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -32,7 +33,6 @@ import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
-import me.proton.core.key.domain.entity.key.KeyId
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.keyHolder
@@ -142,7 +142,8 @@ class UserManagerImpl @Inject constructor(
     override suspend fun changePassword(
         userId: UserId,
         newPassword: EncryptedString,
-        secondFactorCode: String,
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?,
         proofs: SrpProofs,
         srpSession: String,
         auth: Auth?
@@ -169,6 +170,7 @@ class UserManagerImpl @Inject constructor(
                     srpProofs = proofs,
                     srpSession = srpSession,
                     secondFactorCode = secondFactorCode,
+                    secondFactorFido = secondFactorFido,
                     auth = auth,
                     keys = updatedKeys,
                     userKeys = updatedUserKeys

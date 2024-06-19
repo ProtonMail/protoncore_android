@@ -26,6 +26,7 @@ import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -40,6 +41,7 @@ import me.proton.core.user.domain.repository.UserRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFailsWith
+import kotlin.test.assertTrue
 
 class PerformUpdateUserPasswordTest {
     // region mocks
@@ -117,6 +119,7 @@ class PerformUpdateUserPasswordTest {
                 userId = testUserId,
                 newPassword = any(),
                 secondFactorCode = any(),
+                secondFactorFido = null,
                 proofs = any(),
                 srpSession = any(),
                 auth = any()
@@ -178,10 +181,40 @@ class PerformUpdateUserPasswordTest {
             useCase.invoke(
                 userId = testUserId,
                 secondFactorCode = testSecondFactor,
+                secondFactorFido = null,
                 loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
                 newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),
                 twoPasswordMode = false
             )
         }
+    }
+
+    @Test
+    fun `update mailbox password fido2`() = runTest {
+        coEvery { userRepository.getUser(testUserId) } returns testUser
+        val secondFactorFido = mockk<SecondFactorFido>(relaxed = true)
+
+        coEvery {
+            userManager.changePassword(
+                userId = testUserId,
+                newPassword = any(),
+                secondFactorCode = null,
+                secondFactorFido = secondFactorFido,
+                proofs = any(),
+                srpSession = any(),
+                auth = any()
+            )
+        } returns true
+
+        val result = useCase.invoke(
+            userId = testUserId,
+            secondFactorCode = null,
+            secondFactorFido = secondFactorFido,
+            loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
+            newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),
+            twoPasswordMode = false
+        )
+
+        assertTrue(result)
     }
 }

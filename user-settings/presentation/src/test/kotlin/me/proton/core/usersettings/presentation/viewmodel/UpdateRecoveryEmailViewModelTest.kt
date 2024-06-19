@@ -145,7 +145,8 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "",
                 password = "encrypted-test-password",
-                secondFactorCode = ""
+                secondFactorCode = null,
+                secondFactorFido = null
             )
         } returns testUserSettingsResponse.copy(email = RecoverySetting("", 1, notify = true, reset = true))
 
@@ -173,7 +174,8 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
                 password = "encrypted-test-password",
-                secondFactorCode = ""
+                secondFactorCode = null,
+                secondFactorFido = null
             )
         } returns testUserSettingsResponse.copy(email = RecoverySetting("new-email", 1, notify = true, reset = true))
 
@@ -201,7 +203,8 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
                 password = "encrypted-test-password",
-                secondFactorCode = "123456"
+                secondFactorCode = "123456",
+                secondFactorFido = null
             )
         } returns testUserSettingsResponse.copy(
             email = RecoverySetting("new-email", 1, notify = true, reset = true)
@@ -230,7 +233,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             assertIs<UpdateRecoveryEmailViewModel.State.PasswordNeeded>(awaitItem())
             viewModel.setPassword(testPassword)
             assertIs<UpdateRecoveryEmailViewModel.State.SecondFactorNeeded>(awaitItem())
-            viewModel.setSecondFactor("123456")
+            viewModel.setSecondFactor("123456", null)
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
             val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
@@ -245,7 +248,8 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
                 password = "encrypted-test-password",
-                secondFactorCode = ""
+                secondFactorCode = null,
+                secondFactorFido = null
             )
         } throws ApiException(
             ApiResult.Error.Http(

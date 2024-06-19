@@ -20,6 +20,7 @@ package me.proton.core.usersettings.domain.usecase
 
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
@@ -48,7 +49,8 @@ class PerformUpdateUserPassword @Inject constructor(
         userId: UserId,
         loginPassword: EncryptedString,
         newPassword: EncryptedString,
-        secondFactorCode: String = ""
+        secondFactorCode: String?,
+        secondFactorFido: SecondFactorFido?
     ): Boolean {
         val user = userRepository.getUser(userId)
         val username = user.nameNotNull()
@@ -83,6 +85,7 @@ class PerformUpdateUserPassword @Inject constructor(
                     userId = userId,
                     newPassword = newPassword,
                     secondFactorCode = secondFactorCode,
+                    secondFactorFido = secondFactorFido,
                     proofs = clientProofs,
                     srpSession = loginInfo.srpSession,
                     auth = auth

@@ -18,6 +18,7 @@
 
 package me.proton.core.usersettings.presentation.ui
 
+import androidx.activity.ComponentActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import me.proton.core.auth.presentation.alert.ConfirmPasswordInputDialog
@@ -75,3 +76,25 @@ fun FragmentManager.registerShowTwoFADialogResultLauncher(
         show = { showTwoFAEnterDialog(userId = userId) }
     )
 }
+
+fun FragmentManager.registerShowTwoFADialogResultLauncher(
+    context: ComponentActivity,
+    userId: UserId,
+    onResult: (TwoFAInput?) -> Unit
+): FragmentDialogResultLauncher<Unit> {
+
+    setFragmentResultListener(
+        TwoFAInputDialog.KEY_2FA_SET,
+        context
+    ) { _, bundle ->
+        val result =
+            bundle.getParcelable<TwoFAInput>(TwoFAInputDialog.BUNDLE_KEY_2FA_DATA)
+        onResult(result)
+    }
+
+    return FragmentDialogResultLauncher(
+        requestKey = TwoFAInputDialog.KEY_2FA_SET,
+        show = { showTwoFAEnterDialog(userId = userId) }
+    )
+}
+

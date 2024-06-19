@@ -28,13 +28,13 @@ import me.proton.core.observability.domain.metrics.common.FidoSignStatus
  * When 2FA is requested, call [invoke] and check the launch result.
  * The final result will be delivered to the callback given in the call to [register].
  */
-public interface PerformTwoFaWithSecurityKey<A : Any> {
+public interface PerformTwoFaWithSecurityKey<T: Any, A : Any> {
     public suspend operator fun invoke(
         activity: A,
         publicKey: Fido2PublicKeyCredentialRequestOptions
     ): LaunchResult
 
-    public fun register(activity: A, onResult: (Result, Fido2PublicKeyCredentialRequestOptions) -> Unit)
+    public fun register(caller: T, onResult: (Result, Fido2PublicKeyCredentialRequestOptions) -> Unit)
 
     public sealed class LaunchResult {
         public data object Success : LaunchResult()

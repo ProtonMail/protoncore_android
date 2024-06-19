@@ -157,6 +157,15 @@ public final class me/proton/core/auth/fido/domain/entity/Fido2RegisteredKey$Com
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/auth/fido/domain/entity/SecondFactorFido {
+	public fun <init> (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;[B[B[B[B)V
+	public final fun getAuthenticatorData ()[B
+	public final fun getClientData ()[B
+	public final fun getCredentialID ()[B
+	public final fun getPublicKeyOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
+	public final fun getSignature ()[B
+}
+
 public final class me/proton/core/auth/fido/domain/ext/Fido2AuthenticationExtensionsClientInputsExtKt {
 	public static final fun toJson (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationExtensionsClientInputs;)Lkotlinx/serialization/json/JsonObject;
 }

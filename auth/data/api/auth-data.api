@@ -473,6 +473,10 @@ public final class me/proton/core/auth/data/api/request/SecondFactorRequest$Comp
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
+public final class me/proton/core/auth/data/api/request/SecondFactorRequestKt {
+	public static final fun toFido2Request (Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)Lme/proton/core/auth/data/api/request/Fido2Request;
+}
+
 public final class me/proton/core/auth/data/api/request/UniversalTwoFactorRequest {
 	public static final field Companion Lme/proton/core/auth/data/api/request/UniversalTwoFactorRequest$Companion;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V

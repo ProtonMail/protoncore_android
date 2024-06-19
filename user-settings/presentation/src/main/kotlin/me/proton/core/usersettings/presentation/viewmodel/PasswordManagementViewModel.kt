@@ -34,6 +34,7 @@ import kotlinx.coroutines.flow.stateIn
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
+import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
@@ -134,7 +135,8 @@ class PasswordManagementViewModel @Inject constructor(
             userId = action.userId,
             password = encryptedPassword,
             newPassword = encryptedNewPassword,
-            secondFactorCode = action.secondFactorCode
+            secondFactorCode = action.secondFactorCode,
+            secondFactorFido = action.secondFactorFido
         )
         emit(State.Success)
     }
@@ -148,7 +150,8 @@ class PasswordManagementViewModel @Inject constructor(
             userId = action.userId,
             loginPassword = encryptedLoginPassword,
             newPassword = encryptedNewMailboxPassword,
-            secondFactorCode = action.secondFactorCode
+            secondFactorCode = action.secondFactorCode,
+            secondFactorFido = action.secondFactorFido
         )
         emit(State.Success)
     }
@@ -162,7 +165,8 @@ class PasswordManagementViewModel @Inject constructor(
             userId = action.userId,
             loginPassword = encryptedLoginPassword,
             newPassword = encryptedNewMailboxPassword,
-            secondFactorCode = action.secondFactorCode
+            secondFactorCode = action.secondFactorCode,
+            secondFactorFido = action.secondFactorFido
         )
         emit(State.Success)
     }
@@ -180,7 +184,7 @@ class PasswordManagementViewModel @Inject constructor(
     }
 
     private suspend fun setTwoFactor(action: Action.SetTwoFactor): Flow<State> {
-        val passwordAction = requireNotNull(pendingUpdate?.copy(secondFactorCode = action.code))
+        val passwordAction = requireNotNull(pendingUpdate?.copy(secondFactorCode = action.code, secondFactorFido = action.twoFAFido))
         return updatePassword(passwordAction)
     }
 
@@ -254,12 +258,14 @@ class PasswordManagementViewModel @Inject constructor(
             val type: PasswordType,
             val password: String,
             val newPassword: String,
-            val secondFactorCode: String = ""
+            val secondFactorCode: String? = "",
+            val secondFactorFido: SecondFactorFido? = null
         ) : Action(userId)
 
         data class SetTwoFactor(
             override val userId: UserId,
-            val code: String
+            val code: String?,
+            val twoFAFido: SecondFactorFido?
         ) : Action(userId)
 
         data class CancelTwoFactor(

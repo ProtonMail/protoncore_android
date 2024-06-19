@@ -205,14 +205,15 @@ class UserManagerPasswordTests {
 
         coEvery {
             privateKeyRepository.updatePrivateKeys(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                sessionUserId = any(),
+                keySalt = any(),
+                srpProofs = any(),
+                srpSession = any(),
+                secondFactorCode = null,
+                secondFactorFido = null,
+                auth = any(),
+                keys = null,
+                userKeys = emptyList()
             )
         } returns true
 
@@ -226,7 +227,9 @@ class UserManagerPasswordTests {
                 expectedServerProof = "expected-server-proof"
             ),
             srpSession = "test-srp-session",
-            auth = mockk()
+            auth = mockk(),
+            secondFactorCode = null,
+            secondFactorFido = null
         )
 
         // THEN
