@@ -20,20 +20,18 @@ package me.proton.core.gradle.plugins.coverage
 
 import kotlinx.kover.gradle.plugin.KoverGradlePlugin
 import kotlinx.kover.gradle.plugin.dsl.AggregationType
-import kotlinx.kover.gradle.plugin.dsl.KoverNames
+import kotlinx.kover.gradle.plugin.dsl.CoverageUnit
 import kotlinx.kover.gradle.plugin.dsl.KoverProjectExtension
-import kotlinx.kover.gradle.plugin.dsl.KoverReportExtension
-import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
-import kotlinx.kover.gradle.plugin.dsl.KoverVerifyReportConfig
-import kotlinx.kover.gradle.plugin.dsl.MetricType
+import kotlinx.kover.gradle.plugin.dsl.KoverReportFiltersConfig
+import kotlinx.kover.gradle.plugin.dsl.KoverVerificationRulesConfig
 import me.proton.core.gradle.plugins.coverage.rules.androidRules
 import me.proton.core.gradle.plugins.coverage.rules.commonRules
 import me.proton.core.gradle.plugins.coverage.rules.daggerRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinParcelizeRules
 import me.proton.core.gradle.plugins.coverage.rules.kotlinSerializationRules
 import me.proton.core.gradle.plugins.coverage.rules.roomDbRules
-import net.razvan.JacocoToCoberturaTask
 import net.razvan.JacocoToCoberturaPlugin
+import net.razvan.JacocoToCoberturaTask
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
@@ -53,7 +51,6 @@ private const val DEFAULT_COBERTURA_BASENAME = "cobertura"
 private const val DEFAULT_XML_REPORT_COBERTURA_FILE =
     "reports/kover/${DEFAULT_COBERTURA_BASENAME}.xml"
 
-private const val TASK_NAME_KOVER = KoverNames.DEFAULT_XML_REPORT_NAME
 private const val TASK_NAME_COBERTURA = "coberturaXmlReport"
 private const val TASK_NAME_JACOCO_TO_COBERTURA = JacocoToCoberturaPlugin.TASK_NAME
 
@@ -77,80 +74,88 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         ext.applyConventionsFrom(target.rootProject)
         ext.finalizeValuesOnRead()
 
-        target.afterEvaluate {
-            if (ext.disabled.get()) return@afterEvaluate
-            target.pluginManager.apply(KoverGradlePlugin::class.java)
-            target.pluginManager.apply(JacocoToCoberturaPlugin::class.java)
-            onAfterEvaluate(ext)
-        }
+        target.pluginManager.apply(KoverGradlePlugin::class.java)
+        target.pluginManager.apply(JacocoToCoberturaPlugin::class.java)
+
+        target.setupConventions(ext)
+        target.configureCoverage(ext)
     }
 
-    private fun Project.onAfterEvaluate(ext: ProtonCoverageExtension) {
-        extensions.configure<KoverProjectExtension> {
-            //useJacoco()
-        }
-
-        if (hasAndroidPlugin()) {
-            ext.androidBuildVariant.convention(DEFAULT_ANDROID_BUILD_VARIANT)
-            ext.enableAndroidRules.convention(true)
-            ext.enableRoomDbRules.convention(true)
-        }
-        if (plugins.hasPlugin(PluginIds.hilt)) {
-            ext.enableDaggerRules.convention(true)
-        }
-        if (plugins.hasPlugin(PluginIds.kotlinParcelize)) {
-            ext.enableKotlinParcelizeRules.convention(true)
-        }
-        if (plugins.hasPlugin(PluginIds.kotlinSerialization)) {
-            ext.enableKotlinSerializationRules.convention(true)
-        }
-        if (ext.enableAllRules.orNull == true) {
-            ext.enableAndroidRules.convention(true)
-            ext.enableDaggerRules.convention(true)
-            ext.enableKotlinParcelizeRules.convention(true)
-            ext.enableKotlinSerializationRules.convention(true)
-            ext.enableRoomDbRules.convention(true)
-        }
+    private fun Project.setupConventions(ext: ProtonCoverageExtension) {
+        fun allRulesOr(other: () -> Boolean) = ext.enableAllRules.orElse(provider { other() })
+        ext.enableAndroidRules.convention(allRulesOr { hasAndroidPlugin() })
+        ext.enableRoomDbRules.convention(allRulesOr { hasAndroidPlugin() })
+        ext.enableDaggerRules.convention(allRulesOr { plugins.hasPlugin(PluginIds.hilt) })
+        ext.enableKotlinParcelizeRules.convention(allRulesOr { plugins.hasPlugin(PluginIds.kotlinParcelize) })
+        ext.enableKotlinSerializationRules.convention(allRulesOr { plugins.hasPlugin(PluginIds.kotlinSerialization) })
         ext.enableCommonRules.convention(true)
+    }
 
+    private fun Project.configureCoverage(ext: ProtonCoverageExtension) {
         configureKoverExtension(ext)
-        configureJacocoToCoberturaExtension()
-        registerCoberturaReportTask()
+        configureJacocoToCoberturaExtension(ext)
+        registerCoberturaReportTask(ext)
     }
 
     private fun Project.hasAndroidPlugin(): Boolean =
         plugins.hasPlugin(PluginIds.androidApp) || plugins.hasPlugin(PluginIds.androidLibrary)
 
+    private fun Project.hasKotlinLibraryPlugin(): Boolean =
+        plugins.hasPlugin(PluginIds.kotlinJvm)
+
     private fun Project.configureKoverExtension(ext: ProtonCoverageExtension) {
-        extensions.configure<KoverReportExtension> {
-            defaults {
-                ext.androidBuildVariant.orNull?.let { mergeWith(it) }
-                html {
-                    setReportDir(layout.buildDirectory.dir(DEFAULT_HTML_REPORT_DIR))
+        extensions.configure<KoverProjectExtension> {
+            currentProject {
+                createVariant(DEFAULT_REPORT_VARIANT_NAME) {
+                    when {
+                        hasAndroidPlugin() -> addWithDependencies(DEFAULT_ANDROID_BUILD_VARIANT, optional = true)
+                        hasKotlinLibraryPlugin() -> addWithDependencies("jvm")
+                        else -> Unit
+                    }
                 }
-                xml {
-                    setReportFile(layout.buildDirectory.file(DEFAULT_XML_REPORT_FILE))
+                instrumentation {
+                    disabledForAll.set(ext.disabled)
+                }
+            }
+            reports {
+                variant(DEFAULT_REPORT_VARIANT_NAME) {
+                    html {
+                        htmlDir.set(layout.buildDirectory.dir(DEFAULT_HTML_REPORT_DIR))
+                    }
+                    xml {
+                        xmlFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_FILE))
+                    }
                 }
                 verify {
                     applyVerificationConfig(ext)
                 }
             }
-            filters {
-                applyFiltersConfig(ext)
+        }
+
+        afterEvaluate {
+            extensions.configure<KoverProjectExtension> {
+                reports {
+                    filters {
+                        // Note: filters are applied in `afterEvaluate`,
+                        // so that we can resolve the config values in `ext`.
+                        applyFiltersConfig(ext)
+                    }
+                }
             }
         }
     }
 
-    private fun Project.configureJacocoToCoberturaExtension() {
-        tasks.named<JacocoToCoberturaTask>(TASK_NAME_JACOCO_TO_COBERTURA) {
+    private fun Project.configureJacocoToCoberturaExtension(ext: ProtonCoverageExtension) {
+        val conversionTask = tasks.named<JacocoToCoberturaTask>(TASK_NAME_JACOCO_TO_COBERTURA) {
             inputFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_FILE))
             outputFile.set(layout.buildDirectory.file(DEFAULT_XML_REPORT_COBERTURA_FILE))
             splitByPackage.set(true)
         }
+
         afterEvaluate {
-            val reportTask = tasks.named(TASK_NAME_KOVER)
-            val conversionTask = tasks.named(TASK_NAME_JACOCO_TO_COBERTURA)
             conversionTask.configure {
+                enabled = !ext.disabled.get()
+                val reportTask = tasks.named(XML_REPORT_NAME)
                 dependsOn(reportTask)
                 onlyIf { !reportTask.get().state.skipped || reportTask.get().state.upToDate }
                 doLast {
@@ -179,15 +184,21 @@ public class ProtonCoveragePlugin : Plugin<Project> {
             }
     }
 
-    private fun Project.registerCoberturaReportTask() {
-        tasks.register(TASK_NAME_COBERTURA) {
+    private fun Project.registerCoberturaReportTask(ext: ProtonCoverageExtension) {
+        val coberturaTask = tasks.register(TASK_NAME_COBERTURA) {
             group = LifecycleBasePlugin.VERIFICATION_GROUP
             description = "Generates Cobertura report from koverXmlReport task."
             dependsOn(TASK_NAME_JACOCO_TO_COBERTURA)
         }
+
+        afterEvaluate {
+            coberturaTask.configure {
+                enabled = !ext.disabled.get()
+            }
+        }
     }
 
-    private fun KoverReportFilters.applyFiltersConfig(ext: ProtonCoverageExtension) {
+    private fun KoverReportFiltersConfig.applyFiltersConfig(ext: ProtonCoverageExtension) {
         if (ext.enableAndroidRules.orNull == true) androidRules()
         if (ext.enableDaggerRules.orNull == true) daggerRules()
         if (ext.enableKotlinParcelizeRules.orNull == true) kotlinParcelizeRules()
@@ -199,27 +210,29 @@ public class ProtonCoveragePlugin : Plugin<Project> {
         }
     }
 
-    private fun KoverVerifyReportConfig.applyVerificationConfig(ext: ProtonCoverageExtension) {
+    private fun KoverVerificationRulesConfig.applyVerificationConfig(ext: ProtonCoverageExtension) {
         // Set up the requirement:
         // Min coverage percentage must be equal to max coverage (+/- 1).
         // As a result, the build will fail, if the coverage changes.
         // This will give us a chance to update the coverage value in build files.
 
         rule("branchCoveragePercentage") {
-            bound(
-                minValue = ext.branchCoveragePercentage.get() - 1,
-                maxValue = ext.branchCoveragePercentage.get() + 1,
-                MetricType.BRANCH,
-                AggregationType.COVERED_PERCENTAGE
-            )
+            disabled.set(ext.disabled)
+            bound {
+                minValue.set(ext.branchCoveragePercentage.map { it - 1 })
+                maxValue.set(ext.branchCoveragePercentage.map { it + 1 })
+                coverageUnits.set(CoverageUnit.BRANCH)
+                aggregationForGroup.set(AggregationType.COVERED_PERCENTAGE)
+            }
         }
         rule("lineCoveragePercentage") {
-            bound(
-                minValue = ext.lineCoveragePercentage.get() - 1,
-                maxValue = ext.lineCoveragePercentage.get() + 1,
-                MetricType.LINE,
-                AggregationType.COVERED_PERCENTAGE
-            )
+            disabled.set(ext.disabled)
+            bound {
+                minValue.set(ext.lineCoveragePercentage.map { it - 1 })
+                maxValue.set(ext.lineCoveragePercentage.map { it + 1 })
+                coverageUnits.set(CoverageUnit.LINE)
+                aggregationForGroup.set(AggregationType.COVERED_PERCENTAGE)
+            }
         }
     }
 }

@@ -23,6 +23,11 @@ plugins {
     protonAndroidLibrary
 }
 
+protonCoverage {
+    branchCoveragePercentage.set(0)
+    lineCoveragePercentage.set(0)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 android {

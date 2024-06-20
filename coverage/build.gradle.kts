@@ -17,6 +17,7 @@
  */
 
 plugins {
+    protonAndroidLibrary
     id("me.proton.core.gradle-plugins.global-coverage")
 }
 
@@ -24,6 +25,11 @@ publishOption.shouldBePublishedAsLib = false
 
 // Global minimum coverage percentage.
 protonCoverage {
-    branchCoveragePercentage.set(36)
-    lineCoveragePercentage.set(62)
+    enableAllRules.set(true)
+    branchCoveragePercentage.set(45)
+    lineCoveragePercentage.set(63)
+}
+
+android {
+    namespace = "me.proton.core.coverage"
 }

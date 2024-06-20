@@ -27,6 +27,11 @@ protonBuild {
     apiModeDisabled()
 }
 
+protonCoverage {
+    branchCoveragePercentage.set(0)
+    lineCoveragePercentage.set(0)
+}
+
 publishOption.shouldBePublishedAsLib = true
 
 android {
@@ -42,7 +47,7 @@ dependencies {
     implementation(
         project(Module.presentationCompose),
 
-    )
+        )
 
     debugImplementation(
         `compose-ui-tooling`,

@@ -20,7 +20,7 @@ package me.proton.core.gradle.plugins.coverage
 
 import org.gradle.api.Project
 
-private val globalLineCoverageTaskNameRegex = Regex("(.*:)?$globalLineCoverageTaskName")
+private val globalLineCoverageTaskNameRegex = Regex("(.*:)?$GLOBAL_LINE_COVERAGE_TASK_NAME")
 private val koverTaskNameRegex = Regex("(.*:)?kover.*")
 private val coberturaTaskNameRegex = Regex("(.*:)?cobertura.*")
 private val tasksTaskNameRegex = Regex("(.*:)?tasks")

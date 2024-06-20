@@ -18,9 +18,9 @@
 
 package me.proton.core.gradle.plugins.coverage.rules
 
-import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
+import kotlinx.kover.gradle.plugin.dsl.KoverReportFiltersConfig
 
-internal fun KoverReportFilters.commonRules() {
+internal fun KoverReportFiltersConfig.commonRules() {
     excludes {
         annotatedBy("me.proton.core.util.kotlin.annotation.ExcludeFromCoverage")
         classes("*\$DefaultImpls")

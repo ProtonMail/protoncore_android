@@ -28,9 +28,6 @@ private const val DEFAULT_MIN_BRANCH_PERCENTAGE_COVERAGE = 90
 private const val DEFAULT_MIN_LINE_PERCENTAGE_COVERAGE = 90
 
 public interface ProtonCoverageExtension {
-    /** The Android build variant to use for the default report. Defaults to `debug`. */
-    public val androidBuildVariant: Property<String>
-
     /** Set to `true` to disable code coverage for the project. By default, coverage is enabled. */
     public val disabled: Property<Boolean>
 
@@ -79,7 +76,6 @@ internal fun ProtonCoverageExtension.applyConventionsFrom(project: Project) {
 }
 
 internal fun ProtonCoverageExtension.applyConventionsFrom(other: ProtonCoverageExtension) {
-    other.androidBuildVariant.orNull?.let { androidBuildVariant.convention(it) }
     other.disabled.orNull?.let { disabled.convention(it) }
     other.enableAllRules.orNull?.let { enableAllRules.convention(it) }
     other.enableAndroidRules.orNull?.let { enableAndroidRules.convention(it) }
@@ -101,7 +97,6 @@ internal fun ProtonCoverageExtension.applyGeneralConventions() {
 }
 
 internal fun ProtonCoverageExtension.finalizeValuesOnRead() {
-    androidBuildVariant.finalizeValueOnRead()
     disabled.finalizeValueOnRead()
     enableAllRules.finalizeValueOnRead()
     enableAndroidRules.finalizeValueOnRead()

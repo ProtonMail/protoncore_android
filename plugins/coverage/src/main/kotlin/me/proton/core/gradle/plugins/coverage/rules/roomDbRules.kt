@@ -1,8 +1,8 @@
 package me.proton.core.gradle.plugins.coverage.rules
 
-import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
+import kotlinx.kover.gradle.plugin.dsl.KoverReportFiltersConfig
 
-internal fun KoverReportFilters.roomDbRules() {
+internal fun KoverReportFiltersConfig.roomDbRules() {
     excludes {
         annotatedBy(
             "androidx.room.Dao",

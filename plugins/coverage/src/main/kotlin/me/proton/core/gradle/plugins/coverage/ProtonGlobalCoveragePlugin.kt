@@ -20,14 +20,18 @@ package me.proton.core.gradle.plugins.coverage
 
 import groovy.xml.XmlSlurper
 import groovy.xml.slurpersupport.Node
-import kotlinx.kover.gradle.plugin.KoverGradlePlugin
 import kotlinx.kover.gradle.plugin.dsl.KoverNames
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.kotlin.dsl.configure
 import java.util.Locale
 
-internal const val globalLineCoverageTaskName = "globalLineCoverage"
+internal const val GLOBAL_LINE_COVERAGE_TASK_NAME = "globalLineCoverage"
+internal const val DEFAULT_REPORT_VARIANT_NAME = "default"
+internal val XML_REPORT_NAME = KoverNames.koverXmlReportName + DEFAULT_REPORT_VARIANT_NAME.replaceFirstChar {
+    if (it.isLowerCase()) it.titlecase(
+        Locale.getDefault()
+    ) else it.toString()
+}
 
 /**
  * The plugin can be applied on a separate project.
@@ -36,12 +40,11 @@ internal const val globalLineCoverageTaskName = "globalLineCoverage"
  */
 public class ProtonGlobalCoveragePlugin : Plugin<Project> {
     override fun apply(target: Project) {
+        target.plugins.apply(ProtonCoveragePlugin::class.java)
         if (!target.shouldSkipPluginApplication()) {
             configureGlobalCoverageReports(target)
             registerGlobalLineCoverageTask(target)
         }
-
-        target.plugins.apply(ProtonCoveragePlugin::class.java)
     }
 
     private fun configureGlobalCoverageReports(target: Project) {
@@ -52,23 +55,14 @@ public class ProtonGlobalCoveragePlugin : Plugin<Project> {
             target.evaluationDependsOn(project.path)
         }
 
-        target.plugins.apply(PluginIds.javaLibrary)
-        target.plugins.apply(PluginIds.kotlinJvm)
-
         target.afterEvaluate {
-            target.plugins.apply(KoverGradlePlugin::class.java)
-
-            target.extensions.configure<ProtonCoverageExtension> {
-                enableAllRules.set(true)
-            }
-
             rootProject.subprojects {
                 if (project == target) return@subprojects
 
-                if (project.plugins.hasPlugin(ProtonCoveragePlugin::class.java) &&
-                    project.extensions.findByType(ProtonCoverageExtension::class.java)?.disabled?.get() != true
+                if (project.plugins.hasPlugin(ProtonCoveragePlugin::class.java)
+                    && project.extensions.findByType(ProtonCoverageExtension::class.java)?.disabled?.get() != true
                 ) {
-                    target.dependencies.add(KoverNames.DEPENDENCY_CONFIGURATION_NAME, project)
+                    target.dependencies.add(KoverNames.configurationName, project)
                 }
             }
         }
@@ -76,8 +70,7 @@ public class ProtonGlobalCoveragePlugin : Plugin<Project> {
 
     /** Registers a task that prints out the total line coverage. */
     private fun registerGlobalLineCoverageTask(target: Project) {
-        target.tasks.register(globalLineCoverageTaskName) {
-            dependsOn(target.tasks.named(KoverNames.DEFAULT_XML_REPORT_NAME))
+        val globalLineCoverageTask = target.tasks.register(GLOBAL_LINE_COVERAGE_TASK_NAME) {
             description = "Prints out total line coverage percentage."
 
             doLast {
@@ -96,6 +89,12 @@ public class ProtonGlobalCoveragePlugin : Plugin<Project> {
                 val total = missed + covered
                 val percentage = covered / total * 100.0f
                 println("TotalLineCoverage: %.2f%%".format(Locale.US, percentage))
+            }
+        }
+
+        target.afterEvaluate {
+            globalLineCoverageTask.configure {
+                dependsOn(target.tasks.named(XML_REPORT_NAME))
             }
         }
     }

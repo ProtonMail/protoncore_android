@@ -18,9 +18,9 @@
 
 package me.proton.core.gradle.plugins.coverage.rules
 
-import kotlinx.kover.gradle.plugin.dsl.KoverReportFilters
+import kotlinx.kover.gradle.plugin.dsl.KoverReportFiltersConfig
 
-internal fun KoverReportFilters.daggerRules() {
+internal fun KoverReportFiltersConfig.daggerRules() {
     excludes {
         annotatedBy(
             "dagger.hilt.android.AndroidEntryPoint",
