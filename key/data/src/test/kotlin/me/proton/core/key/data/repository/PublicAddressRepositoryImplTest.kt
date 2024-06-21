@@ -253,10 +253,10 @@ class PublicAddressRepositoryImplTest {
         coJustRun { publicAddressKeyDataDao.insertOrUpdate(any()) }
 
         // WHEN
-        val result = repositoryImpl.getPublicAddressInfo(testUserId, email = testEmail)
+        val result = repositoryImpl.getPublicAddressInfo(testUserId, email = testEmail, internalOnly = true)
 
         // THEN
         assertEquals(testEmail, result.email)
-        coVerify(exactly = 1) { keyApi.getAllActivePublicKeys(testEmail, internalOnly = 0, any()) }
+        coVerify(exactly = 1) { keyApi.getAllActivePublicKeys(testEmail, internalOnly = 1, any()) }
     }
 }

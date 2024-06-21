@@ -66,7 +66,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
         val userId: UserId,
         val email: String,
         val forceNoCache: Boolean,
-        val internalOnly: Boolean = false
+        val internalOnly: Boolean?
     )
 
     @Deprecated("Using getPublicAddressKeys is deprecated")
@@ -103,7 +103,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
             provider.get<KeyApi>(key.userId).invoke {
                 getAllActivePublicKeys(
                     key.email,
-                    key.internalOnly.toInt(),
+                    key.internalOnly?.toInt(),
                     if (key.forceNoCache) CacheOverride().noCache() else null
                 ).toPublicAddressInfo(key.email)
             }.valueOrThrow
@@ -152,7 +152,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId,
         email: String,
         source: Source
-    ): PublicAddress = StoreKey(sessionUserId, email, source == Source.RemoteNoCache)
+    ): PublicAddress = StoreKey(sessionUserId, email, source == Source.RemoteNoCache, internalOnly = null)
         .let { if (source == Source.LocalIfAvailable) store.get(it) else store.fresh(it) }
 
     override suspend fun getPublicAddressInfo(
@@ -161,7 +161,8 @@ class PublicAddressRepositoryImpl @Inject constructor(
         internalOnly: Boolean,
         source: Source
     ): PublicAddressInfo {
-        val storeKey = StoreKey(sessionUserId, email, forceNoCache = source == Source.RemoteNoCache)
+        val storeKey =
+            StoreKey(sessionUserId, email, forceNoCache = source == Source.RemoteNoCache, internalOnly = internalOnly)
         return if (source == Source.LocalIfAvailable) {
             publicAddressInfoStore.get(storeKey)
         } else {
