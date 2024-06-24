@@ -146,6 +146,15 @@ public final class me/proton/core/auth/test/MinimalSignUpExternalTests$DefaultIm
 	public static fun signupSwitchToInternalAccountHappyPath (Lme/proton/core/auth/test/MinimalSignUpExternalTests;)V
 }
 
+public final class me/proton/core/auth/test/fake/FakeIsCommonPasswordCheckEnabled : me/proton/core/auth/domain/IsCommonPasswordCheckEnabled {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+}
+
 public final class me/proton/core/auth/test/fake/FakeIsCredentialLessEnabled : me/proton/core/auth/domain/usecase/IsCredentialLessEnabled {
 	public fun <init> ()V
 	public fun <init> (Z)V
