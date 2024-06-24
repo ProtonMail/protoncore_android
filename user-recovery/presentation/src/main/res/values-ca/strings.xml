@@ -18,7 +18,7 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">Recuperació amb un dispositiu de confiança</string>
-  <string name="user_recovery_notification_body">Hem recuperat automàticament les dades del seu compte.</string>
+  <string name="user_recovery_notification_body">Hem recuperat automàticament les dades del vostre compte.</string>
   <string name="user_recovery_dialog_title">Recuperació amb un dispositiu de confiança</string>
   <string name="user_recovery_dialog_text">Després d\'un restabliment de la contrasenya, vam recuperar automàticament les dades de %1s.</string>
   <string name="user_recovery_dialog_dismiss">Entesos</string>

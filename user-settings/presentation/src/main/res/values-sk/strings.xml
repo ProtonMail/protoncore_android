@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">Email na obnovenie bol aktualizovaný</string>
   <string name="settings_password_management_success">Heslo bolo aktualizované</string>
   <string name="settings_password_management_start_recovery">Neviete, aké je vaše aktuálne heslo?</string>
+  <string name="settings_manage_security_keys">Ak chcete spravovať, pridávať alebo odstraňovať bezpečnostné kľúče, použite prosím webovú aplikáciu Proton .</string>
+  <string name="settings_security_keys_registered">Toto sú bezpečnostné kľúče zaregistrované k vášmu účtu.</string>
+  <string name="settings_security_keys_empty">K vášmu účtu nie sú zaregistrované žiadne bezpečnostné kľúče.</string>
+  <string name="settings_security_keys_title">Bezpečnostné kľúče</string>
+  <string name="settings_security_keys_error">Chyba pri načítaní bezpečnostných kľúčov, skúste to znova, prosím.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonymná telemetria</string>
   <string name="device_settings_telemetry_hint">Na zlepšenie našich služieb niekedy zhromažďujeme anonymizované údaje o používaní.</string>

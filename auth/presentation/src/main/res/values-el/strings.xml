@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Ο λογαριασμός σας έχει διαμορφώσει αρκετούς μηχανισμούς 2FA. Επιλέξτε πώς θέλετε να επιβεβαιώσετε την ταυτότητά σας.</string>
   <string name="auth_2fa_tab_one_time_code">Κωδικός μίας χρήσης</string>
   <string name="auth_2fa_tab_security_key">Κλειδί ασφαλείας</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Παρουσιάστε ένα κλειδί ασφαλείας συνδεδεμένο με τον λογαριασμό Proton. <annotation link="more">Μάθετε περισσότερα</annotation></string>
   <string name="auth_2fa_label">Κωδικός Δύο Παραγόντων (2FA)</string>
   <string name="auth_2fa_recovery_code_label">Κωδικός ανάκτησης</string>
   <string name="auth_2fa_assistive_text">Εισάγετε τον 6-ψήφιο κωδικό.</string>

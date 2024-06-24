@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">El vostre compte té configurats diversos mecanismes A2F. Trieu com voleu confirmar la vostra identitat.</string>
   <string name="auth_2fa_tab_one_time_code">Codi d\'un sol ús</string>
   <string name="auth_2fa_tab_security_key">Clau de seguretat</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Presenteu una clau de seguretat vinculada al vostre compte de Proton.<annotation link="more"> Saber-ne més</annotation></string>
   <string name="auth_2fa_label">Codi de dos factors</string>
   <string name="auth_2fa_recovery_code_label">Codi de recuperació</string>
   <string name="auth_2fa_assistive_text">Introduïu el codi de 6 dígits.</string>
@@ -139,7 +139,7 @@
   <string name="auth_signup_error_create_to_continue">Creeu un compte per a continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saber-ne més</string>
   <string name="auth_signup_create_account_dialog_title">Activeu la vostra subscripció</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_text">El vostre pagament de Google Pay s\'ha processat correctament. Per activar la vostra subscripció, creeu el vostre compte de Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Cancel·la</string>
   <string name="auth_signup_create_account_dialog_action_continue">Continua</string>
   <string name="auth_signup_error_username_blank">El nom d\'usuari no pot estar en blanc.</string>
@@ -153,7 +153,7 @@
   <string name="auth_signup_verify">Verifica</string>
   <string name="auth_signup_verification_code">Codi de verificació</string>
   <string name="auth_signup_enter_code_subtitle">Introduïu el codi de verificació que s’ha enviat a %s:</string>
-  <string name="auth_signup_error_human_verification_failed">La verificació humana ha fallat.</string>
+  <string name="auth_signup_error_human_verification_failed">La verificació humana no ha funcionat.</string>
   <string name="auth_signup_congratulations_subtitle">S\'ha creat el vostre compte de Proton.\nGaudiu del món de la privacitat.</string>
   <string name="auth_signup_congratulations">Enhorabona!</string>
   <string name="auth_signup_start_using_proton">Comenceu a utilitzar Proton</string>

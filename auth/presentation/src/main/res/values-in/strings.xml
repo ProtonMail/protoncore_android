@@ -108,7 +108,7 @@
   <string name="auth_one_account_all_services">Satu akun untuk seluruh layanan Proton.</string>
   <string name="auth_create_account">Buat akun</string>
   <string name="auth_long_signup">Mohon tunggu…</string>
-  <string name="auth_long_login">Sedang masuk, mohon tunggu…</string>
+  <string name="auth_long_login">Memasukkan Anda ke akun, mohon tunggu…</string>
   <!-- signup related strings -->
   <string name="auth_signup_create_account">Buat Akun Proton Anda</string>
   <string name="auth_signup_current_email">Gunakan alamat email Anda saat ini</string>

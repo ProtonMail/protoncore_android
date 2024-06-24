@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Váš účet má nakonfigurovaných niekoľko mechanizmov 2FA. Vyberte si, ako chcete potvrdiť svoju totožnosť.</string>
   <string name="auth_2fa_tab_one_time_code">Jednorazový kód</string>
   <string name="auth_2fa_tab_security_key">Bezpečnostný kľúč</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Predložte bezpečnostný kľúč spojený s vaším Proton účtom <annotation link="more">Viac informácií</annotation></string>
   <string name="auth_2fa_label">Kód pre dvojstupňové overenie</string>
   <string name="auth_2fa_recovery_code_label">Kód pre obnovenie</string>
   <string name="auth_2fa_assistive_text">Zadajte 6-miestny kód.</string>

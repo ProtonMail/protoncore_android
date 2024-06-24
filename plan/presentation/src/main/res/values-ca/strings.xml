@@ -148,7 +148,7 @@
   <string name="highest_vpn_speed" comment="new_plans">La velocitat VPN més alta</string>
   <string name="servers_in_countries" comment="new_plans">Més de 1500 servidors en 63 països</string>
   <string name="ad_blocker" comment="new_plans">Bloquejador d\'anuncis integrat (NetShield)</string>
-  <string name="streaming_services_access" comment="new_plans">Accediu a serveis de transmissió en continu en tot el món</string>
+  <string name="streaming_services_access" comment="new_plans">Accediu a serveis d\'estríming en tot el món</string>
   <string name="secure_core" comment="new_plans">Servidors Secure Core</string>
   <string name="tor_vpn" comment="new_plans">Tor sobre VPN</string>
   <string name="p2p_bittorrent" comment="new_plans">P2P/BitTorrent</string>

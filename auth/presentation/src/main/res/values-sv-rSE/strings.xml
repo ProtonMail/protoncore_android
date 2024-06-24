@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Ditt konto har flera 2FA-mekanismer konfigurerade. Välj hur du vill bekräfta din identitet.</string>
   <string name="auth_2fa_tab_one_time_code">Engångskod</string>
   <string name="auth_2fa_tab_security_key">Säkerhetsnyckel</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Presentera en säkerhetsnyckel länkat till ditt Proton-konto. <annotation link="more">Lär dig mer</annotation></string>
   <string name="auth_2fa_label">Tvåfaktorskod</string>
   <string name="auth_2fa_recovery_code_label">Återställningskod</string>
   <string name="auth_2fa_assistive_text">Ange den 6-siffriga koden.</string>

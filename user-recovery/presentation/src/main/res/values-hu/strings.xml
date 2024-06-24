@@ -18,8 +18,8 @@
   -->
 <resources>
   <string name="user_recovery_notification_title">Helyreállítás megbízható eszközzel</string>
-  <string name="user_recovery_notification_body">We automatically recovered your account data.</string>
+  <string name="user_recovery_notification_body">Automatikusan helyreállítottuk a fiókadatokat.</string>
   <string name="user_recovery_dialog_title">Helyreállítás megbízható eszközzel</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Got it</string>
+  <string name="user_recovery_dialog_text">A jelszó visszaállítását követően automatikusan helyreállítottuk az adatokat %1s számára.</string>
+  <string name="user_recovery_dialog_dismiss">Értem</string>
 </resources>

@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">E-Mail-Adresse für die Wiederherstellung aktualisiert</string>
   <string name="settings_password_management_success">Passwort wurde aktualisiert</string>
   <string name="settings_password_management_start_recovery">Du kennst dein aktuelles Passwort nicht?</string>
+  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_security_keys_registered">Dies sind die für dein Konto registrierten Sicherheitsschlüssel.</string>
+  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
+  <string name="settings_security_keys_title">Sicherheitsschlüssel</string>
+  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonyme Telemetrie</string>
   <string name="device_settings_telemetry_hint">Um unsere Dienste zu verbessern, sammeln wir gelegentlich anonymisierte Nutzungsdaten.</string>

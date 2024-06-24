@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Inclou recàrrec per taxes i impostos addicionals del proveïdor.</string>
   <string name="payments_iap_terms_conditions">En tocar \"Compra amb Google Pay\", accepteu els termes i condicions de Google Pay i accepteu configurar un pagament recurrent amb Google.</string>
-  <string name="payments_iap_invalid_google_plan">S\'ha seleccionat un nom de pla invàlid. Reinicieu el procés.</string>
+  <string name="payments_iap_invalid_google_plan">S\'ha seleccionat un nom de pla no vàlid. Reinicieu el procés.</string>
   <string name="payments_iap_error_google_plan_price">Problema amb el preu del producte de Google. Reinicieu el procés.</string>
   <string name="payments_iap_error_fetching_google_plan">Hi ha hagut un problema en recuperar el producte de Google. Reinicieu el procés.</string>
   <string name="payments_iap_error_already_owned">Ja teniu aquest producte. Seleccioneu-ne un altre.</string>

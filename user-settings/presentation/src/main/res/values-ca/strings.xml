@@ -34,19 +34,24 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_login_password">Contrasenya del compte</string>
   <string name="settings_password_management_tab_mailbox_password">Contrasenya de xifratge</string>
-  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
-  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_change_login_password">En el mode de dues contrasenyes, la contrasenya del compte s\'utilitza per iniciar la sessió al vostre compte de Proton</string>
+  <string name="settings_password_management_change_mailbox_password">En el mode de dues contrasenyes, la contrasenya de xifratge s\'utilitza per xifrar i desxifrar les vostres dades.</string>
   <string name="settings_password_management_header">Canvia la contrasenya</string>
   <string name="settings_login_password_hint_current">Contrasenya actual</string>
   <string name="settings_login_password_hint_new">Contrasenya nova</string>
   <string name="settings_login_password_hint_new_confirm">Confirmeu la contrasenya nova</string>
   <string name="settings_mailbox_password_hint_current_account_password">Contrasenya del compte actual</string>
   <string name="settings_mailbox_password_hint_new">Contrasenya de xifratge nova</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirma la contrasenya de xifratge nova</string>
+  <string name="settings_mailbox_password_hint_new_confirm">Confirmeu la contrasenya de xifratge nova</string>
   <string name="settings_change_password_error">Hi ha hagut un error de canvi de contrasenya.</string>
   <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
   <string name="settings_password_management_start_recovery">No sabeu la contrasenya actual?</string>
+  <string name="settings_manage_security_keys">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton.</string>
+  <string name="settings_security_keys_registered">Aquestes són les claus de seguretat registrades al vostre compte.</string>
+  <string name="settings_security_keys_empty">No hi ha cap clau de seguretat registrada al vostre compte.</string>
+  <string name="settings_security_keys_title">Claus de seguretat</string>
+  <string name="settings_security_keys_error">S\'ha produït un error en obtenir les claus de seguretat. Torneu-ho a provar.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anònima</string>
   <string name="device_settings_telemetry_hint">Per a millorar els nostres serveis, de vegades recopilem dades d\'ús anonimitzades.</string>

@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">L\'adresse e-mail de récupération a été mise à jour.</string>
   <string name="settings_password_management_success">Le mot de passe a été mis à jour.</string>
   <string name="settings_password_management_start_recovery">Vous ne connaissez pas votre mot de passe actuel ?</string>
+  <string name="settings_manage_security_keys">Pour gérer, ajouter ou retirer des clés de sécurité, utilisez l\'application web de Proton .</string>
+  <string name="settings_security_keys_registered">Voici les clés de sécurité enregistrées pour votre compte.</string>
+  <string name="settings_security_keys_empty">Il n\'existe aucune clé de sécurité enregistrée pour votre compte.</string>
+  <string name="settings_security_keys_title">Clés de sécurité</string>
+  <string name="settings_security_keys_error">Les clés de sécurité n\'ont pas pu être récupérées. Nous vous invitons à réessayer.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Données d\'utilisation anonymisées</string>
   <string name="device_settings_telemetry_hint">Pour améliorer nos services, nous collectons parfois des données d\'utilisation anonymisées.</string>

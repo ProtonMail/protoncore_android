@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">回復用メールアドレスが更新されました</string>
   <string name="settings_password_management_success">パスワードが更新されました。</string>
   <string name="settings_password_management_start_recovery">現在のパスワードがわかりませんか?</string>
+  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
+  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
+  <string name="settings_security_keys_title">Security keys</string>
+  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名の情報収集</string>
   <string name="device_settings_telemetry_hint">サービスを改善するため、匿名化されたデータを収集します。</string>

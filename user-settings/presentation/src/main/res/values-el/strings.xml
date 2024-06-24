@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">Η διεύθυνση ηλεκτρονικού ταχυδρομείου ανάκτησης ενημερώθηκε</string>
   <string name="settings_password_management_success">Ο κωδικός πρόσβασης ενημερώθηκε</string>
   <string name="settings_password_management_start_recovery">Δεν γνωρίζετε τον τρέχοντα κωδικό πρόσβασής σας;</string>
+  <string name="settings_manage_security_keys">Για να διαχειριστείτε, να προσθέσετε ή να αφαιρέσετε κλειδιά ασφαλείας, χρησιμοποιήστε την εφαρμογή ιστού Proton .</string>
+  <string name="settings_security_keys_registered">Αυτά είναι τα κλειδιά ασφαλείας που έχουν καταχωριστεί στον λογαριασμό σας.</string>
+  <string name="settings_security_keys_empty">Δεν έχουν καταχωρηθεί κλειδιά ασφαλείας στον λογαριασμό σας.</string>
+  <string name="settings_security_keys_title">Κλειδιά ασφαλείας</string>
+  <string name="settings_security_keys_error">Σφάλμα κατά την ανάκτηση κλειδιών ασφαλείας, δοκιμάστε ξανά.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Ανώνυμη τηλεμετρία</string>
   <string name="device_settings_telemetry_hint">Για να βελτιώσουμε τις υπηρεσίες μας, μερικές φορές συλλέγουμε ανώνυμα δεδομένα χρήσης.</string>

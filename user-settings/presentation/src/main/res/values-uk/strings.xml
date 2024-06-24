@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">Адресу резервної електронної пошти оновлено</string>
   <string name="settings_password_management_success">Пароль оновлено</string>
   <string name="settings_password_management_start_recovery">Не знаєте свій поточний пароль?</string>
+  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
+  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
+  <string name="settings_security_keys_title">Security keys</string>
+  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Анонімна телеметрія</string>
   <string name="device_settings_telemetry_hint">Для поліпшення наших послуг ми іноді збираємо анонімні дані користування.</string>

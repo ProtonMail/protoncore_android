@@ -153,7 +153,7 @@
   <string name="auth_signup_verify">Verificar</string>
   <string name="auth_signup_verification_code">Código de verificación</string>
   <string name="auth_signup_enter_code_subtitle">Introduce el código de verificación enviado a %s:</string>
-  <string name="auth_signup_error_human_verification_failed">La verificación humana falló.</string>
+  <string name="auth_signup_error_human_verification_failed">Error con la verificación humana</string>
   <string name="auth_signup_congratulations_subtitle">Tu cuenta Proton ha sido creada correctamente.\nDisfruta el mundo de la privacidad.</string>
   <string name="auth_signup_congratulations">¡Enhorabuena!</string>
   <string name="auth_signup_start_using_proton">Empezar a utilizar Proton</string>

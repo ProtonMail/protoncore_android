@@ -20,6 +20,6 @@
   <string name="user_recovery_notification_title">სანდო მოწყობილობის აღმოჩენა</string>
   <string name="user_recovery_notification_body">ჩვენ ავტომატურად აღვადგინეთ თქვენი ანგარიშის მონაცემები.</string>
   <string name="user_recovery_dialog_title">სანდო მოწყობილობის აღმოჩენა</string>
-  <string name="user_recovery_dialog_text">Following a password reset, we automatically recovered the data for %1s.</string>
+  <string name="user_recovery_dialog_text">პაროლის ჩამოყრის შემდეგ ჩვენ ავტომატურად აღვადგინეთ მონაცემები %1s-სთვის.</string>
   <string name="user_recovery_dialog_dismiss">გავიგე</string>
 </resources>

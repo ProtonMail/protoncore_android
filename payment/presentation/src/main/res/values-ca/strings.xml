@@ -19,7 +19,7 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">S\'ha produït un error.</string>
-  <string name="payments_no_connectivity">No hi ha connexió per mostrar la pàgina de confirmació de 3DS.</string>
+  <string name="payments_no_connectivity">No hi ha connectivitat per mostrar la pàgina de confirmació de 3DS.</string>
   <string name="payments_3ds_not_approved">L\'aprovació 3DS ha estat rebutjada.</string>
   <string name="payments_error_card_name">Es requereix el nom a la targeta.</string>
   <string name="payments_error_card_number">El número de targeta no és vàlid.</string>
@@ -32,7 +32,7 @@
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Trieu el vostre mètode de pagament</string>
-  <string name="payments_add_credit_debit_card">Afegeix nova targeta de crèdit/dèbit</string>
+  <string name="payments_add_credit_debit_card">Afegeix una targeta de crèdit/dèbit nova</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga amb</string>
   <string name="payments_method_icon">Icona de mètode de pagament.</string>
@@ -61,11 +61,11 @@
   <string name="payments_billing_monthly">Per 1 mes</string>
   <string name="payments_billing_yearly">Durant 1 any</string>
   <string name="payments_billing_two_years">Per 2 anys</string>
-  <string name="payment_use_google_pay_instead">Utilitza Google Pay en el seu lloc</string>
-  <string name="payment_use_credit_card_instead">Utilitzeu una targeta de crèdit/dèbit en el seu lloc</string>
+  <string name="payment_use_google_pay_instead">Utilitza Google Pay</string>
+  <string name="payment_use_credit_card_instead">Utilitzeu una targeta de crèdit/dèbit</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Confirma la millora del compte</string>
+  <string name="payments_giap_unredeemed_title">Confirmeu la millora del compte</string>
   <string name="payments_giap_unredeemed_description">S\'ha processat el vostre pagament de Google Pay, però el procés d\'actualització del compte s\'ha interromput. Voleu aplicar el pagament per millorar el vostre compte ara?</string>
   <string name="payments_giap_unredeemed_confirm">Confirmar actualització</string>
   <string name="payments_giap_redeem_success">S\'ha actualitzat el vostre compte</string>

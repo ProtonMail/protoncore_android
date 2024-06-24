@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Contul are mai multe mecanisme de A2F. Alegeți cum doriți să vă confirmați identitatea.</string>
   <string name="auth_2fa_tab_one_time_code">Cod de unică folosință</string>
   <string name="auth_2fa_tab_security_key">Cheie de securitate</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Prezentați o cheie de securitate conectată la contul Proton. <annotation link="more">Detalii</annotation></string>
   <string name="auth_2fa_label">Cod autentificare cu doi factori</string>
   <string name="auth_2fa_recovery_code_label">Cod de recuperare</string>
   <string name="auth_2fa_assistive_text">Introduceți codul din 6 cifre.</string>

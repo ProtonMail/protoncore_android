@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">Indirizzo email di recupero aggiornato</string>
   <string name="settings_password_management_success">Password aggiornata</string>
   <string name="settings_password_management_start_recovery">Non ricordi la password attuale?</string>
+  <string name="settings_manage_security_keys">Per gestire, aggiungere o rimuovere le chiavi di sicurezza, utilizza l\'applicazione web di Proton.</string>
+  <string name="settings_security_keys_registered">Queste sono le chiavi di sicurezza associate al tuo account.</string>
+  <string name="settings_security_keys_empty">Nessuna chiave di sicurezza associata all\'account</string>
+  <string name="settings_security_keys_title">Chiavi di sicurezza</string>
+  <string name="settings_security_keys_error">Caricamento delle chiavi di sicurezza non riuscito. Riprova.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
   <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo in forma anonima.</string>

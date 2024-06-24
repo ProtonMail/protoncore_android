@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">密保邮箱地址已更新</string>
   <string name="settings_password_management_success">密码已更改</string>
   <string name="settings_password_management_start_recovery">忘记了你的密码？</string>
+  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
+  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
+  <string name="settings_security_keys_title">Security keys</string>
+  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名遥测</string>
   <string name="device_settings_telemetry_hint">为了提升服务质量，我们偶尔会收集一些匿名的使用数据。</string>

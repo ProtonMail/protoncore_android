@@ -47,6 +47,11 @@
   <string name="settings_recovery_email_success">Gjennopprettings-e-postadressen oppdatert</string>
   <string name="settings_password_management_success">Passord oppdatert</string>
   <string name="settings_password_management_start_recovery">Vet du ikke hva ditt nåværende passord er?</string>
+  <string name="settings_manage_security_keys">For å administrere, legge til eller fjerne sikkerhetsnøkler, bruk nettapplikasjonen Proton .</string>
+  <string name="settings_security_keys_registered">Dette er sikkerhetsnøklene som er registrert på kontoen din.</string>
+  <string name="settings_security_keys_empty">Det er ingen sikkerhetsnøkler registrert på kontoen din.</string>
+  <string name="settings_security_keys_title">Sikkerhetsnøkler</string>
+  <string name="settings_security_keys_error">Feil ved henting av sikkerhetsnøkler, prøv på nytt.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonym telemetri</string>
   <string name="device_settings_telemetry_hint">For å forbedre våres tjenester, hender det vi samler inn anonymisert bruksdata.</string>

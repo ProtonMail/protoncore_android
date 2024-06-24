@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">계정에 여러 2단계 인증 매커니즘이 구성되어 있습니다. 어떤 방식으로 신원을 확인할 것인지 선택해 주세요.</string>
   <string name="auth_2fa_tab_one_time_code">일회용 코드</string>
   <string name="auth_2fa_tab_security_key">보안 키</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">현재 보안 키가 사용자의 Proton 계정과 연결된 상태입니다. <annotation link="more">더 알아보기</annotation></string>
   <string name="auth_2fa_label">2단계 인증 코드</string>
   <string name="auth_2fa_recovery_code_label">복구 코드</string>
   <string name="auth_2fa_assistive_text">6자리 인증 코드를 입력하세요.</string>
