@@ -159,6 +159,17 @@ public final class me/proton/core/auth/test/fake/FakeIsCredentialLessEnabled : m
 	public final fun setRemoteDisabled (Lkotlin/jvm/functions/Function1;)V
 }
 
+public final class me/proton/core/auth/test/fake/FakeIsFido2Enabled : me/proton/core/auth/domain/feature/IsFido2Enabled {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public synthetic fun <init> (ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getEnabled ()Z
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
+	public fun isLocalEnabled ()Z
+	public fun isRemoteEnabled (Lme/proton/core/domain/entity/UserId;)Z
+	public final fun setEnabled (Z)V
+}
+
 public final class me/proton/core/auth/test/fake/FakeIsSsoCustomTabEnabled : me/proton/core/auth/domain/usecase/IsSsoCustomTabEnabled {
 	public fun <init> ()V
 	public fun <init> (Z)V
