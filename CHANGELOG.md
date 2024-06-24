@@ -11,6 +11,34 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.0.1] - 2024-06-24
+
+### Chores
+
+- presentation:
+  - Add ic_proton_shield_2_bolt.
+- sentry:
+  - Updating package/tag prefixes.
+
+### Bug Fixes
+
+- country:
+  - Fix country code for Dominican Rep.
+- key:
+  - The `internalOnly` parameter was not honored when calling `getPublicAddressInfo` method.
+- payment-iap:
+  - Added added logs to PerformGiapPurchaseImpl.
+  - Added missing CheckoutGiapBillingAcknowledgeTotal metric.
+  - Fixed GooglePurchaseStateHandler crashes (added logs).
+- plan:
+  - Fixed PurchaseStateHandler crashes (added logs).
+- user-recovery:
+  - Skip setting up user device recovery, if feature flag is disabled.
+
+### Internationalization
+
+- Upgrade translations from crowdin (bf5a84eb).
+
 ## [25.0.0] - 2024-06-18
 
 ### Breaking Changes
