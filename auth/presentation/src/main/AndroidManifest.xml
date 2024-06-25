@@ -45,7 +45,7 @@
 
         <activity
             android:name="me.proton.core.auth.presentation.ui.ConfirmPasswordActivity"
-            android:screenOrientation="portrait"
+            android:screenOrientation="behind"
             android:theme="@style/ProtonTheme.Transparent"
             android:windowSoftInputMode="adjustResize" />
 
