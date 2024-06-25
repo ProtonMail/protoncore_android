@@ -365,8 +365,8 @@ public final class me/proton/core/auth/presentation/alert/AlertUtilsKt {
 	public static synthetic fun showConfirmPasswordDialog$default (Landroidx/fragment/app/FragmentManager;ZLjava/lang/String;Ljava/util/List;ILjava/lang/Object;)V
 	public static final fun showPasswordEnterDialog (Landroidx/fragment/app/FragmentManager;Z)V
 	public static synthetic fun showPasswordEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZILjava/lang/Object;)V
-	public static final fun showTwoFAEnterDialog (Landroidx/fragment/app/FragmentManager;ZLme/proton/core/domain/entity/UserId;)V
-	public static synthetic fun showTwoFAEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZLme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
+	public static final fun showTwoFAEnterDialog (Landroidx/fragment/app/FragmentManager;ZLme/proton/core/auth/presentation/viewmodel/Source;Lme/proton/core/domain/entity/UserId;)V
+	public static synthetic fun showTwoFAEnterDialog$default (Landroidx/fragment/app/FragmentManager;ZLme/proton/core/auth/presentation/viewmodel/Source;Lme/proton/core/domain/entity/UserId;ILjava/lang/Object;)V
 }
 
 public final class me/proton/core/auth/presentation/alert/CancelCreateAccountDialog : androidx/fragment/app/DialogFragment {
@@ -435,7 +435,7 @@ public final class me/proton/core/auth/presentation/alert/TwoFAInputDialog : and
 }
 
 public final class me/proton/core/auth/presentation/alert/TwoFAInputDialog$Companion {
-	public final fun invoke (Ljava/lang/String;)Lme/proton/core/auth/presentation/alert/TwoFAInputDialog;
+	public final fun invoke (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/alert/TwoFAInputDialog;
 }
 
 public abstract interface class me/proton/core/auth/presentation/alert/TwoFAInputDialog_GeneratedInjector {
@@ -2982,10 +2982,27 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel {
-	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)V
+public final class me/proton/core/auth/presentation/viewmodel/Source : java/lang/Enum {
+	public static final field changePassword Lme/proton/core/auth/presentation/viewmodel/Source;
+	public static final field changeRecoveryEmail Lme/proton/core/auth/presentation/viewmodel/Source;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public final fun getValue ()Ljava/lang/String;
+	public final fun toScreenId ()Lme/proton/core/observability/domain/metrics/ChangePasswordOrRecoveryEmailFidoLaunchResultTotal$ScreenId;
+	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/Source;
+	public static fun values ()[Lme/proton/core/auth/presentation/viewmodel/Source;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
+	public fun <init> (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/observability/domain/ObservabilityManager;)V
+	public fun enqueueObservability (Lme/proton/core/observability/domain/metrics/ObservabilityData;)V
+	public fun enqueueObservability-KWTtemM (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)Ljava/lang/Object;
 	public final fun getFido2Info ()Lme/proton/core/auth/domain/entity/Fido2Info;
+	public fun getObservabilityManager ()Lme/proton/core/observability/domain/ObservabilityManager;
 	public final fun getState ()Lkotlinx/coroutines/flow/SharedFlow;
+	public fun onCompleteEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun onLaunchResult (Lme/proton/core/auth/presentation/viewmodel/Source;Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$LaunchResult;)V
+	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public final fun onSignResult (Lme/proton/core/auth/presentation/viewmodel/Source;Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$Result;)V
 	public final fun setFido2Info (Lme/proton/core/auth/domain/entity/Fido2Info;)V
 	public final fun setup (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 }
@@ -3012,11 +3029,11 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogVi
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel;
-	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/auth/domain/feature/IsFido2Enabled;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel;
+	public static fun newInstance (Lme/proton/core/accountmanager/domain/AccountManager;Lme/proton/core/auth/domain/usecase/GetAuthInfoSrp;Lme/proton/core/usersettings/domain/usecase/GetUserSettings;Lme/proton/core/auth/domain/feature/IsFido2Enabled;Lme/proton/core/observability/domain/ObservabilityManager;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel_HiltModules {

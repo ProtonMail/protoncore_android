@@ -49,6 +49,7 @@ import me.proton.core.auth.presentation.entity.TwoFAMechanisms
 import me.proton.core.auth.presentation.entity.TwoFaFido
 import me.proton.core.auth.presentation.entity.toParcelable
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
+import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.auth.presentation.viewmodel.TwoFAInputDialogViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.R
@@ -73,11 +74,13 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
 
     companion object {
         private const val ARG_USER_ID = "arg.userId"
+        private const val ARG_SOURCE = "arg.source"
         const val KEY_2FA_SET = "key.2fa_set"
         const val BUNDLE_KEY_2FA_DATA = "bundle.2fa_data"
 
-        operator fun invoke(userId: String) = TwoFAInputDialog().apply {
+        operator fun invoke(source: String, userId: String) = TwoFAInputDialog().apply {
             arguments = bundleOf(
+                ARG_SOURCE to source,
                 ARG_USER_ID to userId
             )
         }
@@ -87,6 +90,10 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
 
     private val userId by lazy {
         UserId(requireNotNull(requireArguments().getString(ARG_USER_ID)))
+    }
+
+    private val source by lazy {
+        Source.valueOf(requireNotNull(requireArguments().getString(ARG_SOURCE)))
     }
 
     private val binding by lazy {
@@ -190,6 +197,7 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
         result: PerformTwoFaWithSecurityKey.Result,
         options: Fido2PublicKeyCredentialRequestOptions
     ) {
+        viewModel.onSignResult(source, result)
         when (result) {
             is PerformTwoFaWithSecurityKey.Result.Success -> {
                 val secondFactorFido = SecondFactorFido(
@@ -249,10 +257,13 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
         else TwoFAMechanisms.ONE_TIME_CODE
 
     private fun onSecurityKeySubmitted() {
+        val performTwoFaWithSecurityKey = performTwoFaWithSecurityKey.getOrNull() ?: return
         val requestOptions = requireNotNull(viewModel.fido2Info?.authenticationOptions?.publicKey)
 
         lifecycleScope.launch {
-            when (val launchResult = performTwoFaWithSecurityKey.getOrNull()?.invoke(requireActivity(), requestOptions)) {
+            val launchResult = performTwoFaWithSecurityKey.invoke(requireActivity(), requestOptions)
+            viewModel.onLaunchResult(source, launchResult)
+            when (launchResult) {
                 is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> {
                     binding.root.errorSnack(
                         message = launchResult.exception.localizedMessage

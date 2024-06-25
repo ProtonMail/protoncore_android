@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentManager
 import me.proton.core.auth.presentation.alert.confirmpass.ConfirmPasswordDialog
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
+import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 import me.proton.core.presentation.utils.inTransaction
@@ -60,10 +61,11 @@ fun FragmentManager.showPasswordEnterDialog(
  */
 fun FragmentManager.showTwoFAEnterDialog(
     largeLayout: Boolean = false,
+    source: Source,
     userId: UserId
 ) {
     findFragmentByTag(TAG_TWO_FA_ENTER_DIALOG) ?: run {
-        val fragment = TwoFAInputDialog(userId.id)
+        val fragment = TwoFAInputDialog(source.value, userId.id)
         if (largeLayout) {
             // For large screens (tablets), we show the fragment as a dialog
             fragment.show(this, TAG_TWO_FA_ENTER_DIALOG)

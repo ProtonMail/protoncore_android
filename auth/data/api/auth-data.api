@@ -823,6 +823,7 @@ public final class me/proton/core/auth/data/api/response/SessionResponse$Compani
 
 public final class me/proton/core/auth/data/feature/IsFido2EnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/auth/domain/feature/IsFido2Enabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;Ljava/util/Optional;)V
+	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 	public fun isLocalEnabled ()Z
 }
 

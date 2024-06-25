@@ -32,7 +32,14 @@ import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.fido.domain.usecase.toStatus
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.TwoFaDialogFidoLaunchResultTotal
+import me.proton.core.observability.domain.metrics.TwoFaDialogFidoSignResultTotal
+import me.proton.core.observability.domain.metrics.common.TwoFaDialogScreenId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.usersettings.domain.usecase.GetUserSettings
 import javax.inject.Inject
@@ -43,7 +50,8 @@ class TwoFAInputDialogViewModel @Inject constructor(
     private val getAuthInfoSrp: GetAuthInfoSrp,
     private val getUserSettings: GetUserSettings,
     private val isFido2Enabled: IsFido2Enabled,
-) : ProtonViewModel() {
+    override val observabilityManager: ObservabilityManager
+) : ProtonViewModel(), ObservabilityContext {
 
     var fido2Info: Fido2Info? = null
 
@@ -82,4 +90,24 @@ class TwoFAInputDialogViewModel @Inject constructor(
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
+
+    fun onLaunchResult(source: Source, launchResult: PerformTwoFaWithSecurityKey.LaunchResult) {
+        enqueueObservability(TwoFaDialogFidoLaunchResultTotal(source.toScreenId(), launchResult.toStatus()))
+    }
+
+    fun onSignResult(source: Source, result: PerformTwoFaWithSecurityKey.Result) {
+        enqueueObservability(TwoFaDialogFidoSignResultTotal(source.toScreenId(), result.toStatus()))
+    }
 }
+
+enum class Source(val value: String) {
+    changePassword("changePassword"),
+    changeRecoveryEmail("changeRecoveryEmail");
+
+    fun toScreenId() = when (this) {
+        changePassword -> TwoFaDialogScreenId.changePassword
+        changeRecoveryEmail -> TwoFaDialogScreenId.changeRecoveryEmail
+    }
+}
+
+

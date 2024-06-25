@@ -55,7 +55,6 @@ import me.proton.core.observability.domain.metrics.ConfirmPasswordFidoSignResult
 import me.proton.core.observability.domain.metrics.ConfirmPasswordSubmissionTotal
 import me.proton.core.observability.domain.metrics.ConfirmPasswordSubmissionTotal.SecondFactorProofType
 import me.proton.core.presentation.viewmodel.ProtonViewModel
-import me.proton.core.user.domain.entity.SecondFactorFido
 import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.takeIfNotEmpty

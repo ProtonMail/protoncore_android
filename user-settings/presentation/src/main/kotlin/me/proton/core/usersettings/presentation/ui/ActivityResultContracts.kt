@@ -25,6 +25,7 @@ import androidx.activity.result.contract.ActivityResultContract
 import me.proton.core.auth.presentation.entity.TwoFAInput
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
+import me.proton.core.usersettings.presentation.entity.TwoFaDialogArguments
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 
 class StartUpdateRecoveryEmail : ActivityResultContract<SettingsInput, UpdateRecoveryEmailResult?>() {
@@ -52,19 +53,15 @@ class StartPasswordManagement : ActivityResultContract<SettingsInput, PasswordMa
     }
 }
 
-class StartTwoFAInputDialog : ActivityResultContract<String, TwoFAInput?>() {
+class StartTwoFAInputDialog : ActivityResultContract<TwoFaDialogArguments, TwoFAInput?>() {
 
-    override fun createIntent(context: Context, input: String): Intent = getIntent(context, input)
+    override fun createIntent(context: Context, input: TwoFaDialogArguments): Intent =
+        Intent(context, TwoFaInputActivity::class.java).apply {
+            putExtra(TwoFaInputActivity.ARG_INPUT, input)
+        }
 
     override fun parseResult(resultCode: Int, intent: Intent?): TwoFAInput? {
         if (resultCode != Activity.RESULT_OK) return null
         return intent?.getParcelableExtra(TwoFaInputActivity.ARG_RESULT)
-    }
-
-    companion object {
-        fun getIntent(context: Context, input: String) =
-            Intent(context, TwoFaInputActivity::class.java).apply {
-                putExtra(TwoFaInputActivity.ARG_INPUT, input)
-            }
     }
 }

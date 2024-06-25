@@ -44,6 +44,7 @@ import me.proton.core.usersettings.data.extension.toUserSettings
 import me.proton.core.usersettings.domain.entity.UserSettings
 import me.proton.core.usersettings.domain.entity.UserSettingsProperty
 import me.proton.core.usersettings.domain.repository.UserSettingsRemoteDataSource
+import me.proton.core.util.kotlin.coroutine.result
 import me.proton.core.util.kotlin.exhaustive
 import me.proton.core.util.kotlin.toInt
 import javax.inject.Inject
@@ -83,20 +84,23 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         srpSession: String,
         secondFactorCode: String?,
         secondFactorFido: SecondFactorFido?
-    ): Pair<UserSettings, ServerProof> = apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
-        updateRecoveryEmail(
-            UpdateRecoveryEmailRequest(
-                email = email,
-                twoFactorCode = secondFactorCode,
-                fido2 = secondFactorFido?.toFido2Request(),
-                clientEphemeral = srpProofs.clientEphemeral,
-                clientProof = srpProofs.clientProof,
-                srpSession = srpSession
-            )
-        ).let { response ->
-            response.settings.toUserSettings(sessionUserId) to response.serverProof
+    ): Pair<UserSettings, ServerProof> =
+        result("updateRecoveryEmail") {
+            apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
+                updateRecoveryEmail(
+                    UpdateRecoveryEmailRequest(
+                        email = email,
+                        twoFactorCode = secondFactorCode,
+                        fido2 = secondFactorFido?.toFido2Request(),
+                        clientEphemeral = srpProofs.clientEphemeral,
+                        clientProof = srpProofs.clientProof,
+                        srpSession = srpSession
+                    )
+                ).let { response ->
+                    response.settings.toUserSettings(sessionUserId) to response.serverProof
+                }
+            }.valueOrThrow
         }
-    }.valueOrThrow
 
     override suspend fun updateLoginPassword(
         sessionUserId: SessionUserId,
@@ -105,20 +109,23 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         secondFactorCode: String?,
         secondFactorFido: SecondFactorFido?,
         auth: Auth
-    ): Pair<UserSettings, ServerProof> = apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
-        updateLoginPassword(
-            UpdateLoginPasswordRequest(
-                twoFactorCode = secondFactorCode,
-                fido2 = secondFactorFido?.toFido2Request(),
-                clientEphemeral = srpProofs.clientEphemeral,
-                clientProof = srpProofs.clientProof,
-                srpSession = srpSession,
-                auth = AuthRequest.from(auth)
-            )
-        ).let { response ->
-            response.settings.toUserSettings(sessionUserId) to response.serverProof
+    ): Pair<UserSettings, ServerProof> =
+        result("updateLoginPassword") {
+            apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
+                updateLoginPassword(
+                    UpdateLoginPasswordRequest(
+                        twoFactorCode = secondFactorCode,
+                        fido2 = secondFactorFido?.toFido2Request(),
+                        clientEphemeral = srpProofs.clientEphemeral,
+                        clientProof = srpProofs.clientProof,
+                        srpSession = srpSession,
+                        auth = AuthRequest.from(auth)
+                    )
+                ).let { response ->
+                    response.settings.toUserSettings(sessionUserId) to response.serverProof
+                }
+            }.valueOrThrow
         }
-    }.valueOrThrow
 
     override suspend fun updateUserSettings(
         userId: UserId,

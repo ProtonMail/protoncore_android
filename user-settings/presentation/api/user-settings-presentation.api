@@ -168,6 +168,33 @@ public final class me/proton/core/usersettings/presentation/entity/SettingsInput
 	public final fun newArray (I)[Lme/proton/core/usersettings/presentation/entity/SettingsInput;
 }
 
+public final class me/proton/core/usersettings/presentation/entity/TwoFaDialogArguments : android/os/Parcelable {
+	public static final field $stable I
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/usersettings/presentation/entity/TwoFaDialogArguments;
+	public static synthetic fun copy$default (Lme/proton/core/usersettings/presentation/entity/TwoFaDialogArguments;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/usersettings/presentation/entity/TwoFaDialogArguments;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getSource ()Lme/proton/core/auth/presentation/viewmodel/Source;
+	public final fun getSourceString ()Ljava/lang/String;
+	public final fun getUser ()Lme/proton/core/domain/entity/UserId;
+	public final fun getUserId ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/usersettings/presentation/entity/TwoFaDialogArguments$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/usersettings/presentation/entity/TwoFaDialogArguments;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/usersettings/presentation/entity/TwoFaDialogArguments;
+}
+
 public final class me/proton/core/usersettings/presentation/entity/UpdateRecoveryEmailResult : android/os/Parcelable {
 	public static final field $stable I
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
@@ -305,8 +332,7 @@ public final class me/proton/core/usersettings/presentation/ui/PasswordManagemen
 public final class me/proton/core/usersettings/presentation/ui/ShowPasswordLauncherKt {
 	public static final fun registerShowPasswordDialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 	public static synthetic fun registerShowPasswordDialogResultLauncher$default (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lkotlin/jvm/functions/Function1;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
-	public static final fun registerShowTwoFADialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
-	public static final fun registerShowTwoFADialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/fragment/app/Fragment;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
+	public static final fun registerShowTwoFADialogResultLauncher (Landroidx/fragment/app/FragmentManager;Landroidx/activity/ComponentActivity;Lme/proton/core/auth/presentation/viewmodel/Source;Lme/proton/core/domain/entity/UserId;Lkotlin/jvm/functions/Function1;)Lme/proton/core/presentation/ui/alert/FragmentDialogResultLauncher;
 }
 
 public final class me/proton/core/usersettings/presentation/ui/StartPasswordManagement : androidx/activity/result/contract/ActivityResultContract {
@@ -320,16 +346,11 @@ public final class me/proton/core/usersettings/presentation/ui/StartPasswordMana
 
 public final class me/proton/core/usersettings/presentation/ui/StartTwoFAInputDialog : androidx/activity/result/contract/ActivityResultContract {
 	public static final field $stable I
-	public static final field Companion Lme/proton/core/usersettings/presentation/ui/StartTwoFAInputDialog$Companion;
 	public fun <init> ()V
 	public synthetic fun createIntent (Landroid/content/Context;Ljava/lang/Object;)Landroid/content/Intent;
-	public fun createIntent (Landroid/content/Context;Ljava/lang/String;)Landroid/content/Intent;
+	public fun createIntent (Landroid/content/Context;Lme/proton/core/usersettings/presentation/entity/TwoFaDialogArguments;)Landroid/content/Intent;
 	public synthetic fun parseResult (ILandroid/content/Intent;)Ljava/lang/Object;
 	public fun parseResult (ILandroid/content/Intent;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
-}
-
-public final class me/proton/core/usersettings/presentation/ui/StartTwoFAInputDialog$Companion {
-	public final fun getIntent (Landroid/content/Context;Ljava/lang/String;)Landroid/content/Intent;
 }
 
 public final class me/proton/core/usersettings/presentation/ui/StartUpdateRecoveryEmail : androidx/activity/result/contract/ActivityResultContract {

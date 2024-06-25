@@ -22,24 +22,35 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.usersettings.presentation.entity.TwoFaDialogArguments
 
 @AndroidEntryPoint
 class TwoFaInputActivity : ProtonActivity() {
 
+    private val twoFaDialogArguments by lazy {
+        intent.getParcelableExtra<TwoFaDialogArguments>(ARG_INPUT) ?: error("Missing activity input")
+    }
+
+    private val source by lazy {
+        twoFaDialogArguments.source
+    }
+
     private val userId by lazy {
-        UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
+        twoFaDialogArguments.user
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val twoFactorLauncher = supportFragmentManager.registerShowTwoFADialogResultLauncher(this, userId) { result ->
-            val intent = Intent().putExtra(ARG_RESULT, result)
-            setResult(Activity.RESULT_OK, intent)
-            finish()
-        }
+        val twoFactorLauncher =
+            supportFragmentManager.registerShowTwoFADialogResultLauncher(this, source, userId) { result ->
+                val intent = Intent().putExtra(ARG_RESULT, result)
+                setResult(Activity.RESULT_OK, intent)
+                finish()
+            }
 
         twoFactorLauncher.show(Unit)
     }

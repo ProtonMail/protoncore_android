@@ -27,6 +27,7 @@ import me.proton.core.auth.presentation.alert.showPasswordEnterDialog
 import me.proton.core.auth.presentation.alert.showTwoFAEnterDialog
 import me.proton.core.auth.presentation.entity.PasswordInput
 import me.proton.core.auth.presentation.entity.TwoFAInput
+import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
 
@@ -57,28 +58,8 @@ fun FragmentManager.registerShowPasswordDialogResultLauncher(
 }
 
 fun FragmentManager.registerShowTwoFADialogResultLauncher(
-    fragment: Fragment,
-    userId: UserId,
-    onResult: (TwoFAInput?) -> Unit
-): FragmentDialogResultLauncher<Unit> {
-
-    setFragmentResultListener(
-        TwoFAInputDialog.KEY_2FA_SET,
-        fragment
-    ) { _, bundle ->
-        val result =
-            bundle.getParcelable<TwoFAInput>(TwoFAInputDialog.BUNDLE_KEY_2FA_DATA)
-        onResult(result)
-    }
-
-    return FragmentDialogResultLauncher(
-        requestKey = TwoFAInputDialog.KEY_2FA_SET,
-        show = { showTwoFAEnterDialog(userId = userId) }
-    )
-}
-
-fun FragmentManager.registerShowTwoFADialogResultLauncher(
     context: ComponentActivity,
+    source: Source,
     userId: UserId,
     onResult: (TwoFAInput?) -> Unit
 ): FragmentDialogResultLauncher<Unit> {
@@ -94,7 +75,7 @@ fun FragmentManager.registerShowTwoFADialogResultLauncher(
 
     return FragmentDialogResultLauncher(
         requestKey = TwoFAInputDialog.KEY_2FA_SET,
-        show = { showTwoFAEnterDialog(userId = userId) }
+        show = { showTwoFAEnterDialog(source = source, userId = userId) }
     )
 }
 

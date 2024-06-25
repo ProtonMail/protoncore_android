@@ -40,6 +40,7 @@ import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialo
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
 import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.presentation.entity.fromParcelable
+import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonSecureFragment
@@ -64,6 +65,7 @@ import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentPasswordManagementBinding
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.entity.TwoFaDialogArguments
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.Action
 import me.proton.core.usersettings.presentation.viewmodel.PasswordManagementViewModel.PasswordType
@@ -173,7 +175,7 @@ class PasswordManagementFragment :
                     }
 
                     is PasswordManagementViewModel.State.TwoFactorNeeded -> {
-                        twoFactorLauncher.launch(userId.id)
+                        twoFactorLauncher.launch(TwoFaDialogArguments(userId.id, Source.changePassword.value))
                     }
 
                     is PasswordManagementViewModel.State.Success -> {

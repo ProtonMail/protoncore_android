@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.entity.fromParcelable
+import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
@@ -44,6 +45,7 @@ import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.usersettings.presentation.R
 import me.proton.core.usersettings.presentation.databinding.FragmentUpdateRecoveryEmailBinding
 import me.proton.core.usersettings.presentation.entity.SettingsInput
+import me.proton.core.usersettings.presentation.entity.TwoFaDialogArguments
 import me.proton.core.usersettings.presentation.entity.UpdateRecoveryEmailResult
 import me.proton.core.usersettings.presentation.viewmodel.UpdateRecoveryEmailViewModel
 import me.proton.core.util.kotlin.exhaustive
@@ -111,7 +113,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
                         showPasswordDialogResultLauncher.show(Unit)
                     }
                     is UpdateRecoveryEmailViewModel.State.SecondFactorNeeded -> {
-                        showTwoFADialogResultLauncher.launch(userId.id)
+                        showTwoFADialogResultLauncher.launch(TwoFaDialogArguments(userId.id, Source.changeRecoveryEmail.value))
                     }
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)
