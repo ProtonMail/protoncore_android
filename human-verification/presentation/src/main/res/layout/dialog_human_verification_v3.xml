@@ -41,22 +41,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
-        android:id="@+id/scrollView"
+    <me.proton.core.presentation.ui.webview.ProtonWebView
+        android:id="@+id/humanVerificationWebView"
+        android:nestedScrollingEnabled="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:nestedScrollingEnabled="true"
-        android:background="?proton_background_norm"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <me.proton.core.presentation.ui.webview.ProtonWebView
-            android:id="@+id/humanVerificationWebView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="invisible" />
-
-    </ScrollView>
+        android:visibility="invisible" />
 
     <!-- this should be replaced with a Proton loader animation -->
     <ProgressBar

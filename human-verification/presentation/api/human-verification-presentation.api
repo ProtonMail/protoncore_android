@@ -102,7 +102,6 @@ public final class me/proton/core/humanverification/presentation/databinding/Dia
 	public final field appbar Lcom/google/android/material/appbar/AppBarLayout;
 	public final field humanVerificationWebView Lme/proton/core/presentation/ui/webview/ProtonWebView;
 	public final field progress Landroid/widget/ProgressBar;
-	public final field scrollView Landroid/widget/ScrollView;
 	public final field toolbar Lcom/google/android/material/appbar/MaterialToolbar;
 	public static fun bind (Landroid/view/View;)Lme/proton/core/humanverification/presentation/databinding/DialogHumanVerificationV3Binding;
 	public synthetic fun getRoot ()Landroid/view/View;

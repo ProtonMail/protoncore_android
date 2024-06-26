@@ -18,7 +18,6 @@
 
 package me.proton.core.humanverification.presentation.ui.hv3
 
-import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import android.graphics.Color
@@ -36,7 +35,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.animation.AnimationUtils
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.launch
@@ -128,7 +126,6 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
             setupWebView(humanVerificationWebView)
         }
 
-        observeNestedScroll()
         launchOnScreenView { viewModel.onScreenView() }
     }
 
@@ -285,34 +282,6 @@ class HV3DialogFragment : ProtonDialogFragment(R.layout.dialog_human_verificatio
                     putParcelable(RESULT_HUMAN_VERIFICATION, result)
                 }
             })
-        }
-    }
-
-    private fun observeNestedScroll() {
-        // Since liftOnScroll doesn't seem to work properly with WebViews, we'll animate it manually
-        var previousAnimator: ValueAnimator? = null
-        binding.scrollView.setOnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-            val context = this.context ?: return@setOnScrollChangeListener
-            val valueAnimator = when {
-                scrollY <= 0 && oldScrollY > 0 -> ValueAnimator.ofFloat(v.elevation, 0f)
-                scrollY > 0 && oldScrollY <= 0 -> {
-                    val toValue = context.resources.getDimension(com.google.android.material.R.dimen.design_appbar_elevation)
-                    ValueAnimator.ofFloat(v.elevation, toValue)
-                }
-                else -> return@setOnScrollChangeListener
-            }.also {
-                it.duration = context.resources.getInteger(
-                    com.google.android.material.R.integer.app_bar_elevation_anim_duration
-                ).toLong()
-                it.interpolator = AnimationUtils.LINEAR_INTERPOLATOR
-                it.addUpdateListener {
-                    binding.appbar.elevation = it.animatedValue as Float
-                    binding.humanVerificationWebView.postInvalidateOnAnimation()
-                }
-            }
-            previousAnimator?.cancel()
-            valueAnimator.start()
-            previousAnimator = valueAnimator
         }
     }
 
