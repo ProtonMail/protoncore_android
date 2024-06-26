@@ -21,6 +21,7 @@ package me.proton.core.usersettings.presentation.viewmodel
 import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
@@ -145,8 +146,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "",
                 password = "encrypted-test-password",
-                secondFactorCode = null,
-                secondFactorFido = null
+                secondFactorProof = null
             )
         } returns testUserSettingsResponse.copy(email = RecoverySetting("", 1, notify = true, reset = true))
 
@@ -174,8 +174,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
                 password = "encrypted-test-password",
-                secondFactorCode = null,
-                secondFactorFido = null
+                secondFactorProof = null
             )
         } returns testUserSettingsResponse.copy(email = RecoverySetting("new-email", 1, notify = true, reset = true))
 
@@ -203,8 +202,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
                 password = "encrypted-test-password",
-                secondFactorCode = "123456",
-                secondFactorFido = null
+                secondFactorProof = SecondFactorProof.SecondFactorCode("123456")
             )
         } returns testUserSettingsResponse.copy(
             email = RecoverySetting("new-email", 1, notify = true, reset = true)
@@ -233,7 +231,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
             assertIs<UpdateRecoveryEmailViewModel.State.PasswordNeeded>(awaitItem())
             viewModel.setPassword(testPassword)
             assertIs<UpdateRecoveryEmailViewModel.State.SecondFactorNeeded>(awaitItem())
-            viewModel.setSecondFactor("123456", null)
+            viewModel.setSecondFactor(SecondFactorProof.SecondFactorCode("123456"))
             assertIs<UpdateRecoveryEmailViewModel.State.UpdatingCurrent>(awaitItem())
             val result = awaitItem()
             assertTrue(result is UpdateRecoveryEmailViewModel.State.UpdatingSuccess)
@@ -248,8 +246,7 @@ class UpdateRecoveryEmailViewModelTest : ArchTest by ArchTest(), CoroutinesTest 
                 sessionUserId = testUserId,
                 newRecoveryEmail = "new-email",
                 password = "encrypted-test-password",
-                secondFactorCode = null,
-                secondFactorFido = null
+                secondFactorProof = null
             )
         } throws ApiException(
             ApiResult.Error.Http(

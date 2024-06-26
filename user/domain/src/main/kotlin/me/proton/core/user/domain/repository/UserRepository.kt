@@ -19,7 +19,7 @@
 package me.proton.core.user.domain.repository
 
 import kotlinx.coroutines.flow.Flow
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.srp.Auth
@@ -153,8 +153,7 @@ interface UserRepository : PassphraseRepository {
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?
     ): Boolean
 
     /**

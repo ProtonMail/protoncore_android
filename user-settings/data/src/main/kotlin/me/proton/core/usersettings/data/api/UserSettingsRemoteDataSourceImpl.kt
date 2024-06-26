@@ -18,9 +18,10 @@
 
 package me.proton.core.usersettings.data.api
 
-import me.proton.core.auth.data.api.request.toFido2Request
+import me.proton.core.auth.data.api.request.toSecondFactorCode
+import me.proton.core.auth.data.api.request.toSecondFactorFido
 import me.proton.core.auth.domain.entity.ServerProof
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.srp.Auth
@@ -82,16 +83,15 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         email: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?
     ): Pair<UserSettings, ServerProof> =
         result("updateRecoveryEmail") {
             apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
                 updateRecoveryEmail(
                     UpdateRecoveryEmailRequest(
                         email = email,
-                        twoFactorCode = secondFactorCode,
-                        fido2 = secondFactorFido?.toFido2Request(),
+                        twoFactorCode = secondFactorProof.toSecondFactorCode(),
+                        fido2 = secondFactorProof.toSecondFactorFido(),
                         clientEphemeral = srpProofs.clientEphemeral,
                         clientProof = srpProofs.clientProof,
                         srpSession = srpSession
@@ -106,16 +106,15 @@ class UserSettingsRemoteDataSourceImpl @Inject constructor(
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?,
+        secondFactorProof: SecondFactorProof?,
         auth: Auth
     ): Pair<UserSettings, ServerProof> =
         result("updateLoginPassword") {
             apiProvider.get<UserSettingsApi>(sessionUserId).invoke {
                 updateLoginPassword(
                     UpdateLoginPasswordRequest(
-                        twoFactorCode = secondFactorCode,
-                        fido2 = secondFactorFido?.toFido2Request(),
+                        twoFactorCode = secondFactorProof.toSecondFactorCode(),
+                        fido2 = secondFactorProof.toSecondFactorFido(),
                         clientEphemeral = srpProofs.clientEphemeral,
                         clientProof = srpProofs.clientProof,
                         srpSession = srpSession,

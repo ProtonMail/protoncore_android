@@ -39,9 +39,9 @@ import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.fido.domain.usecase.toStatus
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
@@ -120,15 +120,10 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         userId: UserId,
         missingScope: Scope,
         password: String,
-        secondFactorCode: String? = null,
-        secondFactorFido: SecondFactorFido? = null
+        secondFactorProof: SecondFactorProof? = null
     ) = flowWithResultContext {
-        check(secondFactorCode == null || secondFactorFido == null) {
-            "Cannot unlock ${missingScope.value} scope using both 2FA code and security key."
-        }
-
         it.onResultEnqueueObservability("unlockUserForPasswordScope") {
-            toConfirmPasswordSubmissionTotal(secondFactorCode, secondFactorFido)
+            toConfirmPasswordSubmissionTotal(secondFactorProof)
         }
 
         send(State.ProcessingObtainScope)
@@ -145,8 +140,7 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
                 sessionId = requireNotNull(account.sessionId),
                 username = requireNotNull(account.username),
                 password = password.encrypt(keyStoreCrypto),
-                secondFactorCode = secondFactorCode?.takeIfNotEmpty(),
-                secondFactorFido = secondFactorFido
+                secondFactorProof = secondFactorProof
             )
 
             Scope.LOCKED -> obtainLockedScope(
@@ -185,12 +179,11 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
 }
 
 private fun Result<*>.toConfirmPasswordSubmissionTotal(
-    secondFactorCode: String?,
-    secondFactorFido: SecondFactorFido?
+    secondFactorProof: SecondFactorProof?
 ): ConfirmPasswordSubmissionTotal {
     val secondFactorProofType = when {
-        secondFactorCode != null -> SecondFactorProofType.totp
-        secondFactorFido != null -> SecondFactorProofType.securityKey
+        secondFactorProof is SecondFactorProof.SecondFactorCode -> SecondFactorProofType.totp
+        secondFactorProof is SecondFactorProof.Fido2 -> SecondFactorProofType.securityKey
         else -> SecondFactorProofType.none
     }
     return if (exceptionOrNull() is InvalidServerAuthenticationException) {

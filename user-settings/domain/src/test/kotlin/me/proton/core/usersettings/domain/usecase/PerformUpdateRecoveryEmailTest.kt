@@ -26,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
@@ -55,7 +56,7 @@ class PerformUpdateRecoveryEmailTest {
     private val testUserId = UserId("test-user-id")
     private val testUsername = "test-username"
     private val testPassword = "test-password"
-    private val testSecondFactor = "123456"
+    private val testSecondFactor = SecondFactorProof.SecondFactorCode("123456")
     private val testSrpSession = "test-srp-session"
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
@@ -105,7 +106,6 @@ class PerformUpdateRecoveryEmailTest {
                 any(),
                 any(),
                 any(),
-                any(),
                 any()
             )
         } returns testUserSettingsResponse
@@ -144,8 +144,7 @@ class PerformUpdateRecoveryEmailTest {
             sessionUserId = testUserId,
             newRecoveryEmail = "",
             password = keyStoreCrypto.encrypt(testPassword),
-            secondFactorCode = testSecondFactor,
-            secondFactorFido = null
+            secondFactorProof = testSecondFactor
         )
         coVerify(exactly = 1) {
             userSettingsRepository.updateRecoveryEmail(
@@ -153,8 +152,7 @@ class PerformUpdateRecoveryEmailTest {
                 email = "",
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = testSecondFactor,
-                secondFactorFido = null
+                secondFactorProof = testSecondFactor
             )
         }
         assertNotNull(result)
@@ -189,8 +187,7 @@ class PerformUpdateRecoveryEmailTest {
             sessionUserId = testUserId,
             newRecoveryEmail = "",
             password = testPassword,
-            secondFactorCode = testSecondFactor,
-            secondFactorFido = null
+            secondFactorProof = testSecondFactor
         )
         coVerify(exactly = 1) {
             userSettingsRepository.updateRecoveryEmail(
@@ -198,8 +195,7 @@ class PerformUpdateRecoveryEmailTest {
                 email = "",
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = testSecondFactor,
-                secondFactorFido = null
+                secondFactorProof = testSecondFactor
             )
         }
         assertNotNull(result)

@@ -26,11 +26,9 @@ import me.proton.core.domain.entity.UserId
 
 @Parcelize
 data class TwoFaDialogArguments(
-    val userId: String,
-    val sourceString: String
+    val userIdString: String,
+    val source: Source
 ) : Parcelable {
     @IgnoredOnParcel
-    val user = UserId(userId)
-    @IgnoredOnParcel
-    val source = Source.valueOf(sourceString)
+    val userId = UserId(userIdString)
 }

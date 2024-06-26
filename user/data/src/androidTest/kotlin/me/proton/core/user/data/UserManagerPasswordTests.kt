@@ -209,8 +209,7 @@ class UserManagerPasswordTests {
                 keySalt = any(),
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = null,
-                secondFactorFido = null,
+                secondFactorProof = null,
                 auth = any(),
                 keys = null,
                 userKeys = emptyList()
@@ -228,8 +227,7 @@ class UserManagerPasswordTests {
             ),
             srpSession = "test-srp-session",
             auth = mockk(),
-            secondFactorCode = null,
-            secondFactorFido = null
+            secondFactorProof = null
         )
 
         // THEN

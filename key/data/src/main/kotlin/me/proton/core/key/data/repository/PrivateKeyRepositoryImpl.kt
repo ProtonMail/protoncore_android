@@ -18,10 +18,11 @@
 
 package me.proton.core.key.data.repository
 
-import me.proton.core.auth.data.api.request.toFido2Request
+import me.proton.core.auth.data.api.request.toSecondFactorCode
+import me.proton.core.auth.data.api.request.toSecondFactorFido
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.usecase.ValidateServerProof
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -102,8 +103,7 @@ class PrivateKeyRepositoryImpl @Inject constructor(
         keySalt: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?,
+        secondFactorProof: SecondFactorProof?,
         auth: Auth?,
         keys: List<Key>?,
         userKeys: List<Key>?
@@ -115,8 +115,8 @@ class PrivateKeyRepositoryImpl @Inject constructor(
                     clientEphemeral = srpProofs.clientEphemeral,
                     clientProof = srpProofs.clientProof,
                     srpSession = srpSession,
-                    twoFactorCode = secondFactorCode,
-                    fido2 = secondFactorFido?.toFido2Request(),
+                    twoFactorCode = secondFactorProof.toSecondFactorCode(),
+                    fido2 = secondFactorProof.toSecondFactorFido(),
                     auth = if (auth != null) AuthRequest.from(auth) else null,
                     keys = keys?.map {
                         PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)

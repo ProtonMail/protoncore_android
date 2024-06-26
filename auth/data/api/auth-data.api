@@ -474,7 +474,9 @@ public final class me/proton/core/auth/data/api/request/SecondFactorRequest$Comp
 }
 
 public final class me/proton/core/auth/data/api/request/SecondFactorRequestKt {
-	public static final fun toFido2Request (Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)Lme/proton/core/auth/data/api/request/Fido2Request;
+	public static final fun toFido2Request (Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$Fido2;)Lme/proton/core/auth/data/api/request/Fido2Request;
+	public static final fun toSecondFactorCode (Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;)Ljava/lang/String;
+	public static final fun toSecondFactorFido (Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;)Lme/proton/core/auth/data/api/request/Fido2Request;
 }
 
 public final class me/proton/core/auth/data/api/request/UniversalTwoFactorRequest {
@@ -823,7 +825,6 @@ public final class me/proton/core/auth/data/api/response/SessionResponse$Compani
 
 public final class me/proton/core/auth/data/feature/IsFido2EnabledImpl : me/proton/core/featureflag/data/IsFeatureFlagEnabledImpl, me/proton/core/auth/domain/feature/IsFido2Enabled {
 	public fun <init> (Landroid/content/Context;Lme/proton/core/featureflag/domain/FeatureFlagManager;Ljava/util/Optional;)V
-	public fun invoke (Lme/proton/core/domain/entity/UserId;)Z
 	public fun isLocalEnabled ()Z
 }
 
@@ -843,7 +844,7 @@ public final class me/proton/core/auth/data/repository/AuthRepositoryImpl : me/p
 	public fun performLogin (Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun performLoginLess (Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun performLoginSso (Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun performSecondFactor (Lme/proton/core/network/domain/session/SessionId;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun randomModulus (Lme/proton/core/network/domain/session/SessionId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun refreshSession (Lme/proton/core/network/domain/session/Session;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun requestSession (Lkotlin/coroutines/Continuation;)Ljava/lang/Object;

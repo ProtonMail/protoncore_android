@@ -39,7 +39,7 @@ import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDia
 import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
 import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
-import me.proton.core.auth.presentation.entity.fromParcelable
+import me.proton.core.auth.presentation.entity.fromEntity
 import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
@@ -86,7 +86,7 @@ class PasswordManagementFragment :
 
     private val twoFactorLauncher = registerForActivityResult(StartTwoFAInputDialog()) { result ->
         if (result != null) {
-            viewModel.perform(Action.SetTwoFactor(userId, result.twoFA, result.twoFAFido?.fromParcelable()))
+            viewModel.perform(Action.SetTwoFactor(userId, result.fromEntity()))
         } else {
             viewModel.perform(Action.CancelTwoFactor(userId))
         }
@@ -175,7 +175,7 @@ class PasswordManagementFragment :
                     }
 
                     is PasswordManagementViewModel.State.TwoFactorNeeded -> {
-                        twoFactorLauncher.launch(TwoFaDialogArguments(userId.id, Source.changePassword.value))
+                        twoFactorLauncher.launch(TwoFaDialogArguments(userId.id, Source.ChangePassword))
                     }
 
                     is PasswordManagementViewModel.State.Success -> {

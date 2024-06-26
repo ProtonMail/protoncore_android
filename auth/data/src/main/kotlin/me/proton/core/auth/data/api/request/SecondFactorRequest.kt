@@ -24,7 +24,7 @@ import kotlinx.serialization.Serializable
 import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.ext.toJson
 
 @Serializable
@@ -87,7 +87,7 @@ data class Fido2Request(
 }
 
 @OptIn(ExperimentalUnsignedTypes::class)
-fun SecondFactorFido.toFido2Request(): Fido2Request {
+fun SecondFactorProof.Fido2.toFido2Request(): Fido2Request {
     val optionsData = AuthenticationOptionsData(
         PublicKeyCredentialRequestOptionsResponse(
             challenge = publicKeyOptions.challenge,
@@ -114,3 +114,9 @@ fun SecondFactorFido.toFido2Request(): Fido2Request {
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
+
+fun SecondFactorProof?.toSecondFactorCode(): String? = if (this is SecondFactorProof.SecondFactorCode) code else null
+
+fun SecondFactorProof?.toSecondFactorFido(): Fido2Request? =
+    if (this is SecondFactorProof.Fido2) toFido2Request() else null
+

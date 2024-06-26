@@ -19,8 +19,8 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 

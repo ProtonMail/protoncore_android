@@ -42,7 +42,7 @@ import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialDescriptor
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
@@ -483,7 +483,6 @@ class UserRepositoryImplTests {
             TestUsers.User1.id,
             testSrpProofs,
             "test-srp-session",
-            null,
             null
         )
         assertNotNull(response)
@@ -514,8 +513,7 @@ class UserRepositoryImplTests {
             TestUsers.User1.id,
             testSrpProofs,
             "test-srp-session",
-            "test-2fa",
-            null
+            SecondFactorProof.SecondFactorCode("test-2fa")
         )
         assertNotNull(response)
         assertTrue(response)
@@ -544,8 +542,7 @@ class UserRepositoryImplTests {
             TestUsers.User1.id,
             testSrpProofs,
             "test-srp-session",
-            null,
-            SecondFactorFido(
+            SecondFactorProof.Fido2(
                 publicKeyOptions = Fido2PublicKeyCredentialRequestOptions(
                     challenge = challenge,
                     allowCredentials = listOf(

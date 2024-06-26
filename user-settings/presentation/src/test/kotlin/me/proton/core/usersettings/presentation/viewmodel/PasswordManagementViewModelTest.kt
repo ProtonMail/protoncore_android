@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountrecovery.domain.IsAccountRecoveryResetEnabled
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecovery
 import me.proton.core.accountrecovery.domain.usecase.ObserveUserRecoverySelfInitiated
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -190,7 +191,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             )
         )
 
-        coEvery { performUpdateMailboxPassword.invoke(any(), testUserId, any(), any(), any(), any()) } returns true
+        coEvery { performUpdateMailboxPassword.invoke(any(), testUserId, any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
@@ -210,8 +211,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     userId = testUserId,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
-                    secondFactorCode = "",
-                    secondFactorFido = null,
+                    secondFactorProof = null,
                     twoPasswordMode = false
                 )
             }
@@ -235,7 +235,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             )
         )
 
-        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any(), any()) } returns true
+        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
@@ -255,8 +255,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     userId = testUserId,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
-                    secondFactorCode = "",
-                    secondFactorFido = null,
+                    secondFactorProof = null,
                     twoPasswordMode = true
                 )
             }
@@ -280,7 +279,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
             )
         )
 
-        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any(), any()) } returns true
+        coEvery { performUpdateMailboxPassword.invoke(any(), any(), any(), any(), any()) } returns true
 
         flowTest(viewModel.state) {
             // WHEN
@@ -300,8 +299,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
                     userId = testUserId,
                     loginPassword = "encrypted-test-password",
                     newPassword = "encrypted-test-new-password",
-                    secondFactorCode = "",
-                    secondFactorFido = null,
+                    secondFactorProof = null,
                     twoPasswordMode = false
                 )
             }

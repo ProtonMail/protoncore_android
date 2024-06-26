@@ -27,7 +27,7 @@ import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.usecase.ValidateServerProof
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.data.arch.buildProtonStore
@@ -87,16 +87,14 @@ class UserSettingsRepositoryImpl @Inject constructor(
         email: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?,
     ): UserSettings {
         val (userSettings, serverProof) = remoteDataSource.updateRecoveryEmail(
             sessionUserId = sessionUserId,
             email = email,
             srpProofs = srpProofs,
             srpSession = srpSession,
-            secondFactorCode = secondFactorCode,
-            secondFactorFido = secondFactorFido
+            secondFactorProof = secondFactorProof
         )
         validateServerProof(serverProof, srpProofs.expectedServerProof) { "recovery email update failed" }
         localDataSource.insertOrUpdate(userSettings)
@@ -107,16 +105,14 @@ class UserSettingsRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?,
+        secondFactorProof: SecondFactorProof?,
         auth: Auth
     ): UserSettings {
         val (userSettings, serverProof) = remoteDataSource.updateLoginPassword(
             sessionUserId = sessionUserId,
             srpProofs = srpProofs,
             srpSession = srpSession,
-            secondFactorCode = secondFactorCode,
-            secondFactorFido = secondFactorFido,
+            secondFactorProof = secondFactorProof,
             auth = auth
         )
         validateServerProof(serverProof, srpProofs.expectedServerProof) { "password change failed" }

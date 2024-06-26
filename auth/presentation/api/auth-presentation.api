@@ -435,7 +435,7 @@ public final class me/proton/core/auth/presentation/alert/TwoFAInputDialog : and
 }
 
 public final class me/proton/core/auth/presentation/alert/TwoFAInputDialog$Companion {
-	public final fun invoke (Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/alert/TwoFAInputDialog;
+	public final fun invoke (Lme/proton/core/auth/presentation/viewmodel/Source;Ljava/lang/String;)Lme/proton/core/auth/presentation/alert/TwoFAInputDialog;
 }
 
 public abstract interface class me/proton/core/auth/presentation/alert/TwoFAInputDialog_GeneratedInjector {
@@ -1024,14 +1024,14 @@ public final class me/proton/core/auth/presentation/entity/ChooseAddressResult$U
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/ChooseAddressResult$UserCheckError;
 }
 
-public final class me/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable : android/os/Parcelable {
+public final class me/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2 ()Ljava/lang/Boolean;
 	public final fun component3 ()Ljava/lang/Boolean;
-	public final fun copy (Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
+	public final fun copy (Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;Ljava/lang/String;Ljava/lang/Boolean;Ljava/lang/Boolean;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAppId ()Ljava/lang/String;
@@ -1042,22 +1042,22 @@ public final class me/proton/core/auth/presentation/entity/Fido2AuthenticationEx
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable$Creator : android/os/Parcelable$Creator {
+public final class me/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity$Creator : android/os/Parcelable$Creator {
 	public fun <init> ()V
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
 }
 
-public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable : android/os/Parcelable {
+public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public synthetic fun <init> (Ljava/lang/String;[BLjava/util/List;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/lang/String;
 	public final fun component2-TcUX1vc ()[B
 	public final fun component3 ()Ljava/util/List;
-	public final fun copy-Coi6ktg (Ljava/lang/String;[BLjava/util/List;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;
-	public static synthetic fun copy-Coi6ktg$default (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;Ljava/lang/String;[BLjava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;
+	public final fun copy-Coi6ktg (Ljava/lang/String;[BLjava/util/List;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;
+	public static synthetic fun copy-Coi6ktg$default (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;Ljava/lang/String;[BLjava/util/List;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getId-TcUX1vc ()[B
@@ -1068,31 +1068,31 @@ public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredent
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable$Creator : android/os/Parcelable$Creator {
+public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity$Creator : android/os/Parcelable$Creator {
 	public fun <init> ()V
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;
 }
 
-public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable : android/os/Parcelable {
+public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public synthetic fun <init> ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-TcUX1vc ()[B
 	public final fun component2-6VbMDqA ()Lkotlin/ULong;
 	public final fun component3 ()Ljava/lang/String;
 	public final fun component4 ()Ljava/util/List;
 	public final fun component5 ()Ljava/lang/String;
-	public final fun component6 ()Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
-	public final fun copy-ebjZ_cE ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
-	public static synthetic fun copy-ebjZ_cE$default (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;[BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
+	public final fun component6 ()Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
+	public final fun copy-ebjZ_cE ([BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;
+	public static synthetic fun copy-ebjZ_cE$default (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;[BLkotlin/ULong;Ljava/lang/String;Ljava/util/List;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;
 	public fun describeContents ()I
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAllowCredentials ()Ljava/util/List;
 	public final fun getChallenge-TcUX1vc ()[B
-	public final fun getExtensions ()Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
+	public final fun getExtensions ()Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
 	public final fun getRpId ()Ljava/lang/String;
 	public final fun getTimeout-6VbMDqA ()Lkotlin/ULong;
 	public final fun getUserVerification ()Ljava/lang/String;
@@ -1101,12 +1101,12 @@ public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredent
 	public fun writeToParcel (Landroid/os/Parcel;I)V
 }
 
-public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable$Creator : android/os/Parcelable$Creator {
+public final class me/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity$Creator : android/os/Parcelable$Creator {
 	public fun <init> ()V
 	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;
 }
 
 public final class me/proton/core/auth/presentation/entity/LoginInput : android/os/Parcelable {
@@ -1252,16 +1252,6 @@ public final class me/proton/core/auth/presentation/entity/PasswordInput$Creator
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/PasswordInput;
 }
 
-public final class me/proton/core/auth/presentation/entity/PasswordInputKt {
-	public static final fun fromParcelable (Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;)Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationExtensionsClientInputs;
-	public static final fun fromParcelable (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;)Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialDescriptor;
-	public static final fun fromParcelable (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;)Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
-	public static final fun fromParcelable (Lme/proton/core/auth/presentation/entity/TwoFaFido;)Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;
-	public static final fun toParcelable (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationExtensionsClientInputs;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsParcelable;
-	public static final fun toParcelable (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialDescriptor;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorParcelable;
-	public static final fun toParcelable (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
-}
-
 public final class me/proton/core/auth/presentation/entity/SecondFactorInput : android/os/Parcelable {
 	public static final field CREATOR Landroid/os/Parcelable$Creator;
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;Z)V
@@ -1288,6 +1278,88 @@ public final class me/proton/core/auth/presentation/entity/SecondFactorInput$Cre
 	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorInput;
 	public synthetic fun newArray (I)[Ljava/lang/Object;
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorInput;
+}
+
+public abstract class me/proton/core/auth/presentation/entity/SecondFactorProofEntity : android/os/Parcelable {
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntity$Fido2Entity : me/proton/core/auth/presentation/entity/SecondFactorProofEntity {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;[B[B[B[B)V
+	public fun describeContents ()I
+	public final fun getAuthenticatorData ()[B
+	public final fun getClientData ()[B
+	public final fun getCredentialID ()[B
+	public final fun getPublicKeyOptions ()Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;
+	public final fun getSignature ()[B
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntity$Fido2Entity$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$Fido2Entity;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$Fido2Entity;
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity : me/proton/core/auth/presentation/entity/SecondFactorProofEntity {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorCodeEntity;
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity : me/proton/core/auth/presentation/entity/SecondFactorProofEntity {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity;
+	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity;
+	public fun describeContents ()I
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClientData ()Ljava/lang/String;
+	public final fun getKeyHandle ()Ljava/lang/String;
+	public final fun getSignatureData ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$SecondFactorSignatureEntity;
+}
+
+public final class me/proton/core/auth/presentation/entity/SecondFactorProofEntityKt {
+	public static final fun fromEntity (Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;)Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationExtensionsClientInputs;
+	public static final fun fromEntity (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;)Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialDescriptor;
+	public static final fun fromEntity (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;)Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
+	public static final fun fromEntity (Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity$Fido2Entity;)Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$Fido2;
+	public static final fun fromEntity (Lme/proton/core/auth/presentation/entity/SecondFactorProofEntity;)Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;
+	public static final fun toEntity (Lme/proton/core/auth/fido/domain/entity/Fido2AuthenticationExtensionsClientInputs;)Lme/proton/core/auth/presentation/entity/Fido2AuthenticationExtensionsClientInputsEntity;
+	public static final fun toEntity (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialDescriptor;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialDescriptorEntity;
+	public static final fun toEntity (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;)Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsEntity;
 }
 
 public abstract class me/proton/core/auth/presentation/entity/SecondFactorResult : android/os/Parcelable {
@@ -1389,32 +1461,6 @@ public final class me/proton/core/auth/presentation/entity/SessionResult$Creator
 	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/SessionResult;
 }
 
-public final class me/proton/core/auth/presentation/entity/TwoFAInput : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/TwoFaFido;)V
-	public synthetic fun <init> (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/TwoFaFido;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Ljava/lang/String;
-	public final fun component2 ()Lme/proton/core/auth/presentation/entity/TwoFaFido;
-	public final fun copy (Ljava/lang/String;Lme/proton/core/auth/presentation/entity/TwoFaFido;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/TwoFAInput;Ljava/lang/String;Lme/proton/core/auth/presentation/entity/TwoFaFido;ILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getTwoFA ()Ljava/lang/String;
-	public final fun getTwoFAFido ()Lme/proton/core/auth/presentation/entity/TwoFaFido;
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/auth/presentation/entity/TwoFAInput$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/TwoFAInput;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/TwoFAInput;
-}
-
 public final class me/proton/core/auth/presentation/entity/TwoFAMechanisms : java/lang/Enum {
 	public static final field Companion Lme/proton/core/auth/presentation/entity/TwoFAMechanisms$Companion;
 	public static final field ONE_TIME_CODE Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
@@ -1428,36 +1474,6 @@ public final class me/proton/core/auth/presentation/entity/TwoFAMechanisms : jav
 public final class me/proton/core/auth/presentation/entity/TwoFAMechanisms$Companion {
 	public final fun enumOf (Ljava/lang/Integer;)Lme/proton/core/auth/presentation/entity/TwoFAMechanisms;
 	public final fun getMap ()Ljava/util/Map;
-}
-
-public final class me/proton/core/auth/presentation/entity/TwoFaFido : android/os/Parcelable {
-	public static final field CREATOR Landroid/os/Parcelable$Creator;
-	public fun <init> (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;[B[B[B[B)V
-	public final fun component1 ()Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
-	public final fun component2 ()[B
-	public final fun component3 ()[B
-	public final fun component4 ()[B
-	public final fun component5 ()[B
-	public final fun copy (Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;[B[B[B[B)Lme/proton/core/auth/presentation/entity/TwoFaFido;
-	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/entity/TwoFaFido;Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;[B[B[B[BILjava/lang/Object;)Lme/proton/core/auth/presentation/entity/TwoFaFido;
-	public fun describeContents ()I
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAuthenticatorData ()[B
-	public final fun getClientData ()[B
-	public final fun getCredentialID ()[B
-	public final fun getPublicKeyOptions ()Lme/proton/core/auth/presentation/entity/Fido2PublicKeyCredentialRequestOptionsParcelable;
-	public final fun getSignature ()[B
-	public fun hashCode ()I
-	public fun toString ()Ljava/lang/String;
-	public fun writeToParcel (Landroid/os/Parcel;I)V
-}
-
-public final class me/proton/core/auth/presentation/entity/TwoFaFido$Creator : android/os/Parcelable$Creator {
-	public fun <init> ()V
-	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
-	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/entity/TwoFaFido;
-	public synthetic fun newArray (I)[Ljava/lang/Object;
-	public final fun newArray (I)[Lme/proton/core/auth/presentation/entity/TwoFaFido;
 }
 
 public final class me/proton/core/auth/presentation/entity/TwoPassModeInput : android/os/Parcelable {
@@ -2627,8 +2643,8 @@ public final class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDia
 	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun onSignResult (Lme/proton/core/auth/fido/domain/usecase/PerformTwoFaWithSecurityKey$Result;)V
 	public final fun setFido2Info (Lme/proton/core/auth/domain/entity/Fido2Info;)V
-	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;)Lkotlinx/coroutines/Job;
-	public static synthetic fun unlock$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
+	public final fun unlock (Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;)Lkotlinx/coroutines/Job;
+	public static synthetic fun unlock$default (Lme/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel;Lme/proton/core/domain/entity/UserId;Lme/proton/core/network/domain/scopes/Scope;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;ILjava/lang/Object;)Lkotlinx/coroutines/Job;
 }
 
 public abstract class me/proton/core/auth/presentation/viewmodel/ConfirmPasswordDialogViewModel$State {
@@ -2894,7 +2910,7 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public fun onResultEnqueueObservability (Lme/proton/core/util/kotlin/coroutine/ResultCollector;Ljava/lang/String;Lkotlin/jvm/functions/Function1;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public final fun setup (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLjava/lang/String;)Lkotlinx/coroutines/Job;
-	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLme/proton/core/auth/domain/entity/SecondFactorProof;)Lkotlinx/coroutines/Job;
+	public final fun startSecondFactorFlow (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/account/domain/entity/AccountType;ZLme/proton/core/auth/fido/domain/entity/SecondFactorProof;)Lkotlinx/coroutines/Job;
 	public final fun stopSecondFactorFlow (Lme/proton/core/domain/entity/UserId;)Lkotlinx/coroutines/Job;
 }
 
@@ -2982,14 +2998,24 @@ public final class me/proton/core/auth/presentation/viewmodel/SecondFactorViewMo
 	public static fun provide ()Ljava/lang/String;
 }
 
-public final class me/proton/core/auth/presentation/viewmodel/Source : java/lang/Enum {
-	public static final field changePassword Lme/proton/core/auth/presentation/viewmodel/Source;
-	public static final field changeRecoveryEmail Lme/proton/core/auth/presentation/viewmodel/Source;
+public final class me/proton/core/auth/presentation/viewmodel/Source : java/lang/Enum, android/os/Parcelable {
+	public static final field CREATOR Landroid/os/Parcelable$Creator;
+	public static final field ChangePassword Lme/proton/core/auth/presentation/viewmodel/Source;
+	public static final field ChangeRecoveryEmail Lme/proton/core/auth/presentation/viewmodel/Source;
+	public fun describeContents ()I
 	public static fun getEntries ()Lkotlin/enums/EnumEntries;
-	public final fun getValue ()Ljava/lang/String;
-	public final fun toScreenId ()Lme/proton/core/observability/domain/metrics/ChangePasswordOrRecoveryEmailFidoLaunchResultTotal$ScreenId;
+	public final fun toScreenId ()Lme/proton/core/observability/domain/metrics/common/TwoFaDialogScreenId;
 	public static fun valueOf (Ljava/lang/String;)Lme/proton/core/auth/presentation/viewmodel/Source;
 	public static fun values ()[Lme/proton/core/auth/presentation/viewmodel/Source;
+	public fun writeToParcel (Landroid/os/Parcel;I)V
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/Source$Creator : android/os/Parcelable$Creator {
+	public fun <init> ()V
+	public synthetic fun createFromParcel (Landroid/os/Parcel;)Ljava/lang/Object;
+	public final fun createFromParcel (Landroid/os/Parcel;)Lme/proton/core/auth/presentation/viewmodel/Source;
+	public synthetic fun newArray (I)[Ljava/lang/Object;
+	public final fun newArray (I)[Lme/proton/core/auth/presentation/viewmodel/Source;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel : me/proton/core/presentation/viewmodel/ProtonViewModel, me/proton/core/observability/domain/ObservabilityContext {
@@ -3015,6 +3041,16 @@ public abstract class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialo
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Error$InvalidAccount : me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Error {
 	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Error$InvalidAccount;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Error$SetupError : me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Error {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Error$SetupError;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle : me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State {
@@ -3024,6 +3060,13 @@ public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogVi
 	public static synthetic fun copy$default (Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle;ZILjava/lang/Object;)Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Idle;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getShowSecurityKey ()Z
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Loading : me/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State {
+	public static final field INSTANCE Lme/proton/core/auth/presentation/viewmodel/TwoFAInputDialogViewModel$State$Loading;
+	public fun equals (Ljava/lang/Object;)Z
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }

@@ -26,6 +26,7 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.api.response.SRPAuthenticationResponse
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -106,8 +107,7 @@ class PrivateKeyRepositoryImplTest {
                 keySalt = "test-key-salt",
                 srpProofs = testSrpProofs,
                 srpSession = "test-srp-session",
-                secondFactorCode = "test-2fa-code",
-                secondFactorFido = null,
+                secondFactorProof = SecondFactorProof.SecondFactorCode("test-2fa-code"),
                 auth = mockk(relaxed = true),
                 keys = listOf(mockk(relaxed = true)),
                 userKeys = listOf(mockk(relaxed = true))

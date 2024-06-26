@@ -22,14 +22,12 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.spyk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.srp.Auth
@@ -63,7 +61,7 @@ class PerformUpdateLoginPasswordTest {
     private val testUserId = UserId("test-user-id")
     private val testUsername = "test-username"
     private val testPassword = "test-password"
-    private val testSecondFactor = "123456"
+    private val testSecondFactor = SecondFactorProof.SecondFactorCode("123456")
     private val testSrpSession = "test-srp-session"
     private val testModulus = "test-modulus"
     private val testServerEphemeral = "test-server-ephemeral"
@@ -140,8 +138,7 @@ class PerformUpdateLoginPasswordTest {
                 sessionUserId = testUserId,
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = testSecondFactor,
-                secondFactorFido = null,
+                secondFactorProof = testSecondFactor,
                 auth = testAuth
             )
         } returns testUserSettingsResponse
@@ -194,8 +191,7 @@ class PerformUpdateLoginPasswordTest {
             userId = testUserId,
             password = keyStoreCrypto.encrypt(testPassword),
             newPassword = keyStoreCrypto.encrypt(testNewPassword),
-            secondFactorCode = testSecondFactor,
-            secondFactorFido = null
+            secondFactorProof = testSecondFactor,
         )
         // THEN
         coVerify(exactly = 1) {
@@ -203,8 +199,7 @@ class PerformUpdateLoginPasswordTest {
                 sessionUserId = testUserId,
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = testSecondFactor,
-                secondFactorFido = null,
+                secondFactorProof = testSecondFactor,
                 auth = testAuth
             )
         }
@@ -214,15 +209,14 @@ class PerformUpdateLoginPasswordTest {
     @Test
     fun `update login password with fido2 returns success`() = runTest {
         // GIVEN
-        val testSecondFactorFido = mockk<SecondFactorFido>(relaxed = true)
+        val testSecondFactorFido = mockk<SecondFactorProof.Fido2>(relaxed = true)
 
         // WHEN
         val result = useCase.invoke(
             userId = testUserId,
             password = keyStoreCrypto.encrypt(testPassword),
             newPassword = keyStoreCrypto.encrypt(testNewPassword),
-            secondFactorCode = null,
-            secondFactorFido = testSecondFactorFido
+            secondFactorProof = testSecondFactorFido
         )
         // THEN
         coVerify(exactly = 1) {
@@ -230,8 +224,7 @@ class PerformUpdateLoginPasswordTest {
                 sessionUserId = testUserId,
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = null,
-                secondFactorFido = testSecondFactorFido,
+                secondFactorProof = testSecondFactorFido,
                 auth = testAuth
             )
         }

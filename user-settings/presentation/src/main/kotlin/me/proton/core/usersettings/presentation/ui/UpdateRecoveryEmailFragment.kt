@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import me.proton.core.auth.presentation.entity.fromParcelable
+import me.proton.core.auth.presentation.entity.fromEntity
 import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
@@ -59,7 +59,7 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
     private lateinit var showPasswordDialogResultLauncher: FragmentDialogResultLauncher<Unit>
     private val showTwoFADialogResultLauncher = registerForActivityResult(StartTwoFAInputDialog()) { result ->
         if (result != null) {
-            viewModel.setSecondFactor(result.twoFA, result.twoFAFido?.fromParcelable())
+            viewModel.setSecondFactor(result.fromEntity())
         }
     }
 
@@ -113,7 +113,9 @@ class UpdateRecoveryEmailFragment : ProtonFragment(R.layout.fragment_update_reco
                         showPasswordDialogResultLauncher.show(Unit)
                     }
                     is UpdateRecoveryEmailViewModel.State.SecondFactorNeeded -> {
-                        showTwoFADialogResultLauncher.launch(TwoFaDialogArguments(userId.id, Source.changeRecoveryEmail.value))
+                        showTwoFADialogResultLauncher.launch(
+                            TwoFaDialogArguments(userId.id, Source.ChangeRecoveryEmail)
+                        )
                     }
                 }.exhaustive
             }.launchIn(viewLifecycleOwner.lifecycleScope)

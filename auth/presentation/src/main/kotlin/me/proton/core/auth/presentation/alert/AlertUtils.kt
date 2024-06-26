@@ -65,7 +65,7 @@ fun FragmentManager.showTwoFAEnterDialog(
     userId: UserId
 ) {
     findFragmentByTag(TAG_TWO_FA_ENTER_DIALOG) ?: run {
-        val fragment = TwoFAInputDialog(source.value, userId.id)
+        val fragment = TwoFAInputDialog(source, userId.id)
         if (largeLayout) {
             // For large screens (tablets), we show the fragment as a dialog
             fragment.show(this, TAG_TWO_FA_ENTER_DIALOG)

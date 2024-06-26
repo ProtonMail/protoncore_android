@@ -34,10 +34,10 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R

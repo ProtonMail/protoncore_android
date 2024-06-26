@@ -23,8 +23,8 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId

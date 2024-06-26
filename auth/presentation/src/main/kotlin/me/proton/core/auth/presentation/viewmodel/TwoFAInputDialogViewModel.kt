@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.presentation.viewmodel
 
+import android.os.Parcelable
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.parcelize.Parcelize
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.auth.domain.entity.Fido2Info
 import me.proton.core.auth.domain.entity.SecondFactor
@@ -61,13 +63,16 @@ class TwoFAInputDialogViewModel @Inject constructor(
 
     sealed class State {
         data class Idle(val showSecurityKey: Boolean) : State()
+        data object Loading: State()
 
         sealed class Error : State() {
-            object InvalidAccount : Error()
+            data object InvalidAccount : Error()
+            data object SetupError : Error()
         }
     }
 
     fun setup(userId: UserId) = flow {
+        emit(State.Loading)
         when {
             !isFido2Enabled(userId) -> emit(State.Idle(false))
             else -> {
@@ -86,7 +91,7 @@ class TwoFAInputDialogViewModel @Inject constructor(
             }
         }
     }.catch { _ ->
-        emit(State.Idle(false))
+        emit(State.Error.SetupError)
     }.onEach { state ->
         _state.tryEmit(state)
     }.launchIn(viewModelScope)
@@ -100,13 +105,14 @@ class TwoFAInputDialogViewModel @Inject constructor(
     }
 }
 
-enum class Source(val value: String) {
-    changePassword("changePassword"),
-    changeRecoveryEmail("changeRecoveryEmail");
+@Parcelize
+enum class Source: Parcelable {
+    ChangePassword,
+    ChangeRecoveryEmail;
 
     fun toScreenId() = when (this) {
-        changePassword -> TwoFaDialogScreenId.changePassword
-        changeRecoveryEmail -> TwoFaDialogScreenId.changeRecoveryEmail
+        ChangePassword -> TwoFaDialogScreenId.changePassword
+        ChangeRecoveryEmail -> TwoFaDialogScreenId.changeRecoveryEmail
     }
 }
 

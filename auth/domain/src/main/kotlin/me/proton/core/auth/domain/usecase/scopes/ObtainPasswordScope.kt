@@ -19,7 +19,7 @@
 package me.proton.core.auth.domain.usecase.scopes
 
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
@@ -39,8 +39,7 @@ class ObtainPasswordScope @Inject constructor(
         sessionId: SessionId,
         username: String,
         password: EncryptedString,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?
     ): Boolean {
         val authInfo = authRepository.getAuthInfoSrp(
             sessionId = sessionId,
@@ -59,8 +58,7 @@ class ObtainPasswordScope @Inject constructor(
                 userId,
                 clientProofs,
                 authInfo.srpSession,
-                secondFactorCode = secondFactorCode,
-                secondFactorFido = secondFactorFido
+                secondFactorProof
             )
         }
     }

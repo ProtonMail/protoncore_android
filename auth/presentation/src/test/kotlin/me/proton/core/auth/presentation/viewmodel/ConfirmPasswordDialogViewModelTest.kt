@@ -36,6 +36,7 @@ import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
@@ -79,7 +80,7 @@ class ConfirmPasswordDialogViewModelTest :
     private val testUsername = "test-username"
     private val testPassword = "test-password"
     private val testPasswordEncrypted = "test-password-encrypted"
-    private val test2FACode = "test-2fa"
+    private val test2FACode = SecondFactorProof.SecondFactorCode("test-2fa")
     private val testUserId = UserId(testUserIdString)
     private val testSessionId = SessionId("test-sessionId")
 
@@ -200,7 +201,6 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
-                null,
                 null
             )
         } returns true
@@ -226,7 +226,6 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
-                null,
                 null
             )
         } throws ApiException(
@@ -260,8 +259,7 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
-                test2FACode,
-                null
+                test2FACode
             )
         } returns true
         flowTest(viewModel.state) {
@@ -286,8 +284,7 @@ class ConfirmPasswordDialogViewModelTest :
                 testSessionId,
                 testUsername,
                 testPasswordEncrypted,
-                test2FACode,
-                null
+                test2FACode
             )
         } throws ApiException(
             ApiResult.Error.Http(

@@ -32,13 +32,13 @@ import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
-import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.entity.fido2AuthenticationOptions
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.fido.domain.usecase.toStatus
 import me.proton.core.auth.presentation.LogTag

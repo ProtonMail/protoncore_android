@@ -26,7 +26,7 @@ import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -58,7 +58,7 @@ class PerformUpdateUserPasswordTest {
     private val testSessionId = SessionId("test-session-id")
     private val testUserId = UserId("test-user-id")
     private val testUsername = "test-username"
-    private val testSecondFactor = "123456"
+    private val testSecondFactorCode = SecondFactorProof.SecondFactorCode("123456")
     private val testKeySalt = "test-keysalt"
     private val testSrpSession = "test-srp-session"
     private val testLoginPassword = "test-login-password"
@@ -118,8 +118,7 @@ class PerformUpdateUserPasswordTest {
             userManager.changePassword(
                 userId = testUserId,
                 newPassword = any(),
-                secondFactorCode = any(),
-                secondFactorFido = null,
+                secondFactorProof = any(),
                 proofs = any(),
                 srpSession = any(),
                 auth = any()
@@ -180,8 +179,7 @@ class PerformUpdateUserPasswordTest {
         assertFailsWith(IllegalArgumentException::class) {
             useCase.invoke(
                 userId = testUserId,
-                secondFactorCode = testSecondFactor,
-                secondFactorFido = null,
+                secondFactorProof = testSecondFactorCode,
                 loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
                 newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),
                 twoPasswordMode = false
@@ -192,14 +190,13 @@ class PerformUpdateUserPasswordTest {
     @Test
     fun `update mailbox password fido2`() = runTest {
         coEvery { userRepository.getUser(testUserId) } returns testUser
-        val secondFactorFido = mockk<SecondFactorFido>(relaxed = true)
+        val secondFactorFido = mockk<SecondFactorProof.Fido2>(relaxed = true)
 
         coEvery {
             userManager.changePassword(
                 userId = testUserId,
                 newPassword = any(),
-                secondFactorCode = null,
-                secondFactorFido = secondFactorFido,
+                secondFactorProof = secondFactorFido,
                 proofs = any(),
                 srpSession = any(),
                 auth = any()
@@ -208,8 +205,7 @@ class PerformUpdateUserPasswordTest {
 
         val result = useCase.invoke(
             userId = testUserId,
-            secondFactorCode = null,
-            secondFactorFido = secondFactorFido,
+            secondFactorProof = secondFactorFido,
             loginPassword = keyStoreCrypto.encrypt(testLoginPassword),
             newPassword = keyStoreCrypto.encrypt(testNewMailboxPassword),
             twoPasswordMode = false

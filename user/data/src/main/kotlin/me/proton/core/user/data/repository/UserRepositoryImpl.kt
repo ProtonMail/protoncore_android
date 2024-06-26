@@ -27,10 +27,11 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import me.proton.core.auth.data.api.request.toFido2Request
+import me.proton.core.auth.data.api.request.toSecondFactorCode
+import me.proton.core.auth.data.api.request.toSecondFactorFido
 import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.usecase.ValidateServerProof
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
@@ -200,16 +201,15 @@ class UserRepositoryImpl @Inject constructor(
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?
     ): Boolean = result("unlockUserForPasswordScope") {
         provider.get<UserApi>(sessionUserId).invoke {
             val request = UnlockPasswordRequest(
-                srpProofs.clientEphemeral,
-                srpProofs.clientProof,
-                srpSession,
-                secondFactorCode,
-                secondFactorFido?.toFido2Request()
+                clientEphemeral = srpProofs.clientEphemeral,
+                clientProof = srpProofs.clientProof,
+                srpSession = srpSession,
+                twoFactorCode = secondFactorProof.toSecondFactorCode(),
+                fido2 = secondFactorProof.toSecondFactorFido()
             )
             val response = unlockPasswordScope(request)
             validateServerProof(

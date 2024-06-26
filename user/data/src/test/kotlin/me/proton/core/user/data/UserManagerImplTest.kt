@@ -28,6 +28,7 @@ import io.mockk.unmockkStatic
 import io.mockk.verify
 import kotlinx.coroutines.test.runTest
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.PlainByteArray
@@ -269,8 +270,7 @@ class UserManagerImplTest {
         val result = spyManager.changePassword(
             userId = userIdMigrated,
             newPassword = "encrypted",
-            secondFactorCode = "code",
-            secondFactorFido = null,
+            secondFactorProof = SecondFactorProof.SecondFactorCode("code"),
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
@@ -291,8 +291,7 @@ class UserManagerImplTest {
         manager.changePassword(
             userId = userIdMigrated,
             newPassword = "encrypted",
-            secondFactorCode = "code",
-            secondFactorFido = null,
+            secondFactorProof = SecondFactorProof.SecondFactorCode("code"),
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
@@ -304,8 +303,7 @@ class UserManagerImplTest {
                 keySalt = any(),
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = any(),
-                secondFactorFido = null,
+                secondFactorProof = any(),
                 auth = any(),
                 keys = null,
                 userKeys = expectedUserKeys,
@@ -322,8 +320,7 @@ class UserManagerImplTest {
         manager.changePassword(
             userId = userIdNotMigrated,
             newPassword = "encrypted",
-            secondFactorCode = "code",
-            secondFactorFido = null,
+            secondFactorProof = SecondFactorProof.SecondFactorCode("code"),
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
@@ -335,8 +332,7 @@ class UserManagerImplTest {
                 keySalt = any(),
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = any(),
-                secondFactorFido = null,
+                secondFactorProof = any(),
                 auth = any(),
                 keys = expectedUserKeys + expectedAddressKeys,
                 userKeys = null,
@@ -350,8 +346,7 @@ class UserManagerImplTest {
         manager.changePassword(
             userId = userIdMigrated,
             newPassword = "encrypted",
-            secondFactorCode = "code",
-            secondFactorFido = null,
+            secondFactorProof = SecondFactorProof.SecondFactorCode("code"),
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
@@ -363,8 +358,7 @@ class UserManagerImplTest {
                 keySalt = any(),
                 srpProofs = any(),
                 srpSession = any(),
-                secondFactorCode = any(),
-                secondFactorFido = null,
+                secondFactorProof = any(),
                 auth = any(),
                 keys = any(),
                 userKeys = any(),

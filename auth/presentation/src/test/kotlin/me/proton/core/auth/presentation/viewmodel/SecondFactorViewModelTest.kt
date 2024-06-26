@@ -29,10 +29,10 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.ScopeInfo
-import me.proton.core.auth.domain.entity.SecondFactorProof
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.PerformSecondFactor
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.presentation.entity.SessionResult
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId

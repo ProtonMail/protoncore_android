@@ -1175,7 +1175,7 @@ public final class me/proton/core/key/data/repository/PrivateKeyRepositoryImpl :
 	public fun createAddressKey (Lme/proton/core/domain/entity/UserId;Lme/proton/core/key/domain/entity/key/PrivateAddressKey;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun reactivatePrivateKey (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/key/domain/entity/key/PrivateKey;Ljava/util/List;Ljava/util/Map;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setupInitialKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updatePrivateKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updatePrivateKeys (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;Lme/proton/core/crypto/common/srp/Auth;Ljava/util/List;Ljava/util/List;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
 public final class me/proton/core/key/data/repository/PublicAddressRepositoryImpl : me/proton/core/key/domain/repository/PublicAddressRepository {

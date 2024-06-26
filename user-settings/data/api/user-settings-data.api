@@ -70,8 +70,8 @@ public final class me/proton/core/usersettings/data/api/UserSettingsRemoteDataSo
 	public fun fetch (Lme/proton/core/domain/entity/UserId;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setRecoverySecret (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUserSettings (Lme/proton/core/domain/entity/UserId;Lme/proton/core/usersettings/domain/entity/UserSettingsProperty;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }
 
@@ -973,8 +973,8 @@ public final class me/proton/core/usersettings/data/repository/UserSettingsRepos
 	public fun markAsStale (Lme/proton/core/domain/entity/UserId;)V
 	public fun setUsername (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateCrashReports (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
-	public fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorFido;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateLoginPassword (Lme/proton/core/domain/entity/UserId;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;Lme/proton/core/crypto/common/srp/Auth;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
+	public fun updateRecoveryEmail (Lme/proton/core/domain/entity/UserId;Ljava/lang/String;Lme/proton/core/crypto/common/srp/SrpProofs;Ljava/lang/String;Lme/proton/core/auth/fido/domain/entity/SecondFactorProof;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateTelemetry (Lme/proton/core/domain/entity/UserId;ZLkotlin/coroutines/Continuation;)Ljava/lang/Object;
 	public fun updateUserSettings (Lme/proton/core/usersettings/domain/entity/UserSettings;Lkotlin/coroutines/Continuation;)Ljava/lang/Object;
 }

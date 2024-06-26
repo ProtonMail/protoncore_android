@@ -22,8 +22,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.presentation.viewmodel.Source
-import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.usersettings.presentation.entity.TwoFaDialogArguments
 
@@ -39,7 +37,7 @@ class TwoFaInputActivity : ProtonActivity() {
     }
 
     private val userId by lazy {
-        twoFaDialogArguments.user
+        twoFaDialogArguments.userId
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -157,13 +157,42 @@ public final class me/proton/core/auth/fido/domain/entity/Fido2RegisteredKey$Com
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/proton/core/auth/fido/domain/entity/SecondFactorFido {
+public abstract class me/proton/core/auth/fido/domain/entity/SecondFactorProof {
+}
+
+public final class me/proton/core/auth/fido/domain/entity/SecondFactorProof$Fido2 : me/proton/core/auth/fido/domain/entity/SecondFactorProof {
 	public fun <init> (Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;[B[B[B[B)V
 	public final fun getAuthenticatorData ()[B
 	public final fun getClientData ()[B
 	public final fun getCredentialID ()[B
 	public final fun getPublicKeyOptions ()Lme/proton/core/auth/fido/domain/entity/Fido2PublicKeyCredentialRequestOptions;
 	public final fun getSignature ()[B
+}
+
+public final class me/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorCode : me/proton/core/auth/fido/domain/entity/SecondFactorProof {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;)Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorCode;
+	public static synthetic fun copy$default (Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorCode;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorCode;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getCode ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorSignature : me/proton/core/auth/fido/domain/entity/SecondFactorProof {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorSignature;
+	public static synthetic fun copy$default (Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorSignature;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Lme/proton/core/auth/fido/domain/entity/SecondFactorProof$SecondFactorSignature;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getClientData ()Ljava/lang/String;
+	public final fun getKeyHandle ()Ljava/lang/String;
+	public final fun getSignatureData ()Ljava/lang/String;
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/proton/core/auth/fido/domain/ext/Fido2AuthenticationExtensionsClientInputsExtKt {

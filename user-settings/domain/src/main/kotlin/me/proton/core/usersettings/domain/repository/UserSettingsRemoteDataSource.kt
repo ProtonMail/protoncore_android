@@ -19,7 +19,7 @@
 package me.proton.core.usersettings.domain.repository
 
 import me.proton.core.auth.domain.entity.ServerProof
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.EncryptedSignature
 import me.proton.core.crypto.common.srp.Auth
@@ -39,16 +39,14 @@ interface UserSettingsRemoteDataSource {
         email: String,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?
+        secondFactorProof: SecondFactorProof?
     ): Pair<UserSettings, ServerProof>
 
     suspend fun updateLoginPassword(
         sessionUserId: SessionUserId,
         srpProofs: SrpProofs,
         srpSession: String,
-        secondFactorCode: String?,
-        secondFactorFido: SecondFactorFido?,
+        secondFactorProof: SecondFactorProof?,
         auth: Auth
     ): Pair<UserSettings, ServerProof>
 

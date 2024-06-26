@@ -22,7 +22,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import me.proton.core.auth.presentation.entity.TwoFAInput
+import me.proton.core.auth.presentation.entity.SecondFactorProofEntity
 import me.proton.core.usersettings.presentation.entity.SettingsInput
 import me.proton.core.usersettings.presentation.entity.PasswordManagementResult
 import me.proton.core.usersettings.presentation.entity.TwoFaDialogArguments
@@ -53,14 +53,14 @@ class StartPasswordManagement : ActivityResultContract<SettingsInput, PasswordMa
     }
 }
 
-class StartTwoFAInputDialog : ActivityResultContract<TwoFaDialogArguments, TwoFAInput?>() {
+class StartTwoFAInputDialog : ActivityResultContract<TwoFaDialogArguments, SecondFactorProofEntity?>() {
 
     override fun createIntent(context: Context, input: TwoFaDialogArguments): Intent =
         Intent(context, TwoFaInputActivity::class.java).apply {
             putExtra(TwoFaInputActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, intent: Intent?): TwoFAInput? {
+    override fun parseResult(resultCode: Int, intent: Intent?): SecondFactorProofEntity? {
         if (resultCode != Activity.RESULT_OK) return null
         return intent?.getParcelableExtra(TwoFaInputActivity.ARG_RESULT)
     }

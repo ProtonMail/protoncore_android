@@ -37,7 +37,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
-import me.proton.core.auth.fido.domain.entity.SecondFactorFido
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
@@ -155,8 +155,8 @@ class ConfirmPasswordDialog : DialogFragment() {
 
     private fun onTotpSubmitted() {
         val password = viewController.password.orEmpty()
-        val twoFactorCode = viewController.twoFactorCode
-        viewModel.unlock(userId, missingScope, password, secondFactorCode = twoFactorCode)
+        val twoFactorCode = viewController.twoFactorCode.orEmpty()
+        viewModel.unlock(userId, missingScope, password, secondFactorProof = SecondFactorProof.SecondFactorCode(twoFactorCode))
     }
 
     private fun onSecurityKeySubmitted() {
@@ -256,7 +256,7 @@ class ConfirmPasswordDialog : DialogFragment() {
             userId = userId,
             missingScope = missingScope,
             password = password,
-            secondFactorFido = SecondFactorFido(
+            secondFactorProof = SecondFactorProof.Fido2(
                 publicKeyOptions = options,
                 clientData = result.response.clientDataJSON,
                 authenticatorData = result.response.authenticatorData,

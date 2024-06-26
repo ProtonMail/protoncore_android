@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.domain.exception.InvalidServerAuthenticationException
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
@@ -157,8 +158,7 @@ class UserSettingsRepositoryImplTest {
             email = "test-email2",
             srpProofs = testSrpProofs,
             srpSession = "test-srp-session",
-            secondFactorCode = "",
-            secondFactorFido = null
+            secondFactorProof = SecondFactorProof.SecondFactorCode("")
         )
         // THEN
         assertNotNull(response)
@@ -179,8 +179,7 @@ class UserSettingsRepositoryImplTest {
                 email = "test-email2",
                 srpProofs = testSrpProofs,
                 srpSession = "test-srp-session",
-                secondFactorCode = "",
-                secondFactorFido = null
+                secondFactorProof = SecondFactorProof.SecondFactorCode("")
             )
         }
         assertEquals(
@@ -222,8 +221,7 @@ class UserSettingsRepositoryImplTest {
             sessionUserId = UserId(testUserId),
             srpProofs = testSrpProofs,
             srpSession = "test-srp-session",
-            secondFactorCode = "",
-            secondFactorFido = null,
+            secondFactorProof = SecondFactorProof.SecondFactorCode(""),
             auth = testAuth
         )
         // THEN
@@ -244,8 +242,7 @@ class UserSettingsRepositoryImplTest {
                 sessionUserId = UserId(testUserId),
                 srpProofs = testSrpProofs,
                 srpSession = "test-srp-session",
-                secondFactorCode = "",
-                secondFactorFido = null,
+                secondFactorProof = SecondFactorProof.SecondFactorCode(""),
                 auth = testAuth
             )
         }
