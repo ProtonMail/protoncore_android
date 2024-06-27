@@ -39,7 +39,6 @@ public class MeasureBlock(
 
     @SuppressLint("VisibleForTests")
     internal fun startMeasurement() {
-        profile.logcatFilter.clearLogcat()
         // Add current ProfileMeasure object to profile measure list.
         profile.measuresList.add(this)
         profile.measurements.forEach { it.onStartMeasurement(profile) }
