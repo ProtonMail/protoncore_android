@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Confirma la dirección de correo electrónico de recuperación</string>
   <string name="settings_recovery_email_new_hint">Introduce tu dirección de correo electrónico</string>
   <string name="settings_recovery_email_confirm_hint">Introduce de nuevo tu dirección de correo electrónico</string>
+  <string name="settings_save_second_password">Guardar la segunda contraseña nueva</string>
+  <string name="settings_save_main_password">Guardar la contraseña principal nueva</string>
   <string name="settings_save">Guardar</string>
   <string name="settings_password_required">Introduce tu contraseña de inicio de sesión</string>
   <string name="settings_password_required_ok">Aceptar</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">La dirección de correo electrónico no es válida.</string>
   <string name="settings_general_error">Se ha producido un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Contraseña de la cuenta</string>
-  <string name="settings_password_management_tab_mailbox_password">Contraseña de cifrado</string>
-  <string name="settings_password_management_change_login_password">En modo de dos contraseñas, se usa la contraseña de la cuenta para iniciar sesión en la cuenta de Proton</string>
-  <string name="settings_password_management_change_mailbox_password">En modo de dos contraseñas, se usa la contraseña de cifrado para cifrar y descifrar los datos.</string>
+  <string name="settings_password_management_tab_main_password">Contraseña principal</string>
+  <string name="settings_password_management_tab_second_password">Segunda contraseña</string>
+  <string name="settings_password_management_change_password_note">Para cambiar cualquiera de tus contraseñas, necesitas conocer la contraseña principal. <a href="https://account.proton.me/reset-password">¿Has olvidado tu contraseña principal?</a></string>
   <string name="settings_password_management_header">Cambiar la contraseña</string>
-  <string name="settings_login_password_hint_current">Contraseña actual</string>
-  <string name="settings_login_password_hint_new">Nueva contraseña</string>
-  <string name="settings_login_password_hint_new_confirm">Confirma la nueva contraseña.</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Contraseña de cifrado actual</string>
-  <string name="settings_mailbox_password_hint_new">Nueva contraseña de cifrado</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirma la nueva contraseña de cifrado.</string>
+  <string name="settings_main_password_hint_current">Contraseña principal actual</string>
+  <string name="settings_main_password_hint_new">Contraseña principal nueva</string>
+  <string name="settings_main_password_hint_new_confirm">Confirmar la contraseña principal nueva</string>
+  <string name="settings_second_password_hint_current_main_password">Contraseña principal actual</string>
+  <string name="settings_second_password_hint_new">Nueva segunda contraseña</string>
+  <string name="settings_second_password_hint_new_confirm">Confirmar la segunda contraseña nueva</string>
   <string name="settings_change_password_error">Se ha producido un error al cambiar la contraseña.</string>
   <string name="settings_recovery_email_success">La dirección de correo electrónico de recuperación ha sido actualizada.</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>

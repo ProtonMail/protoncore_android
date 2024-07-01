@@ -18,43 +18,44 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">備援電子郵件</string>
-  <string name="settings_recovery_email_current">目前的備援電子郵件位址</string>
-  <string name="settings_recovery_email_new">新的備援電子郵件位址</string>
-  <string name="settings_recovery_email_confirm">確認備援電子郵件位址</string>
+  <string name="settings_recovery_email_header">復原電郵位址</string>
+  <string name="settings_recovery_email_current">目前使用的復原電子郵件位址</string>
+  <string name="settings_recovery_email_new">新增的復原電子郵件位址</string>
+  <string name="settings_recovery_email_confirm">確認復原電子郵件位址</string>
   <string name="settings_recovery_email_new_hint">請輸入電子郵件位址</string>
-  <string name="settings_recovery_email_confirm_hint">重新輸入電子郵件位址</string>
+  <string name="settings_recovery_email_confirm_hint">再次輸入電子郵件位址</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">儲存</string>
   <string name="settings_password_required">輸入您的登入密碼</string>
   <string name="settings_password_required_ok">確定</string>
   <string name="settings_not_set">未設定</string>
-  <string name="settings_recovery_email_error_no_match">新增的復原用電子郵件位址不一致</string>
-  <string name="settings_validation_email">電子郵件位址無效.</string>
-  <string name="settings_general_error">發生錯誤。</string>
+  <string name="settings_recovery_email_error_no_match">新增的復原電子郵件位址不一致</string>
+  <string name="settings_validation_email">電子郵件位址格式無效</string>
+  <string name="settings_general_error">出現錯誤</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">帳號密碼</string>
-  <string name="settings_password_management_tab_mailbox_password">加密密碼</string>
-  <string name="settings_password_management_change_login_password">在雙密碼模式下，帳號密碼用於登入您的 Proton 帳號。</string>
-  <string name="settings_password_management_change_mailbox_password">在雙密碼模式下，加密密碼用於加密與解密您的資料。</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">變更密碼</string>
-  <string name="settings_login_password_hint_current">目前密碼</string>
-  <string name="settings_login_password_hint_new">新密碼</string>
-  <string name="settings_login_password_hint_new_confirm">確認新密碼</string>
-  <string name="settings_mailbox_password_hint_current_account_password">目前帳號密碼</string>
-  <string name="settings_mailbox_password_hint_new">新加密密碼</string>
-  <string name="settings_mailbox_password_hint_new_confirm">確認新加密密碼</string>
-  <string name="settings_change_password_error">發生變更密碼錯誤。</string>
-  <string name="settings_recovery_email_success">已更新備援電子郵件位址</string>
-  <string name="settings_password_management_success">已更新密碼</string>
-  <string name="settings_password_management_start_recovery">忘記您目前的密碼嗎？</string>
-  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
-  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_change_password_error">變更密碼時出現錯誤</string>
+  <string name="settings_recovery_email_success">復原電子郵件位址已更新</string>
+  <string name="settings_password_management_success">密碼已更新</string>
+  <string name="settings_password_management_start_recovery">忘記或想不起您的密碼？</string>
+  <string name="settings_manage_security_keys">進行管理、加入或移除安全性密鑰時，請利用 Proton 網頁應用程式。</string>
+  <string name="settings_security_keys_registered">這些是註冊在您帳號的安全性密鑰。</string>
+  <string name="settings_security_keys_empty">目前沒有註冊在您帳號的安全性密鑰。</string>
+  <string name="settings_security_keys_title">安全性密鑰</string>
+  <string name="settings_security_keys_error">擷取安全性密鑰時出錯，請重新再試一次。</string>
   <!-- device/local settings -->
-  <string name="device_settings_telemetry_title">匿名遙測</string>
-  <string name="device_settings_telemetry_hint">為了改善我們的服務，我們有時候會蒐集匿名的使用資料。</string>
-  <string name="device_settings_crashreport_title">匿名當機報告</string>
-  <string name="device_settings_crashreport_hint">若應用程式當機，將會傳送一份報告給我們的工程師，其中會包含原因的詳細資訊。我們僅會使用這些資訊來改進應用程式。</string>
+  <string name="device_settings_telemetry_title">匿名遠測</string>
+  <string name="device_settings_telemetry_hint">為更有效創新服務產品，我們僅在非常時刻蒐集無名化處理過的資料。 </string>
+  <string name="device_settings_crashreport_title">無名化的當機報告</string>
+  <string name="device_settings_crashreport_hint">若應用程式當機，將會傳送一份報告給我們的工程師，其中會包含起因的詳細資訊。這些資訊僅用作改進應用程式。</string>
 </resources>

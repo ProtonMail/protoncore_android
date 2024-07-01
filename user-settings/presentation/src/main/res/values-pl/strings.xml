@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Potwierdź adres pomocniczy</string>
   <string name="settings_recovery_email_new_hint">Wpisz adres e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Wpisz ponownie adres e-mail</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">Zapisz</string>
   <string name="settings_password_required">Wpisz hasło logowania</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">Adres e-mail jest nieprawidłowy.</string>
   <string name="settings_general_error">Wystąpił błąd.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Hasło konto</string>
-  <string name="settings_password_management_tab_mailbox_password">Hasło szyfrowania</string>
-  <string name="settings_password_management_change_login_password">W trybie podwójnego hasła do logowania się do konta Proton używane jest hasło konta.</string>
-  <string name="settings_password_management_change_mailbox_password">W trybie podwójnego hasła do szyfrowania i odszyfrowania danych używane jest hasło szyfrowania.</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Zmień hasło</string>
-  <string name="settings_login_password_hint_current">Obecne hasło</string>
-  <string name="settings_login_password_hint_new">Nowe hasło</string>
-  <string name="settings_login_password_hint_new_confirm">Potwierdź nowe hasło</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Obecne hasło konta</string>
-  <string name="settings_mailbox_password_hint_new">Nowe hasło szyfrowania</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Potwierdź nowe hasło szyfrowania</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
   <string name="settings_change_password_error">Wystąpił błąd podczas zmiany hasła.</string>
   <string name="settings_recovery_email_success">Adres pomocniczy został zaktualizowany</string>
   <string name="settings_password_management_success">Hasło zostało zaktualizowane</string>

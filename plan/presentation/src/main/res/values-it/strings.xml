@@ -25,13 +25,13 @@
   <string name="plan_price_monthly">al mese</string>
   <string name="plan_price_annually">all\'anno</string>
   <string name="plans_current_plan">Piano attuale</string>
-  <string name="plans_upgrade_plan">Effettua l\'upgrade del piano</string>
+  <string name="plans_upgrade_plan">Effettua l\'upgrade</string>
   <string name="plans_subscription">Abbonamento</string>
   <string name="plans_renewal_date">Il tuo piano si rinnoverà automaticamente il &lt;b&gt;%s&lt;/b&gt;</string>
   <string name="plans_expiration_date">Il tuo piano scadrà il &lt;b&gt;%s&lt;/b&gt;</string>
-  <string name="plans_pay_monthly">Paga mensilmente</string>
-  <string name="plans_pay_annually">Paga annualmente</string>
-  <string name="plans_pay_biennially">Paga ogni 2 anni</string>
+  <string name="plans_pay_monthly">Pagamento mensile</string>
+  <string name="plans_pay_annually">Pagamento annuale</string>
+  <string name="plans_pay_biennially">Pagamento biennale</string>
   <plurals name="plans_pay_other">
     <item quantity="one">Paga per %d mese</item>
     <item quantity="other">Paga per %d mesi</item>
@@ -45,11 +45,11 @@
     <item quantity="one">Per %d mese</item>
     <item quantity="other">Per %d mesi</item>
   </plurals>
-  <string name="plans_upgrade_your_plan">Effettua l\'upgrade del piano</string>
+  <string name="plans_upgrade_your_plan">Effettua l\'upgrade</string>
   <string name="plans_proton_for_free">Ottieni Proton gratuitamente</string>
-  <string name="plans_get_proton">Ottieni %s</string>
+  <string name="plans_get_proton">Ottieni il piano %s</string>
   <string name="plans_manage_your_subscription">Gestisci l\'abbonamento al sito <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s di %2$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s / %2$s</string>
   <string name="plans_payments_info_not_available">non disponibile</string>
   <string name="plans_manage_your_subscription_google">Il tuo abbonamento è gestito da Google Play.</string>
   <string name="plans_manage_your_subscription_other">Il tuo abbonamento non può essere gestito all\'interno dell\'app mobile.</string>
@@ -57,16 +57,16 @@
   <string name="plans_can_not_upgrade_from_mobile">Non puoi effettuare l\'upgrade dall\'app mobile.</string>
   <string name="plans_no_upgrade_available">Al momento non è disponibile alcun upgrade.</string>
   <string name="plans_limited_offer">Offerta a tempo limitato</string>
-  <string name="plans_subscription_base_storage_full_title">Il tuo spazio di archiviazione Mail è pieno</string>
-  <string name="plans_subscription_base_storage_nearly_full_title">Il tuo spazio di archiviazione Mail è quasi pieno</string>
-  <string name="plans_subscription_drive_storage_full_title">Il tuo spazio di archiviazione Drive è pieno</string>
-  <string name="plans_subscription_drive_storage_nearly_full_title">Il tuo spazio di archiviazione Drive è quasi pieno</string>
+  <string name="plans_subscription_base_storage_full_title">Spazio di archiviazione Mail pieno</string>
+  <string name="plans_subscription_base_storage_nearly_full_title">Spazio di archiviazione Mail quasi pieno</string>
+  <string name="plans_subscription_drive_storage_full_title">Spazio di archiviazione Drive pieno</string>
+  <string name="plans_subscription_drive_storage_nearly_full_title">Spazio di archiviazione Drive quasi pieno</string>
   <string name="plans_subscription_storage_get_more">Ottieni più spazio di archiviazione</string>
   <string name="plans_subscription_storage_full_description">Effettua l\'upgrade per continuare a utilizzare il tuo account senza interruzioni.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
-    <item quantity="one">#proton_storage# di archiviazione</item>
-    <item quantity="other">#proton_storage# di archiviazione</item>
+    <item quantity="one">#proton_storage# di spazio di archiviazione</item>
+    <item quantity="other">#proton_storage# di spazio di archiviazione</item>
   </plurals>
   <plurals name="item_storage_free" comment="please do not modify the text between #">
     <item quantity="one">Fino a #proton_storage# di archiviazione</item>
@@ -85,8 +85,8 @@
     <item quantity="other">#proton_addresses# indirizzi / utente</item>
   </plurals>
   <plurals name="item_address_current" comment="please do not modify the test between #">
-    <item quantity="one">%d di #proton_addresses# indirizzo</item>
-    <item quantity="other">%d di #proton_addresses# indirizzi</item>
+    <item quantity="one">%d / #proton_addresses# indirizzo email</item>
+    <item quantity="other">%d / #proton_addresses# indirizzi email</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
     <item quantity="one">Supporto per #proton_domains# dominio email personalizzato</item>
@@ -97,12 +97,12 @@
     <item quantity="other">#proton_calendars# calendari personali</item>
   </plurals>
   <plurals name="item_calendar_current" comment="please do not modify the test between #">
-    <item quantity="one">%d di #proton_calendars# calendario</item>
-    <item quantity="other">%d di #proton_calendars# calendari</item>
+    <item quantity="one">%d / #proton_calendars# calendario</item>
+    <item quantity="other">%d / #proton_calendars# calendari</item>
   </plurals>
   <plurals name="item_connections" comment="please do not modify the test between #">
-    <item quantity="one">VPN gratuita su un unico dispositivo</item>
-    <item quantity="other">VPN ad alta velocità su #proton_vpn# dispositivi</item>
+    <item quantity="one">VPN gratuita per un unico dispositivo</item>
+    <item quantity="other">VPN ad alta velocità per #proton_vpn# dispositivi</item>
   </plurals>
   <plurals name="item_connections_highspeed" comment="please do not modify the test between #">
     <item quantity="one">#proton_vpn# connessione VPN ad alta velocità</item>
@@ -113,8 +113,8 @@
     <item quantity="other">#proton_users# utenti</item>
   </plurals>
   <plurals name="item_users_current" comment="please do not modify the test between #">
-    <item quantity="one">%d di #proton_users# utente</item>
-    <item quantity="other">%d di #proton_users# utenti</item>
+    <item quantity="one">%d / #proton_users# utente</item>
+    <item quantity="other">%d / #proton_users# utenti</item>
   </plurals>
   <!-- endregion -->
   <!-- region plans headers -->
@@ -127,7 +127,7 @@
   <string name="plan_id_vpnplus_streaming">Supporto per i servizi di streaming</string>
   <string name="plan_id_vpnplus_header">VPN Plus</string>
   <string name="plan_id_vpnplus_countries">63 paesi</string>
-  <string name="plan_id_vpnplus_highest_speed">Massima velocità</string>
+  <string name="plan_id_vpnplus_highest_speed">Altissima velocità</string>
   <string name="plan_id_professional_header">Professional</string>
   <string name="plan_id_professional_multiuser">Supporto multi-utente</string>
   <string name="plan_id_visionary_header">Visionary</string>
@@ -145,7 +145,7 @@
   </string-array>
   <!-- region plans hardcoded texts -->
   <string name="unlimited_folders_labels_filters" comment="new_plans">Cartelle, etichette e filtri illimitati</string>
-  <string name="highest_vpn_speed" comment="new_plans">Massima velocità VPN</string>
+  <string name="highest_vpn_speed" comment="new_plans">VPN ad altissima velocità</string>
   <string name="servers_in_countries" comment="new_plans">Oltre 1500 server in 63 paesi</string>
   <string name="ad_blocker" comment="new_plans">Ad-blocker integrato (NetShield)</string>
   <string name="streaming_services_access" comment="new_plans">Accesso ai servizi di streaming a livello globale</string>

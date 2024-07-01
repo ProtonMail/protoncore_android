@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">您的帳號設定了多種雙因子驗證機制。請挑選您想要確認身份的方式。</string>
   <string name="auth_2fa_tab_one_time_code">拋棄式驗證碼</string>
   <string name="auth_2fa_tab_security_key">安全金鑰</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">出示連結到您 Proton 帳號的安全金鑰。<annotation link="more">取得更多資訊</annotation></string>
   <string name="auth_2fa_label">兩步驟代碼</string>
   <string name="auth_2fa_recovery_code_label">復原代碼</string>
   <string name="auth_2fa_assistive_text">請輸入 6 位數</string>

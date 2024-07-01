@@ -145,7 +145,7 @@
   <string name="auth_signup_error_username_blank">Le nom d\'utilisateur ne doit pas être vide.</string>
   <string name="auth_signup_error_passwords_do_not_match">Les mots de passe ne correspondent pas.</string>
   <string name="auth_signup_validation_password_length">Le mot de passe doit comporter au moins 8 caractères.</string>
-  <string name="auth_signup_password_not_allowed">Le mot de passe es trop commun. Veuillez utiliser un autre mot de passe.</string>
+  <string name="auth_signup_password_not_allowed">Le mot de passe est trop commun. Veuillez utiliser un autre mot de passe.</string>
   <string name="auth_signup_validation_password">Saisissez votre mot de passe.</string>
   <string name="auth_signup_your_account_is_being_setup">Nous créons votre compte…</string>
   <string name="auth_signup_please_wait">Cela ne prend généralement pas plus d\'une minute.</string>

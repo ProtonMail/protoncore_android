@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Potvrďte e-mailovú adresu na obnovenie</string>
   <string name="settings_recovery_email_new_hint">Zadajte e-mailovú adresu</string>
   <string name="settings_recovery_email_confirm_hint">Znova zadajte e-mailovú adresu</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">Uložiť</string>
   <string name="settings_password_required">Zadajte svoje prihlasovacie heslo</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">Emailová adresa je neplatná.</string>
   <string name="settings_general_error">Vyskytla sa chyba.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Heslo účtu</string>
-  <string name="settings_password_management_tab_mailbox_password">Šifrovacie heslo</string>
-  <string name="settings_password_management_change_login_password">V režime dvoch hesiel sa heslo účtu používa na prihlásenie k účtu Proton.</string>
-  <string name="settings_password_management_change_mailbox_password">V režime dvoch hesiel sa šifrovacie heslo používa na šifrovanie a dešifrovanie dát.</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Zmeniť heslo</string>
-  <string name="settings_login_password_hint_current">Aktuálne heslo</string>
-  <string name="settings_login_password_hint_new">Nové heslo</string>
-  <string name="settings_login_password_hint_new_confirm">Potvrďte nové heslo</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Aktuálne heslo účtu</string>
-  <string name="settings_mailbox_password_hint_new">Nové šifrovacie heslo</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Podvrďte nové šifrovacie heslo</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
   <string name="settings_change_password_error">Vyskytla sa chyba pri zmene hesla.</string>
   <string name="settings_recovery_email_success">Email na obnovenie bol aktualizovaný</string>
   <string name="settings_password_management_success">Heslo bolo aktualizované</string>

@@ -29,7 +29,7 @@
   <string name="account_recovery_cancel_password_label">Contraseña actual</string>
   <string name="account_recovery_cancel_password_placeholder">Contraseña</string>
   <string name="account_recovery_cancel_now">Cancelar el restablecimiento de contraseña</string>
-  <string name="account_recovery_cancel_back">Regresar</string>
+  <string name="account_recovery_cancel_back">Volver</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">Restablecimiento de contraseña cancelado</string>
   <string name="account_recovery_cancelled_subtitle">Si tú nunca solicitaste un cambio para tu contraseña, tu cuenta podría estar comprometida y en riesgo.\n\nAsegura tu cuenta cambiando tu contraseña.</string>

@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Confirma l\'adreça electrònica de recuperació actual</string>
   <string name="settings_recovery_email_new_hint">Introduïu l\'adreça de correu electrònic.</string>
   <string name="settings_recovery_email_confirm_hint">Torneu a introduir l\'adreça de correu electrònic</string>
+  <string name="settings_save_second_password">Desa la nova segona contrasenya</string>
+  <string name="settings_save_main_password">Desa la nova contrasenya principal</string>
   <string name="settings_save">Desa</string>
   <string name="settings_password_required">Introduïu la contrasenya d\'inici de sessió</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">L\'adreça de correu electrònic no és vàlida.</string>
   <string name="settings_general_error">S\'ha produït un error.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Contrasenya del compte</string>
-  <string name="settings_password_management_tab_mailbox_password">Contrasenya de xifratge</string>
-  <string name="settings_password_management_change_login_password">En el mode de dues contrasenyes, la contrasenya del compte s\'utilitza per iniciar la sessió al vostre compte de Proton</string>
-  <string name="settings_password_management_change_mailbox_password">En el mode de dues contrasenyes, la contrasenya de xifratge s\'utilitza per xifrar i desxifrar les vostres dades.</string>
+  <string name="settings_password_management_tab_main_password">Contrasenya principal</string>
+  <string name="settings_password_management_tab_second_password">Segona contrasenya</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Canvia la contrasenya</string>
-  <string name="settings_login_password_hint_current">Contrasenya actual</string>
-  <string name="settings_login_password_hint_new">Contrasenya nova</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmeu la contrasenya nova</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Contrasenya del compte actual</string>
-  <string name="settings_mailbox_password_hint_new">Contrasenya de xifratge nova</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmeu la contrasenya de xifratge nova</string>
+  <string name="settings_main_password_hint_current">Contrasenya principal actual</string>
+  <string name="settings_main_password_hint_new">Nova contrasenya principal</string>
+  <string name="settings_main_password_hint_new_confirm">Confirma la nova contrasenya principal</string>
+  <string name="settings_second_password_hint_current_main_password">Contrasenya principal actual</string>
+  <string name="settings_second_password_hint_new">Nova segona contrasenya</string>
+  <string name="settings_second_password_hint_new_confirm">Confirmeu la nova segona contrasenya</string>
   <string name="settings_change_password_error">Hi ha hagut un error de canvi de contrasenya.</string>
   <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>

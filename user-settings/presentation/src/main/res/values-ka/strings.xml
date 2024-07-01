@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">დაადასტურეთ აღდგენის ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_new_hint">შეიყვანეთ ელფოსტის მისამართი</string>
   <string name="settings_recovery_email_confirm_hint">თავიდან შეიყვანეთ ელფოსტის მისამართი</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">შენახვა</string>
   <string name="settings_password_required">შეიყვანეთ თქვენი პაროლი</string>
   <string name="settings_password_required_ok">დიახ</string>
@@ -32,22 +34,21 @@
   <string name="settings_validation_email">ელფოსტის მისამართი არასწორია.</string>
   <string name="settings_general_error">ნაპოვნია შეცდომა.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">ანგარიშის პაროლი</string>
-  <string name="settings_password_management_tab_mailbox_password">დაშიფვრის პაროლი</string>
-  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
-  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">პაროლის შეცვლა</string>
-  <string name="settings_login_password_hint_current">მიმდინარე პაროლი</string>
-  <string name="settings_login_password_hint_new">ახალი პაროლი</string>
-  <string name="settings_login_password_hint_new_confirm">დაადასტურეთ ახალი პაროლი</string>
-  <string name="settings_mailbox_password_hint_current_account_password">მიმდინარე ანგარიშის პაროლი</string>
-  <string name="settings_mailbox_password_hint_new">ახალი დაშიფვრის პაროლი</string>
-  <string name="settings_mailbox_password_hint_new_confirm">დაადასტურეთ დაშიფვრის ახალი პაროლი</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
   <string name="settings_change_password_error">შეცდომა პაროლის შეცვლისას.</string>
   <string name="settings_recovery_email_success">აღდგენის ელფოსტის მისამართი განახლდა</string>
   <string name="settings_password_management_success">პაროლი განახლებულია</string>
   <string name="settings_password_management_start_recovery">არ იცით თქვენი მიმდინარე პაროლი?</string>
-  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_manage_security_keys">უსაფრთხოების გასაღებების სამართავად, დასამატებლად ან წასაშლელად Proton-ის ვებ-აპლიკაცია გამოიყენეთ.</string>
   <string name="settings_security_keys_registered">თქვენს ანგარიშზე რეგისტრირებულია უსაფრთხოების გასაღებები.</string>
   <string name="settings_security_keys_empty">თქვენს ანგარიშზე უსაფრთხოების გასაღებები რეგისტრირებული არაა.</string>
   <string name="settings_security_keys_title">უსაფრთხოების გასაღებები</string>

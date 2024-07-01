@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Bekräfta e-postadress för återställning</string>
   <string name="settings_recovery_email_new_hint">Ange e-postadress</string>
   <string name="settings_recovery_email_confirm_hint">Ange e-postadress igen</string>
+  <string name="settings_save_second_password">Spara nytt andra lösenord</string>
+  <string name="settings_save_main_password">Spara nytt huvudlösenord</string>
   <string name="settings_save">Spara</string>
   <string name="settings_password_required">Ange ditt inloggningslösenord</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">E-postadress är ogiltig.</string>
   <string name="settings_general_error">Ett fel uppstod.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Kontolösenord</string>
-  <string name="settings_password_management_tab_mailbox_password">Krypteringslösenord</string>
-  <string name="settings_password_management_change_login_password">I tvålösenordsläge används kontolösenordet för att logga in på ditt Proton-konto.</string>
-  <string name="settings_password_management_change_mailbox_password">I tvålösenordsläge används krypteringslösenordet för att kryptera och dekryptera dina data.</string>
+  <string name="settings_password_management_tab_main_password">Huvudlösenord</string>
+  <string name="settings_password_management_tab_second_password">Andra lösenord</string>
+  <string name="settings_password_management_change_password_note">För att ändra något av dina lösenord måste du känna till ditt huvudlösenord. <a href="https://account.proton.me/reset-password">Glömt ditt huvudlösenord?</a></string>
   <string name="settings_password_management_header">Ändra lösenord</string>
-  <string name="settings_login_password_hint_current">Nuvarande lösenord</string>
-  <string name="settings_login_password_hint_new">Nytt lösenord</string>
-  <string name="settings_login_password_hint_new_confirm">Bekräfta nytt lösenord</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Nuvarande kontolösenord</string>
-  <string name="settings_mailbox_password_hint_new">Nytt krypteringslösenord</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Bekräfta nytt krypteringslösenord</string>
+  <string name="settings_main_password_hint_current">Nuvarande huvudlösenord</string>
+  <string name="settings_main_password_hint_new">Nytt huvudlösenord</string>
+  <string name="settings_main_password_hint_new_confirm">Bekräfta nytt huvudlösenord</string>
+  <string name="settings_second_password_hint_current_main_password">Nuvarande huvudlösenord</string>
+  <string name="settings_second_password_hint_new">Nytt andra lösenord</string>
+  <string name="settings_second_password_hint_new_confirm">Bekräfta nytt andra lösenord</string>
   <string name="settings_change_password_error">Ett fel uppstod vid ändring av lösenord.</string>
   <string name="settings_recovery_email_success">E-postadress för återställning uppdaterad</string>
   <string name="settings_password_management_success">Lösenord uppdaterat</string>

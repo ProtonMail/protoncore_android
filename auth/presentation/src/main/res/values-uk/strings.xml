@@ -56,7 +56,7 @@
   <string name="auth_help_option_customer_support">Клієнтська підтримка</string>
   <string name="auth_2fa_title">Two Factor Authentication</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_tab_one_time_code">Одноразовий код</string>
   <string name="auth_2fa_tab_security_key">Security key</string>
   <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Код двоетапної перевірки</string>
@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">Введіть 8-значний код відновлення.</string>
   <string name="auth_2fa_action">Автентифікація</string>
   <string name="auth_2fa_use_recovery_code">Використати код відновлення</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">Докладніше</string>
   <string name="auth_2fa_use_2fa_code">Використати код двоетапної перевірки</string>
   <string name="auth_2fa_error_empty_code">Введіть код із 6 цифр.</string>
   <string name="auth_mailbox_title">Розблокуйте поштову скриньку</string>

@@ -24,25 +24,26 @@
   <string name="settings_recovery_email_confirm">Conferma il nuovo indirizzo email</string>
   <string name="settings_recovery_email_new_hint">Inserisci l\'indirizzo email</string>
   <string name="settings_recovery_email_confirm_hint">Inserisci nuovamente l\'indirizzo email</string>
+  <string name="settings_save_second_password">Salva la nuova password secondaria</string>
+  <string name="settings_save_main_password">Salva la nuova password principale</string>
   <string name="settings_save">Salva</string>
-  <string name="settings_password_required">Inserisci la password di accesso</string>
+  <string name="settings_password_required">Inserisci la password dell\'account</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non impostato</string>
-  <string name="settings_recovery_email_error_no_match">Email non corrispondente</string>
+  <string name="settings_recovery_email_error_no_match">Indirizzo email non corrispondente</string>
   <string name="settings_validation_email">Indirizzo email non valido</string>
   <string name="settings_general_error">Si è verificato un errore</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Password dell\'account</string>
-  <string name="settings_password_management_tab_mailbox_password">Password di crittografia</string>
-  <string name="settings_password_management_change_login_password">Nella modalità a doppia password, la password dell\'account viene utilizzata per accedere all\'account Proton.</string>
-  <string name="settings_password_management_change_mailbox_password">Nella modalità a doppia password, la password di crittografia viene utilizzata per crittografare e decrittografare i dati.</string>
+  <string name="settings_password_management_tab_main_password">Password principale</string>
+  <string name="settings_password_management_tab_second_password">Password secondaria</string>
+  <string name="settings_password_management_change_password_note">Inserisci la password principale attuale per cambiare la password. <a href="https://account.proton.me/reset-password">Hai dimenticato la password principale?</a></string>
   <string name="settings_password_management_header">Gestione delle password</string>
-  <string name="settings_login_password_hint_current">Password attuale dell\'account</string>
-  <string name="settings_login_password_hint_new">Nuova password dell\'account</string>
-  <string name="settings_login_password_hint_new_confirm">Conferma la nuova password</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Password dell\'account attuale</string>
-  <string name="settings_mailbox_password_hint_new">Nuova password di crittografia</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Conferma la nuova password</string>
+  <string name="settings_main_password_hint_current">Password principale attuale</string>
+  <string name="settings_main_password_hint_new">Nuova password principale</string>
+  <string name="settings_main_password_hint_new_confirm">Conferma la nuova password</string>
+  <string name="settings_second_password_hint_current_main_password">Password principale attuale</string>
+  <string name="settings_second_password_hint_new">Nuova password secondaria</string>
+  <string name="settings_second_password_hint_new_confirm">Conferma la nuova password</string>
   <string name="settings_change_password_error">Cambio della password non riuscito</string>
   <string name="settings_recovery_email_success">Indirizzo email di recupero aggiornato</string>
   <string name="settings_password_management_success">Password aggiornata</string>
@@ -54,7 +55,7 @@
   <string name="settings_security_keys_error">Caricamento delle chiavi di sicurezza non riuscito. Riprova.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anonima</string>
-  <string name="device_settings_telemetry_hint">Per migliorare i nostri servizi, a volte raccogliamo dati di utilizzo in forma anonima.</string>
+  <string name="device_settings_telemetry_hint">Abilita questa opzione per inviare automaticamente dati di utilizzo dell\'app in forma anonima.</string>
   <string name="device_settings_crashreport_title">Segnalazioni anonime</string>
-  <string name="device_settings_crashreport_hint">Se l\'app si arresta in modo anomalo, verrà inviata una segnalazione ai nostri tecnici con i dettagli della causa. Useremo queste solamente al fine di migliorare l\'app.</string>
+  <string name="device_settings_crashreport_hint">Abilita questa opzione per inviare automaticamente una segnalazione nel caso in cui l\'app si arresta in modo anomalo.</string>
 </resources>

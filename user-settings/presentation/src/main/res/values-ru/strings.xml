@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Подтвердить резервный адрес электронной почты</string>
   <string name="settings_recovery_email_new_hint">Введите адрес электронной почты</string>
   <string name="settings_recovery_email_confirm_hint">Повторно введите адрес электронной почты</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">Сохранить</string>
   <string name="settings_password_required">Введите свой пароль для входа</string>
   <string name="settings_password_required_ok">ОК</string>
@@ -32,26 +34,25 @@
   <string name="settings_validation_email">Неверный адрес электронной почты.</string>
   <string name="settings_general_error">Произошла ошибка.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Пароль аккаунта</string>
-  <string name="settings_password_management_tab_mailbox_password">Пароль шифрования</string>
-  <string name="settings_password_management_change_login_password">В режиме двух паролей пароль аккаунта используется для входа в ваш аккаунт Proton.</string>
-  <string name="settings_password_management_change_mailbox_password">В режиме двух паролей пароль шифрования используется для шифрования и дешифрования данных.</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Изменить пароль</string>
-  <string name="settings_login_password_hint_current">Текущий пароль</string>
-  <string name="settings_login_password_hint_new">Новый пароль</string>
-  <string name="settings_login_password_hint_new_confirm">Подтвердите новый пароль</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Текущий пароль аккаунта</string>
-  <string name="settings_mailbox_password_hint_new">Новый пароль шифрования</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Подтвердите новый пароль шифрования</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
   <string name="settings_change_password_error">Произошла ошибка при смене пароля.</string>
   <string name="settings_recovery_email_success">Резервный адрес электронной почты обновлён</string>
   <string name="settings_password_management_success">Пароль обновлен</string>
   <string name="settings_password_management_start_recovery">Не знаете свой текущий пароль?</string>
-  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_manage_security_keys">Для управления, добавления или удаления ключей безопасности используйте веб-приложение Proton .</string>
   <string name="settings_security_keys_registered">Это ключи безопасности, зарегистрированные в вашей учетной записи.</string>
-  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
+  <string name="settings_security_keys_empty">Для вашей учетной записи не зарегистрировано ни одного ключа безопасности.</string>
+  <string name="settings_security_keys_title">Ключи безопасности</string>
+  <string name="settings_security_keys_error">Ошибка при загрузке ключей безопасности, попробуйте еще раз.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Анонимная телеметрия</string>
   <string name="device_settings_telemetry_hint">Иногда мы собираем обезличенные данные для улучшения наших сервисов.</string>

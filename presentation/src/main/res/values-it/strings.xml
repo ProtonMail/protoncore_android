@@ -18,17 +18,17 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Impossibile trovare il browser per aprire il link</string>
+  <string name="presentation_browser_missing">Apertura del link non riuscita poiché nessun browser è stato trovato</string>
   <string name="presentation_force_update_title">Aggiornamento necessario</string>
-  <string name="presentation_force_update_message">Questa versione dell\'app non è più supportata, aggiornala per continuare a usarla.</string>
+  <string name="presentation_force_update_message">Versione attuale dell\'app non più supportata. Aggiornala per continuare a usarla.</string>
   <string name="presentation_force_update_learn_more">Scopri di più</string>
   <string name="presentation_force_update_update">Aggiorna</string>
-  <string name="presentation_market_missing">Impossibile trovare l\'applicazione sul tuo dispositivo. Vai nell\'app store per installarla.</string>
+  <string name="presentation_market_missing">Applicazione non trovata nel dispositivo. Vai nell\'app store per installarla.</string>
   <string name="presentation_authenticate">Autentica</string>
-  <string name="presentation_signin_to_continue">Accedi per continuare</string>
+  <string name="presentation_signin_to_continue">Effettua l\'accesso per continuare</string>
   <string name="presentation_alert_title">Avviso</string>
   <string name="presentation_alert_ok">OK</string>
-  <string name="presentation_alert_enter">Inserisci</string>
+  <string name="presentation_alert_enter">Conferma</string>
   <string name="presentation_alert_cancel">Annulla</string>
   <string name="presentation_alert_continue">Continua</string>
   <string name="presentation_alert_submit">Invia</string>
@@ -44,7 +44,7 @@
   <string name="presentation_skip">Salta</string>
   <string name="presentation_phone_calling_code_template">+%s</string>
   <string name="presentation_general_connection_error">Connessione al server non riuscita</string>
-  <string name="presentation_check_your_connection">Controlla la tua connessione</string>
+  <string name="presentation_check_your_connection">Controlla la connessione</string>
   <string name="presentation_connectivity_issues">Problemi di connessione</string>
   <string name="presentation_field_required">Campo necessario</string>
   <string name="presentation_error_general">Si è verificato un errore</string>

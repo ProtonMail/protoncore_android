@@ -19,20 +19,20 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">Si è verificato un errore</string>
-  <string name="payments_no_connectivity">Nessuna connessione per visualizzare la pagina di conferma del 3DS</string>
+  <string name="payments_no_connectivity">Sei offline. Visualizzazione della pagina di conferma del 3DS non riuscita.</string>
   <string name="payments_3ds_not_approved">Approvazione 3DS rifiutata</string>
   <string name="payments_error_card_name">Nome sulla carta necessario</string>
   <string name="payments_error_card_number">Numero della carta non valido</string>
-  <string name="payments_error_cvc">Inserisci un codice di sicurezza valido</string>
-  <string name="payments_error_session">ID di sessione valido necessario quando si iscrive un utente che ha effettuato l\'accesso.</string>
+  <string name="payments_error_cvc">Codice di sicurezza non valido</string>
+  <string name="payments_error_session">ID sessione valido necessario per la registrazione di un utente che ha effettuato l\'accesso</string>
   <string name="payments_error_signup_paymentmethod">Registrazione con il metodo di pagamento esistente non riuscita</string>
   <string name="payments_error_invalid_session">Sessione non valida</string>
   <string name="payments_no_payment_provider">Nessun fornitore di servizi di pagamento trovato</string>
-  <string name="payments_error_google_prices">Problema nel caricamento dei prezzi dal Google Play Store.</string>
+  <string name="payments_error_google_prices">Caricamento dei prezzi da Google Play Store non riuscito</string>
   <!-- endregion -->
   <!-- region payment options -->
   <string name="payments_choose_payment_method">Scegli il metodo di pagamento</string>
-  <string name="payments_add_credit_debit_card">Aggiungi una nuova carta di credito/debito</string>
+  <string name="payments_add_credit_debit_card">Aggiungi una carta</string>
   <string name="payments_pay" comment="Example: Pay 5EUR">Paga %s</string>
   <string name="payments_pay_with" comment="Example: Pay with debit card">Paga con</string>
   <string name="payments_method_icon">Icona del metodo di pagamento</string>
@@ -62,13 +62,13 @@
   <string name="payments_billing_yearly">Per 1 anno</string>
   <string name="payments_billing_two_years">Per 2 anni</string>
   <string name="payment_use_google_pay_instead">Usa invece Google Pay</string>
-  <string name="payment_use_credit_card_instead">Usa invece la carta di credito/debito</string>
+  <string name="payment_use_credit_card_instead">Usa invece una carta</string>
   <!-- endregion -->
   <!-- region GIAP -->
-  <string name="payments_giap_unredeemed_title">Conferma l\'upgrade dell\'account</string>
-  <string name="payments_giap_unredeemed_description">Il pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi ripetere il pagamento per effettuare l\'upgrade del tuo account adesso?</string>
-  <string name="payments_giap_unredeemed_confirm">Conferma l\'upgrade</string>
-  <string name="payments_giap_redeem_success">L\'upgrade dell\'account è stato effettuato correttamente</string>
+  <string name="payments_giap_unredeemed_title">Conferma l\'upgrade</string>
+  <string name="payments_giap_unredeemed_description">Il pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi applicare il pagamento per effettuare l\'upgrade adesso?</string>
+  <string name="payments_giap_unredeemed_confirm">Conferma</string>
+  <string name="payments_giap_redeem_success">Upgrade dell\'account effettuato</string>
   <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova più tardi.</string>
   <!-- endregion -->
 </resources>

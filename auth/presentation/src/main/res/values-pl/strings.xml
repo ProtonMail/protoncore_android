@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Na koncie masz skonfigurowane wiele metod uwierzytelniania dwustopniowego. Wybierz metodę potwierdzenia tożsamości.</string>
   <string name="auth_2fa_tab_one_time_code">Kod uwierzytelniający</string>
   <string name="auth_2fa_tab_security_key">Klucz bezpieczeństwa</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Użyj klucza bezpieczeństwa powiązanego z kontem Proton. <annotation link="more">Dowiedz się więcej</annotation></string>
   <string name="auth_2fa_label">Kod uwierzytelniający</string>
   <string name="auth_2fa_recovery_code_label">Kod odzyskiwania</string>
   <string name="auth_2fa_assistive_text">Wpisz 6-cyfrowy kod.</string>

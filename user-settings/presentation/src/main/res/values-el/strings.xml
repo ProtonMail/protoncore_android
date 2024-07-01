@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Επιβεβαίωση ηλεκτρονικής διεύθυνσης ανάκτησης</string>
   <string name="settings_recovery_email_new_hint">Εισάγετε την διεύθυνση email σας</string>
   <string name="settings_recovery_email_confirm_hint">Εισάγετε ξανά τη διεύθυνση email σας</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">Αποθήκευση</string>
   <string name="settings_password_required">Εισαγάγετε τον κωδικό πρόσβασης</string>
   <string name="settings_password_required_ok">ΟΚ</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">Η διεύθυνση email δεν είναι έγκυρη.</string>
   <string name="settings_general_error">Παρουσιάστηκε σφάλμα.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Κωδικός λογαριασμού</string>
-  <string name="settings_password_management_tab_mailbox_password">Κωδικός πρόσβασης κρυπτογράφησης</string>
-  <string name="settings_password_management_change_login_password">Σε λειτουργία δύο κωδικών πρόσβασης, ο κωδικός πρόσβασης λογαριασμού χρησιμοποιείται για τη σύνδεση στον λογαριασμό Proton.</string>
-  <string name="settings_password_management_change_mailbox_password">Στη λειτουργία δύο κωδικών πρόσβασης, ο κωδικός πρόσβασης κρυπτογράφησης χρησιμοποιείται για την κρυπτογράφηση και την αποκρυπτογράφηση των δεδομένων σας.</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Αλλαγή κωδικού πρόσβασης</string>
-  <string name="settings_login_password_hint_current">Τρέχων κωδικός πρόσβασης</string>
-  <string name="settings_login_password_hint_new">Νέος κωδικός</string>
-  <string name="settings_login_password_hint_new_confirm">Επιβεβαίωση νέου κωδικού</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Τρέχων κωδικός λογαριασμού</string>
-  <string name="settings_mailbox_password_hint_new">Νέος κωδικός πρόσβασης κρυπτογράφησης</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Επιβεβαίωση νέου κωδικού πρόσβασης κρυπτογράφησης</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
   <string name="settings_change_password_error">Παρουσιάστηκε σφάλμα στην αλλαγή κωδικού πρόσβασης.</string>
   <string name="settings_recovery_email_success">Η διεύθυνση ηλεκτρονικού ταχυδρομείου ανάκτησης ενημερώθηκε</string>
   <string name="settings_password_management_success">Ο κωδικός πρόσβασης ενημερώθηκε</string>

@@ -21,5 +21,5 @@
   <string name="user_recovery_notification_body">I dati dell\'account sono stati recuperati automaticamente.</string>
   <string name="user_recovery_dialog_title">Recupero tramite dispositivo attendibile</string>
   <string name="user_recovery_dialog_text">In seguito a una reimpostazione della password, i dati dell\'account %1s sono stati automaticamente recuperati.</string>
-  <string name="user_recovery_dialog_dismiss">Ho capito</string>
+  <string name="user_recovery_dialog_dismiss">OK</string>
 </resources>

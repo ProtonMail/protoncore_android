@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Confirme o endereço de e-mail de recuperação</string>
   <string name="settings_recovery_email_new_hint">Digite o endereço de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Digite novamente o endereço de e-mail</string>
+  <string name="settings_save_second_password">Salvar segunda senha nova</string>
+  <string name="settings_save_main_password">Salvar senha principal nova</string>
   <string name="settings_save">Salvar</string>
   <string name="settings_password_required">Digite sua senha de início de sessão</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,26 +34,25 @@
   <string name="settings_validation_email">Endereço de e-mail inválido.</string>
   <string name="settings_general_error">Ocorreu um erro.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Senha da conta</string>
-  <string name="settings_password_management_tab_mailbox_password">Senha de criptografia</string>
-  <string name="settings_password_management_change_login_password">No modo de duas senhas, a senha da conta é usada para iniciar sessão na sua conta da Proton.</string>
-  <string name="settings_password_management_change_mailbox_password">No modo de duas senhas, a senha da criptografia é usada para criptografar e descriptografar seus dados.</string>
+  <string name="settings_password_management_tab_main_password">Senha principal</string>
+  <string name="settings_password_management_tab_second_password">Segunda senha</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Alterar senha</string>
-  <string name="settings_login_password_hint_current">Senha atual</string>
-  <string name="settings_login_password_hint_new">Nova senha</string>
-  <string name="settings_login_password_hint_new_confirm">Confirmar nova senha</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Senha atual da conta</string>
-  <string name="settings_mailbox_password_hint_new">Nova senha de criptografia</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirmar nova senha de criptografia</string>
+  <string name="settings_main_password_hint_current">Senha principal atual</string>
+  <string name="settings_main_password_hint_new">Nova senha principal</string>
+  <string name="settings_main_password_hint_new_confirm">Confirmar nova senha principal</string>
+  <string name="settings_second_password_hint_current_main_password">Senha principal atual</string>
+  <string name="settings_second_password_hint_new">Nova segunda senha</string>
+  <string name="settings_second_password_hint_new_confirm">Confirmar segunda senha nova</string>
   <string name="settings_change_password_error">Ocorreu um erro na troca da senha.</string>
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação atualizado</string>
   <string name="settings_password_management_success">Senha atualizada</string>
   <string name="settings_password_management_start_recovery">Não sabe sua senha atual?</string>
-  <string name="settings_manage_security_keys">Para gerenciar, adicionar ou remover chaves de segurança use o aplicativo web da Proton .</string>
+  <string name="settings_manage_security_keys">Para gerenciar, adicionar ou remover chaves de segurança use o aplicativo web da Proton.</string>
   <string name="settings_security_keys_registered">Essas chaves de segurança estão registradas na sua conta.</string>
   <string name="settings_security_keys_empty">Não há chaves de segurança registradas em sua conta.</string>
   <string name="settings_security_keys_title">Chaves de segurança</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
+  <string name="settings_security_keys_error">Erro ao obter chaves de segurança. Por favor, tente novamente.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Telemetria anônima</string>
   <string name="device_settings_telemetry_hint">Para melhorar nossos serviços, às vezes coletamos dados de uso anônimos.</string>

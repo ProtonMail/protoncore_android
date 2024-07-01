@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Bekræft gendannelses-e-mailadresse</string>
   <string name="settings_recovery_email_new_hint">Indtast e-mailadresse</string>
   <string name="settings_recovery_email_confirm_hint">Indtast e-mailadresse igen</string>
+  <string name="settings_save_second_password">Gem anden adgangskode</string>
+  <string name="settings_save_main_password">Gem ny hovedadgangskode</string>
   <string name="settings_save">Gem</string>
   <string name="settings_password_required">Indtast din login-adgangskode</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">E-mailadresse er ugyldig.</string>
   <string name="settings_general_error">Der opstod en fejl.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Adgangskode til konto</string>
-  <string name="settings_password_management_tab_mailbox_password">Krypteringsadgangskode</string>
-  <string name="settings_password_management_change_login_password">I to adgangskoder-modus bruges kontoens adgangskode til at logge ind på din Proton-konto.</string>
-  <string name="settings_password_management_change_mailbox_password">I to adgangskoder-modus bruges krypteringsadgangskoden til at kryptere og dekryptere dine data.</string>
+  <string name="settings_password_management_tab_main_password">Hovedadgangskode</string>
+  <string name="settings_password_management_tab_second_password">Anden adgangskode</string>
+  <string name="settings_password_management_change_password_note">For at ændre en af dine adgangskoder, skal du huske din hovedadgangskode. <a href="https://account.proton.me/reset-password">Har du glemt din hovedadgangskode?</a></string>
   <string name="settings_password_management_header">Ændr adgangskode</string>
-  <string name="settings_login_password_hint_current">Aktuel adgangskode</string>
-  <string name="settings_login_password_hint_new">Ny adgangskode</string>
-  <string name="settings_login_password_hint_new_confirm">Bekræft ny adgangskode</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Adgangskode til aktuel konto</string>
-  <string name="settings_mailbox_password_hint_new">Ny krypteringsadgangskode</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Bekræft ny krypteringsadgangskode</string>
+  <string name="settings_main_password_hint_current">Nuværende hovedadgangskode</string>
+  <string name="settings_main_password_hint_new">Ny hovedadgangskode</string>
+  <string name="settings_main_password_hint_new_confirm">Bekræft ny hovedadgangskode</string>
+  <string name="settings_second_password_hint_current_main_password">Nuværende hovedadgangskode</string>
+  <string name="settings_second_password_hint_new">Ny anden adgangskode</string>
+  <string name="settings_second_password_hint_new_confirm">Bekræft ny anden adgangskode</string>
   <string name="settings_change_password_error">En fejl opstod ved ændring af adgangskode.</string>
   <string name="settings_recovery_email_success">E-mail-adresse til gendannelse opdateret</string>
   <string name="settings_password_management_success">Adgangskode opdateret</string>

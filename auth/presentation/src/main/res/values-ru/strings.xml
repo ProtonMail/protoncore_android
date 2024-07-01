@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">В вашем аккаунте настроено несколько способов 2FA. Пожалуйста, выберите, как вы хотите подтвердить свою личность.</string>
   <string name="auth_2fa_tab_one_time_code">Одноразовый код</string>
   <string name="auth_2fa_tab_security_key">Ключ безопасности</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Представьте ключ безопасности, привязанный к вашему аккаунту Proton. <annotation link="more">Подробнее</annotation></string>
   <string name="auth_2fa_label">Код двухфакторной аутентификации</string>
   <string name="auth_2fa_recovery_code_label">Код восстановления</string>
   <string name="auth_2fa_assistive_text">Введите код из шести цифр.</string>

@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Пацвердзіць адрас электроннай пошты для аднаўлення доступу</string>
   <string name="settings_recovery_email_new_hint">Увядзіце адрас электроннай пошты</string>
   <string name="settings_recovery_email_confirm_hint">Увядзіце адрас электроннай пошты яшчэ раз</string>
+  <string name="settings_save_second_password">Захаваць новы другі пароль</string>
+  <string name="settings_save_main_password">Захаваць новы галоўны пароль</string>
   <string name="settings_save">Захаваць</string>
   <string name="settings_password_required">Увядзіце ваш пароль уваходу</string>
   <string name="settings_password_required_ok">Добра</string>
@@ -32,22 +34,21 @@
   <string name="settings_validation_email">Памылковы адрас электроннай пошты.</string>
   <string name="settings_general_error">Адбылася памылка.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Пароль уліковага запісу</string>
-  <string name="settings_password_management_tab_mailbox_password">Шыфраванне пароля</string>
-  <string name="settings_password_management_change_login_password">Пароль уліковага запісу ў рэжыме двух пароляў выкарыстоўваецца, каб увайсці ў ваш уліковы запіс Proton.</string>
-  <string name="settings_password_management_change_mailbox_password">Пароль шыфравання ў рэжыме двух пароляў выкарыстоўваецца, каб зашыфраваць і расшыфраваць вашы даныя.</string>
+  <string name="settings_password_management_tab_main_password">Галоўны пароль</string>
+  <string name="settings_password_management_tab_second_password">Другі пароль</string>
+  <string name="settings_password_management_change_password_note">Вы павінны ведаць свой галоўны пароль, каб змяніць любы з вашых пароляў. <a href="https://account.proton.me/reset-password">Забылі свой галоўны пароль?</a></string>
   <string name="settings_password_management_header">Змяніць пароль</string>
-  <string name="settings_login_password_hint_current">Бягучы пароль</string>
-  <string name="settings_login_password_hint_new">Новы пароль</string>
-  <string name="settings_login_password_hint_new_confirm">Пацвердзіць новы пароль</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Бягучы пароль уліковага запісу</string>
-  <string name="settings_mailbox_password_hint_new">Новы пароль шыфравання</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Пацвердзіць новы пароль шыфравання</string>
+  <string name="settings_main_password_hint_current">Бягучы галоўны пароль</string>
+  <string name="settings_main_password_hint_new">Новы галоўны пароль</string>
+  <string name="settings_main_password_hint_new_confirm">Пацвердзіць новы галоўны пароль</string>
+  <string name="settings_second_password_hint_current_main_password">Бягучы галоўны пароль</string>
+  <string name="settings_second_password_hint_new">Новы другі пароль</string>
+  <string name="settings_second_password_hint_new_confirm">Пацвердзіць новы другі пароль</string>
   <string name="settings_change_password_error">Адбылася памылка пры змяненні пароля.</string>
   <string name="settings_recovery_email_success">Адрас электроннай пошты для аднаўлення доступу абноўлены</string>
   <string name="settings_password_management_success">Пароль абноўлены</string>
   <string name="settings_password_management_start_recovery">Не ведаеце свой бягучы пароль?</string>
-  <string name="settings_manage_security_keys">Карыстайцеся вэб-праграмай Proton для кіравання, дадавання або выдалення ключоў бяспекі.</string>
+  <string name="settings_manage_security_keys">Cкарыстайцеся вэб-праграмай Proton для кіравання, дадавання або выдалення ключоў бяспекі.</string>
   <string name="settings_security_keys_registered">Гэтыя ключы бяспекі зарэгістраваны ў вашым уліковым запісе.</string>
   <string name="settings_security_keys_empty">Адсутнічаюць ключы бяспекі, якія зарэгістраваны для вашага ўліковага запісу.</string>
   <string name="settings_security_keys_title">Ключы бяспекі</string>

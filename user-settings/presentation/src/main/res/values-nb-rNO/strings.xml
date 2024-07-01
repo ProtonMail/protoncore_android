@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">Bekreft e-postadresse for gjenoppretting</string>
   <string name="settings_recovery_email_new_hint">Skriv inn e-postadresse</string>
   <string name="settings_recovery_email_confirm_hint">Skriv inn e-postadressen på nytt</string>
+  <string name="settings_save_second_password">Lagre nytt andre passord</string>
+  <string name="settings_save_main_password">Lagre nytt hovedpassord</string>
   <string name="settings_save">Lagre</string>
   <string name="settings_password_required">Skriv inn påloggingspassordet ditt</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">E-postadressen er ugyldig</string>
   <string name="settings_general_error">En feil oppstod</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Kontopassord</string>
-  <string name="settings_password_management_tab_mailbox_password">Krypteringspassord</string>
-  <string name="settings_password_management_change_login_password">I topassordmodus brukes kontopassordet til å logge på Proton-kontoen din.</string>
-  <string name="settings_password_management_change_mailbox_password">I topassordmodus brukes krypteringspassordet til å kryptere og dekryptere dataene dine.</string>
+  <string name="settings_password_management_tab_main_password">Hovedpassord</string>
+  <string name="settings_password_management_tab_second_password">Andre passord</string>
+  <string name="settings_password_management_change_password_note">Hvis du vil endre et av passordene dine, må du vite hovedpassordet ditt. <a href="https://account.proton.me/reset-password">Glemt hovedpassordet ditt?</a></string>
   <string name="settings_password_management_header">Endre passord</string>
-  <string name="settings_login_password_hint_current">Nåværende passord</string>
-  <string name="settings_login_password_hint_new">Nytt passord</string>
-  <string name="settings_login_password_hint_new_confirm">Bekreft nytt passord</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Gjeldende kontopassord</string>
-  <string name="settings_mailbox_password_hint_new">Nytt krypteringspassord</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Bekreft nytt krypteringspassord</string>
+  <string name="settings_main_password_hint_current">Gjeldende hovedpassord</string>
+  <string name="settings_main_password_hint_new">Nytt hovedpassord</string>
+  <string name="settings_main_password_hint_new_confirm">Bekreft nytt hovedpassord</string>
+  <string name="settings_second_password_hint_current_main_password">Gjeldende hovedpassord</string>
+  <string name="settings_second_password_hint_new">Nytt andre passord</string>
+  <string name="settings_second_password_hint_new_confirm">Bekreft nytt andre passord</string>
   <string name="settings_change_password_error">Det har oppstått en feil ved endring av passord.</string>
   <string name="settings_recovery_email_success">Gjennopprettings-e-postadressen oppdatert</string>
   <string name="settings_password_management_success">Passord oppdatert</string>

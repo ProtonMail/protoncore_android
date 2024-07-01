@@ -24,6 +24,8 @@
   <string name="settings_recovery_email_confirm">A helyreállítási e-mail cím megerősítése</string>
   <string name="settings_recovery_email_new_hint">Adja meg az e-mail címet</string>
   <string name="settings_recovery_email_confirm_hint">Adja meg ismét az e-mail címet</string>
+  <string name="settings_save_second_password">Save new second password</string>
+  <string name="settings_save_main_password">Save new main password</string>
   <string name="settings_save">Mentés</string>
   <string name="settings_password_required">Adja meg a bejelentkezési jelszavát</string>
   <string name="settings_password_required_ok">OK</string>
@@ -32,17 +34,16 @@
   <string name="settings_validation_email">Az e-mail cím érvénytelen.</string>
   <string name="settings_general_error">Hiba történt.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_login_password">Account password</string>
-  <string name="settings_password_management_tab_mailbox_password">Encryption password</string>
-  <string name="settings_password_management_change_login_password">In two-password mode, the account password is used to sign in to your Proton Account.</string>
-  <string name="settings_password_management_change_mailbox_password">In two-password mode, the encryption password is used to encrypt and decrypt your data.</string>
+  <string name="settings_password_management_tab_main_password">Main password</string>
+  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">Jelszó módosítása</string>
-  <string name="settings_login_password_hint_current">Jelenlegi jelszó</string>
-  <string name="settings_login_password_hint_new">New password</string>
-  <string name="settings_login_password_hint_new_confirm">Új jelszó megerősítése</string>
-  <string name="settings_mailbox_password_hint_current_account_password">Current account password</string>
-  <string name="settings_mailbox_password_hint_new">New encryption password</string>
-  <string name="settings_mailbox_password_hint_new_confirm">Confirm new encryption password</string>
+  <string name="settings_main_password_hint_current">Current main password</string>
+  <string name="settings_main_password_hint_new">New main password</string>
+  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
+  <string name="settings_second_password_hint_current_main_password">Current main password</string>
+  <string name="settings_second_password_hint_new">New second password</string>
+  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
   <string name="settings_change_password_error">Hiba történt a jelszó megváltoztatása közben.</string>
   <string name="settings_recovery_email_success">Helyreállítási e-mail cím frissítve</string>
   <string name="settings_password_management_success">Jelszó frissítve</string>
