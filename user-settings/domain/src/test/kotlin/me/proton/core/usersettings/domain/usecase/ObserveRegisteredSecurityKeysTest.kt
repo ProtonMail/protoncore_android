@@ -37,7 +37,8 @@ class ObserveRegisteredSecurityKeysTest {
         every { observeUserSettings(testUserId, any()) } returns flowOf(mockk(relaxed = true))
 
         tested(testUserId).test {
-            expectNoEvents()
+            assertTrue(awaitItem().isEmpty())
+            awaitComplete()
         }
     }
 
