@@ -27,6 +27,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.domain.feature.IsFido2Enabled
+import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -46,6 +48,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountSettingsViewModel @Inject constructor(
     accountManager: AccountManager,
+    private val isFido2Enabled: IsFido2Enabled,
     private val observeUser: ObserveUser,
     private val observeUserSettings: ObserveUserSettings,
     override val telemetryManager: TelemetryManager,
@@ -65,7 +68,10 @@ class AccountSettingsViewModel @Inject constructor(
                 observeUser(userId),
                 observeUserSettings(userId)
             ) { user, settings ->
-                user.toAccountSettingsViewState(settings)
+                user.toAccountSettingsViewState(
+                    isFido2Enabled = lazy { isFido2Enabled(userId) },
+                    settings
+                )
             }
         }.stateIn(
             scope = viewModelScope,
@@ -86,7 +92,9 @@ sealed class AccountSettingsViewState {
         val displayName: String? = null,
         val email: String? = null,
         val recoveryState: UserRecovery.State? = null,
-        val recoveryEmail: String? = null
+        val recoveryEmail: String? = null,
+        val registeredSecurityKeys: List<Fido2RegisteredKey> = emptyList(),
+        val securityKeysVisible: Boolean = false
     ) : AccountSettingsViewState()
 
     companion object {
@@ -97,11 +105,15 @@ sealed class AccountSettingsViewState {
             email = "example@proton.me",
             recoveryState = UserRecovery.State.Grace,
             recoveryEmail = "example@domain.com",
+            registeredSecurityKeys = emptyList()
         )
     }
 }
 
-private fun User?.toAccountSettingsViewState(settings: UserSettings?): AccountSettingsViewState = when {
+private fun User?.toAccountSettingsViewState(
+    isFido2Enabled: Lazy<Boolean>,
+    settings: UserSettings?
+): AccountSettingsViewState = when {
     this == null -> AccountSettingsViewState.Hidden
     type == Type.CredentialLess -> AccountSettingsViewState.CredentialLess(userId)
     else -> AccountSettingsViewState.LoggedIn(
@@ -110,6 +122,8 @@ private fun User?.toAccountSettingsViewState(settings: UserSettings?): AccountSe
         displayName = getDisplayName(),
         email = getEmail(),
         recoveryState = recovery?.state?.enum,
-        recoveryEmail = settings?.email?.value
+        recoveryEmail = settings?.email?.value,
+        registeredSecurityKeys = settings?.twoFA?.registeredKeys ?: emptyList(),
+        securityKeysVisible = isFido2Enabled.value
     )
 }

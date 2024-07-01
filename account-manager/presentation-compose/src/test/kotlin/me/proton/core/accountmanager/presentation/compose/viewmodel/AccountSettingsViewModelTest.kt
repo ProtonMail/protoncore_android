@@ -27,6 +27,7 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import kotlinx.coroutines.flow.flowOf
 import me.proton.core.accountmanager.domain.AccountManager
+import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -45,6 +46,9 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var accountManager: AccountManager
+
+    @MockK
+    private lateinit var isFido2Enabled: IsFido2Enabled
 
     @MockK
     private lateinit var observeUser: ObserveUser
@@ -89,10 +93,12 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         MockKAnnotations.init(this)
         mockkStatic("me.proton.core.accountmanager.domain.AccountManagerExtensionsKt")
         every { accountManager.getPrimaryUserId() } returns flowOf(userId)
+        every { isFido2Enabled(any()) } returns false
         coEvery { observeUser(userId) } returns flowOf(user)
         coEvery { observeUserSettings(userId) } returns flowOf(userSettings)
         tested = AccountSettingsViewModel(
             accountManager = accountManager,
+            isFido2Enabled = isFido2Enabled,
             observeUser = observeUser,
             observeUserSettings = observeUserSettings,
             telemetryManager = telemetryManager

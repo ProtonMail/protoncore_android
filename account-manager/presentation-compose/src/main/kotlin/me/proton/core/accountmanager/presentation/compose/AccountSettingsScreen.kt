@@ -34,6 +34,7 @@ fun AccountSettingsScreen(
     modifier: Modifier = Modifier,
     onPasswordManagementClick: () -> Unit,
     onRecoveryEmailClick: () -> Unit,
+    onSecurityKeysClick: () -> Unit,
     onBackClick: () -> Unit,
     divider: @Composable () -> Unit = { Divider() }
 ) {
@@ -51,6 +52,7 @@ fun AccountSettingsScreen(
                 modifier = Modifier.padding(paddingValues),
                 onPasswordManagementClick = onPasswordManagementClick,
                 onRecoveryEmailClick = onRecoveryEmailClick,
+                onSecurityKeysClick = onSecurityKeysClick,
                 divider = divider
             )
         }
@@ -64,6 +66,7 @@ private fun AccountSettingsScreenPreview() {
         AccountSettingsScreen(
             onPasswordManagementClick = {},
             onRecoveryEmailClick = {},
+            onSecurityKeysClick = {},
             onBackClick = {}
         )
     }

@@ -34,7 +34,8 @@ class AccountSettingsListSnapshotTest {
             ProtonTheme {
                 AccountSettingsList(
                     onPasswordManagementClick = {},
-                    onRecoveryEmailClick = {}
+                    onRecoveryEmailClick = {},
+                    onSecurityKeysClick = {}
                 )
             }
         }
@@ -46,7 +47,8 @@ class AccountSettingsListSnapshotTest {
             ProtonTheme(isDark = true) {
                 AccountSettingsList(
                     onPasswordManagementClick = {},
-                    onRecoveryEmailClick = {}
+                    onRecoveryEmailClick = {},
+                    onSecurityKeysClick = {}
                 )
             }
         }

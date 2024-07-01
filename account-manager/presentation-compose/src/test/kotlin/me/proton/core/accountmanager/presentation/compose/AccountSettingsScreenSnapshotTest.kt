@@ -35,6 +35,7 @@ class AccountSettingsScreenSnapshotTest {
                 AccountSettingsScreen(
                     onPasswordManagementClick = {},
                     onRecoveryEmailClick = {},
+                    onSecurityKeysClick = {},
                     onBackClick = {}
                 )
             }
@@ -48,6 +49,7 @@ class AccountSettingsScreenSnapshotTest {
                 AccountSettingsScreen(
                     onPasswordManagementClick = {},
                     onRecoveryEmailClick = {},
+                    onSecurityKeysClick = {},
                     onBackClick = {}
                 )
             }
