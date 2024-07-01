@@ -34,7 +34,6 @@ plugins {
     id("me.proton.core.gradle-plugins.tests")
     id("me.proton.core.gradle-plugins.coverage-config")
     alias(libs.plugins.benManes.versions.gradle)
-    alias(libs.plugins.kotlin.binaryCompatibilityValidator)
     alias(libs.plugins.kotlin.gradle)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dependencyAnalysis)
@@ -144,24 +143,6 @@ dependencyAnalysis {
                     "org.jetbrains.kotlin:kotlin-android-extensions-runtime",
                     "org.jetbrains.kotlin:kotlin-parcelize-runtime",
                 )
-            }
-        }
-    }
-}
-
-// Don't evaluate binary for some projects (see https://github.com/Kotlin/binary-compatibility-validator).
-rootProject.apiValidation {
-    ignoredProjects.add(rootProject.name)
-    ignoredProjects.add("proguard-rules")
-}
-// Ignore non-published projects.
-subprojects {
-    afterEvaluate {
-        val publishOption = extensions.findByType(PublishOptionExtension::class.java)
-        val shouldBePublishedAsLib = publishOption?.shouldBePublishedAsLib ?: false
-        if (!shouldBePublishedAsLib) {
-            rootProject.apiValidation {
-                ignoredProjects.add(name)
             }
         }
     }

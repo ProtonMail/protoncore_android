@@ -1,5 +1,0 @@
-public abstract interface class me/proton/core/crypto/validator/domain/prefs/CryptoPrefs {
-	public abstract fun getUseInsecureKeystore ()Ljava/lang/Boolean;
-	public abstract fun setUseInsecureKeystore (Ljava/lang/Boolean;)V
-}
-

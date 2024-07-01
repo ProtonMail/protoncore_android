@@ -204,15 +204,6 @@ start-review:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
-binary-compatibility-check:
-  extends: .gradle-job
-  stage: test
-  interruptible: true
-  needs:
-    - assemble
-  script:
-    - ./gradlew apiCheck
-
 .client-integration-tests:
   stage: test
   inherit:
