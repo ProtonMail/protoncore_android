@@ -31,12 +31,15 @@ import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.extension.isCredentialLess
 import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
 
 /** Checks if there is an unredeemed Google purchase for a logged in user. */
 internal class CheckUnredeemedGooglePurchase @Inject constructor(
+    private val userManager: UserManager,
     private val findUnacknowledgedGooglePurchase: Optional<FindUnacknowledgedGooglePurchase>,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
     private val getCurrentSubscription: GetDynamicSubscription,
@@ -47,7 +50,12 @@ internal class CheckUnredeemedGooglePurchase @Inject constructor(
      */
     suspend operator fun invoke(userId: UserId): UnredeemedGooglePurchase? {
         return try {
-            perform(userId)
+            val user = userManager.getUser(userId)
+            when {
+                // Don't raise any unredeemed flow for credential-less user.
+                user.isCredentialLess() -> null
+                else -> perform(userId)
+            }
         } catch (_: Throwable) {
             null
         }

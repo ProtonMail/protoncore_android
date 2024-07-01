@@ -1469,11 +1469,11 @@ public final class me/proton/core/plan/presentation/ui/UpgradePlansFragment_Memb
 }
 
 public final class me/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory : dagger/internal/Factory {
-	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
-	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory;
+	public fun <init> (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)V
+	public static fun create (Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;Ljavax/inject/Provider;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase_Factory;
 	public synthetic fun get ()Ljava/lang/Object;
 	public fun get ()Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
-	public static fun newInstance (Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
+	public static fun newInstance (Lme/proton/core/user/domain/UserManager;Ljava/util/Optional;Lme/proton/core/payment/domain/usecase/GetAvailablePaymentProviders;Lme/proton/core/plan/domain/usecase/GetDynamicSubscription;Lme/proton/core/plan/domain/usecase/GetDynamicPlans;)Lme/proton/core/plan/presentation/usecase/CheckUnredeemedGooglePurchase;
 }
 
 public final class me/proton/core/plan/presentation/usecase/LoadStorageUsageState {

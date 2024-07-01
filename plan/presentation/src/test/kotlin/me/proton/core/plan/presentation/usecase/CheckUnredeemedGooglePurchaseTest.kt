@@ -22,6 +22,7 @@ import io.mockk.coEvery
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
@@ -41,6 +42,8 @@ import me.proton.core.plan.domain.usecase.GetDynamicPlans
 import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchase
 import me.proton.core.plan.presentation.entity.UnredeemedGooglePurchaseStatus
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.entity.Type
 import java.time.Instant
 import java.util.Optional
 import kotlin.jvm.optionals.getOrNull
@@ -50,6 +53,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertNull
 
 class CheckUnredeemedGooglePurchaseTest {
+    private lateinit var userManager: UserManager
     private lateinit var findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
     private lateinit var findUnacknowledgedGooglePurchaseOptional: Optional<FindUnacknowledgedGooglePurchase>
     private lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
@@ -59,6 +63,9 @@ class CheckUnredeemedGooglePurchaseTest {
 
     @BeforeTest
     fun setUp() {
+        userManager = mockk {
+            coEvery { getUser(any()) } returns mockk { every { type } returns Type.Proton }
+        }
         findUnacknowledgedGooglePurchase = mockk()
         findUnacknowledgedGooglePurchaseOptional = mockk {
             every { isPresent } returns true
@@ -70,6 +77,7 @@ class CheckUnredeemedGooglePurchaseTest {
         getPlans = mockk()
 
         tested = CheckUnredeemedGooglePurchase(
+            userManager,
             findUnacknowledgedGooglePurchaseOptional,
             getAvailablePaymentProviders,
             getCurrentSubscription,
@@ -389,6 +397,50 @@ class CheckUnredeemedGooglePurchaseTest {
             UnredeemedGooglePurchase(googlePurchaseA, planA, UnredeemedGooglePurchaseStatus.NotSubscribed),
             tested(userId)
         )
+    }
+
+    @Test
+    fun `user not subscribed with 1 unacknowledged google purchases but credential-less`() = runTest {
+        val customer = "customer"
+        val product = "product"
+        val userId = UserId("user-id")
+
+        coEvery { userManager.getUser(userId) } returns mockk {
+            every { type } returns Type.CredentialLess
+        }
+
+        val plan = mockk<DynamicPlan> {
+            every { name } returns "plan"
+            every { instances } returns mapOf(
+                12 to DynamicPlanInstance(
+                    cycle = 12,
+                    description = "",
+                    periodEnd = Instant.MAX,
+                    price = mapOf(),
+                    vendors = mapOf(
+                        AppStore.GooglePlay to DynamicPlanVendor(
+                            productId = product,
+                            customerId = customer
+                        )
+                    )
+                )
+            )
+        }
+        val googlePurchase = mockk<GooglePurchase> {
+            every { customerId } returns customer
+            every { productIds } returns listOf(ProductId(product))
+        }
+
+        coEvery { findUnacknowledgedGooglePurchase.invoke() } returns listOf(googlePurchase)
+        coEvery { getAvailablePaymentProviders.invoke() } returns PaymentProvider.entries.toSet()
+        coEvery { getCurrentSubscription.invoke(userId) } returns DynamicSubscription(
+            name = null,
+            title = "",
+            description = ""
+        )
+        coEvery { getPlans.invoke(null) } returns DynamicPlans(defaultCycle = null, listOf(plan))
+
+        assertNull(tested(userId))
     }
 
     @Test
