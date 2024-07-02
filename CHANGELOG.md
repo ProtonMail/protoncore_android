@@ -11,6 +11,21 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.0.2] - 2024-07-02
+
+### Bug Fixes
+
+- auth: CancelCreateAccountDialog must cancel CreateAccountNeeded Account only.
+- plan: Don't raise any unredeemed flow for Credential-less user.
+- test: Remove logcat cleanup before measure block.
+- auth-presentation: Crash-fix ("Only fullscreen opaque activities can request orientation").
+- human-verification: The dialog for re-sending email verification code would not show up.
+- human-verification-presentation: Crash-fix ("Only fullscreen opaque activities can request orientation").
+
+### Refactoring
+
+- auth: Refactor to use SecondFactorProof instead of the duplicate SecondFactorFido.kt.
+
 ## [25.0.1] - 2024-06-24
 
 ### Chores
