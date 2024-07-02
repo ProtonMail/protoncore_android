@@ -7,6 +7,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runTest
+import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.fido.domain.entity.Fido2RegisteredKey
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.domain.entity.UserId
@@ -16,6 +17,9 @@ import kotlin.test.assertContentEquals
 import kotlin.test.assertTrue
 
 class ObserveRegisteredSecurityKeysTest {
+    @MockK
+    private lateinit var accountRepository: AccountRepository
+
     @MockK
     private lateinit var isFido2Enabled: IsFido2Enabled
 
@@ -28,7 +32,7 @@ class ObserveRegisteredSecurityKeysTest {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
-        tested = ObserveRegisteredSecurityKeys(isFido2Enabled, observeUserSettings)
+        tested = ObserveRegisteredSecurityKeys(accountRepository, isFido2Enabled, observeUserSettings)
     }
 
     @Test
