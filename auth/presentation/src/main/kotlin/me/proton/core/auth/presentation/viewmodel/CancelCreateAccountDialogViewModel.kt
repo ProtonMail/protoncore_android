@@ -19,10 +19,12 @@
 package me.proton.core.auth.presentation.viewmodel
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.getAccounts
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
@@ -35,9 +37,9 @@ class CancelCreateAccountDialogViewModel @Inject constructor(
 ) : ProtonViewModel() {
 
     fun cancelCreation() = scopeProvider.GlobalDefaultSupervisedScope.launch {
-        accountManager.getPrimaryUserId().firstOrNull()?.let {
-            accountWorkflowHandler.handleCreateAccountFailed(it)
-            accountManager.disableAccount(it, keepSession = true)
+        accountManager.getAccounts(AccountState.CreateAccountNeeded).first().firstOrNull()?.let {
+            accountWorkflowHandler.handleCreateAccountFailed(it.userId)
+            accountManager.disableAccount(it.userId, keepSession = true)
         }
     }
 }
