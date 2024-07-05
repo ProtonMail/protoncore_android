@@ -19,9 +19,7 @@
 package me.proton.core.auth.presentation
 
 import android.content.Context
-import androidx.annotation.StringRes
 import kotlinx.coroutines.flow.first
-import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getAccounts
@@ -30,7 +28,6 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.UserCheckResult
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.Delinquent
-import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
 import me.proton.core.user.domain.extension.hasSubscription
 import me.proton.core.user.domain.extension.isCredentialLess
@@ -40,7 +37,7 @@ import javax.inject.Inject
 /**
  * Check [User] succeed if:
  * - [User.delinquent] is not [Delinquent.InvoiceDelinquent] or [Delinquent.InvoiceMailDisabled].
- * - [User.hasSubscription] is true or all existing [Account] in [AccountState.Ready] have a subscription.
+ * - [User.hasSubscription] is false and currentFreeUserCount + 1 <= maxFreeUserCount.
  */
 open class DefaultUserCheck @Inject constructor(
     private val context: Context,
@@ -48,8 +45,16 @@ open class DefaultUserCheck @Inject constructor(
     private val userManager: UserManager
 ) : PostLoginAccountSetup.UserCheck {
 
-    private fun errorMessage(@StringRes message: Int) = UserCheckResult.Error(
-        localizedMessage = context.getString(message)
+    private val maxFreeUserCount: Int by lazy {
+        context.resources.getInteger(R.integer.core_feature_auth_user_check_max_free_user_count)
+    }
+
+    private fun errorMaxFreeUser() = UserCheckResult.Error(
+        localizedMessage = context.resources.getQuantityString(
+            R.plurals.auth_user_check_max_free_error,
+            maxFreeUserCount,
+            maxFreeUserCount
+        )
     )
 
     private fun errorDelinquent() = UserCheckResult.Error(
@@ -60,24 +65,31 @@ open class DefaultUserCheck @Inject constructor(
         )
     )
 
-    private suspend fun allReadyHaveSubscription(): Boolean =
+    private suspend fun currentFreeUserCount(): Int =
         accountManager.getAccounts(AccountState.Ready).first()
             .map { userManager.getUser(it.userId) }
             .filterNot { it.isCredentialLess() }
-            .all { it.hasSubscription() }
+            .fold(0) { acc, user -> if (!user.hasSubscription()) acc + 1 else acc }
 
     override suspend fun invoke(user: User): UserCheckResult =
         result("defaultUserCheck") {
             when {
-                user.delinquent in listOf(
-                    Delinquent.InvoiceDelinquent,
-                    Delinquent.InvoiceMailDisabled
-                ) -> errorDelinquent()
+                user.delinquent in delinquentStates -> {
+                    errorDelinquent()
+                }
 
-                !user.hasSubscription() && !allReadyHaveSubscription() ->
-                    errorMessage(R.string.auth_user_check_one_free_error)
+                !user.hasSubscription() && (currentFreeUserCount() + 1 > maxFreeUserCount) -> {
+                    errorMaxFreeUser()
+                }
 
                 else -> UserCheckResult.Success
             }
         }
+
+    companion object {
+        private val delinquentStates = listOf(
+            Delinquent.InvoiceDelinquent,
+            Delinquent.InvoiceMailDisabled
+        )
+    }
 }
