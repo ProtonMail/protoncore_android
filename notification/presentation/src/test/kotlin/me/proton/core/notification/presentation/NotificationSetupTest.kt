@@ -28,6 +28,7 @@ import io.mockk.verify
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.yield
@@ -38,12 +39,12 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
-import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
+import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.presentation.app.ActivityProvider
-import me.proton.core.presentation.app.AppLifecycleObserver
-import me.proton.core.presentation.app.AppLifecycleProvider
+import me.proton.core.test.kotlin.TestCoroutineScopeProvider
 import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
+import java.lang.ref.WeakReference
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 
@@ -53,9 +54,6 @@ class NotificationSetupTest {
 
     @MockK
     private lateinit var activityProvider: ActivityProvider
-
-    @MockK
-    private lateinit var appLifecycleObserver: AppLifecycleObserver
 
     @MockK
     private lateinit var hasNotificationPermission: HasNotificationPermission
@@ -72,6 +70,8 @@ class NotificationSetupTest {
     @MockK(relaxed = true)
     private lateinit var deeplinkManager: DeeplinkManager
 
+    private lateinit var scopeProvider: TestCoroutineScopeProvider
+
     private lateinit var tested: NotificationSetup
 
     private val testUserId = UserId("test_user_id")
@@ -80,15 +80,15 @@ class NotificationSetupTest {
     fun setUp() {
         MockKAnnotations.init(this)
 
+        scopeProvider = UnconfinedTestCoroutineScopeProvider()
         tested = NotificationSetup(
             accountManager,
             activityProvider,
-            appLifecycleObserver,
             hasNotificationPermission,
             isNotificationsEnabled,
             notificationManager,
             observePushNotifications,
-            UnconfinedTestCoroutineScopeProvider(),
+            scopeProvider,
             deeplinkManager
         )
     }
@@ -104,19 +104,18 @@ class NotificationSetupTest {
     @Test
     fun notificationsEnabled() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Background)
-        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
+        val account = mockAccount(AccountState.NotReady)
+        val accountStateFlow = MutableStateFlow(account)
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns true
         justRun { notificationManager.setupNotificationChannel() }
+        every { observePushNotifications(any()) } returns mockk()
 
         // WHEN
         launch {
-            yield()
-            appStateFlow.value = AppLifecycleProvider.State.Foreground
             yield()
             accountStateFlow.value = mockAccount(AccountState.Ready)
         }
@@ -129,25 +128,30 @@ class NotificationSetupTest {
     @Test
     fun hasNotificationPermission() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Background)
-        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
+        val account = mockAccount(AccountState.NotReady)
+        val allAccountsFlow = MutableStateFlow(listOf(account))
+        val accountStateFlow = MutableStateFlow(account)
+        val activityStateFlow = MutableStateFlow<WeakReference<Activity>?>(null)
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns allAccountsFlow
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
+        every { activityProvider.activityFlow } returns activityStateFlow
         every { hasNotificationPermission.invoke() } returns true
         justRun { notificationManager.setupNotificationChannel() }
-        justRun { observePushNotifications(any()) }
+        every { observePushNotifications(any()) } returns mockk()
 
         // WHEN
         launch {
             yield()
-            appStateFlow.value = AppLifecycleProvider.State.Foreground
+            activityStateFlow.value = WeakReference(mockActivity())
             yield()
+            allAccountsFlow.value = listOf(mockAccount(AccountState.Ready))
             accountStateFlow.value = mockAccount(AccountState.Ready)
         }
         tested()
         runCurrent()
+        scopeProvider.GlobalDefaultSupervisedScope.advanceUntilIdle()
 
         // THEN
         verify { notificationManager.setupNotificationChannel() }
@@ -157,20 +161,22 @@ class NotificationSetupTest {
     @Test
     fun noNotificationPermission() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
-        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.Ready))
-        val activity = mockk<Activity>(relaxed = true)
+        val account = mockAccount(AccountState.Ready)
+        val accountStateFlow = MutableStateFlow(account)
+        val activity = mockActivity()
+        val activityStateflow = MutableStateFlow(WeakReference(activity))
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
+        every { activityProvider.activityFlow } returns activityStateflow
         every { hasNotificationPermission.invoke() } returns false
-        every { activityProvider.lastResumed } returns activity
-        justRun { observePushNotifications(any()) }
+        every { observePushNotifications(any()) } returns mockk()
 
         // WHEN
         tested()
         runCurrent()
+        scopeProvider.GlobalDefaultSupervisedScope.advanceUntilIdle()
 
         // THEN
         verify { hasNotificationPermission.invoke() }
@@ -180,15 +186,16 @@ class NotificationSetupTest {
     @Test
     fun noResumedActivity() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
-        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.Ready))
+        val account = mockAccount(AccountState.Ready)
+        val accountStateFlow = MutableStateFlow(account)
+        val activityStateFlow = MutableStateFlow(WeakReference(mockActivity()))
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
+        every { activityProvider.activityFlow } returns activityStateFlow
         every { hasNotificationPermission.invoke() } returns false
-        every { activityProvider.lastResumed } returns null
-        justRun { observePushNotifications(any()) }
+        every { observePushNotifications(any()) } returns mockk()
 
         // WHEN
         tested()
@@ -201,20 +208,19 @@ class NotificationSetupTest {
     @Test
     fun appGoesIntoBackground() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
-        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
+        val account = mockAccount(AccountState.NotReady)
+        val accountStateFlow = MutableStateFlow(account)
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { hasNotificationPermission.invoke() } returns false
-        justRun { observePushNotifications(any()) }
+        every { observePushNotifications(any()) } returns mockk()
 
         // WHEN
         launch {
             yield()
             accountStateFlow.value = mockAccount(AccountState.Ready)
-            appStateFlow.value = AppLifecycleProvider.State.Background
         }
         tested()
         runCurrent()
@@ -226,14 +232,17 @@ class NotificationSetupTest {
     @Test
     fun observeReadyAccount() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
-        val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
+        val account = mockAccount(AccountState.NotReady)
+        val accountStateFlow = MutableStateFlow(account)
+        val activityStateflow = MutableStateFlow(WeakReference(mockActivity()))
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
+        every { activityProvider.activityFlow } returns activityStateflow
         every { hasNotificationPermission.invoke() } returns true
         justRun { notificationManager.setupNotificationChannel() }
+        every { observePushNotifications(any()) } returns mockk()
 
         // WHEN
         launch {
@@ -250,13 +259,15 @@ class NotificationSetupTest {
     @Test
     fun cancelObserveNonReadyAccount() = runTest {
         // GIVEN
-        val appStateFlow = MutableStateFlow(AppLifecycleProvider.State.Foreground)
+        val account = mockAccount(AccountState.NotReady)
         val accountStateFlow = MutableStateFlow(mockAccount(AccountState.NotReady))
-        val observeJob = mockk<Job>()
+        val activityStateFlow = MutableStateFlow(WeakReference(mockActivity()))
+        val observeJob = mockk<Job>(relaxed = true)
 
         every { isNotificationsEnabled(any()) } returns true
-        every { appLifecycleObserver.state } returns appStateFlow
+        every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
+        every { activityProvider.activityFlow } returns activityStateFlow
         every { hasNotificationPermission.invoke() } returns true
         justRun { notificationManager.setupNotificationChannel() }
         every { observePushNotifications(any()) } returns observeJob
@@ -281,4 +292,12 @@ class NotificationSetupTest {
             every { state } returns s
             every { this@mockk.userId } returns userId
         }
+
+    private fun mockActivity(
+        isDestroyed: Boolean = false,
+        isFinishing: Boolean = false
+    ) = mockk<Activity>(relaxed = true) {
+        every { this@mockk.isDestroyed } returns isDestroyed
+        every { this@mockk.isFinishing } returns isFinishing
+    }
 }

@@ -18,16 +18,22 @@
 
 package me.proton.core.notification.presentation
 
+import android.app.Activity
 import androidx.lifecycle.DefaultLifecycleObserver
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
+import me.proton.core.account.domain.entity.isReady
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
@@ -39,18 +45,16 @@ import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
 import me.proton.core.notification.presentation.ui.NotificationPermissionActivity
 import me.proton.core.presentation.app.ActivityProvider
-import me.proton.core.presentation.app.AppLifecycleObserver
-import me.proton.core.presentation.app.AppLifecycleProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.milliseconds
 
 @Suppress("LongParameterList")
 @Singleton
 public class NotificationSetup @Inject internal constructor(
     private val accountManager: AccountManager,
     private val activityProvider: ActivityProvider,
-    private val appLifecycleObserver: AppLifecycleObserver,
     private val hasNotificationPermission: HasNotificationPermission,
     private val isNotificationsEnabled: IsNotificationsEnabled,
     private val notificationManager: ProtonNotificationManager,
@@ -58,6 +62,7 @@ public class NotificationSetup @Inject internal constructor(
     private val scopeProvider: CoroutineScopeProvider,
     private val deeplinkManager: DeeplinkManager
 ) : DefaultLifecycleObserver {
+    private val observeJobMap: MutableMap<UserId, Job> = mutableMapOf()
 
     public operator fun invoke() {
         if (!isNotificationsEnabled(userId = null)) return
@@ -67,8 +72,8 @@ public class NotificationSetup @Inject internal constructor(
 
         scopeProvider.GlobalDefaultSupervisedScope.launch {
             // Setup for notification permissions.
-            waitForConditions()
-            setupNotifications()
+            val activity = waitForConditions()
+            setupNotifications(activity)
         }
 
         scopeProvider.GlobalDefaultSupervisedScope.launch {
@@ -96,24 +101,30 @@ public class NotificationSetup @Inject internal constructor(
     }
 
     /** App in foreground, an account is ready. */
-    private suspend fun waitForConditions() {
-        appLifecycleObserver.state
-            .combine(accountManager.onAccountStateChanged(initialState = true), ::Pair)
-            .filter { (state, account) ->
-                state == AppLifecycleProvider.State.Foreground && account.state == AccountState.Ready
-            }.first()
+    @OptIn(FlowPreview::class)
+    private suspend fun waitForConditions(): Activity {
+        return accountManager.getAccounts()
+            .filter { accounts -> accounts.any { it.isReady() } }
+            .distinctUntilChanged()
+            .flatMapLatest {
+                activityProvider.activityFlow
+                    .map { it?.get() }
+                    .filterNotNull()
+                    .filter { !it.isFinishing && !it.isDestroyed }
+            }
+            .debounce(600.milliseconds)
+            .first()
     }
 
-    private fun setupNotifications() {
+    private fun setupNotifications(activity: Activity) {
         if (hasNotificationPermission()) {
             notificationManager.setupNotificationChannel()
         } else {
-            startNotificationPermissionActivity()
+            startNotificationPermissionActivity(activity)
         }
     }
 
-    private fun startNotificationPermissionActivity() {
-        val activity = activityProvider.lastResumed ?: return
+    private fun startNotificationPermissionActivity(activity: Activity) {
         activity.startActivity(NotificationPermissionActivity(activity))
     }
 
@@ -129,9 +140,5 @@ public class NotificationSetup @Inject internal constructor(
             notificationManager.onNotificationConsumed(notificationId, userId)
         }
         return true
-    }
-
-    internal companion object {
-        val observeJobMap: MutableMap<UserId, Job> = mutableMapOf()
     }
 }
