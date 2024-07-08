@@ -11,6 +11,32 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.1.0] - 2024-07-08
+
+### Chores
+
+- Remove binary compatibility validator.
+
+### Features
+
+- account-manager:
+  - Add Observe security keys for the primary user.
+  - Add "Security keys" item into the account settings screen.
+- auth:
+  - Enable local flag for FIDO2.
+
+### Bug Fixes
+
+- auth:
+  - Moved Terms & Conditions and Privacy Policy to Confirm password screen.
+  - Added config for max concurrent free user.
+- user-settings:
+  - When observing registered security keys, if FIDO2 flag is disabled, return an empty list.
+
+### Internationalization
+
+- Upgrade translations from crowdin (d6e61bcd).
+
 ## [25.0.2] - 2024-07-02
 
 ### Bug Fixes
