@@ -18,17 +18,21 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
+import android.os.Parcelable
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.parcelize.Parcelize
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
+import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
@@ -36,18 +40,31 @@ import javax.inject.Inject
 @HiltViewModel
 internal class ChooseExternalEmailViewModel @Inject constructor(
     private val accountAvailability: AccountAvailability,
-    override val observabilityManager: ObservabilityManager
+    override val observabilityManager: ObservabilityManager,
+    savedStateHandle: SavedStateHandle
 ) : ProtonViewModel(), ObservabilityContext {
 
-    private val mainState = MutableStateFlow<State>(State.Idle)
-    val state = mainState.asStateFlow()
+    private val mainState by savedStateHandle.flowState(
+        mutableSharedFlow = MutableStateFlow<State>(State.Idle),
+        coroutineScope = viewModelScope,
+        onStateRestored = this::onStateRestored
+    )
+    val state = mainState.asSharedFlow()
 
-    sealed class State {
-        object Idle : State()
-        object Processing : State()
+    @Parcelize
+    sealed class State : Parcelable {
+        @Parcelize
+        data object Idle : State()
+        @Parcelize
+        data class Processing(val email: String) : State()
+        @Parcelize
         data class SwitchInternal(val username: String, val domain: String) : State()
+        @Parcelize
         data class Success(val email: String) : State()
+
+        @Parcelize
         sealed class Error : State() {
+            @Parcelize
             data class Message(val error: Throwable) : Error()
         }
     }
@@ -57,7 +74,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
         onResultEnqueueObservability("getAvailableDomains") { SignupFetchDomainsTotal(this) }
 
         flow {
-            emit(State.Processing)
+            emit(State.Processing(email))
 
             // See CP-5335.
             val domains = accountAvailability.getDomains(userId = null)
@@ -79,6 +96,13 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
             emit(State.Error.Message(error))
         }.collect {
             mainState.tryEmit(it)
+        }
+    }
+
+    private fun onStateRestored(state: State) {
+        // Resume the process, if it was interrupted:
+        if (state is State.Processing) {
+            checkExternalEmail(state.email)
         }
     }
 }

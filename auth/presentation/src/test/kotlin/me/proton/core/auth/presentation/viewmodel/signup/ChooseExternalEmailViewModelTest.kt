@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
+import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.Ordering
@@ -94,7 +95,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         MockKAnnotations.init(this)
         coEvery { getPrimaryUser() } returns user
         accountAvailability = AccountAvailability(userRepository, domainRepository, getPrimaryUser)
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager)
+        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager, SavedStateHandle())
     }
 
     @Test
