@@ -116,8 +116,8 @@ fun FragmentManager.removeCongrats() {
 /**
  * Helper method to monitor flow for state staying as one for prolonged period of time to trigger specific actions
  */
-internal inline fun <E> Flow<Any>.onLongState(state: E, crossinline action: () -> Unit) = flatMapLatest {
-    if (it == state) flow {
+internal inline fun <reified E> Flow<Any>.onLongState(crossinline action: () -> Unit) = flatMapLatest {
+    if (it is E) flow {
         delay(10000)
         emit(Unit)
     }

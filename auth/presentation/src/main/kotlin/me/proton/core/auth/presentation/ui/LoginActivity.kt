@@ -154,7 +154,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         viewModel.state
             .flowWithLifecycle(lifecycle)
             .distinctUntilChanged()
-            .onLongState(LoginViewModel.State.Processing) {
+            .onLongState<LoginViewModel.State.Processing> {
                 if (showLongLogin) showToast(getString(R.string.auth_long_login))
             }
             .launchIn(lifecycleScope)

@@ -100,7 +100,7 @@ class ChooseUsernameFragment : SignupFragment(R.layout.fragment_signup_choose_us
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
             }
-            .onLongState(State.Processing) {
+            .onLongState<State.Processing> {
                 requireContext().showToast(getString(R.string.auth_long_signup))
             }
             .launchIn(lifecycleScope)

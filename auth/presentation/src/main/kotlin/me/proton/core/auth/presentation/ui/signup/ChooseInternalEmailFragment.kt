@@ -151,7 +151,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                     is State.Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
             }
-            .onLongState(ChooseUsernameViewModel.State.Processing) {
+            .onLongState<ChooseUsernameViewModel.State.Processing> {
                 requireContext().showToast(getString(R.string.auth_long_signup))
             }
             .launchIn(lifecycleScope)
