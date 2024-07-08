@@ -17,6 +17,8 @@
   -->
 
 <resources>
+    <string name="core_feature_auth_signup_url_terms_and_conditions" translatable="false">https://proton.me/legal/terms</string>
+    <string name="core_feature_auth_signup_url_privacy_policy" translatable="false">https://proton.me/legal/privacy</string>
     <bool name="core_feature_auth_signup_show_congrats">true</bool>
     <bool name="core_feature_auth_signin_show_long_login_toast">true</bool>
     <string name="core_feature_auth_sso_redirect_scheme" translatable="false">proton</string>

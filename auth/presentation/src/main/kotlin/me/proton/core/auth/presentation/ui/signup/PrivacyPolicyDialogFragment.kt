@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.databinding.FragmentTermsConditionsBinding
+import me.proton.core.auth.presentation.databinding.FragmentPrivacyPolicyBinding
 import me.proton.core.auth.presentation.viewmodel.signup.TermsConditionsViewModel
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -40,16 +40,16 @@ import me.proton.core.presentation.utils.viewBinding
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class TermsConditionsDialogFragment : ProtonDialogFragment(R.layout.fragment_terms_conditions) {
+class PrivacyPolicyDialogFragment : ProtonDialogFragment(R.layout.fragment_privacy_policy) {
 
     @Inject
     internal lateinit var customWebViewClient: CustomWebViewClient
 
     private val viewModel by viewModels<TermsConditionsViewModel>()
-    private val binding by viewBinding(FragmentTermsConditionsBinding::bind)
+    private val binding by viewBinding(FragmentPrivacyPolicyBinding::bind)
 
     private val urlToLoad: String by lazy {
-        getString(R.string.core_feature_auth_signup_url_terms_and_conditions)
+        getString(R.string.core_feature_auth_signup_url_privacy_policy)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

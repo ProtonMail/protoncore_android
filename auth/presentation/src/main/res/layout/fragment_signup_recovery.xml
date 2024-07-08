@@ -96,16 +96,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/auth_content_separator_top_margin"
                     android:text="@string/auth_signup_next" />
-
-                <TextView
-                    android:id="@+id/terms"
-                    style="@style/ProtonTextView.Subtitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/auth_content_top_margin"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="@string/auth_signup_terms_conditions" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

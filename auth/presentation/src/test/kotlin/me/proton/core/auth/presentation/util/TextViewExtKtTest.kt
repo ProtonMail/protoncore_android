@@ -51,24 +51,26 @@ class TextViewExtKtTest {
     }
 
     @Test
-    fun `whole text view is clickable if no annotation found`() {
+    fun `annotated link value in callback`() {
         // GIVEN
-        textView.setTextWithAnnotatedLink(notAnnotatedText, "terms") {
-            // no-op
+        var linkValue: String? = null
+        textView.setTextWithAnnotatedLink(R.string.auth_credentialless_terms) { link ->
+            linkValue = link
         }
         val spannableString = textView.text as SpannableString
         val clickableSpan = requireNotNull(spannableString.getSpans<ClickableSpan>().firstOrNull())
 
+        // WHEN
+        clickableSpan.onClick(textView)
+
         // THEN
-        assertEquals(notAnnotatedText, textView.text.toString())
-        assertEquals(0, spannableString.getSpanStart(clickableSpan))
-        assertEquals(spannableString.length, spannableString.getSpanEnd(clickableSpan))
+        assertEquals(linkValue, "terms")
     }
 
     @Test
-    fun `text view is not clickable if no annotation found and no fallback`() {
+    fun `text view is not clickable if no annotation found`() {
         // GIVEN
-        textView.setTextWithAnnotatedLink(notAnnotatedText, "terms", fallbackEnabled = false) {
+        textView.setTextWithAnnotatedLink(notAnnotatedText, "terms") {
             // no-op
         }
         val spannableString = textView.text as SpannableString

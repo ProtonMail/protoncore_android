@@ -116,7 +116,6 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                 }
             }
             initTabs()
-            initTermsAndConditions()
             next.onClick(::onNextClicked)
 
             adjustAccountTypeUI()
@@ -208,12 +207,6 @@ class RecoveryMethodFragment : SignupFragment(R.layout.fragment_signup_recovery)
                     }
                 }
             })
-        }
-    }
-
-    private fun initTermsAndConditions() {
-        binding.terms.setTextWithAnnotatedLink(R.string.auth_signup_terms_conditions_full, "terms") {
-            childFragmentManager.showTermsConditions()
         }
     }
 

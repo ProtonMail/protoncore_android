@@ -29,61 +29,113 @@ import androidx.core.text.getSpans
 
 /**
  * Sets a [text] on [this][TextView].
- * The [text] resource can contain a special annotation, for example:
- * `<string name="my_string">Accept our <annotation link="terms">Terms and Conditions</annotation></string>`.
- * Then you can call this method: `setTextWithAnnotatedLink(R.string.my_string, "terms") { openTermsActivity() }`.
- * In case the annotation cannot be found, and if [fallbackEnabled] is true,
- * the whole text will become clickable.
+ *
+ * The [text] resource can contain a special link annotation, for example:
+ * ```
+ * <string name="my_string">Accept our <annotation link="terms">Terms and Conditions</annotation></string>.
+ * ```
+ * Then you can call this method:
+ * ```
+ * setTextWithAnnotatedLink(R.string.my_string, "terms") { openTermsActivity() }
+ * ```
  */
 internal fun TextView.setTextWithAnnotatedLink(
     @StringRes text: Int,
     linkAttributeValue: String,
-    fallbackEnabled: Boolean = true,
     onLinkClicked: () -> Unit
+) = setTextWithAnnotatedLink(text) { link ->
+    if (link == linkAttributeValue) {
+        onLinkClicked()
+    }
+}
+
+/**
+ * Sets a [text] on [this][TextView].
+ *
+ * The [text] can contain a special link annotation, for example:
+ * ```
+ * <string name="my_string">Accept our <annotation link="terms">Terms and Conditions</annotation></string>.
+ * ```
+ * Then you can call this method:
+ * ```
+ * setTextWithAnnotatedLink(R.string.my_string, "terms") { openTermsActivity() }
+ * ```
+ */
+internal fun TextView.setTextWithAnnotatedLink(
+    text: CharSequence,
+    linkAttributeValue: String,
+    onLinkClicked: () -> Unit
+) = setTextWithAnnotatedLink(text) { link ->
+    if (link == linkAttributeValue) {
+        onLinkClicked()
+    }
+}
+
+/**
+ * Sets a [text] on [this][TextView].
+ *
+ * The [text] resource can contain a special link annotation, for example:
+ * ```
+ * <string name="my_string">Accept our <annotation link="terms">Terms and Conditions</annotation></string>.
+ * ```
+ * Then you can call this method:
+ * ```
+ * setTextWithAnnotatedLink(R.string.my_string) { link -> if (link == "terms") openTermsActivity() }
+ * ```
+ */
+internal fun TextView.setTextWithAnnotatedLink(
+    @StringRes text: Int,
+    onLinkClicked: (link: String) -> Unit
 ) {
     setTextWithAnnotatedLink(
         text = context.getText(text),
-        linkAttributeValue = linkAttributeValue,
-        fallbackEnabled = fallbackEnabled,
         onLinkClicked = onLinkClicked
     )
 }
 
+/**
+ * Sets a [text] on [this][TextView].
+ *
+ * The [text] can contain a special link annotation, for example:
+ * ```
+ * <string name="my_string">Accept our <annotation link="terms">Terms and Conditions</annotation></string>.
+ * ```
+ * Then you can call this method:
+ * ```
+ * setTextWithAnnotatedLink(R.string.my_string) { link -> if (link == "terms") openTermsActivity() }
+ * ```
+ */
 internal fun TextView.setTextWithAnnotatedLink(
     text: CharSequence,
-    linkAttributeValue: String,
-    fallbackEnabled: Boolean = true,
-    onLinkClicked: () -> Unit
+    onLinkClicked: (link: String) -> Unit
 ) {
-    val spannableString = SpannableString(text)
-    val annotations = spannableString.getSpans<android.text.Annotation>()
-        .filter { it.key == "link" && it.value == linkAttributeValue }
-    val linkIndices = annotations.map {
-        Pair(
-            spannableString.getSpanStart(it),
-            spannableString.getSpanEnd(it)
-        )
-    }
-    val clickableSpan = object : ClickableSpan() {
+    class LinkClickableSpan(
+        val key: String,
+        val spanStart: Int,
+        val spanEnd: Int,
+    ) : ClickableSpan() {
         override fun onClick(widget: View) {
-            onLinkClicked()
+            onLinkClicked(key)
         }
     }
-    if (linkIndices.isNotEmpty()) {
-        linkIndices.forEach { (start, end) ->
-            spannableString.setSpan(
-                clickableSpan,
-                start,
-                end,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+
+    val spannableString = SpannableString(text)
+    val linkClickableSpans = spannableString.getSpans<android.text.Annotation>()
+        .filter { it.key == "link" }
+        .map {
+            LinkClickableSpan(
+                it.value,
+                spannableString.getSpanStart(it),
+                spannableString.getSpanEnd(it)
             )
         }
-    } else if (fallbackEnabled) {
+
+    linkClickableSpans.forEach { linkClickableSpan ->
         spannableString.setSpan(
-            clickableSpan,
-            0,
-            spannableString.length,
-            Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+            linkClickableSpan,
+            linkClickableSpan.spanStart,
+            linkClickableSpan.spanEnd,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
     }
     setText(spannableString)

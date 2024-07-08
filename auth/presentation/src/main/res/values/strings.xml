@@ -133,12 +133,13 @@
     <string name="auth_signup_recovery_method_email_hint">Recovery email</string>
     <string name="auth_signup_recovery_method_phone_hint">Recovery phone number</string>
     <string name="auth_signup_terms_conditions">Terms and Conditions</string>
-    <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+    <string name="auth_signup_privacy_policy">Privacy Policy</string>
+    <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
     <string name="auth_signup_skip_recovery_title">Skip recovery method?</string>
     <string name="auth_signup_skip_recovery_description">A recovery method will help you access your account in case you forget your password or get locked out of your account.</string>
     <string name="auth_signup_skip_recovery">Skip</string>
     <string name="auth_signup_set_recovery">Set recovery method</string>
-    <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
+    <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
     <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
     <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
     <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>

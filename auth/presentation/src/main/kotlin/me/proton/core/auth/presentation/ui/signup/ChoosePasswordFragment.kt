@@ -28,6 +28,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChoosePasswordBinding
+import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.presentation.utils.InvalidPasswordProvider
@@ -115,6 +116,13 @@ class ChoosePasswordFragment : SignupFragment(R.layout.fragment_signup_choose_pa
                         .onSuccess { clearInputError() }
                 }
                 setOnDoneActionListener { onNextClicked() }
+            }
+
+            terms.setTextWithAnnotatedLink(R.string.auth_signup_terms_conditions_privacy_policy_full) { link ->
+                when (link) {
+                    "terms" -> childFragmentManager.showTermsConditions()
+                    "privacy" -> childFragmentManager.showPrivacyPolicy()
+                }
             }
         }
 

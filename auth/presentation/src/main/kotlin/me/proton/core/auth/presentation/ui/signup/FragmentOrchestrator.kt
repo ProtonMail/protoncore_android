@@ -37,6 +37,7 @@ private const val TAG_SKIP_RECOVERY_DIALOG = "skip_recovery_dialog"
 private const val TAG_EMAIL_RECOVERY_FRAGMENT = "email_recovery_fragment"
 private const val TAG_SMS_RECOVERY_FRAGMENT = "skip_recovery_fragment"
 private const val TAG_TERMS_CONDITIONS_FRAGMENT = "terms_conditions_fragment"
+private const val TAG_PRIVACY_POLICY_FRAGMENT = "privacy_policy_fragment"
 
 fun FragmentManager.registerSkipRecoveryDialogResultLauncher(
     fragment: Fragment,
@@ -79,6 +80,15 @@ internal fun FragmentManager.showTermsConditions() {
         setCustomAnimations(0, 0)
         add(termsConditionsDialogFragment, TAG_TERMS_CONDITIONS_FRAGMENT)
         addToBackStack(TAG_TERMS_CONDITIONS_FRAGMENT)
+    }
+}
+
+internal fun FragmentManager.showPrivacyPolicy() {
+    val termsConditionsDialogFragment = PrivacyPolicyDialogFragment()
+    inTransaction {
+        setCustomAnimations(0, 0)
+        add(termsConditionsDialogFragment, TAG_PRIVACY_POLICY_FRAGMENT)
+        addToBackStack(TAG_PRIVACY_POLICY_FRAGMENT)
     }
 }
 
