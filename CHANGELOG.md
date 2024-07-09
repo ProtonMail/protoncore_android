@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.1.1] - 2024-07-09
+
+### Bug Fixes
+
+- plan: Fixed missing double % for Upgrade Storage translation.
+
 ## [25.1.0] - 2024-07-08
 
 ### Chores
