@@ -30,7 +30,7 @@ class ObserveUsersWithoutRecoverySecret @Inject constructor(
 ) {
     operator fun invoke(): Flow<UserId> = observeUserDeviceRecovery()
         .filter { (user, deviceRecovery) ->
-            deviceRecovery == true && user.isRecoverySecretMissingForPrimaryKey()
+            deviceRecovery == true && user.isRecoverySecretMissingForPrimaryKey() && user.private
         }.map { (user, _) ->
             user.userId
         }

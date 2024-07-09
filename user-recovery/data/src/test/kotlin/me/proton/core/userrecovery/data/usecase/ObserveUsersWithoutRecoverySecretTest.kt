@@ -65,6 +65,29 @@ class ObserveUsersWithoutRecoverySecretTest {
     }
 
     @Test
+    fun `user without recovery secret and non-private user`() = runTest {
+        // GIVEN
+        val userId = UserId("user-1")
+        val privateKey = mockk<PrivateKey> {
+            every { isPrimary } returns true
+        }
+        val user = mockUser(
+            userId,
+            listOf(mockUserKey(testRecoverySecretHash = null, testPrivateKey = privateKey)),
+            testPrivate = false
+        )
+        val userDeviceRecoveryFlow = MutableStateFlow(Pair(user, true))
+
+        every { observeUserDeviceRecovery() } returns userDeviceRecoveryFlow
+
+        // WHEN
+        tested().test {
+            // THEN
+            expectNoEvents()
+        }
+    }
+
+    @Test
     fun `user without recovery secret but no primary key`() = runTest {
         // GIVEN
         val userId = UserId("user-1")

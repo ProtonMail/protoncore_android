@@ -36,9 +36,10 @@ fun mockAccount(testUserId: UserId, accountState: AccountState = AccountState.Re
     every { userId } returns testUserId
 }
 
-fun mockUser(testUserId: UserId, testKeys: List<UserKey> = emptyList()): User = mockk {
+fun mockUser(testUserId: UserId, testKeys: List<UserKey> = emptyList(), testPrivate: Boolean = true): User = mockk {
     every { userId } returns testUserId
     every { keys } returns testKeys
+    every { private } returns testPrivate
 }
 
 fun mockUserKey(

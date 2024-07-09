@@ -27,6 +27,7 @@ import javax.inject.Inject
 
 /**
  * Remotely set a newly generated user primary recovery secret.
+ * Note: can be called only for [private][me.proton.core.user.domain.entity.User.private] users.
  */
 class SetRecoverySecretRemote @Inject constructor(
     private val eventManagerProvider: EventManagerProvider,
