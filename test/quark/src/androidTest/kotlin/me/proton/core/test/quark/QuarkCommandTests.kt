@@ -23,7 +23,7 @@ import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.command.expireSession
 import me.proton.core.test.quark.v2.command.jailUnban
 import me.proton.core.test.quark.v2.command.populateUserWithData
-import me.proton.core.test.quark.v2.command.seedNewSubscriber
+import me.proton.core.test.quark.v2.command.seedSubscriber
 import okhttp3.Response
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,7 +46,7 @@ class QuarkCommandTests(
         @get:JvmStatic
         val data = listOf<QuarkCommand.() -> Response>(
             { jailUnban() },
-            { seedNewSubscriber() },
+            { seedSubscriber() },
             { expireSession("pro") },
             { populateUserWithData(User("pro", "pro", dataSetScenario = "1")) }
         ).toList()
