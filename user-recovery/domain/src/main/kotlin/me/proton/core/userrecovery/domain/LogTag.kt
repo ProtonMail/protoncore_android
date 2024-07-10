@@ -22,6 +22,12 @@ object LogTag {
     /** Default tag for any other issue we need to log */
     const val DEFAULT = "core.userrecovery.default"
 
+    /** Errors encountered during key recovery. */
+    const val KEY_RECOVERY = "core.userrecovery.key.recovery"
+
+    /** Errors encountered when setting the recovery secret. */
+    const val RECOVERY_SECRET_SETUP = "core.userrecovery.recovery.secret.setup"
+
     /** Tag for Device Recovery State observation. */
     const val ERROR_OBSERVING_STATE = "core.userrecovery.error.observing.state"
 }

@@ -29,6 +29,8 @@ import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.ensureActive
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.HttpResponseCodes.HTTP_UNPROCESSABLE
@@ -49,22 +51,24 @@ class SetRecoverySecretWorker @AssistedInject constructor(
     private val getUser: GetUser
 ) : CoroutineWorker(context, params) {
 
-    override suspend fun doWork(): Result {
+    override suspend fun doWork(): Result = coroutineScope {
         val rawUserId = requireNotNull(inputData.getString(KEY_USER_ID))
         val userId = UserId(rawUserId)
-        return runCatching {
+        runCatching {
             setRecoverySecretRemote(userId)
         }.fold(
             onSuccess = { Result.success() },
             onFailure = { error ->
+                ensureActive() // rethrows CancellationException
+
                 when {
                     error is ApiException && error.isRecoverySecretSetError() -> {
-                        getUser(userId,  refresh =true)
+                        getUser(userId, refresh = true)
                         Result.success()
                     }
                     error is ApiException && error.isRetryable() -> Result.retry()
                     else -> {
-                        CoreLogger.e(LogTag.DEFAULT, error)
+                        CoreLogger.e(LogTag.RECOVERY_SECRET_SETUP, error)
                         Result.failure()
                     }
                 }

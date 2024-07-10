@@ -57,7 +57,7 @@ class RecoverInactivePrivateKeysWorker @AssistedInject constructor(
                 if (error is ApiException && error.isRetryable()) {
                     Result.retry()
                 } else {
-                    CoreLogger.e(LogTag.DEFAULT, error)
+                    CoreLogger.e(LogTag.KEY_RECOVERY, error)
                     Result.failure()
                 }
             }
