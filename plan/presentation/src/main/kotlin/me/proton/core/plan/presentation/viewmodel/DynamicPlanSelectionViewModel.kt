@@ -69,6 +69,7 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
             val result: BillingResult
         ) : Action()
         object SetBillingCanceled : Action()
+        data object PlanSelectionFinished : Action()
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
@@ -97,7 +98,8 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         DynamicPlanFilters(userId, dynamicPlans?.defaultCycle ?: 0, instancesCycles, currencies)
     }
 
-    private fun observeState(filters: DynamicPlanFilters) = mutableSelectedItem.map { (plan, result) ->
+    private fun observeState(filters: DynamicPlanFilters) = mutableSelectedItem
+        .map { (plan, result) ->
         when {
             plan == null -> State.Idle(filters)
             result != null -> when {
@@ -117,6 +119,7 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
         is Action.SetBillingResult -> onSetPaymentResult(action.result)
         is Action.SetGiapBillingResult -> onSetGiapPaymentResult(action.selectedPlan, action.result)
         is Action.SetBillingCanceled -> onSetBillingCanceled()
+        is Action.PlanSelectionFinished -> onPlanSelectionFinished()
     }
 
     private fun onLoad() = viewModelScope.launch {
@@ -144,5 +147,9 @@ internal class DynamicPlanSelectionViewModel @Inject constructor(
 
     private fun onSetBillingCanceled() = viewModelScope.launch {
         mutableSelectedItem.update { Pair(null, null) }
+    }
+
+    private fun onPlanSelectionFinished() = viewModelScope.launch {
+        mutableSelectedItem.emit(Pair(null, null))
     }
 }

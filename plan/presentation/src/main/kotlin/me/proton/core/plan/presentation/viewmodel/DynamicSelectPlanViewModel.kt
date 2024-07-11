@@ -63,6 +63,7 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         object Load : Action()
         data class SelectFreePlan(val plan: SelectedPlan) : Action()
         data class SelectPaidPlan(val plan: SelectedPlan, val result: BillingResult) : Action()
+        data object PlanSelectionFinished : Action()
     }
 
     private val mutableLoadCount = MutableStateFlow(1)
@@ -82,6 +83,7 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         Action.Load -> onLoad()
         is Action.SelectFreePlan -> onSelectFreePlan(action.plan)
         is Action.SelectPaidPlan -> onSelectPaidPlan(action.plan, action.result)
+        is Action.PlanSelectionFinished -> onPlanSelectionFinished()
     }
 
     fun onScreenView() {
@@ -101,6 +103,10 @@ internal class DynamicSelectPlanViewModel @Inject constructor(
         result: BillingResult
     ) = viewModelScope.launch {
         mutableSelectedItem.emit(Pair(plan, result))
+    }
+
+    private fun onPlanSelectionFinished() = viewModelScope.launch {
+        mutableSelectedItem.emit(Pair(null, null))
     }
 
     private suspend fun observeState(selectedItem: Pair<SelectedPlan?, BillingResult?>) = flow {

@@ -116,10 +116,12 @@ class DynamicSelectPlanFragment : BasePlansFragment(R.layout.fragment_dynamic_se
 
     private fun onFreePlanSelected(plan: SelectedPlan) {
         setResult(plan)
+        viewModel.perform(Action.PlanSelectionFinished)
     }
 
     private fun onPaidPlanSelected(plan: SelectedPlan, result: BillingResult) {
         setResult(plan, result)
+        viewModel.perform(Action.PlanSelectionFinished)
     }
 
     private fun onError(error: Throwable?) = with(binding) {

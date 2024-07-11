@@ -200,6 +200,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private fun onFree(selectedPlan: SelectedPlan) {
         onPlanFree?.invoke(selectedPlan)
+        viewModel.perform(Action.PlanSelectionFinished)
     }
 
     private fun onBilling(selectedPlan: SelectedPlan) {
@@ -220,6 +221,7 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     private fun onBilled(selectedPlan: SelectedPlan, result: BillingResult) {
         onPlanBilled?.invoke(selectedPlan, result)
+        viewModel.perform(Action.PlanSelectionFinished)
     }
 
     private fun onProtonPaymentResult(event: ProtonPaymentEvent) {
