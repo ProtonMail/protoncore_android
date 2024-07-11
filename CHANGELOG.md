@@ -11,6 +11,19 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.2.0] - 2024-07-11
+
+### Features
+
+- Configurator - add quark user creation
+- test:
+  - distribute Android configurator app from post merge pipeline
+
+### Bug Fixes
+
+- account-manager:
+  - Fix compose plurals for security keys settings item.
+
 ## [25.1.1] - 2024-07-09
 
 ### Bug Fixes
