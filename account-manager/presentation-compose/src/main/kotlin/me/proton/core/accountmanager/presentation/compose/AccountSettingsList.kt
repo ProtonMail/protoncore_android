@@ -172,8 +172,9 @@ fun SecurityKeysSettingsItemHint(registeredSecurityKeys: List<Fido2RegisteredKey
     )
 
     else -> pluralStringResource(
-        id = R.plurals.account_settings_list_item_security_keys_hint_many,
-        count = registeredSecurityKeys.size
+        R.plurals.account_settings_list_item_security_keys_hint_many,
+        registeredSecurityKeys.size,
+        registeredSecurityKeys.size
     )
 }
 
