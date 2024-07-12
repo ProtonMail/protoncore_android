@@ -11,6 +11,27 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [25.2.1] - 2024-07-12
+
+### Bug Fixes
+
+- auth:
+  - Restore the signup process, if the previous activity was finished while `HumanVerificationActivity` was displayed.
+- notification:
+  - Add "debounce" delay before setting up the notifications.
+
+    Without the delay, the call to `startNotificationPermissionActivity` may interfere with the flow, especially in case "Don't keep activities" is enabled.
+- plan:
+  - During signup, a plan can be re-selected, in case the HV step has failed.
+- user-recovery:
+  - Don't log a cancellation exceptions when setting recovery secret.
+  - Don't set recovery secret for non-private users.
+
+### Refactoring
+
+- auth:
+  - In `onLongState`, compare using the class (via a reified parameter) instead of comparing to an instance.
+
 ## [25.2.0] - 2024-07-11
 
 ### Features
