@@ -24,7 +24,7 @@ include:
     file: '/scenarios/pipeline-env.yml'
 
 default:
-  image: ${CI_REGISTRY}/android/shared/docker-android/oci:v2.0.0
+  image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.1
   tags:
     - shared-small
 
