@@ -45,7 +45,9 @@ data class ContactEmailResource(
     @SerialName("LabelIDs")
     val labelIds: List<String>,
     @SerialName("IsProton")
-    val isProton: Int? = null
+    val isProton: Int? = null,
+    @SerialName("LastUsedTime")
+    val lastUsedTime: Long
 ) {
     fun toContactEmail(userId: UserId): ContactEmail = ContactEmail(
         userId,
@@ -57,6 +59,7 @@ data class ContactEmailResource(
         ContactId(contactId),
         canonicalEmail,
         labelIds,
-        isProton?.toBooleanOrFalse()
+        isProton?.toBooleanOrFalse(),
+        lastUsedTime
     )
 }

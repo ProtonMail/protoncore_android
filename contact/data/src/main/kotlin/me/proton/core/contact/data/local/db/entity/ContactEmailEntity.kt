@@ -58,7 +58,8 @@ data class ContactEmailEntity(
     val order: Int,
     val contactId: ContactId,
     val canonicalEmail: String?,
-    val isProton: Int?
+    val isProton: Int?,
+    val lastUsedTime: Long
 )
 
 fun ContactEmail.toContactEmailEntity() = ContactEmailEntity(
@@ -70,5 +71,6 @@ fun ContactEmail.toContactEmailEntity() = ContactEmailEntity(
     order = order,
     contactId = contactId,
     canonicalEmail = canonicalEmail,
-    isProton = isProton?.toInt()
+    isProton = isProton?.toInt(),
+    lastUsedTime = lastUsedTime
 )

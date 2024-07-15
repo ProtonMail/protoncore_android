@@ -47,5 +47,6 @@ fun ContactEmailWithLabelsRelation.toContactEmail() = ContactEmail(
     contactId = contactEmail.contactId,
     canonicalEmail = contactEmail.canonicalEmail,
     labelIds = labelIds,
-    isProton = contactEmail.isProton?.toBooleanOrFalse()
+    isProton = contactEmail.isProton?.toBooleanOrFalse(),
+    lastUsedTime = contactEmail.lastUsedTime
 )

@@ -47,7 +47,8 @@ object TestEvents {
                     "ContactID": "a29olIjFv0rnXxBhSMw==",
                     "LabelIDs": [
                       "I6hgx3Ol-d3HYa3E394T_ACXDmTaBub14w=="
-                    ]
+                    ],
+                    "LastUsedTime": 1
                   }
                 ],
                 "LabelIDs": [
@@ -79,7 +80,8 @@ object TestEvents {
                 "ContactID": "a29olIjFv0rnXxBhSMw==",
                 "LabelIDs": [
                   "I6hgx3Ol-d3HYa3E394T_ACXDmTaBub14w=="
-                ]
+                ],
+                "LastUsedTime": 1
               }
             }
           ],

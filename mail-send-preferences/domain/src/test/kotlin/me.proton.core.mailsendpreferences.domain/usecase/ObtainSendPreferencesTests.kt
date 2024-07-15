@@ -111,7 +111,8 @@ class ObtainSendPreferencesTests {
                 contactId = ContactId("contact_1"),
                 "contact_external_pinned_key@email.com",
                 labelIds = emptyList(),
-                isProton = false
+                isProton = false,
+                lastUsedTime = 0
             ),
             contacWith2PinnedKeysContactEmail
         )
@@ -470,7 +471,8 @@ class ObtainSendPreferencesTests {
                         contactId = ContactId("contact_1"),
                         canonicalEmail = null,
                         labelIds = emptyList(),
-                        isProton = false
+                        isProton = false,
+                        lastUsedTime = 0
                     )
                 ),
             ),
@@ -493,7 +495,8 @@ class ObtainSendPreferencesTests {
         contactId = ContactId("ID of contact with 2 pinned keys"),
         canonicalEmail = null,
         labelIds = emptyList(),
-        isProton = false
+        isProton = false,
+        lastUsedTime = 0
     )
 
     private val contactWith2PinnedKeys: ContactWithCards =

@@ -348,4 +348,10 @@ object AccountManagerDatabaseMigrations {
             PublicAddressDatabase.MIGRATION_3.migrate(db)
         }
     }
+
+    val MIGRATION_49_50 = object : Migration(49, 50) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            ContactDatabase.MIGRATION_2.migrate(db)
+        }
+    }
 }

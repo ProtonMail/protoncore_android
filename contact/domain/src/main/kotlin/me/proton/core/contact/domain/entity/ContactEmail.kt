@@ -33,5 +33,6 @@ data class ContactEmail(
     val contactId: ContactId,
     val canonicalEmail: String?,
     val labelIds: List<String>,
-    val isProton: Boolean?
+    val isProton: Boolean?,
+    val lastUsedTime: Long
 )

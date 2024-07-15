@@ -63,5 +63,16 @@ interface ContactDatabase: Database {
                 )
             }
         }
+
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "ContactEmailEntity",
+                    column = "lastUsedTime",
+                    type = "INTEGER NOT NULL",
+                    defaultValue = "0"
+                )
+            }
+        }
     }
 }
