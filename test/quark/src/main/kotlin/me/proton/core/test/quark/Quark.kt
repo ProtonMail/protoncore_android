@@ -162,7 +162,7 @@ public class Quark constructor(
     ): Pair<User, CreateUserQuarkResponse> {
         val args = arrayOf(
             if (user.isExternal) "-e=true" else "",
-            if (user.isExternal) "-em=${URLEncoder.encode(user.email, "UTF-8")}" else "",
+            if (user.isExternal) "--external-email=${URLEncoder.encode(user.email, "UTF-8")}" else "",
             if (user.name.isNotEmpty()) "-N=${user.name}" else "",
             if (user.password.isNotEmpty()) "-p=${user.password}" else "",
             if (user.passphrase.isNotEmpty()) "-m=${user.passphrase}" else "",
