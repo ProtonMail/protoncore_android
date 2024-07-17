@@ -25,10 +25,12 @@ public open class ProductPrice(
     public open val priceAmountMicros: Long,
     public open val currency: String,
     public open val formattedPriceAndCurrency: String,
+    public open val defaultPriceAmountMicros: Long? = null,
 ) {
     public val priceAmount : Double get() = priceAmountMicros / 1000000.0
-
+    public val defaultPriceAmount : Double? get() = defaultPriceAmountMicros?.let { it / 1000000.0 }
     public val priceAmountCents : Int get() = (priceAmountMicros / GOOGLE_TO_PROTON_PRICE_DIVIDER).toInt()
+    public val defaultPriceAmountCents: Int? get() = defaultPriceAmountMicros?.let { (it / GOOGLE_TO_PROTON_PRICE_DIVIDER).toInt() }
 }
 
 // Google Billing library returns price in micros where 1,000,000 micro-units equal one unit of the currency

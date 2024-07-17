@@ -27,18 +27,16 @@ import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
-import me.proton.core.payment.domain.entity.GoogleProductDetails
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
-import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
 import me.proton.core.paymentiap.domain.firstPriceOrNull
+import me.proton.core.paymentiap.domain.pricingPhases
 import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -71,11 +69,13 @@ class GetStorePriceImplTest {
     fun `billing repository returns non empty`() = runTest {
         val testPlanName = ProductId("test-plan-name")
         val productDetails = mockk<ProductDetails>(relaxed = true)
-        every { productDetails.firstPriceOrNull() } returns mockk {
+        val pricingPhase = mockk<ProductDetails.PricingPhase> {
             every { priceAmountMicros } returns 1000000
             every { formattedPrice } returns "CHF 100"
             every { priceCurrencyCode } returns "CHF"
         }
+        every { productDetails.firstPriceOrNull() } returns pricingPhase
+        every { productDetails.pricingPhases() } returns listOf(pricingPhase)
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
             productDetails.wrap()
         )

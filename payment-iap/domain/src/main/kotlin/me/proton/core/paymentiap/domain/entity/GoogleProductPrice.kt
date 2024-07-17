@@ -25,4 +25,5 @@ public data class GoogleProductPrice(
     override val priceAmountMicros: Long,
     override val currency: String,
     override val formattedPriceAndCurrency: String,
-) : ProductPrice(PaymentProvider.GoogleInAppPurchase, priceAmountMicros, currency, formattedPriceAndCurrency)
+    override val defaultPriceAmountMicros: Long? = null
+) : ProductPrice(PaymentProvider.GoogleInAppPurchase, priceAmountMicros, currency, formattedPriceAndCurrency, defaultPriceAmountMicros)

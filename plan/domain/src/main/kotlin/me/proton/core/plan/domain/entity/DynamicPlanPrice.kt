@@ -21,6 +21,6 @@ package me.proton.core.plan.domain.entity
 data class DynamicPlanPrice(
     val id: String,
     val currency: String,
-    val current: Int, // cents
-    val default: Int? = null // cents
+    val current: Int, // cents. If default is set, this is the price only for the first cycle.
+    val default: Int? = null, // cents. Renew price if different than current.
 )

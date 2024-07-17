@@ -25,6 +25,9 @@ import me.proton.core.payment.domain.repository.BillingClientError
 public fun ProductDetails.firstPriceOrNull(): ProductDetails.PricingPhase? =
     subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList?.getOrNull(0)
 
+public fun ProductDetails.pricingPhases(): List<ProductDetails.PricingPhase> =
+    subscriptionOfferDetails?.getOrNull(0)?.pricingPhases?.pricingPhaseList ?: emptyList()
+
 public fun BillingClientError.isRetryable(): Boolean = when (responseCode) {
     BillingClient.BillingResponseCode.SERVICE_DISCONNECTED -> true
     BillingClient.BillingResponseCode.SERVICE_TIMEOUT -> true

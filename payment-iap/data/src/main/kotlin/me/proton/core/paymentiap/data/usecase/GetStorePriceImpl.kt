@@ -19,6 +19,7 @@
 package me.proton.core.paymentiap.data.usecase
 
 import android.app.Activity
+import com.android.billingclient.api.ProductDetails
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
 import me.proton.core.payment.domain.repository.BillingClientError
@@ -26,7 +27,7 @@ import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.paymentiap.domain.entity.GoogleProductPrice
 import me.proton.core.paymentiap.domain.entity.unwrap
-import me.proton.core.paymentiap.domain.firstPriceOrNull
+import me.proton.core.paymentiap.domain.pricingPhases
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -36,14 +37,26 @@ public class GetStorePriceImpl @Inject constructor(
     override suspend fun invoke(planName: ProductId): ProductPrice? =
         billingRepositoryProvider.get().use { repository ->
             try {
-                repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
-                    ?.firstPriceOrNull()?.let { price ->
+                val details = repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
+                if (details == null)
+                    null
+                else {
+                    val phases = details.pricingPhases()
+                    val current = phases.getOrNull(0)
+                    val default = phases.getOrNull(1)?.takeIf {
+                        it.priceAmountMicros != current?.priceAmountMicros &&
+                            current?.recurrenceMode == ProductDetails.RecurrenceMode.FINITE_RECURRING &&
+                            it.recurrenceMode == ProductDetails.RecurrenceMode.INFINITE_RECURRING
+                    }
+                    current?.let { price ->
                         GoogleProductPrice(
                             priceAmountMicros = price.priceAmountMicros,
                             currency = price.priceCurrencyCode,
                             formattedPriceAndCurrency = price.formattedPrice,
+                            defaultPriceAmountMicros = default?.priceAmountMicros,
                         )
                     }
+                }
             } catch (ignored: BillingClientError) {
                 null
             }

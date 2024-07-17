@@ -54,7 +54,8 @@ class GetDynamicPlansAdjustedPrices @Inject constructor(
                             prices.currency to DynamicPlanPrice(
                                 id = productId,
                                 currency = prices.currency,
-                                current = prices.priceAmountCents
+                                current = prices.priceAmountCents,
+                                default = prices.defaultPriceAmountCents,
                             )
                         )
                     )
