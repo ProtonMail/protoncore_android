@@ -29,19 +29,16 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.quark.data.User
+import me.proton.core.configuration.configurator.quark.entity.User
+import me.proton.core.configuration.configurator.quark.entity.getAllUsers
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.command.enableEarlyAccess
-import me.proton.core.test.quark.v2.command.seedNewSubscriber
-import me.proton.core.test.quark.v2.command.seedSubscriber
-import me.proton.core.test.quark.v2.command.userCreate
-import okhttp3.internal.toLongOrDefault
+import me.proton.core.test.quark.v2.command.userDelete
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateUserViewModel @Inject constructor(
+class UpdateUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
     private val sharedData: SharedData,
     private val configurationUseCase: ConfigurationUseCase
@@ -50,53 +47,65 @@ class CreateUserViewModel @Inject constructor(
     private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
-    private val _errorState = MutableStateFlow<String?>(null)
-    val errorState: StateFlow<String?> = _errorState.asStateFlow()
+    private val _response = MutableStateFlow<String?>(null)
+    val response: StateFlow<String?> = _response.asStateFlow()
 
-    private val _userResponse = MutableStateFlow<String?>(null)
-    val userResponse: StateFlow<String?> = _userResponse.asStateFlow()
+    private val _userResponse = MutableStateFlow<List<User>>(emptyList())
+    private val _userNames = MutableStateFlow<List<String>>(emptyList())
+    val userNames: StateFlow<List<String>> = _userNames.asStateFlow()
+
+    val lastUserData get() = sharedData
 
     val selectedDomain: StateFlow<String> = configurationUseCase.configState.map { set ->
         val hostField = set.first { field -> field.name == "host" }
         hostField.value as String
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), initialValue = "")
 
-    private fun extractFourDigitId(input: String): String? {
-        val regex = """\b\d{4}\b""".toRegex()
-        return regex.find(input)?.value
-    }
-
-    fun createUser(username: String, password: String, plan: Plan, isEnableEarlyAccess: Boolean, isChargebee: Boolean) =
-
-        viewModelScope.launch(Dispatchers.IO) {
+    fun fetchUsers() {
+        viewModelScope.launch {
             _isLoading.value = true
             try {
-                val user = User(name = username, password = password, plan = plan)
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
-                if (isChargebee) {
-                    val response = quarkCommand.seedSubscriber(user)
-                    val whatever = response.body!!.string()
-                    _userResponse.value = whatever
-                    sharedData.lastUserId = extractFourDigitId(whatever)?.toLongOrDefault(0L) ?: 0L
-                } else {
-                    val response = quarkCommand.userCreate(user)
-                    quarkCommand.seedNewSubscriber(user)
-                    _userResponse.value =
-                        "${response.decryptedUserId} \nName: ${response.name} \nEmail: ${response.email}"
-                    sharedData.lastUserId = response.decryptedUserId
+                val users = withContext(Dispatchers.IO) {
+                    quarkCommand.getAllUsers()
                 }
-
-                sharedData.lastUsername = username
-                sharedData.lastPassword = password
-
-                if (isEnableEarlyAccess)
-                    quarkCommand.enableEarlyAccess(user.name)
-                _errorState.value = null
+                _userResponse.value = users
+                _userNames.value = users.map { it.name }
+                _response.value = null
             } catch (e: Exception) {
-                _errorState.value = e.localizedMessage
-                _userResponse.value = null
+                _response.value = e.message
+                _userResponse.value = emptyList()
             } finally {
                 _isLoading.value = false
             }
         }
+    }
+
+    fun deleteUser() {
+        val user = _userResponse.value.find { it.name == lastUserData.lastUsername }
+        if (user != null) {
+            deleteUser(user.id)
+        } else {
+            deleteUser(lastUserData.lastUserId)
+        }
+    }
+
+    private fun deleteUser(id: Long) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                withContext(Dispatchers.IO) {
+                    quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
+                    val response = quarkCommand.userDelete(id.toInt())
+                    val responseBody = response.body?.string()
+                    _response.value = responseBody
+                }
+                sharedData.clean()
+            } catch (e: Exception) {
+                _response.value = e.message
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
 }

@@ -26,6 +26,7 @@ import me.proton.core.configuration.ContentResolverConfigManager
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.configuration.configurator.domain.EnvironmentConfigurationUseCase
 import me.proton.core.configuration.configurator.entity.AppConfig
+import me.proton.core.configuration.configurator.presentation.viewModel.SharedData
 import me.proton.core.test.quark.v2.QuarkCommand
 import okhttp3.OkHttpClient
 import javax.inject.Singleton
@@ -37,6 +38,12 @@ object ApplicationModule {
     @Singleton
     @Provides
     fun provideQuarkCommand(client: OkHttpClient): QuarkCommand = QuarkCommand(client)
+
+    @Provides
+    @Singleton
+    fun provideSharedData(): SharedData {
+        return SharedData
+    }
 
     @Singleton
     @Provides

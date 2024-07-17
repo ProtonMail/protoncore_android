@@ -16,12 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.configuration.configurator.entity
+package me.proton.core.configuration.configurator.presentation.viewModel
 
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
+object SharedData {
+    var lastUsername: String = ""
+    var lastPassword: String = ""
+    var lastUserId: Long = 0
 
-data class AppConfig(
-    val quarkTimeout: Duration = 30.seconds,
-    val proxyUrl: String = "https://proxy.proton.black"
-)
+    fun isNotEmpty() = lastUsername.isNotEmpty() && lastPassword.isNotEmpty()
+    fun clean() {
+        lastUsername = ""
+        lastPassword = ""
+        lastUserId = 0
+    }
+}

@@ -23,18 +23,29 @@ import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.Response
 
-public const val DRIVE_POPULATE_USER_WITH_DATA: String = "quark/drive:populate"
+public const val DRIVE_POPULATE_USER_WITH_DATA: String = "quark/raw::drive:populate"
 
-public fun QuarkCommand.populateUserWithData(user: User): Response =
-    route(DRIVE_POPULATE_USER_WITH_DATA)
-        .args(
-            listOf(
-                "-u" to user.name,
-                "-p" to user.password,
-                "-S" to user.dataSetScenario
-            ).toEncodedArgs()
-        )
+public fun QuarkCommand.populateUserWithData(
+    user: User,
+    hasPhotos: Boolean = false,
+    withDevice: Boolean = false
+): Response {
+    val args = mutableListOf(
+        "-u" to user.name,
+        "-p" to user.password,
+        "-S" to user.dataSetScenario
+    )
+
+    if (hasPhotos) {
+        args.add("--photo" to "$hasPhotos")
+    }
+
+    if (withDevice) {
+        args.add("--device" to "$withDevice")
+    }
+
+    return route(DRIVE_POPULATE_USER_WITH_DATA)
+        .args(args.toEncodedArgs())
         .build()
-        .let {
-            client.executeQuarkRequest(it)
-        }
+        .let { client.executeQuarkRequest(it) }
+}

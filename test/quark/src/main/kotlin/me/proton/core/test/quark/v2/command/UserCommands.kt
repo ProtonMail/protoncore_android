@@ -30,6 +30,7 @@ import okhttp3.Response
 public const val USERS_CREATE: String = "quark/raw::user:create"
 public const val USERS_CREATE_ADDRESS: String = "quark/raw::user:create:address"
 public const val USERS_EXPIRE_SESSIONS: String = "quark/raw::user:expire:sessions"
+public const val USERS_DELETE: String = "quark/raw::user:delete"
 
 public fun QuarkCommand.userCreate(
     user: User = User(),
@@ -89,6 +90,18 @@ public fun QuarkCommand.expireSession(username: String, expireRefreshToken: Bool
             listOf(
                 "User" to username,
                 "--refresh" to if (expireRefreshToken) "null" else ""
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+
+public fun QuarkCommand.userDelete(id: Int): Response =
+    route(USERS_DELETE)
+        .args(
+            listOf(
+                "-u" to id.toString(),
             ).toEncodedArgs()
         )
         .build()

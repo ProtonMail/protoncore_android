@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.toEncodedArgs
 import okhttp3.Response
+import java.util.regex.Pattern
 
 const val USER_LIST_COMMAND = "quark/raw::user:list"
 const val FIXTURES_LOAD_COMMAND = "quark/raw::qa:fixtures:load"
@@ -43,23 +44,35 @@ public fun QuarkCommand.createUserWithFixturesLoad(scenario: String): Response =
 
 
 fun QuarkCommand.getAllUsers(): List<User> {
-    val request = route(USER_LIST_COMMAND).build()
-    val response = client.executeQuarkRequest(request)
+    val response = route(USER_LIST_COMMAND)
+        .args(arrayOf())
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
     val htmlResponse = response.body?.string() ?: throw IllegalStateException("Failed users fetching")
 
-    val regexPattern = "\\|\\s*(\\d+)\\s*\\|\\s*([^|]+?)\\s*\\|"
-    val regex = Regex(regexPattern)
-    val matches = regex.findAll(htmlResponse)
+    val regexPattern = "^\\|\\s*(\\d+)\\s*\\|\\s*([^|]+?)\\s*\\|"
+    val regex = Pattern.compile(regexPattern, Pattern.MULTILINE)
+    val matcher = regex.matcher(htmlResponse)
 
-    if (matches.none()) {
+    val users = mutableListOf<User>()
+
+    while (matcher.find()) {
+        val idString = matcher.group(1)
+        val nameString = matcher.group(2)!!.trim()
+
+        val id = idString?.toIntOrNull()
+        if (id != null && nameString.isNotEmpty()) {
+            users.add(User(id.toLong(), nameString))
+        }
+    }
+
+    if (users.isEmpty()) {
         throw IllegalStateException("Failed users fetching")
     }
 
-    return matches.map { match ->
-        val id = match.groupValues[1].toInt()
-        val name = match.groupValues[2]
-        User(id, name)
-    }.toList()
+    return users
 }
 
 
@@ -78,7 +91,7 @@ public fun QuarkCommand.doctrineFixturesLoad(scenario: String): Response =
 
 
 data class User(
-    val id: Int,
+    val id: Long,
     val name: String,
     val password: String? = null
 ) {
@@ -100,11 +113,11 @@ data class QuarkUser(
 )
 
 data class QuarkID(
-    val raw: Int
+    val raw: Long
 )
 
 data class DoctrineUser(
-    @SerialName("ID") val userId: Int,
+    @SerialName("ID") val userId: Long,
     @SerialName("Name") val name: String,
     @SerialName("Password") val password: String,
     @SerialName("Status") val status: String,

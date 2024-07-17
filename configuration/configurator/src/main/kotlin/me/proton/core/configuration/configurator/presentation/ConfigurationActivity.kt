@@ -18,6 +18,7 @@
 
 package me.proton.core.configuration.configurator.presentation
 
+import NavigationContent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -39,7 +40,6 @@ import me.proton.core.compose.component.ProtonBottomNavigation
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
-import me.proton.core.configuration.configurator.presentation.components.NavigationContent
 import me.proton.core.presentation.ui.ProtonActivity
 
 @AndroidEntryPoint

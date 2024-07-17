@@ -30,18 +30,13 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
-import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.v2.QuarkCommand
-import me.proton.core.test.quark.v2.command.enableEarlyAccess
-import me.proton.core.test.quark.v2.command.seedNewSubscriber
-import me.proton.core.test.quark.v2.command.seedSubscriber
-import me.proton.core.test.quark.v2.command.userCreate
-import okhttp3.internal.toLongOrDefault
+import me.proton.core.test.quark.v2.command.populateUserWithData
 import javax.inject.Inject
 
 @HiltViewModel
-class CreateUserViewModel @Inject constructor(
+class DriveUpdateUserViewModel @Inject constructor(
     private val quarkCommand: QuarkCommand,
     private val sharedData: SharedData,
     private val configurationUseCase: ConfigurationUseCase
@@ -53,48 +48,31 @@ class CreateUserViewModel @Inject constructor(
     private val _errorState = MutableStateFlow<String?>(null)
     val errorState: StateFlow<String?> = _errorState.asStateFlow()
 
-    private val _userResponse = MutableStateFlow<String?>(null)
-    val userResponse: StateFlow<String?> = _userResponse.asStateFlow()
+    private val _response = MutableStateFlow<String?>(null)
+    val response: StateFlow<String?> = _response.asStateFlow()
 
     val selectedDomain: StateFlow<String> = configurationUseCase.configState.map { set ->
         val hostField = set.first { field -> field.name == "host" }
         hostField.value as String
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), initialValue = "")
 
-    private fun extractFourDigitId(input: String): String? {
-        val regex = """\b\d{4}\b""".toRegex()
-        return regex.find(input)?.value
-    }
-
-    fun createUser(username: String, password: String, plan: Plan, isEnableEarlyAccess: Boolean, isChargebee: Boolean) =
+    fun drivePopulate(scenario: Int, hasPhotos: Boolean, withDevice: Boolean) =
 
         viewModelScope.launch(Dispatchers.IO) {
             _isLoading.value = true
             try {
-                val user = User(name = username, password = password, plan = plan)
                 quarkCommand.baseUrl("https://${selectedDomain.value}/api/internal")
-                if (isChargebee) {
-                    val response = quarkCommand.seedSubscriber(user)
-                    val whatever = response.body!!.string()
-                    _userResponse.value = whatever
-                    sharedData.lastUserId = extractFourDigitId(whatever)?.toLongOrDefault(0L) ?: 0L
-                } else {
-                    val response = quarkCommand.userCreate(user)
-                    quarkCommand.seedNewSubscriber(user)
-                    _userResponse.value =
-                        "${response.decryptedUserId} \nName: ${response.name} \nEmail: ${response.email}"
-                    sharedData.lastUserId = response.decryptedUserId
-                }
-
-                sharedData.lastUsername = username
-                sharedData.lastPassword = password
-
-                if (isEnableEarlyAccess)
-                    quarkCommand.enableEarlyAccess(user.name)
+                val user = User(
+                    name = sharedData.lastUsername,
+                    password = sharedData.lastPassword,
+                    dataSetScenario = scenario.toString()
+                )
+                val response = quarkCommand.populateUserWithData(user, hasPhotos, withDevice)
+                val responseBody = response.body?.string()
+                _response.value = responseBody
                 _errorState.value = null
             } catch (e: Exception) {
                 _errorState.value = e.localizedMessage
-                _userResponse.value = null
             } finally {
                 _isLoading.value = false
             }

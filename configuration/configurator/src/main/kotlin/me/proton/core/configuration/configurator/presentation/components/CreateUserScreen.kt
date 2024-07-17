@@ -42,17 +42,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import me.proton.core.compose.component.ProtonOutlinedTextField
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.configuration.configurator.R
-import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
+import me.proton.core.configuration.configurator.featureflag.entity.BackButton
 import me.proton.core.configuration.configurator.presentation.viewModel.CreateUserViewModel
 import me.proton.core.test.quark.data.Plan
 
 @Composable
-fun CreateUserScreen(viewModel: CreateUserViewModel = hiltViewModel()) {
+fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserViewModel = hiltViewModel()) {
+
+    val isLoading by viewModel.isLoading.collectAsState()
+    val selectedDomain by viewModel.selectedDomain.collectAsState()
     var username by remember { mutableStateOf(TextFieldValue("")) }
     var password by remember { mutableStateOf(TextFieldValue("")) }
     var selectedPlan by remember { mutableStateOf("mail2022") } // Default value as an example
@@ -60,21 +64,34 @@ fun CreateUserScreen(viewModel: CreateUserViewModel = hiltViewModel()) {
     val userKeys = listOf("Curve25519")
     val plans = LocalContext.current.resources.getStringArray(R.array.plans)
     var isEarlyAccessEnabled by remember { mutableStateOf(true) }
+    var isChargebee by remember { mutableStateOf(true) }
     val state by viewModel.userResponse.collectAsState()
     val errorState by viewModel.errorState.collectAsState()
-    val selectedDomain by viewModel.selectedDomain.collectAsState()
 
     Column(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
-        ProtonTopAppBar(title = { Text("Create User") })
+
+        ProtonTopAppBar(
+            title = { Text("Create User") },
+            navigationIcon = { BackButton(navController) }
+        )
         Text(text = "Selected Domain: $selectedDomain")
-        ConfigurationTextField(
-            configField = ConfigurationUseCase.ConfigField(name = "Username", value = username.text),
-            onValueChange = { newValue -> username = TextFieldValue(newValue) }
+
+        ProtonOutlinedTextField(
+            value = username,
+            onValueChange = { newValue ->
+                username = newValue
+            },
+            label = { Text(text = "Username") },
+            singleLine = true,
         )
 
-        ConfigurationTextField(
-            configField = ConfigurationUseCase.ConfigField(name = "Password", value = password.text),
-            onValueChange = { newValue -> password = TextFieldValue(newValue) }
+        ProtonOutlinedTextField(
+            value = password,
+            onValueChange = { newValue ->
+                password = newValue
+            },
+            label = { Text(text = "Password") },
+            singleLine = true,
         )
 
         DropdownField(
@@ -105,6 +122,20 @@ fun CreateUserScreen(viewModel: CreateUserViewModel = hiltViewModel()) {
                 }
             )
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Chargebee", modifier = Modifier.weight(1f))
+            Switch(
+                checked = isChargebee,
+                onCheckedChange = { isChecked ->
+                    isChargebee = isChecked
+                }
+            )
+        }
         DropdownField(
             label = "Select Key",
             options = userKeys,
@@ -118,9 +149,12 @@ fun CreateUserScreen(viewModel: CreateUserViewModel = hiltViewModel()) {
                     username.text,
                     password.text,
                     plan = Plan.fromString(selectedPlan),
-                    isEnableEarlyAccess = isEarlyAccessEnabled
+                    isEnableEarlyAccess = isEarlyAccessEnabled,
+                    isChargebee = isChargebee
                 )
             },
+            loading = isLoading,
+            enabled = username.text.isNotEmpty() && password.text.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 8.dp)
@@ -128,7 +162,6 @@ fun CreateUserScreen(viewModel: CreateUserViewModel = hiltViewModel()) {
             Text("Create User")
         }
 
-        // Handle error state
         if (!errorState.isNullOrBlank()) {
             Text(
                 text = errorState.toString(),
@@ -137,10 +170,9 @@ fun CreateUserScreen(viewModel: CreateUserViewModel = hiltViewModel()) {
             )
         }
 
-        // Display user data if available
         state?.let { response ->
             Text(
-                text = "User ID: ${response.userId}\nName: ${response.name}\nEmail: ${response.email ?: "Not provided"}\nRecovery Phone: ${response.recoveryPhone}",
+                text = "User ${response ?: "Not provided"}",
                 modifier = Modifier.padding(top = 8.dp)
             )
         }

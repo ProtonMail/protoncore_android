@@ -1,5 +1,3 @@
-package me.proton.core.configuration.configurator.presentation.components
-
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,7 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.Checkbox
+import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -25,11 +25,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import me.proton.core.compose.component.ProtonOutlinedTextField
 import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
@@ -39,6 +44,11 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
 import me.proton.core.configuration.configurator.presentation.Screen
+import me.proton.core.configuration.configurator.presentation.components.AppNavigation
+import me.proton.core.configuration.configurator.presentation.components.CreateUserScreen
+import me.proton.core.configuration.configurator.presentation.components.DriveUserUpdateScreen
+import me.proton.core.configuration.configurator.presentation.components.SearchableConfigurationTextField
+import me.proton.core.configuration.configurator.presentation.components.UpdateUserScreen
 import me.proton.core.configuration.configurator.presentation.viewModel.ConfigurationScreenViewModel
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.presentation.R.drawable as CoreDrawable
@@ -54,7 +64,71 @@ fun NavigationContent(currentScreen: Screen) {
         )
 
         Screen.FeatureFlag -> AppNavigation()
-        Screen.Quark -> CreateUserScreen()
+        Screen.Quark -> QuarkMainScreen()
+    }
+}
+
+@Composable
+fun QuarkMainScreen() {
+    val navController = rememberNavController()
+
+    NavHost(navController, startDestination = "main") {
+        composable("main") { MainScreen(navController) }
+        composable("createUser") { CreateUserScreen(navController) }
+        composable("updateUser") { UpdateUserScreen(navController) }
+        composable("drive") { DriveUserUpdateScreen(navController) }
+    }
+}
+
+@Composable
+fun MainScreen(navController: NavHostController) {
+    Column {
+        UserManagementSection(navController)
+        EnvironmentManagementSection(navController)
+    }
+}
+
+@Composable
+fun UserManagementSection(navController: NavHostController) {
+    val isProduction = false // Change as needed
+
+    Column {
+        Text("User management", fontWeight = FontWeight.Bold)
+        Button(
+            onClick = {
+                navController.navigate("createUser")
+            },
+            enabled = !isProduction
+        ) {
+            Text("Create User")
+        }
+        Button(
+            onClick = {
+                navController.navigate("updateUser")
+            },
+            enabled = !isProduction
+        ) {
+            Text("Update User")
+        }
+        Divider()
+    }
+}
+
+@Composable
+fun EnvironmentManagementSection(navController: NavHostController) {
+    val isProduction = false // Change as needed
+
+    Column {
+        Text("Environment management", fontWeight = FontWeight.Bold)
+        Button(
+            onClick = {
+                navController.navigate("environmentManagement")
+            },
+            enabled = !isProduction
+        ) {
+            Text("Environment management")
+        }
+        Divider()
     }
 }
 
@@ -96,7 +170,6 @@ fun ConfigurationScreen(
         }
     }
 }
-
 
 @Composable
 private fun ConfigSettingsScreen(
@@ -331,7 +404,6 @@ val Boolean.drawable: Int
     @DrawableRes get() = if (this) R.drawable.ic_proton_arrow_up else R.drawable.ic_proton_arrow_down
 
 fun String.toSpacedWords(): String = replace("(?<=\\p{Lower})(?=[A-Z])".toRegex(), " ").capitalize()
-
 
 sealed class Domain(val rawValue: String) {
     object Black : Domain("proton.black")
