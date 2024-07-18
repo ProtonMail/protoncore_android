@@ -11,6 +11,27 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [26.0.0] - 2024-07-18
+
+### Breaking Changes
+
+**Features**
+
+- contact:
+  - Add "lastUsedTime" field to ContactEmail.
+
+    MIGRATION: ContactDatabase.MIGRATION_2
+
+### Chores
+
+- Replace option "-em" by "--external-email"
+
+### Features
+
+- add new-payments:seed-subscriber quark command
+- payment:
+  - Support plans with different recurring price.
+
 ## [25.2.1] - 2024-07-12
 
 ### Bug Fixes
