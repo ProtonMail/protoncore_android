@@ -18,11 +18,13 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class AddAccountTests : BaseTest() {
 
     private val addAccountRobot = AddAccountRobot()

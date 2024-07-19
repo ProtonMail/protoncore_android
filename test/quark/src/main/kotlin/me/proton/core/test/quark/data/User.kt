@@ -26,9 +26,15 @@ import me.proton.core.util.kotlin.random
 
 @Serializable
 public data class User(
+    val addressID: String = EMPTY_STRING,
+    val authVersion: Int = -1,
+    val id: String = EMPTY_STRING,
+    val decryptedUserId: Long = 0L,
     val name: String = randomUsername(),
     val password: String = randomString(length = 8),
     val email: String = EMPTY_STRING,
+    val externalEmail: String = EMPTY_STRING,
+    val status: Int = -1,
 
     val passphrase: String = EMPTY_STRING,
     val twoFa: String = EMPTY_STRING,
@@ -40,8 +46,9 @@ public data class User(
     val cards: List<Card> = emptyList(),
     val paypal: String = EMPTY_STRING,
     val dataSetScenario: String = EMPTY_STRING,
+    val recoveryEmail: String = EMPTY_STRING,
+    val recoveryPhone: String = EMPTY_STRING,
 
-    val recoveryEmail: String = "",
     val isExternal: Boolean = false
 ) {
 

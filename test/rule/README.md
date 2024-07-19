@@ -4,7 +4,7 @@
 
 **Key Features:**
 
-* **Reduced Boilerplate:** Streamline common tasks like activity/Compose test setup, test data injection, and environment configuration.
+* **Reduced Boilerplate:** Streamline common tasks like Activity/Compose test setup, test data injection, and environment configuration.
 * **Improved Organization:** Centralize configuration for cleaner and more maintainable tests.
 * **Customization:** Define custom annotations and rules for specific test requirements.
 
@@ -22,8 +22,6 @@ class TestClass {
     val rule: ProtonRule = protonRule(
         testSubscriptionData,
         envConfig = EnvironmentConfig(host = "proton.black"),
-        userData = TestUserData(name = randomUsername()),
-        loginBefore = true,
         logoutBefore = true,
         logoutAfter = true,
         activityRule = activityScenarioRule<MainActivity>(),
@@ -31,22 +29,62 @@ class TestClass {
     )
 
     @Test
+    @PrepareUser
     fun defaultExample() {
-        // MainActivity is started with a seeded user with Unlimited plan logged in on 'proton.black' environment.
+        // MainActivity is started with a seeded user. Application uses proton.black host.
     }
 
     @Test
-    @EnvironmentConfig(host = "proton.me")
-    @TestUserData(name = "pro", password = "pro", shouldSeed = false)
-    fun overrideExample() {
-        // MainActivity is started with a user 'pro' logged in on 'proton.me' environment. User will not be seeded beforehand
+    @EnvironmentConfig(host = "curie.proton.black")
+    @PrepareUser(userData = TestUserData(name = "name", password = "password"), loginBefore = true)
+    fun overrideExample0() {
+        // MainActivity is started with a user seeded with given name and password, authenticated on 'curie.proton.black' environment.
     }
 
+    @Test
+    @PrepareUser(loginBefore = true)
+    fun overrideExample1() {
+        // MainActivity is started with a seeded user with MailPlus plan logged in on 'proton.black' environment. 
+        val mainTestUser = rule.testDataRule.mainTestUser
+    }
 
     @Test
-    @TestSubscriptionData(plan = Plan.MailPlus)
+    @PrepareUser(userData = TestUserData(name = "name", password = "password"), loginBefore = true)
     fun overrideExample2() {
-        // MainActivity is started with a seeded user with MailPlus plan logged in on 'proton.black' environment.
+        // MainActivity is started with authenticated exiting user credentials. 
+        val mainTestUser = rule.testDataRule.mainTestUser
+    }
+
+    @Test
+    @PrepareUser(userData = TestUserData(email = "email@proton.black", password = "password"), loginBefore = true)
+    fun overrideExample3() {
+        // MainActivity is started with authenticated exiting user credentials. 
+        val mainTestUser = rule.testDataRule.mainTestUser
+    }
+    
+    @Test
+    @PrepareUser(
+        withTag = "mailPlusUser",
+        userData = TestUserData(genKeys = TestUserData.GenKeys.Curve25519),
+        subscriptionData = TestSubscriptionData(plan = Plan.MailPlus),
+        loginBefore = true
+    )
+    fun overrideExample4() {
+        // MainActivity is started with a seeded user with MailPlus plan logged in on 'proton.black' environment. 
+        // User is tagged with 'mailPlusUser' tag and can be accessed in tests as shown below.
+        val mainPlusUser = rule.testDataRule.seededUsers["mainPlusUser"]
+    }
+
+    @Test
+    @PrepareUser(withTag = "sender", loginBefore = true)
+    @PrepareUser(withTag = "recipient")
+    fun overrideExample5() {
+        // MainActivity is started with two seeded users where one of them with tag 'sender' is authenticated.
+        // Second user with tag 'recipient' is seeded on selected environment and can be used in tests. 
+        // By default, annotation without given tag, like @PrepareUser would seed user with 'main' tag.
+        // Tags should be unique per test otherwise exception will be thrown.
+        val sender = rule.testDataRule.seededUsers["sender"]
+        val recipient = rule.testDataRule.seededUsers["recipient"]
     }
 }
 ```
@@ -79,11 +117,9 @@ class TestClass {
         // MainActivity is started with following configuration:
         // 1. Default environment configuration provided by the application
         // 2. Hilt test dependencies injected 
-        // 3. Logged in with freshly created user with random username 
-        //    Can be accessed by protonRule.testDataRule.testUserData
-        // 4. All users are logged out before and after the test (to always assure clean state)
-        // 5. Default environment configuration is overriden by annotation
-        // 6. Test feature is disabled by default, but can be overriden by annotation @TestFeatureEnabled
+        // 3. All users are logged out before and after the test (to always assure clean state)
+        // 4. Default environment configuration is overriden by annotation
+        // 5. Test feature is disabled by default, but can be overriden by annotation @TestFeatureEnabled
     }
 }
 ```
@@ -140,17 +176,10 @@ fun exampleOverride() {
 For advanced setup you can use underlying test rules directly and/or combine them into your own rules:
 ```kotlin
 class AdvancedTestSetup {
-    private val testUserData = TestUserData(
-        name = randomUsername(),
-        password = "password",
-        genKeys = TestUserData.GenKeys.RSA4096
-    )
 
     private val environmentConfig = EnvironmentConfig(host = "proton.black")
 
     private val userConfig = ProtonRule.UserConfig(
-        userData = testUserData,
-        loginBefore = true,
         logoutBefore = true,
         logoutAfter = true
     )
@@ -172,27 +201,23 @@ class AdvancedTestSetup {
     @get:Rule
     val testDataRule = QuarkTestDataRule(
         annotationTestData = testConfig.annotationTestData,
-        initialTestUserData = userConfig.userData,
         environmentConfig = { envConfigRule.config }
     )
-
-    @get:Rule
-    val authenticationRule: AuthenticationRule = AuthenticationRule(
-        userConfig = userConfig
-    )
-
+    
     @get:Rule
     val setupRule: ExternalResource = before {
-        // setup
+        // Here code will be executed to set up an external resource before a test (a file, socket, 
+        // server, database connection, etc.), and guarantee to tear it down afterward.
+        // See JUnit ExternalResource class for more details.
     }
 
     @get:Rule
     val activityRule = testConfig.activityRule
 
     @Test
-    @TestSubscriptionData(plan = Plan.Unlimited)
+    @PrepareUser(subscriptionData = TestSubscriptionData(plan = Plan.MailPlus), loginBefore = true)
     fun example() {
-        // Test will run under the same conditions as using protonActivityScenarioRule()
+        // Test will run under the same conditions as using protonActivityScenarioRule().
     }
 }
 ```

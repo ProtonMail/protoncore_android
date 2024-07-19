@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.signup
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
@@ -27,6 +28,7 @@ import me.proton.core.util.kotlin.random
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class UsernameSetupTests : BaseTest() {
     private val chooseUsernameRobot = ChooseUsernameRobot()
 

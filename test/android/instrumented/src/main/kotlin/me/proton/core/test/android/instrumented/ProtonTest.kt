@@ -21,19 +21,16 @@ package me.proton.core.test.android.instrumented
 
 import android.app.Activity
 import android.app.Instrumentation
-import android.app.UiAutomation
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.rule.GrantPermissionRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.instrumented.rules.RetryRule
 import me.proton.core.test.android.instrumented.utils.FileUtils
 import me.proton.core.test.android.instrumented.utils.Shell
-import me.proton.core.test.performance.MeasurementConfig
 import me.proton.core.test.performance.MeasurementRule
 import org.hamcrest.CoreMatchers
 import org.junit.After
@@ -44,6 +41,7 @@ import org.junit.rules.TestName
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
+@HiltAndroidTest
 /**
  * Class that holds common setUp() and tearDown() functions.
  *
@@ -62,25 +60,27 @@ open class ProtonTest(
     }
 
     class TestExecutionWatcher : TestWatcher() {
-        override fun failed(e: Throwable?, description: Description?) = Shell.saveToFile(description)
+        override fun failed(e: Throwable?, description: Description?) =
+            Shell.saveToFile(description)
     }
 
     val measurementRule = MeasurementRule()
-
+    private val hiltRule = HiltAndroidRule(this)
     private val retryRule = RetryRule(activity, tries)
 
     @Rule(order = Rule.DEFAULT_ORDER + 1)
     @JvmField
     val ruleChain = RuleChain
-        .outerRule(testName)
+        .outerRule(hiltRule)
         .around(measurementRule)
         .around(testWatcher)
         .around(retryRule)
+        .around(testName)
         .around(activityScenarioRule)!!
-
 
     @Before
     open fun setUp() {
+        hiltRule.inject()
         Intents.init()
         Log.d(testTag, "Starting test execution: ${testName.methodName}")
         Intents.intending(CoreMatchers.not(IntentMatchers.isInternal()))

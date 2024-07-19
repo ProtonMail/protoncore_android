@@ -17,7 +17,6 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.test.rule.ProtonRule
-import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.core.user.domain.UserManager
 import org.junit.Rule
@@ -27,15 +26,10 @@ import kotlin.test.assertNotNull
 
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
-class ConvertExternalToInternalAccountTests(
-    friendlyName: String, testUserData: TestUserData, onLogin: () -> Any
-) : BaseConvertExternalToInternalAccountTests(friendlyName, testUserData, onLogin) {
+class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccountTests() {
 
     @get:Rule
-    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>(
-        loginBefore = false,
-        userData = testUserData
-    ) {
+    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity> {
         extraHeaderProvider.addHeaders("X-Accept-ExtAcc" to "true")
     }
 
@@ -45,8 +39,8 @@ class ConvertExternalToInternalAccountTests(
 
         val user = runBlocking { userManager.getUser(account.userId) }
 
-        assertEquals(testUserData.externalEmail, account.email)
-        assertEquals(testUserData.name, user.name)
+        assertEquals(protonRule.testDataRule.mainTestUser?.externalEmail, account.email)
+        assertEquals(protonRule.testDataRule.mainTestUser?.name, user.name)
     }
 
     @get:Rule

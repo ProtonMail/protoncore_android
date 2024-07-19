@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.android.retrofit
+import studio.forface.easygradle.dsl.android.*
 import studio.forface.easygradle.dsl.api
 import studio.forface.easygradle.dsl.`coroutines-core`
 import studio.forface.easygradle.dsl.implementation
@@ -59,6 +59,8 @@ dependencies {
         `kotlin-test`,
         `kotlin-test-junit`,
         retrofit,
-        uiautomator
+        uiautomator,
+        `hilt-android-testing`
     )
+    implementation(project(":test:test-rule"))
 }

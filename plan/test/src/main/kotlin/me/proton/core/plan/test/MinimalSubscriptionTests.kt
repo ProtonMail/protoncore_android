@@ -18,33 +18,45 @@
 
 package me.proton.core.plan.test
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.rule.annotation.PrepareUser
+import me.proton.core.test.rule.annotation.payments.TestSubscriptionData
+import me.proton.test.fusion.FusionConfig
+import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.junit.runners.Parameterized
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Minimal Subscription tests (for both Static and Dynamic plans implementation).
  */
-@RunWith(Parameterized::class)
-public abstract class MinimalSubscriptionTests(private val plan: Plan) {
+@HiltAndroidTest
+public abstract class MinimalSubscriptionTests {
+
     public abstract fun startSubscription(): SubscriptionRobot
 
+    @Before
+    public fun setUpTimeouts() {
+        FusionConfig.Compose.waitTimeout.set(60.seconds)
+        FusionConfig.Espresso.waitTimeout.set(60.seconds)
+    }
+
     @Test
-    public fun subscriptionIsShownForPlan() {
+    @PrepareUser(subscriptionData = TestSubscriptionData(plan = Plan.MailPlus), loginBefore = true)
+    public fun subscriptionIsShownForMailPlusPlan() {
         startSubscription()
             .apply {
                 currentPlanIsDisplayed()
             }
     }
 
-    public companion object {
-        @get:Parameterized.Parameters(name = "{0}")
-        @get:JvmStatic
-        public val data: Collection<Plan> = listOf(
-            Plan.MailPlus,
-            Plan.Unlimited
-        )
+    @Test
+    @PrepareUser(subscriptionData = TestSubscriptionData(plan = Plan.Unlimited), loginBefore = true)
+    public fun subscriptionIsShownForUnlimitedPlan() {
+        startSubscription()
+            .apply {
+                currentPlanIsDisplayed()
+            }
     }
 }

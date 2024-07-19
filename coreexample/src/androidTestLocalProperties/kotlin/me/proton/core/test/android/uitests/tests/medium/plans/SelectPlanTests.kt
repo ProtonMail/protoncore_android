@@ -20,9 +20,6 @@ package me.proton.core.test.android.uitests.tests.medium.plans
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
-import me.proton.core.test.quark.data.Plan.Dev
-import me.proton.core.test.quark.data.Plan.Free
-import me.proton.core.test.quark.data.User
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
@@ -31,12 +28,15 @@ import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
+import me.proton.core.test.quark.data.Plan.Dev
+import me.proton.core.test.quark.data.Plan.Free
+import me.proton.core.test.quark.data.User
 import org.junit.After
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 
-@Ignore("Replaced with SelectDynamicPlanTests")
+@Ignore("Replaced with DynamicSelectPlanTests")
 class SelectPlanTests : BaseTest() {
 
     private var humanVerificationRobot: HVRobot? = null

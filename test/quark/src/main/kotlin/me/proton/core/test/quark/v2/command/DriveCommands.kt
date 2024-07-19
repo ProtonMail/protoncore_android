@@ -49,3 +49,96 @@ public fun QuarkCommand.populateUserWithData(
         .build()
         .let { client.executeQuarkRequest(it) }
 }
+
+public fun QuarkCommand.populate(
+    user: User,
+    scenario: Int = 0,
+    isDevice: Boolean = false,
+    isPhotos: Boolean = false,
+    sharingUser: User? = null
+): Response =
+    route("quark/drive:populate")
+        .args(
+            listOfNotNull(
+                "-u" to user.name,
+                "-p" to user.password,
+                "-S" to scenario.toString(),
+                isDevice.optionalArg("-d"),
+                isPhotos.optionalArg("--photo"),
+                sharingUser?.name?.optionalArg("--sharing-username"),
+                sharingUser?.password?.optionalArg("--sharing-user-pass"),
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+
+public fun QuarkCommand.populate(
+    userName: String,
+    password: String,
+    scenario: Int = 0,
+    isDevice: Boolean = false,
+    isPhotos: Boolean = false,
+    sharingUserName: String? = null,
+    sharingUserPassword: String? = null
+): Response =
+    route("quark/drive:populate")
+        .args(
+            listOfNotNull(
+                "-u" to userName,
+                "-p" to password,
+                "-S" to scenario.toString(),
+                isDevice.optionalArg("-d"),
+                isPhotos.optionalArg("--photo"),
+                sharingUserName?.optionalArg("--sharing-username"),
+                sharingUserPassword?.optionalArg("--sharing-user-pass"),
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+
+private fun Boolean.optionalArg(
+    name: String,
+): Pair<String, String>? = takeIf { it }?.let { name to it.toString() }
+
+private fun String.optionalArg(
+    name: String,
+): Pair<String, String>? = takeIf { it.isNotEmpty() }?.let { name to it }
+
+public fun QuarkCommand.quotaSetUsedSpace(
+    user: User,
+    usedSpace: String,
+    product: String,
+): Response =
+    route("quark/drive:quota:set-used-space")
+        .args(
+            listOf(
+                "--user-id" to user.decryptedUserId.toString(),
+                "--used-space" to usedSpace,
+                "--product" to product
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+
+public fun QuarkCommand.volumeCreate(
+    user: User
+): Response =
+    route("quark/drive:volume:create")
+        .args(
+            listOf(
+                "--uid" to user.decryptedUserId.toString(),
+                "--username" to user.name,
+                "--pass" to user.password,
+                "--address-id" to user.addressID
+            ).toEncodedArgs()
+        )
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }

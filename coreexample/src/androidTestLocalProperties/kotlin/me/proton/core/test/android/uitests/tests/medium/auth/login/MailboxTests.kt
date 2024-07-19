@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.Ready
@@ -30,6 +31,7 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class MailboxTests : BaseTest() {
 
     private val mailboxPasswordRobot = MailboxPasswordRobot()

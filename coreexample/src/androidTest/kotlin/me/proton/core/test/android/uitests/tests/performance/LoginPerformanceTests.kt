@@ -19,15 +19,13 @@
 package me.proton.core.test.android.uitests.tests.performance
 
 import android.util.Log
-import me.proton.android.core.coreexample.BuildConfig
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
+import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
-import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.performance.LogcatFilter
-import me.proton.core.test.performance.MeasurementConfig
 import me.proton.core.test.performance.annotation.Measure
 import me.proton.core.test.performance.measurement.AppSizeMeasurement
 import me.proton.core.test.performance.measurement.DurationMeasurement

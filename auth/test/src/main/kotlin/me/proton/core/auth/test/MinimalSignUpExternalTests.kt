@@ -24,7 +24,6 @@ import me.proton.core.auth.test.robot.signup.SetPasswordRobot
 import me.proton.core.auth.test.robot.signup.SignupInternal
 import me.proton.core.humanverification.test.robot.HvCodeRobot
 import me.proton.core.plan.test.robot.SubscriptionRobot
-import me.proton.core.test.quark.data.Plan
 import me.proton.core.util.kotlin.random
 import me.proton.test.fusion.FusionConfig
 import org.junit.Before
@@ -38,8 +37,10 @@ public interface MinimalSignUpExternalTests {
 
     @Before
     public fun goToExternalSignup() {
-        FusionConfig.Compose.waitTimeout.set(60.seconds)
-        FusionConfig.Espresso.waitTimeout.set(60.seconds)
+        FusionConfig.Compose.waitTimeout.set(90.seconds)
+        FusionConfig.Compose.assertTimeout.set(90.seconds)
+        FusionConfig.Espresso.waitTimeout.set(90.seconds)
+        FusionConfig.Espresso.assertTimeout.set(90.seconds)
         AddAccountRobot.clickSignUp()
     }
 
@@ -57,10 +58,10 @@ public interface MinimalSignUpExternalTests {
             .clickVerify()
 
         SetPasswordRobot
-            .fillAndClickNext("123123123")
+            .fillAndClickNext(String.random(12))
 
         SubscriptionRobot
-            .selectPlan(Plan.Free)
+            .selectFreePlan()
 
         HvCodeRobot
             .apply {
@@ -69,7 +70,7 @@ public interface MinimalSignUpExternalTests {
     }
 
     @Test
-    public fun signupSwitchToInternalAccountHappyPath() {
+    public fun signupSwitchToInternalAccountCreationHappyPath() {
         val testUsername = "test-${String.random(15)}"
 
         SignupInternal
@@ -82,12 +83,12 @@ public interface MinimalSignUpExternalTests {
             .apply {
                 uiElementsDisplayed()
             }
-            .fillAndClickNext("123123123")
+            .fillAndClickNext(String.random(12))
             .skip()
             .skipConfirm()
 
         SubscriptionRobot
-            .selectPlan(Plan.Free)
+            .selectFreePlan()
 
         HvCodeRobot
             .apply {

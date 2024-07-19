@@ -34,6 +34,7 @@ import me.proton.core.eventmanager.domain.EventManagerProvider
 import me.proton.core.eventmanager.domain.repository.EventMetadataRepository
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.notification.domain.repository.NotificationRepository
+import me.proton.core.test.rule.annotation.PrepareUser
 import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -65,6 +66,7 @@ public interface MinimalAccountRecoveryNotificationTest {
     }
 
     @Test
+    @PrepareUser(loginBefore = true)
     public fun receiveAccountRecoveryNotification() {
         val account = waitForPrimaryAccount()
 

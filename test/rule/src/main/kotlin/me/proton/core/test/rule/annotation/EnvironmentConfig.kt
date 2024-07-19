@@ -20,15 +20,16 @@ package me.proton.core.test.rule.annotation
 
 import me.proton.core.configuration.EnvironmentConfiguration
 
-
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 public annotation class EnvironmentConfig(
-    public val host: String
+    public val host: String,
+    public val proxyToken: String
+
 ) {
     public companion object {
         public fun fromConfiguration(config: EnvironmentConfiguration): EnvironmentConfig =
-            EnvironmentConfig(config.host)
+            EnvironmentConfig(config.host, config.proxyToken)
     }
 }
 

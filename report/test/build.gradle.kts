@@ -17,6 +17,7 @@
  */
 
 import studio.forface.easygradle.dsl.*
+import studio.forface.easygradle.dsl.android.*
 
 plugins {
     protonAndroidLibrary
@@ -38,9 +39,18 @@ dependencies {
     implementation(
         project(Module.androidInstrumentedTest),
         project(Module.authTest),
+        project(Module.testRule),
         project(Module.reportPresentation),
+        `hilt-android-testing`,
         fusion,
+        junit,
         `kotlin-test`,
         `kotlin-test-junit`
+    )
+    testImplementation(
+        project(Module.androidTest),
+        `hilt-android-testing`,
+        junit,
+        `kotlin-test`
     )
 }

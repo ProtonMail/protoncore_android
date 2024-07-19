@@ -34,7 +34,7 @@ public object SignupInternal {
 
     public fun clickNext(): HvCodeRobot = HvCodeRobot.apply { nextButton.click() }
 
-    public fun clickSwitch(): SignupExternal = SignupExternal.apply { switchButton.click() }
+    public fun clickSwitch(): SignupExternal = SignupExternal.apply { switchButton.scrollTo().click() }
 
     public fun robotDisplayed() {
         emailInput.await { checkIsDisplayed() }

@@ -28,10 +28,15 @@ import org.junit.Before
 import org.junit.Rule
 
 @HiltAndroidTest
-class SignupExternalTests: MinimalSignUpExternalTests {
-    @get:Rule
-    val protonRule = protonActivityScenarioRule<MainActivity>(loginBefore = false, userData = null)
+class SignupExternalTests : MinimalSignUpExternalTests {
 
+    @get:Rule
+    val protonRule = protonActivityScenarioRule<MainActivity>()
+
+    /**
+     * We need this override since in real Proton client we trigger sign up from Login screen
+     * and in coreexample app this is done by clicking on "Signup External" button.
+     */
     @Before
     override fun goToExternalSignup() {
         device.pressBack()

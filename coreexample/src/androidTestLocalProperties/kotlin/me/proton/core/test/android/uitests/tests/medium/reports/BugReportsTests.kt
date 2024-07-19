@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.reports
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.report.domain.entity.BugReport
 import me.proton.core.report.presentation.R
 import me.proton.core.test.android.instrumented.ui.espresso.OnView
@@ -27,6 +28,7 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Test
 
+@HiltAndroidTest
 class BugReportsTests : BaseTest() {
     private val closeButton: OnView
         get() = BugReportRobot().view.withContentDesc(R.string.core_report_bug_close)

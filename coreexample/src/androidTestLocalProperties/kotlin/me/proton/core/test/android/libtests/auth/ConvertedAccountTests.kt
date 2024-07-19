@@ -22,26 +22,18 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.test.BaseConvertedAccountTests
 import me.proton.core.test.android.robot.CoreexampleRobot
-import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.core.test.rule.ProtonRule
-import me.proton.core.test.rule.annotation.TestUserData
-import me.proton.core.util.kotlin.random
+import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.FusionConfig
 import org.junit.Rule
 import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidTest
-class ConvertedAccountTests : BaseConvertedAccountTests {
+open class ConvertedAccountTests : BaseConvertedAccountTests {
 
     @get:Rule
-    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>(
-        userData = TestUserData(
-            external = true,
-            externalEmail = "free@${String.random()}.test"
-        ),
-        loginBefore = false
-    ) {
+    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity> {
         FusionConfig.Compose.waitTimeout.set(60.seconds)
         FusionConfig.Espresso.waitTimeout.set(60.seconds)
     }

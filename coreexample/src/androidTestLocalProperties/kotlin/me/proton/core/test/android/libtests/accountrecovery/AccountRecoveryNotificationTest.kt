@@ -53,14 +53,13 @@ class AccountRecoveryNotificationTest : MinimalAccountRecoveryNotificationTest {
     @get:Rule
     val protonRule: ProtonRule = protonAndroidComposeRule<MainActivity>(
         fusionEnabled = true,
-        additionalRules = setOf(grantPermissionRule),
-        beforeHilt = {
+        additionalRules = linkedSetOf(grantPermissionRule),
+        afterHilt = {
+            every { isAccountRecoveryEnabled(any()) } returns true
+            every { isNotificationsEnabled(any<UserId>()) } returns true
             WorkManager.initialize(it.targetContext, Configuration.Builder().build())
         }
-    ) {
-        every { isAccountRecoveryEnabled(any()) } returns true
-        every { isNotificationsEnabled(any<UserId>()) } returns true
-    }
+    )
 
     @Inject
     override lateinit var accountStateHandler: AccountStateHandler

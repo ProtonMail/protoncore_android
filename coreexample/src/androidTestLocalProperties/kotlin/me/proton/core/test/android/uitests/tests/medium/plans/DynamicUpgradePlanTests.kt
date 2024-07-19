@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.test.robot.SubscriptionRobot
@@ -30,6 +31,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class DynamicUpgradePlanTests : BaseTest() {
     private val coreExampleRobot = CoreexampleRobot()
 

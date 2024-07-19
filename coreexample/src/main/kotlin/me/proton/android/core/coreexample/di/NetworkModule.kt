@@ -54,6 +54,7 @@ class NetworkModule {
 @Module
 @InstallIn(SingletonComponent::class)
 class NetworkConstantsModule {
+
     @Provides
     @BaseProtonApiUrl
     fun provideProtonApiUrl(envConfig: EnvironmentConfiguration): HttpUrl = envConfig.baseUrl.toHttpUrl()

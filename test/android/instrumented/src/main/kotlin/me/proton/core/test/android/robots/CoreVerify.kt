@@ -35,7 +35,7 @@ open class CoreVerify : CoreRobot() {
     }
 
     fun errorSnackbarDisplayed(text: String) {
-        view
+        view.inRoot(rootView.isPlatformPopUp())
             .withSnackbarText(text)
             .checkEffectiveVisibility(ViewMatchers.Visibility.VISIBLE)
     }

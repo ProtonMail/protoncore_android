@@ -62,7 +62,8 @@ public fun QuarkCommand.userCreateAddress(
     decryptedUserId: Long,
     password: String,
     email: String,
-    genKeys: GenKeys = GenKeys.Curve25519
+    genKeys: GenKeys = GenKeys.Curve25519,
+    isPrimary: Boolean = false
 ): CreateUserAddressQuarkResponse =
     route(USERS_CREATE_ADDRESS)
         .args(
@@ -71,6 +72,7 @@ public fun QuarkCommand.userCreateAddress(
                 "password" to password,
                 "email" to email,
                 "--gen-keys" to genKeys.name,
+                "--primary" to "$isPrimary",
                 "--format" to "json"
             ).toEncodedArgs()
         )

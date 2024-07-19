@@ -20,7 +20,6 @@
 package me.proton.android.core.coreexample.hilttests.login
 
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import kotlinx.coroutines.flow.first
@@ -51,7 +50,6 @@ import me.proton.core.user.domain.repository.DomainRepository
 import org.junit.Rule
 import org.junit.Test
 import javax.inject.Inject
-import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 import me.proton.core.test.quark.data.User as TestUser
@@ -59,8 +57,6 @@ import me.proton.core.test.quark.data.User as TestUser
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
 class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, tries = 1) {
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     val logsRule = LogsRule()
@@ -91,11 +87,6 @@ class InternalLoginWithAccountSetupTests : ProtonTest(MainActivity::class.java, 
 
     @Inject
     lateinit var quark: QuarkCommand
-
-    @BeforeTest
-    fun prepare() {
-        hiltRule.inject()
-    }
 
     @Test
     fun userWithNoKeys() {

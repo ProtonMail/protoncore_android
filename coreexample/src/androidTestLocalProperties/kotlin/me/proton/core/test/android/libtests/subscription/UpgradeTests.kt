@@ -23,14 +23,19 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.plan.test.MinimalUpgradeTests
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
+import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
-import me.proton.test.fusion.FusionConfig.Compose.targetContext
+import me.proton.test.fusion.FusionConfig
 import org.junit.Rule
+import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidTest
-class UpgradeTests: MinimalUpgradeTests {
+open class UpgradeTests : MinimalUpgradeTests {
     @get:Rule
-    val protonRule = protonActivityScenarioRule<MainActivity>()
+    val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>{
+        FusionConfig.Compose.waitTimeout.set(60.seconds)
+        FusionConfig.Espresso.waitTimeout.set(60.seconds)
+    }
 
     override fun startUpgrade(): SubscriptionRobot {
         CoreexampleRobot().plansUpgrade()

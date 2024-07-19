@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.payments
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.R
 import me.proton.core.test.quark.data.Plan
@@ -30,6 +31,7 @@ import org.junit.After
 import org.junit.Ignore
 import org.junit.Test
 
+@HiltAndroidTest
 @Ignore("Replaced by DynamicNewCreditCardTests")
 class NewCreditCardTests : BaseTest() {
 

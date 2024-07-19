@@ -38,6 +38,6 @@ public object TwoPassRobot {
 
     public fun screenIsDisplayed() {
         passphraseInput.await { checkIsDisplayed() }
-        passphraseInput.await { checkIsDisplayed() }
+        unlockButton.await { checkIsDisplayed() }
     }
 }

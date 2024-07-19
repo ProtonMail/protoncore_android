@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.confirmpassword
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.robots.confirmpassword.ConfirmPasswordRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
@@ -25,6 +26,7 @@ import me.proton.core.test.android.uitests.tests.SmokeTest
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class ConfirmPasswordTests : BaseTest() {
     private lateinit var confirmPasswordRobot: ConfirmPasswordRobot
     private val user = users.getUser()

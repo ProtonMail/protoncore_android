@@ -50,29 +50,26 @@ import org.junit.runners.model.Statement
  * @param testConfig Configuration for environment, test data, and an optional activity rule.
  * @param hiltConfig Configuration for hooking into hilt setup
  */
-public open class ProtonRule(
-    private val userConfig: UserConfig?,
-    private val testConfig: TestConfig,
+public class ProtonRule(
+    public val userConfig: UserConfig?,
+    public val testConfig: TestConfig,
     private val hiltConfig: HiltConfig?,
-    private val additionalRules: Set<TestRule> = setOf()
+    private val additionalRules: LinkedHashSet<TestRule> = linkedSetOf()
 ) : TestRule {
 
     public val activityScenarioRule: TestRule? = testConfig.activityRule
-
     public val targetContext: Context get() = InstrumentationRegistry.getInstrumentation().targetContext
 
-    public val testDataRule: QuarkTestDataRule? by lazy {
-        if (userConfig?.userData == null && testConfig.annotationTestData.isEmpty()) return@lazy null
+    public lateinit var testName: String
+
+    public val testDataRule: QuarkTestDataRule  by lazy {
         QuarkTestDataRule(
-            testConfig.annotationTestData,
-            initialTestUserData = userConfig?.userData,
+            protonRule = this,
             environmentConfiguration = {
                 provideEnvironmentConfiguration(ContentResolverConfigManager(targetContext))
             }
         )
     }
-
-    public lateinit var testName: String
 
     private val environmentConfigRule by lazy {
         EnvironmentConfigRule(testConfig.envConfig)
@@ -89,19 +86,13 @@ public open class ProtonRule(
         }
     }
 
-    private val authenticationRule by lazy {
-        if (userConfig == null) return@lazy null.also {
-            printInfo("No UserConfig provided. Skipping authentication.")
-        }
-        AuthenticationRule {
-            UserConfig(
-                testDataRule?.testUserData,
-                loginBefore = userConfig.loginBefore,
-                logoutBefore = userConfig.logoutBefore,
-                logoutAfter = userConfig.logoutAfter,
-            )
-        }
-    }
+    /**
+     * Responsible for authenticating the user if needed. This rule can take either user that is
+     * provided in ProtonRule instance or the one from @PrepareUser annotation. Exception will be
+     * thrown in case both ProtonRule and @PrepareUser annotation have user to login.
+     */
+    private val authenticationRule = AuthenticationRule(this)
+
 
     private val beforeHiltRule by lazy {
         if (hiltConfig?.beforeHilt == null) return@lazy null
@@ -126,13 +117,13 @@ public open class ProtonRule(
             .outerRule(beforeHiltRule)
             .aroundNullable(hiltRule)
             .around(environmentConfigRule)
-            .around(hiltInjectRule)
             .aroundNullable(afterHiltRule)
-            .aroundNullable(testDataRule)
+            .around(testDataRule)
             .aroundNullable(authenticationRule)
+            .around(hiltInjectRule)
+            .aroundMultiple(additionalRules)
             .aroundNullable(testConfig.activityRule)
             .around(TestExecutionWatcher())
-            .aroundMultiple(additionalRules)
             .apply(base, description)
     }
 }
@@ -141,7 +132,7 @@ private fun RuleChain.aroundNullable(rule: TestRule?): RuleChain {
     return around(rule ?: return this)
 }
 
-private fun RuleChain.aroundMultiple(ruleSet: Set<TestRule>): RuleChain {
+private fun RuleChain.aroundMultiple(ruleSet: LinkedHashSet<TestRule>): RuleChain {
     var chain = this
     ruleSet.map {
         chain = chain.around(it)

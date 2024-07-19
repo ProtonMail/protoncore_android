@@ -16,29 +16,41 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.rule.annotation
+package me.proton.core.test.rule.annotation.payments
 
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.response.CreateUserQuarkResponse
+import me.proton.core.test.rule.annotation.AnnotationTestData
 import me.proton.core.test.rule.extension.subscriptionCreate
+import me.proton.core.test.rule.printInfo
 import me.proton.core.util.kotlin.EMPTY_STRING
 
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
 public annotation class TestSubscriptionData(
-    val plan: Plan,
+    val plan: Plan = Plan.Free,
+    val customPlan: String = "",
     val couponCode: String = EMPTY_STRING,
-    val delinquent: Boolean = false
+    val delinquent: Boolean = false,
 )
 
 public val TestSubscriptionData.annotationTestData: AnnotationTestData<TestSubscriptionData>
-    get() = AnnotationTestData(
+    get() = AnnotationTestData.forCreateUserQuarkResponse(
         default = this,
         implementation = { data: TestSubscriptionData, seededUser: CreateUserQuarkResponse? ->
-            if (data.plan != Plan.Free) {
-                seededUser?.let {
-                    subscriptionCreate(data, it.decryptedUserId.toString())
-                } ?: error("Could not create subscription. User is not seeded.")
-            }
+            seededUser?.let {
+                // Custom plan case is handled in subscriptionCreate() function.
+                val response = subscriptionCreate(data, it.decryptedUserId.toString())
+                if (response.code == 200) {
+                    printInfo("Subscription seeding successful: { ${response.message} }")
+                } else {
+                    error(
+                        "Could not create subscription. Seeding failed with status code: " +
+                                "${response.code} - ${response.message}"
+                    )
+                }
+            } ?: error("Could not create subscription. User is not seeded.")
         }
     )
+
+public fun TestSubscriptionData.isDefault(): Boolean = this == TestSubscriptionData()

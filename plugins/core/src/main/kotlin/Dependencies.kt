@@ -224,4 +224,6 @@ public val DependencyHandler.uiautomator: Any
     get() = androidx("test.uiautomator", module = "uiautomator") version `uiautomator version`
 public val DependencyHandler.fusion: Any
     get() = dependency("me.proton.test", module = "fusion") version `fusion version`
+public val DependencyHandler.`kotlin-reflection`: Any
+    get() = dependency("org.jetbrains.kotlin", module = "kotlin-reflect") version `kotlin version`
 // endregion

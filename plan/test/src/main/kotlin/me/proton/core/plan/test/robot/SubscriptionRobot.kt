@@ -25,6 +25,7 @@ import me.proton.test.fusion.Fusion.device
 import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.FusionConfig
 import me.proton.test.fusion.ui.espresso.builders.OnView
+import kotlin.time.Duration.Companion.seconds
 
 public object SubscriptionRobot {
 
@@ -36,7 +37,6 @@ public object SubscriptionRobot {
     private val upgradeYourPlanText =
         view.withId(R.id.title).withText(R.string.plans_upgrade_your_plan)
     private val upgradeYourPlanTitle = view.withText(R.string.plans_upgrade_your_plan)
-        .hasAncestor(toolbar)
     private val cannotUpgrade = view.withText(R.string.plans_can_not_upgrade_from_mobile)
     private val managementInfo = view.withId(R.id.management_info)
     private val noUpgradeAvailableTextView = view.withText(R.string.plans_no_upgrade_available)
@@ -53,7 +53,7 @@ public object SubscriptionRobot {
     }
 
     private fun togglePlanItem(plan: Plan) {
-        view.withId(R.id.title).containsText(plan.text).scrollTo().click()
+        view.withId(R.id.title).withText(plan.text).scrollTo().click()
     }
 
     private fun getPlanButton(plan: Plan): OnView {
@@ -61,12 +61,19 @@ public object SubscriptionRobot {
         return view.withId(R.id.content_button).containsText(buttonText)
     }
 
+    private fun getFreePlanButton(): OnView {
+        return view.withText(R.string.plans_proton_for_free)
+    }
+
     private fun expandAndSelectPlan(plan: Plan) {
         togglePlanItem(plan)
+        getPlanButton(plan).scrollTo().click()
+    }
 
-        getPlanButton(plan)
-            .scrollTo()
-            .click()
+    public fun selectFreePlan() {
+        view.withText("Free").await(timeout = 90.seconds) { checkIsDisplayed() }
+        view.withText("Free").scrollTo().click()
+        getPlanButton(Plan.Free).scrollTo().click()
     }
 
     public fun selectPlan(plan: Plan) {
@@ -95,8 +102,10 @@ public object SubscriptionRobot {
     }
 
     private fun planSelectionIsDisplayed() {
-        planSelection.scrollTo()
-        planSelection.await { checkIsDisplayed() }
+        planSelection.apply {
+            scrollTo()
+            checkIsDisplayed()
+        }
         planSelectionWithCardView.await { checkIsDisplayed() }
     }
 

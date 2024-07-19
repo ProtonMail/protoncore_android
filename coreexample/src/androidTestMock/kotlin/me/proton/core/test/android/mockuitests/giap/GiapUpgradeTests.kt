@@ -20,41 +20,27 @@ package me.proton.core.test.android.mockuitests.giap
 
 import androidx.test.core.app.ActivityScenario
 import com.android.billingclient.api.BillingClient
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
-import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
-import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
-import me.proton.core.test.android.mockuitests.BaseMockTest
-import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.android.mockuitests.SampleMockTest
 import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
 import me.proton.core.test.quark.data.Card
-import okhttp3.HttpUrl
-import org.junit.Rule
 import javax.inject.Inject
 import kotlin.test.Test
 import me.proton.core.test.quark.data.Plan as TestPlan
 
 @HiltAndroidTest
-class GiapUpgradeTests : BaseMockTest {
-    @get:Rule
-    val mockTestRule = MockTestRule(this)
-
-    @BindValue
-    @BaseProtonApiUrl
-    override lateinit var baseProtonApiUrl: HttpUrl
+class GiapUpgradeTests : SampleMockTest() {
 
     @Inject
     lateinit var billingClientFactory: FakeBillingClientFactory
 
     private val billingClient: BillingClient get() = billingClientFactory.billingClient
-
-    private val dispatcher: TestWebServerDispatcher get() = mockTestRule.dispatcher
 
     // TODO: add check for Google Billing dialog display
 //    @Test

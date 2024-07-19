@@ -20,7 +20,6 @@
 package me.proton.android.core.coreexample.hilttests.login
 
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import me.proton.android.core.coreexample.MainActivity
@@ -46,8 +45,6 @@ import kotlin.test.Test
 @HiltAndroidTest
 @UninstallModules(ApplicationModule::class)
 class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java, tries = 1) {
-    @get:Rule
-    val hiltRule = HiltAndroidRule(this)
 
     @get:Rule
     val logsRule = LogsRule()
@@ -81,7 +78,6 @@ class ExternalAccountUnsupportedLoginTests : ProtonTest(MainActivity::class.java
             email = "${User.randomUsername()}@proton.wtf",
             isExternal = true
         )
-        hiltRule.inject()
     }
 
     @Test

@@ -16,36 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.android.libtests.report
+package me.proton.core.test.android.libtests.auth
 
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
-import me.proton.core.report.test.MinimalReportInternalTests
-import me.proton.core.report.test.robot.ReportRobot
+import me.proton.core.auth.test.MinimalSignUpExternalTests
 import me.proton.core.test.android.robot.CoreexampleRobot
-import me.proton.core.test.rule.ProtonRule
-import me.proton.core.test.rule.annotation.payments.TestPaymentMethods
-import me.proton.core.test.rule.annotation.payments.annotationTestData
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
-import me.proton.test.fusion.FusionConfig
+import me.proton.test.fusion.Fusion.device
+import org.junit.Before
 import org.junit.Rule
-import kotlin.time.Duration.Companion.seconds
 
 @HiltAndroidTest
-open class ReportInternalTests : MinimalReportInternalTests {
+class SignupInternalTests: MinimalSignUpExternalTests {
     @get:Rule
-    val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity> (
-        annotationTestData = setOf(TestPaymentMethods().annotationTestData)
-    ) {
-        FusionConfig.Compose.waitTimeout.set(60.seconds)
-        FusionConfig.Espresso.waitTimeout.set(60.seconds)
-    }
+    val protonRule = protonActivityScenarioRule<MainActivity>()
 
-    override fun startReport() {
-        CoreexampleRobot().bugReport()
-    }
-
-    override fun verifyAfter() {
-        ReportRobot.thankYouDisplayed()
+    @Before
+    override fun goToExternalSignup() {
+        device.pressBack()
+        CoreexampleRobot().signupInternal()
     }
 }

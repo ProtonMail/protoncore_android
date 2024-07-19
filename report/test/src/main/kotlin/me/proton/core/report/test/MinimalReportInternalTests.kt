@@ -18,13 +18,16 @@
 
 package me.proton.core.report.test
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.report.test.robot.ReportRobot
+import me.proton.core.test.rule.annotation.PrepareUser
 import org.junit.Test
 
 /**
  * Minimal Report Tests for app providing [AccountType.Internal].
  */
+@HiltAndroidTest
 public interface MinimalReportInternalTests {
 
     public fun startReport()
@@ -32,6 +35,7 @@ public interface MinimalReportInternalTests {
     public fun verifyAfter()
 
     @Test
+    @PrepareUser(loginBefore = true)
     public fun fillAndSendReportHappyPath() {
         startReport()
 

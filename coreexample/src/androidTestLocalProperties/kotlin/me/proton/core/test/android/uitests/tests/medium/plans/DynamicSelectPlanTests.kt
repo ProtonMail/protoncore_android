@@ -18,7 +18,6 @@
 
 package me.proton.core.test.android.uitests.tests.medium.plans
 
-import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
@@ -30,26 +29,31 @@ import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.payments.AddCreditCardRobot
-import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.quark.data.Plan.Free
 import me.proton.core.test.quark.data.Plan.MailPlus
-import me.proton.core.test.rule.annotation.TestPaymentMethods
 import me.proton.core.test.rule.annotation.TestUserData
-import me.proton.core.test.rule.annotation.annotationTestData
+import me.proton.core.test.rule.annotation.payments.TestPaymentMethods
+import me.proton.core.test.rule.annotation.payments.annotationTestData
+import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 
-@HiltAndroidTest
 @Ignore("Outdated")
 class DynamicSelectPlanTests {
 
     @get:Rule
     val protonRule = protonActivityScenarioRule<MainActivity>(
-        setOf(TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false).annotationTestData),
-        userData = null
+        setOf(
+            TestPaymentMethods(
+                AppStore.GooglePlay,
+                card = true,
+                paypal = false,
+                inApp = false
+            ).annotationTestData
+        )
     )
 
     @Before

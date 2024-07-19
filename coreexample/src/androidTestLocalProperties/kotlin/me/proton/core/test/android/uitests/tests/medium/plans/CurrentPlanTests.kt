@@ -21,6 +21,7 @@ package me.proton.core.test.android.uitests.tests.medium.plans
 import android.content.Context
 import androidx.core.text.HtmlCompat
 import androidx.test.core.app.ApplicationProvider
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.entity.PlanCycle
@@ -37,7 +38,7 @@ import java.text.DateFormat
 import java.util.Calendar
 import java.util.Date
 
-@Ignore("Replaced by CurrentDynamicPlanTests")
+@Ignore("Replaced by DynamicCurrentPlanTests")
 class CurrentPlanTests : BaseTest() {
     private fun navigateUserToCurrentPlans(user: User): SelectPlanRobot {
         quark.setPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false)

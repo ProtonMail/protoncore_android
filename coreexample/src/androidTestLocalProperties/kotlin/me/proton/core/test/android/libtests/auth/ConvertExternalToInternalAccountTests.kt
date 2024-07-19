@@ -21,28 +21,16 @@ package me.proton.core.test.android.libtests.auth
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.test.BaseConvertExternalToInternalAccountTests
-import me.proton.core.test.rule.extension.protonActivityScenarioRule
-import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.rule.ProtonRule
-import me.proton.core.test.rule.annotation.TestSubscriptionData
-import me.proton.core.test.rule.annotation.TestUserData
-import me.proton.core.test.rule.annotation.annotationTestData
+import me.proton.core.test.rule.extension.protonActivityScenarioRule
 import me.proton.test.fusion.Fusion.view
 import org.junit.Rule
 
 @HiltAndroidTest
-class ConvertExternalToInternalAccountTests(
-    friendlyName: String, testUserData: TestUserData, onLogin: () -> Any
-): BaseConvertExternalToInternalAccountTests(friendlyName, testUserData, onLogin) {
-
-    private val testData = setOf(TestSubscriptionData(plan = Plan.MailPlus).annotationTestData)
+open class ConvertExternalToInternalAccountTests : BaseConvertExternalToInternalAccountTests() {
 
     @get:Rule
-    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>(
-        annotationTestData = testData,
-        loginBefore = false,
-        userData = testUserData
-    )
+    override val protonRule: ProtonRule = protonActivityScenarioRule<MainActivity>()
 
     override fun loggedIn(username: String) {
         view.withText(username).await { checkIsDisplayed() }

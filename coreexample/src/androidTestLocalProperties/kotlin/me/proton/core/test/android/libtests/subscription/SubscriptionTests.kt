@@ -23,19 +23,13 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.plan.test.MinimalSubscriptionTests
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.rule.annotation.TestSubscriptionData
-import me.proton.core.test.rule.annotation.annotationTestData
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
-import me.proton.test.fusion.FusionConfig
 import org.junit.Rule
 
 @HiltAndroidTest
-class SubscriptionTests(plan: Plan): MinimalSubscriptionTests(plan) {
+open class SubscriptionTests : MinimalSubscriptionTests() {
     @get:Rule
-    val protonRule = protonActivityScenarioRule<MainActivity>(
-        setOf(TestSubscriptionData(plan = plan).annotationTestData)
-    )
+    val protonRule = protonActivityScenarioRule<MainActivity>()
 
     override fun startSubscription(): SubscriptionRobot {
         CoreexampleRobot().plansCurrent()

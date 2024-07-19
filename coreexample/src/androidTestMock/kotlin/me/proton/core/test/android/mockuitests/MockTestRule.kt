@@ -25,6 +25,7 @@ import me.proton.core.test.android.instrumented.utils.Shell
 import me.proton.core.test.android.mocks.FakeApiClient
 import me.proton.core.util.android.sentry.TimberLogger
 import me.proton.core.util.kotlin.CoreLogger
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -35,20 +36,13 @@ import timber.log.Timber
  * @see SampleMockTest
  */
 class MockTestRule constructor(private val testInstance: BaseMockTest) : TestRule {
-    lateinit var dispatcher: TestWebServerDispatcher
-
     override fun apply(base: Statement, description: Description): Statement {
         ProtonTest.commandTimeout = FakeApiClient.CALL_TIMEOUT.inWholeMilliseconds
         initLogging()
 
-        dispatcher = TestWebServerDispatcher()
-        val webServer = MockWebServer()
-        webServer.dispatcher = dispatcher
-
         val hiltRule = HiltAndroidRule(testInstance)
         val result = hiltRule.apply(object : Statement() {
             override fun evaluate() {
-                testInstance.baseProtonApiUrl = webServer.url("/")
                 hiltRule.inject()
                 base.evaluate()
             }
@@ -61,8 +55,6 @@ class MockTestRule constructor(private val testInstance: BaseMockTest) : TestRul
                 } catch (t: Throwable) {
                     Shell.saveToFile(description)
                     throw t
-                } finally {
-                    webServer.shutdown()
                 }
             }
         }

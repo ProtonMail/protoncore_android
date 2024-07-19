@@ -28,8 +28,10 @@ import io.mockk.mockk
 import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.NetworkBindsModule
 import me.proton.android.core.coreexample.di.NetworkConstantsModule
+import me.proton.android.core.coreexample.di.NetworkModule
 import me.proton.android.core.coreexample.di.WorkManagerModule
 import me.proton.core.crypto.common.aead.AeadCrypto
+import me.proton.core.configuration.EnvironmentConfiguration
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -37,6 +39,7 @@ import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.crypto.common.srp.SrpChallenge
 import me.proton.core.crypto.dagger.CoreCryptoModule
 import me.proton.core.network.data.di.AlternativeApiPins
+import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.data.di.CertificatePins
 import me.proton.core.network.data.di.DohProviderUrls
 import me.proton.core.network.domain.ApiClient
@@ -49,7 +52,12 @@ import me.proton.core.test.android.mocks.FakePGPCrypto
 import me.proton.core.test.android.mocks.FakeSrpCrypto
 import me.proton.core.test.android.mocks.FakeSrpChallenge
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
+import okhttp3.Dispatcher
+import okhttp3.HttpUrl
+import okhttp3.HttpUrl.Companion.toHttpUrl
+import okhttp3.mockwebserver.MockWebServer
 import javax.inject.Singleton
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 
 @Module
 @TestInstallIn(
@@ -125,10 +133,33 @@ object TestComponent {
     // region WorkManagerModule
     @Provides
     @Singleton
+    @MockWorkManager
     fun provideWorkManager(): WorkManager = mockk(relaxed = true)
     // endregion
 
     @Provides
     @Singleton
     fun provideSrpChallenge(): SrpChallenge = FakeSrpChallenge()
+
+    @Provides
+    @Singleton
+    fun provideDispatcher(): TestWebServerDispatcher = TestWebServerDispatcher()
+
+    @Provides
+    @Singleton
+    fun provideMockWebServer(dispatcher: TestWebServerDispatcher): MockWebServer {
+        val webServer = MockWebServer()
+        webServer.dispatcher = dispatcher
+        return webServer
+    }
+
+    // region BaseProtonApiUrl
+    @Provides
+    @BaseProtonApiUrl
+    @Singleton
+    fun provideBaseProtonApiUrl(webServer: MockWebServer): HttpUrl {
+        return webServer.url("/")
+    }
+    // endregion
 }
+

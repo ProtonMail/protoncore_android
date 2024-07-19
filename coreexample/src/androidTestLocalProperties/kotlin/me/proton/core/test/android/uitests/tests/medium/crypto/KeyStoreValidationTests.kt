@@ -27,6 +27,7 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.intent.Intents
 import androidx.test.espresso.intent.matcher.IntentMatchers
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.crypto.validator.presentation.R
 import me.proton.core.crypto.validator.presentation.ui.CryptoValidatorErrorDialogActivity
 import me.proton.core.test.android.instrumented.ProtonTest
@@ -43,34 +44,10 @@ import org.junit.rules.RuleChain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-class KeyStoreValidationTests {
-
-    class TestExecutionWatcher : TestWatcher() {
-        override fun failed(e: Throwable?, description: Description?) = Shell.saveToFile(description)
-    }
-
-    private val testWatcher = TestExecutionWatcher()
-    private val retryRule = RetryRule(CryptoValidatorErrorDialogActivity::class.java, 2)
-
-    @Rule
-    @JvmField
-    val ruleChain = RuleChain
-        .outerRule(ProtonTest.testName)
-        .around(testWatcher)
-        .around(retryRule)!!
+@HiltAndroidTest
+class KeyStoreValidationTests : BaseTest() {
 
     private val robot = KeyStoreErrorRobot()
-
-    @Before
-    fun setup() {
-        BaseTest.authHelper.logoutAll()
-        Intents.init()
-    }
-
-    @After
-    fun tearDown() {
-        Intents.release()
-    }
 
     @Test
     fun showsExitButtonIfThereAreNoAccounts() {

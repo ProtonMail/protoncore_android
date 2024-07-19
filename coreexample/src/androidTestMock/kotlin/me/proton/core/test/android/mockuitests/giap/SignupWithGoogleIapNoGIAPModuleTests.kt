@@ -21,71 +21,31 @@ package me.proton.core.test.android.mockuitests.giap
 import androidx.test.core.app.ActivityScenario
 import com.android.billingclient.api.BillingClient
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.auth.test.robot.signup.CongratsRobot
-import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
-import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
+import me.proton.core.test.android.mockuitests.SampleMockTest
 import me.proton.core.test.android.robots.CoreRobot
-import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.signup.RecoveryMethodsRobot
 import me.proton.core.test.android.robots.plans.SelectPlanRobot
-import me.proton.core.util.android.sentry.TimberLogger
-import me.proton.core.util.kotlin.CoreLogger
-import okhttp3.HttpUrl
-import okhttp3.mockwebserver.MockWebServer
-import org.junit.Rule
-import timber.log.Timber
+import me.proton.core.test.quark.data.Plan
 import javax.inject.Inject
-import kotlin.test.AfterTest
-import kotlin.test.BeforeTest
 import kotlin.test.Test
 
 @HiltAndroidTest
-class SignupWithGoogleIapNoGIAPModuleTests {
-    private val testUsername = "test-mock-936"
-    private val testPassword = "password"
-
-    @get:Rule(order = Rule.DEFAULT_ORDER - 1)
-    val hiltAndroidRule = HiltAndroidRule(this)
-
-    @BindValue
-    @BaseProtonApiUrl
-    lateinit var baseProtonApiUrl: HttpUrl
+class SignupWithGoogleIapNoGIAPModuleTests : SampleMockTest() {
 
     @Inject
     lateinit var billingClientFactory: FakeBillingClientFactory
 
     private val billingClient: BillingClient get() = billingClientFactory.billingClient
-    private lateinit var dispatcher: TestWebServerDispatcher
-    private lateinit var webServer: MockWebServer
-
-    @BeforeTest
-    fun setUp() {
-        Timber.plant(Timber.DebugTree())
-        CoreLogger.set(TimberLogger)
-
-        dispatcher = TestWebServerDispatcher()
-        webServer = MockWebServer().apply {
-            dispatcher = this@SignupWithGoogleIapNoGIAPModuleTests.dispatcher
-        }
-        baseProtonApiUrl = webServer.url("/")
-
-        hiltAndroidRule.inject()
-    }
-
-    @AfterTest
-    fun tearDown() {
-        webServer.shutdown()
-    }
 
     @BindValue
     val protonIAPBillingLibrary: ProtonIAPBillingLibraryImpl = mockk {

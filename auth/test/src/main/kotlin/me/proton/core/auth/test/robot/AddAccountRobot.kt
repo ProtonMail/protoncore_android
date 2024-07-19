@@ -24,6 +24,7 @@ import me.proton.core.auth.test.robot.signup.SignUpRobot
 import me.proton.test.fusion.Fusion.view
 import me.proton.test.fusion.FusionConfig
 import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
 /** Corresponds to [me.proton.core.auth.presentation.ui.AddAccountActivity]. */
 public object AddAccountRobot {
@@ -31,25 +32,21 @@ public object AddAccountRobot {
     private val signUpButton = view.withId(R.id.sign_up)
 
     public fun clickSignIn(): LoginRobot {
+        signInButton.await(30.seconds) { checkIsDisplayed() }
         signInButton.click()
         return LoginRobot
     }
 
     public fun clickSignUp(): SignUpRobot {
+        signUpButton.await(30.seconds) { checkIsDisplayed() }
         signUpButton.click()
         return SignUpRobot
     }
 
-<<<<<<< HEAD
     public fun uiElementsDisplayed(timeout: Duration = FusionConfig.Espresso.waitTimeout.get()) {
         signInButton.await(timeout = timeout) {
             signInButton.checkIsDisplayed()
             signUpButton.checkIsDisplayed()
         }
-=======
-    public fun uiElementsDisplayed() {
-        signInButton.await { checkIsDisplayed() }
-        signUpButton.await { checkIsDisplayed() }
->>>>>>> 5e7aa0d2c (test: Updated module tests with test rules package.)
     }
 }

@@ -22,6 +22,9 @@ import android.app.Application
 import android.util.Log
 import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.runBlocking
 import me.proton.android.core.coreexample.BuildConfig
 import me.proton.android.core.coreexample.Constants
@@ -33,20 +36,27 @@ import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.android.instrumented.utils.Shell.setupDeviceForAutomation
 import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.uitests.robot.CoreexampleRobot
 import me.proton.core.test.performance.MeasurementConfig
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.Plan
 import me.proton.core.test.quark.data.User
 import me.proton.core.test.quark.data.User.Users
 import org.junit.After
+import org.junit.Before
 import org.junit.BeforeClass
-import java.util.UUID
 
+@HiltAndroidTest
 open class BaseTest(
     private val logoutAllAfterTest: Boolean = true,
     defaultTimeout: Long = 30_000L,
 ) : ProtonTest(MainActivity::class.java, defaultTimeout, 1) {
+
+    @Before
+    override fun setUp() {
+        super.setUp()
+        authHelper.logoutAll()
+        fetchUnleashFeatureFlags(userId = null)
+    }
 
     @After
     fun logoutUsers() {
@@ -90,8 +100,6 @@ open class BaseTest(
         @BeforeClass
         fun prepare() {
             setupDeviceForAutomation(true)
-            authHelper.logoutAll()
-            fetchUnleashFeatureFlags(userId = null)
             Plan.Dev.text = Plan.MailPlus.text
             Plan.Dev.planName = Plan.MailPlus.planName
         }

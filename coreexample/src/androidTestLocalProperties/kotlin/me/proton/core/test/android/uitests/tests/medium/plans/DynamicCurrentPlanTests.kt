@@ -26,11 +26,10 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.test.robot.SubscriptionRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
+import me.proton.core.test.rule.annotation.PrepareUser
+import me.proton.core.test.rule.annotation.payments.TestPaymentMethods
+import me.proton.core.test.rule.annotation.payments.annotationTestData
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
-import me.proton.core.test.quark.data.Plan
-import me.proton.core.test.rule.annotation.TestPaymentMethods
-import me.proton.core.test.rule.annotation.TestSubscriptionData
-import me.proton.core.test.rule.annotation.annotationTestData
 import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
@@ -44,13 +43,18 @@ class DynamicCurrentPlanTests {
     @get:Rule
     val protonRule = protonActivityScenarioRule<MainActivity>(
         setOf(
-            TestSubscriptionData(plan = Plan.Free).annotationTestData,
-            TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = false).annotationTestData
+            TestPaymentMethods(
+                AppStore.GooglePlay,
+                card = true,
+                paypal = false,
+                inApp = false
+            ).annotationTestData
         )
     )
 
     @Ignore("Quark command does not support cycle")
     @Test
+    @PrepareUser(loginBefore = true)
     @TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
     fun userWithPaidPlanCardAndIAPPayment1month() {
         CoreexampleRobot().plansCurrent()
@@ -64,6 +68,7 @@ class DynamicCurrentPlanTests {
 
     @Ignore("Quark command does not support cycle")
     @Test
+    @PrepareUser(loginBefore = true)
     @TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
     fun userWithPaidPlanCardAndIAPPayment12months() {
         CoreexampleRobot().plansCurrent()
@@ -79,6 +84,7 @@ class DynamicCurrentPlanTests {
 
     @Ignore("Quark command does not support cycle")
     @Test
+    @PrepareUser(loginBefore = true)
     @TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
     fun userWithPaidPlanCardAndIAPPayment15months() {
         CoreexampleRobot().plansCurrent()
@@ -92,6 +98,7 @@ class DynamicCurrentPlanTests {
 
     @Ignore("Quark command does not support cycle")
     @Test
+    @PrepareUser(loginBefore = true)
     @TestPaymentMethods(AppStore.GooglePlay, card = true, paypal = false, inApp = true)
     fun userWithPaidPlanCardAndIAPPayment30months() {
         CoreexampleRobot().plansCurrent()

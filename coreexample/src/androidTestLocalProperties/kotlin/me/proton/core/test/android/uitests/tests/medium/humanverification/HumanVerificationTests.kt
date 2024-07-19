@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.humanverification
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.humanverification.HVRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
@@ -25,6 +26,7 @@ import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class HumanVerificationTests : BaseTest() {
     private val humanVerificationRobot = HVRobot()
     private val defaultCode = quark.defaultVerificationCode

@@ -27,7 +27,6 @@ import androidx.test.ext.junit.rules.activityScenarioRule
 import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.annotation.AnnotationTestData
 import me.proton.core.test.rule.annotation.EnvironmentConfig
-import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.test.rule.entity.HiltConfig
 import me.proton.core.test.rule.entity.TestConfig
 import me.proton.core.test.rule.entity.UserConfig
@@ -39,15 +38,11 @@ import org.junit.rules.TestRule
  *
  * This function offers fine-grained control over various test aspects, including:
  *  - Environment configuration
- *  - Test data
- *  - User authentication
  *  - Custom setup logic
  *  - Activity or Compose test rule
  *
  * @param annotationTestData Set of `AnnotationTestData` for `QuarkTestDataRule`.
  * @param envConfig Environment configuration for the test (optional).
- * @param userData Test user data (optional).
- * @param loginBefore Whether to perform login before the test (default: false).
  * @param logoutBefore Whether to perform logout before the test (default: false).
  * @param logoutAfter Whether to perform logout after the test (default: false).
  * @param activityRule Optional `TestRule` for managing activities (default: null).
@@ -58,18 +53,14 @@ import org.junit.rules.TestRule
 public fun Any.protonRule(
     annotationTestData: Set<AnnotationTestData<Annotation>> = emptySet(),
     envConfig: EnvironmentConfig? = null,
-    userData: TestUserData? = null,
-    loginBefore: Boolean = false,
     logoutBefore: Boolean = false,
     logoutAfter: Boolean = false,
     activityRule: TestRule? = null,
-    additionalRules: Set<TestRule> = mutableSetOf(),
+    additionalRules: LinkedHashSet<TestRule> = linkedSetOf(),
     afterHilt: (ProtonRule) -> Any = { },
     beforeHilt: (ProtonRule) -> Any = { },
 ): ProtonRule {
     val userConfig = UserConfig(
-        userData = userData,
-        loginBefore = loginBefore,
         logoutBefore = logoutBefore,
         logoutAfter = logoutAfter
     )
@@ -103,32 +94,25 @@ public fun Any.protonRule(
  * @param A The type of activity to be used with the `ActivityScenarioRule`.
  * @param annotationTestData Array of `AnnotationTestData` for `QuarkTestDataRule`.
  * @param envConfig Environment configuration for the test (optional).
- * @param userData Test user data (optional).
- * @param loginBefore Whether to perform login before the test (default: true).
  * @param logoutBefore Whether to perform logout before the test (default: true).
  * @param logoutAfter Whether to perform logout after the test (default: true).
  * @param activityScenarioRule An `ActivityScenarioRule` for the specified activity type
  *        (default: created using `activityScenarioRule()`).
- * @param setUp A lambda function containing setup logic to be executed before each test (default: empty).
  * @return A new `ProtonRule` instance.
  */
 @SuppressWarnings("LongParameterList")
 public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
     annotationTestData: Set<AnnotationTestData<Annotation>> = emptySet(),
     envConfig: EnvironmentConfig? = null,
-    userData: TestUserData? = TestUserData.withRandomUsername,
-    loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
     logoutAfter: Boolean = false,
     activityScenarioRule: ActivityScenarioRule<A> = activityScenarioRule<A>(),
-    additionalRules: MutableSet<TestRule> = mutableSetOf(),
+    additionalRules: LinkedHashSet<TestRule> = linkedSetOf(),
     noinline beforeHilt: (ProtonRule) -> Unit = { },
     noinline afterHilt: (ProtonRule) -> Unit = { },
 ): ProtonRule = protonRule(
     annotationTestData = annotationTestData,
     envConfig = envConfig,
-    userData = userData,
-    loginBefore = loginBefore,
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityRule = activityScenarioRule,
@@ -146,8 +130,6 @@ public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
  * @param A The type of component activity to be used with the `ComposeTestRule`.
  * @param annotationTestData Array of `AnnotationTestData` for `QuarkTestDataRule`.
  * @param envConfig Environment configuration for the test (optional).
- * @param userData Test user data (optional).
- * @param loginBefore Whether to perform login before the test (default: true).
  * @param logoutBefore Whether to perform logout before the test (default: true).
  * @param logoutAfter Whether to perform logout after the test (default: true).
  * @param composeTestRule A `ComposeTestRule` for the specified component activity type
@@ -159,20 +141,16 @@ public inline fun <reified A : Activity> Any.protonActivityScenarioRule(
 public inline fun <reified A : ComponentActivity> Any.protonAndroidComposeRule(
     annotationTestData: Set<AnnotationTestData<Annotation>> = emptySet(),
     envConfig: EnvironmentConfig? = null,
-    userData: TestUserData? = TestUserData.withRandomUsername,
-    loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
     logoutAfter: Boolean = false,
     fusionEnabled: Boolean = false,
     composeTestRule: ComposeTestRule = createAndroidComposeRule<A>(),
-    additionalRules: Set<TestRule> = setOf(),
+    additionalRules: LinkedHashSet<TestRule> = linkedSetOf(),
     noinline beforeHilt: (ProtonRule) -> Any = { },
     noinline afterHilt: (ProtonRule) -> Any = { },
 ): ProtonRule = protonRule(
     annotationTestData = annotationTestData,
     envConfig = envConfig,
-    userData = userData,
-    loginBefore = loginBefore,
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityRule = composeTestRule,

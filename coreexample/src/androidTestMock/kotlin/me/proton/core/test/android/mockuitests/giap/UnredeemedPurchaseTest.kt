@@ -25,7 +25,6 @@ import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.Purchase
-import dagger.hilt.android.testing.BindValue
 import dagger.hilt.android.testing.HiltAndroidTest
 import io.mockk.every
 import io.mockk.mockk
@@ -33,38 +32,25 @@ import io.mockk.verify
 import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.usecase.WaitForPrimaryAccount
-import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.plan.presentation.UnredeemedPurchaseInitializer
 import me.proton.core.plan.test.robot.UnredeemedPurchaseRobot
-import me.proton.core.test.android.TestWebServerDispatcher
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockAcknowledgePurchase
 import me.proton.core.test.android.mocks.mockQueryPurchasesAsync
 import me.proton.core.test.android.mocks.mockStartConnection
-import me.proton.core.test.android.mockuitests.BaseMockTest
-import me.proton.core.test.android.mockuitests.MockTestRule
+import me.proton.core.test.android.mockuitests.SampleMockTest
 import me.proton.core.test.android.robot.CoreexampleRobot
-import okhttp3.HttpUrl
-import org.junit.Rule
 import javax.inject.Inject
 import kotlin.test.Test
 
 @HiltAndroidTest
-class UnredeemedPurchaseTest : BaseMockTest {
-    @get:Rule
-    val mockTestRule = MockTestRule(this)
-
-    @BindValue
-    @BaseProtonApiUrl
-    override lateinit var baseProtonApiUrl: HttpUrl
+class UnredeemedPurchaseTest : SampleMockTest() {
 
     @Inject
     lateinit var billingClientFactory: FakeBillingClientFactory
 
     @Inject
     lateinit var waitForPrimaryAccount: WaitForPrimaryAccount
-
-    private val dispatcher: TestWebServerDispatcher get() = mockTestRule.dispatcher
 
     @Test
     fun happyPath() {

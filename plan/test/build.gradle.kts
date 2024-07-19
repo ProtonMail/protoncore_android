@@ -41,8 +41,11 @@ dependencies {
         project(Module.androidInstrumentedTest),
         project(Module.humanVerificationTest),
         project(Module.planPresentation),
+        project(Module.androidUtilDagger),
+        project(Module.testRule),
         fusion,
         `kotlin-test`,
-        `kotlin-test-junit`
+        `kotlin-test-junit`,
+        `hilt-android-testing`
     )
 }

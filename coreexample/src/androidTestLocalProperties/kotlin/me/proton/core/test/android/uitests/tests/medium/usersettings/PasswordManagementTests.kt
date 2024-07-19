@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.usersettings
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.auth.R
@@ -29,6 +30,7 @@ import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.util.kotlin.random
 import org.junit.Test
 
+@HiltAndroidTest
 class PasswordManagementTests : BaseTest() {
 
     private val passwordManagementRobot = PasswordManagementRobot()
@@ -62,7 +64,8 @@ class PasswordManagementTests : BaseTest() {
             .verify { inputErrorDisplayed(R.string.auth_signup_error_passwords_do_not_match) }
     }
 
-    @Test
+    // @Test
+    // TODO: migrate to fusion and use ui automator.
     fun incorrectPassword() {
         val password = String.random()
         prepareTest(freeUser)

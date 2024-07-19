@@ -23,23 +23,23 @@ import me.proton.android.core.coreexample.hilttests.mocks.AndroidTestApiClient
 internal val CalendarApiClient = AndroidTestApiClient(
     appName = "android-calendar",
     productName = "ProtonCalendar",
-    versionName = "2.3.11"
+    versionName = "2.21.2"
 )
 
 internal val DriveApiClient = AndroidTestApiClient(
     appName = "android-drive",
     productName = "ProtonDrive",
-    versionName = "2.1.0"
+    versionName = "2.7.0"
 )
 
 internal val MailApiClient = AndroidTestApiClient(
     appName = "android-mail",
     productName = "ProtonMail",
-    versionName = "3.0.9"
+    versionName = "4.0.16"
 )
 
 internal val VpnApiClient = AndroidTestApiClient(
     appName = "android-vpn",
     productName = "ProtonVPN",
-    versionName = "4.4.73.0"
+    versionName = "5.5.27.0"
 )

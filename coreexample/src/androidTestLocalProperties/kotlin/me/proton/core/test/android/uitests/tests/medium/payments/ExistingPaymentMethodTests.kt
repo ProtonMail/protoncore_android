@@ -20,6 +20,7 @@ package me.proton.core.test.android.uitests.tests.medium.payments
 
 import android.content.Context
 import androidx.test.core.app.ApplicationProvider
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.data.Card
 import me.proton.core.test.quark.data.Plan
@@ -36,6 +37,7 @@ import org.junit.runners.Parameterized
 import me.proton.core.payment.presentation.R
 import me.proton.core.test.android.instrumented.utils.StringUtils.stringFromResource
 
+@HiltAndroidTest
 @Ignore("Replaced with DynamicExistingPaymentMethodTests")
 @RunWith(Parameterized::class)
 class ExistingPaymentMethodTests(

@@ -18,12 +18,14 @@
 
 package me.proton.core.test.android.uitests.tests.large.usersettings
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.robots.auth.AccountSwitcherRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Test
 
+@HiltAndroidTest
 class PasswordManagementTest : BaseTest() {
 
     private val createUserResult = quark.userCreate()

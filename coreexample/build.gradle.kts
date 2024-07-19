@@ -101,7 +101,7 @@ android {
     sourceSets.getByName("androidTest") {
         // Add schema for android tests
         assets.srcDirs("$projectDir/schemas")
-    }
+    }.java.srcDirs("src/androidTest/kotlin", "src/androidTestLocalProperties/kotlin")
 }
 
 fun setupFlavors(testedExtension: TestedExtension) {
@@ -129,9 +129,21 @@ fun setupFlavors(testedExtension: TestedExtension) {
             buildConfigField("String", buildConfigFieldKeys.KEY_TRANSPARENCY_ENV, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.SENTRY_DSN, null.toBuildConfigValue())
             buildConfigField("String", buildConfigFieldKeys.ACCOUNT_SENTRY_DSN, null.toBuildConfigValue())
-            buildConfigField("String", "LOKI_ENDPOINT", localProperties.getProperty("LOKI_ENDPOINT").toBuildConfigValue())
-            buildConfigField("String", "LOKI_PRIVATE_KEY", localProperties.getProperty("LOKI_PRIVATE_KEY").toBuildConfigValue())
-            buildConfigField("String", "LOKI_CERTIFICATE", localProperties.getProperty("LOKI_CERTIFICATE").toBuildConfigValue())
+            buildConfigField(
+                "String",
+                "LOKI_ENDPOINT",
+                localProperties.getProperty("LOKI_ENDPOINT").toBuildConfigValue()
+            )
+            buildConfigField(
+                "String",
+                "LOKI_PRIVATE_KEY",
+                localProperties.getProperty("LOKI_PRIVATE_KEY").toBuildConfigValue()
+            )
+            buildConfigField(
+                "String",
+                "LOKI_CERTIFICATE",
+                localProperties.getProperty("LOKI_CERTIFICATE").toBuildConfigValue()
+            )
         }
 
         productFlavors.register("dev") {

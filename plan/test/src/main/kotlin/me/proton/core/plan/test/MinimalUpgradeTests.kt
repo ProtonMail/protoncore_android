@@ -18,16 +18,30 @@
 
 package me.proton.core.plan.test
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.plan.test.robot.SubscriptionRobot
+import me.proton.core.test.rule.annotation.PrepareUser
+import me.proton.test.fusion.FusionConfig
+import org.junit.Before
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Minimal Upgrade tests (for both Static and Dynamic plans implementation).
  */
+@HiltAndroidTest
 public interface MinimalUpgradeTests {
+
     public fun startUpgrade(): SubscriptionRobot
 
+    @Before
+    public fun setUpTimeouts() {
+        FusionConfig.Compose.waitTimeout.set(60.seconds)
+        FusionConfig.Espresso.waitTimeout.set(60.seconds)
+    }
+
     @Test
+    @PrepareUser(loginBefore = true)
     public fun upgradeScreenIsShownForFreeUser() {
         startUpgrade()
             .apply {

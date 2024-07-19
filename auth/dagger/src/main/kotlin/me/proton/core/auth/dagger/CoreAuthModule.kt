@@ -106,5 +106,4 @@ public interface CoreAuthFeaturesModule {
 
     @Binds
     public fun bindIsFido2Enabled(impl: IsFido2EnabledImpl): IsFido2Enabled
-
 }

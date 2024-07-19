@@ -18,21 +18,24 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.android.core.coreexample.R
 import me.proton.core.account.domain.entity.AccountState.Ready
 import me.proton.core.account.domain.entity.SessionState.Authenticated
+import me.proton.core.test.android.robot.CoreexampleRobot
+import me.proton.core.test.android.robots.auth.AddAccountRobot
+import me.proton.core.test.android.robots.auth.login.LoginRobot
+import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
+import me.proton.core.test.android.uitests.tests.BaseTest
 import me.proton.core.test.android.uitests.tests.SmokeTest
 import me.proton.core.test.quark.data.User
-import me.proton.core.test.android.robots.auth.AddAccountRobot
-import me.proton.core.test.android.robots.auth.signup.ChooseUsernameRobot
-import me.proton.core.test.android.robots.auth.login.LoginRobot
-import me.proton.core.test.android.robot.CoreexampleRobot
-import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 
+@HiltAndroidTest
 class LoginTests : BaseTest() {
+
     private val loginRobot = LoginRobot()
     private val user: User = users.getUser { it.isPaid }
 

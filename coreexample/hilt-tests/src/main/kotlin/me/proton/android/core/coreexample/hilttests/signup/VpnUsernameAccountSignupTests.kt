@@ -21,7 +21,6 @@ package me.proton.android.core.coreexample.hilttests.signup
 import androidx.startup.AppInitializer
 import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import io.mockk.coEvery
@@ -56,9 +55,6 @@ class VpnUsernameAccountSignupTests : BaseUsernameAccountSignupTests,
     )
 
     @get:Rule
-    val hiltRule = HiltAndroidRule(this)
-
-    @get:Rule
     val logsRule = LogsRule()
 
     @BindValue
@@ -89,7 +85,6 @@ class VpnUsernameAccountSignupTests : BaseUsernameAccountSignupTests,
 
     @BeforeTest
     override fun prepare() {
-        hiltRule.inject()
         super.prepare()
         AppInitializer.getInstance(ApplicationProvider.getApplicationContext()).apply {
             initializeComponent(HumanVerificationInitializer::class.java)

@@ -18,84 +18,85 @@
 
 package me.proton.core.usersettings.test
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
-import me.proton.core.test.quark.Quark
+import me.proton.core.test.rule.ProtonRule
+import me.proton.core.test.rule.annotation.PrepareUser
+import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.usersettings.test.flow.PasswordManagementFlow
 import me.proton.core.usersettings.test.flow.UpdateRecoveryEmailFlow
 import me.proton.core.util.kotlin.random
 import org.junit.Test
-import kotlin.test.BeforeTest
 
 /**
  * Note: requires [me.proton.test.fusion.FusionConfig.Compose.testRule] to be initialized.
  */
+@HiltAndroidTest
 public interface MinimalUserSettingsTest {
 
-    public val quark: Quark
+    public val protonRule: ProtonRule
+
+    private val testUser: TestUserData
+        get() = protonRule.testDataRule.mainTestUser ?: error("No User data was seeded")
 
     public fun startPasswordManagement()
     public fun startRecoveryEmail()
 
-    @BeforeTest
-    public fun prepare() {
-        quark.jailUnban()
-    }
-
     @Test
+    @PrepareUser
     public fun changePasswordSuccess() {
-        val (user, _) = quark.userCreate()
         val new = "new${String.random()}"
 
         AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
+        SignInFlow.signInInternal(testUser.name, testUser.password)
 
         startPasswordManagement()
 
         PasswordManagementFlow
-            .changeLoginPassword(current = user.password, new = new, confirm = new)
+            .changeLoginPassword(current = testUser.password, new = new, confirm = new)
             .successPasswordUpdatedIsDisplayed()
     }
 
     @Test
+    @PrepareUser
     public fun changePasswordErrorDoNotMatch() {
-        val (user, _) = quark.userCreate()
         val new = "new${String.random()}"
         val other = "other${String.random()}"
 
         AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
+        SignInFlow.signInInternal(testUser.name, testUser.password)
 
         startPasswordManagement()
 
         PasswordManagementFlow
-            .changeLoginPassword(current = user.password, new = new, confirm = other)
+            .changeLoginPassword(current = testUser.password, new = new, confirm = other)
             .errorPasswordDoNotMatchIsDisplayed()
     }
 
     @Test
+    @PrepareUser
     public fun changeRecoveryEmailSuccess() {
-        val (user, _) = quark.userCreate()
-        val new = "mew.${String.random()}@domain.com"
+        val new = "new.${testUser.name}@email.com"
 
         AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
+        SignInFlow.signInInternal(testUser.name, testUser.password)
 
         startRecoveryEmail()
 
         UpdateRecoveryEmailFlow
-            .changeRecoveryEmail(new = new, confirm = new, password = user.password)
+            .changeRecoveryEmail(new = new, confirm = new, password = testUser.password)
             .successEmailUpdatedIsDisplayed()
     }
 
     @Test
+    @PrepareUser
     public fun changeRecoveryEmailErrorDoNotMatch() {
-        val (user, _) = quark.userCreate()
-        val new = "new.${String.random()}@domain.com"
-        val other = "other.${String.random()}@domain.com"
+        val new = "new.${testUser.name}@email.com"
+        val other = "other.${testUser.name}@email.com"
 
         AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
+        SignInFlow.signInInternal(testUser.name, testUser.password)
 
         startRecoveryEmail()
 
@@ -105,15 +106,14 @@ public interface MinimalUserSettingsTest {
     }
 
     @Test
+    @PrepareUser
     public fun startAndCancelAccountRecovery() {
-        val (user, _) = quark.userCreate()
-
         AddAccountRobot.clickSignIn()
-        SignInFlow.signInInternal(user.name, user.password)
+        SignInFlow.signInInternal(testUser.name, testUser.password)
 
         startPasswordManagement()
 
         PasswordManagementFlow.startRecovery()
-        PasswordManagementFlow.cancelRecovery(password = user.password)
+        PasswordManagementFlow.cancelRecovery(password = testUser.password)
     }
 }

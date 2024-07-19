@@ -16,9 +16,10 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.rule.entity
+package me.proton.core.test.android
 
-public data class UserConfig(
-    val logoutBefore: Boolean = true,
-    val logoutAfter: Boolean = false
-)
+import javax.inject.Qualifier
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class MockWorkManager

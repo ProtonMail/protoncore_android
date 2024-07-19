@@ -22,9 +22,9 @@ import android.annotation.SuppressLint
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import dagger.hilt.android.EntryPointAccessors
+import kotlinx.coroutines.runBlocking
 import me.proton.core.auth.domain.testing.LoginTestHelper
 import me.proton.core.auth.presentation.testing.ProtonTestEntryPoint
-import me.proton.core.test.rule.entity.UserConfig
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import kotlin.time.measureTime
@@ -36,48 +36,59 @@ import kotlin.time.measureTime
  */
 @SuppressLint("RestrictedApi")
 public class AuthenticationRule(
-    config: () -> UserConfig,
+    private val protonRule: ProtonRule
 ) : TestWatcher() {
 
-    private val userConfig by lazy(config)
-
-    private val loginTestHelper: LoginTestHelper by lazy {
-        protonTestEntryPoint.loginTestHelper
-    }
-
-    private val protonTestEntryPoint by lazy {
-        EntryPointAccessors.fromApplication(
-            ApplicationProvider.getApplicationContext<Application>(),
-            ProtonTestEntryPoint::class.java
-        )
-    }
-
     override fun starting(description: Description) {
-        if (userConfig.logoutBefore) {
-            logout()
-        }
-
-        userConfig.userData?.let {
-            if (userConfig.loginBefore) {
-                printInfo("Logging in: ${it.name} / ${it.password} ...")
-
-                val loginTime = measureTime {
-                    loginTestHelper.login(it.name, it.password)
-                }
-
-                printInfo("Logged in in ${loginTime.inWholeSeconds} seconds.")
+        runBlocking {
+            printInfo("Starting ${AuthenticationRule::class.java.simpleName}")
+            if (protonRule.userConfig!!.logoutBefore) {
+                logout()
             }
+
+            protonRule.testDataRule.mainTestUser?.let { mainTestUser ->
+                // Authenticate only if loginBefore is true
+                if (mainTestUser.loginBefore) {
+                    val loginIdentifier = when {
+                        mainTestUser.name.isNotEmpty() -> mainTestUser.name
+                        mainTestUser.email.isNotEmpty() -> mainTestUser.email
+                        else -> throw IllegalStateException("User authentication was requested but both email and name fields are empty.")
+                    }
+
+                    loginIdentifier.let {
+                        printInfo("Logging in: $it / ${mainTestUser.password} ...")
+                        val loginTime = measureTime {
+                            authHelper.login(it, mainTestUser.password)
+                        }
+                        printInfo("Logged in ${loginTime.inWholeSeconds} seconds.")
+                    }
+                }
+            } ?: printInfo("No users required to login before test execution. Skipping authentication.")
+
+            printInfo("Done with starting ${this::class.java.simpleName}")
         }
     }
 
     override fun finished(description: Description) {
-        if (userConfig.logoutAfter) {
+        if (protonRule.userConfig!!.logoutAfter) {
             logout()
         }
     }
 
     private fun logout() {
         printInfo("Logging out all users")
-        runCatching { loginTestHelper.logoutAll() }
+        runCatching { authHelper.logoutAll() }
+    }
+
+    public companion object {
+
+        private val protonTestEntryPoint by lazy {
+            EntryPointAccessors.fromApplication(
+                ApplicationProvider.getApplicationContext<Application>(),
+                ProtonTestEntryPoint::class.java
+            )
+        }
+
+        public val authHelper: LoginTestHelper by lazy { protonTestEntryPoint.loginTestHelper }
     }
 }

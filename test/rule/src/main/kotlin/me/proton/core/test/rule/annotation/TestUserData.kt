@@ -18,7 +18,10 @@
 
 package me.proton.core.test.rule.annotation
 
-import me.proton.core.test.rule.extension.seedTestUserData
+import me.proton.core.test.quark.data.Plan
+import me.proton.core.test.quark.data.User
+import me.proton.core.test.quark.response.CreateUserQuarkResponse
+import me.proton.core.test.rule.annotation.payments.TestSubscriptionData
 import me.proton.core.util.kotlin.EMPTY_STRING
 import me.proton.core.util.kotlin.random
 
@@ -26,22 +29,32 @@ import me.proton.core.util.kotlin.random
 @Retention(AnnotationRetention.RUNTIME)
 @Suppress("LongParameterList")
 public annotation class TestUserData(
-    val name: String = EMPTY_STRING,
-    val password: String = "password",
-    val recoveryEmail: String = EMPTY_STRING,
-    val status: Status = Status.Active,
     val authVersion: Int = 4,
     val createAddress: Boolean = true,
-    val genKeys: GenKeys = GenKeys.Curve25519,
-    val mailboxPassword: String = EMPTY_STRING,
-    val external: Boolean = false,
-    val toTpSecret: String = EMPTY_STRING,
-    val recoveryPhone: String = EMPTY_STRING,
-    val externalEmail: String = EMPTY_STRING,
-    val vpnSettings: String = EMPTY_STRING,
     val creationTime: String = EMPTY_STRING,
+    val email: String = EMPTY_STRING,
+    val isExternal: Boolean = false,
+    val externalEmail: String = EMPTY_STRING,
+    val genKeys: GenKeys = GenKeys.Curve25519,
+    val passphrase: String = EMPTY_STRING,
+    val name: String = EMPTY_STRING,
+    val password: String = EMPTY_STRING,
+    val recoveryEmail: String = EMPTY_STRING,
+    val recoveryPhone: String = EMPTY_STRING,
+    val status: Status = Status.Active,
+    val twoFa: String = EMPTY_STRING,
+    val vpnSettings: String = EMPTY_STRING,
 
-    val shouldSeed: Boolean = true,
+    // Will be later added from CreateUserQuarkResponse.
+    val id: String = EMPTY_STRING,
+    val decryptedUserId: Long = 0L,
+    val addressID: String = EMPTY_STRING,
+
+    val loginBefore: Boolean = false,
+    val externalEmailMatchesExistingName: Boolean = false,
+
+    // Can be later updated by TestSubscriptionData.
+    val plan: Plan = Plan.ProtonFree,
 ) {
     public enum class Status {
         Deleted, Disabled, Active, VPNAdmin, Admin, Super
@@ -57,34 +70,152 @@ public annotation class TestUserData(
                 .map { String.random(length = 6, charPool = it) }
                 .let { "proton${it[0]}${it[1]}" }
 
-        public val withRandomUsername: TestUserData get() = TestUserData(randomUsername())
+        public val withRandomUsername: TestUserData get() = TestUserData(name = randomUsername())
     }
 }
 
-public fun TestUserData.handleExternal(
+/**
+ * This function should be called before seeding to handle dynamically created data.
+ */
+public fun TestUserData.handleUserData(
     username: String = TestUserData.randomUsername()
 ): TestUserData = TestUserData(
-    name = if (shouldHandleExternal) username else name,
-    password,
-    recoveryEmail,
-    status,
-    authVersion,
-    createAddress,
-    genKeys,
-    mailboxPassword,
-    external,
-    toTpSecret,
-    recoveryPhone,
-    externalEmail = if (shouldHandleExternal) "$username@example.lt" else externalEmail
+    authVersion = authVersion,
+    createAddress = createAddress,
+    creationTime = creationTime,
+    email = email,
+    isExternal = isExternal,
+    externalEmail = when {
+        shouldHandleExternal -> "$username@example.lt"
+        externalEmailMatchesExistingName -> "free@${username}.lt"
+        else -> externalEmail
+    },
+    genKeys = genKeys,
+    passphrase = passphrase,
+    name = name.ifEmpty { username },
+    password = password.ifEmpty { "password" },
+    recoveryEmail = recoveryEmail.ifEmpty { "$username@example.lt" },
+    recoveryPhone = recoveryPhone,
+    status = status,
+    twoFa = twoFa,
+    vpnSettings = vpnSettings,
 )
 
-public val TestUserData.annotationTestData: AnnotationTestData<TestUserData>
-    get() = AnnotationTestData(
-        default = this,
-        implementation = { data ->
-            seedTestUserData(data)
-        }
+/**
+ * This function should be called after seeding to update users with CreateUserQuarkResponse data.
+ */
+public fun TestUserData.copyWithQuarkResponseData(
+    createdUserQuarkResponse: CreateUserQuarkResponse,
+    loginBefore: Boolean
+): TestUserData {
+    return TestUserData(
+
+        // From CreateUserQuarkResponse if not null.
+        name = if (createdUserQuarkResponse.name != null) createdUserQuarkResponse.name!! else this.name,
+        password = createdUserQuarkResponse.password,
+        addressID = createdUserQuarkResponse.addressID ?: EMPTY_STRING,
+        decryptedUserId = createdUserQuarkResponse.decryptedUserId,
+        id = createdUserQuarkResponse.userId,
+        recoveryEmail = createdUserQuarkResponse.recovery,
+        recoveryPhone = createdUserQuarkResponse.recoveryPhone,
+        authVersion = createdUserQuarkResponse.authVersion,
+        email = if (createdUserQuarkResponse.email != null) createdUserQuarkResponse.email!! else this.email,
+
+        // From TestUserData.
+        externalEmail = this.externalEmail,
+        isExternal = this.isExternal,
+        twoFa = this.twoFa,
+
+        // LoginBefore parameter from @SeedUser annotation.
+        loginBefore = loginBefore
     )
+}
+
+/**
+ * This function should be called after seeding to update users with CreateUserQuarkResponse data.
+ */
+public fun TestUserData.copyWithSubscriptionDetails(
+    subscriptionData: TestSubscriptionData
+): TestUserData {
+    return TestUserData(
+
+        // From CreateUserQuarkResponse if not null.
+        name = this.name,
+        password = this.password,
+        addressID = this.addressID,
+        decryptedUserId = this.decryptedUserId,
+        id = this.id,
+        recoveryEmail = this.recoveryEmail,
+        recoveryPhone = this.recoveryPhone,
+        authVersion = this.authVersion,
+        email = this.email,
+
+        // From TestUserData.
+        externalEmail = this.externalEmail,
+        isExternal = this.isExternal,
+        twoFa = this.twoFa,
+
+        // From TestSubscriptionData
+        plan = subscriptionData.plan,
+
+        // LoginBefore parameter from @SeedUser annotation.
+        loginBefore = this.loginBefore
+    )
+}
+
+public fun TestUserData.copyWithLoginFlag(
+    loginBefore: Boolean
+): TestUserData {
+    return TestUserData(
+
+        // From CreateUserQuarkResponse if not null.
+        name = this.name,
+        password = this.password,
+        addressID = this.addressID,
+        decryptedUserId = this.decryptedUserId,
+        id = this.id,
+        recoveryEmail = this.recoveryEmail,
+        recoveryPhone = this.recoveryPhone,
+        authVersion = this.authVersion,
+        email = this.email,
+
+        // From TestUserData.
+        externalEmail = this.externalEmail,
+        isExternal = this.isExternal,
+        twoFa = this.twoFa,
+
+        // From TestSubscriptionData
+        plan = this.plan,
+
+        // LoginBefore parameter from @PrepareUser annotation.
+        loginBefore = loginBefore
+    )
+}
+
+public fun TestUserData.mapToUser(): User = User(
+    addressID = this.addressID,
+    authVersion = this.authVersion,
+    id = this.id,
+    decryptedUserId = this.decryptedUserId,
+    name = this. name,
+    password = this.password,
+    email = this.email,
+    externalEmail = this.externalEmail,
+    status = this.status.ordinal,
+    passphrase = this.passphrase,
+    twoFa = this.twoFa,
+    phone = this.recoveryPhone,
+    recoveryEmail = this.recoveryEmail,
+    recoveryPhone = this.recoveryPhone,
+    isExternal = this.isExternal,
+    plan = this.plan,
+
+    // Leaving default values. Can be updated later by creating similar extensions in clients code.
+    country = EMPTY_STRING,
+    cards = listOf(),
+    paypal = EMPTY_STRING,
+    dataSetScenario = EMPTY_STRING,
+)
 
 public val TestUserData.shouldHandleExternal: Boolean
-    get() = externalEmail.isEmpty() && external
+    get() = externalEmail.isEmpty() && isExternal && !externalEmailMatchesExistingName

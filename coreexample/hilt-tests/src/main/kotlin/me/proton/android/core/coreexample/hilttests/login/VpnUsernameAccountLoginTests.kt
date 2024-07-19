@@ -19,7 +19,6 @@
 package me.proton.android.core.coreexample.hilttests.login
 
 import dagger.hilt.android.testing.BindValue
-import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import dagger.hilt.android.testing.UninstallModules
 import me.proton.android.core.coreexample.MainActivity
@@ -49,9 +48,6 @@ class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(M
     )
 
     @get:Rule
-    val hiltRule = HiltAndroidRule(this)
-
-    @get:Rule
     val logsRule = LogsRule()
 
     @BindValue
@@ -77,7 +73,6 @@ class VpnUsernameAccountLoginTests : BaseUsernameAccountLoginTests, ProtonTest(M
 
     @BeforeTest
     override fun prepare() {
-        hiltRule.inject()
         super.prepare()
     }
 

@@ -16,10 +16,11 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.test.rule.annotation
+package me.proton.core.test.rule.annotation.payments
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.test.quark.v2.command.setPaymentMethods
+import me.proton.core.test.rule.annotation.AnnotationTestData
 
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
@@ -31,9 +32,9 @@ public annotation class TestPaymentMethods(
 )
 
 public val TestPaymentMethods.annotationTestData: AnnotationTestData<TestPaymentMethods>
-    get() = AnnotationTestData(
+    get() = AnnotationTestData.forDefault(
         this,
-        implementation = { data ->
+        implementation = { data: TestPaymentMethods ->
             setPaymentMethods(
                 data.appStore,
                 data.card,

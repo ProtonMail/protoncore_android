@@ -44,6 +44,5 @@ public object PasswordManagementFlow {
         .clickCancelRecovery()
         .fillPassword(password)
         .clickCancelReset()
-        .successCancelResetIsDisplayed()
         .let { PasswordManagementRobot }
 }

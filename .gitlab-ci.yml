@@ -320,48 +320,47 @@ pass-integration-tests:
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
-uitest:lib:auth:
+uitest:coreexample:hilt-tests:
+  allow_failure: true
+  variables:
+    TEST_APK: "coreexample/hilt-tests/build/outputs/apk/localProperties/debug/coreexample-hilt-tests-localProperties-debug.apk"
+    TEST_TARGET: "package me.proton.android.core.coreexample.hilttests"
+    DEVICE_MODEL: "Pixel2.arm,version=28"
+    DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
+    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
+  extends: .firebase-tests-common
+
+androidTest:coreexample:libtests:auth:
   variables:
     TEST_TARGET: "package me.proton.core.test.android.libtests.auth"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
   allow_failure: true
 
-uitest:lib:subscription:
+androidTest:coreexample:libtests:subscription:
   variables:
     TEST_TARGET: "package me.proton.core.test.android.libtests.subscription"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
   allow_failure: true
 
-uitest:lib:account-recovery:
-  variables:
-    TEST_TARGET: "package me.proton.core.test.android.libtests.accountrecovery"
-    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
-  extends: .firebase-tests-common
-
-uitest:lib:report:
+androidTest:coreexample:libtests:report:
   variables:
     TEST_TARGET: "package me.proton.core.test.android.libtests.report"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
   extends: .firebase-tests-common
 
-uitest:mocked-tests:
+androidTest:coreexample:dbtests:
+  variables:
+    TEST_TARGET: "package me.proton.core.test.android.dbtests"
+  extends: .firebase-tests-common
+
+androidTestMock:coreexample:mockuitests:
   variables:
     APP_APK: "coreexample/build/outputs/apk/mock/debug/coreexample-mock-debug.apk"
     TEST_APK: "coreexample/build/outputs/apk/androidTest/mock/debug/coreexample-mock-debug-androidTest.apk"
     TEST_TARGET: "package me.proton.core.test.android.mockuitests"
     FLAKY_TEST_RERUN: "1"
-    DEVICE_MODEL: "Pixel2.arm,version=28"
-    DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
-    EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
-  extends: .firebase-tests-common
-
-uitest:hilt-tests:
-  allow_failure: true
-  variables:
-    TEST_APK: "coreexample/hilt-tests/build/outputs/apk/localProperties/debug/coreexample-hilt-tests-localProperties-debug.apk"
-    TEST_TARGET: "package me.proton.android.core.coreexample.hilttests"
     DEVICE_MODEL: "Pixel2.arm,version=28"
     DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
     EXTRA_OPTIONS: "--use-orchestrator --environment-variables clearPackageData=true"
@@ -387,17 +386,12 @@ androidTest:crypto-android:
     TEST_TARGET: "package me.proton.core.crypto.android"
   extends: .firebase-tests-common
 
-androidTest:key-transparency-data:
+androidTest:key-transparency:data:
   variables:
     TEST_APK: "key-transparency/data/build/outputs/apk/androidTest/debug/key-transparency-data-debug-androidTest.apk"
     TEST_TARGET: "package me.proton.core.keytransparency.data"
     DEVICE_MODEL: "Pixel2.arm,version=28"
     DEVICE_MODEL_RESULTS_DIR: "Pixel2.arm-28-en-portrait"
-  extends: .firebase-tests-common
-
-androidTest:coreexample-migration:
-  variables:
-    TEST_TARGET: "package me.proton.core.test.android.dbtests"
   extends: .firebase-tests-common
 
 ## publish stage ###################################################################################

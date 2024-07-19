@@ -18,27 +18,74 @@
 
 package me.proton.core.test.android.mockuitests
 
-import dagger.hilt.android.testing.BindValue
+import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.test.android.TestWebServerDispatcher
+import me.proton.core.util.android.sentry.TimberLogger
+import me.proton.core.util.kotlin.CoreLogger
 import okhttp3.HttpUrl
+import okhttp3.mockwebserver.MockWebServer
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
+import timber.log.Timber
+import javax.inject.Inject
 
 interface BaseMockTest {
-    @BaseProtonApiUrl
-    var baseProtonApiUrl: HttpUrl
 
     val testUsername get() = "test-mock-936"
     val testPassword get() = "password"
+
+    /**
+     * Perform common setup tasks for tests.
+     */
+    fun commonSetup()
+
+    /**
+     * Perform common teardown tasks for tests.
+     */
+    fun commonTeardown()
 }
 
 /** A minimal example for writing a test with hilt-testing and mocked server. */
 @HiltAndroidTest
-class SampleMockTest : BaseMockTest {
-    @get:Rule
-    val mockTestRule = MockTestRule(this)
+open class SampleMockTest : BaseMockTest {
 
-    @BindValue
+    @get:Rule
+    var hiltRule = HiltAndroidRule(this)
+
+    @Inject
     @BaseProtonApiUrl
-    override lateinit var baseProtonApiUrl: HttpUrl
+    lateinit var baseProtonApiUrl: HttpUrl
+
+    @Inject
+    lateinit var webServer: MockWebServer
+
+    @Inject
+    lateinit var dispatcher: TestWebServerDispatcher
+
+    @Before
+    fun setup() {
+        commonSetup()
+        hiltRule.inject()
+    }
+
+    @After
+    fun tearDown() {
+        commonTeardown()
+    }
+
+    override fun commonSetup() {
+        initLogging()
+    }
+
+    override fun commonTeardown() {
+        webServer.shutdown()
+    }
+
+    private fun initLogging() {
+        Timber.plant(Timber.DebugTree())
+        CoreLogger.set(TimberLogger)
+    }
 }

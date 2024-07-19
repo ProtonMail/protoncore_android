@@ -49,6 +49,7 @@ dependencies {
         `androidx-test-monitor`,
         `android-test-runner`,
         `compose-ui-test-junit`,
-        `junit-ktx`
+        `junit-ktx`,
+        `kotlin-reflection`
     )
 }

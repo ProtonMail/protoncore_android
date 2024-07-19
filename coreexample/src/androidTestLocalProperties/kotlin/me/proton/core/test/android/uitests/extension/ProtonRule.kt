@@ -23,22 +23,17 @@ import me.proton.android.core.coreexample.MainActivity
 import me.proton.core.test.rule.ProtonRule
 import me.proton.core.test.rule.annotation.AnnotationTestData
 import me.proton.core.test.rule.annotation.EnvironmentConfig
-import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.test.rule.extension.protonActivityScenarioRule
 
 fun Any.coreExampleRule(
     annotationTestData: Set<AnnotationTestData<Annotation>> = setOf(),
     envConfig: EnvironmentConfig? = null,
-    userData: TestUserData? = TestUserData(TestUserData.randomUsername()),
-    loginBefore: Boolean = true,
     logoutBefore: Boolean = true,
     logoutAfter: Boolean = true,
     setUp: (ProtonRule) -> Unit = { },
 ): ProtonRule = protonActivityScenarioRule<MainActivity>(
     annotationTestData,
     envConfig = envConfig,
-    userData = userData,
-    loginBefore = loginBefore,
     logoutBefore = logoutBefore,
     logoutAfter = logoutAfter,
     activityScenarioRule = activityScenarioRule<MainActivity>(),

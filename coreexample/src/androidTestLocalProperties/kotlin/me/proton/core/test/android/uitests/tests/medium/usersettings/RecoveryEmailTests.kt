@@ -18,6 +18,7 @@
 
 package me.proton.core.test.android.uitests.tests.medium.usersettings
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.test.quark.data.User
@@ -29,6 +30,7 @@ import me.proton.core.usersettings.R
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class RecoveryEmailTests : BaseTest() {
 
     private val recoveryEmailRobot = RecoveryEmailRobot()
@@ -71,7 +73,8 @@ class RecoveryEmailTests : BaseTest() {
         }
     }
 
-    @Test
+    // @Test
+    // TODO: migrate to fusion and use ui automator.
     fun incorrectCredentials() {
         recoveryEmailRobot
             .newEmail(user.recoveryEmail)

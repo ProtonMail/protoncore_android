@@ -18,14 +18,15 @@
 
 package me.proton.core.test.android.uitests.tests.medium.auth.login
 
+import dagger.hilt.android.testing.HiltAndroidTest
 import me.proton.core.test.android.robots.auth.AddAccountRobot
 import me.proton.core.test.android.robots.auth.login.LoginRobot
 import me.proton.core.test.android.robots.auth.login.TwoFaRobot
-import me.proton.core.test.android.robot.CoreexampleRobot
 import me.proton.core.test.android.uitests.tests.BaseTest
 import org.junit.Before
 import org.junit.Test
 
+@HiltAndroidTest
 class TwoFaTests : BaseTest() {
 
     private val invalidCode = "123456"

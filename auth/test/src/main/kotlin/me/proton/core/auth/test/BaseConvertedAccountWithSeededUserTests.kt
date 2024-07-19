@@ -21,12 +21,11 @@ package me.proton.core.auth.test
 import me.proton.core.auth.test.robot.AddAccountRobot
 import me.proton.core.auth.test.robot.signup.ChooseInternalAddressRobot
 import me.proton.core.test.rule.ProtonRule
-import me.proton.core.test.rule.annotation.PrepareUser
 import me.proton.core.test.rule.annotation.TestUserData
 import me.proton.core.test.rule.annotation.TestUserData.Companion.randomUsername
 import org.junit.Test
 
-public interface BaseConvertedAccountTests {
+public interface BaseConvertedAccountWithSeededUserTests {
 
     public fun loggedIn(username: String)
 
@@ -35,10 +34,9 @@ public interface BaseConvertedAccountTests {
     public val protonRule: ProtonRule
 
     private val testUser: TestUserData
-        get() = protonRule.testDataRule.mainTestUser ?: error("No User data was seeded")
+        get() = protonRule.testDataRule?.mainTestUser ?: error("SeedUser data is not provided")
 
     @Test
-    @PrepareUser(userData = TestUserData(isExternal = true, externalEmailMatchesExistingName = true))
     public fun accountWithUnavailableUsername() {
         val username = randomUsername()
         AddAccountRobot
@@ -62,7 +60,6 @@ public interface BaseConvertedAccountTests {
     }
 
     @Test
-    @PrepareUser(userData = TestUserData(isExternal = true, externalEmailMatchesExistingName = true))
     public fun chooseInternalAddressIsClosed() {
         AddAccountRobot
             .clickSignIn()
