@@ -37,7 +37,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.proton.core.compose.component.ProtonSolidButton
@@ -47,11 +46,10 @@ import me.proton.core.configuration.configurator.featureflag.entity.BackButton
 import me.proton.core.configuration.configurator.presentation.viewModel.DriveUpdateUserViewModel
 
 enum class DriveScenario(val code: Int, var text: String) {
-    FullDataSet(1, "Drive - Full data"),
-    FileAndFolder(2, "Drive - File and folder"),
-    UnsignedContent(3, "Drive - Unsigned content"),
-    SharedAndTrashedItems(4, "Drive - Shared and trashed items"),
-    Documents(8, "Drive - Documents")
+    FullDataSet(1, "Drive - Full data"), FileAndFolder(2, "Drive - File and folder"), UnsignedContent(
+        3, "Drive - Unsigned content"
+    ),
+    SharedAndTrashedItems(4, "Drive - Shared and trashed items"), Documents(8, "Drive - Documents")
 }
 
 @SuppressLint("StateFlowValueCalledInComposition")
@@ -87,7 +85,7 @@ fun DriveUserUpdateScreen(
                 selectedFixture = DriveScenario.entries.first { it.text == selectedText }
             })
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Spacer(modifier = Modifier.height(ProtonDimens.SmallSpacing))
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Checkbox(checked = hasPhotos, onCheckedChange = { hasPhotos = it })
@@ -118,13 +116,13 @@ fun DriveUserUpdateScreen(
             Text(
                 text = errorState.toString(),
                 color = MaterialTheme.colors.error,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
             )
         }
 
         response?.let { response ->
             Text(
-                text = response, modifier = Modifier.padding(top = 8.dp)
+                text = response, modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
             )
         }
     }

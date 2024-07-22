@@ -43,7 +43,7 @@ class ConfigurationScreenViewModel @Inject constructor(
 
     sealed class Action {
         data object ObserveConfig : Action()
-        data object FetchConfig: Action()
+        data object FetchConfig : Action()
         data object SetDefaultConfigFields : Action()
         data class SaveConfig(val isAdvanced: Boolean) : Action()
         data class SetAdvanced(val isAdvanced: Boolean) : Action()
@@ -52,8 +52,7 @@ class ConfigurationScreenViewModel @Inject constructor(
     }
 
     data class State(
-        val configFieldSet: Set<ConfigurationUseCase.ConfigField>,
-        val isAdvanced: Boolean
+        val configFieldSet: Set<ConfigurationUseCase.ConfigField>, val isAdvanced: Boolean
     )
 
     private val mutableErrorFlow: MutableSharedFlow<String> = MutableSharedFlow()
@@ -62,14 +61,13 @@ class ConfigurationScreenViewModel @Inject constructor(
 
     val errorFlow: SharedFlow<String> = mutableErrorFlow.asSharedFlow()
 
-    val state: StateFlow<State> =
-        observeConfig().onStart {
-            perform(Action.FetchConfig)
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
-            initialValue = State(configurationUseCase.configState.value, isAdvanced.value)
-        )
+    val state: StateFlow<State> = observeConfig().onStart {
+        perform(Action.FetchConfig)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis),
+        initialValue = State(configurationUseCase.configState.value, isAdvanced.value)
+    )
 
     fun perform(action: Action) = runCatching {
         when (action) {
@@ -86,8 +84,7 @@ class ConfigurationScreenViewModel @Inject constructor(
     }
 
     private fun observeConfig(): Flow<State> = combine(
-        configurationUseCase.configState,
-        isAdvanced
+        configurationUseCase.configState, isAdvanced
     ) { fieldSet, advanced ->
         val fieldList = if (isAdvanced.value) fieldSet else fieldSet.filter { it.isAdvanced == advanced }
         State(fieldList.toSet(), isAdvanced.value)
@@ -117,12 +114,11 @@ class ConfigurationScreenViewModel @Inject constructor(
         isAdvanced.emit(advancedValue)
     }
 
-    private fun launchCatching(block: suspend () -> Unit) =
-        viewModelScope.launch {
-            runCatching {
-                block()
-            }.onFailure {
-                mutableErrorFlow.emit(it.message ?: "Unknown error")
-            }
+    private fun launchCatching(block: suspend () -> Unit) = viewModelScope.launch {
+        runCatching {
+            block()
+        }.onFailure {
+            mutableErrorFlow.emit(it.message ?: "Unknown error")
         }
+    }
 }

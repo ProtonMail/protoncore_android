@@ -40,7 +40,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.proton.core.compose.component.ProtonOutlinedTextField
@@ -68,12 +67,9 @@ fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserView
     val state by viewModel.userResponse.collectAsState()
     val errorState by viewModel.errorState.collectAsState()
 
-    Column(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
+    Column(modifier = Modifier.fillMaxWidth()) {
 
-        ProtonTopAppBar(
-            title = { Text("Create User") },
-            navigationIcon = { BackButton(navController) }
-        )
+        ProtonTopAppBar(title = { Text("Create User") }, navigationIcon = { BackButton(navController) })
         Text(text = "Selected Domain: $selectedDomain")
 
         ProtonOutlinedTextField(
@@ -94,54 +90,42 @@ fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserView
             singleLine = true,
         )
 
-        DropdownField(
-            label = "Select Plan",
+        DropdownField(label = "Select Plan",
             options = plans.toMutableList(),
             selectedOption = selectedPlan,
-            onOptionSelected = { selectedPlan = it }
-        )
+            onOptionSelected = { selectedPlan = it })
 
-        DropdownField(
-            label = "Select Key",
+        DropdownField(label = "Select Key",
             options = userKeys,
             selectedOption = selectedKey,
-            onOptionSelected = { selectedKey = it }
-        )
+            onOptionSelected = { selectedKey = it })
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = ProtonDimens.SmallSpacing),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Enable early access", modifier = Modifier.weight(1f))
-            Switch(
-                checked = isEarlyAccessEnabled,
-                onCheckedChange = { isChecked ->
-                    isEarlyAccessEnabled = isChecked
-                }
-            )
+            Switch(checked = isEarlyAccessEnabled, onCheckedChange = { isChecked ->
+                isEarlyAccessEnabled = isChecked
+            })
         }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 8.dp),
+                .padding(vertical = ProtonDimens.SmallSpacing),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("Chargebee", modifier = Modifier.weight(1f))
-            Switch(
-                checked = isChargebee,
-                onCheckedChange = { isChecked ->
-                    isChargebee = isChecked
-                }
-            )
+            Switch(checked = isChargebee, onCheckedChange = { isChecked ->
+                isChargebee = isChecked
+            })
         }
-        DropdownField(
-            label = "Select Key",
+        DropdownField(label = "Select Key",
             options = userKeys,
             selectedOption = selectedKey,
-            onOptionSelected = { selectedKey = it }
-        )
+            onOptionSelected = { selectedKey = it })
 
         ProtonSolidButton(
             onClick = {
@@ -157,7 +141,7 @@ fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserView
             enabled = username.text.isNotEmpty() && password.text.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 8.dp)
+                .padding(top = ProtonDimens.SmallSpacing)
         ) {
             Text("Create User")
         }
@@ -166,14 +150,14 @@ fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserView
             Text(
                 text = errorState.toString(),
                 color = MaterialTheme.colors.error,
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
             )
         }
 
         state?.let { response ->
             Text(
                 text = "User ${response ?: "Not provided"}",
-                modifier = Modifier.padding(top = 8.dp)
+                modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
             )
         }
     }
@@ -181,27 +165,19 @@ fun CreateUserScreen(navController: NavHostController, viewModel: CreateUserView
 
 @Composable
 fun DropdownField(
-    label: String,
-    options: List<String>,
-    selectedOption: String,
-    onOptionSelected: (String) -> Unit
+    label: String, options: List<String>, selectedOption: String, onOptionSelected: (String) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
     Box {
         Column {
             Text(text = label, style = MaterialTheme.typography.caption)
-            Text(
-                text = selectedOption,
+            Text(text = selectedOption,
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { expanded = !expanded }
-                    .padding(16.dp)
-            )
+                    .padding(ProtonDimens.DefaultSpacing))
         }
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
+        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { option ->
                 DropdownMenuItem(onClick = {
                     onOptionSelected(option)

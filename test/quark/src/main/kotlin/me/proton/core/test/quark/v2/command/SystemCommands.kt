@@ -2,6 +2,7 @@ package me.proton.core.test.quark.v2.command
 
 import me.proton.core.test.quark.v2.QuarkCommand
 import me.proton.core.test.quark.v2.toEncodedArgs
+import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
@@ -35,3 +36,15 @@ public fun QuarkCommand.systemEnv(variable: String, value: String): Response =
         .let {
             client.executeQuarkRequest(it)
         }
+
+public fun QuarkCommand.systemEnvVariableAsJson(variable: String, value: String): Response {
+    val jsonString = """{"env":"$variable='$value'"}"""
+    val data = jsonString.toRequestBody("application/json; charset=utf-8".toMediaType())
+
+    return route(SYSTEM_ENV)
+        .onRequestBuilder { post(data) }
+        .build()
+        .let {
+            client.executeQuarkRequest(it)
+        }
+}

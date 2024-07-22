@@ -36,7 +36,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import me.proton.core.compose.component.ProtonOutlinedTextField
@@ -64,14 +63,8 @@ fun UpdateUserScreen(navController: NavHostController, viewModel: UpdateUserView
         showingSearchView = false
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-    ) {
-        ProtonTopAppBar(
-            title = { Text("Update User") },
-            navigationIcon = { BackButton(navController) }
-        )
+    Column(modifier = Modifier.fillMaxWidth()) {
+        ProtonTopAppBar(title = { Text("Update User") }, navigationIcon = { BackButton(navController) })
         Text(text = "Selected Domain: $selectedDomain")
 
         if (showingSearchView) {
@@ -95,9 +88,7 @@ fun UpdateUserScreen(navController: NavHostController, viewModel: UpdateUserView
                 viewModel.fetchUsers()
 
                 showingSearchView = true
-            },
-            loading = isLoading,
-            enabled = !isLoading
+            }, loading = isLoading, enabled = !isLoading
         ) {
             Text("Fetch Users")
         }
@@ -120,8 +111,7 @@ fun UpdateUserScreen(navController: NavHostController, viewModel: UpdateUserView
                 if (viewModel.lastUserData.isNotEmpty()) {
                     navController.navigate("drive")
                 }
-            },
-            enabled = viewModel.lastUserData.isNotEmpty()
+            }, enabled = viewModel.lastUserData.isNotEmpty()
         ) {
             Text("Navigate to Drive")
         }
@@ -140,7 +130,7 @@ fun UpdateUserScreen(navController: NavHostController, viewModel: UpdateUserView
 
         response?.let { response ->
             Text(
-                text = response, modifier = Modifier.padding(top = 8.dp)
+                text = response, modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
             )
         }
     }

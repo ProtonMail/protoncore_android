@@ -28,7 +28,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -40,6 +39,7 @@ import me.proton.core.compose.component.ProtonSnackbarHostState
 import me.proton.core.compose.component.ProtonSnackbarType
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.configuration.configurator.R
 import me.proton.core.configuration.configurator.domain.ConfigurationUseCase
@@ -47,6 +47,7 @@ import me.proton.core.configuration.configurator.presentation.Screen
 import me.proton.core.configuration.configurator.presentation.components.AppNavigation
 import me.proton.core.configuration.configurator.presentation.components.CreateUserScreen
 import me.proton.core.configuration.configurator.presentation.components.DriveUserUpdateScreen
+import me.proton.core.configuration.configurator.presentation.components.EnvironmentManagementScreen
 import me.proton.core.configuration.configurator.presentation.components.SearchableConfigurationTextField
 import me.proton.core.configuration.configurator.presentation.components.UpdateUserScreen
 import me.proton.core.configuration.configurator.presentation.viewModel.ConfigurationScreenViewModel
@@ -77,6 +78,7 @@ fun QuarkMainScreen() {
         composable("createUser") { CreateUserScreen(navController) }
         composable("updateUser") { UpdateUserScreen(navController) }
         composable("drive") { DriveUserUpdateScreen(navController) }
+        composable("environmentManagement") { EnvironmentManagementScreen(navController) }
     }
 }
 
@@ -97,16 +99,14 @@ fun UserManagementSection(navController: NavHostController) {
         Button(
             onClick = {
                 navController.navigate("createUser")
-            },
-            enabled = !isProduction
+            }, enabled = !isProduction
         ) {
             Text("Create User")
         }
         Button(
             onClick = {
                 navController.navigate("updateUser")
-            },
-            enabled = !isProduction
+            }, enabled = !isProduction
         ) {
             Text("Update User")
         }
@@ -123,8 +123,7 @@ fun EnvironmentManagementSection(navController: NavHostController) {
         Button(
             onClick = {
                 navController.navigate("environmentManagement")
-            },
-            enabled = !isProduction
+            }, enabled = !isProduction
         ) {
             Text("Environment management")
         }
@@ -163,9 +162,7 @@ fun ConfigurationScreen(
     LaunchedEffect(Unit) {
         configViewModel.errorFlow.collect {
             snackbarHostState.showSnackbar(
-                type = ProtonSnackbarType.ERROR,
-                message = it,
-                actionLabel = "OK"
+                type = ProtonSnackbarType.ERROR, message = it, actionLabel = "OK"
             )
         }
     }
@@ -196,15 +193,12 @@ private fun ConfigSettingsScreen(
         )
 
         AdvancedOptionsColumn(
-            isAdvancedExpanded = isAdvancedExpanded,
-            onClick = onAdvanceSetting
+            isAdvancedExpanded = isAdvancedExpanded, onClick = onAdvanceSetting
         )
 
-        SaveConfigurationButton(
-            onClick = {
-                onConfigurationSave(isAdvancedExpanded)
-            }
-        )
+        SaveConfigurationButton(onClick = {
+            onConfigurationSave(isAdvancedExpanded)
+        })
     }
 }
 
@@ -238,29 +232,22 @@ private fun ConfigurationFields(
                 )
             } else {
                 ConfigurationTextField(
-                    configField = configField,
-                    onValueChange = {
+                    configField = configField, onValueChange = {
                         showingSearchView = true
-                    },
-                    fetchAction = fetchAction
+                    }, fetchAction = fetchAction
                 )
             }
         } else {
             when (configField.value) {
                 is String -> ConfigurationTextField(
-                    configField = configField,
-                    onValueChange = { newValue ->
+                    configField = configField, onValueChange = { newValue ->
                         onFieldUpdate(configField.name, newValue)
-                    },
-                    fetchAction = fetchAction
+                    }, fetchAction = fetchAction
                 )
 
-                is Boolean -> ConfigurationCheckbox(
-                    configField = configField,
-                    onCheckChanged = { newValue ->
-                        onFieldUpdate(configField.name, newValue)
-                    }
-                )
+                is Boolean -> ConfigurationCheckbox(configField = configField, onCheckChanged = { newValue ->
+                    onFieldUpdate(configField.name, newValue)
+                })
 
                 null -> Unit
                 else -> error("Unsupported configuration field type for key ${configField.name}")
@@ -280,12 +267,10 @@ fun ConfigurationTextField(
     var textFieldValue by remember { mutableStateOf(initialTextFieldValue) }
 
     LaunchedEffect(initialValue) {
-        if (textFieldValue.text != initialValue)
-            textFieldValue = TextFieldValue(text = initialValue)
+        if (textFieldValue.text != initialValue) textFieldValue = TextFieldValue(text = initialValue)
     }
 
-    ProtonOutlinedTextField(
-        modifier = Modifier.bottomPad(8.dp),
+    ProtonOutlinedTextField(modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing),
         value = textFieldValue,
         onValueChange = { newValue ->
             textFieldValue = newValue
@@ -298,8 +283,7 @@ fun ConfigurationTextField(
             fetchAction?.let {
                 ConfigActionButton(onClick = fetchAction)
             }
-        }
-    )
+        })
 }
 
 @Composable
@@ -309,15 +293,14 @@ private fun ConfigurationCheckbox(
 ) {
     Row(
         modifier = Modifier
-            .bottomPad(8.dp)
+            .bottomPad(ProtonDimens.SmallSpacing)
             .clickable {
                 onCheckChanged(
                     !configField.value
                         .toString()
                         .toBoolean()
                 )
-            },
-        verticalAlignment = Alignment.CenterVertically
+            }, verticalAlignment = Alignment.CenterVertically
     ) {
         Checkbox(
             checked = configField.value.toString().toBoolean(),
@@ -329,26 +312,23 @@ private fun ConfigurationCheckbox(
 
 @Composable
 private fun ExpandableHeader(
-    isExpanded: Boolean,
-    onExpandChange: (Boolean) -> Unit
+    isExpanded: Boolean, onExpandChange: (Boolean) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = ProtonTheme.colors.floatyText)
-            .clickable { onExpandChange(!isExpanded) }
-    ) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .background(color = ProtonTheme.colors.floatyText)
+        .clickable { onExpandChange(!isExpanded) }) {
         Text(
             text = stringResource(id = R.string.configuration_text_advanced),
             modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 8.dp)
+                .padding(horizontal = ProtonDimens.DefaultSpacing, vertical = ProtonDimens.SmallSpacing)
                 .background(color = ProtonTheme.colors.floatyText, shape = MaterialTheme.shapes.small)
         )
         Icon(
             painter = painterResource(id = isExpanded.drawable),
             modifier = Modifier
                 .align(Alignment.CenterEnd)
-                .padding(end = 8.dp),
+                .padding(end = ProtonDimens.SmallSpacing),
             tint = ProtonTheme.colors.iconNorm,
             contentDescription = null
         )
@@ -361,10 +341,9 @@ private fun AdvancedOptionsColumn(
     onClick: () -> Unit,
 ) {
     if (isAdvancedExpanded) {
-        Column(modifier = Modifier.bottomPad(16.dp), horizontalAlignment = Alignment.End) {
+        Column(modifier = Modifier.bottomPad(ProtonDimens.DefaultSpacing), horizontalAlignment = Alignment.End) {
             ProtonSolidButton(
-                modifier = Modifier.bottomPad(8.dp),
-                onClick = onClick
+                modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing), onClick = onClick
             ) {
                 Text(stringResource(id = R.string.configuration_set_defaults))
             }
@@ -374,10 +353,9 @@ private fun AdvancedOptionsColumn(
 
 @Composable
 private fun SaveConfigurationButton(onClick: () -> Unit) {
-    Column(modifier = Modifier.bottomPad(16.dp), horizontalAlignment = Alignment.End) {
+    Column(modifier = Modifier.bottomPad(ProtonDimens.DefaultSpacing), horizontalAlignment = Alignment.End) {
         ProtonSolidButton(
-            modifier = Modifier.bottomPad(8.dp),
-            onClick = onClick
+            modifier = Modifier.bottomPad(ProtonDimens.SmallSpacing), onClick = onClick
         ) {
             Text(stringResource(id = R.string.configuration_button_apply))
         }
@@ -388,19 +366,17 @@ private fun SaveConfigurationButton(onClick: () -> Unit) {
 private fun ConfigActionButton(
     @DrawableRes drawableId: Int = CoreDrawable.ic_proton_arrow_down_circle,
     onClick: () -> Unit = { },
-) =
-    IconButton(onClick) {
-        Icon(
-            painter = painterResource(id = drawableId),
-            tint = ProtonTheme.colors.iconNorm,
-            contentDescription = "Configuration Field Action Icon"
-        )
-    }
+) = IconButton(onClick) {
+    Icon(
+        painter = painterResource(id = drawableId),
+        tint = ProtonTheme.colors.iconNorm,
+        contentDescription = "Configuration Field Action Icon"
+    )
+}
 
 private fun Modifier.bottomPad(bottomPadding: Dp) = fillMaxWidth().padding(bottom = bottomPadding)
 
-private
-val Boolean.drawable: Int
+private val Boolean.drawable: Int
     @DrawableRes get() = if (this) R.drawable.ic_proton_arrow_up else R.drawable.ic_proton_arrow_down
 
 fun String.toSpacedWords(): String = replace("(?<=\\p{Lower})(?=[A-Z])".toRegex(), " ").capitalize()

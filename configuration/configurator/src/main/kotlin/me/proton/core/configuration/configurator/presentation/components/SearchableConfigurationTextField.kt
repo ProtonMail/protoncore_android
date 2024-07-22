@@ -41,9 +41,7 @@ import me.proton.core.compose.theme.ProtonDimens
 
 @Composable
 fun SearchableConfigurationTextField(
-    searchData: List<String>,
-    onResultSelected: (String) -> Unit,
-    onDismissRequest: () -> Unit
+    searchData: List<String>, onResultSelected: (String) -> Unit, onDismissRequest: () -> Unit
 ) {
     // State for the search text
     var searchText by remember { mutableStateOf("") }
@@ -56,31 +54,26 @@ fun SearchableConfigurationTextField(
     Surface {
         Column(modifier = Modifier.height(300.dp)) {
             // Top App Bar with a TextField for searching
-            TopAppBar(
-                title = {
-                    BasicTextField(
-                        value = searchText,
-                        onValueChange = { searchText = it },
-                        modifier = Modifier.fillMaxWidth(),
-                        decorationBox = { innerTextField ->
-                            if (searchText.isEmpty()) {
-                                Text("Search", color = Color.LightGray)
-                            }
-                            innerTextField()
+            TopAppBar(title = {
+                BasicTextField(value = searchText,
+                    onValueChange = { searchText = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    decorationBox = { innerTextField ->
+                        if (searchText.isEmpty()) {
+                            Text("Search", color = Color.LightGray)
                         }
-                    )
-                },
-                actions = {
-                    // Wrap 'Cancel' text in clickable modifier to handle taps
-                    Text(
-                        text = "Cancel",
-                        modifier = Modifier
-                            .padding(horizontal = ProtonDimens.SmallSpacing)
-                            .clickable { onDismissRequest() }, // This calls the provided `onDismissRequest` callback
-                        color = Color.White
-                    )
-                }
-            )
+                        innerTextField()
+                    })
+            }, actions = {
+                // Wrap 'Cancel' text in clickable modifier to handle taps
+                Text(
+                    text = "Cancel",
+                    modifier = Modifier
+                        .padding(horizontal = ProtonDimens.SmallSpacing)
+                        .clickable { onDismissRequest() }, // This calls the provided `onDismissRequest` callback
+                    color = Color.White
+                )
+            })
 
             // List of filtered items
             LazyColumn {
@@ -94,11 +87,9 @@ fun SearchableConfigurationTextField(
 
 @Composable
 fun ItemView(item: String, onItemClicked: (String) -> Unit) {
-    Text(
-        text = item,
+    Text(text = item,
         modifier = Modifier
             .fillMaxWidth()
             .padding(ProtonDimens.SmallSpacing)
-            .clickable { onItemClicked(item) }
-    )
+            .clickable { onItemClicked(item) })
 }
