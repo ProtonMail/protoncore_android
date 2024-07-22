@@ -115,7 +115,7 @@ class PublicAddressRepositoryImpl @Inject constructor(
             delete = { publicAddressInfoDao.deleteByEmail(it.email) },
             deleteAll = { publicAddressInfoDao.deleteAll() }
         )
-    ).buildProtonStore(scopeProvider)
+    ).disableCache().buildProtonStore(scopeProvider)
 
     private fun getPublicAddressInfoLocal(email: String): Flow<PublicAddressInfo?> =
         publicAddressInfoWithKeysDao.findWithKeysByEmail(email)
