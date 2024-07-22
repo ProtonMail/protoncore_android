@@ -20,6 +20,7 @@ package me.proton.core.auth.presentation.ui.signup
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -133,7 +134,7 @@ class ChooseExternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
                     is State.Processing -> showLoading(true)
                     is State.SwitchInternal -> onSwitchInternal(it.username, it.domain)
                     is State.Success -> onExternalEmailAvailable(it.email)
-                    is State.Error.Message -> onError(it.error.getUserMessage(resources))
+                    is State.Error.Message -> onError(it.error)
                 }.exhaustive
             }
             .onLongState<State.Processing> {

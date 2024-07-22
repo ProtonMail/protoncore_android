@@ -18,10 +18,12 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
+import android.content.Context
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.catch
@@ -33,12 +35,14 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.presentation.savedstate.flowState
+import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 internal class ChooseExternalEmailViewModel @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val accountAvailability: AccountAvailability,
     override val observabilityManager: ObservabilityManager,
     savedStateHandle: SavedStateHandle
@@ -65,7 +69,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
         @Parcelize
         sealed class Error : State() {
             @Parcelize
-            data class Message(val error: Throwable) : Error()
+            data class Message(val error: String?) : Error()
         }
     }
 
@@ -93,7 +97,7 @@ internal class ChooseExternalEmailViewModel @Inject constructor(
                 }
             }
         }.catch { error ->
-            emit(State.Error.Message(error))
+            emit(State.Error.Message(error.getUserMessage(context.resources)))
         }.collect {
             mainState.tryEmit(it)
         }

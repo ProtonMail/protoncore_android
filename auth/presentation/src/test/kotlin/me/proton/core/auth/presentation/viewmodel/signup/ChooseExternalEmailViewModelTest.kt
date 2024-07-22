@@ -18,6 +18,8 @@
 
 package me.proton.core.auth.presentation.viewmodel.signup
 
+import android.content.Context
+import android.content.res.Resources
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
@@ -66,6 +68,12 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
     @MockK
     private lateinit var userRepository: UserRepository
 
+    @MockK
+    private lateinit var context: Context
+
+    @MockK
+    private lateinit var resources: Resources
+
     private lateinit var viewModel: ChooseExternalEmailViewModel
 
     val userId = UserId("123")
@@ -93,9 +101,11 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+        every { context.resources } returns resources
+        every { resources.getString(any()) } returns "test-string"
         coEvery { getPrimaryUser() } returns user
         accountAvailability = AccountAvailability(userRepository, domainRepository, getPrimaryUser)
-        viewModel = ChooseExternalEmailViewModel(accountAvailability, observabilityManager, SavedStateHandle())
+        viewModel = ChooseExternalEmailViewModel(context, accountAvailability, observabilityManager, SavedStateHandle())
     }
 
     @Test
