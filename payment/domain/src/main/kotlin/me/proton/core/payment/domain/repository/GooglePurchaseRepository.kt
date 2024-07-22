@@ -23,6 +23,7 @@ import me.proton.core.payment.domain.entity.ProtonPaymentToken
 
 public interface GooglePurchaseRepository {
     public suspend fun deleteByGooglePurchaseToken(googlePurchaseToken: GooglePurchaseToken)
+    public suspend fun deleteByProtonPaymentToken(paymentToken: ProtonPaymentToken)
 
     public suspend fun findGooglePurchaseToken(paymentToken: ProtonPaymentToken): GooglePurchaseToken?
 

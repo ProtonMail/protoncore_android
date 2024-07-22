@@ -28,6 +28,9 @@ public abstract class GooglePurchaseDao : BaseDao<GooglePurchaseEntity>() {
     @Query("DELETE FROM GooglePurchaseEntity WHERE googlePurchaseToken = :googlePurchaseToken")
     public abstract suspend fun deleteByGooglePurchaseToken(googlePurchaseToken: String)
 
+    @Query("DELETE FROM GooglePurchaseEntity WHERE paymentToken = :paymentToken")
+    public abstract suspend fun deleteByProtonPaymentToken(paymentToken: String)
+
     @Query("SELECT * FROM GooglePurchaseEntity WHERE paymentToken = :paymentToken")
     public abstract suspend fun findByPaymentToken(paymentToken: String): GooglePurchaseEntity?
 }

@@ -18,7 +18,6 @@
 
 package me.proton.core.paymentiap.data.worker
 
-import android.app.Activity
 import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
@@ -29,22 +28,18 @@ import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.payment.domain.entity.PurchaseState
-import me.proton.core.payment.domain.extension.findGooglePurchase
-import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
 import me.proton.core.payment.domain.repository.PurchaseRepository
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.util.kotlin.CoreLogger
-import javax.inject.Provider
 
 @HiltWorker
 internal class DeletePurchaseWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
     private val purchaseRepository: PurchaseRepository,
-    private val googlePurchaseRepository: GooglePurchaseRepository,
-    private val googleBillingRepository: Provider<GoogleBillingRepository<Activity>>
+    private val googlePurchaseRepository: GooglePurchaseRepository
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
@@ -52,11 +47,7 @@ internal class DeletePurchaseWorker @AssistedInject constructor(
         val purchase = requireNotNull(purchaseRepository.getPurchase(planName))
         return runCatching {
             require(purchase.paymentProvider == PaymentProvider.GoogleInAppPurchase)
-            googleBillingRepository.get().use {
-                val googlePurchase = it.findGooglePurchase(purchase)
-                checkNotNull(googlePurchase) { "Cannot find google purchase: $purchase" }
-                googlePurchaseRepository.deleteByGooglePurchaseToken(googlePurchase.purchaseToken)
-             }
+            googlePurchaseRepository.deleteByProtonPaymentToken(requireNotNull(purchase.paymentToken))
         }.fold(
             onSuccess = {
                 CoreLogger.w(LogTag.GIAP_INFO,"$TAG, deleted: $purchase")

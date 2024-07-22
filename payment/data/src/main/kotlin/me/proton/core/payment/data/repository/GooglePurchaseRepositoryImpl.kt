@@ -34,6 +34,10 @@ public class GooglePurchaseRepositoryImpl @Inject constructor(
         dao.deleteByGooglePurchaseToken(googlePurchaseToken.value)
     }
 
+    override suspend fun deleteByProtonPaymentToken(paymentToken: ProtonPaymentToken) {
+        dao.deleteByProtonPaymentToken(paymentToken.value)
+    }
+
     override suspend fun findGooglePurchaseToken(paymentToken: ProtonPaymentToken): GooglePurchaseToken? {
         val entity = dao.findByPaymentToken(paymentToken.value)
         return entity?.googlePurchaseToken?.let { GooglePurchaseToken(it) }
