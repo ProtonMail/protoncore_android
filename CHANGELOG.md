@@ -11,6 +11,19 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [26.0.1] - 2024-07-23
+
+### Bug Fixes
+
+- auth:
+  - Fix parcelable error for external email signup.
+- key:
+  - Disable memory cache for public address info store.
+- payment:
+  - Fixed DeletePurchaseWorker to deleteByProtonPaymentToken.
+- plan:
+  - Fixed SubscribePurchaseWorker to not retry on PAYMENTS_SUBSCRIPTION_NOT_EXISTS.
+
 ## [26.0.0] - 2024-07-18
 
 ### Breaking Changes
