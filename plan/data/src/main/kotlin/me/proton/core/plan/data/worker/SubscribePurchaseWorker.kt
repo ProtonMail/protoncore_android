@@ -48,6 +48,7 @@ import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.plan.domain.usecase.GetCurrentSubscription
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.coroutine.withResultContext
 
@@ -58,6 +59,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
     private val sessionProvider: SessionProvider,
     private val purchaseRepository: PurchaseRepository,
     private val plansRepository: PlansRepository,
+    private val getCurrentSubscription: GetCurrentSubscription,
     override val observabilityManager: ObservabilityManager,
 ) : CoroutineWorker(context, params), ObservabilityContext {
 
@@ -108,7 +110,7 @@ internal class SubscribePurchaseWorker @AssistedInject constructor(
             error is ApiException && (error.isUnprocessable() || error.isBadRequest()) -> {
                 CoreLogger.w(LogTag.PURCHASE_INFO, error, "$TAG, fetching current subscription: $purchase")
                 val userId = requireNotNull(sessionProvider.getUserId(purchase.sessionId))
-                val plans = plansRepository.getSubscription(userId)?.plans.orEmpty()
+                val plans = getCurrentSubscription(userId)?.plans.orEmpty()
                 when {
                     plans.any { it.name == purchase.planName } -> onSuccess(purchase)
                     else -> onPermanentFailure(purchase, error)
