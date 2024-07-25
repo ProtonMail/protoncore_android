@@ -40,7 +40,7 @@ import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel
 import me.proton.core.auth.presentation.viewmodel.ChooseAddressViewModel.State
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick

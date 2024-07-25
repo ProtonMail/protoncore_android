@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.presentation.ui.webview
+package me.proton.core.network.presentation.ui.webview
 
 import android.net.http.SslCertificate
 import android.os.Build
@@ -25,15 +25,15 @@ import me.proton.core.network.data.di.Constants
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 
-fun SslCertificate.isTrustedByLeafSPKIPinning() =
+public fun SslCertificate.isTrustedByLeafSPKIPinning(): Boolean =
     getCompatX509Cert()?.isTrustedByLeafSPKIPinning() ?: false
 
-fun X509Certificate.isTrustedByLeafSPKIPinning() =
+public fun X509Certificate.isTrustedByLeafSPKIPinning(): Boolean =
     LeafSPKIPinningTrustManager(Constants.ALTERNATIVE_API_SPKI_PINS).runCatching {
         checkServerTrusted(arrayOf(this@isTrustedByLeafSPKIPinning), "generic")
     }.isSuccess
 
-fun SslCertificate.getCompatX509Cert(): X509Certificate? = when (Build.VERSION.SDK_INT) {
+public fun SslCertificate.getCompatX509Cert(): X509Certificate? = when (Build.VERSION.SDK_INT) {
     in Build.VERSION_CODES.Q..Int.MAX_VALUE -> x509Certificate
     else -> {
         // Hidden API, there is no way to access this value otherwise.

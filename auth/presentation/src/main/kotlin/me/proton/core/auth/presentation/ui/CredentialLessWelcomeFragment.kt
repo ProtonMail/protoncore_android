@@ -43,7 +43,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.SnackbarLength
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.viewBinding

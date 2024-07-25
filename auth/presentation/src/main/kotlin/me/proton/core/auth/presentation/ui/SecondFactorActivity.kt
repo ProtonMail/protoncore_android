@@ -49,10 +49,10 @@ import me.proton.core.auth.presentation.entity.TwoFAMechanisms
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.SecondFactorViewModel
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
-import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick

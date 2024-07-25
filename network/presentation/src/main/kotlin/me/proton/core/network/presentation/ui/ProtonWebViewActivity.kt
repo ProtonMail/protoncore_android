@@ -1,4 +1,22 @@
-package me.proton.core.presentation.ui
+/*
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
+package me.proton.core.network.presentation.ui
 
 import android.app.Activity
 import android.content.Context
@@ -18,27 +36,28 @@ import kotlinx.parcelize.Parcelize
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.presentation.databinding.ProtonWebviewActivityBinding
-import me.proton.core.presentation.ui.webview.ProtonWebViewClient
+import me.proton.core.presentation.ui.ProtonSecureActivity
 import okhttp3.HttpUrl
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.io.ByteArrayInputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>(
+public class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>(
     ProtonWebviewActivityBinding::inflate
 ) {
 
     @Inject
     @BaseProtonApiUrl
-    lateinit var baseApiUrl: HttpUrl
+    internal lateinit var baseApiUrl: HttpUrl
 
     @Inject
-    lateinit var networkPrefs: NetworkPrefs
+    internal lateinit var networkPrefs: NetworkPrefs
 
     @Inject
-    lateinit var extraHeaderProvider: ExtraHeaderProvider
+    internal lateinit var extraHeaderProvider: ExtraHeaderProvider
 
     private val input: Input by lazy { requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) }
     private val successUrlRegex by lazy { input.successUrlRegex?.toRegex() }
@@ -114,7 +133,7 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
         finish()
     }
 
-    inner class CustomWebViewClient(
+    internal inner class CustomWebViewClient(
         private val shouldInterceptRequest: (request: WebResourceRequest) -> WebResourceResponse?,
         private val onPageLoadSuccess: () -> Unit,
         private val onPageLoadError: (Int?) -> Unit,
@@ -157,7 +176,7 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
     }
 
     @Parcelize
-    data class Input(
+    public data class Input(
         val url: String,
         val successUrlRegex: String? = null,
         val errorUrlRegex: String? = null,
@@ -171,32 +190,32 @@ class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityBinding>
     ) : Parcelable
 
     @Parcelize
-    sealed class Result(
-        open val pageLoadErrorCode: Int?
+    public sealed class Result(
+        public open val pageLoadErrorCode: Int?
     ) : Parcelable {
-        data class Cancel(
+        public data class Cancel(
             override val pageLoadErrorCode: Int?
         ) : Result(pageLoadErrorCode)
 
-        data class Success(
+        public data class Success(
             val url: String,
             override val pageLoadErrorCode: Int?
         ) : Result(pageLoadErrorCode = null)
 
-        data class Error(
+        public data class Error(
             val url: String,
             override val pageLoadErrorCode: Int?
         ) : Result(pageLoadErrorCode)
 
     }
 
-    companion object {
-        const val ARG_INPUT = "arg.protonWebViewActivityInput"
-        const val ARG_RESULT = "arg.protonWebViewActivityResult"
+    public companion object {
+        internal const val ARG_INPUT = "arg.protonWebViewActivityInput"
+        internal const val ARG_RESULT = "arg.protonWebViewActivityResult"
 
-        object ResultContract : ActivityResultContract<Input, Result?>() {
+        public object ResultContract : ActivityResultContract<Input, Result?>() {
 
-            override fun createIntent(context: Context, input: Input) =
+            override fun createIntent(context: Context, input: Input): Intent =
                 Intent(context, ProtonWebViewActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     putExtra(ARG_INPUT, input)

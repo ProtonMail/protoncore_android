@@ -43,7 +43,7 @@ import me.proton.core.payment.presentation.viewmodel.PaymentTokenApprovalViewMod
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.exhaustive
 

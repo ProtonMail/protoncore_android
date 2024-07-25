@@ -33,7 +33,7 @@ import me.proton.core.humanverification.presentation.LogTag
 import me.proton.core.humanverification.presentation.LogTag.HV_REQUEST_ERROR
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
-import me.proton.core.presentation.ui.webview.ProtonWebViewClient
+import me.proton.core.network.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
 import me.proton.core.util.kotlin.takeIfNotBlank

@@ -54,11 +54,11 @@ import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.network.presentation.ui.ProtonWebViewActivity
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
-import me.proton.core.presentation.ui.ProtonWebViewActivity
-import me.proton.core.presentation.ui.ProtonWebViewActivity.Companion.ResultContract
-import me.proton.core.presentation.ui.ProtonWebViewActivity.Result
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.ui.ProtonWebViewActivity.Companion.ResultContract
+import me.proton.core.network.presentation.ui.ProtonWebViewActivity.Result
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.presentation.ui.webview
+package me.proton.core.network.presentation.ui.webview
 
 import android.annotation.SuppressLint
 import android.net.Uri
@@ -36,7 +36,7 @@ import me.proton.core.presentation.utils.openBrowserLink
  * - Proton Extra Headers.
  */
 // See: https://commonsware.com/blog/2015/06/11/psa-webview-regression.html.
-open class ProtonWebViewClient(
+public open class ProtonWebViewClient(
     private val networkPrefs: NetworkPrefs,
     private val extraHeaderProvider: ExtraHeaderProvider,
 ) : WebViewClient() {
@@ -46,9 +46,9 @@ open class ProtonWebViewClient(
 
     private var isFinished = false
 
-    var shouldOpenLinkInBrowser = true
+    public var shouldOpenLinkInBrowser: Boolean = true
 
-    fun Uri.isAlternativeHost() = alternativeUrl?.let { host == it.host } ?: false
+    public fun Uri.isAlternativeHost(): Boolean = alternativeUrl?.let { host == it.host } ?: false
 
     override fun onPageFinished(view: WebView?, url: String?) {
         isFinished = true
@@ -68,7 +68,7 @@ open class ProtonWebViewClient(
         return false
     }
 
-    open fun shouldKeepInWebView(url: String): Boolean {
+    public open fun shouldKeepInWebView(url: String): Boolean {
         if (!isFinished) return true
         return false
     }

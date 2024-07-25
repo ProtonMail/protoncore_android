@@ -32,7 +32,7 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.successToast
 import javax.inject.Inject
 

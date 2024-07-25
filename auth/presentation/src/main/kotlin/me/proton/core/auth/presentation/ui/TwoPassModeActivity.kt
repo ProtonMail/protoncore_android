@@ -36,7 +36,7 @@ import me.proton.core.auth.presentation.entity.TwoPassModeInput
 import me.proton.core.auth.presentation.entity.TwoPassModeResult
 import me.proton.core.auth.presentation.viewmodel.TwoPassModeViewModel
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.onFailure

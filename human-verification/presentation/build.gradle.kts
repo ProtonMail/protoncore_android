@@ -49,6 +49,7 @@ dependencies {
         project(Module.humanVerificationDomain),
         project(Module.observabilityDomain),
         project(Module.networkDomain),
+        project(Module.networkPresentation),
         project(Module.presentation),
         project(Module.userSettingsDomain),
         project(Module.telemetryPresentation),

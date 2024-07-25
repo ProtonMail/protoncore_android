@@ -30,12 +30,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.parcelize.Parcelize
 import me.proton.core.auth.domain.usecase.AccountAvailability
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.SignupEmailAvailabilityTotal
 import me.proton.core.observability.domain.metrics.SignupFetchDomainsTotal
 import me.proton.core.presentation.savedstate.flowState
-import me.proton.core.presentation.utils.getUserMessage
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.launchWithResultContext
 import javax.inject.Inject

@@ -43,7 +43,6 @@ android {
 
 dependencies {
     api(
-        project(Module.networkDomain),
         activity,
         appcompat,
         `constraint-layout`,
@@ -61,7 +60,6 @@ dependencies {
 
     implementation(
         project(Module.kotlinUtil),
-        project(Module.networkData),
         `android-ktx`,
         `core-splashscreen`,
         drawerLayout,

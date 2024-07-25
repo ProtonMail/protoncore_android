@@ -38,7 +38,7 @@ import me.proton.core.plan.presentation.viewmodel.DynamicSelectPlanViewModel.Act
 import me.proton.core.plan.presentation.viewmodel.DynamicSelectPlanViewModel.State
 import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.utils.addOnBackPressedCallback
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding

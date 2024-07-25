@@ -63,6 +63,7 @@ dependencies {
 
     implementation(
         project(Module.kotlinUtil),
+        project(Module.networkPresentation),
         project(Module.planData),
         `android-ktx`,
         `coroutines-core`,

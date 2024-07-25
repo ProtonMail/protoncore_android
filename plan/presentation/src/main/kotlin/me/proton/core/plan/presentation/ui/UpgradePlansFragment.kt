@@ -51,7 +51,7 @@ import me.proton.core.plan.presentation.viewmodel.BasePlansViewModel
 import me.proton.core.plan.presentation.viewmodel.UpgradePlansViewModel
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.viewBinding
 import me.proton.core.util.kotlin.exhaustive

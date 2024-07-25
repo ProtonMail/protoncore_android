@@ -57,6 +57,7 @@ dependencies {
         project(Module.humanVerificationPresentation),
         project(Module.networkData),
         project(Module.networkDomain),
+        project(Module.networkPresentation),
         project(Module.observabilityDomain),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),

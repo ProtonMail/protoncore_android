@@ -58,6 +58,7 @@ dependencies {
     implementation(
         // Core
         project(Module.kotlinUtil),
+        project(Module.networkPresentation),
 
         // Features
         project(Module.countryPresentation),

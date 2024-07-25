@@ -26,8 +26,8 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import me.proton.core.presentation.utils.ProtonColorUtils.intenseColorVariant
-import me.proton.core.presentation.utils.ProtonColorUtils.strongColorVariant
+import me.proton.core.compose.util.ProtonColorUtils.intenseColorVariant
+import me.proton.core.compose.util.ProtonColorUtils.strongColorVariant
 
 private object ProtonPalette {
     val Haiti = Color(0xFF1B1340)

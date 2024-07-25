@@ -30,7 +30,6 @@ import androidx.lifecycle.lifecycleScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -44,7 +43,7 @@ import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.addOnBackPressedCallback
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.hideKeyboard
 import me.proton.core.presentation.utils.normToast
 import me.proton.core.presentation.utils.onClick

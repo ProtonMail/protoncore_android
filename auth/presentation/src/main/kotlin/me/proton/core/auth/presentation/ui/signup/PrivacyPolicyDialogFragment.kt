@@ -34,7 +34,7 @@ import me.proton.core.auth.presentation.viewmodel.signup.TermsConditionsViewMode
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.presentation.ui.ProtonDialogFragment
-import me.proton.core.presentation.ui.webview.ProtonWebViewClient
+import me.proton.core.network.presentation.ui.webview.ProtonWebViewClient
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.viewBinding
 import javax.inject.Inject

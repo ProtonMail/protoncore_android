@@ -52,7 +52,7 @@ import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.GetCurrentSubscription
 import me.proton.core.plan.domain.usecase.PerformSubscribe
 import me.proton.core.plan.domain.usecase.ValidateSubscriptionPlan
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.test.android.ArchTest
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.assertIs

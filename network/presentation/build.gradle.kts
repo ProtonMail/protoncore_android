@@ -22,6 +22,7 @@ import studio.forface.easygradle.dsl.android.*
 plugins {
     protonAndroidLibrary
     protonDagger
+    id("kotlin-parcelize")
 }
 
 protonCoverage {
@@ -46,6 +47,7 @@ dependencies {
     implementation(
         project(Module.accountDomain),
         project(Module.domain),
+        project(Module.networkData),
         project(Module.presentation),
 
         activity,

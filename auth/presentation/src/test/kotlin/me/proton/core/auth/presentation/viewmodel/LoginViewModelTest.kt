@@ -47,7 +47,7 @@ import me.proton.core.observability.domain.metrics.ObservabilityData
 import me.proton.core.observability.domain.metrics.SignupLoginTotal
 import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.telemetry.domain.TelemetryManager
 import me.proton.core.telemetry.domain.entity.TelemetryEvent
 import me.proton.core.test.android.ArchTest

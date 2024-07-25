@@ -43,7 +43,7 @@ import me.proton.core.payment.presentation.viewmodel.BillingCommonViewModel
 import me.proton.core.payment.presentation.viewmodel.BillingViewModel
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.presentation.utils.errorSnack
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive

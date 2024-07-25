@@ -43,7 +43,7 @@ import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Ac
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.Action.SetUser
 import me.proton.core.plan.presentation.viewmodel.DynamicUpgradePlanViewModel.State
 import me.proton.core.presentation.ui.ProtonFragment
-import me.proton.core.presentation.utils.getUserMessage
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
