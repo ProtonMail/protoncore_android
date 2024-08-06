@@ -30,6 +30,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -52,6 +53,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewModel
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewState
 import me.proton.core.compose.component.ProtonSolidButton
@@ -193,20 +195,20 @@ fun AccountSettingsCredentialLess(
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
             InfoText()
             Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
+            val buttonModifier = Modifier
+                .heightIn(min = 48.dp)
+                .align(alignment = Alignment.CenterHorizontally)
+                .fillMaxWidth()
             if (!signUpButtonGone) {
                 CreateAccountButton(
                     onClick = onCreateAccountClicked,
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterHorizontally)
-                        .fillMaxWidth()
+                    modifier = buttonModifier
                 )
             }
             if (!signInButtonGone) {
                 SignInButton(
                     onClick = onSignInClicked,
-                    modifier = Modifier
-                        .align(alignment = Alignment.CenterHorizontally)
-                        .fillMaxWidth()
+                    modifier = buttonModifier
                 )
             }
         }
@@ -317,13 +319,13 @@ private fun InfoText(
     Column(modifier = modifier) {
         Text(
             color = ProtonTheme.colors.textNorm,
-            style = ProtonTheme.typography.defaultSmallStrongUnspecified,
+            style = ProtonTheme.typography.body1Medium,
             text = stringResource(id = R.string.auth_credentialless_settings_title)
         )
         Spacer(modifier = Modifier.height(ProtonDimens.ExtraSmallSpacing))
         Text(
             color = ProtonTheme.colors.textWeak,
-            style = ProtonTheme.typography.captionNorm,
+            style = ProtonTheme.typography.body2Regular,
             text = stringResource(id = R.string.auth_credentialless_settings_subtitle)
         )
     }
