@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">Kurtarma e-posta adresini onaylayın</string>
   <string name="settings_recovery_email_new_hint">E-posta adresini yazın</string>
   <string name="settings_recovery_email_confirm_hint">E-posta adresini yeniden yazın</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">Yeni ikinci parolayı kaydet</string>
+  <string name="settings_save_main_password">Yeni ana parolayı kaydet</string>
   <string name="settings_save">Kaydet</string>
   <string name="settings_password_required">Oturum açma parolanızı yazın</string>
   <string name="settings_password_required_ok">Tamam</string>
@@ -34,16 +34,16 @@
   <string name="settings_validation_email">E-posta adresi geçersiz.</string>
   <string name="settings_general_error">Bir sorun çıktı.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">Ana parola</string>
+  <string name="settings_password_management_tab_second_password">İkinci parola</string>
+  <string name="settings_password_management_change_password_note">Parolalarınızın birini değiştirebilmek için ana parolanızı bilmelisiniz. <a href="https://account.proton.me/reset-password">Ana parolanızı unuttunuz mu?</a></string>
   <string name="settings_password_management_header">Parolayı değiştir</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">Geçerli ana parola</string>
+  <string name="settings_main_password_hint_new">Yeni ana parola</string>
+  <string name="settings_main_password_hint_new_confirm">Yeni ana parola onayı</string>
+  <string name="settings_second_password_hint_current_main_password">Geçerli ana parola</string>
+  <string name="settings_second_password_hint_new">Yeni ikinci parola</string>
+  <string name="settings_second_password_hint_new_confirm">Yeni ikinci parola onayı</string>
   <string name="settings_change_password_error">Parola değiştirilirken bir sorun çıktı.</string>
   <string name="settings_recovery_email_success">Kurtarma e-posta adresi güncellendi</string>
   <string name="settings_password_management_success">Parola güncellendi</string>

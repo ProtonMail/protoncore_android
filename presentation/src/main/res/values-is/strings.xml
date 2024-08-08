@@ -30,7 +30,7 @@
   <string name="presentation_alert_ok">Í lagi</string>
   <string name="presentation_alert_enter">Setja inn</string>
   <string name="presentation_alert_cancel">Hætta við</string>
-  <string name="presentation_alert_continue">Continue</string>
+  <string name="presentation_alert_continue">Halda áfram</string>
   <string name="presentation_alert_submit">Senda inn</string>
   <!-- Common menu items -->
   <string name="presentation_menu_item_title_report_a_bug">Tilkynna vandamál</string>

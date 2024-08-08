@@ -54,18 +54,18 @@
   <string name="auth_help_option_other">Egyéb bejelentkezési problémák</string>
   <string name="auth_help_other">További segítségre van szüksége? Lépjen velünk kapcsolatba.</string>
   <string name="auth_help_option_customer_support">Vevőszolgálat</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_title">Kétlépcsős hitelesítés</string>
+  <string name="auth_2fa_subtitle">Többféle kétlépcsős hitelesítést is beállított. Válassza ki, hogy szeretné folytatni a hitelesítést.</string>
+  <string name="auth_2fa_tab_one_time_code">Egyszeri kód</string>
+  <string name="auth_2fa_tab_security_key">Hitelesítési kulcs</string>
+  <string name="auth_2fa_insert_security_key">A Proton fiókjához kapcsolt hitelesítési kulcs bemutatásával. <annotation link="more">További információk</annotation></string>
   <string name="auth_2fa_label">Kétlépcsős kód</string>
   <string name="auth_2fa_recovery_code_label">Helyreállítási kód</string>
   <string name="auth_2fa_assistive_text">Írja be a hatjegyű kódot.</string>
   <string name="auth_2fa_recovery_code_assistive_text">Írjon be egy 8 karakteres helyreállítási kódot.</string>
   <string name="auth_2fa_action">Azonosítás</string>
   <string name="auth_2fa_use_recovery_code">Helyreállító kód használata</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">További információk</string>
   <string name="auth_2fa_use_2fa_code">Kétlépcsős kód használata</string>
   <string name="auth_2fa_error_empty_code">Írja be a hatjegyű kódot.</string>
   <string name="auth_mailbox_title">E-mail fiók feloldása</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Változtassa meg a jelszavát</string>
   <string name="auth_password_chooser_description">A Proton alkalmazás szervezeti tagként való használatához, először be kell jelentkeznie a Protonba a web böngészőből és megváltoztatnia a jelszavát.</string>
   <string name="auth_password_chooser_change">Jelszó megváltoztatása</string>
-  <string name="auth_user_check_one_free_error">Csak egy ingyenes Proton fiók engedélyezett.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Csak egy ingyenes Proton fiók engedélyezett.</item>
+    <item quantity="other">Csak %d ingyenes Proton fiók engedélyezett.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Fiókja jelenleg, számlatartozás miatt, fel van függesztve.</string>
   <string name="auth_user_check_delinquent_action">Számla befizetése</string>
   <string name="auth_account_not_found_error">Hiba történt a fiókkal</string>
@@ -130,22 +133,23 @@
   <string name="auth_signup_recovery_method_email_hint">Helyreállítási email</string>
   <string name="auth_signup_recovery_method_phone_hint">Helyreállítási telefonszám</string>
   <string name="auth_signup_terms_conditions">Szerződési feltételeket</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">A Következő gombra kattintva kijelenti, hogy elfogadja a Proton <annotation link="terms">Felhasználási feltételeit</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Adatvédelmi irányelvek</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">A Következő gombra kattintva kijelenti, hogy elfogadja a Proton <annotation link="terms">Felhasználási feltételeit</annotation> és <annotation link="privacy">Adatvédelmi irányelveit</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Helyreállítási módszer kihagyása?</string>
   <string name="auth_signup_skip_recovery_description">Egy helyreállítási módszer beállításával könnyen visszaszerezheti a fiókja elérést, ha elfelejtené a jelszavát vagy kizáródna a fiókból.</string>
   <string name="auth_signup_skip_recovery">Kihagyás</string>
   <string name="auth_signup_set_recovery">Helyreállítási módszer beállítása</string>
-  <string name="auth_signup_no_connectivity">Nincs kapcsolat a Felhasználási feltételek megjelenítéséhez.</string>
+  <string name="auth_signup_no_connectivity">Nincs kapcsolat a weboldal megjelenítéséhez.</string>
   <string name="auth_signup_error_create_to_continue">Kérjük, hozzon létre egy fiókot a folytatáshoz</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">További információk</string>
+  <string name="auth_signup_create_account_dialog_title">Aktiválja az előfizetését</string>
+  <string name="auth_signup_create_account_dialog_text">A Google Pay fizetés sikeresen feldolgozva. Az előfizetése aktiválásához kérjük, hozza létre a Proton fiókját.</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Törlés</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Folytatás</string>
   <string name="auth_signup_error_username_blank">A felhasználónév nem lehet üres.</string>
   <string name="auth_signup_error_passwords_do_not_match">A jelszavak nem egyeznek meg.</string>
   <string name="auth_signup_validation_password_length">A jelszónak legalább 8 karakternek kell lennie.</string>
-  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
+  <string name="auth_signup_password_not_allowed">Ez a jelszó túl közismert. Válasszon egy másikat.</string>
   <string name="auth_signup_validation_password">A jelszó nem lehet üres.</string>
   <string name="auth_signup_your_account_is_being_setup">Fiókja létrehozás alatt…</string>
   <string name="auth_signup_please_wait">Ez általában nem tart tovább egy percnél.</string>

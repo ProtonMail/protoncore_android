@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">Váš účet má nastaven několik mechanismů 2FA. Vyberte, jakým způsobem chcete potvrdit svou identitu.</string>
   <string name="auth_2fa_tab_one_time_code">Jednorázový kód</string>
   <string name="auth_2fa_tab_security_key">Bezpečnostní klíč</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Předložte bezpečnostní klíč spojený s vaším účtem Proton. <annotation link="more">Více informací</annotation></string>
   <string name="auth_2fa_label">Kód pro dvoufaktorové ověření</string>
   <string name="auth_2fa_recovery_code_label">Kód pro obnovení</string>
   <string name="auth_2fa_assistive_text">Zadejte 6místný kód.</string>
@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Změňte své heslo</string>
   <string name="auth_password_chooser_description">Chcete-li používat aplikaci Proton jako člen organizace, musíte nejprve změnit své heslo přihlášením do Proton prostřednictvím prohlížeče.</string>
   <string name="auth_password_chooser_change">Změnit heslo</string>
-  <string name="auth_user_check_one_free_error">Je povolen pouze jeden bezplatný Proton účet.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Je povolen pouze jeden bezplatný účet Proton.</item>
+    <item quantity="few">Jsou povoleny pouze %d bezplatné účty Proton.</item>
+    <item quantity="many">Je povoleno pouze %d bezplatných účtů Proton.</item>
+    <item quantity="other">Je povoleno pouze %d bezplatných účtů Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Váš účet je aktuálně pozastaven kvůli faktuře po splatnosti.</string>
   <string name="auth_user_check_delinquent_action">Zaplatit fakturu</string>
   <string name="auth_account_not_found_error">Problém s účtem</string>
@@ -130,12 +135,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-mail pro obnovení</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonní číslo pro obnovení</string>
   <string name="auth_signup_terms_conditions">Obchodní podmínky</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Kliknutím na tlačítko Dále, souhlasíte s <annotation link="terms"> podmínkami a náležitostmi Proton.</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Zásady ochrany osobních údajů</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Kliknutím na Další, souhlasíte se <annotation link="terms">Smluvními podmínkami užívání</annotation> Proton a se <annotation link="privacy">Zásadami ochrany osobních údajů</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Přeskočit metodu obnovení?</string>
   <string name="auth_signup_skip_recovery_description">Metoda obnovení vám pomůže získat přístup k účtu v případě, že zapomenete heslo nebo se z účtu odhlásíte.</string>
   <string name="auth_signup_skip_recovery">Přeskočit</string>
   <string name="auth_signup_set_recovery">Nastavit metodu obnovení</string>
-  <string name="auth_signup_no_connectivity">Žádné připojení k zobrazení Obchodních podmínek.</string>
+  <string name="auth_signup_no_connectivity">Pro zobrazení webové stránky není k dispozici konektivita.</string>
   <string name="auth_signup_error_create_to_continue">Pro pokračování si vytvořte účet</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Více informací</string>
   <string name="auth_signup_create_account_dialog_title">Aktivujte své předplatné</string>

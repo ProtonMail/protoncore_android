@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Змяніць свой пароль</string>
   <string name="auth_password_chooser_description">Для выкарыстання праграмы Proton у якасці ўдзельніка арганізацыі, першапачаткова вам неабходна змяніць свой пароль, увайшоўшы ў Proton праз браўзер.</string>
   <string name="auth_password_chooser_change">Змяніць пароль</string>
-  <string name="auth_user_check_one_free_error">Дазволены толькі адзін бясплатны ўліковы запіс Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Дазволены толькі адзін бясплатны ўліковы запіс Proton.</item>
+    <item quantity="few">Дазволены толькі %d бясплатныя ўліковыя запісы Proton.</item>
+    <item quantity="many">Дазволены толькі %d бясплатных уліковых запісаў Proton.</item>
+    <item quantity="other">Дазволены толькі %d бясплатных уліковых запісаў Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Ваш уліковы запіс удзельніка Proton прыпынены па прычыне неаплачанага рахунка.</string>
   <string name="auth_user_check_delinquent_action">Аплаціць рахунак</string>
   <string name="auth_account_not_found_error">Памылка ўліковага запісу</string>
@@ -130,12 +135,13 @@
   <string name="auth_signup_recovery_method_email_hint">Электронная пошта для аднаўлення доступу</string>
   <string name="auth_signup_recovery_method_phone_hint">Нумар тэлефона для аднаўлення доступу</string>
   <string name="auth_signup_terms_conditions">Умовы выкарыстання</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Націскаючы кнопку \"Далей\", вы пагаджаецеся з <annotation link="terms">Умовамі выкарыстання.</annotation> Proton.</string>
+  <string name="auth_signup_privacy_policy">Палітыка прыватнасці</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Націскаючы кнопку \"Далей\", вы пагаджаецеся з <annotation link="terms">Умовамі выкарыстання</annotation> і <annotation link="privacy">Палітыкай прыватнасці</annotation> кампаніі Proton.</string>
   <string name="auth_signup_skip_recovery_title">Прапусціць спосаб аднаўлення?</string>
   <string name="auth_signup_skip_recovery_description">Спосаб аднаўлення дапаможа атрымаць доступ да вашага ўліковага запісу ў выпадку, калі вы забудзеце пароль або заблакіруеце ўліковы запіс.</string>
   <string name="auth_signup_skip_recovery">Прапусціць</string>
   <string name="auth_signup_set_recovery">Задаць спосаб аднаўлення</string>
-  <string name="auth_signup_no_connectivity">Няма падключэння, каб паказаць умовы выкарыстання.</string>
+  <string name="auth_signup_no_connectivity">Немагчыма адлюстраваць вэб-стронку, бо адсутнічае падключэнне да інтэрнэту.</string>
   <string name="auth_signup_error_create_to_continue">Стварыце ўліковы запіс, каб працягнуць</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Даведацца больш</string>
   <string name="auth_signup_create_account_dialog_title">Актываваць падпіску</string>

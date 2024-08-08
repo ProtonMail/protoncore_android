@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Altere a sua palavra-passe</string>
   <string name="auth_password_chooser_description">Para utilizar a app Proton como membro de uma organização, primeiro é necessário alterar a sua palavra-passe iniciando sessão na Proton através de um browser.</string>
   <string name="auth_password_chooser_change">Alterar a palavra-passe</string>
-  <string name="auth_user_check_one_free_error">Só é permitida uma conta gratuita de Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Só é permitida uma conta gratuita de Proton.</item>
+    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">A sua conta encontra-se atualmente em estado de espera devido a uma fatura vencida.</string>
   <string name="auth_user_check_delinquent_action">Pagar fatura</string>
   <string name="auth_account_not_found_error">Erro com a conta</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">Endereço de recuperação</string>
   <string name="auth_signup_recovery_method_phone_hint">Número de telefone de recuperação</string>
   <string name="auth_signup_terms_conditions">Termos e condições</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao clicar em Seguinte, concorda em obedecer aos <annotation link="terms">Termos e Condições</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Política de privacidade</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Saltar método de recuperação?</string>
   <string name="auth_signup_skip_recovery_description">Um método de recuperação ajuda-lo-á a aceder à sua conta, no caso de esquecer a sua palavra-passe ou a sua conta ficar bloqueada.</string>
   <string name="auth_signup_skip_recovery">Saltar</string>
   <string name="auth_signup_set_recovery">Definir método de recuperação</string>
-  <string name="auth_signup_no_connectivity">Sem ligação para exibir os Termos e Condições.</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
   <string name="auth_signup_error_create_to_continue">Por favor, crie uma conta para continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saiba mais</string>
   <string name="auth_signup_create_account_dialog_title">Ativar a sua subscrição</string>

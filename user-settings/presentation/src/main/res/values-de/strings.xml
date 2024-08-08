@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">Wiederherstellungs-E-Mail-Adresse bestätigen</string>
   <string name="settings_recovery_email_new_hint">E‐Mail‐Adresse eingeben</string>
   <string name="settings_recovery_email_confirm_hint">E-Mail-Adresse erneut eingeben</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">Neues zusätzliches Passwort speichern</string>
+  <string name="settings_save_main_password">Speichere neues primäres Passwort</string>
   <string name="settings_save">Speichern</string>
   <string name="settings_password_required">Anmeldepasswort eingeben</string>
   <string name="settings_password_required_ok">OK</string>
@@ -34,25 +34,25 @@
   <string name="settings_validation_email">E-Mail-Adresse ist ungültig.</string>
   <string name="settings_general_error">Ein Fehler ist aufgetreten.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">Primäres Passwort</string>
+  <string name="settings_password_management_tab_second_password">Zusätzliches Passwort</string>
+  <string name="settings_password_management_change_password_note">Um irgendeines deiner Passwörter zu ändern, musst du dein primäres Passwort kennen. <a href="https://account.proton.me/reset-password">Dein primäres Passwort vergessen?</a></string>
   <string name="settings_password_management_header">Passwort ändern</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">Akutelles primäres Passwort</string>
+  <string name="settings_main_password_hint_new">Neues primäres Passwort</string>
+  <string name="settings_main_password_hint_new_confirm">Neues primäres Passwort bestätigen</string>
+  <string name="settings_second_password_hint_current_main_password">Akutelles primäres Passwort</string>
+  <string name="settings_second_password_hint_new">Neues zusätzliches Passwort</string>
+  <string name="settings_second_password_hint_new_confirm">Neues zusätzliches Passwort bestätigen</string>
   <string name="settings_change_password_error">Das Ändern des Passworts ist fehlgeschlagen.</string>
   <string name="settings_recovery_email_success">E-Mail-Adresse für die Wiederherstellung aktualisiert</string>
   <string name="settings_password_management_success">Passwort wurde aktualisiert</string>
   <string name="settings_password_management_start_recovery">Du kennst dein aktuelles Passwort nicht?</string>
-  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_manage_security_keys">Um Sicherheitsschlüssel zu verwalten, hinzuzufügen oder zu entfernen, verwende bitte die Proton-Webanwendung.</string>
   <string name="settings_security_keys_registered">Dies sind die für dein Konto registrierten Sicherheitsschlüssel.</string>
-  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
+  <string name="settings_security_keys_empty">Es sind keine Sicherheitsschlüssel in deinem Konto registriert.</string>
   <string name="settings_security_keys_title">Sicherheitsschlüssel</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
+  <string name="settings_security_keys_error">Fehler beim Abrufen der Sicherheitsschlüssel, bitte versuche es erneut.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonyme Telemetrie</string>
   <string name="device_settings_telemetry_hint">Um unsere Dienste zu verbessern, sammeln wir gelegentlich anonymisierte Nutzungsdaten.</string>

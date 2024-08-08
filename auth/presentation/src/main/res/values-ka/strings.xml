@@ -55,7 +55,7 @@
   <string name="auth_help_other">ჯერ კიდევ გჭირდებათ დახმარება? პირდაპირ დაგვიკავშირდით.</string>
   <string name="auth_help_option_customer_support">მხარდაჭერის გუნდი</string>
   <string name="auth_2fa_title">2FA</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_subtitle">თქვენს ანგარიშზე რამდენიმე 2FA აქვს მორგებული. აირჩიეთ, როგორ გნებავთ თქვენი იდენტიფიკაციის დადასტურება.</string>
   <string name="auth_2fa_tab_one_time_code">ერთჯერადი კოდი</string>
   <string name="auth_2fa_tab_security_key">უსაფრთხოების გასაღები</string>
   <string name="auth_2fa_insert_security_key">ჩასვით თქვენი Proton-ის ანგარიშზე მიბმული უსაფრთხოების გასაღები. <annotation link="more">გაიგეთ მეტი</annotation></string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">შეცვალეთ თქვენი პაროლი</string>
   <string name="auth_password_chooser_description">Proton-ის აპის ორგანიზაციის წევრად გამოყენებისთვის ჯერ პაროლის შეცვლაა საჭირო. ამის გაკეთება Proton-ში ბრაუზერიდან შესვლით შეგიძლიათ.</string>
   <string name="auth_password_chooser_change">პაროლის შეცვლა</string>
-  <string name="auth_user_check_one_free_error">დაშვებულია Proton-ის, მხოლოდ, ერთი ანგარიში.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">დაშვებულია Proton-ის, მხოლოდ, ერთი ანგარიში.</item>
+    <item quantity="other">დაშვებულია Proton-ის, მხოლოდ, %d ანგარიში.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">თქვენი ანგარიში შეჩერებულია გადაცილებული ინვოისის გამო.</string>
   <string name="auth_user_check_delinquent_action">ინვოისის გადახდა</string>
   <string name="auth_account_not_found_error">ანგარიშის შეცდომა</string>
@@ -130,16 +133,17 @@
   <string name="auth_signup_recovery_method_email_hint">აღდგენის ელფოსტა</string>
   <string name="auth_signup_recovery_method_phone_hint">აღდგენის ტელეფონის ნომერი</string>
   <string name="auth_signup_terms_conditions">პირობები და წესები</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">შემდეგ-ზე დაწკაპუნებით თქვენ Proton-ის<annotation link="terms">წესებს და პირობებს</annotation> ეთანხმებით.</string>
+  <string name="auth_signup_privacy_policy">კონფიდენციალობის პოლიტიკა</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">შემდეგ გვერდზე გადასვლით თქვენ ეთანხმებით Proton-ის <annotation link="terms">წესებს და პირობებს</annotation> და <annotation link="privacy">კონფიდენციალობის პოლიტიკას</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">გამოვტოვო აღდგენის მეთოდი?</string>
   <string name="auth_signup_skip_recovery_description">აღდგენის მეთოდი, რომელიც დაგეხმარებათ თქვენს ანგარიშთან წვდომაში, თუ პაროლი დაგავიწყდათ ან ანგარიშის დაგებლოკათ.</string>
   <string name="auth_signup_skip_recovery">გამოტოვება</string>
   <string name="auth_signup_set_recovery">აღდგენის მეთოდის დაყენება</string>
-  <string name="auth_signup_no_connectivity">წესებისა და პირობების საჩვენებლად შეერთება არ არსებობს.</string>
+  <string name="auth_signup_no_connectivity">ვებგვერდის საჩენებლად ინტერნეტთან მიერთებული არ ბრძანდებით.</string>
   <string name="auth_signup_error_create_to_continue">გასაგრძელებლად შექმენით ანგარიში</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">გაიგეთ მეტი</string>
   <string name="auth_signup_create_account_dialog_title">თქვენი გამოწერის გააქტიურება</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_text">თქვენი Google Pay-ით გადახდა წარმატებულია. გამოწერის გასააქტიურებლად შექმენით თქვენი Proton-ის ანგარიში.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">გაუქმება</string>
   <string name="auth_signup_create_account_dialog_action_continue">გაგრძელება</string>
   <string name="auth_signup_error_username_blank">მომხმარებლის სახელი ცარიელი ვერ იქნება.</string>

@@ -22,7 +22,7 @@
   <string name="core_report_bug_subject_field_hint">Assumpte</string>
   <string name="core_report_bug_subject_field_required">Introduïu un assumpte</string>
   <string name="core_report_bug_description_field_hint">Quin és el problema? Mínim 10 caràcters</string>
-  <string name="core_report_bug_description_field_placeholder">Descriviu el problema amb tots els detalls que pugueu. Si hi ha hagut algun missatge d\'error, feu-nos saber què deia.</string>
+  <string name="core_report_bug_description_field_placeholder">Descriviu el problema amb el major detall possible. Si hi ha hagut un missatge d\'error, feu-nos saber què deia.</string>
   <plurals name="core_report_bug_description_field_required">
     <item quantity="one">Introduïu almenys %d caràcter</item>
     <item quantity="other">Introduïu almenys %d caràcters</item>

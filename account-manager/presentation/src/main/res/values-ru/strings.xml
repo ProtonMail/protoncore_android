@@ -32,9 +32,18 @@
   <string name="account_settings_list_item_password_hint_insecure">Сброс пароля готов</string>
   <string name="account_settings_list_item_recovery_header">Резервный адрес электронной почты</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Не установлен</string>
-  <string name="account_signout_dialog_title">Bыйти?</string>
-  <string name="account_signout_dialog_text">Данные, связанные с вашей учетной записью, будут оставаться на этом устройстве, пока вы не решите их удалить.</string>
-  <string name="account_signout_dialog_delete_information">Удалить все данные, связанные с этой учетной записью</string>
-  <string name="account_signout_dialog_action_signout">Bыйти</string>
+  <string name="account_settings_list_item_security_keys_header">Ключи безопасности</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Не установлен</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d ключ безопасности установлен</item>
+    <item quantity="few">%d ключа безопасности установлено</item>
+    <item quantity="many">%d ключей безопасности установлено</item>
+    <item quantity="other">%d ключей безопасности установлено</item>
+  </plurals>
+  <string name="account_signout_dialog_title">Выйти?</string>
+  <string name="account_signout_dialog_text">Данные, связанные с вашим аккаунтом, будут оставаться на этом устройстве, пока вы не решите их удалить.</string>
+  <string name="account_signout_dialog_delete_information">Удалить все связанные данные</string>
+  <string name="account_signout_dialog_action_signout">Выйти</string>
   <string name="account_signout_dialog_action_cancel">Отменить</string>
 </resources>

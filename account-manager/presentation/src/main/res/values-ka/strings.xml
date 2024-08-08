@@ -32,8 +32,15 @@
   <string name="account_settings_list_item_password_hint_insecure">პაროლის ჩამოყრა მზადაა</string>
   <string name="account_settings_list_item_recovery_header">აღდგენის ელფოსტა</string>
   <string name="account_settings_list_item_recovery_hint_not_set">დაყენებული არაა</string>
+  <string name="account_settings_list_item_security_keys_header">უსაფრთხოების გასაღებები</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">დაყენებული არაა</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">დაყენებულია %d უსაფრთხოების გასაღები</item>
+    <item quantity="other">დაყენებულია %d უსაფრთხოების გასაღები</item>
+  </plurals>
   <string name="account_signout_dialog_title">გახვალთ?</string>
-  <string name="account_signout_dialog_text">The data associated to your account will remain on this device unless you select to delete it.</string>
+  <string name="account_signout_dialog_text">თქვენს ანგარიშთან ასოცირებული მონაცემები დარჩება მოწყობილობაზე, თუ მას ხელით არ წაშლით.</string>
   <string name="account_signout_dialog_delete_information">ასოცირებული მონაცემების წაშლა</string>
   <string name="account_signout_dialog_action_signout">გასვლა</string>
   <string name="account_signout_dialog_action_cancel">გაუქმება</string>

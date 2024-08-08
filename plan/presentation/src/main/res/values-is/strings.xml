@@ -49,7 +49,7 @@
   <string name="plans_proton_for_free">Fáðu Proton ókeypis</string>
   <string name="plans_get_proton">Fáðu %s</string>
   <string name="plans_manage_your_subscription">Manage your subscription at <a href="https://account.proton.me">account.proton.me</a></string>
-  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s of %2$s</string>
+  <string name="plans_used_space" comment="1 - used space (e.g. 300MB); 2 - max available space (e.g. 1GB)">%1$s af %2$s</string>
   <string name="plans_payments_info_not_available">ekki tiltækt</string>
   <string name="plans_manage_your_subscription_google">Your subscription is managed by Google Play.</string>
   <string name="plans_manage_your_subscription_other">Your subscription can’t be managed inside the mobile app.</string>

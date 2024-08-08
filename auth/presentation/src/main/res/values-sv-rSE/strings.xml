@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Ändra ditt lösenord</string>
   <string name="auth_password_chooser_description">För att kunna använda Proton-appen som medlem i en organisation måste du först ändra ditt lösenord genom att logga in på Proton i en webbläsare.</string>
   <string name="auth_password_chooser_change">Ändra lösenord</string>
-  <string name="auth_user_check_one_free_error">Endast ett gratis Proton-konto är tillåtet.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Endast ett gratis Proton-konto är tillåtet.</item>
+    <item quantity="other">Endast %d gratis Proton-konton är tillåtna.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Ditt konto är för närvarande pausad på grund av en försenad faktura.</string>
   <string name="auth_user_check_delinquent_action">Betala faktura</string>
   <string name="auth_account_not_found_error">Fel med kontot</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-post för återställning</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonnummer för återställning</string>
   <string name="auth_signup_terms_conditions">Användarvillkor</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Genom att klicka på ”Nästa” godkänner du Protons <annotation link="terms">användarvillkor</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Integritetspolicy</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Genom att klicka på nästa godkänner du Protons <annotation link="terms">användarvillkor</annotation> och <annotation link="privacy">integritetspolicy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Hoppa över återställningsmetod?</string>
   <string name="auth_signup_skip_recovery_description">En återställningsmetod hjälper dig att komma åt ditt konto om du glömmer ditt lösenord eller blir utelåst från ditt konto.</string>
   <string name="auth_signup_skip_recovery">Hoppa över</string>
   <string name="auth_signup_set_recovery">Ställ in återställningsmetod</string>
-  <string name="auth_signup_no_connectivity">Ingen anslutning för att visa användarvillkor.</string>
+  <string name="auth_signup_no_connectivity">Ingen anslutning för att visa webbsidan.</string>
   <string name="auth_signup_error_create_to_continue">Skapa ett konto för att fortsätta</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Lär dig mer</string>
   <string name="auth_signup_create_account_dialog_title">Aktivera din prenumeration</string>

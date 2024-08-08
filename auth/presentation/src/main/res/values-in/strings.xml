@@ -52,7 +52,7 @@
   <string name="auth_help_option_forgot_username">Lupa nama pengguna</string>
   <string name="auth_help_option_forgot_password">Lupa kata sandi</string>
   <string name="auth_help_option_other">Masalah masuk lainnya</string>
-  <string name="auth_help_other">Masih perlu bantuan? Hubungi kami secara langsung.</string>
+  <string name="auth_help_other">Masih butuh bantuan? Hubungi kami secara langsung.</string>
   <string name="auth_help_option_customer_support">Layanan pelanggan</string>
   <string name="auth_2fa_title">Autentikasi Dua Faktor</string>
   <string name="auth_2fa_subtitle">Akun Anda memiliki beberapa mekanisme 2FA yang terpasang. Silakan tentukan bagaimana Anda ingin mengonfirmasi identitas Anda.</string>
@@ -101,7 +101,9 @@
   <string name="auth_password_chooser_title">Ubah kata sandi Anda</string>
   <string name="auth_password_chooser_description">Untuk menggunakan aplikasi Proton sebagai anggota organisasi, Anda perlu untuk terlebih dahulu mengubah kata sandi Anda dengan masuk ke Proton melalui browser.</string>
   <string name="auth_password_chooser_change">Ubah Kata Sandi</string>
-  <string name="auth_user_check_one_free_error">Hanya satu akun Proton gratis yang diperbolehkan.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="other">Hanya %d akun Proton gratis yang diizinkan.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Akun Anda sedang ditahan karena terdapat faktur yang tertunggak.</string>
   <string name="auth_user_check_delinquent_action">Bayar faktur</string>
   <string name="auth_account_not_found_error">Kesalahan pada akun</string>
@@ -130,12 +132,13 @@
   <string name="auth_signup_recovery_method_email_hint">Alamat surel pemulihan</string>
   <string name="auth_signup_recovery_method_phone_hint">Nomor telepon pemulihan</string>
   <string name="auth_signup_terms_conditions">Syarat dan Ketentuan</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Dengan mengeklik Selanjutnya, Anda menyatakan setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> Proton.</string>
+  <string name="auth_signup_privacy_policy">Kebijakan Privasi</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Dengan mengeklik Selanjutnya, Anda menyatakan diri setuju terhadap <annotation link="terms">Syarat dan Ketentuan</annotation> serta <annotation link="privacy">Kebijakan Privasi</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Lewati metode pemulihan?</string>
   <string name="auth_signup_skip_recovery_description">Metode pemulihan akan membantu Anda mengakses akun Anda seandainya lupa dengan kata sandi atau terkunci dari akun Anda.</string>
   <string name="auth_signup_skip_recovery">Lewati</string>
   <string name="auth_signup_set_recovery">Atur metode pemulihan</string>
-  <string name="auth_signup_no_connectivity">Tidak ada koneksi untuk menampilkan Syarat dan Ketentuan.</string>
+  <string name="auth_signup_no_connectivity">Tidak ada konektivitas untuk menampilkan halaman web.</string>
   <string name="auth_signup_error_create_to_continue">Silakan buat akun untuk melanjutkan</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Pelajari lebih lanjut</string>
   <string name="auth_signup_create_account_dialog_title">Aktifkan langganan Anda</string>

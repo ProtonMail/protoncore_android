@@ -20,9 +20,9 @@
   <!-- Grace period - info -->
   <string name="account_recovery_grace_period_info_title">Zatražen zahtjev za ponovno postavljanje lozinke</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="one">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hour.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="one">Zatraženo je ponovno postavljanje lozinke za <b>%1$s</b>. Možete promijeniti svoju lozinku za %2$d sat.\n\nAko Vi niste podnijeli ovaj zahtjev, odmah ga otkažite.</item>
     <item quantity="few">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
-    <item quantity="other">A password reset was requested for <b>%1$s</b>. You can change your password in %2$d hours.\n\nIf you didn’t make this request, cancel it now.</item>
+    <item quantity="other">Zatraženo je ponovno postavljanje lozinke za <b>%1$s</b>. Možete promijeniti svoju lozinku za %2$d sati.\n\nAko Vi niste podnijeli ovaj zahtjev, odmah ga otkažite.</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">Poništiti ponovno postavljanje lozinke?</string>
@@ -47,19 +47,19 @@
   <string name="account_recovery_reset">Ponovno postavljanje lozinke</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Zatražen zahtjev za ponovno postavljanje lozinke</string>
-  <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>
-  <string name="account_recovery_info_grace_description">To make sure it\'s really you trying to reset your password, we wait 72 hours before approving requests.\n\nIf you didn\'t ask to reset your password, cancel this request now.</string>
+  <string name="account_recovery_info_grace_subtitle">Možete ponovo postaviti lozinku za %1s.</string>
+  <string name="account_recovery_info_grace_description">Kako bismo bili sigurni da doista vi pokušavate ponovo postaviti lozinku, čekamo 72 sata prije nego što odobrimo zahtjeve.\n\nAko niste tražili ponovo postavljanje zaporke, odmah poništite ovaj zahtjev.</string>
   <string name="account_recovery_info_cancelled_title">Ponovno postavljanje lozinke otkazano</string>
-  <string name="account_recovery_info_cancelled_subtitle">A password reset request was made on %1s.</string>
+  <string name="account_recovery_info_cancelled_subtitle">Zahtjev za poništavanje lozinke započet je %1s.</string>
   <string name="account_recovery_info_cancelled_description">If you don\'t recognize this request, it could mean that someone else has access to your Proton Account.\n\nSecure your account now.</string>
   <string name="account_recovery_info_insecure_title">Ponovno postavljanje lozinke dostupno</string>
   <string name="account_recovery_info_insecure_subtitle">You can now reset your password. Password reset is available until %1s.</string>
   <string name="account_recovery_info_insecure_description">Didn\'t make this request?\n\nIf you didn\'t ask to reset your password, cancel the request now.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Ponovno postavljanje lozinke?</string>
-  <string name="account_recovery_reset_dialog_text">"For security reasons, you’ll have to wait 72 hours before you can change the password for %1s.\n\nIf you have a recovery method set up, try account recovery instead. This will allow you to change your password straight away."</string>
-  <string name="account_recovery_reset_dialog_action_request_reset">Request password reset</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery">Use recovery method</string>
-  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Change your password in your web browser without waiting through the security period.</string>
+  <string name="account_recovery_reset_dialog_text">"Iz sigurnosnih razloga, morat ćete pričekati 72 sata prije nego što možete promijeniti lozinku za %1s.\n\nAko ste postavili metodu oporavka, umjesto čekanja pokušajte oporaviti račun. To će vam omogućiti da odmah promijenite lozinku."</string>
+  <string name="account_recovery_reset_dialog_action_request_reset">Zahtjev za ponovno postavljanje lozinke</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery">Koristite metodu oporavka</string>
+  <string name="account_recovery_reset_dialog_action_use_recovery_hint">Promijenite lozinku u svom web pregledniku bez čekanja da prođe sigurnosno razdoblje.</string>
   <string name="account_recovery_reset_dialog_action_request_reset_success">Zatražen zahtjev za ponovno postavljanje lozinke</string>
 </resources>

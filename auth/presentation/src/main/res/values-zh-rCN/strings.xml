@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">您的账户配置了多种 2FA 机制。请选择确认身份的方式。</string>
   <string name="auth_2fa_tab_one_time_code">一次性验证码</string>
   <string name="auth_2fa_tab_security_key">安全密钥</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">请提供与您的Proton账户关联的安全密钥。 <annotation link="more">了解更多信息</annotation></string>
   <string name="auth_2fa_label">双重验证码</string>
   <string name="auth_2fa_recovery_code_label">恢复码</string>
   <string name="auth_2fa_assistive_text">请输入 6 位验证码。</string>
@@ -101,7 +101,9 @@
   <string name="auth_password_chooser_title">更改密码</string>
   <string name="auth_password_chooser_description">如需以机构成员身份使用 Proton 服务，您需要先从浏览器登录 Proton 并更改密码。</string>
   <string name="auth_password_chooser_change">更改密码</string>
-  <string name="auth_user_check_one_free_error">只允许使用一个免费 Proton 账户。</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="other">只允许%d个免费的 Proton 账户</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">您的账户因欠费已被停用。</string>
   <string name="auth_user_check_delinquent_action">前去支付</string>
   <string name="auth_account_not_found_error">账户出错</string>
@@ -130,12 +132,13 @@
   <string name="auth_signup_recovery_method_email_hint">密保邮箱</string>
   <string name="auth_signup_recovery_method_phone_hint">密保手机号</string>
   <string name="auth_signup_terms_conditions">服务条款</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">点击下一步即表示您同意 Proton 的<annotation link="terms">服务条款</annotation>。</string>
+  <string name="auth_signup_privacy_policy">隐私协议</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">点击下一步，即表示您同意 Proton 的<annotation link="terms">条款</annotation>和条件以及<annotation link="privacy">隐私政策.</annotation></string>
   <string name="auth_signup_skip_recovery_title">跳过设置恢复方法？</string>
   <string name="auth_signup_skip_recovery_description">恢复方法将帮助您在忘记密码或账户被锁时访问您的账户。</string>
   <string name="auth_signup_skip_recovery">跳过</string>
   <string name="auth_signup_set_recovery">设置恢复方法</string>
-  <string name="auth_signup_no_connectivity">网络未连接，无法显示服务条款。</string>
+  <string name="auth_signup_no_connectivity">无法连接以显示网页</string>
   <string name="auth_signup_error_create_to_continue">请创建一个账户以继续</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">了解更多信息</string>
   <string name="auth_signup_create_account_dialog_title">激活您的订阅</string>

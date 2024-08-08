@@ -18,22 +18,22 @@
   -->
 <resources>
   <!-- Grace period - info -->
-  <string name="account_recovery_grace_period_info_title">密碼重設已被送出</string>
+  <string name="account_recovery_grace_period_info_title">密碼重設已依需求送出</string>
   <plurals name="account_recovery_grace_period_info_subtitle">
-    <item quantity="other"><b>%1$s</b> 的密碼重設已被送出。您可以在%2$d小時內變更密碼。\n\n若您並未作出此要求，請立刻取消。</item>
+    <item quantity="other"><b>%1$s</b> 的密碼重設需求已寄發。您可以在接下來 %2$d 小時內變更密碼。\n\n 若您並未提出此需求，請即刻進行取消。</item>
   </plurals>
   <!-- Grace period - cancellation form -->
   <string name="account_recovery_cancel_title">取消密碼重設？</string>
-  <string name="account_recovery_cancel_subtitle">請輸入您的密碼以便取消。</string>
-  <string name="account_recovery_cancel_password_label">目前密碼</string>
+  <string name="account_recovery_cancel_subtitle">請輸入您的密碼以便取消需求。</string>
+  <string name="account_recovery_cancel_password_label">目前使用的密碼</string>
   <string name="account_recovery_cancel_password_placeholder">密碼</string>
   <string name="account_recovery_cancel_now">取消密碼重設</string>
   <string name="account_recovery_cancel_back">返回</string>
   <!-- Account recovery cancelled -->
   <string name="account_recovery_cancelled_title">已取消密碼重設</string>
-  <string name="account_recovery_cancelled_subtitle">若您並未要求更改密碼，您的帳號可能面臨風險。\n\n請更改您的密碼來保護您的帳號。</string>
+  <string name="account_recovery_cancelled_subtitle">若您未曾要求更改密碼，那麼您的帳號可能存在風險。\n\n請即刻變更您的密碼才得以安全保護您的帳號。</string>
   <!-- Password change period -->
-  <string name="account_recovery_password_started_title">可以重設密碼</string>
+  <string name="account_recovery_password_started_title">現在可進行密碼重設</string>
   <string name="account_recovery_password_started_subtitle">為了重設密碼，請回到您原先做出密碼重設要求的裝置、應用程式或瀏覽器。\n\n您必須在 %s 之前完成。\n\n若您並未要求重設密碼，請立刻取消要求。</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">現在您可以重設密碼。\n\n您需要在 %s 之前執行此操作。\n\n若您沒有要求重設密碼，請立刻取消要求。</string>
   <!-- Recovery window ended -->

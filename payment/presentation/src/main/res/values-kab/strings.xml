@@ -52,7 +52,7 @@
   <string name="payments_expiration_date_hint">MM/YY</string>
   <string name="payments_security_code_hint">123</string>
   <string name="payments_country">Tamurt</string>
-  <string name="payments_get_plan">Get %s</string>
+  <string name="payments_get_plan">Awi-d %s</string>
   <string name="payments_paying_in_process">Axelleṣ</string>
   <string name="payments_choose_country">Fren tamurt</string>
   <string name="payment_cc_list_item">%1$s - %2$s (Ad ifut %3$s/%4$s)</string>

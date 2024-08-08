@@ -32,6 +32,12 @@
   <string name="account_settings_list_item_password_hint_insecure">密码重置请求准备就绪</string>
   <string name="account_settings_list_item_recovery_header">密保邮箱</string>
   <string name="account_settings_list_item_recovery_hint_not_set">尚未设置</string>
+  <string name="account_settings_list_item_security_keys_header">安全密钥</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">尚未设置</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="other">%d 安全密钥已设置</item>
+  </plurals>
   <string name="account_signout_dialog_title">退出账户?</string>
   <string name="account_signout_dialog_text">除非您选择删除，否则与您账户相关的数据将保留在此设备上。</string>
   <string name="account_signout_dialog_delete_information">删除所有相关数据</string>

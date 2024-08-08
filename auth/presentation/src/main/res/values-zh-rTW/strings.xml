@@ -17,8 +17,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">運用 Proton 來保護您的隱私權</string>
-  <string name="welcome_subtitle">高階加密把守您的資料隱密。您的資料真實地掌握手中。</string>
+  <string name="welcome_title">使用 Proton 保護您的隱私</string>
+  <string name="welcome_subtitle">透過加密確保您的資料隱密。您的資料完全地掌握在自己的手中。</string>
   <string name="welcome_subtitle_mail">經加密過的電子信箱，守住來往訊息隱私。您的收件匣真實地掌握手中。</string>
   <string name="welcome_subtitle_mail_alt">隱私權。安全防護。便捷。加密電子信箱提供您個資的完全控管。</string>
   <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。千呼萬喚終於出現讓您可完全信賴的雲端儲存。</string>
@@ -101,7 +101,9 @@
   <string name="auth_password_chooser_title">變更您的密碼</string>
   <string name="auth_password_chooser_description">要以組織成員的身份使用 Proton 應用程式，您必須先使用瀏覽器登入 Proton 來變更您的密碼。</string>
   <string name="auth_password_chooser_change">變更密碼</string>
-  <string name="auth_user_check_one_free_error">僅允許一個免費的 Proton 帳號。</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="other">僅允許 %d 個免費的 Proton 帳號。</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">您的帳號目前因為發票過期而暫停。</string>
   <string name="auth_user_check_delinquent_action">支付繳款單</string>
   <string name="auth_account_not_found_error">帳號錯誤</string>
@@ -130,12 +132,13 @@
   <string name="auth_signup_recovery_method_email_hint">備援電子郵件</string>
   <string name="auth_signup_recovery_method_phone_hint">復原電話號碼</string>
   <string name="auth_signup_terms_conditions">條款與細則</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">點擊下一步，即表示您同意 Proton 的<annotation link="terms">合約條款</annotation>。</string>
+  <string name="auth_signup_privacy_policy">隱私權政策</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">點擊下一步，即表示您同意 Proton 的<annotation link="terms">合約條款</annotation>與<annotation link="privacy">隱私權政策</annotation>。</string>
   <string name="auth_signup_skip_recovery_title">略過備援方法？</string>
   <string name="auth_signup_skip_recovery_description">復原方法可協助您存取您的帳號，以防您忘記您的密碼或被鎖在帳號之外。</string>
   <string name="auth_signup_skip_recovery">略過</string>
   <string name="auth_signup_set_recovery">設定備援方法</string>
-  <string name="auth_signup_no_connectivity">無法連線以顯示條款與細則。</string>
+  <string name="auth_signup_no_connectivity">無網路連線可供顯示網頁。</string>
   <string name="auth_signup_error_create_to_continue">請建立帳號以繼續</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">取得更多資訊</string>
   <string name="auth_signup_create_account_dialog_title">啟用您的訂閱</string>

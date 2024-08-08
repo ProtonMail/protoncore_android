@@ -18,7 +18,7 @@
   -->
 <resources>
   <!-- base common presentation strings -->
-  <string name="presentation_browser_missing">Apertura del link non riuscita poiché nessun browser è stato trovato</string>
+  <string name="presentation_browser_missing">Nessun browser trovato. Apertura del link non riuscita.</string>
   <string name="presentation_force_update_title">Aggiornamento necessario</string>
   <string name="presentation_force_update_message">Versione attuale dell\'app non più supportata. Aggiornala per continuare a usarla.</string>
   <string name="presentation_force_update_learn_more">Scopri di più</string>

@@ -36,7 +36,7 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Senha principal</string>
   <string name="settings_password_management_tab_second_password">Segunda senha</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_change_password_note">Para alterar qualquer uma de suas senhas, você precisará saber a sua senha principal. <a href="https://account.proton.me/reset-password">Esqueceu sua senha principal?</a></string>
   <string name="settings_password_management_header">Alterar senha</string>
   <string name="settings_main_password_hint_current">Senha principal atual</string>
   <string name="settings_main_password_hint_new">Nova senha principal</string>

@@ -32,6 +32,13 @@
   <string name="account_settings_list_item_password_hint_insecure">Nulstilling af adgangskode klar</string>
   <string name="account_settings_list_item_recovery_header">E-mail til gendannelse</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Ikke angivet</string>
+  <string name="account_settings_list_item_security_keys_header">Sikkerhedsnøgler</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Ikke angivet</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d sikkerhedsnøgle angivet</item>
+    <item quantity="other">%d sikkerhedsnøgler angivet</item>
+  </plurals>
   <string name="account_signout_dialog_title">Log ud?</string>
   <string name="account_signout_dialog_text">Data, der er knyttet til din konto, forbliver på denne enhed, medmindre du vælger at slette dem.</string>
   <string name="account_signout_dialog_delete_information">Fjern alle tilknyttede data</string>

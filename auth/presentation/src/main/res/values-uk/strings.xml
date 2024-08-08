@@ -54,11 +54,11 @@
   <string name="auth_help_option_other">Інші проблеми з входом</string>
   <string name="auth_help_other">Досі потребуєте допомоги? Зв\'яжіться з нами безпосередньо.</string>
   <string name="auth_help_option_customer_support">Клієнтська підтримка</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
+  <string name="auth_2fa_title">Двоетапна перевірка</string>
+  <string name="auth_2fa_subtitle">У вашому обліковому записі налаштовано декілька механізмів 2ЕП. Будь ласка, виберіть, як ви хочете підтвердити свою особу.</string>
   <string name="auth_2fa_tab_one_time_code">Одноразовий код</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_tab_security_key">Ключ безпеки</string>
+  <string name="auth_2fa_insert_security_key">Пред\'явіть ключ безпеки, прив\'язаний до вашого облікового запису Proton. <annotation link="more">Докладніше</annotation></string>
   <string name="auth_2fa_label">Код двоетапної перевірки</string>
   <string name="auth_2fa_recovery_code_label">Код відновлення</string>
   <string name="auth_2fa_assistive_text">Введіть 6-значний код.</string>
@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Змініть пароль</string>
   <string name="auth_password_chooser_description">Щоб користуватися програмою Proton як учасник організації, спершу потрібно змінити пароль, увійшовши до Proton через браузер.</string>
   <string name="auth_password_chooser_change">Змінити пароль</string>
-  <string name="auth_user_check_one_free_error">Дозволено лише один безплатний обліковий запис Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Дозволено лише один безплатний обліковий запис Proton.</item>
+    <item quantity="few">Дозволено лише %d безплатні облікові записи Proton.</item>
+    <item quantity="many">Дозволено лише %d безплатних облікових записів Proton.</item>
+    <item quantity="other">Дозволено лише %d безплатних облікових записів Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Ваш обліковий запис наразі призупинено через несплату рахунку.</string>
   <string name="auth_user_check_delinquent_action">Сплатити рахунок</string>
   <string name="auth_account_not_found_error">Помилка з обліковим записом</string>
@@ -130,22 +135,23 @@
   <string name="auth_signup_recovery_method_email_hint">Резервна е-пошта</string>
   <string name="auth_signup_recovery_method_phone_hint">Номер телефону для відновлення</string>
   <string name="auth_signup_terms_conditions">Умови та положення</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Натискаючи Далі, ви погоджуєтеся з <annotation link="terms">Умовами та положеннями</annotation> Proton.</string>
+  <string name="auth_signup_privacy_policy">Політика приватності</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Натискаючи «Далі», ви погоджуєтеся з <annotation link="terms">Умовами та положеннями</annotation> й <annotation link="privacy">Політикою приватності</annotation> компанії Proton.</string>
   <string name="auth_signup_skip_recovery_title">Не додавати спосіб відновлення?</string>
   <string name="auth_signup_skip_recovery_description">Спосіб відновлення допоможе вам отримати доступ до свого облікового запису у випадку втрати пароля чи блокування облікового запису.</string>
   <string name="auth_signup_skip_recovery">Пропустити</string>
   <string name="auth_signup_set_recovery">Налаштувати спосіб відновлення</string>
-  <string name="auth_signup_no_connectivity">Немає з\'єднання, щоб показати Умови та положення.</string>
+  <string name="auth_signup_no_connectivity">Відсутнє з\'єднання для показу вебсторінки.</string>
   <string name="auth_signup_error_create_to_continue">Щоб продовжити, створіть обліковий запис</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Докладніше</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_title">Активувати підписку</string>
+  <string name="auth_signup_create_account_dialog_text">Ваш платіж через Google Pay був успішно оброблений. Щоб активувати підписку, створіть свій обліковий запис Proton.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Скасувати</string>
   <string name="auth_signup_create_account_dialog_action_continue">Продовжити</string>
   <string name="auth_signup_error_username_blank">Поле з ім\'ям користувача не повинно бути порожнім.</string>
   <string name="auth_signup_error_passwords_do_not_match">Паролі відрізняються.</string>
   <string name="auth_signup_validation_password_length">Пароль повинен містити принаймні 8 символів.</string>
-  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
+  <string name="auth_signup_password_not_allowed">Пароль занадто поширений. Використайте інший пароль.</string>
   <string name="auth_signup_validation_password">Потрібно ввести пароль.</string>
   <string name="auth_signup_your_account_is_being_setup">Створюємо ваш обліковий запис…</string>
   <string name="auth_signup_please_wait">Зазвичай це триває не більше ніж хвилину.</string>

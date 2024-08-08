@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Altere sua senha</string>
   <string name="auth_password_chooser_description">Para usar o app Proton como membro de uma organização, você precisa primeiro trocar sua senha acessado o Proton através de um navegador.</string>
   <string name="auth_password_chooser_change">Alterar senha</string>
-  <string name="auth_user_check_one_free_error">Apenas uma conta Proton gratuita é permitida.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Apenas uma conta Proton gratuita é permitida.</item>
+    <item quantity="other">Apenas %d contas Proton gratuitas são permitidas.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Sua conta está suspensa no momento devido a uma fatura vencida.</string>
   <string name="auth_user_check_delinquent_action">Pagar fatura</string>
   <string name="auth_account_not_found_error">Erro com a conta</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-mail de recuperação</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefone de recuperação</string>
   <string name="auth_signup_terms_conditions">Termos e condições</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ao clicar em Próximo, você concorda com <annotation link="terms">Termos e Condições</annotation> da Proton.</string>
+  <string name="auth_signup_privacy_policy">Política de privacidade</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Ao clicar em Próximo, você concorda com os <annotation link="terms">Termos e Condições</annotation> e com a <annotation link="privacy">Política de Privacidade</annotation> da Proton.</string>
   <string name="auth_signup_skip_recovery_title">Pular o método de recuperação?</string>
   <string name="auth_signup_skip_recovery_description">Um método de recuperação te ajudará a acessar sua conta caso você esqueça sua senha ou tenha seu acesso a sua conta bloqueado.</string>
   <string name="auth_signup_skip_recovery">Pular</string>
   <string name="auth_signup_set_recovery">Definir o método de recuperação</string>
-  <string name="auth_signup_no_connectivity">Sem conexão para exibir os Termos e Condições.</string>
+  <string name="auth_signup_no_connectivity">Sem conectividade para mostrar a página web.</string>
   <string name="auth_signup_error_create_to_continue">Crie uma conta para continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saiba mais</string>
   <string name="auth_signup_create_account_dialog_title">Ativar sua assinatura</string>

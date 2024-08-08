@@ -24,10 +24,10 @@
   <string name="settings_recovery_email_confirm">Conferma il nuovo indirizzo email</string>
   <string name="settings_recovery_email_new_hint">Inserisci l\'indirizzo email</string>
   <string name="settings_recovery_email_confirm_hint">Inserisci nuovamente l\'indirizzo email</string>
-  <string name="settings_save_second_password">Salva la nuova password secondaria</string>
-  <string name="settings_save_main_password">Salva la nuova password principale</string>
+  <string name="settings_save_second_password">Salva</string>
+  <string name="settings_save_main_password">Salva</string>
   <string name="settings_save">Salva</string>
-  <string name="settings_password_required">Inserisci la password dell\'account</string>
+  <string name="settings_password_required">Inserisci la password principale</string>
   <string name="settings_password_required_ok">OK</string>
   <string name="settings_not_set">Non impostato</string>
   <string name="settings_recovery_email_error_no_match">Indirizzo email non corrispondente</string>
@@ -36,7 +36,7 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Password principale</string>
   <string name="settings_password_management_tab_second_password">Password secondaria</string>
-  <string name="settings_password_management_change_password_note">Inserisci la password principale attuale per cambiare la password. <a href="https://account.proton.me/reset-password">Hai dimenticato la password principale?</a></string>
+  <string name="settings_password_management_change_password_note">Inserisci la password principale attuale per cambiare questa password. <a href="https://account.proton.me/reset-password">Hai dimenticato la password principale?</a></string>
   <string name="settings_password_management_header">Gestione delle password</string>
   <string name="settings_main_password_hint_current">Password principale attuale</string>
   <string name="settings_main_password_hint_new">Nuova password principale</string>
@@ -47,7 +47,7 @@
   <string name="settings_change_password_error">Cambio della password non riuscito</string>
   <string name="settings_recovery_email_success">Indirizzo email di recupero aggiornato</string>
   <string name="settings_password_management_success">Password aggiornata</string>
-  <string name="settings_password_management_start_recovery">Non ricordi la password attuale?</string>
+  <string name="settings_password_management_start_recovery">Reimposta la password principale</string>
   <string name="settings_manage_security_keys">Per gestire, aggiungere o rimuovere le chiavi di sicurezza, utilizza l\'applicazione web di Proton.</string>
   <string name="settings_security_keys_registered">Queste sono le chiavi di sicurezza associate al tuo account.</string>
   <string name="settings_security_keys_empty">Nessuna chiave di sicurezza associata all\'account</string>

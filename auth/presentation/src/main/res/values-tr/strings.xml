@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Parolanızı değiştirin</string>
   <string name="auth_password_chooser_description">Proton uygulamasını bir kuruluş üyesi olarak kullanmak için, öncelikle tarayıcı üzerinden Proton oturumu açıp parolanızı değiştirmelisiniz.</string>
   <string name="auth_password_chooser_change">Parolayı değiştir</string>
-  <string name="auth_user_check_one_free_error">Yalnızca bir ücretsiz Proton hesabına izin verilir.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Yalnızca bir ücretsiz Proton hesabına izin verilir.</item>
+    <item quantity="other">Yalnızca %d ücretsiz Proton hesabına izin verilir.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Süresi geçmiş bir fatura nedeniyle hesabınız askıya alındı.</string>
   <string name="auth_user_check_delinquent_action">Faturayı öde</string>
   <string name="auth_account_not_found_error">Hesap ile ilgili sorun</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">Kurtarma e-posta adresi</string>
   <string name="auth_signup_recovery_method_phone_hint">Kurtarma telefonu numarası</string>
   <string name="auth_signup_terms_conditions">Hüküm ve Koşullar</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Sonraki üzerine tıkladığınızda Proton <annotation link="terms">Hüküm ve Koşulları</annotation> metnini kabul etmiş olursunuz.</string>
+  <string name="auth_signup_privacy_policy">Gizlilik ilkesi</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Sonraki üzerine tıkladığınızda Proton <annotation link="terms">Hüküm ve Koşulları</annotation> ile <annotation link="privacy">Gizlilik ilkesi</annotation> metinlerini kabul etmiş olursunuz.</string>
   <string name="auth_signup_skip_recovery_title">Kurtarma yöntemi atlansın mı?</string>
   <string name="auth_signup_skip_recovery_description">Kurtarma yöntemi, parolanızı unuttuğunuzda ya da oturum açamadığınızda hesabınıza erişmenizi sağlar.</string>
   <string name="auth_signup_skip_recovery">Atla</string>
   <string name="auth_signup_set_recovery">Kurtarma yöntemini ayarla</string>
-  <string name="auth_signup_no_connectivity">Bağlantı olmadığından Hüküm ve Koşullar görüntülenemiyor.</string>
+  <string name="auth_signup_no_connectivity">Site sayfasını görüntülemek için bağlantı yok.</string>
   <string name="auth_signup_error_create_to_continue">İlerlemek için lütfen bir hesap açın</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Ayrıntılı bilgi alın</string>
   <string name="auth_signup_create_account_dialog_title">Aboneliğinizi etkinleştirin</string>

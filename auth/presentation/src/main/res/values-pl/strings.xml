@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Zmień hasło</string>
   <string name="auth_password_chooser_description">Aby używać aplikacji Proton jako użytkownik organizacji, musisz zmienić swoje hasło. Zaloguj się do konta Proton przez przeglądarkę.</string>
   <string name="auth_password_chooser_change">Zmień hasło</string>
-  <string name="auth_user_check_one_free_error">Możesz dodać tylko jedno darmowe konto Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Możesz dodać tylko jedno darmowe konto Proton.</item>
+    <item quantity="few">Możesz dodać tylko %d darmowe konta Proton.</item>
+    <item quantity="many">Możesz dodać tylko %d darmowych kont Proton.</item>
+    <item quantity="other">Możesz dodać tylko %d darmowych kont Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Twoje konto jest obecnie zawieszone z powodu zaległych faktur.</string>
   <string name="auth_user_check_delinquent_action">Zapłać fakturę</string>
   <string name="auth_account_not_found_error">Wystąpił błąd konta</string>
@@ -130,12 +135,13 @@
   <string name="auth_signup_recovery_method_email_hint">Adres pomocniczy</string>
   <string name="auth_signup_recovery_method_phone_hint">Numer pomocniczy</string>
   <string name="auth_signup_terms_conditions">Regulamin</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Klikając przycisk Dalej, akceptujesz <annotation link="terms">regulamin</annotation> usługi Proton.</string>
+  <string name="auth_signup_privacy_policy">Polityka prywatności</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Klikając przycisk Dalej, akceptujesz <annotation link="terms">regulamin</annotation> usługi Proton i <annotation link="privacy">politykę prywatności</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Pominąć metodę odzyskiwania?</string>
   <string name="auth_signup_skip_recovery_description">Metoda odzyskiwania pomoże uzyskać dostęp do konta, w przypadku gdy zostanie ono zablokowane lub zapomnisz hasła.</string>
   <string name="auth_signup_skip_recovery">Pomiń</string>
   <string name="auth_signup_set_recovery">Ustaw metodę odzyskiwania</string>
-  <string name="auth_signup_no_connectivity">Brak połączenia z Internetem, aby wyświetlić regulamin.</string>
+  <string name="auth_signup_no_connectivity">Brak połączenia z Internetem, aby wyświetlić stronę.</string>
   <string name="auth_signup_error_create_to_continue">Utwórz konto, aby kontynuować</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Dowiedz się więcej</string>
   <string name="auth_signup_create_account_dialog_title">Aktywuj subskrypcję</string>

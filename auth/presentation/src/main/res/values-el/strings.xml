@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Αλλαγή του κωδικού πρόσβασης σας</string>
   <string name="auth_password_chooser_description">Για να χρησιμοποιήσετε την εφαρμογή Proton ως μέλος ενός οργανισμού, πρέπει πρώτα να αλλάξετε τον κωδικό πρόσβασης σας, χρησιμοποιώντας ένα πρόγραμμα περιήγησης για την είσοδο στο Proton.</string>
   <string name="auth_password_chooser_change">Αλλαγή Κωδικού Πρόσβασης</string>
-  <string name="auth_user_check_one_free_error">Επιτρέπεται μόνο ένας δωρεάν λογαριασμός Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Επιτρέπεται μόνο ένας δωρεάν λογαριασμός Proton.</item>
+    <item quantity="other">Επιτρέπονται μόνο %d δωρεάν λογαριασμοί Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Ο λογαριασμός σας είναι σε αναστολή λόγω ενός ληξιπρόθεσμου τιμολογίου.</string>
   <string name="auth_user_check_delinquent_action">Πληρωμή τιμολογίου</string>
   <string name="auth_account_not_found_error">Σφάλμα με τον λογαριασμό</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">Διεύθυνση ανάκτησης</string>
   <string name="auth_signup_recovery_method_phone_hint">Αριθμός τηλεφώνου ανάκτησης</string>
   <string name="auth_signup_terms_conditions">Όροι και Προϋποθέσεις</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Με κλικ στο Επόμενο, συμφωνείτε με τους <annotation link="terms">Όρους και Προϋποθέσεις</annotation> της Proton.</string>
+  <string name="auth_signup_privacy_policy">Πολιτική Απορρήτου</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Με κλικ στο Επόμενο, συμφωνείτε με τους <annotation link="terms">Όρους και Προϋποθέσεις</annotation> και την <annotation link="privacy">Πολιτική απορρήτου</annotation> της Proton.</string>
   <string name="auth_signup_skip_recovery_title">Παράλειψη μεθόδου ανάκτησης;</string>
   <string name="auth_signup_skip_recovery_description">Μια μέθοδος ανάκτησης θα σας βοηθήσει να αποκτήσετε πρόσβαση στον λογαριασμό σας σε περίπτωση που ξεχάσετε τον κωδικό πρόσβασης σας ή κλειδωθείτε από τον λογαριασμό σας.</string>
   <string name="auth_signup_skip_recovery">Παράλειψη</string>
   <string name="auth_signup_set_recovery">Ορισμός μεθόδου ανάκτησης</string>
-  <string name="auth_signup_no_connectivity">Δεν υπάρχει συνδεσιμότητα για την εμφάνιση των Όρων και Προϋποθέσεων.</string>
+  <string name="auth_signup_no_connectivity">Δεν υπάρχει δυνατότητα σύνδεσης για την εμφάνιση της ιστοσελίδας.</string>
   <string name="auth_signup_error_create_to_continue">Παρακαλούμε δημιουργήστε έναν λογαριασμό για να συνεχίσετε</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Μάθετε περισσότερα</string>
   <string name="auth_signup_create_account_dialog_title">Ενεργοποιήστε τη συνδρομή σας</string>

@@ -101,7 +101,9 @@
   <string name="auth_password_chooser_title">パスワードを変更</string>
   <string name="auth_password_chooser_description">組織のメンバーとして Proton アプリを使うと、初めにブラウザーから Proton にサインインしてパスワードを変更する必要があります。</string>
   <string name="auth_password_chooser_change">パスワードを変更</string>
-  <string name="auth_user_check_one_free_error">1 つの無料 Proton アカウントのみが許可されています。</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">アカウントは支払い期限を過ぎたため現在保留中です。</string>
   <string name="auth_user_check_delinquent_action">請求の支払い</string>
   <string name="auth_account_not_found_error">アカウントのエラーが発生しました</string>
@@ -130,12 +132,13 @@
   <string name="auth_signup_recovery_method_email_hint">回復用のメールアドレス</string>
   <string name="auth_signup_recovery_method_phone_hint">回復用の電話番号</string>
   <string name="auth_signup_terms_conditions">利用規約</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">次へをクリックすることで、Proton の<annotation link="terms">利用規約</annotation>に同意したことになります。</string>
+  <string name="auth_signup_privacy_policy">プライバシーポリシー</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">回復手段の設定をスキップしますか?</string>
   <string name="auth_signup_skip_recovery_description">パスワードを忘れたり、アカウントにアクセスできなくなった場合に、回復手段を使ってアカウントにアクセスできるようにします。</string>
   <string name="auth_signup_skip_recovery">スキップ</string>
   <string name="auth_signup_set_recovery">回復手段を設定</string>
-  <string name="auth_signup_no_connectivity">利用規約を表示するための接続がありません。</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
   <string name="auth_signup_error_create_to_continue">続行するにはアカウントを作成してください</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">より詳しく</string>
   <string name="auth_signup_create_account_dialog_title">サブスクリプションを有効にする</string>

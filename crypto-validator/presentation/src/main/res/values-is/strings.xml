@@ -21,6 +21,6 @@
   <string name="crypto_keystore_error_message">Þetta tæki notar gallaða útfærslu á Android Keystore, sem við notum til að halda gögnunum þínum öruggum. Þetta þýðir að gögnin þín geta verið í hættu ef árásarmaður fær raunlægan aðgang að þessu tæki. Hvað viltu gera?</string>
   <string name="crypto_keystore_error_continue_action">Halda áfram</string>
   <string name="crypto_keystore_error_more_info_action">Fá ítarlegri upplýsingar</string>
-  <string name="crypto_keystore_error_logout_action">Sign out</string>
+  <string name="crypto_keystore_error_logout_action">Skrá út</string>
   <string name="crypto_keystore_error_exit_action">Útgangur</string>
 </resources>

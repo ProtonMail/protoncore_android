@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Canvieu la vostra contrasenya</string>
   <string name="auth_password_chooser_description">Per a utilitzar l\'aplicació Proton com a membre d\'una organització, abans necessiteu canviar la vostra contrasenya iniciant sessió a Proton des d\'un navegador.</string>
   <string name="auth_password_chooser_change">Canvia la contrasenya</string>
-  <string name="auth_user_check_one_free_error">Només es permet un compte Proton gratuït.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Només es permet un compte Proton gratuït.</item>
+    <item quantity="other">Només es permeten %d comptes Proton gratuïts.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">El vostre compte està actualment en suspens a causa d\'una factura endarrerida.</string>
   <string name="auth_user_check_delinquent_action">Paga la factura</string>
   <string name="auth_account_not_found_error">Hi ha hagut un error amb el compte</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">Correu electrònic de recuperació</string>
   <string name="auth_signup_recovery_method_phone_hint">Número de telèfon de recuperació</string>
   <string name="auth_signup_terms_conditions">Termes i condicions</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Si cliqueu a Següent, esteu d\'acord amb els <annotation link="terms">Termes i Condicions</annotation> de Proton.</string>
+  <string name="auth_signup_privacy_policy">Política de privacitat</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Clicant a Següent, accepteu els <annotation link="terms">termes i condicions</annotation> i la <annotation link="privacy">política de privacitat</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">Voleu ometre el mètode de recuperació?</string>
   <string name="auth_signup_skip_recovery_description">Un mètode de recuperació us ajudarà a accedir al vostre compte si oblideu la contrasenya o no podeu entrar al compte.</string>
   <string name="auth_signup_skip_recovery">Omet</string>
   <string name="auth_signup_set_recovery">Estableix un mètode de recuperació</string>
-  <string name="auth_signup_no_connectivity">No hi ha connexió per mostrar els Termes i Condicions.</string>
+  <string name="auth_signup_no_connectivity">No hi ha connectivitat per mostrar la pàgina web.</string>
   <string name="auth_signup_error_create_to_continue">Creeu un compte per a continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saber-ne més</string>
   <string name="auth_signup_create_account_dialog_title">Activeu la vostra subscripció</string>

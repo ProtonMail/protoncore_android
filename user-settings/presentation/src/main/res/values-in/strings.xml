@@ -18,14 +18,14 @@
   -->
 <resources>
   <!-- recovery email settings -->
-  <string name="settings_recovery_email_header">Alamat email pemulihan</string>
+  <string name="settings_recovery_email_header">Email pemulihan</string>
   <string name="settings_recovery_email_current">Alamat email pemulihan saat ini</string>
   <string name="settings_recovery_email_new">Alamat email pemulihan baru</string>
   <string name="settings_recovery_email_confirm">Konfirmasi alamat email pemulihan</string>
   <string name="settings_recovery_email_new_hint">Masukkan alamat email</string>
   <string name="settings_recovery_email_confirm_hint">Masukkan ulang alamat email</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">Simpan kata sandi kedua baru</string>
+  <string name="settings_save_main_password">Simpan kata sandi utama baru</string>
   <string name="settings_save">Simpan</string>
   <string name="settings_password_required">Masukkan kata sandi login Anda</string>
   <string name="settings_password_required_ok">OK</string>
@@ -34,22 +34,22 @@
   <string name="settings_validation_email">Alamat email tidak valid.</string>
   <string name="settings_general_error">Terdapat suatu kesalahan.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">Kata sandi utama</string>
+  <string name="settings_password_management_tab_second_password">Kata sandi kedua</string>
+  <string name="settings_password_management_change_password_note">Untuk mengubah kata sandi mana pun, Anda harus mengetahui kata sandi utama Anda. <a href="https://account.proton.me/reset-password">Lupa kata sandi utama Anda?</a></string>
   <string name="settings_password_management_header">Ubah kata sandi</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">Kata sandi utama saat ini</string>
+  <string name="settings_main_password_hint_new">Kata sandi utama baru</string>
+  <string name="settings_main_password_hint_new_confirm">Konfirmasikan kata sandi utama baru</string>
+  <string name="settings_second_password_hint_current_main_password">Kata sandi utama saat ini</string>
+  <string name="settings_second_password_hint_new">Kata sandi kedua baru</string>
+  <string name="settings_second_password_hint_new_confirm">Konfirmasi kata sandi kedua baru</string>
   <string name="settings_change_password_error">Terdapat kesalahan dalam proses perubahan kata sandi.</string>
   <string name="settings_recovery_email_success">Alamat email pemulihan diperbarui</string>
   <string name="settings_password_management_success">Kata sandi diperbarui</string>
   <string name="settings_password_management_start_recovery">Tidak tahu kata sandi Anda saat ini?</string>
   <string name="settings_manage_security_keys">Untuk mengelola, menambahkan, atau menghapus kunci keamanan, silakan gunakan aplikasi web Proton.</string>
-  <string name="settings_security_keys_registered">Terdapat kunci keamanan yang terdaftar ke akun Anda.</string>
+  <string name="settings_security_keys_registered">Berikut merupakan kunci keamanan yang terdaftar ke akun Anda.</string>
   <string name="settings_security_keys_empty">Tidak ada kunci keamanan yang terdaftar dengan akun Anda.</string>
   <string name="settings_security_keys_title">Kunci keamanan</string>
   <string name="settings_security_keys_error">Terjadi kesalahan mendapatkan kunci keamanan, silakan coba lagi.</string>

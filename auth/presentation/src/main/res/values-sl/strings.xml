@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">V vašem računu je konfiguriranih več 2FA mehanizmov. Izberite, s katerim želite potrditi svojo identiteto.</string>
   <string name="auth_2fa_tab_one_time_code">Enkratno geslo</string>
   <string name="auth_2fa_tab_security_key">Varnostni ključ</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Predložite varnostni ključ, povezan z vašim Proton računom. <annotation link="more">Več informacij</annotation></string>
   <string name="auth_2fa_label">Geslo za dvojno preverjanje pristnosti</string>
   <string name="auth_2fa_recovery_code_label">Koda za obnovitev</string>
   <string name="auth_2fa_assistive_text">Vnesite 6-mestno kodo.</string>
@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Spreminjanje gesla</string>
   <string name="auth_password_chooser_description">Če želite aplikacijo Proton uporabljati kot član organizacije, se z brskalnikom naprej prijavite v Proton na spletu in spremenite geslo.</string>
   <string name="auth_password_chooser_change">Spremeni geslo</string>
-  <string name="auth_user_check_one_free_error">Dovoljen je le en brezplačni Proton račun.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Dovoljen je le en brezplačni Proton račun.</item>
+    <item quantity="two">Dovoljena sta le %d brezplačna Proton računa.</item>
+    <item quantity="few">Dovoljeni so le %d brezplačni Proton računi.</item>
+    <item quantity="other">Dovoljeni so le %d brezplačni Proton računi.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Vaš račun je trenutno zadržan zaradi neplačanega računa.</string>
   <string name="auth_user_check_delinquent_action">Plačilo računa</string>
   <string name="auth_account_not_found_error">Napaka pri računu</string>
@@ -130,12 +135,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-poštni naslov za obnovitev</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonska številka za obnovitev</string>
   <string name="auth_signup_terms_conditions">Pogoji storitve</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">S klikom Naprej se strinjate s <annotation link="terms">Pravili storitve</annotation> Proton.</string>
+  <string name="auth_signup_privacy_policy">Pravilnik o zasebnosti</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">S klikom na Naprej se strinjate s Protonovimi <annotation link="terms">Pravili uporabe</annotation> in <annotation link="privacy">Pravilnikom o zasebnosti</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Preskoči način za obnovitev?</string>
   <string name="auth_signup_skip_recovery_description">Način obnovitve vam pomaga dostopati do računa, če pozabite geslo ali če je vaš račun zaklenjen.</string>
   <string name="auth_signup_skip_recovery">Preskoči</string>
   <string name="auth_signup_set_recovery">Nastavitev načina obnovitve</string>
-  <string name="auth_signup_no_connectivity">Ni povezave za prikaz Pogojev storitve.</string>
+  <string name="auth_signup_no_connectivity">Ni internetne povezave za prikaz spletne strani.</string>
   <string name="auth_signup_error_create_to_continue">Za nadaljevanje ustvarite račun</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Več informacij</string>
   <string name="auth_signup_create_account_dialog_title">Aktivirajte naročnino</string>
@@ -145,7 +151,7 @@
   <string name="auth_signup_error_username_blank">Uporabniško ime ne sme biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Gesli se ne ujemata.</string>
   <string name="auth_signup_validation_password_length">Vaše geslo mora imeti najmanj 8 znakov</string>
-  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
+  <string name="auth_signup_password_not_allowed">Geslo je prepogosto. Izberite drugo geslo.</string>
   <string name="auth_signup_validation_password">Geslo ne sme biti prazno.</string>
   <string name="auth_signup_your_account_is_being_setup">Vaš račun se ustvarja ...</string>
   <string name="auth_signup_please_wait">Običajno traja največ minuto.</string>

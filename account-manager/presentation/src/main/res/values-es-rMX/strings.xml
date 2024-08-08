@@ -32,6 +32,13 @@
   <string name="account_settings_list_item_password_hint_insecure">Restablecimiento de contraseña listo</string>
   <string name="account_settings_list_item_recovery_header">Correo electrónico de recuperación</string>
   <string name="account_settings_list_item_recovery_hint_not_set">No establecido</string>
+  <string name="account_settings_list_item_security_keys_header">Claves de seguridad</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">No establecida</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d clave de seguridad configurada</item>
+    <item quantity="other">%d claves de seguridad configuradas</item>
+  </plurals>
   <string name="account_signout_dialog_title">¿Cerrar sesión?</string>
   <string name="account_signout_dialog_text">La información asociada a la cuenta se mantendrá en este dispositivo a menos que la elimine.</string>
   <string name="account_signout_dialog_delete_information">Borrar toda información asociada</string>

@@ -23,7 +23,7 @@
   <string name="payments_3ds_not_approved">Persetujuan 3DS ditolak.</string>
   <string name="payments_error_card_name">Nama pada kartu diperlukan.</string>
   <string name="payments_error_card_number">Nomor kartu tidak valid.</string>
-  <string name="payments_error_cvc">Mohon masukkan kode keamanan yang valid.</string>
+  <string name="payments_error_cvc">Silakan masukkan kode keamanan yang valid.</string>
   <string name="payments_error_session">ID sesi yang valid dibutuhkan untuk memberikan langganan kepada pengguna yang masuk.</string>
   <string name="payments_error_signup_paymentmethod">Tidak dapat mendaftar dengan metode pembayaran yang telah ada.</string>
   <string name="payments_error_invalid_session">Sesi tidak valid.</string>

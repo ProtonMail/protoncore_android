@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">Potrdite e-poštni naslov za obnovitev</string>
   <string name="settings_recovery_email_new_hint">Vnesi e-poštni naslov</string>
   <string name="settings_recovery_email_confirm_hint">Ponovno vnesi e-poštni naslov</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">Shrani novo drugo geslo</string>
+  <string name="settings_save_main_password">Shrani novo glavno geslo</string>
   <string name="settings_save">Shrani</string>
   <string name="settings_password_required">Vnesite geslo za prijavo</string>
   <string name="settings_password_required_ok">V REDU</string>
@@ -34,25 +34,25 @@
   <string name="settings_validation_email">E-poštni naslov ni veljaven.</string>
   <string name="settings_general_error">Prišlo je do napake.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">Glavno geslo</string>
+  <string name="settings_password_management_tab_second_password">Drugo geslo</string>
+  <string name="settings_password_management_change_password_note">Za spremembo katerega koli gesla morate poznati svoje glavno geslo. <a href="https://account.proton.me/reset-password">Ste pozabili svoje glavno geslo?</a></string>
   <string name="settings_password_management_header">Spremeni geslo</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">Trenutno glavno geslo</string>
+  <string name="settings_main_password_hint_new">Novo glavno geslo</string>
+  <string name="settings_main_password_hint_new_confirm">Potrdite novo glavno geslo</string>
+  <string name="settings_second_password_hint_current_main_password">Trenutno glavno geslo</string>
+  <string name="settings_second_password_hint_new">Novo drugo geslo</string>
+  <string name="settings_second_password_hint_new_confirm">Potrdite novo drugo geslo</string>
   <string name="settings_change_password_error">Pri spremembi gesla je prišlo do napake.</string>
   <string name="settings_recovery_email_success">E-poštni naslov za obnovitev je posodobljen</string>
   <string name="settings_password_management_success">Geslo je posodobljeno</string>
   <string name="settings_password_management_start_recovery">Ne poznate trenutnega gesla?</string>
-  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_manage_security_keys">Prosimo uporabite Proton spletno aplikacijo za upravljanje, dodajanje ali odstranjevanje varnostnih ključev.</string>
   <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
-  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
+  <string name="settings_security_keys_empty">Vaš račun nima registriranih varnostnih ključev.</string>
+  <string name="settings_security_keys_title">Varnostni ključi</string>
+  <string name="settings_security_keys_error">Napaka pri pridobivanju varnostnih ključev. Prosimo, poskusite znova.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonimna telemetrija</string>
   <string name="device_settings_telemetry_hint">Za izboljšanje naših storitev občasno zbiramo anonimne podatke o uporabi.</string>

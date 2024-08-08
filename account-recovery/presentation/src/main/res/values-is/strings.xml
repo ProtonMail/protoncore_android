@@ -27,7 +27,7 @@
   <string name="account_recovery_cancel_title">Cancel password reset?</string>
   <string name="account_recovery_cancel_subtitle">Enter your password to cancel.</string>
   <string name="account_recovery_cancel_password_label">Núverandi lykilorð</string>
-  <string name="account_recovery_cancel_password_placeholder">Password</string>
+  <string name="account_recovery_cancel_password_placeholder">Lykilorð</string>
   <string name="account_recovery_cancel_now">Cancel password reset</string>
   <string name="account_recovery_cancel_back">Til baka</string>
   <!-- Account recovery cancelled -->
@@ -43,7 +43,7 @@
   <!-- Other -->
   <string name="account_recovery_cancel">Hætta við beiðni</string>
   <string name="account_recovery_dismiss">Náði því</string>
-  <string name="account_recovery_reset">Reset password</string>
+  <string name="account_recovery_reset">Endurstilla lykilorð</string>
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Password reset requested</string>
   <string name="account_recovery_info_grace_subtitle">You can reset your password in %1s.</string>

@@ -26,13 +26,13 @@
   <string name="welcome_subtitle_calendar">Calendario crittografato che mantiene privati, sicuri e protetti gli eventi della tua vita.</string>
   <string name="welcome_subtitle_calendar_alt">Il nostro calendario crittografato end-to-end ti aiuta a rimanere organizzato, concentrato e in controllo.</string>
   <string name="welcome_subtitle_vpn">Una VPN svizzera ad alta velocità che tutela la tua privacy crittografando la connessione a Internet.</string>
-  <string name="welcome_subtitle_vpn_alt">Una VPN svizzera ad alta velocità che protegge la tua privacy. Massima sicurezza, oltre 5.500 server e nessuna restrizione.</string>
+  <string name="welcome_subtitle_vpn_alt">Una VPN svizzera ad alta velocità che protegge la tua privacy. Massima sicurezza, oltre 1.600 server e nessuna restrizione.</string>
   <string name="welcome_subtitle_pass">Tutte le tue password. Al sicuro in un unico posto e protette dal nome più attendibile nella privacy.</string>
   <string name="welcome_subtitle_pass_alt">Tutte le tue password. Al sicuro in un unico posto e protette dal nome più attendibile nella privacy.</string>
   <string name="welcome_privacy_by_default">Privacy by default</string>
   <string name="auth_password_label">Password</string>
   <string name="auth_password_help">Inserisci una password lunga almeno 8 caratteri</string>
-  <string name="auth_current_login_password">Password di accesso attuale</string>
+  <string name="auth_current_login_password">Password principale attuale</string>
   <string name="auth_enter_six_digit_code">Inserisci il codice a 6 cifre</string>
   <string name="auth_second_factor_code">Codice del secondo fattore</string>
   <string name="auth_email">Email</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Gestione delle password</string>
   <string name="auth_password_chooser_description">Effettua l\'accesso al sito di Proton e cambia la password dell\'account per usare Proton come membro di un\'organizzazione.</string>
   <string name="auth_password_chooser_change">Cambia la password</string>
-  <string name="auth_user_check_one_free_error">Limite di account Proton gratuiti raggiunto</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Limite di un account Proton gratuito raggiunto</item>
+    <item quantity="other">Limite di %d account Proton gratuiti raggiunto</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Il tuo account è attualmente sospeso a causa di una fattura scaduta.</string>
   <string name="auth_user_check_delinquent_action">Paga la fattura</string>
   <string name="auth_account_not_found_error">Account non valido</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">Indirizzo email di recupero</string>
   <string name="auth_signup_recovery_method_phone_hint">Numero di telefono di recupero</string>
   <string name="auth_signup_terms_conditions">Termini e Condizioni</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Toccando \"Avanti\", accetti <annotation link="terms">Termini e Condizioni</annotation> di Proton.</string>
+  <string name="auth_signup_privacy_policy">Informativa sulla Privacy</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Toccando \"Avanti\", accetti <annotation link="terms">Termini e Condizioni</annotation> e l\'<annotation link="privacy">Informativa sulla Privacy</annotation> di Proton.</string>
   <string name="auth_signup_skip_recovery_title">Imposta un metodo di recupero</string>
   <string name="auth_signup_skip_recovery_description">Sei sicuro di non voler impostare un metodo di recupero? Un metodo di recupero consente di accedere all\'account nel caso in cui dimentichi le credenziali o non riesci ad accedere.</string>
   <string name="auth_signup_skip_recovery">Salta</string>
   <string name="auth_signup_set_recovery">Imposta</string>
-  <string name="auth_signup_no_connectivity">Sei offline. Visualizzazione di Termini e Condizioni non riuscita.</string>
+  <string name="auth_signup_no_connectivity">Sei offline. Visualizzazione della pagina web non riuscita.</string>
   <string name="auth_signup_error_create_to_continue">Crea un account per continuare</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Scopri di più</string>
   <string name="auth_signup_create_account_dialog_title">Attiva l\'abbonamento</string>
@@ -146,7 +150,7 @@
   <string name="auth_signup_error_passwords_do_not_match">Password non corrispondente</string>
   <string name="auth_signup_validation_password_length">Inserisci una password lunga almeno 8 caratteri</string>
   <string name="auth_signup_password_not_allowed">Password troppo comune. Imposta una password diversa.</string>
-  <string name="auth_signup_validation_password">Inserisci l\'attuale password dell\'account</string>
+  <string name="auth_signup_validation_password">Inserisci l\'attuale password principale</string>
   <string name="auth_signup_your_account_is_being_setup">Creazione dell\'account in corso</string>
   <string name="auth_signup_please_wait">Solitamente non richiede più di un minuto</string>
   <string name="auth_signup_replacement_code">Non hai ricevuto il codice?</string>

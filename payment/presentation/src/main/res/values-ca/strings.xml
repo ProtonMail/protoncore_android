@@ -19,7 +19,7 @@
 <resources>
   <!-- region payment errors -->
   <string name="payments_general_error">S\'ha produït un error.</string>
-  <string name="payments_no_connectivity">No hi ha connectivitat per mostrar la pàgina de confirmació de 3DS.</string>
+  <string name="payments_no_connectivity">No hi ha connexió per mostrar la pàgina de confirmació de 3DS.</string>
   <string name="payments_3ds_not_approved">L\'aprovació 3DS ha estat rebutjada.</string>
   <string name="payments_error_card_name">Es requereix el nom a la targeta.</string>
   <string name="payments_error_card_number">El número de targeta no és vàlid.</string>
@@ -27,7 +27,7 @@
   <string name="payments_error_session">Es necessita un ID de sessió vàlid per a subscriure a un usuari que ha iniciat la sessió.</string>
   <string name="payments_error_signup_paymentmethod">No s\'ha pogut crear el compte amb el mètode de pagament existent.</string>
   <string name="payments_error_invalid_session">Sessió invàlida.</string>
-  <string name="payments_no_payment_provider">No s\'ha trobat cap proveïdor de pagament actiu.</string>
+  <string name="payments_no_payment_provider">No s\'ha trobat cap mitjà de pagament.</string>
   <string name="payments_error_google_prices">Hi ha hagut un problema en recuperar els preus de Google Play Store en aquest moment.</string>
   <!-- endregion -->
   <!-- region payment options -->

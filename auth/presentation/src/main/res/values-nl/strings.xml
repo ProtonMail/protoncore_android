@@ -54,11 +54,11 @@
   <string name="auth_help_option_other">Andere inlogproblemen</string>
   <string name="auth_help_other">Meer hulp nodig? Neem dan rechtstreeks contact me ons op.</string>
   <string name="auth_help_option_customer_support">Klantondersteuning</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
+  <string name="auth_2fa_title">Tweestapsverificatie</string>
+  <string name="auth_2fa_subtitle">Uw account heeft meerdere 2FA mechanismen geconfigureerd. Selecteer hoe u uw identiteit wilt bevestigen.</string>
+  <string name="auth_2fa_tab_one_time_code">Eenmalige code</string>
   <string name="auth_2fa_tab_security_key">Beveiligingssleutel</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Vul een beveiligingssleutel in die gekoppeld is aan uw Proton Account. <annotation link="more">Meer informatie</annotation></string>
   <string name="auth_2fa_label">Tweestapsverificatiecode</string>
   <string name="auth_2fa_recovery_code_label">Herstelcode</string>
   <string name="auth_2fa_assistive_text">Voer de 6-cijferige code in.</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Verander uw wachtwoord</string>
   <string name="auth_password_chooser_description">Om de Proton-app als lid van een organisatie te gebruiken, moet u eerst uw wachtwoord wijzigen door u via een browser bij Proton aan te melden.</string>
   <string name="auth_password_chooser_change">Wachtwoord wijzigen</string>
-  <string name="auth_user_check_one_free_error">Slechts één gratis Proton account is toegestaan.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Slechts één gratis Proton account is toegestaan.</item>
+    <item quantity="other">Slechts %d gratis Proton accounts zijn toegestaan.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Uw account staat momenteel in wacht wegens een achterstallige factuur.</string>
   <string name="auth_user_check_delinquent_action">Factuur betalen</string>
   <string name="auth_account_not_found_error">Fout met het account</string>
@@ -130,22 +133,23 @@
   <string name="auth_signup_recovery_method_email_hint">Herstel-e-mailadres</string>
   <string name="auth_signup_recovery_method_phone_hint">Herstel-telefoonnummer</string>
   <string name="auth_signup_terms_conditions">Algemene voorwaarden</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Door op Volgende te klikken, gaat u akkoord met de <annotation link="terms">Voorwaarden van Proton</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Privacybeleid</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Door op Volgende te klikken, gaat u akkoord met de <annotation link="terms">Algemene Voorwaarden</annotation> en het <annotation link="privacy">Privacybeleid</annotation> van Proton.</string>
   <string name="auth_signup_skip_recovery_title">Herstelmethode overslaan?</string>
   <string name="auth_signup_skip_recovery_description">Een herstelmethode zal u helpen om toegang te krijgen tot uw account in het geval u uw wachtwoord vergeet of van uw account wordt afgesloten.</string>
   <string name="auth_signup_skip_recovery">Overslaan</string>
   <string name="auth_signup_set_recovery">Herstelmethode instellen</string>
-  <string name="auth_signup_no_connectivity">Geen connectiviteit om Voorwaarden en Condities te tonen.</string>
+  <string name="auth_signup_no_connectivity">Geen verbinding om de webpagina weer te geven.</string>
   <string name="auth_signup_error_create_to_continue">Maak een account aan om verder te gaan</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Meer informatie</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
-  <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
+  <string name="auth_signup_create_account_dialog_title">Abonnement activeren</string>
+  <string name="auth_signup_create_account_dialog_text">Uw Google Pay betaling is succesvol verwerkt. Maak uw Proton account aan om uw abonnement te activeren.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Annuleren</string>
   <string name="auth_signup_create_account_dialog_action_continue">Doorgaan</string>
   <string name="auth_signup_error_username_blank">De gebruikersnaam mag niet leeg zijn.</string>
   <string name="auth_signup_error_passwords_do_not_match">Wachtwoorden komen niet overeen.</string>
   <string name="auth_signup_validation_password_length">Wachtwoord moet ten minste 8 tekens bevatten.</string>
-  <string name="auth_signup_password_not_allowed">Password too common. Use a different password.</string>
+  <string name="auth_signup_password_not_allowed">Wachtwoord is te veelvoorkomend. Gebruik een ander wachtwoord.</string>
   <string name="auth_signup_validation_password">Het wachtwoord mag niet leeg zijn.</string>
   <string name="auth_signup_your_account_is_being_setup">Uw account wordt aangemaakt…</string>
   <string name="auth_signup_please_wait">Dit duurt doorgaans niet langer dan één minuut.</string>

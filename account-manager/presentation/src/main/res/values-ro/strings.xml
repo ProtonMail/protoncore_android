@@ -32,6 +32,14 @@
   <string name="account_settings_list_item_password_hint_insecure">Resetarea parolei este disponibilă.</string>
   <string name="account_settings_list_item_recovery_header">E-mail de recuperare</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nesetat</string>
+  <string name="account_settings_list_item_security_keys_header">Chei de securitate</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Nesetat</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d cheie de securitate setată</item>
+    <item quantity="few">%d chei de securitate setate</item>
+    <item quantity="other">%d de chei de securitate setate</item>
+  </plurals>
   <string name="account_signout_dialog_title">Deconectare?</string>
   <string name="account_signout_dialog_text">Datele asociate contului vor rămâne pe acest dispozitiv dacă nu selectați să le ștergeți.</string>
   <string name="account_signout_dialog_delete_information">Eliminare toate datele asociate</string>

@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">回復用メールアドレスを確認</string>
   <string name="settings_recovery_email_new_hint">メールアドレスを入力</string>
   <string name="settings_recovery_email_confirm_hint">メールアドレスを再入力</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">新しいセカンドパスワードを保存</string>
+  <string name="settings_save_main_password">新しいメインパスワードを保存</string>
   <string name="settings_save">保存</string>
   <string name="settings_password_required">ログインパスワードを入力</string>
   <string name="settings_password_required_ok">OK</string>
@@ -34,16 +34,16 @@
   <string name="settings_validation_email">メールアドレスが無効です.</string>
   <string name="settings_general_error">エラーが発生しました。</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_tab_main_password">メインパスワード</string>
+  <string name="settings_password_management_tab_second_password">セカンドパスワード</string>
   <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">パスワードを変更する</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">現在のメインパスワード</string>
+  <string name="settings_main_password_hint_new">新しいメインパスワード</string>
+  <string name="settings_main_password_hint_new_confirm">新しいメインパスワードを確認</string>
+  <string name="settings_second_password_hint_current_main_password">現在のメインパスワード</string>
+  <string name="settings_second_password_hint_new">新しいセカンドパスワード</string>
+  <string name="settings_second_password_hint_new_confirm">新しいセカンドパスワードを確認</string>
   <string name="settings_change_password_error">パスワード変更に失敗しました。</string>
   <string name="settings_recovery_email_success">回復用メールアドレスが更新されました</string>
   <string name="settings_password_management_success">パスワードが更新されました。</string>
@@ -51,7 +51,7 @@
   <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
   <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
   <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
+  <string name="settings_security_keys_title">セキュリティキー</string>
   <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">匿名の情報収集</string>

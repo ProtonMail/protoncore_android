@@ -32,6 +32,13 @@
   <string name="account_settings_list_item_password_hint_insecure">La réinitialisation du mot de passe est prête.</string>
   <string name="account_settings_list_item_recovery_header">E-mail de récupération</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Non défini</string>
+  <string name="account_settings_list_item_security_keys_header">Clés de sécurité</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Non défini</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">%d clé de sécurité configurée</item>
+    <item quantity="other">%d clés de sécurité configurées</item>
+  </plurals>
   <string name="account_signout_dialog_title">Se déconnecter ?</string>
   <string name="account_signout_dialog_text">Les données associées à votre compte resteront sur cet appareil à moins que vous ne choisissiez de les supprimer.</string>
   <string name="account_signout_dialog_delete_information">Retirer toutes les données associées</string>

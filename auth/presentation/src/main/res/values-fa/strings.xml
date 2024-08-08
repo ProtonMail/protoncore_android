@@ -54,10 +54,10 @@
   <string name="auth_help_option_other">سایر مشکلات ورود</string>
   <string name="auth_help_other">هنوز به کمک نیاز دارید؟ با ما به صورت مستقیم تماس بگیرید.</string>
   <string name="auth_help_option_customer_support">پشتیبانی مشتری</string>
-  <string name="auth_2fa_title">Two Factor Authentication</string>
-  <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
-  <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_title">احراز هویت دو عاملی</string>
+  <string name="auth_2fa_subtitle">حساب شما دارای چندین مکانیسم احراز هویت دو عاملی است که به منظور تأیید هویت شما پیکربندی شده است. لطفاً تأیید کنید که چگونه می خواهید هویت خود را تأیید کنید.</string>
+  <string name="auth_2fa_tab_one_time_code">کد یکبار مصرفکد</string>
+  <string name="auth_2fa_tab_security_key">کلید امنیتی</string>
   <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">کد دو مرحله‌ای</string>
   <string name="auth_2fa_recovery_code_label">کد بازیابی</string>
@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">یک کد بازیابی 8 نویسه ای را وارد کنید.</string>
   <string name="auth_2fa_action">احراز هویت</string>
   <string name="auth_2fa_use_recovery_code">از کد بازیابی استفاده کنید</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">برای کسب اطلاعات بیشتر در این مورد اینجا را کلیک کنید.</string>
   <string name="auth_2fa_use_2fa_code">استفاده از کد دو مرحله ای</string>
   <string name="auth_2fa_error_empty_code">کد ۶-رقمی را وارد کنید.</string>
   <string name="auth_mailbox_title">قفل صندوق پیام خود را باز کنید</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">گذرواژه خود را تغییر دهید</string>
   <string name="auth_password_chooser_description">برای استفاده از برنامه Proton به عنوان عضوی از یک سازمان، شما اول باید گذرواژه خود را از طریق ورود به Proton از طریق یک مرورگر تغییر دهید.</string>
   <string name="auth_password_chooser_change">تغییر گذرواژه</string>
-  <string name="auth_user_check_one_free_error">فقط یک حساب کاربری رایگان Proton مجاز است.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">فقط یک حساب کاربری رایگان Proton مجاز است.</item>
+    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">حساب کاربری شما به دلیل صورت‌حساب معوقه در حالت انتظار است.</string>
   <string name="auth_user_check_delinquent_action">پرداخت صورت‌حساب</string>
   <string name="auth_account_not_found_error">خطای مربوط به حساب کاربری</string>
@@ -130,18 +133,19 @@
   <string name="auth_signup_recovery_method_email_hint">ایمیل بازیابی</string>
   <string name="auth_signup_recovery_method_phone_hint">شماره تلفن بازیابی</string>
   <string name="auth_signup_terms_conditions">شرایط و ضوابط</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">با کلیک روی بعدی، شما با شرایط و ضوابط Proton <annotation link="terms"> موافقت میکنید.</annotation>.</string>
+  <string name="auth_signup_privacy_policy">خط مش سیاست حفظ اطلاعات و حریم خصوصی کاربران</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">رد شدن از تعیین روش بازیابی؟</string>
   <string name="auth_signup_skip_recovery_description">یک روش بازیابی به شما کمک می کند که در صورت فراموشی گذرواژه یا عدم امکان ورود به حساب کاربری، به حساب کاربری خود دسترسی پیدا کنید.</string>
   <string name="auth_signup_skip_recovery">رد شدن</string>
   <string name="auth_signup_set_recovery">تعیین روش بازیابی</string>
-  <string name="auth_signup_no_connectivity">اتصال برای نمایش شرایط و ضوابط برقرار نیست.</string>
+  <string name="auth_signup_no_connectivity">اتصالی برای نمایش صفحه وب وجود ندارد.</string>
   <string name="auth_signup_error_create_to_continue">لطفا برای ادامه یک حساب کاربری بسازید</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">برای کسب اطلاعات بیشتر در این مورد اینجا را کلیک کنید.</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">لغو</string>
+  <string name="auth_signup_create_account_dialog_action_continue">ادامه</string>
   <string name="auth_signup_error_username_blank">نام کاربری نباید خالی باشد.</string>
   <string name="auth_signup_error_passwords_do_not_match">گذرواژه‌ها مطابقت ندارند.</string>
   <string name="auth_signup_validation_password_length">رمز عبور باید حداقل 8 نویسه داشته باشد.</string>

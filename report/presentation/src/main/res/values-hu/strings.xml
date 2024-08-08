@@ -38,5 +38,5 @@
   <string name="core_report_bug_general_error">Hiba történt. Kérjük, próbálkozzon később.</string>
   <string name="core_report_bug_send">Bejelentés elküldése</string>
   <string name="core_report_bug_success">Köszönjük a bejelentést</string>
-  <string name="core_report_bug_attach_log">Attach log</string>
+  <string name="core_report_bug_attach_log">Napló csatolása</string>
 </resources>

@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Cambie la contraseña</string>
   <string name="auth_password_chooser_description">Para usar la aplicación Proton como miembro de una organización, primero necesita cambiar la contraseña iniciando sesión en Proton a través de un navegador.</string>
   <string name="auth_password_chooser_change">Cambiar contraseña</string>
-  <string name="auth_user_check_one_free_error">Sólo se permite una cuenta gratuita de Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Solo se permite una cuenta gratuita de Proton.</item>
+    <item quantity="other">Solo se permiten %d cuentas gratuitas de Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">La cuenta está actualmente en espera debido a una factura atrasada.</string>
   <string name="auth_user_check_delinquent_action">Pagar factura</string>
   <string name="auth_account_not_found_error">Error con la cuenta</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">Correo de recuperación</string>
   <string name="auth_signup_recovery_method_phone_hint">Número telefónico de recuperación</string>
   <string name="auth_signup_terms_conditions">Términos y Condiciones</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Al hacer clic en Siguiente, acepta los <annotation link="terms">Términos y Condiciones</annotation> de Proton.</string>
+  <string name="auth_signup_privacy_policy">Política de privacidad</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Al hacer clic en Siguiente, acepta los <annotation link="terms">Términos y Condiciones</annotation> y la <annotation link="privacy">Política de Privacidad</annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">¿Omitir método de recuperación?</string>
   <string name="auth_signup_skip_recovery_description">Un método de recuperación le ayudará a acceder a la cuenta en caso de que olvide la contraseña o no pueda entrar en la cuenta.</string>
   <string name="auth_signup_skip_recovery">Omitir</string>
   <string name="auth_signup_set_recovery">Establecer método de recuperación</string>
-  <string name="auth_signup_no_connectivity">No hay conexión para mostrar los términos y condiciones.</string>
+  <string name="auth_signup_no_connectivity">No hay conectividad para mostrar la página web.</string>
   <string name="auth_signup_error_create_to_continue">Cree una cuenta para continuar</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Más información</string>
   <string name="auth_signup_create_account_dialog_title">Activar la suscripción</string>

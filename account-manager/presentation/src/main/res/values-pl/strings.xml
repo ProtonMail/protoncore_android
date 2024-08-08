@@ -32,6 +32,15 @@
   <string name="account_settings_list_item_password_hint_insecure">Resetowanie hasła jest dostępne</string>
   <string name="account_settings_list_item_recovery_header">Adres pomocniczy</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Nie ustawiono</string>
+  <string name="account_settings_list_item_security_keys_header">Klucze bezpieczeństwa</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">Nie ustawiono</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="one">Ustawiono %d klucz bezpieczeństwa</item>
+    <item quantity="few">Ustawiono %d klucze bezpieczeństwa</item>
+    <item quantity="many">Ustawiono %d kluczy bezpieczeństwa</item>
+    <item quantity="other">Ustawiono %d kluczy bezpieczeństwa</item>
+  </plurals>
   <string name="account_signout_dialog_title">Wylogować się?</string>
   <string name="account_signout_dialog_text">Dane powiązane z kontem pozostaną na urządzeniu, chyba że usuniesz te dane.</string>
   <string name="account_signout_dialog_delete_information">Usuń wszystkie powiązane dane</string>

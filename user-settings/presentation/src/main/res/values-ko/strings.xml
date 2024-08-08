@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">복구 이메일 주소 확인</string>
   <string name="settings_recovery_email_new_hint">이메일 주소 입력</string>
   <string name="settings_recovery_email_confirm_hint">이메일 주소 재입력</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">새로운 2단계 비밀번호 저장하기</string>
+  <string name="settings_save_main_password">새로운 2단계 비밀번호 저장하기</string>
   <string name="settings_save">저장</string>
   <string name="settings_password_required">로그인 비밀번호 입력</string>
   <string name="settings_password_required_ok">확인</string>
@@ -34,16 +34,16 @@
   <string name="settings_validation_email">올바르지 않은 이메일 주소입니다.</string>
   <string name="settings_general_error">오류 발생.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">기본 비밀번호</string>
+  <string name="settings_password_management_tab_second_password">이중 비밀번호</string>
+  <string name="settings_password_management_change_password_note">비밀번호를 변경하려면 기본 비밀번호를 숙지해야 합니다. <a href="https://account.proton.me/reset-password">기본 비밀번호를 잊으셨나요?</a></string>
   <string name="settings_password_management_header">비밀번호 변경</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">현재 기본 비밀번호</string>
+  <string name="settings_main_password_hint_new">새로운 기본 비밀번호</string>
+  <string name="settings_main_password_hint_new_confirm">새로운 기본 비밀번호 확인</string>
+  <string name="settings_second_password_hint_current_main_password">현재 기본 비밀번호</string>
+  <string name="settings_second_password_hint_new">새로운 이중 비밀번호</string>
+  <string name="settings_second_password_hint_new_confirm">새로운 2단계 비밀번호 확인</string>
   <string name="settings_change_password_error">비밀번호 변경에 오류가 발생했습니다</string>
   <string name="settings_recovery_email_success">복구 이메일 주소 변경됨</string>
   <string name="settings_password_management_success">비밀번호 변경됨</string>
@@ -52,7 +52,7 @@
   <string name="settings_security_keys_registered">이것들이 당신의 계정에 등록된 보안 키입니다.</string>
   <string name="settings_security_keys_empty">계정에 등록된 보안키가 없습니다.</string>
   <string name="settings_security_keys_title">보안 키</string>
-  <string name="settings_security_keys_error">보안 키 패칭 실패, 다시 시도하십시오.</string>
+  <string name="settings_security_keys_error">보안 키 검색 중 오류 발생, 다시 시도하십시오.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">익명 원격 측정</string>
   <string name="device_settings_telemetry_hint">서비스 품질 향상을 위해, 익명의 데이터를 수집할 수 있습니다.</string>

@@ -49,7 +49,7 @@
   <!-- Account Recovery Info -->
   <string name="account_recovery_info_grace_title">Запрошен сброс пароля</string>
   <string name="account_recovery_info_grace_subtitle">Вы можете восстановить свой пароль через %1s.</string>
-  <string name="account_recovery_info_grace_description">Чтобы убедиться, что это действительно вы пытаетесь сбросить пароль, мы ждем 72 часа, прежде чем одобрить запрос.\n\nЕсли вы не просили сбросить пароль, отмените этот запрос сейчас.</string>
+  <string name="account_recovery_info_grace_description">Чтобы убедиться, что это именно вы пытаетесь сбросить пароль, мы ждём 72 часа, прежде чем одобрить запрос.\n\nЕсли вы не запрашивали сброс пароля, немедленно отмените этот запрос.</string>
   <string name="account_recovery_info_cancelled_title">Сброс пароля отменён</string>
   <string name="account_recovery_info_cancelled_subtitle">Запрос на сброс пароля был сделан %1s.</string>
   <string name="account_recovery_info_cancelled_description">Если вы не узнаете этот запрос, это может означать, что кто-то другой имеет доступ к вашему аккаунту Proton.\n\nЗащитите свой аккаунт прямо сейчас.</string>

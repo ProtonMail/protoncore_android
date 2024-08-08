@@ -57,7 +57,7 @@
   <string name="auth_2fa_title">Two Factor Authentication</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_tab_security_key">Tasarutt n tɣellist</string>
   <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Tangalt n snat n tarayin</string>
   <string name="auth_2fa_recovery_code_label">Tangalt n tririt</string>
@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">Sekcem tangalt n tririt n 8 yisekkilen.</string>
   <string name="auth_2fa_action">Asesteb</string>
   <string name="auth_2fa_use_recovery_code">Seqdec tangalt n tririt</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">Issin ugar</string>
   <string name="auth_2fa_use_2fa_code">Seqdec tangalt n snat n tarayin</string>
   <string name="auth_2fa_error_empty_code">Sekcem tangalt n 6 n yizwilen.</string>
   <string name="auth_mailbox_title">Kkes asekker i tbewwaḍt-ik·im n ymayl</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Senfel awal uffir</string>
   <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
   <string name="auth_password_chooser_change">Snifel awal uffir</string>
-  <string name="auth_user_check_one_free_error">Only one free Proton account is allowed.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Only one free Proton account is allowed.</item>
+    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
   <string name="auth_user_check_delinquent_action">Xelleṣ tafaturt</string>
   <string name="auth_account_not_found_error">Tuccḍa deg umiḍan</string>
@@ -130,18 +133,19 @@
   <string name="auth_signup_recovery_method_email_hint">Imayl n tririt</string>
   <string name="auth_signup_recovery_method_phone_hint">Uṭṭun n usawal n tririt</string>
   <string name="auth_signup_terms_conditions">Tiwtilin n useqdec</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Tasertit tabaḍnit</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Zgel tarrayt n tririt?</string>
   <string name="auth_signup_skip_recovery_description">A recovery method will help you access your account in case you forget your password or get locked out of your account.</string>
   <string name="auth_signup_skip_recovery">Zgel</string>
   <string name="auth_signup_set_recovery">Sbadu tarrayt n tririt</string>
-  <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
   <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Issin ugar</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Sefsex</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Kemmel</string>
   <string name="auth_signup_error_username_blank">Isem n useqdac ur ilaq ara ad yili d ilem.</string>
   <string name="auth_signup_error_passwords_do_not_match">Awalen uffiren ur menṭaḍen ara.</string>
   <string name="auth_signup_validation_password_length">Awal uffir yessefk ad isεu ugar n 8 n isekkilen.</string>

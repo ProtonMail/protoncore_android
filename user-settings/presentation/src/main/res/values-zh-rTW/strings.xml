@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">確認復原電子郵件位址</string>
   <string name="settings_recovery_email_new_hint">請輸入電子郵件位址</string>
   <string name="settings_recovery_email_confirm_hint">再次輸入電子郵件位址</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">儲存新的第二密碼</string>
+  <string name="settings_save_main_password">儲存新的主要密碼</string>
   <string name="settings_save">儲存</string>
   <string name="settings_password_required">輸入您的登入密碼</string>
   <string name="settings_password_required_ok">確定</string>
@@ -34,16 +34,16 @@
   <string name="settings_validation_email">電子郵件位址格式無效</string>
   <string name="settings_general_error">出現錯誤</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">主要密碼</string>
+  <string name="settings_password_management_tab_second_password">第二密碼</string>
+  <string name="settings_password_management_change_password_note">要變更您的任何一個密碼，都必須知道您的主密碼。<a href="https://account.proton.me/reset-password">忘記主密碼？</a></string>
   <string name="settings_password_management_header">變更密碼</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">目前的主密碼</string>
+  <string name="settings_main_password_hint_new">新的主密碼</string>
+  <string name="settings_main_password_hint_new_confirm">確認新的主密碼</string>
+  <string name="settings_second_password_hint_current_main_password">目前的主密碼</string>
+  <string name="settings_second_password_hint_new">新的第二密碼</string>
+  <string name="settings_second_password_hint_new_confirm">確認新的第二密碼</string>
   <string name="settings_change_password_error">變更密碼時出現錯誤</string>
   <string name="settings_recovery_email_success">復原電子郵件位址已更新</string>
   <string name="settings_password_management_success">密碼已更新</string>

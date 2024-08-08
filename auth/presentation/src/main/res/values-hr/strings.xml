@@ -39,7 +39,7 @@
   <string name="auth_email_username">Korisničko ime ili adresa e-pošte</string>
   <string name="auth_account_details">Unesite detalje vašeg Proton računa</string>
   <string name="auth_sign_in">Prijavite se</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Odjava</string>
   <string name="auth_sign_in_action">Prijavite se</string>
   <string name="auth_sign_in_sso">Prijavite se u vašu organizaciju</string>
   <string name="auth_sign_in_with_password">Prijavite se s lozinkom.</string>
@@ -57,7 +57,7 @@
   <string name="auth_2fa_title">Two Factor Authentication</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_tab_security_key">Sigurnosni ključ</string>
   <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Kȏd dvofaktorske autentikacije</string>
   <string name="auth_2fa_recovery_code_label">Kȏd za oporavak</string>
@@ -101,7 +101,11 @@
   <string name="auth_password_chooser_title">Promijenite vašu lozinku</string>
   <string name="auth_password_chooser_description">Da biste koristili Proton aplikaciju kao član organizacije, prvo morate promijeniti vašu lozinku prijavom u Proton preko pretraživača.</string>
   <string name="auth_password_chooser_change">Promijeni lozinku</string>
-  <string name="auth_user_check_one_free_error">Samo jedan besplatan Proton račun je dopušten.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Samo jedan besplatan Proton račun je dopušten.</item>
+    <item quantity="few">Only %d free Proton accounts are allowed.</item>
+    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
   <string name="auth_user_check_delinquent_action">Plati račun</string>
   <string name="auth_account_not_found_error">Greška s računom</string>
@@ -130,18 +134,19 @@
   <string name="auth_signup_recovery_method_email_hint">Adresa e-pošte za oporavak</string>
   <string name="auth_signup_recovery_method_phone_hint">Broj mobitela za oporavak</string>
   <string name="auth_signup_terms_conditions">Odredbe i uvjeti</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Pravila o privatnosti</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Preskočiti metodu oporavka?</string>
   <string name="auth_signup_skip_recovery_description">Metoda oporavka će vam pomoći pristupiti računu u slučaju da zaboravite lozinku ili vam se račun zaključa.</string>
   <string name="auth_signup_skip_recovery">Preskoči</string>
   <string name="auth_signup_set_recovery">Postavite metodu oporavka</string>
-  <string name="auth_signup_no_connectivity">Nema veze za prikaz Uvjeta i Odredbi.</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
   <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Saznajte više</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">Poništi</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Nastavite</string>
   <string name="auth_signup_error_username_blank">Korisničko ime ne smije biti prazno.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lozinke se ne poklapaju.</string>
   <string name="auth_signup_validation_password_length">Lozinka mora imati najmanje 8 znakova.</string>

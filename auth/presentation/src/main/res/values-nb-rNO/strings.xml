@@ -24,7 +24,7 @@
   <string name="welcome_subtitle_drive">Bekvemmeligheten av skylagring og garantien av krypteringsteknologi. Endelig en betrodd skylagringsløsning.</string>
   <string name="welcome_subtitle_drive_alt">Den sikreste måten å lagre filene dine på. Last opp, synkroniser og del med den sterkeste krypteringen som er tilgjengelig.</string>
   <string name="welcome_subtitle_calendar">Kryptert kalender som holder livshendelsene dine private, trygge og sikre.</string>
-  <string name="welcome_subtitle_calendar_alt">Vår ende-til-ende krypterte kalender hjelper deg å holde deg organisert, på rett spor og under kontroll.</string>
+  <string name="welcome_subtitle_calendar_alt">Vår ende-til-ende-krypterte kalender hjelper deg å holde deg organisert, på rett spor og under kontroll.</string>
   <string name="welcome_subtitle_vpn">Høyhastighets sveitsisk VPN som beskytter ditt personvern ved å kryptere internettforbindelsen din.</string>
   <string name="welcome_subtitle_vpn_alt">Høyhastighets sveitsisk VPN som ivaretar ditt personvern. Maksimum sikkerhet, 1600+ tjenere og ingen restriksjoner.</string>
   <string name="welcome_subtitle_pass">Alle passordene dine. Trygt på ett sted og beskyttet av det mest betrodde navnet innen personvern.</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Endre passordet ditt</string>
   <string name="auth_password_chooser_description">For å bruke Proton-appen som et medlem av en organisasjon, trenger du først å endre passordet ditt ved å logge på Proton gjennom en nettleser.</string>
   <string name="auth_password_chooser_change">Endre passord</string>
-  <string name="auth_user_check_one_free_error">Kun en gratis Proton-konto er tillatt.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Kun en gratis Proton-konto er tillatt.</item>
+    <item quantity="other">Kun %d gratis Proton-kontoer er tillatt.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Kontoen din er for øyeblikket satt på pause på grunn av en forfalt faktura.</string>
   <string name="auth_user_check_delinquent_action">Betal faktura</string>
   <string name="auth_account_not_found_error">Feil med kontoen</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-post for gjenoppretting</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonnummer for gjenoppretting</string>
   <string name="auth_signup_terms_conditions">Vilkår og betingelser</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Ved å klikke neste, sier du deg enig med Protons <annotation link="terms">brukervilkår</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Personvernerklæring</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Ved å klikke på neste, godtar du Protons <annotation link="terms">vilkår og betingelser</annotation> og <annotation link="privacy">personvernregler</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Hopp over gjenopprettingsmetode?</string>
   <string name="auth_signup_skip_recovery_description">En gjenopprettingsmetode vil hjelpe deg med å få tilgang til kontoen i tilfelle du glemmer passordet eller blir utestengt fra kontoen din.</string>
   <string name="auth_signup_skip_recovery">Hopp over</string>
   <string name="auth_signup_set_recovery">Angi gjenopprettingsmetode</string>
-  <string name="auth_signup_no_connectivity">Ingen forbindelse for å vise brukervilkår.</string>
+  <string name="auth_signup_no_connectivity">Ingen tilkobling for å vise websiden.</string>
   <string name="auth_signup_error_create_to_continue">Vennligst opprett en konto for å fortsette</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Lær mer</string>
   <string name="auth_signup_create_account_dialog_title">Aktiver abonnementet ditt</string>

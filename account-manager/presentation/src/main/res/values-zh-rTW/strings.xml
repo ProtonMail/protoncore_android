@@ -30,11 +30,17 @@
   <string name="account_settings_list_item_password_header">變更密碼</string>
   <string name="account_settings_list_item_password_hint_grace">密碼重設擱置</string>
   <string name="account_settings_list_item_password_hint_insecure">密碼重設就緒</string>
-  <string name="account_settings_list_item_recovery_header">備援電子郵件</string>
+  <string name="account_settings_list_item_recovery_header">復原用電子郵件</string>
   <string name="account_settings_list_item_recovery_hint_not_set">未設定</string>
+  <string name="account_settings_list_item_security_keys_header">安全性密鑰</string>
+  <string name="account_settings_list_item_security_keys_hint_not_set">未設定</string>
+  <string name="account_settings_list_item_security_keys_hint_single">%s</string>
+  <plurals name="account_settings_list_item_security_keys_hint_many">
+    <item quantity="other">%d 組安全密鑰</item>
+  </plurals>
   <string name="account_signout_dialog_title">登出？</string>
-  <string name="account_signout_dialog_text">除非您選擇刪除，否則與您的帳號關聯的資料將保留在此裝置上。</string>
-  <string name="account_signout_dialog_delete_information">移除所有關聯資料</string>
+  <string name="account_signout_dialog_text">與您的帳號相關聯資料仍保留在此裝置上，唯有您可選擇刪除它。</string>
+  <string name="account_signout_dialog_delete_information">移除所有關聯的資料</string>
   <string name="account_signout_dialog_action_signout">登出</string>
   <string name="account_signout_dialog_action_cancel">取消</string>
 </resources>

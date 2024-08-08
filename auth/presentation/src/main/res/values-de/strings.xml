@@ -58,7 +58,7 @@
   <string name="auth_2fa_subtitle">In deinem Konto sind mehrere 2FA-Mechanismen konfiguriert. Bitte wähle aus, wie du deine Identität bestätigen möchtest.</string>
   <string name="auth_2fa_tab_one_time_code">Einmalcode</string>
   <string name="auth_2fa_tab_security_key">Sicherheitsschlüssel</string>
-  <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
+  <string name="auth_2fa_insert_security_key">Stecke einen Sicherheitsschlüssel ein, der mit deinem Proton-Konto verknüpft ist. <annotation link="more">Mehr erfahren</annotation></string>
   <string name="auth_2fa_label">Zwei‐Faktor‐Code</string>
   <string name="auth_2fa_recovery_code_label">Wiederherstellungscode</string>
   <string name="auth_2fa_assistive_text">6-stelligen Code eingeben.</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Passwort ändern</string>
   <string name="auth_password_chooser_description">Um als Mitglied einer Organisation die Proton-App nutzen zu können, musst du zunächst dein Passwort ändern, indem du dich über einen Browser bei Proton anmeldest.</string>
   <string name="auth_password_chooser_change">Passwort ändern</string>
-  <string name="auth_user_check_one_free_error">Es ist nur ein einziges kostenloses Proton-Konto erlaubt.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Es ist nur ein einziges kostenloses Proton-Konto erlaubt.</item>
+    <item quantity="other">Es sind nur %d kostenlose Proton-Konten erlaubt.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Dein Konto ist derzeit aufgrund einer überfälligen Rechnung ausgesetzt.</string>
   <string name="auth_user_check_delinquent_action">Rechnung bezahlen</string>
   <string name="auth_account_not_found_error">Kontofehler</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-Mail-Adresse für die Wiederherstellung</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefonnummer für die Wiederherstellung</string>
   <string name="auth_signup_terms_conditions">Allgemeine Geschäftsbedingungen</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Indem du auf „Weiter“ klickst, erklärst du dich mit den <annotation link="terms">Nutzungsbedingungen</annotation> von Proton einverstanden.</string>
+  <string name="auth_signup_privacy_policy">Datenschutzerklärung</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Indem du auf „Weiter“ klickst, erklärst du dich mit den <annotation link="terms">Nutzungsbedingungen</annotation> und der <annotation link="privacy">Datenschutzerklärung</annotation> von Proton einverstanden.</string>
   <string name="auth_signup_skip_recovery_title">Wiederherstellungsmethode überspringen?</string>
   <string name="auth_signup_skip_recovery_description">Eine Wiederherstellungsmethode hilft dir, auf dein Konto zuzugreifen, falls du dein Passwort vergessen hast oder aus deinem Konto ausgesperrt wurdest.</string>
   <string name="auth_signup_skip_recovery">Überspringen</string>
   <string name="auth_signup_set_recovery">Wiederherstellungsmethode festlegen</string>
-  <string name="auth_signup_no_connectivity">Fehlende Verbindung zum Anzeigen der Allgemeinen Geschäftsbedingungen.</string>
+  <string name="auth_signup_no_connectivity">Keine Verbindung zur Anzeige der Webseite.</string>
   <string name="auth_signup_error_create_to_continue">Bitte erstelle ein Konto, um fortzufahren.</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Mehr erfahren</string>
   <string name="auth_signup_create_account_dialog_title">Aktiviere dein Abonnement</string>

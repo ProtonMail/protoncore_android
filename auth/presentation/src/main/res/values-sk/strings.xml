@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Zmeňte si heslo</string>
   <string name="auth_password_chooser_description">Ak chcete používať aplikáciu Proton ako člen organizácie, musíte si najprv zmeniť heslo prihlásením sa do Protonu cez prehliadač.</string>
   <string name="auth_password_chooser_change">Zmeniť heslo</string>
-  <string name="auth_user_check_one_free_error">Je povolený iba jeden bezplatný účet Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Je povolený iba jeden bezplatný účet Proton.</item>
+    <item quantity="few">Sú povolené len %d bezplatné účty Proton.</item>
+    <item quantity="many">Je povolených %d bezplatných účtov Proton.</item>
+    <item quantity="other">Je povolených %d bezplatných účtov Proton.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Váš účet je momentálne pozastavený z dôvodu dátumu faktúry po splatnosti.</string>
   <string name="auth_user_check_delinquent_action">Zaplatiť faktúru</string>
   <string name="auth_account_not_found_error">Chyba účtu</string>
@@ -130,12 +135,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-mail pre obnovenie</string>
   <string name="auth_signup_recovery_method_phone_hint">Telefónne číslo pre obnovenie</string>
   <string name="auth_signup_terms_conditions">Podmienky používania</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Kliknutím na tlačidlo Ďalej vyjadrujete súhlas s <annotation link="terms">Zmluvnými podmienkami</annotation> Protonu.</string>
+  <string name="auth_signup_privacy_policy">Ochrana osobných údajov</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Kliknutím na tlačidlo Ďalej súhlasíte so zmluvnými <annotation link="terms">podmienkami</annotation> a <annotation link="privacy">zásadami ochrany osobných údajov</annotation> spoločnosti Proton.</string>
   <string name="auth_signup_skip_recovery_title">Preskočiť spôsob obnovy?</string>
   <string name="auth_signup_skip_recovery_description">Spôsob obnovenia vám pomôže získať prístup k vášmu účtu v prípade, že zabudnete heslo alebo si uzamknete účet.</string>
   <string name="auth_signup_skip_recovery">Preskočiť</string>
   <string name="auth_signup_set_recovery">Nastaviť spôsob obnovenia</string>
-  <string name="auth_signup_no_connectivity">Žiadne pripojenie na zobrazenie zmluvných podmienok.</string>
+  <string name="auth_signup_no_connectivity">Žiadne pripojenie na zobrazenie webovej stránky.</string>
   <string name="auth_signup_error_create_to_continue">Pre pokračovanie si vytvorte účet</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Zistiť viac</string>
   <string name="auth_signup_create_account_dialog_title">Aktivujte svoje predplatné</string>

@@ -21,5 +21,5 @@
   <string name="user_recovery_notification_body">Hemos recuperado automáticamente los datos de tu cuenta.</string>
   <string name="user_recovery_dialog_title">Dispositivo de confianza de recuperación</string>
   <string name="user_recovery_dialog_text">Después del restablecimiento de contraseña, hemos recuperado automáticamente los datos para %1s.</string>
-  <string name="user_recovery_dialog_dismiss">Entiendo</string>
+  <string name="user_recovery_dialog_dismiss">Entendido</string>
 </resources>

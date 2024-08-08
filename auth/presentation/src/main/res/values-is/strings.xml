@@ -39,7 +39,7 @@
   <string name="auth_email_username">Notandanafn eða tölvupóstfang</string>
   <string name="auth_account_details">Sláðu inn þínum Proton reikningsupplýsingum.</string>
   <string name="auth_sign_in">Skrá inn</string>
-  <string name="auth_sign_out">Sign out</string>
+  <string name="auth_sign_out">Skrá út</string>
   <string name="auth_sign_in_action">Skrá inn</string>
   <string name="auth_sign_in_sso">Sign in to your organization</string>
   <string name="auth_sign_in_with_password">Sign in with a password</string>
@@ -57,7 +57,7 @@
   <string name="auth_2fa_title">Two Factor Authentication</string>
   <string name="auth_2fa_subtitle">Your account has several 2FA mechanisms configured. Please pick how you want to confirm your identity.</string>
   <string name="auth_2fa_tab_one_time_code">One-time code</string>
-  <string name="auth_2fa_tab_security_key">Security key</string>
+  <string name="auth_2fa_tab_security_key">Öryggislykill</string>
   <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">Tveggja-þátta kóði</string>
   <string name="auth_2fa_recovery_code_label">Endurheimtukóði</string>
@@ -65,7 +65,7 @@
   <string name="auth_2fa_recovery_code_assistive_text">Enter an 8-character recovery code.</string>
   <string name="auth_2fa_action">Auðkenna</string>
   <string name="auth_2fa_use_recovery_code">Nota endurheimtukóða</string>
-  <string name="auth_2fa_learn_more">Learn more</string>
+  <string name="auth_2fa_learn_more">Læra meira</string>
   <string name="auth_2fa_use_2fa_code">Nota tveggja-þátta kóða</string>
   <string name="auth_2fa_error_empty_code">Settu inn 6-stafa kóðann.</string>
   <string name="auth_mailbox_title">Aflæstu pósthólfinu þínu</string>
@@ -81,7 +81,7 @@
   <string name="auth_create_address_title">Proton address required</string>
   <string name="auth_create_address_subtitle">You need a Proton email address to use Proton Mail and Proton Calendar. You’ll still be able to use %1$s to sign in, and to recover your account.</string>
   <string name="auth_username">Notandanafn</string>
-  <string name="auth_username_next_action">Continue</string>
+  <string name="auth_username_next_action">Halda áfram</string>
   <string name="auth_create_address_result_title">%s er tiltækt</string>
   <string name="auth_create_address_result_title_username">%1$s@%2$s verður nýja Proton Mail-tölvupóstfangið þitt.</string>
   <string name="auth_create_address_result_subtitle">You will use this address to sign in to all Proton services.</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Breyta lykilorðinu þínu</string>
   <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
   <string name="auth_password_chooser_change">Breyta lykilorði</string>
-  <string name="auth_user_check_one_free_error">Only one free Proton account is allowed.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Only one free Proton account is allowed.</item>
+    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Your account is currently on hold due to an overdue invoice.</string>
   <string name="auth_user_check_delinquent_action">Greiða reikning</string>
   <string name="auth_account_not_found_error">Error with the account</string>
@@ -130,18 +133,19 @@
   <string name="auth_signup_recovery_method_email_hint">Endurheimtupóstur</string>
   <string name="auth_signup_recovery_method_phone_hint">Endurheimtusímanúmer</string>
   <string name="auth_signup_terms_conditions">Skilmálar og kvaðir</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation>.</string>
+  <string name="auth_signup_privacy_policy">Meðferð persónuupplýsinga</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">By clicking Next, you agree with Proton\'s <annotation link="terms">Terms and Conditions</annotation> and <annotation link="privacy">Privacy Policy</annotation>.</string>
   <string name="auth_signup_skip_recovery_title">Skip recovery method?</string>
   <string name="auth_signup_skip_recovery_description">A recovery method will help you access your account in case you forget your password or get locked out of your account.</string>
   <string name="auth_signup_skip_recovery">Sleppa</string>
   <string name="auth_signup_set_recovery">Stilltu endurheimtuaðferð</string>
-  <string name="auth_signup_no_connectivity">No connectivity to display Terms and Conditions.</string>
+  <string name="auth_signup_no_connectivity">No connectivity to display the webpage.</string>
   <string name="auth_signup_error_create_to_continue">Please create an account to continue</string>
-  <string name="auth_signup_error_create_to_continue_action_learn_more">Learn more</string>
+  <string name="auth_signup_error_create_to_continue_action_learn_more">Læra meira</string>
   <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
-  <string name="auth_signup_create_account_dialog_action_cancel">Cancel</string>
-  <string name="auth_signup_create_account_dialog_action_continue">Continue</string>
+  <string name="auth_signup_create_account_dialog_action_cancel">Hætta við</string>
+  <string name="auth_signup_create_account_dialog_action_continue">Halda áfram</string>
   <string name="auth_signup_error_username_blank">Username must not be blank.</string>
   <string name="auth_signup_error_passwords_do_not_match">Lykilorðin stemma ekki.</string>
   <string name="auth_signup_validation_password_length">Password should be at least 8 characters long.</string>

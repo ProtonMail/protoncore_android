@@ -19,8 +19,8 @@
 <resources>
   <string name="welcome_title">Protégez votre vie privée avec Proton</string>
   <string name="welcome_subtitle">Le chiffrement assure la confidentialité de vos données. Vos données vous appartiennent vraiment.</string>
-  <string name="welcome_subtitle_mail">Une messagerie chiffrée qui préserve la confidentialité de vos conversations. Vos messages vous appartiennent vraiment.</string>
-  <string name="welcome_subtitle_mail_alt">Vie privée. Sécurité. Facilité d\'utilisation. Une messagerie chiffrée qui vous donne le contrôle total de vos données personnelles.</string>
+  <string name="welcome_subtitle_mail">Une messagerie chiffrée qui préserve la confidentialité de vos conversations. Votre boîte de réception vous appartient vraiment.</string>
+  <string name="welcome_subtitle_mail_alt">Confidentialité. Sécurité. Facilité d\'utilisation. Une messagerie chiffrée qui vous donne le contrôle total de vos données personnelles.</string>
   <string name="welcome_subtitle_drive">Le confort du stockage cloud et la sécurité de la technologie de chiffrement. Enfin une solution de stockage cloud digne de confiance.</string>
   <string name="welcome_subtitle_drive_alt">Le moyen le plus sécurisé de stocker vos fichiers. Téléchargez, synchronisez et partagez avec le chiffrement le plus puissant qui existe.</string>
   <string name="welcome_subtitle_calendar">Un calendrier chiffré qui préserve la confidentialité et la sécurité des événements de votre vie.</string>
@@ -36,7 +36,7 @@
   <string name="auth_enter_six_digit_code">Saisissez le code à 6 chiffres.</string>
   <string name="auth_second_factor_code">Code à deux facteurs</string>
   <string name="auth_email">Adresse e-mail</string>
-  <string name="auth_email_username">Nom d\'utilisateur ou adresse email</string>
+  <string name="auth_email_username">Nom d\'utilisateur ou adresse e-mail</string>
   <string name="auth_account_details">Saisissez les informations de votre compte Proton.</string>
   <string name="auth_sign_in">Se connecter</string>
   <string name="auth_sign_out">Se déconnecter</string>
@@ -46,19 +46,19 @@
   <string name="auth_continue_to_proton_vpn">pour accéder à Proton VPN.</string>
   <string name="auth_sign_in_with_sso">Se connecter avec l\'authentification unique (SSO)</string>
   <string name="auth_help_label">Aide</string>
-  <string name="auth_login_assistive_text">Saisissez votre adresse e-mail Proton ou votre nom d\'utilisateur Proton.</string>
+  <string name="auth_login_assistive_text">Saisissez votre adresse e-mail Proton ou votre nom d\'utilisateur.</string>
   <string name="auth_login_sso_assistive_text">Saisissez votre adresse e-mail.</string>
   <string name="auth_help_title">Comment pouvons-nous vous aider ?</string>
   <string name="auth_help_option_forgot_username">Nom d\'utilisateur oublié</string>
   <string name="auth_help_option_forgot_password">Mot de passe oublié</string>
   <string name="auth_help_option_other">Autres problèmes de connexion</string>
-  <string name="auth_help_other">Vous avez toujours besoin d\'aide ? Contactez-nous.</string>
+  <string name="auth_help_other">Vous avez toujours besoin d\'aide ? Contactez-nous directement.</string>
   <string name="auth_help_option_customer_support">Service client</string>
   <string name="auth_2fa_title">Authentification à deux facteurs (A2F)</string>
   <string name="auth_2fa_subtitle">Plusieurs mécanismes A2F sont configurés sur votre compte. Choisissez la manière dont vous voulez confirmer votre identité.</string>
   <string name="auth_2fa_tab_one_time_code">Code à usage unique</string>
   <string name="auth_2fa_tab_security_key">Clé de sécurité</string>
-  <string name="auth_2fa_insert_security_key">Présentez une clé de sécurité liée à votre compte Proton. <annotation link="more">En savoir plus</annotation></string>
+  <string name="auth_2fa_insert_security_key">Présentez une clé de sécurité associée à votre compte Proton. <annotation link="more">En savoir plus</annotation></string>
   <string name="auth_2fa_label">Code à deux facteurs</string>
   <string name="auth_2fa_recovery_code_label">Code de récupération</string>
   <string name="auth_2fa_assistive_text">Saisissez le code à 6 chiffres.</string>
@@ -101,7 +101,10 @@
   <string name="auth_password_chooser_title">Modifier votre mot de passe</string>
   <string name="auth_password_chooser_description">Pour utiliser l\'application Proton en tant que membre d\'une organisation, vous devez d\'abord changer votre mot de passe en vous connectant à Proton via un navigateur.</string>
   <string name="auth_password_chooser_change">Modifier le mot de passe</string>
-  <string name="auth_user_check_one_free_error">Un seul compte Proton gratuit est autorisé.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Un seul compte Proton gratuit est autorisé.</item>
+    <item quantity="other">Seuls %d comptes Proton gratuits sont autorisés.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Votre compte est actuellement suspendu en raison d\'une facture impayée.</string>
   <string name="auth_user_check_delinquent_action">Payer la facture</string>
   <string name="auth_account_not_found_error">Erreur avec le compte</string>
@@ -130,12 +133,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-mail de récupération</string>
   <string name="auth_signup_recovery_method_phone_hint">Numéro de téléphone de récupération</string>
   <string name="auth_signup_terms_conditions">Conditions générales d’utilisation</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">En cliquant sur Suivant, vous acceptez les <annotation link="terms">conditions générales d\'utilisation</annotation> de Proton.</string>
+  <string name="auth_signup_privacy_policy">Politique de confidentialité</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">En cliquant sur Suivant, vous acceptez de respecter les <annotation link="terms">conditions générales d\'utilisation</annotation> et la <annotation link="privacy">politique de confidentialité </annotation> de Proton.</string>
   <string name="auth_signup_skip_recovery_title">Ne pas définir de méthode de récupération ?</string>
   <string name="auth_signup_skip_recovery_description">Une méthode de récupération vous aidera à accéder à votre compte en cas d\'oubli de votre mot de passe ou de blocage de votre compte.</string>
   <string name="auth_signup_skip_recovery">Ignorer</string>
   <string name="auth_signup_set_recovery">Définir une méthode de récupération</string>
-  <string name="auth_signup_no_connectivity">Aucune connexion pour afficher les conditions générales d’utilisation.</string>
+  <string name="auth_signup_no_connectivity">Vous n\'\'avez pas de connexion pour afficher la page web.</string>
   <string name="auth_signup_error_create_to_continue">Créez un compte pour continuer</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">En savoir plus</string>
   <string name="auth_signup_create_account_dialog_title">Activer votre abonnement</string>

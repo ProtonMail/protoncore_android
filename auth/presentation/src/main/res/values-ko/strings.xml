@@ -24,7 +24,7 @@
   <string name="welcome_subtitle_drive">클라우드 스토리지의 편리함과 암호화 기술의 보안성. 신뢰할 수 있는 클라우드 스토리지 솔루션입니다.</string>
   <string name="welcome_subtitle_drive_alt">파일을 안전하게 보관하는 방법. 가장 강력한 암호화를 통해 업로드, 동기화 및 공유하세요.</string>
   <string name="welcome_subtitle_calendar">암호화된 캘린더가 당신의 삶의 이벤트를 안전하게 보호합니다.</string>
-  <string name="welcome_subtitle_calendar_alt">종단간 암호화 캘린더는 체계적이고, 추적하고, 통제할 수 있도록 도와줍니다.</string>
+  <string name="welcome_subtitle_calendar_alt">종단간 암호화 캘린더가 당신이 체계적이고, 추적하고, 통제할 수 있도록 도와줍니다.</string>
   <string name="welcome_subtitle_vpn">빠른 속도의 스위스 VPN은 인터넷 연결 암호화를 통해 사생활을 보호해 줍니다.</string>
   <string name="welcome_subtitle_vpn_alt">스위스 기반 높은 속도의 VPN으로 개인 정보를 보호하세요. 최고의 보안, 1600개 이상 서버, 제한 없이.</string>
   <string name="welcome_subtitle_pass">모든 비밀번호. 가장 안전하게 보관하고 가장 신뢰할 수 있는 개인정보 보호업체의 보호를 받게됩니다.</string>
@@ -101,7 +101,9 @@
   <string name="auth_password_chooser_title">비밀번호 변경</string>
   <string name="auth_password_chooser_description">Proton 앱을 조직의 구성원으로 사용하려면 먼저 브라우저를 통해 Proton에 로그인하여 비밀번호를 변경해야 합니다.</string>
   <string name="auth_password_chooser_change">비밀번호 변경</string>
-  <string name="auth_user_check_one_free_error">1개의 무료 Proton 계정만을 사용할 수 있습니다.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="other">오직 %d개의 무료 Proton 계정만 사용할 수 있습니다.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">사용자의 계정이 현재 연체된 요금으로 인해 대기 상태입니다.</string>
   <string name="auth_user_check_delinquent_action">청구서 지불</string>
   <string name="auth_account_not_found_error">계정에 오류가 발생했습니다</string>
@@ -130,12 +132,13 @@
   <string name="auth_signup_recovery_method_email_hint">복구 이메일</string>
   <string name="auth_signup_recovery_method_phone_hint">복구 전화번호</string>
   <string name="auth_signup_terms_conditions">이용 약관</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">다음을 클릭하면, Proton의 <annotation link="terms">이용 약관</annotation>에 동의하게 됩니다.</string>
+  <string name="auth_signup_privacy_policy">개인정보 취급방침</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">다음을 클릭하면, Proton의 <annotation link="terms">이용 약관</annotation> 및 <annotation link="privacy">개인정보 취급방침</annotation>에 동의하는 것으로 간주됩니다.</string>
   <string name="auth_signup_skip_recovery_title">계정 복구 방법 추가를 건너뛰시겠습니까?</string>
   <string name="auth_signup_skip_recovery_description">복구 방법은 비밀번호를 잊어버렸거나 계정이 잠긴 경우 계정에 액세스하는 데 도움이 됩니다.</string>
   <string name="auth_signup_skip_recovery">건너뛰기</string>
   <string name="auth_signup_set_recovery">복구 방법 설정</string>
-  <string name="auth_signup_no_connectivity">이용 약관을 표시할 연결 없음.</string>
+  <string name="auth_signup_no_connectivity">이 웹 페이지를 표시할 연결이 없습니다.</string>
   <string name="auth_signup_error_create_to_continue">계속하려면 가입해주세요</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">더 알아보기</string>
   <string name="auth_signup_create_account_dialog_title">구독을 활성화하십시오</string>

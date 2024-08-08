@@ -101,7 +101,12 @@
   <string name="auth_password_chooser_title">Измените свой пароль</string>
   <string name="auth_password_chooser_description">Чтобы пользоваться приложением Proton в качестве участника организации, вам необходимо сначала поменять ваш пароль, войдя в Proton при помощи браузера.</string>
   <string name="auth_password_chooser_change">Изменить пароль</string>
-  <string name="auth_user_check_one_free_error">У вас может быт только один бесплатный аккаунт Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">У вас может быть только один бесплатный аккаунт Proton.</item>
+    <item quantity="few">Only %d free Proton accounts are allowed.</item>
+    <item quantity="many">Only %d free Proton accounts are allowed.</item>
+    <item quantity="other">Количество доступных бесплатных аккаунтов Proton — %d.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Ваш аккаунт на данный момент заблокирован из-за просроченного счета.</string>
   <string name="auth_user_check_delinquent_action">Оплатить счёт</string>
   <string name="auth_account_not_found_error">Ошибка аккаунта</string>
@@ -130,12 +135,13 @@
   <string name="auth_signup_recovery_method_email_hint">Резервный адрес электронной почты</string>
   <string name="auth_signup_recovery_method_phone_hint">Номер телефона для восстановления доступа</string>
   <string name="auth_signup_terms_conditions">Условия</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Нажимая кнопку Далее, вы соглашаетесь с <annotation link="terms">Условиями</annotation> Proton.</string>
+  <string name="auth_signup_privacy_policy">Политика конфиденциальности</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Нажимая на кнопку «Далее», вы соглашаетесь с <annotation link="terms">Условиями использования</annotation> и <annotation link="privacy">Политикой конфиденциальности</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Пропустить способ восстановления доступа?</string>
   <string name="auth_signup_skip_recovery_description">Метод восстановления поможет вам получить доступ к аккаунту, если вы забудете пароль или он будет заблокирован.</string>
   <string name="auth_signup_skip_recovery">Пропустить</string>
   <string name="auth_signup_set_recovery">Задать метод восстановления доступа</string>
-  <string name="auth_signup_no_connectivity">Нет подключения, чтобы посмотреть условия.</string>
+  <string name="auth_signup_no_connectivity">Нет подключения для отображения веб-страницы.</string>
   <string name="auth_signup_error_create_to_continue">Создайте аккаунт, чтобы продолжить</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Подробнее</string>
   <string name="auth_signup_create_account_dialog_title">Активируйте свою подписку</string>

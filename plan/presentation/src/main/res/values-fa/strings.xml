@@ -62,7 +62,7 @@
   <string name="plans_subscription_drive_storage_full_title">فضای ذخیره سازی درایو شما پر شده است</string>
   <string name="plans_subscription_drive_storage_nearly_full_title">فضای ذخیره‌سازی درایو شما تقریبا پر شده است</string>
   <string name="plans_subscription_storage_get_more">دریافت حافظه بیشتر</string>
-  <string name="plans_subscription_storage_full_description">Upgrade your plan to continue to use your account without interruptions.</string>
+  <string name="plans_subscription_storage_full_description">اشتراکتان را برای استفاده بدون وقفه از حسابتان ارتقا دهید.</string>
   <!-- region all possible plan item types. this could be updated as per language requirements.-->
   <plurals name="item_storage" comment="please do not modify the text between #">
     <item quantity="one">#proton_storage# فضای ذخیره سازی</item>

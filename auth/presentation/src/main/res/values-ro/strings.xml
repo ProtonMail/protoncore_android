@@ -101,7 +101,11 @@
   <string name="auth_password_chooser_title">Schimbare parolă</string>
   <string name="auth_password_chooser_description">Pentru a folosi aplicația Proton ca membru al unei organizații, trebuie mai întâi să vă schimbați parola conectându-vă la Proton cu un navigator web.</string>
   <string name="auth_password_chooser_change">Schimbare parolă</string>
-  <string name="auth_user_check_one_free_error">Este permis doar un cont gratuit de Proton.</string>
+  <plurals name="auth_user_check_max_free_error">
+    <item quantity="one">Este permis doar un cont gratuit de Proton.</item>
+    <item quantity="few">Sunt permise doar %d conturi Proton gratuite.</item>
+    <item quantity="other">Sunt permise doar %d de conturi Proton gratuite.</item>
+  </plurals>
   <string name="auth_user_check_delinquent_error">Contul vă este suspendat datorită unei facturi neachitate.</string>
   <string name="auth_user_check_delinquent_action">Plată factură</string>
   <string name="auth_account_not_found_error">Eroare cont</string>
@@ -130,12 +134,13 @@
   <string name="auth_signup_recovery_method_email_hint">E-mail de recuperare</string>
   <string name="auth_signup_recovery_method_phone_hint">Numărul de telefon pentru recuperare</string>
   <string name="auth_signup_terms_conditions">Termeni și condiții</string>
-  <string name="auth_signup_terms_conditions_full" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Făcând clic pe «Înainte», sunteți de acord cu &lt;annotation link="terms"&gt;termenii și condițiile&lt;/annotation&gt; Proton.</string>
+  <string name="auth_signup_privacy_policy">Politică de confidențialitate</string>
+  <string name="auth_signup_terms_conditions_privacy_policy_full">Apăsând pe «Înainte», sunteți de acord cu <annotation link="terms">Termenii și condițiile</annotation> și cu <annotation link="privacy">Politica de confidențialitate</annotation> Proton.</string>
   <string name="auth_signup_skip_recovery_title">Omiteți metoda de recuperare?</string>
   <string name="auth_signup_skip_recovery_description">O metodă de recuperare vă ajută să accesați contul în cazul în care vă uitați parola și nu vă puteți conecta la cont.</string>
   <string name="auth_signup_skip_recovery">Omitere</string>
   <string name="auth_signup_set_recovery">Setare metodă de recuperare</string>
-  <string name="auth_signup_no_connectivity">Nu există conectivitate pentru a afișa termenii și condițiile.</string>
+  <string name="auth_signup_no_connectivity">Nu există conexiune pentru a afișa pagina web.</string>
   <string name="auth_signup_error_create_to_continue">Creați un cont pentru a continua</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">Detalii</string>
   <string name="auth_signup_create_account_dialog_title">Activați-vă abonamentul</string>

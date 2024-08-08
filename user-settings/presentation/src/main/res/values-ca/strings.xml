@@ -36,7 +36,7 @@
   <!-- login and mailbox password settings -->
   <string name="settings_password_management_tab_main_password">Contrasenya principal</string>
   <string name="settings_password_management_tab_second_password">Segona contrasenya</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_change_password_note">Per canviar qualsevol de les vostres contrasenyes, necessitareu conèixer la vostrac ontrasenya principal. <a href="https://account.proton.me/reset-password">Heu oblidat la vostra contrasenya principal?</a></string>
   <string name="settings_password_management_header">Canvia la contrasenya</string>
   <string name="settings_main_password_hint_current">Contrasenya principal actual</string>
   <string name="settings_main_password_hint_new">Nova contrasenya principal</string>
@@ -57,5 +57,5 @@
   <string name="device_settings_telemetry_title">Telemetria anònima</string>
   <string name="device_settings_telemetry_hint">Per a millorar els nostres serveis, de vegades recopilem dades d\'ús anonimitzades.</string>
   <string name="device_settings_crashreport_title">Informes anònims d\'errors</string>
-  <string name="device_settings_crashreport_hint">Si l\'aplicació falla, s\'enviarà un informe als nostres enginyers amb detalls de la causa. Només els utilitzarem per millorar l\'aplicació.</string>
+  <string name="device_settings_crashreport_hint">Si l\'aplicació falla, s\'enviarà un informe als nostres enginyers amb detalls sobre la causa. Només els utilitzarem per a millorar l\'aplicació.</string>
 </resources>

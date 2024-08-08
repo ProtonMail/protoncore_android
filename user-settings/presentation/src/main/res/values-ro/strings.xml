@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">Confirmați adresa de e-mail de recuperare</string>
   <string name="settings_recovery_email_new_hint">Introduceți adresa de e-mail</string>
   <string name="settings_recovery_email_confirm_hint">Reintroduceți adresa de e-mail</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">Salvare parolă secundară nouă</string>
+  <string name="settings_save_main_password">Salvare parolă principală nouă</string>
   <string name="settings_save">Salvare</string>
   <string name="settings_password_required">Introduceți parola de acces</string>
   <string name="settings_password_required_ok">OK</string>
@@ -34,16 +34,16 @@
   <string name="settings_validation_email">Adresa de e-mail nu este validă.</string>
   <string name="settings_general_error">A apărut o eroare.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">Parola principală</string>
+  <string name="settings_password_management_tab_second_password">Parola secundară</string>
+  <string name="settings_password_management_change_password_note">Pentru a modifica oricare dintre parole, va trebui să vă cunoașteți parola principală. <a href="https://account.proton.me/reset-password">Ați uitat parola principală?</a></string>
   <string name="settings_password_management_header">Schimbare parolă</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">Parola principală actuală</string>
+  <string name="settings_main_password_hint_new">Parola principală nouă</string>
+  <string name="settings_main_password_hint_new_confirm">Confirmare parolă principală nouă</string>
+  <string name="settings_second_password_hint_current_main_password">Parola principală actuală</string>
+  <string name="settings_second_password_hint_new">Parola secundară nouă</string>
+  <string name="settings_second_password_hint_new_confirm">Confirmare parolă secundară nouă</string>
   <string name="settings_change_password_error">A apărut o eroare la schimbarea parolei.</string>
   <string name="settings_recovery_email_success">Adresă e-mail de recuperare s-a actualizat.</string>
   <string name="settings_password_management_success">Parolă actualizată</string>

@@ -42,7 +42,7 @@
   <string name="settings_main_password_hint_new">Contraseña principal nueva</string>
   <string name="settings_main_password_hint_new_confirm">Confirmar la contraseña principal nueva</string>
   <string name="settings_second_password_hint_current_main_password">Contraseña principal actual</string>
-  <string name="settings_second_password_hint_new">Nueva segunda contraseña</string>
+  <string name="settings_second_password_hint_new">Segunda contraseña nueva</string>
   <string name="settings_second_password_hint_new_confirm">Confirmar la segunda contraseña nueva</string>
   <string name="settings_change_password_error">Se ha producido un error al cambiar la contraseña.</string>
   <string name="settings_recovery_email_success">La dirección de correo electrónico de recuperación ha sido actualizada.</string>

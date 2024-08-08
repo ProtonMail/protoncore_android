@@ -24,8 +24,8 @@
   <string name="settings_recovery_email_confirm">Bevestig het herstel-e-mailadres</string>
   <string name="settings_recovery_email_new_hint">Vul e-mailadres in</string>
   <string name="settings_recovery_email_confirm_hint">Voer e-mailadres opnieuw in</string>
-  <string name="settings_save_second_password">Save new second password</string>
-  <string name="settings_save_main_password">Save new main password</string>
+  <string name="settings_save_second_password">Nieuw tweede wachtwoord opslaan</string>
+  <string name="settings_save_main_password">Nieuw hoofdwachtwoord opslaan</string>
   <string name="settings_save">Opslaan</string>
   <string name="settings_password_required">Voer uw wachtwoord in</string>
   <string name="settings_password_required_ok">OK</string>
@@ -34,25 +34,25 @@
   <string name="settings_validation_email">E-mailadres is ongeldig.</string>
   <string name="settings_general_error">Er is iets fout gegaan.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
-  <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
+  <string name="settings_password_management_tab_main_password">Hoofdwachtwoord</string>
+  <string name="settings_password_management_tab_second_password">Tweede wachtwoord</string>
+  <string name="settings_password_management_change_password_note">Om een van uw wachtwoorden te veranderen, moet u uw hoofdwachtwoord weten. <a href="https://account.proton.me/reset-password">Hoofdwachtwoord vergeten?</a></string>
   <string name="settings_password_management_header">Wachtwoord wijzigen</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">Huidig hoofdwachtwoord</string>
+  <string name="settings_main_password_hint_new">Nieuw hoofdwachtwoord</string>
+  <string name="settings_main_password_hint_new_confirm">Bevestig nieuw hoofdwachtwoord</string>
+  <string name="settings_second_password_hint_current_main_password">Huidig hoofdwachtwoord</string>
+  <string name="settings_second_password_hint_new">Nieuw tweede wachtwoord</string>
+  <string name="settings_second_password_hint_new_confirm">Bevestig nieuw tweede wachtwoord</string>
   <string name="settings_change_password_error">Er is een fout opgetreden bij het wijzigen van het wachtwoord.</string>
   <string name="settings_recovery_email_success">Herstel-e-mailadres gewijzigd</string>
   <string name="settings_password_management_success">Wachtwoord bijgewerkt</string>
   <string name="settings_password_management_start_recovery">Wachtwoord vergeten?</string>
-  <string name="settings_manage_security_keys">To manage, add, or remove security keys, please use the Proton web application.</string>
-  <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
-  <string name="settings_security_keys_title">Security keys</string>
-  <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
+  <string name="settings_manage_security_keys">Gebruik de Proton-webapplicatie om beveiligingssleutels te beheren, toe te voegen of te verwijderen.</string>
+  <string name="settings_security_keys_registered">Dit zijn de beveiligingssleutels die geregistreerd zijn op uw account.</string>
+  <string name="settings_security_keys_empty">Er zijn geen beveiligingssleutels geregistreerd op uw account.</string>
+  <string name="settings_security_keys_title">Beveiligingssleutels</string>
+  <string name="settings_security_keys_error">Fout bij het ophalen van beveiligingssleutels, probeer het opnieuw.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonieme telemetrie</string>
   <string name="device_settings_telemetry_hint">Om onze diensten te verbeteren verzamelen we soms anonieme gebruiksgegevens.</string>

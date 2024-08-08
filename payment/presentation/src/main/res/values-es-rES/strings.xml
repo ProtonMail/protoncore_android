@@ -24,7 +24,7 @@
   <string name="payments_error_card_name">El nombre del titular de la tarjeta es obligatorio.</string>
   <string name="payments_error_card_number">Número de tarjeta inválido.</string>
   <string name="payments_error_cvc">Introduce un código de seguridad válido.</string>
-  <string name="payments_error_session">El ID de sesión es necesario cuando se subscribe a un plan para un usuario conectado.</string>
+  <string name="payments_error_session">Se necesita un ID de sesión válido cuando se suscribe a un usuario que ha iniciado sesión.</string>
   <string name="payments_error_signup_paymentmethod">No es posible registrarse con el método actual de pago.</string>
   <string name="payments_error_invalid_session">Sesión inválida.</string>
   <string name="payments_no_payment_provider">No se encuentra ningún medio de pago.</string>
