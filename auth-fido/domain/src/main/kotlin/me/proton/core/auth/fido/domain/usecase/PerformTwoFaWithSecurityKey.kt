@@ -56,7 +56,11 @@ public interface PerformTwoFaWithSecurityKey<T: Any, A : Any> {
         ) : Result()
 
         public data object EmptyResult : Result()
+
         public data object UnknownResult : Result()
+        public data class NoCredentialsResponse(
+            val error: Throwable
+        ) : Result()
     }
 
     public data class ErrorData(
@@ -69,7 +73,6 @@ public interface PerformTwoFaWithSecurityKey<T: Any, A : Any> {
      */
     @Suppress("MagicNumber")
     public enum class ErrorCode(public val code: Int?) {
-        UNKNOWN(null),
         NOT_SUPPORTED_ERR(9),
         INVALID_STATE_ERR(11),
         SECURITY_ERR(18),
@@ -91,15 +94,30 @@ public interface PerformTwoFaWithSecurityKey<T: Any, A : Any> {
     )
 }
 
-public fun PerformTwoFaWithSecurityKey.LaunchResult.toStatus(): FidoLaunchStatus = when (this) {
+public fun PerformTwoFaWithSecurityKey.LaunchResult.toFidoStatus(): FidoLaunchStatus = when (this) {
     is PerformTwoFaWithSecurityKey.LaunchResult.Failure -> FidoLaunchStatus.failure
     is PerformTwoFaWithSecurityKey.LaunchResult.Success -> FidoLaunchStatus.success
 }
 
-public fun PerformTwoFaWithSecurityKey.Result.toStatus(): FidoSignStatus = when (this) {
+public fun PerformTwoFaWithSecurityKey.Result.toFidoStatus(): FidoSignStatus = when (this) {
     is PerformTwoFaWithSecurityKey.Result.Cancelled -> FidoSignStatus.userCancelled
     is PerformTwoFaWithSecurityKey.Result.EmptyResult -> FidoSignStatus.empty
-    is PerformTwoFaWithSecurityKey.Result.Error -> FidoSignStatus.failure
+    is PerformTwoFaWithSecurityKey.Result.Error -> when (error.code) {
+        PerformTwoFaWithSecurityKey.ErrorCode.NOT_SUPPORTED_ERR -> FidoSignStatus.failureNotSupported
+        PerformTwoFaWithSecurityKey.ErrorCode.INVALID_STATE_ERR -> FidoSignStatus.failureInvalidState
+        PerformTwoFaWithSecurityKey.ErrorCode.SECURITY_ERR -> FidoSignStatus.failureSecurity
+        PerformTwoFaWithSecurityKey.ErrorCode.NETWORK_ERR -> FidoSignStatus.failureNetwork
+        PerformTwoFaWithSecurityKey.ErrorCode.ABORT_ERR -> FidoSignStatus.failureAbort
+        PerformTwoFaWithSecurityKey.ErrorCode.TIMEOUT_ERR -> FidoSignStatus.failureTimeout
+        PerformTwoFaWithSecurityKey.ErrorCode.ENCODING_ERR -> FidoSignStatus.failureEncoding
+        PerformTwoFaWithSecurityKey.ErrorCode.CONSTRAINT_ERR -> FidoSignStatus.failureConstraint
+        PerformTwoFaWithSecurityKey.ErrorCode.DATA_ERR -> FidoSignStatus.failureData
+        PerformTwoFaWithSecurityKey.ErrorCode.NOT_ALLOWED_ERR -> FidoSignStatus.failureNotAllowed
+        PerformTwoFaWithSecurityKey.ErrorCode.ATTESTATION_NOT_PRIVATE_ERR -> FidoSignStatus.failureAttestationNotPrivate
+        PerformTwoFaWithSecurityKey.ErrorCode.UNKNOWN_ERR -> FidoSignStatus.failureUnknown
+    }
+
     is PerformTwoFaWithSecurityKey.Result.Success -> FidoSignStatus.success
     is PerformTwoFaWithSecurityKey.Result.UnknownResult -> FidoSignStatus.unknown
+    is PerformTwoFaWithSecurityKey.Result.NoCredentialsResponse -> FidoSignStatus.failureNoResponse
 }

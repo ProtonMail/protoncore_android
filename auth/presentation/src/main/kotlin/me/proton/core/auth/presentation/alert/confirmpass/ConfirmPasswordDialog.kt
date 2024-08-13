@@ -39,11 +39,11 @@ import me.proton.core.auth.domain.entity.SecondFactorMethod
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.DialogConfirmPasswordBinding
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
+import me.proton.core.auth.presentation.ui.handle
 import me.proton.core.auth.presentation.viewmodel.ConfirmPasswordDialogViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
@@ -53,7 +53,6 @@ import me.proton.core.presentation.utils.ScreenContentProtector
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
-import me.proton.core.util.kotlin.CoreLogger
 import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull
@@ -229,21 +228,8 @@ class ConfirmPasswordDialog : DialogFragment() {
         viewController.setIdle()
         viewModel.onSignResult(result)
 
-        when (result) {
-            is PerformTwoFaWithSecurityKey.Result.Success -> onSecurityKeyAuthSuccess(result, options)
-            is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
-            is PerformTwoFaWithSecurityKey.Result.EmptyResult -> viewController.root.errorSnack(
-                getString(R.string.auth_login_general_error)
-            )
-
-            is PerformTwoFaWithSecurityKey.Result.Error -> viewController.root.errorSnack(
-                result.error.message ?: getString(R.string.auth_login_general_error)
-            )
-
-            is PerformTwoFaWithSecurityKey.Result.UnknownResult -> {
-                getString(R.string.auth_login_general_error)
-                CoreLogger.e(LogTag.FLOW_ERROR_2FA, result.toString())
-            }
+        result.handle(requireContext(), viewController.root) { resultSuccess ->
+            onSecurityKeyAuthSuccess(resultSuccess, options)
         }
     }
 

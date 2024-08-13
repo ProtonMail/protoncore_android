@@ -19,12 +19,10 @@
 package me.proton.core.auth.fido.play.usecase
 
 import android.app.Activity
-import android.content.Context
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
 import com.google.android.gms.fido.Fido
 import com.google.android.gms.fido.common.Transport
 import com.google.android.gms.fido.fido2.api.common.AuthenticationExtensions
@@ -135,10 +133,10 @@ public class PerformTwoFaWithSecurityKeyImpl @Inject constructor() : PerformTwoF
             }
     }
 
-    private fun handleCredentialResponse(credential: PublicKeyCredential): PerformTwoFaWithSecurityKey.Result =
-        when (val response = credential.response) {
+    private fun handleCredentialResponse(credential: PublicKeyCredential): PerformTwoFaWithSecurityKey.Result = try {
+        when (val credentialsResponse = credential.response) {
             is AuthenticatorErrorResponse -> PerformTwoFaWithSecurityKey.Result.Error(
-                PerformTwoFaWithSecurityKey.ErrorData(response.errorCode.convert(), response.errorMessage)
+                PerformTwoFaWithSecurityKey.ErrorData(credentialsResponse.errorCode.convert(), credentialsResponse.errorMessage)
             )
 
             is AuthenticatorAssertionResponse -> PerformTwoFaWithSecurityKey.Result.Success(
@@ -147,15 +145,18 @@ public class PerformTwoFaWithSecurityKeyImpl @Inject constructor() : PerformTwoF
                 type = credential.type,
                 id = credential.id!!,
                 response = PerformTwoFaWithSecurityKey.SuccessResponseData(
-                    clientDataJSON = response.clientDataJSON,
-                    authenticatorData = response.authenticatorData,
-                    signature = response.signature
+                    clientDataJSON = credentialsResponse.clientDataJSON,
+                    authenticatorData = credentialsResponse.authenticatorData,
+                    signature = credentialsResponse.signature
                 ),
                 // Note: `credential.clientExtensionResults` are currently not passed down.
             )
 
             else -> PerformTwoFaWithSecurityKey.Result.UnknownResult
         }
+    } catch (e: IllegalStateException) {
+        PerformTwoFaWithSecurityKey.Result.NoCredentialsResponse(e)
+    }
 }
 
 /**

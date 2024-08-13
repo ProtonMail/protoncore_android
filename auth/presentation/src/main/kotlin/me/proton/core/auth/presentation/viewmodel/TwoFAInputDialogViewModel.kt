@@ -35,7 +35,7 @@ import me.proton.core.auth.domain.entity.SecondFactor
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.usecase.GetAuthInfoSrp
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.fido.domain.usecase.toStatus
+import me.proton.core.auth.fido.domain.usecase.toFidoStatus
 import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
@@ -97,11 +97,11 @@ class TwoFAInputDialogViewModel @Inject constructor(
     }.launchIn(viewModelScope)
 
     fun onLaunchResult(source: Source, launchResult: PerformTwoFaWithSecurityKey.LaunchResult) {
-        enqueueObservability(TwoFaDialogFidoLaunchResultTotal(source.toScreenId(), launchResult.toStatus()))
+        enqueueObservability(TwoFaDialogFidoLaunchResultTotal(source.toScreenId(), launchResult.toFidoStatus()))
     }
 
     fun onSignResult(source: Source, result: PerformTwoFaWithSecurityKey.Result) {
-        enqueueObservability(TwoFaDialogFidoSignResultTotal(source.toScreenId(), result.toStatus()))
+        enqueueObservability(TwoFaDialogFidoSignResultTotal(source.toScreenId(), result.toFidoStatus()))
     }
 }
 

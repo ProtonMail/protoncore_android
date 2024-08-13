@@ -21,8 +21,20 @@ package me.proton.core.observability.domain.metrics.common
 @Suppress("EnumNaming", "EnumEntryName")
 public enum class FidoSignStatus {
     empty,
-    failure,
     success,
-    unknown,
-    userCancelled
+    userCancelled,
+    failureNotSupported,
+    failureInvalidState,
+    failureSecurity,
+    failureNetwork,
+    failureAbort,
+    failureTimeout,
+    failureEncoding,
+    failureConstraint,
+    failureData,
+    failureNotAllowed,
+    failureAttestationNotPrivate,
+    failureUnknown,
+    failureNoResponse,
+    unknown
 }

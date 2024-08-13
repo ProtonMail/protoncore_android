@@ -18,6 +18,8 @@
 
 package me.proton.core.auth.presentation.ui
 
+import android.content.Context
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.fragment.app.FragmentManager
 import kotlinx.coroutines.delay
@@ -26,13 +28,16 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
+import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.ui.signup.SignupFinishedFragment
 import me.proton.core.auth.presentation.ui.signup.CreatingUserFragment
-import me.proton.core.domain.entity.Product
 import me.proton.core.presentation.ui.alert.ProtonCancellableAlertDialog
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.inTransaction
 import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.util.kotlin.CoreLogger
 
 private const val TAG_PASSWORD_CHOOSER_DIALOG = "password_chooser_dialog"
 private const val TAG_CREATING_USER = "creating_user_fragment"
@@ -124,4 +129,32 @@ internal inline fun <reified E> Flow<Any>.onLongState(crossinline action: () -> 
     else emptyFlow()
 }.onEach {
     action()
+}
+
+fun PerformTwoFaWithSecurityKey.ErrorData.getMessage(context: Context): String = when(this.code) {
+    PerformTwoFaWithSecurityKey.ErrorCode.NOT_SUPPORTED_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.DATA_ERR -> context.getString(R.string.auth_2fa_error_key_invalid_or_not_supported)
+    PerformTwoFaWithSecurityKey.ErrorCode.TIMEOUT_ERR,
+    PerformTwoFaWithSecurityKey.ErrorCode.NETWORK_ERR -> context.getString(R.string.auth_2fa_error_key_network_error)
+    else -> context.getString(R.string.auth_login_general_error)
+}
+
+fun PerformTwoFaWithSecurityKey.Result.handle(context: Context, view: View, onSuccess: (PerformTwoFaWithSecurityKey.Result.Success) -> Unit) {
+    when (this) {
+        is PerformTwoFaWithSecurityKey.Result.Success -> onSuccess(this)
+        is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
+        is PerformTwoFaWithSecurityKey.Result.EmptyResult -> view.errorSnack(
+            context.getString(R.string.auth_login_general_error)
+        )
+
+        is PerformTwoFaWithSecurityKey.Result.Error -> view.errorSnack(
+            error.getMessage(context)
+        )
+
+        is PerformTwoFaWithSecurityKey.Result.UnknownResult,
+        is PerformTwoFaWithSecurityKey.Result.NoCredentialsResponse -> {
+            view.errorSnack(context.getString(R.string.auth_login_general_error))
+            CoreLogger.e(LogTag.FLOW_ERROR_2FA, toString())
+        }
+    }
 }

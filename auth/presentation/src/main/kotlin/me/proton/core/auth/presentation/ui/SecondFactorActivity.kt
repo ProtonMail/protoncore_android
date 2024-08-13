@@ -243,23 +243,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         showLoading(false)
         viewModel.onFidoSignResult(result)
 
-        when (result) {
-            is PerformTwoFaWithSecurityKey.Result.Success -> onSecurityKeyAuthSuccess(result, options)
-
-            is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
-
-            is PerformTwoFaWithSecurityKey.Result.EmptyResult -> binding.root.errorSnack(
-                getString(R.string.auth_login_general_error)
-            )
-
-            is PerformTwoFaWithSecurityKey.Result.Error -> binding.root.errorSnack(
-                result.error.message ?: getString(R.string.auth_login_general_error)
-            )
-
-            is PerformTwoFaWithSecurityKey.Result.UnknownResult -> {
-                getString(R.string.auth_login_general_error)
-                CoreLogger.e(LogTag.FLOW_ERROR_2FA, result.toString())
-            }
+        result.handle(this, binding.root) { resultSuccess ->
+            onSecurityKeyAuthSuccess(resultSuccess, options)
         }
     }
 

@@ -47,6 +47,7 @@ import me.proton.core.auth.presentation.databinding.Dialog2faInputBinding
 import me.proton.core.auth.presentation.entity.SecondFactorProofEntity
 import me.proton.core.auth.presentation.entity.TwoFAMechanisms
 import me.proton.core.auth.presentation.entity.toEntity
+import me.proton.core.auth.presentation.ui.handle
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.auth.presentation.viewmodel.TwoFAInputDialogViewModel
@@ -212,42 +213,26 @@ class TwoFAInputDialog : DialogFragment(), TabLayout.OnTabSelectedListener {
         options: Fido2PublicKeyCredentialRequestOptions
     ) {
         viewModel.onSignResult(source, result)
-        when (result) {
-            is PerformTwoFaWithSecurityKey.Result.Success -> {
-                val secondFactorFido = SecondFactorProof.Fido2(
-                    publicKeyOptions = options,
-                    clientData = result.response.clientDataJSON,
-                    authenticatorData = result.response.authenticatorData,
-                    signature = result.response.signature,
-                    credentialID = result.rawId
-                )
+        result.handle(requireContext(), binding.root) { resultSuccess ->
+            val secondFactorFido = SecondFactorProof.Fido2(
+                publicKeyOptions = options,
+                clientData = resultSuccess.response.clientDataJSON,
+                authenticatorData = resultSuccess.response.authenticatorData,
+                signature = resultSuccess.response.signature,
+                credentialID = resultSuccess.rawId
+            )
 
-                parentFragmentManager.setFragmentResult(
-                    KEY_2FA_SET, bundleOf(
-                        BUNDLE_KEY_2FA_DATA to SecondFactorProofEntity.Fido2Entity(
-                            secondFactorFido.publicKeyOptions.toEntity(),
-                            secondFactorFido.clientData,
-                            secondFactorFido.authenticatorData,
-                            secondFactorFido.signature,
-                            secondFactorFido.credentialID
-                        )
+            parentFragmentManager.setFragmentResult(
+                KEY_2FA_SET, bundleOf(
+                    BUNDLE_KEY_2FA_DATA to SecondFactorProofEntity.Fido2Entity(
+                        secondFactorFido.publicKeyOptions.toEntity(),
+                        secondFactorFido.clientData,
+                        secondFactorFido.authenticatorData,
+                        secondFactorFido.signature,
+                        secondFactorFido.credentialID
                     )
                 )
-            }
-
-            is PerformTwoFaWithSecurityKey.Result.Cancelled -> Unit
-            is PerformTwoFaWithSecurityKey.Result.EmptyResult -> binding.root.errorSnack(
-                getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
             )
-
-            is PerformTwoFaWithSecurityKey.Result.Error -> binding.root.errorSnack(
-                result.error.message ?: getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
-            )
-
-            is PerformTwoFaWithSecurityKey.Result.UnknownResult -> {
-                getString(me.proton.core.auth.presentation.R.string.auth_login_general_error)
-                CoreLogger.e(LogTag.FLOW_ERROR_2FA, result.toString())
-            }
         }
     }
 

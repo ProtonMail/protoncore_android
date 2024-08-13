@@ -41,7 +41,7 @@ import me.proton.core.auth.domain.usecase.scopes.ObtainLockedScope
 import me.proton.core.auth.domain.usecase.scopes.ObtainPasswordScope
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.fido.domain.usecase.toStatus
+import me.proton.core.auth.fido.domain.usecase.toFidoStatus
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
@@ -57,7 +57,6 @@ import me.proton.core.observability.domain.metrics.ConfirmPasswordSubmissionTota
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import me.proton.core.util.kotlin.exhaustive
-import me.proton.core.util.kotlin.takeIfNotEmpty
 import javax.inject.Inject
 
 @HiltViewModel
@@ -170,11 +169,11 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
     }
 
     fun onLaunchResult(launchResult: PerformTwoFaWithSecurityKey.LaunchResult) {
-        enqueueObservability(ConfirmPasswordFidoLaunchResultTotal(launchResult.toStatus()))
+        enqueueObservability(ConfirmPasswordFidoLaunchResultTotal(launchResult.toFidoStatus()))
     }
 
     fun onSignResult(result: PerformTwoFaWithSecurityKey.Result) {
-        enqueueObservability(ConfirmPasswordFidoSignResultTotal(result.toStatus()))
+        enqueueObservability(ConfirmPasswordFidoSignResultTotal(result.toFidoStatus()))
     }
 }
 

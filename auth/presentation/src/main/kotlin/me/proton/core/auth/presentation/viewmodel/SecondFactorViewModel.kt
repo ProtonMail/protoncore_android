@@ -40,7 +40,7 @@ import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.fido.domain.usecase.toStatus
+import me.proton.core.auth.fido.domain.usecase.toFidoStatus
 import me.proton.core.auth.presentation.LogTag
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
@@ -180,11 +180,11 @@ class SecondFactorViewModel @Inject constructor(
     }
 
     internal fun onFidoLaunchResult(result: PerformTwoFaWithSecurityKey.LaunchResult) {
-        observabilityManager.enqueue(LoginSecondFactorFidoLaunchResultTotal(result.toStatus()))
+        observabilityManager.enqueue(LoginSecondFactorFidoLaunchResultTotal(result.toFidoStatus()))
     }
 
     internal fun onFidoSignResult(result: PerformTwoFaWithSecurityKey.Result) {
-        observabilityManager.enqueue(LoginSecondFactorFidoSignResultTotal(result.toStatus()))
+        observabilityManager.enqueue(LoginSecondFactorFidoSignResultTotal(result.toFidoStatus()))
     }
 
     internal fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
