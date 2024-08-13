@@ -27,7 +27,7 @@ import me.proton.core.observability.domain.metrics.common.FidoLaunchStatus
 
 @Serializable
 @Schema(description = "The result of launching the dialog to sign a request using fido2 security key.")
-@SchemaId("https://proton.me/android_core_confirmPassword_fidoLaunchResult_total_v2.schema.json")
+@SchemaId("https://proton.me/android_core_confirmPassword_fidoLaunchResult_total_v1.schema.json")
 public class ConfirmPasswordFidoLaunchResultTotal(
     override val Labels: FidoLaunchLabels,
     @Required override val Value: Long = 1

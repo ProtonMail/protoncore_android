@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">密保邮箱地址已更新</string>
   <string name="settings_password_management_success">密码已更改</string>
   <string name="settings_password_management_start_recovery">忘记了你的密码？</string>
-  <string name="settings_manage_security_keys">若要管理、添加或删除安全密钥，请使用 Proton 网页应用程序。</string>
+  <string name="settings_manage_security_keys_info">若要管理、添加或删除安全密钥，请使用 Proton 网页应用程序。</string>
   <string name="settings_security_keys_registered">这些是注册到您账户的安全密钥.。</string>
   <string name="settings_security_keys_empty">当前您的账户没有链接安全密钥</string>
   <string name="settings_security_keys_title">安全密钥</string>

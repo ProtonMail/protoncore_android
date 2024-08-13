@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Adres pomocniczy został zaktualizowany</string>
   <string name="settings_password_management_success">Hasło zostało zaktualizowane</string>
   <string name="settings_password_management_start_recovery">Nie pamiętasz hasła?</string>
-  <string name="settings_manage_security_keys">Zarządzaj, dodawaj i usuwaj klucze bezpieczeństwa na stronie aplikacji internetowej Proton.</string>
+  <string name="settings_manage_security_keys_info">Zarządzaj, dodawaj i usuwaj klucze bezpieczeństwa na stronie aplikacji internetowej Proton.</string>
   <string name="settings_security_keys_registered">Te klucze bezpieczeństwa zostały zarejestrowane na Twoim koncie.</string>
   <string name="settings_security_keys_empty">Brak kluczy bezpieczeństwa zarejestrowanych na Twoim koncie.</string>
   <string name="settings_security_keys_title">Klucze bezpieczeństwa</string>

@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">აღდგენის ელფოსტის მისამართი განახლდა</string>
   <string name="settings_password_management_success">პაროლი განახლებულია</string>
   <string name="settings_password_management_start_recovery">არ იცით თქვენი მიმდინარე პაროლი?</string>
-  <string name="settings_manage_security_keys">უსაფრთხოების გასაღებების სამართავად, დასამატებლად ან წასაშლელად Proton-ის ვებ-აპლიკაცია გამოიყენეთ.</string>
+  <string name="settings_manage_security_keys_info">უსაფრთხოების გასაღებების სამართავად, დასამატებლად ან წასაშლელად Proton-ის ვებ-აპლიკაცია გამოიყენეთ.</string>
   <string name="settings_security_keys_registered">თქვენს ანგარიშზე რეგისტრირებულია უსაფრთხოების გასაღებები.</string>
   <string name="settings_security_keys_empty">თქვენს ანგარიშზე უსაფრთხოების გასაღებები რეგისტრირებული არაა.</string>
   <string name="settings_security_keys_title">უსაფრთხოების გასაღებები</string>

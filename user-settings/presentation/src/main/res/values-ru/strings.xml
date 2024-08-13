@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Резервный адрес электронной почты обновлён</string>
   <string name="settings_password_management_success">Пароль обновлен</string>
   <string name="settings_password_management_start_recovery">Не знаете свой текущий пароль?</string>
-  <string name="settings_manage_security_keys">Для управления, добавления или удаления ключей безопасности используйте веб-приложение Proton .</string>
+  <string name="settings_manage_security_keys_info">Для управления, добавления или удаления ключей безопасности используйте веб-приложение Proton .</string>
   <string name="settings_security_keys_registered">Это ключи безопасности, зарегистрированные в вашей учетной записи.</string>
   <string name="settings_security_keys_empty">Для вашей учетной записи не зарегистрировано ни одного ключа безопасности.</string>
   <string name="settings_security_keys_title">Ключи безопасности</string>

@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Alamat email pemulihan diperbarui</string>
   <string name="settings_password_management_success">Kata sandi diperbarui</string>
   <string name="settings_password_management_start_recovery">Tidak tahu kata sandi Anda saat ini?</string>
-  <string name="settings_manage_security_keys">Untuk mengelola, menambahkan, atau menghapus kunci keamanan, silakan gunakan aplikasi web Proton.</string>
+  <string name="settings_manage_security_keys_info">Untuk mengelola, menambahkan, atau menghapus kunci keamanan, silakan gunakan aplikasi web Proton.</string>
   <string name="settings_security_keys_registered">Berikut merupakan kunci keamanan yang terdaftar ke akun Anda.</string>
   <string name="settings_security_keys_empty">Tidak ada kunci keamanan yang terdaftar dengan akun Anda.</string>
   <string name="settings_security_keys_title">Kunci keamanan</string>

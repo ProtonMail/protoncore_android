@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Herstel-e-mailadres gewijzigd</string>
   <string name="settings_password_management_success">Wachtwoord bijgewerkt</string>
   <string name="settings_password_management_start_recovery">Wachtwoord vergeten?</string>
-  <string name="settings_manage_security_keys">Gebruik de Proton-webapplicatie om beveiligingssleutels te beheren, toe te voegen of te verwijderen.</string>
+  <string name="settings_manage_security_keys_info">Gebruik de Proton-webapplicatie om beveiligingssleutels te beheren, toe te voegen of te verwijderen.</string>
   <string name="settings_security_keys_registered">Dit zijn de beveiligingssleutels die geregistreerd zijn op uw account.</string>
   <string name="settings_security_keys_empty">Er zijn geen beveiligingssleutels geregistreerd op uw account.</string>
   <string name="settings_security_keys_title">Beveiligingssleutels</string>

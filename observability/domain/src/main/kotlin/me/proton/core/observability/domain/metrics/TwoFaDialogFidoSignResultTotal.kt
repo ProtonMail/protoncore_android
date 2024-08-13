@@ -27,7 +27,7 @@ import me.proton.core.observability.domain.metrics.common.TwoFaDialogScreenId
 
 @Serializable
 @Schema(description = "The result signing a request using fido2 security key.")
-@SchemaId("https://proton.me/android_core_twoFaDialog_fidoSignResult_total_v1.schema.json")
+@SchemaId("https://proton.me/android_core_twoFaDialog_fidoSignResult_total_v2.schema.json")
 public class TwoFaDialogFidoSignResultTotal(
     override val Labels: FidoSignLabelsData,
     @Required override val Value: Long = 1

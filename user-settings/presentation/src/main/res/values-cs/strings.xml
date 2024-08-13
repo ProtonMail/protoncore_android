@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">E-mailová adresa pro obnovení aktualizována</string>
   <string name="settings_password_management_success">Heslo bylo změněno</string>
   <string name="settings_password_management_start_recovery">Neznáte své aktuální heslo?</string>
-  <string name="settings_manage_security_keys">Chcete-li spravovat, přidávat nebo odebírat bezpečnostní klíče, použijte webovou aplikaci Proton.</string>
+  <string name="settings_manage_security_keys_info">Chcete-li spravovat, přidávat nebo odebírat bezpečnostní klíče, použijte webovou aplikaci Proton.</string>
   <string name="settings_security_keys_registered">Toto jsou bezpečnostní klíče registrované k vašemu účtu.</string>
   <string name="settings_security_keys_empty">K vašemu účtu nejsou registrovány žádné bezpečnostní klíče.</string>
   <string name="settings_security_keys_title">Bezpečnostní klíče</string>

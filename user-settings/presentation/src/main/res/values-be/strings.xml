@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Адрас электроннай пошты для аднаўлення доступу абноўлены</string>
   <string name="settings_password_management_success">Пароль абноўлены</string>
   <string name="settings_password_management_start_recovery">Не ведаеце свой бягучы пароль?</string>
-  <string name="settings_manage_security_keys">Cкарыстайцеся вэб-праграмай Proton для кіравання, дадавання або выдалення ключоў бяспекі.</string>
+  <string name="settings_manage_security_keys_info">Cкарыстайцеся вэб-праграмай Proton для кіравання, дадавання або выдалення ключоў бяспекі.</string>
   <string name="settings_security_keys_registered">Гэтыя ключы бяспекі зарэгістраваны ў вашым уліковым запісе.</string>
   <string name="settings_security_keys_empty">Адсутнічаюць ключы бяспекі, якія зарэгістраваны для вашага ўліковага запісу.</string>
   <string name="settings_security_keys_title">Ключы бяспекі</string>

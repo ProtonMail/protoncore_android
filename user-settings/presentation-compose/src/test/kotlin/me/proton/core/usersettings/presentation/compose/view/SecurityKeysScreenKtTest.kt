@@ -15,6 +15,8 @@ class SecurityKeysScreenKtTest {
         paparazzi.snapshot {
             ProtonTheme {
                 SecurityKeysScreen(
+                    onManageSecurityKeysClicked = {},
+                    onAddSecurityKeyClicked = {},
                     onBackClick = {}
                 )
             }

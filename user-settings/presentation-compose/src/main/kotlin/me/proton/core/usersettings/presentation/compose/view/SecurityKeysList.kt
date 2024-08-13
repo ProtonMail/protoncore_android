@@ -19,20 +19,20 @@
 package me.proton.core.usersettings.presentation.compose.view
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ListItem
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,17 +44,20 @@ import me.proton.core.compose.viewmodel.hiltViewModelOrNull
 import me.proton.core.usersettings.presentation.compose.R
 import me.proton.core.usersettings.presentation.compose.viewmodel.SecurityKeysInfoViewModel
 import me.proton.core.usersettings.presentation.compose.viewmodel.SecurityKeysState
-import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun SecurityKeysList(
     modifier: Modifier = Modifier,
+    onManageSecurityKeysClicked: () -> Unit,
+    onAddSecurityKeyClicked: () -> Unit,
     viewModel: SecurityKeysInfoViewModel? = hiltViewModelOrNull(),
 ) {
     if (viewModel == null) return
     val state by viewModel.state.collectAsStateWithLifecycle()
     SecurityKeysList(
         modifier = modifier,
+        onManageSecurityKeysClicked = onManageSecurityKeysClicked,
+        onAddSecurityKeyClicked = onAddSecurityKeyClicked,
         state = state
     )
 }
@@ -62,6 +65,8 @@ fun SecurityKeysList(
 @Composable
 fun SecurityKeysList(
     modifier: Modifier = Modifier,
+    onManageSecurityKeysClicked: () -> Unit,
+    onAddSecurityKeyClicked: () -> Unit,
     state: SecurityKeysState
 ) {
     when (state) {
@@ -69,6 +74,8 @@ fun SecurityKeysList(
         is SecurityKeysState.Error -> SecurityKeyError(state.throwable?.message)
         is SecurityKeysState.Success -> SecurityKeysList(
             modifier = modifier,
+            onManageSecurityKeysClicked = onManageSecurityKeysClicked,
+            onAddSecurityKeyClicked = onAddSecurityKeyClicked,
             keys = state.keys
         )
     }
@@ -77,6 +84,8 @@ fun SecurityKeysList(
 @Composable
 internal fun SecurityKeysList(
     modifier: Modifier = Modifier,
+    onManageSecurityKeysClicked: () -> Unit,
+    onAddSecurityKeyClicked: () -> Unit,
     keys: List<Fido2RegisteredKey>
 ) {
     LazyColumn(
@@ -88,40 +97,48 @@ internal fun SecurityKeysList(
             .fillMaxWidth()
     ) {
         item {
-            SecurityKeysListHeader()
+            if (keys.isNotEmpty()) {
+                SecurityKeysListHeader()
+            } else {
+                SecurityKeysEmptyListHeader()
+            }
         }
         if (keys.isNotEmpty()) {
             items(keys, { key -> key.name }) { key ->
                 SecurityKeyRow(key = key)
             }
-        } else {
-            item {
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
-                Text(
-                    text = stringResource(id = R.string.settings_security_keys_empty),
-                )
-                Spacer(modifier = Modifier.height(dimensionResource(id = R.dimen.gap_medium_plus)))
-            }
         }
         item {
-            SecurityKeysListFooter()
+            if (keys.isNotEmpty()) {
+                SecurityKeysListFooter(
+                    onManageSecurityKeysClicked = onManageSecurityKeysClicked
+                )
+            } else {
+                SecurityKeysEmptyListFooter(
+                    onAddSecurityKeyClicked = onAddSecurityKeyClicked
+                )
+            }
         }
     }
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 internal fun SecurityKeyRow(
     modifier: Modifier = Modifier,
     key: Fido2RegisteredKey
 ) {
-    Text(
-        modifier = modifier.padding(
-            horizontal = ProtonDimens.DefaultSpacing,
-            vertical = ProtonDimens.DefaultSpacing
-        ),
-        text = key.name
+    ListItem(
+        text = {
+            Text(text = key.name)
+        },
+        icon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_proton_security_key),
+                contentDescription = ""
+            )
+        }
     )
-    HorizontalDivider()
 }
 
 @Composable
@@ -154,6 +171,8 @@ internal fun SecurityKeyError(
 internal fun SecurityKeysListPreviewWithStateSuccess() {
     ProtonTheme {
         SecurityKeysList(
+            onManageSecurityKeysClicked = {},
+            onAddSecurityKeyClicked = {},
             state = SecurityKeysState.Success(
                 keys = listOf(
                     Fido2RegisteredKey("format", UByteArray(10), "Test key 1"),
@@ -171,6 +190,8 @@ internal fun SecurityKeysListPreviewWithStateSuccess() {
 internal fun SecurityKeysListPreviewWithStateError() {
     ProtonTheme {
         SecurityKeysList(
+            onManageSecurityKeysClicked = {},
+            onAddSecurityKeyClicked = {},
             state = SecurityKeysState.Error(
                 Error("Test error")
             )
@@ -184,6 +205,8 @@ internal fun SecurityKeysListPreviewWithStateError() {
 internal fun SecurityKeysListPreviewWithKeysData() {
     ProtonTheme {
         SecurityKeysList(
+            onManageSecurityKeysClicked = {},
+            onAddSecurityKeyClicked = {},
             keys = listOf(
                 Fido2RegisteredKey("format", UByteArray(10), "Test key 1"),
                 Fido2RegisteredKey("format", UByteArray(10), "Test key 2"),
@@ -199,6 +222,8 @@ internal fun SecurityKeysListPreviewWithKeysData() {
 internal fun SecurityKeysListPreviewNoData() {
     ProtonTheme {
         SecurityKeysList(
+            onManageSecurityKeysClicked = {},
+            onAddSecurityKeyClicked = {},
             state = SecurityKeysState.Success(keys = emptyList())
         )
     }

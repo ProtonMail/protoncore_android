@@ -25,6 +25,8 @@ import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.usersettings.presentation.compose.R
 
 @AndroidEntryPoint
 class SecurityKeysActivity : ProtonActivity() {
@@ -32,7 +34,15 @@ class SecurityKeysActivity : ProtonActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ProtonTheme {
-                SecurityKeysScreen(onBackClick = { finish() })
+                SecurityKeysScreen(
+                    onAddSecurityKeyClicked = {
+                        openBrowserLink(getString(R.string.add_security_key_link))
+                    },
+                    onManageSecurityKeysClicked = {
+                        openBrowserLink(getString(R.string.manage_security_keys_link))
+                    },
+                    onBackClick = { finish() }
+                )
             }
         }
     }

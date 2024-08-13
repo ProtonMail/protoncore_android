@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">復原電子郵件位址已更新</string>
   <string name="settings_password_management_success">密碼已更新</string>
   <string name="settings_password_management_start_recovery">忘記或想不起您的密碼？</string>
-  <string name="settings_manage_security_keys">進行管理、加入或移除安全性密鑰時，請利用 Proton 網頁應用程式。</string>
+  <string name="settings_manage_security_keys_info">進行管理、加入或移除安全性密鑰時，請利用 Proton 網頁應用程式。</string>
   <string name="settings_security_keys_registered">這些是註冊在您帳號的安全性密鑰。</string>
   <string name="settings_security_keys_empty">目前沒有註冊在您帳號的安全性密鑰。</string>
   <string name="settings_security_keys_title">安全性密鑰</string>

@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
   <string name="settings_password_management_start_recovery">No sabeu la contrasenya actual?</string>
-  <string name="settings_manage_security_keys">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton.</string>
+  <string name="settings_manage_security_keys_info">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton.</string>
   <string name="settings_security_keys_registered">Aquestes són les claus de seguretat registrades al vostre compte.</string>
   <string name="settings_security_keys_empty">No hi ha cap clau de seguretat registrada al vostre compte.</string>
   <string name="settings_security_keys_title">Claus de seguretat</string>

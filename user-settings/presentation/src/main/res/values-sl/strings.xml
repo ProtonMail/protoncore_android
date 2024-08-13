@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">E-poštni naslov za obnovitev je posodobljen</string>
   <string name="settings_password_management_success">Geslo je posodobljeno</string>
   <string name="settings_password_management_start_recovery">Ne poznate trenutnega gesla?</string>
-  <string name="settings_manage_security_keys">Prosimo uporabite Proton spletno aplikacijo za upravljanje, dodajanje ali odstranjevanje varnostnih ključev.</string>
+  <string name="settings_manage_security_keys_info">Prosimo uporabite Proton spletno aplikacijo za upravljanje, dodajanje ali odstranjevanje varnostnih ključev.</string>
   <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
   <string name="settings_security_keys_empty">Vaš račun nima registriranih varnostnih ključev.</string>
   <string name="settings_security_keys_title">Varnostni ključi</string>

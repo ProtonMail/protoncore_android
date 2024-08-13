@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Endereço de e-mail de recuperação atualizado</string>
   <string name="settings_password_management_success">Senha atualizada</string>
   <string name="settings_password_management_start_recovery">Não sabe sua senha atual?</string>
-  <string name="settings_manage_security_keys">Para gerenciar, adicionar ou remover chaves de segurança use o aplicativo web da Proton.</string>
+  <string name="settings_manage_security_keys_info">Para gerenciar, adicionar ou remover chaves de segurança use o aplicativo web da Proton.</string>
   <string name="settings_security_keys_registered">Essas chaves de segurança estão registradas na sua conta.</string>
   <string name="settings_security_keys_empty">Não há chaves de segurança registradas em sua conta.</string>
   <string name="settings_security_keys_title">Chaves de segurança</string>

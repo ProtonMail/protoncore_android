@@ -30,7 +30,11 @@ class SecurityKeysListKtTest {
         }
         paparazzi.snapshot {
             ProtonTheme {
-                SecurityKeysList(viewModel = viewModel)
+                SecurityKeysList(
+                    viewModel = viewModel,
+                    onManageSecurityKeysClicked = {},
+                    onAddSecurityKeyClicked = {}
+                )
             }
         }
     }
@@ -44,7 +48,11 @@ class SecurityKeysListKtTest {
         }
         paparazzi.snapshot {
             ProtonTheme {
-                SecurityKeysList(viewModel = viewModel)
+                SecurityKeysList(
+                    viewModel = viewModel,
+                    onManageSecurityKeysClicked = {},
+                    onAddSecurityKeyClicked = {}
+                )
             }
         }
     }
@@ -58,7 +66,11 @@ class SecurityKeysListKtTest {
         }
         paparazzi.snapshot {
             ProtonTheme {
-                SecurityKeysList(viewModel = viewModel)
+                SecurityKeysList(
+                    viewModel = viewModel,
+                    onManageSecurityKeysClicked = {},
+                    onAddSecurityKeyClicked = {}
+                )
             }
         }
     }

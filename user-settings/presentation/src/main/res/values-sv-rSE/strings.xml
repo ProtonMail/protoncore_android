@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">E-postadress för återställning uppdaterad</string>
   <string name="settings_password_management_success">Lösenord uppdaterat</string>
   <string name="settings_password_management_start_recovery">Vet du inte ditt nuvarande lösenord?</string>
-  <string name="settings_manage_security_keys">För att hantera, lägga till eller ta bort säkerhetsnycklar, använd webbapplikationen för Proton.</string>
+  <string name="settings_manage_security_keys_info">För att hantera, lägga till eller ta bort säkerhetsnycklar, använd webbapplikationen för Proton.</string>
   <string name="settings_security_keys_registered">Dessa är säkerhetsnycklarna registrerade till ditt konto.</string>
   <string name="settings_security_keys_empty">Det finns inga säkerhetsnycklar registrerade till ditt konto.</string>
   <string name="settings_security_keys_title">Säkerhetsnycklar</string>

@@ -48,7 +48,7 @@
   <string name="settings_recovery_email_success">Adresă e-mail de recuperare s-a actualizat.</string>
   <string name="settings_password_management_success">Parolă actualizată</string>
   <string name="settings_password_management_start_recovery">Nu vă amintiți parola de conectare?</string>
-  <string name="settings_manage_security_keys">Pentru a gestiona, adăuga sau elimina cheile de securitate, utilizați aplicația web Proton.</string>
+  <string name="settings_manage_security_keys_info">Pentru a gestiona, adăuga sau elimina cheile de securitate, utilizați aplicația web Proton.</string>
   <string name="settings_security_keys_registered">Acestea sunt cheile de securitate înregistrate în cont.</string>
   <string name="settings_security_keys_empty">Nu există chei de securitate înregistrate în cont.</string>
   <string name="settings_security_keys_title">Chei de securitate</string>
