@@ -36,7 +36,13 @@ public enum class Plan(public var planName: String, public var text: String) {
     PassPlus("pass2023", "Pass Plus"),
     Unlimited("bundle2022", "Proton Unlimited"),
     VpnPlus("vpn2022", "VPN Plus"),
-    Dev("", "");
+    Dev("", ""),
+
+    // Business plans
+    MailEssentials("mailpro2022", "Mail Essentials"),
+    MailProfessional("mailbiz2024", "Mail Professional"),
+    DriveProfessional("drivebiz2024", "Drive Professional"),
+    BusinessSuite("bundlepro2024", "Business Suite");
 
     public companion object {
         public fun fromString(planName: String): Plan {
