@@ -11,6 +11,44 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [27.0.0] - 2024-08-15
+
+### Breaking Changes
+
+**Chores**
+
+- Update build tools, Compose and Kotlin.
+  - Gradle 8.7.
+  - Android Gradle Plugin 8.5.2.
+  - Kotlin 1.9.25.
+  - Compose Compiler 1.5.15.
+  - Compose libs 1.6.8 (BOM: 2024.06.00).
+  - Material3 1.2.1 (BOM: 2024.06.00).
+
+### Features
+
+- Add system quark commands
+- Add create/update user related flows to configurator
+- account-manager: Tweak credless settings UI [VPNAND-1812]
+
+### Bug Fixes
+
+- auth/user-settings:
+  - Improve copy when there are no or there are not security keys setup.
+  - Improve Fido2 observability, user error message and refactor.
+- plan: Button text is not updated when upgrade is available.
+
+### Internationalization
+
+- Upgrade translations from crowdin (4a159b81).
+
+### Refactoring
+
+- The `presentation` module does not depend on `network*` modules.
+
+  The following elements have been moved from `presentation` to `network-presentation`:
+  `ProtonWebViewActivity`, `ProtonWebViewClient`, `Throwable.getUserMessage`.
+
 ## [26.0.1] - 2024-07-23
 
 ### Bug Fixes
