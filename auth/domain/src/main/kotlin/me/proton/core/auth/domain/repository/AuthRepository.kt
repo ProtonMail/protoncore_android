@@ -121,4 +121,15 @@ interface AuthRepository {
      * Validate recovery phone.
      */
     suspend fun validatePhone(phone: String): Boolean
+
+    /**
+     * Fork a session and return a selector.
+     */
+    suspend fun forkSession(
+        sessionId: SessionId,
+        payload: String,
+        childClientId: String,
+        independent: Long,
+        userCode: String? = null,
+    ): String
 }

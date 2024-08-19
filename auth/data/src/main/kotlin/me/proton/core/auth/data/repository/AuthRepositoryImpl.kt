@@ -28,6 +28,7 @@ import me.proton.core.auth.fido.domain.ext.toJson
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.Fido2Request
+import me.proton.core.auth.data.api.request.ForkSessionRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
@@ -194,6 +195,19 @@ class AuthRepositoryImpl(
             validatePhone(request).isSuccess()
         }.valueOrThrow
     }
+
+    override suspend fun forkSession(
+        sessionId: SessionId,
+        payload: String,
+        childClientId: String,
+        independent: Long,
+        userCode: String?
+    ): String =
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            forkSession(
+                request = ForkSessionRequest(payload, childClientId, independent, userCode),
+            )
+        }.valueOrThrow.selector
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

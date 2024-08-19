@@ -20,6 +20,7 @@ package me.proton.core.auth.data.api
 
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.AuthInfoRequest
+import me.proton.core.auth.data.api.request.ForkSessionRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
@@ -28,6 +29,7 @@ import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
+import me.proton.core.auth.data.api.response.ForkSessionResponse
 import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
@@ -79,4 +81,7 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("core/v4/validate/phone")
     suspend fun validatePhone(@Body request: PhoneValidationRequest): GenericResponse
+
+    @POST("auth/v4/sessions/forks")
+    suspend fun forkSession(@Body request: ForkSessionRequest): ForkSessionResponse
 }
