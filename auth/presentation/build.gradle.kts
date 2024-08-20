@@ -21,7 +21,7 @@ import studio.forface.easygradle.dsl.android.*
 
 
 plugins {
-    protonAndroidUiLibrary
+    protonComposeUiLibrary
     protonDagger
     id("kotlin-parcelize")
 }
@@ -39,6 +39,10 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.auth.presentation"
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -47,6 +51,7 @@ dependencies {
         project(Module.accountManagerDomain),
         project(Module.authDomain),
         project(Module.authFidoDomain),
+        project(Module.authPresentationCompose),
         project(Module.challengeDomain),
         project(Module.challengePresentation),
         project(Module.countryDomain),
@@ -64,6 +69,7 @@ dependencies {
         project(Module.planDomain),
         project(Module.planPresentation),
         project(Module.presentation),
+        project(Module.presentationCompose),
         project(Module.telemetryDomain),
         project(Module.telemetryPresentation),
         project(Module.userDomain),

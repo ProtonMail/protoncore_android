@@ -32,5 +32,6 @@ enum class NextStep : Parcelable {
     None,
     TwoPassMode,
     SecondFactor,
-    ChooseAddress
+    ChooseAddress,
+    ChangePassword
 }

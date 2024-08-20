@@ -44,7 +44,7 @@ import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.StartAddAccount
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
-import me.proton.core.auth.presentation.ui.StartLoginSso
+import me.proton.core.auth.presentation.ui.StartLoginTwoStep
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
@@ -52,7 +52,6 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
-import me.proton.core.plan.domain.entity.SubscriptionManagement
 import javax.inject.Inject
 
 class AuthOrchestrator @Inject constructor() {
@@ -60,18 +59,16 @@ class AuthOrchestrator @Inject constructor() {
     // region result launchers
     private var addAccountWorkflowLauncher: ActivityResultLauncher<AddAccountInput>? = null
     private var loginWorkflowLauncher: ActivityResultLauncher<LoginInput>? = null
-    private var loginSsoWorkflowLauncher: ActivityResultLauncher<LoginSsoInput>? = null
+    private var loginTwoStepWorkflowLauncher: ActivityResultLauncher<LoginInput>? = null
     private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
     private var signUpWorkflowLauncher: ActivityResultLauncher<SignUpInput>? = null
-    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? =
-        null
+    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? = null
     // endregion
 
     private var onAddAccountResultListener: ((result: AddAccountResult?) -> Unit)? = {}
     private var onLoginResultListener: ((result: LoginResult?) -> Unit)? = {}
-    private var onLoginSsoResultListener: ((result: LoginSsoResult?) -> Unit)? = {}
     private var onTwoPassModeResultListener: ((result: TwoPassModeResult?) -> Unit)? = {}
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
@@ -84,10 +81,6 @@ class AuthOrchestrator @Inject constructor() {
 
     fun setOnLoginResult(block: (result: LoginResult?) -> Unit) {
         onLoginResultListener = block
-    }
-
-    fun setOnLoginSsoResult(block: (result: LoginSsoResult?) -> Unit) {
-        onLoginSsoResultListener = block
     }
 
     fun setOnTwoPassModeResult(block: (result: TwoPassModeResult?) -> Unit) {
@@ -131,13 +124,13 @@ class AuthOrchestrator @Inject constructor() {
             onLoginResultListener?.invoke(it)
         }
 
-    private fun registerLoginSsoResult(
+    private fun registerLoginTwoStepResult(
         caller: ActivityResultCaller
-    ): ActivityResultLauncher<LoginSsoInput> =
+    ): ActivityResultLauncher<LoginInput> =
         caller.registerForActivityResult(
-            StartLoginSso
+            StartLoginTwoStep
         ) {
-            onLoginSsoResultListener?.invoke(it)
+            onLoginResultListener?.invoke(it)
         }
 
     private fun registerTwoPassModeResult(
@@ -235,6 +228,7 @@ class AuthOrchestrator @Inject constructor() {
     fun register(caller: ActivityResultCaller) {
         addAccountWorkflowLauncher = registerAddAccountResult(caller)
         loginWorkflowLauncher = registerLoginResult(caller)
+        loginTwoStepWorkflowLauncher = registerLoginTwoStepResult(caller)
         secondFactorWorkflowLauncher = registerSecondFactorResult(caller)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(caller)
         chooseAddressLauncher = registerChooseAddressResult(caller)
@@ -248,6 +242,7 @@ class AuthOrchestrator @Inject constructor() {
     fun unregister() {
         addAccountWorkflowLauncher?.unregister()
         loginWorkflowLauncher?.unregister()
+        loginTwoStepWorkflowLauncher?.unregister()
         secondFactorWorkflowLauncher?.unregister()
         twoPassModeWorkflowLauncher?.unregister()
         chooseAddressLauncher?.unregister()
@@ -255,6 +250,7 @@ class AuthOrchestrator @Inject constructor() {
 
         addAccountWorkflowLauncher = null
         loginWorkflowLauncher = null
+        loginTwoStepWorkflowLauncher = null
         secondFactorWorkflowLauncher = null
         twoPassModeWorkflowLauncher = null
         chooseAddressLauncher = null
@@ -305,15 +301,17 @@ class AuthOrchestrator @Inject constructor() {
     }
 
     /**
-     * Starts the Login SSO workflow.
+     * Starts the Login TwoStep workflow.
      *
-     * @see [onLoginSsoResult]
+     * @see [onLoginResult]
      */
-    fun startLoginSsoWorkflow(
-        email: String? = null,
+    fun startLoginTwoStepWorkflow(
+        requiredAccountType: AccountType,
+        username: String? = null,
+        password: String? = null
     ) {
-        checkRegistered(loginSsoWorkflowLauncher).launch(
-            LoginSsoInput(email)
+        checkRegistered(loginTwoStepWorkflowLauncher).launch(
+            LoginInput(requiredAccountType, username, password)
         )
     }
 
@@ -425,13 +423,6 @@ fun AuthOrchestrator.onLoginResult(
     block: (result: LoginResult?) -> Unit
 ): AuthOrchestrator {
     setOnLoginResult { block(it) }
-    return this
-}
-
-fun AuthOrchestrator.onLoginSsoResult(
-    block: (result: LoginSsoResult?) -> Unit
-): AuthOrchestrator {
-    setOnLoginSsoResult { block(it) }
     return this
 }
 

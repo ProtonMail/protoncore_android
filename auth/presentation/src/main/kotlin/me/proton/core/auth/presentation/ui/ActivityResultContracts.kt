@@ -66,6 +66,20 @@ object StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
     }
 }
 
+object StartLoginTwoStep : ActivityResultContract<LoginInput, LoginResult?>() {
+
+    override fun createIntent(context: Context, input: LoginInput) =
+        Intent(context, LoginTwoStepActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            putExtra(LoginActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, result: Intent?): LoginResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return result?.getParcelableExtra(LoginActivity.ARG_RESULT)
+    }
+}
+
 object StartLoginSso : ActivityResultContract<LoginSsoInput, LoginSsoResult?>() {
 
     override fun createIntent(context: Context, input: LoginSsoInput) =

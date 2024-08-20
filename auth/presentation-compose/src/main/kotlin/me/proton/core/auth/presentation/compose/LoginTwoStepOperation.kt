@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,9 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase
+package me.proton.core.auth.presentation.compose
 
-/** Checks if External SSO is enabled. */
-fun interface IsSsoEnabled {
-    operator fun invoke(): Boolean
+public sealed interface LoginTwoStepOperation
+
+public sealed interface LoginTwoStepAction : LoginTwoStepOperation {
+    public data class SetUsername(
+        val username: String
+    ) : LoginTwoStepAction
+
+    public data class SetPassword(
+        val password: String
+    ) : LoginTwoStepAction
+
+    public data object Close: LoginTwoStepAction
 }

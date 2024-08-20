@@ -60,8 +60,10 @@ import javax.inject.Inject
     viewIds = ["sign_up", "sign_in"],
     priority = TelemetryPriority.Immediate
 )
-internal class AddAccountFragment : ProtonFragment(R.layout.fragment_add_account),
+internal class AddAccountFragment :
+    ProtonFragment(R.layout.fragment_add_account),
     UiComponentProductMetricsDelegateOwner {
+
     @Inject
     lateinit var authOrchestrator: AuthOrchestrator
 
@@ -70,6 +72,8 @@ internal class AddAccountFragment : ProtonFragment(R.layout.fragment_add_account
     private val input by lazy {
         requireNotNull(requireArguments().getParcelable<AddAccountInput>(ARG_ADD_ACCOUNT_INPUT))
     }
+
+    private var isLoginTwoStepEnabled: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,7 +95,17 @@ internal class AddAccountFragment : ProtonFragment(R.layout.fragment_add_account
         // }
 
         binding.signIn.onClick {
-            authOrchestrator.startLoginWorkflow(input.requiredAccountType, input.loginUsername)
+            when (isLoginTwoStepEnabled) {
+                true -> authOrchestrator.startLoginTwoStepWorkflow(
+                    requiredAccountType = input.requiredAccountType,
+                    username = input.loginUsername
+                )
+
+                false -> authOrchestrator.startLoginWorkflow(
+                    requiredAccountType = input.requiredAccountType,
+                    username = input.loginUsername
+                )
+            }
         }
         binding.signUp.onClick {
             authOrchestrator.startSignupWorkflow(input.creatableAccountType)

@@ -100,6 +100,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:auth-fido-domain                      |
 | me.proton.core:auth-fido-play                        |
 | me.proton.core:auth-presentation                     |
+| me.proton.core:auth-presentation-compose             |
 | me.proton.core:auth-test                             |
 | me.proton.core:contact                               |
 | me.proton.core:contact-data                          |

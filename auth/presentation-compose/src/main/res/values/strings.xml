@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2024 Proton AG
+  ~ This file is part of Proton AG and ProtonCore.
+  ~
+  ~ ProtonCore is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ ProtonCore is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <string name="auth_login_details">Enter your Proton Account details.</string>
+    <string name="auth_login_sign_in">Sign in</string>
+    <string name="auth_login_help">Help</string>
+    <string name="auth_login_close">Close</string>
+    <string name="auth_login_continue">Continue</string>
+    <string name="auth_login_forgot_username">Forgot username</string>
+    <string name="auth_login_forgot_password">Forgot password</string>
+    <string name="auth_login_welcome_back">Welcome back</string>
+    <string name="auth_login_username">Username or email</string>
+    <string name="auth_login_password">Enter your password</string>
+    <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
+</resources>
+
