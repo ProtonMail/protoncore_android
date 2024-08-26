@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">Herstel-e-mailadres gewijzigd</string>
   <string name="settings_password_management_success">Wachtwoord bijgewerkt</string>
   <string name="settings_password_management_start_recovery">Wachtwoord vergeten?</string>
-  <string name="settings_manage_security_keys_info">Gebruik de Proton-webapplicatie om beveiligingssleutels te beheren, toe te voegen of te verwijderen.</string>
+  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">Dit zijn de beveiligingssleutels die geregistreerd zijn op uw account.</string>
-  <string name="settings_security_keys_empty">Er zijn geen beveiligingssleutels geregistreerd op uw account.</string>
   <string name="settings_security_keys_title">Beveiligingssleutels</string>
   <string name="settings_security_keys_error">Fout bij het ophalen van beveiligingssleutels, probeer het opnieuw.</string>
   <!-- device/local settings -->

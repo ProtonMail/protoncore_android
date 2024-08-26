@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">より詳しく</string>
   <string name="auth_2fa_use_2fa_code">2 要素認証コードを使用</string>
   <string name="auth_2fa_error_empty_code">6桁のコードを入力してください</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">メールボックスのロック解除</string>
   <string name="auth_mailbox_password_label">メールボックスのパスワード</string>
   <string name="auth_mailbox_unlock_action">ロック解除</string>

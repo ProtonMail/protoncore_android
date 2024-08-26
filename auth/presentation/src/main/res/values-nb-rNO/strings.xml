@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Lær mer</string>
   <string name="auth_2fa_use_2fa_code">Bruk tofaktorkode</string>
   <string name="auth_2fa_error_empty_code">Skriv inn den 6-sifrede koden.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Det har oppstått en feil. Vennligst sjekk nøkkelen din.</string>
+  <string name="auth_2fa_error_key_network_error">Det har oppstått en nettverksfeil. Vennligst prøv igjen.</string>
   <string name="auth_mailbox_title">Lås opp postkassen din</string>
   <string name="auth_mailbox_password_label">Postbokspassord</string>
   <string name="auth_mailbox_unlock_action">Lås opp</string>

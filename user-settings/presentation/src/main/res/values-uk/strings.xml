@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">Адресу резервної електронної пошти оновлено</string>
   <string name="settings_password_management_success">Пароль оновлено</string>
   <string name="settings_password_management_start_recovery">Не знаєте свій поточний пароль?</string>
-  <string name="settings_manage_security_keys_info">Для керування, додавання або видалення ключів безпеки, використовуйте вебзастосунок Proton.</string>
+  <string name="settings_security_keys_learn_more">Дізнатися більше.</string>
+  <string name="settings_manage_security_keys_info">Для управління, створення або видалення ключів безпеки, будь ласка, використовуйте вебдодаток Proton. %s</string>
+  <string name="settings_add_security_key">Додати ключ безпеки</string>
+  <string name="settings_manage_security_keys">Управління ключами безпеки</string>
+  <string name="settings_security_keys_empty_list">До вашого облікового запису не зареєстровано жодних ключів безпеки. Для створення ключа безпеки використайте вебдодаток Proton. %s</string>
   <string name="settings_security_keys_registered">Це ключі безпеки, зареєстровані у вашому обліковому записі.</string>
-  <string name="settings_security_keys_empty">Не знайдено ключів безпеки, зареєстрованих для вашого облікового запису.</string>
   <string name="settings_security_keys_title">Ключі безпеки</string>
   <string name="settings_security_keys_error">Помилка отримання ключів безпеки, спробуйте ще раз.</string>
   <!-- device/local settings -->

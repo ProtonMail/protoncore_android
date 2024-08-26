@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Meer informatie</string>
   <string name="auth_2fa_use_2fa_code">Tweestapsverificatiecode gebruiken</string>
   <string name="auth_2fa_error_empty_code">Voer de 6-cijferige code in.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">Ontgrendel uw mailbox</string>
   <string name="auth_mailbox_password_label">Mailbox-wachtwoord</string>
   <string name="auth_mailbox_unlock_action">Ontgrendelen</string>
@@ -167,7 +169,7 @@
   <string name="auth_signup_start_using_vpn">Begin Proton VPN te gebruiken</string>
   <string name="auth_signup_start_using_pass">Begin Proton Pass te gebruiken</string>
   <string name="auth_signup_error_validation_recovery_destination">Herstelbestemming is ongeldig.</string>
-  <string name="auth_credentialless_vpn_no_logs">Gecertifieerd niet-gelogde VPN</string>
+  <string name="auth_credentialless_vpn_no_logs">Gecertifieerde VPN zonder logboeken</string>
   <string name="auth_credentialless_vpn_title">Welkom bij Proton VPN</string>
   <string name="auth_credentialless_vpn_subtitle">Surf privé, bekijk geblokkeerde content en geniet van digitale vrijheid.</string>
   <string name="auth_credentialless_guest_button">Ga verder als gast</string>

@@ -20,15 +20,15 @@
   <string name="welcome_title">با Proton از حریم خصوصی خود حفاظت کنید</string>
   <string name="welcome_subtitle">رمزگذاری داده‌های شما را خصوصی نگاه می‌دارد. داده‌های شما حقیقتاً متعلق به شما هستند.</string>
   <string name="welcome_subtitle_mail">ایمیل رمزگذاری شده که گفتگوهای شما را خصوصی نگه می‌دارد. صندوق دریافت شما حقیقتاً متعلق به شماست.</string>
-  <string name="welcome_subtitle_mail_alt">حریم شخصی. امنیت. آسودگی. ایمیل رمزگذاری شده ای که به شما کنترل کامل داده‌‌های شخصیتان را می دهد.</string>
-  <string name="welcome_subtitle_drive">آسودگی فضای ذخیره‌ سازی ابری و امنیت تکنولوژی رمزگذاری. سرانجام راه حلی برای یک فضای ذخیره‌سازی ابری که میتوانید به آن اعتماد کنید.</string>
-  <string name="welcome_subtitle_drive_alt">ایمن ترین راه برای ذخیره کردن فایل های شما. بارگذاری کنید، همگام‌سازی کنید و به اشتراک بگذارید با قدرتمندترین روش رمزگذاری موجود.</string>
+  <string name="welcome_subtitle_mail_alt">حریم شخصی. امنیت. راحتی. ایمیل رمزگذاری شده ای که به شما کنترل کامل داده‌‌های شخصیتان را می دهد.</string>
+  <string name="welcome_subtitle_drive">راحتی فضای ذخیره‌ سازی ابری و امنیت تکنولوژی رمزگذاری. سرانجام راه حلی برای یک فضای ذخیره‌سازی ابری که میتوانید به آن اعتماد کنید.</string>
+  <string name="welcome_subtitle_drive_alt">ایمن ترین راه برای ذخیره کردن فایل های شما. بارگذاری، همگام‌سازی و به اشتراک گذاری را با قدرتمندترین روش رمزگذاری موجود انجام دهید.</string>
   <string name="welcome_subtitle_calendar">تقویم رمزگذاری شده ای که رویدادهای زندگی شما رو محرمانه، ایمن، و محفوظ نگه می دارد.</string>
   <string name="welcome_subtitle_calendar_alt">تقویم سرتاسر رمزگذاری شده ما به شما کمک می کند که منظم باشید، در مسیر بمانید، و کنترل در دستتان باشد.</string>
   <string name="welcome_subtitle_vpn">VPN پرسرعت سوئیسی که بوسیله رمزگذاری ارتباط اینترنت شما از حریم خصوصیتان محافظت می کند.</string>
-  <string name="welcome_subtitle_vpn_alt">VPN پر سرعت سوئیسی که از حریم خصوصی شما محافظت می کند. حداکثر امنیت، +1600 سرور، و بدون محدودیت.</string>
-  <string name="welcome_subtitle_pass">تمامی رمز های عبور شما، به طور ایمن و در یک مکان، توسط معتبرترین نام در حفظ حریم خصوصی محافظت می شود.</string>
-  <string name="welcome_subtitle_pass_alt">تمامی رمز های عبور شما، به طور ایمن و در یک مکان، توسط معتبرترین نام در حفظ حریم خصوصی محافظت می شود.</string>
+  <string name="welcome_subtitle_vpn_alt">VPN پر سرعت سوئیسی که از حریم خصوصی شما محافظت می کند. حداکثر امنیت، بیشتر از 1600 سرور، و بدون محدودیت.</string>
+  <string name="welcome_subtitle_pass">تمامی رمز های عبور شما، به طور ایمن و در یک مکان، تحت محافظت معتبرترین نام در حفظ حریم خصوصی</string>
+  <string name="welcome_subtitle_pass_alt">تمامی رمز های عبور شما، به طور ایمن و در یک مکان، تحت محافظت معتبرترین نام در حفظ حریم خصوصی</string>
   <string name="welcome_privacy_by_default">حریم شخصی به صورت پیشفرص</string>
   <string name="auth_password_label">گذرواژه</string>
   <string name="auth_password_help">گذرواژه باید حداقل 8 نویسه داشته باشد</string>
@@ -56,7 +56,7 @@
   <string name="auth_help_option_customer_support">پشتیبانی مشتری</string>
   <string name="auth_2fa_title">احراز هویت دو عاملی</string>
   <string name="auth_2fa_subtitle">حساب شما دارای چندین مکانیسم احراز هویت دو عاملی است که به منظور تأیید هویت شما پیکربندی شده است. لطفاً تأیید کنید که چگونه می خواهید هویت خود را تأیید کنید.</string>
-  <string name="auth_2fa_tab_one_time_code">کد یکبار مصرفکد</string>
+  <string name="auth_2fa_tab_one_time_code">کد یکبار مصرف</string>
   <string name="auth_2fa_tab_security_key">کلید امنیتی</string>
   <string name="auth_2fa_insert_security_key">Present a security key linked to your Proton Account. <annotation link="more">Learn more</annotation></string>
   <string name="auth_2fa_label">کد دو مرحله‌ای</string>
@@ -67,7 +67,9 @@
   <string name="auth_2fa_use_recovery_code">از کد بازیابی استفاده کنید</string>
   <string name="auth_2fa_learn_more">برای کسب اطلاعات بیشتر در این مورد اینجا را کلیک کنید.</string>
   <string name="auth_2fa_use_2fa_code">استفاده از کد دو مرحله ای</string>
-  <string name="auth_2fa_error_empty_code">کد ۶-رقمی را وارد کنید.</string>
+  <string name="auth_2fa_error_empty_code">کد ۶ رقمی را وارد کنید.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">قفل صندوق پیام خود را باز کنید</string>
   <string name="auth_mailbox_password_label">گذرواژهٔ صندوق پیام</string>
   <string name="auth_mailbox_unlock_action">بازگشایی</string>
@@ -103,7 +105,7 @@
   <string name="auth_password_chooser_change">تغییر گذرواژه</string>
   <plurals name="auth_user_check_max_free_error">
     <item quantity="one">فقط یک حساب کاربری رایگان Proton مجاز است.</item>
-    <item quantity="other">Only %d free Proton accounts are allowed.</item>
+    <item quantity="other">فقط %d حساب کاربری رایگان Proton مجاز است.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">حساب کاربری شما به دلیل صورت‌حساب معوقه در حالت انتظار است.</string>
   <string name="auth_user_check_delinquent_action">پرداخت صورت‌حساب</string>
@@ -142,7 +144,7 @@
   <string name="auth_signup_no_connectivity">اتصالی برای نمایش صفحه وب وجود ندارد.</string>
   <string name="auth_signup_error_create_to_continue">لطفا برای ادامه یک حساب کاربری بسازید</string>
   <string name="auth_signup_error_create_to_continue_action_learn_more">برای کسب اطلاعات بیشتر در این مورد اینجا را کلیک کنید.</string>
-  <string name="auth_signup_create_account_dialog_title">Activate your subscription</string>
+  <string name="auth_signup_create_account_dialog_title">اشتراک خود را فعال کنید</string>
   <string name="auth_signup_create_account_dialog_text">Your Google Pay payment was successfully processed. To activate your subscription, please create your Proton account.</string>
   <string name="auth_signup_create_account_dialog_action_cancel">لغو</string>
   <string name="auth_signup_create_account_dialog_action_continue">ادامه</string>

@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">E-poštni naslov za obnovitev je posodobljen</string>
   <string name="settings_password_management_success">Geslo je posodobljeno</string>
   <string name="settings_password_management_start_recovery">Ne poznate trenutnega gesla?</string>
-  <string name="settings_manage_security_keys_info">Prosimo uporabite Proton spletno aplikacijo za upravljanje, dodajanje ali odstranjevanje varnostnih ključev.</string>
+  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
-  <string name="settings_security_keys_empty">Vaš račun nima registriranih varnostnih ključev.</string>
   <string name="settings_security_keys_title">Varnostni ključi</string>
   <string name="settings_security_keys_error">Napaka pri pridobivanju varnostnih ključev. Prosimo, poskusite znova.</string>
   <!-- device/local settings -->

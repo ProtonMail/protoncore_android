@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Saber-ne més</string>
   <string name="auth_2fa_use_2fa_code">Utilitza un codi de dos factors</string>
   <string name="auth_2fa_error_empty_code">Introduïu el codi de 6 dígits.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">Desbloquegeu la vostra bústia de correu</string>
   <string name="auth_mailbox_password_label">Contrasenya de la bústia de correu</string>
   <string name="auth_mailbox_unlock_action">Desbloqueja</string>

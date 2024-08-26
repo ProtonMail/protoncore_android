@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">En savoir plus</string>
   <string name="auth_2fa_use_2fa_code">Utiliser un code à deux facteurs</string>
   <string name="auth_2fa_error_empty_code">Saisissez le code à 6 chiffres.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Une erreur s\'est produite. Veuillez vérifier votre clé.</string>
+  <string name="auth_2fa_error_key_network_error">Une erreur réseau s\'est produite. Veuillez réessayer.</string>
   <string name="auth_mailbox_title">Déverrouillez votre messagerie</string>
   <string name="auth_mailbox_password_label">Mot de passe de la messagerie</string>
   <string name="auth_mailbox_unlock_action">Déverrouiller</string>

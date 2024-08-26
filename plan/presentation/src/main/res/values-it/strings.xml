@@ -20,7 +20,7 @@
   <string name="plans_select_a_plan">Seleziona un piano</string>
   <string name="plans_select_a_plan_subtitle">Un piano per tutti i servizi di Proton</string>
   <string name="plans_fetching_general_error">Caricamento dei piani non riuscito</string>
-  <string name="plans_payment_error">Pagamento non riuscito. Riprova più tardi o crea un piano gratuito.</string>
+  <string name="plans_payment_error">Pagamento non riuscito. Riprova tra qualche minuto o crea un piano gratuito.</string>
   <string name="plans_free_name">Free</string>
   <string name="plan_price_monthly">al mese</string>
   <string name="plan_price_annually">all\'anno</string>

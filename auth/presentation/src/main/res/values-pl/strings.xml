@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Dowiedz się więcej</string>
   <string name="auth_2fa_use_2fa_code">Użyj kodu uwierzytelniającego</string>
   <string name="auth_2fa_error_empty_code">Wpisz 6-cyfrowy kod.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">Odblokuj swoją skrzynkę pocztową</string>
   <string name="auth_mailbox_password_label">Hasło skrzynki pocztowej</string>
   <string name="auth_mailbox_unlock_action">Odblokuj</string>
@@ -154,7 +156,7 @@
   <string name="auth_signup_password_not_allowed">Hasło jest zbyt proste. Użyj innego hasła.</string>
   <string name="auth_signup_validation_password">Hasło nie może być puste.</string>
   <string name="auth_signup_your_account_is_being_setup">Tworzenie konta…</string>
-  <string name="auth_signup_please_wait">Zazwyczaj nie trwa to dłużej niż minutę.</string>
+  <string name="auth_signup_please_wait">Zazwyczaj trwa to nie dłużej niż minutę.</string>
   <string name="auth_signup_replacement_code">Nie otrzymano kodu?</string>
   <string name="auth_signup_verify">Zweryfikuj</string>
   <string name="auth_signup_verification_code">Kod weryfikacyjny</string>

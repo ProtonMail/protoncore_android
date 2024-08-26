@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Μάθετε περισσότερα</string>
   <string name="auth_2fa_use_2fa_code">Χρησιμοποιήστε κωδικό Δύο Παραγόντων (2FA)</string>
   <string name="auth_2fa_error_empty_code">Εισάγετε τον 6-ψήφιο κωδικό.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Παρουσιάστηκε σφάλμα. Παρακαλούμε ελέγξτε το κλειδί σας.</string>
+  <string name="auth_2fa_error_key_network_error">Παρουσιάστηκε ένα σφάλμα δικτύου. Παρακαλούμε δοκιμάστε ξανά.</string>
   <string name="auth_mailbox_title">Ξεκλειδώστε τη θυρίδα σας</string>
   <string name="auth_mailbox_password_label">Κωδικός Θυρίδας</string>
   <string name="auth_mailbox_unlock_action">Ξεκλείδωμα</string>

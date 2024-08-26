@@ -28,9 +28,9 @@
   <string name="account_settings_item_header">用户</string>
   <string name="account_settings_list_header">账户</string>
   <string name="account_settings_list_item_password_header">更改密码</string>
-  <string name="account_settings_list_item_password_hint_grace">密码重置请求等待中</string>
-  <string name="account_settings_list_item_password_hint_insecure">密码重置请求准备就绪</string>
-  <string name="account_settings_list_item_recovery_header">密保邮箱</string>
+  <string name="account_settings_list_item_password_hint_grace">密码重置等待中</string>
+  <string name="account_settings_list_item_password_hint_insecure">密码重置准备就绪</string>
+  <string name="account_settings_list_item_recovery_header">安全邮箱</string>
   <string name="account_settings_list_item_recovery_hint_not_set">尚未设置</string>
   <string name="account_settings_list_item_security_keys_header">安全密钥</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">尚未设置</string>

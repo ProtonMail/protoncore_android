@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Læra meira</string>
   <string name="auth_2fa_use_2fa_code">Nota tveggja-þátta kóða</string>
   <string name="auth_2fa_error_empty_code">Settu inn 6-stafa kóðann.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">Aflæstu pósthólfinu þínu</string>
   <string name="auth_mailbox_password_label">Lykilorð á pósthólfi</string>
   <string name="auth_mailbox_unlock_action">Aflæsa</string>

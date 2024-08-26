@@ -28,11 +28,11 @@
   <string name="account_settings_item_header">Utente</string>
   <string name="account_settings_list_header">Account</string>
   <string name="account_settings_list_item_password_header">Gestione delle password</string>
-  <string name="account_settings_list_item_password_hint_grace">Reimpostazione in attesa</string>
-  <string name="account_settings_list_item_password_hint_insecure">Reimpostazione pronta</string>
+  <string name="account_settings_list_item_password_hint_grace">Reimpostazione richiesta</string>
+  <string name="account_settings_list_item_password_hint_insecure">Reimpostazione disponibile</string>
   <string name="account_settings_list_item_recovery_header">Indirizzo email di recupero</string>
   <string name="account_settings_list_item_recovery_hint_not_set">Non impostato</string>
-  <string name="account_settings_list_item_security_keys_header">Chiavi di sicurezza</string>
+  <string name="account_settings_list_item_security_keys_header">Gestione delle chiavi</string>
   <string name="account_settings_list_item_security_keys_hint_not_set">Non impostata</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">

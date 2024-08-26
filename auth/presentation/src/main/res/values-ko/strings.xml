@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">더 알아보기</string>
   <string name="auth_2fa_use_2fa_code">2단계 인증 코드 사용</string>
   <string name="auth_2fa_error_empty_code">6자리 인증 코드를 입력하세요</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">오류가 발생했습니다. 키를 확인해 주세요.</string>
+  <string name="auth_2fa_error_key_network_error">오류가 발생했습니다. 다시 시도하세요.</string>
   <string name="auth_mailbox_title">메일함 잠금해제</string>
   <string name="auth_mailbox_password_label">메일함 비밀번호</string>
   <string name="auth_mailbox_unlock_action">잠금 해제</string>

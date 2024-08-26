@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Подробнее</string>
   <string name="auth_2fa_use_2fa_code">Использовать код двухфакторной аутентификации</string>
   <string name="auth_2fa_error_empty_code">Введите код из шести цифр.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Произошла ошибка. Пожалуйста, проверьте ваш ключ.</string>
+  <string name="auth_2fa_error_key_network_error">Произошла сетевая ошибка. Попробуйте ещё раз.</string>
   <string name="auth_mailbox_title">Разблокируйте свой почтовый ящик</string>
   <string name="auth_mailbox_password_label">Пароль почтового ящика</string>
   <string name="auth_mailbox_unlock_action">Разблокировать</string>

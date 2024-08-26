@@ -40,7 +40,7 @@
   <string name="settings_password_management_header">Canvia la contrasenya</string>
   <string name="settings_main_password_hint_current">Contrasenya principal actual</string>
   <string name="settings_main_password_hint_new">Nova contrasenya principal</string>
-  <string name="settings_main_password_hint_new_confirm">Confirma la nova contrasenya principal</string>
+  <string name="settings_main_password_hint_new_confirm">Confirmeu la nova contrasenya principal</string>
   <string name="settings_second_password_hint_current_main_password">Contrasenya principal actual</string>
   <string name="settings_second_password_hint_new">Nova segona contrasenya</string>
   <string name="settings_second_password_hint_new_confirm">Confirmeu la nova segona contrasenya</string>
@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">S\'ha actualitzat el correu electrònic de recuperació.</string>
   <string name="settings_password_management_success">Contrasenya actualitzada</string>
   <string name="settings_password_management_start_recovery">No sabeu la contrasenya actual?</string>
-  <string name="settings_manage_security_keys_info">Per gestionar, afegir o eliminar claus de seguretat, utilitzeu l\'aplicació web de Proton.</string>
+  <string name="settings_security_keys_learn_more">Més informació</string>
+  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">Aquestes són les claus de seguretat registrades al vostre compte.</string>
-  <string name="settings_security_keys_empty">No hi ha cap clau de seguretat registrada al vostre compte.</string>
   <string name="settings_security_keys_title">Claus de seguretat</string>
   <string name="settings_security_keys_error">S\'ha produït un error en obtenir les claus de seguretat. Torneu-ho a provar.</string>
   <!-- device/local settings -->

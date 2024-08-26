@@ -45,7 +45,7 @@
   <string name="payments_payment_details">Detalles del pago</string>
   <string name="payments_card_name">Titular de la tarjeta</string>
   <string name="payments_card_number">Número de tarjeta</string>
-  <string name="payments_expiration_date">Fecha de caducidad</string>
+  <string name="payments_expiration_date">Fecha de expiración</string>
   <string name="payments_security_code">Código de seguridad</string>
   <string name="payments_postal_code">Código postal</string>
   <string name="payments_card_number_hint">0000 0000 0000 0000</string>

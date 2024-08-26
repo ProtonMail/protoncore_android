@@ -31,31 +31,34 @@
   <string name="settings_password_required_ok">تایید</string>
   <string name="settings_not_set">تنظیم نشده</string>
   <string name="settings_recovery_email_error_no_match">آدرس ایمیل های بازیابی با یکدیگر مغایرت دارند.</string>
-  <string name="settings_validation_email">رایانشانی نامعتبر است.</string>
+  <string name="settings_validation_email">آدرس ایمیل نامعتبر است.</string>
   <string name="settings_general_error">خطایی رخ داد.</string>
   <!-- login and mailbox password settings -->
-  <string name="settings_password_management_tab_main_password">Main password</string>
-  <string name="settings_password_management_tab_second_password">Second password</string>
+  <string name="settings_password_management_tab_main_password">گذرواژه اصلی</string>
+  <string name="settings_password_management_tab_second_password">گذرواژه دوم</string>
   <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
   <string name="settings_password_management_header">تغییر گذرواژه</string>
-  <string name="settings_main_password_hint_current">Current main password</string>
-  <string name="settings_main_password_hint_new">New main password</string>
-  <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>
-  <string name="settings_second_password_hint_current_main_password">Current main password</string>
-  <string name="settings_second_password_hint_new">New second password</string>
-  <string name="settings_second_password_hint_new_confirm">Confirm new second password</string>
+  <string name="settings_main_password_hint_current">گذرواژه اصلی فعلی</string>
+  <string name="settings_main_password_hint_new">گذرواژه اصلی جدید</string>
+  <string name="settings_main_password_hint_new_confirm">تأیید گذرواژه اصلی جدید</string>
+  <string name="settings_second_password_hint_current_main_password">گذرواژه اصلی فعلی</string>
+  <string name="settings_second_password_hint_new">گذرواژه دوم جدید</string>
+  <string name="settings_second_password_hint_new_confirm">تأیید گذرواژه دوم جدید</string>
   <string name="settings_change_password_error">خطایی در تغییر گذرواژه رخ داد.</string>
   <string name="settings_recovery_email_success">ایمیل بازیابی بروزرسانی شد</string>
   <string name="settings_password_management_success">گذرواژه به‌روز شد</string>
-  <string name="settings_password_management_start_recovery">Don\'t know your current password?</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application.</string>
+  <string name="settings_password_management_start_recovery">گذرواژه فعلی را نمی‌دانید؟</string>
+  <string name="settings_security_keys_learn_more">Learn more</string>
+  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_add_security_key">Add security key</string>
+  <string name="settings_manage_security_keys">Manage security keys</string>
+  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">These are the security keys registered to your account.</string>
-  <string name="settings_security_keys_empty">There are no security keys registered to your account.</string>
   <string name="settings_security_keys_title">کلیدهای امنیتی</string>
   <string name="settings_security_keys_error">Error fetching security keys, please try again.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">دورسنجی ناشناس</string>
-  <string name="device_settings_telemetry_hint">ما برای بهبود سرویس های خود، گاهی داده نحوه استفاده را به صورت ناشناس شده جمع‌آوری میکنیم.</string>
+  <string name="device_settings_telemetry_hint">ما برای بهبود سرویس های خود، گاهی داده های مربوط به نحوه استفاده را به صورت ناشناس جمع‌آوری میکنیم.</string>
   <string name="device_settings_crashreport_title">گزارش‌های ناشناس توقف ناگهانی</string>
   <string name="device_settings_crashreport_hint">اگر برنامه به طور ناگهانی متوقف شود، گزارشی همراه با جزئیات دلیل وقوع آن به مهندسین ما ارسال میشود. ما از اینها تنها برای بهبود برنامه استفاده میکنیم.</string>
 </resources>

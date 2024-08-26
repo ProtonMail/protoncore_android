@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">E-Mail-Adresse für die Wiederherstellung aktualisiert</string>
   <string name="settings_password_management_success">Passwort wurde aktualisiert</string>
   <string name="settings_password_management_start_recovery">Du kennst dein aktuelles Passwort nicht?</string>
-  <string name="settings_manage_security_keys_info">Um Sicherheitsschlüssel zu verwalten, hinzuzufügen oder zu entfernen, verwende bitte die Proton-Webanwendung.</string>
+  <string name="settings_security_keys_learn_more">Erfahre mehr</string>
+  <string name="settings_manage_security_keys_info">Um Sicherheitsschlüssel zu verwalten, hinzuzufügen oder zu entfernen, verwende bitte die Proton-Webanwendung. %s</string>
+  <string name="settings_add_security_key">Sicherheitsschlüssel hinzufügen</string>
+  <string name="settings_manage_security_keys">Sicherheitsschlüssel verwalten</string>
+  <string name="settings_security_keys_empty_list">Es sind keine Sicherheitsschlüssel für dein Konto registriert. Um einen Sicherheitsschlüssel hinzuzufügen, verwende die Proton-Webanwendung. %s</string>
   <string name="settings_security_keys_registered">Dies sind die für dein Konto registrierten Sicherheitsschlüssel.</string>
-  <string name="settings_security_keys_empty">Es sind keine Sicherheitsschlüssel in deinem Konto registriert.</string>
   <string name="settings_security_keys_title">Sicherheitsschlüssel</string>
   <string name="settings_security_keys_error">Fehler beim Abrufen der Sicherheitsschlüssel, bitte versuche es erneut.</string>
   <!-- device/local settings -->

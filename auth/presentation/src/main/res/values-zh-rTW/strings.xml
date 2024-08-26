@@ -17,8 +17,8 @@
   ~ along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
   -->
 <resources>
-  <string name="welcome_title">使用 Proton 保護您的隱私</string>
-  <string name="welcome_subtitle">透過加密確保您的資料隱密。您的資料完全地掌握在自己的手中。</string>
+  <string name="welcome_title">Proton 保護您的隱私</string>
+  <string name="welcome_subtitle">加密可讓您的資料保有絕對隱密。您的隱私資料完全地掌握在自己的手中。</string>
   <string name="welcome_subtitle_mail">經加密過的電子信箱，守住來往訊息隱私。您的收件匣真實地掌握手中。</string>
   <string name="welcome_subtitle_mail_alt">隱私權。安全防護。便捷。加密電子信箱提供您個資的完全控管。</string>
   <string name="welcome_subtitle_drive">雲端儲存的便利性與加密技術的安全性。千呼萬喚終於出現讓您可完全信賴的雲端儲存。</string>
@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">取得更多資訊</string>
   <string name="auth_2fa_use_2fa_code">使用兩步驟驗證碼</string>
   <string name="auth_2fa_error_empty_code">輸入六位數的代碼。</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">遇到錯誤。請檢查您的金鑰。</string>
+  <string name="auth_2fa_error_key_network_error">遇到網路錯誤。請再試一次。</string>
   <string name="auth_mailbox_title">解除鎖定您的信箱</string>
   <string name="auth_mailbox_password_label">信箱密碼</string>
   <string name="auth_mailbox_unlock_action">解鎖</string>

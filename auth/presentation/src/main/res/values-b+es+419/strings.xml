@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Más información</string>
   <string name="auth_2fa_use_2fa_code">Usar código de dos factores</string>
   <string name="auth_2fa_error_empty_code">Ingrese el código de 6 dígitos.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Ocurrió un error. Verifique su clave.</string>
+  <string name="auth_2fa_error_key_network_error">Ocurrió un error de red. Vuelva a intentarlo.</string>
   <string name="auth_mailbox_title">Desbloquee el buzón</string>
   <string name="auth_mailbox_password_label">Contraseña del buzón</string>
   <string name="auth_mailbox_unlock_action">Desbloquear</string>
@@ -151,7 +153,7 @@
   <string name="auth_signup_validation_password_length">La contraseña debe tener al menos 8 caracteres.</string>
   <string name="auth_signup_password_not_allowed">La contraseña es demasiado muy común. Use otra contraseña.</string>
   <string name="auth_signup_validation_password">La contraseña no debe estar vacía.</string>
-  <string name="auth_signup_your_account_is_being_setup">La cuenta está siendo creada…</string>
+  <string name="auth_signup_your_account_is_being_setup">Se está creando su cuenta…</string>
   <string name="auth_signup_please_wait">Usualmente no tarda más de un minuto.</string>
   <string name="auth_signup_replacement_code">¿No recibió el código?</string>
   <string name="auth_signup_verify">Verificar</string>

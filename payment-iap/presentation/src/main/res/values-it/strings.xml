@@ -19,7 +19,7 @@
 <resources>
   <string name="payments_iap_surcharge_info">* Include un supplemento per commissioni e tasse aggiuntive del fornitore.</string>
   <string name="payments_iap_terms_conditions">Toccando \"Acquista con Google Pay\", accetti i termini e le condizioni di Google Pay e accetti di impostare un pagamento ricorrente con Google.</string>
-  <string name="payments_iap_invalid_google_plan">Nome del piano selezionato non valido. Riavvia il processo.</string>
+  <string name="payments_iap_invalid_google_plan">Piano selezionato non valido. Riavvia il processo.</string>
   <string name="payments_iap_error_google_plan_price">Prezzo del prodotto Google non valido. Riavvia il processo.</string>
   <string name="payments_iap_error_fetching_google_plan">Caricamento del prodotto Google non riuscito. Riavvia il processo.</string>
   <string name="payments_iap_error_already_owned">Prodotto già posseduto. Selezionane un altro.</string>

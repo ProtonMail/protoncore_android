@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">E-mail-adresse til gendannelse opdateret</string>
   <string name="settings_password_management_success">Adgangskode opdateret</string>
   <string name="settings_password_management_start_recovery">Kan du ikke din adgangskode?</string>
-  <string name="settings_manage_security_keys_info">Brug Proton- webprogrammet til at håndtere, tilføje eller fjerne sikkerhedsnøgler.</string>
+  <string name="settings_security_keys_learn_more">Få mere at vide</string>
+  <string name="settings_manage_security_keys_info">Brug Proton- webprogrammet til at håndtere, tilføje eller fjerne sikkerhedsnøgler. %s</string>
+  <string name="settings_add_security_key">Tilføj sikkerhedsnøgle</string>
+  <string name="settings_manage_security_keys">Håndter sikkerhedsnøgler</string>
+  <string name="settings_security_keys_empty_list">Der er ingen sikkerhedsnøgler registreret i din konto. Brug Proton-webprogrammet til at tilføje en sikkerhedsnøgle. %s</string>
   <string name="settings_security_keys_registered">Disse sikkerhedsnøgler er registreret på din konto.</string>
-  <string name="settings_security_keys_empty">Ingen sikkerhedsnøgler er registreret på din konto.</string>
   <string name="settings_security_keys_title">Sikkerhedsnøgler</string>
   <string name="settings_security_keys_error">Fejl ved hentning af sikkerhedsnøgler, prøv igen.</string>
   <!-- device/local settings -->

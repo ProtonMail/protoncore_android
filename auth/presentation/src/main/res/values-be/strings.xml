@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Даведацца больш</string>
   <string name="auth_2fa_use_2fa_code">Выкарыстоўваць двухфактарны код</string>
   <string name="auth_2fa_error_empty_code">Увядзіце код з 6 лічбаў.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Адбылася памылка. Праверце свой ключ.</string>
+  <string name="auth_2fa_error_key_network_error">Адбылася памылка сеткі. Паспрабуйце яшчэ раз.</string>
   <string name="auth_mailbox_title">Разблакіруйце вашу паштовую скрыню</string>
   <string name="auth_mailbox_password_label">Пароль паштовай скрыні</string>
   <string name="auth_mailbox_unlock_action">Разблакіраваць</string>

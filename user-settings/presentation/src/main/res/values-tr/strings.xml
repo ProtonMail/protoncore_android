@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">Kurtarma e-posta adresi güncellendi</string>
   <string name="settings_password_management_success">Parola güncellendi</string>
   <string name="settings_password_management_start_recovery">Geçerli parolanızı bilmiyor musunuz?</string>
-  <string name="settings_manage_security_keys_info">Güvenlik anahtarlarını yönetmek, eklemek ya da kaldırmak için lütfen Proton İnternet uygulamasını kullanın.</string>
+  <string name="settings_security_keys_learn_more">Ayrıntılı bilgi alın</string>
+  <string name="settings_manage_security_keys_info">Güvenlik anahtarlarını yönetmek, eklemek ya da kaldırmak için lütfen Proton İnternet uygulamasını kullanın. %s</string>
+  <string name="settings_add_security_key">Güvenlik anahtarı ekle</string>
+  <string name="settings_manage_security_keys">Güvenlik anahtarları yönetimi</string>
+  <string name="settings_security_keys_empty_list">Hesabınızda kaydedilmiş bir güvenlik anahtarı yok. Bir güvenlik anahtarı eklemek için Proton İnternet uygulamasını kullanın. %s</string>
   <string name="settings_security_keys_registered">Hesabınıza kayıtlı güvenlik anahtarları.</string>
-  <string name="settings_security_keys_empty">Hesabınıza kayıtlı herhangi bir güvenlik anahtarı yok.</string>
   <string name="settings_security_keys_title">Güvenlik anahtarları</string>
   <string name="settings_security_keys_error">Güvenlik anahtarları alınırken sorun çıktı. Lütfen yeniden deneyin.</string>
   <!-- device/local settings -->

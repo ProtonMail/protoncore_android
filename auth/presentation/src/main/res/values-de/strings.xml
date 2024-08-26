@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Mehr erfahren</string>
   <string name="auth_2fa_use_2fa_code">Zwei-Faktor-Code verwenden</string>
   <string name="auth_2fa_error_empty_code">6-stelligen Code eingeben.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Ein Fehler ist aufgetreten. Bitte überprüfe deinen Schlüssel.</string>
+  <string name="auth_2fa_error_key_network_error">Ein Netzwerkfehler ist aufgetreten. Bitte versuche es erneut.</string>
   <string name="auth_mailbox_title">Postfach entsperren</string>
   <string name="auth_mailbox_password_label">Postfach‐Passwort</string>
   <string name="auth_mailbox_unlock_action">Entsperren</string>
@@ -152,7 +154,7 @@
   <string name="auth_signup_password_not_allowed">Passwort ist zu gewöhnlich. Benutze ein anderes Passwort.</string>
   <string name="auth_signup_validation_password">Passwort muss eingegeben werden.</string>
   <string name="auth_signup_your_account_is_being_setup">Dein Konto wird erstellt…</string>
-  <string name="auth_signup_please_wait">Dies dauert normalerweise nicht länger als eine Minute.</string>
+  <string name="auth_signup_please_wait">Das dauert normalerweise nicht länger als eine Minute.</string>
   <string name="auth_signup_replacement_code">Code nicht erhalten?</string>
   <string name="auth_signup_verify">Bestätigen</string>
   <string name="auth_signup_verification_code">Bestätigungscode</string>

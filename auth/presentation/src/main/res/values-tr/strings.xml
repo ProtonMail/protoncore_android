@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Ayrıntılı bilgi alın</string>
   <string name="auth_2fa_use_2fa_code">İki adımlı doğrulama kodu kullanılsın</string>
   <string name="auth_2fa_error_empty_code">6 rakamlı kodu yazın.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Bir sorun çıktı. Lütfen anahtarınızı kontrol edin.</string>
+  <string name="auth_2fa_error_key_network_error">Bir ağ sorunu çıktı. Lütfen yeniden deneyin.</string>
   <string name="auth_mailbox_title">Posta kutunuzun kilidini açın</string>
   <string name="auth_mailbox_password_label">Posta kutusu parolası</string>
   <string name="auth_mailbox_unlock_action">Kilidi aç</string>

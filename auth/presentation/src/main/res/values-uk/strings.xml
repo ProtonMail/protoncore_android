@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Докладніше</string>
   <string name="auth_2fa_use_2fa_code">Використати код двоетапної перевірки</string>
   <string name="auth_2fa_error_empty_code">Введіть код із 6 цифр.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Виникла помилка. Будь ласка, перевірте свій ключ.</string>
+  <string name="auth_2fa_error_key_network_error">Виникла помилка в мережі. Будь ласка, спробуйте ще раз.</string>
   <string name="auth_mailbox_title">Розблокуйте поштову скриньку</string>
   <string name="auth_mailbox_password_label">Пароль поштової скриньки</string>
   <string name="auth_mailbox_unlock_action">Розблокувати</string>

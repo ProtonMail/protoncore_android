@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">გაიგეთ მეტი</string>
   <string name="auth_2fa_use_2fa_code">2FA კოდის გამოყენება</string>
   <string name="auth_2fa_error_empty_code">შეიყვანეთ 6-ციფრიანი კოდი.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">შეცდომა. შეამოწმეთ თქვენი გასაღები</string>
+  <string name="auth_2fa_error_key_network_error">ქსელის შეცდომა. თავიდან სცადეთ.</string>
   <string name="auth_mailbox_title">განბლოკეთ თქვენი საფოსტო ყუთი</string>
   <string name="auth_mailbox_password_label">საფოსტო ყუთის პაროლი</string>
   <string name="auth_mailbox_unlock_action">განბლოკვა</string>

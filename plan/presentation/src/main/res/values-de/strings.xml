@@ -166,6 +166,6 @@
   <!-- region Plan entitlement tags -->
   <string name="upgrade_storage_current_drive_storage">Drive: %d%% voll</string>
   <string name="upgrade_storage_current_mail_storage">Mail: %d%% voll</string>
-  <string name="upgrade_storage_subtitle">Speicher erweitern</string>
+  <string name="upgrade_storage_subtitle">Mehr Speicher hinzufügen</string>
   <!-- endregion -->
 </resources>

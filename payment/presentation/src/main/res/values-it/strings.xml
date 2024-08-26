@@ -69,6 +69,6 @@
   <string name="payments_giap_unredeemed_description">Il pagamento Google Pay è stato elaborato correttamente, ma il processo di aggiornamento dell\'account è stato interrotto. Vuoi applicare il pagamento per effettuare l\'upgrade adesso?</string>
   <string name="payments_giap_unredeemed_confirm">Conferma</string>
   <string name="payments_giap_redeem_success">Upgrade dell\'account effettuato</string>
-  <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova più tardi.</string>
+  <string name="payments_giap_redeem_error">Completamento dell\'upgrade non riuscito. Riprova tra qualche minuto.</string>
   <!-- endregion -->
 </resources>

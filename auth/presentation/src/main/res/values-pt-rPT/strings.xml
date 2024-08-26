@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Saiba mais</string>
   <string name="auth_2fa_use_2fa_code">Usar código em dois passos</string>
   <string name="auth_2fa_error_empty_code">Introduza o código de 6 dígitos.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
+  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
   <string name="auth_mailbox_title">Desbloqueie a sua caixa de correio</string>
   <string name="auth_mailbox_password_label">Palavra-passe da caixa de correio</string>
   <string name="auth_mailbox_unlock_action">Desbloquear</string>

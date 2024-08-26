@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Detalii</string>
   <string name="auth_2fa_use_2fa_code">Folosire cod doi factori</string>
   <string name="auth_2fa_error_empty_code">Introduceți codul din 6 cifre.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">A apărut o eroare. Verificați cheia.</string>
+  <string name="auth_2fa_error_key_network_error">A apărut o eroare de rețea. Reîncercați.</string>
   <string name="auth_mailbox_title">Deblocare mesaje</string>
   <string name="auth_mailbox_password_label">Parolă mesaje</string>
   <string name="auth_mailbox_unlock_action">Deblocare</string>
@@ -118,7 +120,7 @@
   <string name="auth_signup_current_email">Folosire adresă de e-mail actuală</string>
   <string name="auth_signup_external_footnote">Cu o adresă Proton puteți accesa toate serviciile Proton</string>
   <string name="auth_signup_internal_footnote">Aveți nevoie de o adresă Proton pentru a utiliza Proton Mail și Proton Calendar</string>
-  <string name="auth_signup_create_secure_proton_address">Obțineți o adresă nouă de e-mail criptată</string>
+  <string name="auth_signup_create_secure_proton_address">Obțineți o adresă de e-mail criptată</string>
   <string name="auth_signup_username">Nume utilizator</string>
   <string name="auth_signup_domain">Domeniu</string>
   <string name="auth_signup_email">E-mail</string>
@@ -132,7 +134,7 @@
   <string name="auth_signup_recovery_method_email">E-mail</string>
   <string name="auth_signup_recovery_method_phone">Telefon</string>
   <string name="auth_signup_recovery_method_email_hint">E-mail de recuperare</string>
-  <string name="auth_signup_recovery_method_phone_hint">Numărul de telefon pentru recuperare</string>
+  <string name="auth_signup_recovery_method_phone_hint">Număr de telefon de recuperare</string>
   <string name="auth_signup_terms_conditions">Termeni și condiții</string>
   <string name="auth_signup_privacy_policy">Politică de confidențialitate</string>
   <string name="auth_signup_terms_conditions_privacy_policy_full">Apăsând pe «Înainte», sunteți de acord cu <annotation link="terms">Termenii și condițiile</annotation> și cu <annotation link="privacy">Politica de confidențialitate</annotation> Proton.</string>

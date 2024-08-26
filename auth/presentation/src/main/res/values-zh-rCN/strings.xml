@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">了解更多信息</string>
   <string name="auth_2fa_use_2fa_code">输入一次性密码</string>
   <string name="auth_2fa_error_empty_code">请输入 6 位验证码。</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">发生错误。请检查您的密钥。</string>
+  <string name="auth_2fa_error_key_network_error">出现网络错误。请重试。</string>
   <string name="auth_mailbox_title">解锁您的邮箱</string>
   <string name="auth_mailbox_password_label">邮箱密码</string>
   <string name="auth_mailbox_unlock_action">解锁​​​​</string>

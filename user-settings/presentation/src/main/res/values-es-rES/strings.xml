@@ -24,7 +24,7 @@
   <string name="settings_recovery_email_confirm">Confirma la dirección de correo electrónico de recuperación</string>
   <string name="settings_recovery_email_new_hint">Introduce tu dirección de correo electrónico</string>
   <string name="settings_recovery_email_confirm_hint">Introduce de nuevo tu dirección de correo electrónico</string>
-  <string name="settings_save_second_password">Guardar la segunda contraseña nueva</string>
+  <string name="settings_save_second_password">Guardar la nueva segunda contraseña</string>
   <string name="settings_save_main_password">Guardar la contraseña principal nueva</string>
   <string name="settings_save">Guardar</string>
   <string name="settings_password_required">Introduce tu contraseña de inicio de sesión</string>
@@ -40,7 +40,7 @@
   <string name="settings_password_management_header">Cambiar la contraseña</string>
   <string name="settings_main_password_hint_current">Contraseña principal actual</string>
   <string name="settings_main_password_hint_new">Contraseña principal nueva</string>
-  <string name="settings_main_password_hint_new_confirm">Confirmar la contraseña principal nueva</string>
+  <string name="settings_main_password_hint_new_confirm">Confirmar la nueva contraseña principal</string>
   <string name="settings_second_password_hint_current_main_password">Contraseña principal actual</string>
   <string name="settings_second_password_hint_new">Segunda contraseña nueva</string>
   <string name="settings_second_password_hint_new_confirm">Confirmar la segunda contraseña nueva</string>
@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">La dirección de correo electrónico de recuperación ha sido actualizada.</string>
   <string name="settings_password_management_success">Contraseña actualizada</string>
   <string name="settings_password_management_start_recovery">¿No recuerdas tu contraseña?</string>
-  <string name="settings_manage_security_keys_info">Para administrar, añadir, o borrar claves de seguridad, usa la aplicación web de Proton.</string>
+  <string name="settings_security_keys_learn_more">Saber más</string>
+  <string name="settings_manage_security_keys_info">Para administrar, añadir, o borrar claves de seguridad, usa la aplicación web de Proton. %s</string>
+  <string name="settings_add_security_key">Añadir clave de seguridad</string>
+  <string name="settings_manage_security_keys">Gestionar claves de seguridad</string>
+  <string name="settings_security_keys_empty_list">No hay claves de seguridad registradas en tu cuenta. Para añadir una clave de seguridad utiliza la aplicación web de Proton. %s</string>
   <string name="settings_security_keys_registered">Estas son las claves de seguridad registradas en la cuenta.</string>
-  <string name="settings_security_keys_empty">No hay claves de seguridad registradas en la cuenta.</string>
   <string name="settings_security_keys_title">Claves de seguridad</string>
   <string name="settings_security_keys_error">Error al obtener las claves de seguridad. Intenta de nuevo.</string>
   <!-- device/local settings -->

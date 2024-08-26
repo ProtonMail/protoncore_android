@@ -48,9 +48,12 @@
   <string name="settings_recovery_email_success">Adresă e-mail de recuperare s-a actualizat.</string>
   <string name="settings_password_management_success">Parolă actualizată</string>
   <string name="settings_password_management_start_recovery">Nu vă amintiți parola de conectare?</string>
-  <string name="settings_manage_security_keys_info">Pentru a gestiona, adăuga sau elimina cheile de securitate, utilizați aplicația web Proton.</string>
+  <string name="settings_security_keys_learn_more">Detalii</string>
+  <string name="settings_manage_security_keys_info">Pentru a gestiona, adăuga sau elimina cheile de securitate, utilizați aplicația web Proton. %s</string>
+  <string name="settings_add_security_key">Adăugare cheie de securitate</string>
+  <string name="settings_manage_security_keys">Gestionare chei de securitate</string>
+  <string name="settings_security_keys_empty_list">Nu există chei de securitate înregistrate în cont. Pentru a adăuga o cheie de securitate, utilizați aplicația web Proton. %s</string>
   <string name="settings_security_keys_registered">Acestea sunt cheile de securitate înregistrate în cont.</string>
-  <string name="settings_security_keys_empty">Nu există chei de securitate înregistrate în cont.</string>
   <string name="settings_security_keys_title">Chei de securitate</string>
   <string name="settings_security_keys_error">Eroare la preluarea cheilor de securitate. Mai încercați.</string>
   <!-- device/local settings -->

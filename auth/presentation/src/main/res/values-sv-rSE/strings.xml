@@ -68,6 +68,8 @@
   <string name="auth_2fa_learn_more">Lär dig mer</string>
   <string name="auth_2fa_use_2fa_code">Använd tvåfaktorskod</string>
   <string name="auth_2fa_error_empty_code">Ange den 6-siffriga koden.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Ett fel har uppstått. Kontrollera din nyckel.</string>
+  <string name="auth_2fa_error_key_network_error">Ett nätverksfel har uppstått. Försök igen.</string>
   <string name="auth_mailbox_title">Lås upp din brevlåda</string>
   <string name="auth_mailbox_password_label">Lösenord för brevlådan</string>
   <string name="auth_mailbox_unlock_action">Lås upp</string>
