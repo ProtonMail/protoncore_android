@@ -321,7 +321,9 @@ class UserManagerImpl @Inject constructor(
             signedKeyLists = signedKeyLists
         )
 
-        return checkNotNull(userRepository.getUser(userId, refresh = true))
+        val user = userRepository.getUser(userId, refresh = true)
+        userAddressRepository.getAddresses(userId, refresh = true)
+        return user
     }
 
     override suspend fun resetPassword(
@@ -348,6 +350,7 @@ class UserManagerImpl @Inject constructor(
 
                 passphraseRepository.setPassphrase(sessionUserId, newPassphrase.encrypt(keyStore))
                 userRepository.getUser(sessionUserId, refresh = true)
+                userAddressRepository.getAddresses(sessionUserId, refresh = true)
                 return result
             }
         }
