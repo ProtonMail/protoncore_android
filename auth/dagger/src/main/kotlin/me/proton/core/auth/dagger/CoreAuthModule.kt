@@ -29,12 +29,14 @@ import me.proton.core.auth.data.usecase.IsCommonPasswordCheckEnabledImpl
 import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.feature.IsFido2EnabledImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
+import me.proton.core.auth.data.repository.DeviceSecretRepositoryImpl
 import me.proton.core.auth.data.usecase.IsCredentialLessEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoCustomTabEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoEnabledImpl
 import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
 import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
@@ -51,6 +53,9 @@ public interface CoreAuthModule {
     @Binds
     @Singleton
     public fun provideMissingScopeListener(impl: MissingScopeListenerImpl): MissingScopeListener
+
+    @Binds
+    public fun bindDeviceSecretRepository(impl: DeviceSecretRepositoryImpl): DeviceSecretRepository
 
     public companion object {
         @Provides
