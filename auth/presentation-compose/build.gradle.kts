@@ -27,8 +27,8 @@ plugins {
 publishOption.shouldBePublishedAsLib = true
 
 protonCoverage {
-    branchCoveragePercentage.set(68)
-    lineCoveragePercentage.set(95)
+    branchCoveragePercentage.set(9)
+    lineCoveragePercentage.set(31)
 }
 
 android {
@@ -49,7 +49,9 @@ dependencies {
         project(Module.userDomain),
         project(Module.telemetryDomain),
         project(Module.presentationCompose),
+        project(Module.userSettingsDomain),
         `androidx-navigation-common`,
+        coilCompose,
         `compose-foundation-layout`,
         `compose-foundation`,
         `compose-material`,

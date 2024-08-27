@@ -115,6 +115,8 @@ public val DependencyHandler.bcrypt: Any
     get() = dependency("at.favre.lib", module = "bcrypt") version `bcrypt version`
 public val DependencyHandler.coil: Any
     get() = dependency("io.coil-kt", module = "coil") version `coil version`
+public val DependencyHandler.coilCompose: Any
+    get() = dependency("io.coil-kt", module = "coil-compose") version `coil version`
 public val DependencyHandler.coilSvg: Any
     get() = dependency("io.coil-kt", module = "coil-svg") version `coil version`
 public val DependencyHandler.coordinatorlayout: Any

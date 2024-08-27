@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,20 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.domain.entity
+package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 
-enum class Product {
-    Calendar,
-    Drive,
-    Mail,
-    Vpn,
-    Pass
-}
+import coil.request.ImageRequest
+import me.proton.core.domain.entity.Product
 
-fun Product.displayName(): String = when (this) {
-    Product.Calendar -> "Proton Calendar"
-    Product.Drive -> "Proton Drive"
-    Product.Mail -> "Proton Mail"
-    Product.Pass -> "Proton Pass"
-    Product.Vpn -> "Proton VPN"
-}
+/**
+ * @param organizationIcon Anything that is accepted by [ImageRequest.Builder.data].
+ */
+public data class BackupPasswordSetupUiData(
+    val product: Product,
+    val organizationAdminEmail: String? = null,
+    val organizationIcon: Any? = null,
+    val organizationName: String? = null,
+)
