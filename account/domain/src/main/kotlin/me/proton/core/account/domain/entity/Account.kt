@@ -65,7 +65,8 @@ fun Account.isStepNeeded(): Boolean {
         AccountState.MigrationNeeded,
         AccountState.TwoPassModeNeeded,
         AccountState.CreateAddressNeeded,
-        AccountState.CreateAccountNeeded -> true
+        AccountState.CreateAccountNeeded,
+        AccountState.DeviceSecretNeeded -> true
         AccountState.NotReady,
         AccountState.TwoPassModeSuccess,
         AccountState.TwoPassModeFailed,
@@ -73,6 +74,8 @@ fun Account.isStepNeeded(): Boolean {
         AccountState.CreateAddressFailed,
         AccountState.CreateAccountSuccess,
         AccountState.CreateAccountFailed,
+        AccountState.DeviceSecretSuccess,
+        AccountState.DeviceSecretFailed,
         AccountState.Ready,
         AccountState.Disabled,
         AccountState.UnlockFailed,

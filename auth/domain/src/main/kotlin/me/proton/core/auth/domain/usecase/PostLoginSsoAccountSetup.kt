@@ -18,10 +18,14 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.UserManager.UnlockResult
 import javax.inject.Inject
 
 /**
@@ -30,27 +34,71 @@ import javax.inject.Inject
 class PostLoginSsoAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val userCheck: PostLoginAccountSetup.UserCheck,
+    private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val userManager: UserManager,
     private val sessionManager: SessionManager,
+    private val product: Product,
 ) {
-    suspend operator fun invoke(
+    suspend operator fun invoke(userId: UserId): Result {
+        return when {
+            product == Product.Vpn -> userCheck(userId)
+            else -> secretCheck(userId)
+        }
+    }
+
+    private suspend fun secretCheck(userId: UserId): Result {
+        val secret: EncryptedString = "?"
+        val isSecretValid = false
+        return when {
+            isSecretValid -> unlockUser(userId, secret)
+            else -> deviceSecretNeeded(userId)
+        }
+    }
+
+    private suspend fun deviceSecretNeeded(userId: UserId): Result {
+        accountWorkflow.handleDeviceSecretNeeded(userId)
+        return Result.Need.DeviceSecret(userId)
+    }
+
+    private suspend fun unlockUser(
         userId: UserId,
-    ): PostLoginAccountSetup.UserCheckResult {
+        secret: EncryptedString
+    ): Result {
+        return when (val result = unlockUserPrimaryKey.invoke(userId, secret)) {
+            UnlockResult.Error.NoKeySaltsForPrimaryKey -> unrecoverable(userId, result)
+            UnlockResult.Error.NoPrimaryKey -> unrecoverable(userId, result)
+            UnlockResult.Error.PrimaryKeyInvalidPassphrase -> recoverable(userId, result)
+            UnlockResult.Success -> userCheck(userId)
+        }
+    }
+
+    private suspend fun unrecoverable(userId: UserId, result: UnlockResult): Result {
+        accountWorkflow.handleUnlockFailed(userId)
+        return Result.Error.UnlockPrimaryKeyError(result as UnlockResult.Error)
+    }
+
+    private suspend fun recoverable(userId: UserId, result: UnlockResult): Result {
+        accountWorkflow.handleUnlockFailed(userId)
+        return Result.Error.UnlockPrimaryKeyError(result as UnlockResult.Error)
+    }
+
+    private suspend fun userCheck(userId: UserId): Result {
         // Refresh scopes.
         sessionManager.refreshScopes(checkNotNull(sessionManager.getSessionId(userId)))
         // First get the User to invoke UserCheck.
         val user = userManager.getUser(userId, refresh = true)
-        val userCheckResult = userCheck.invoke(user)
-        when (userCheckResult) {
+        return when (val userCheckResult = userCheck.invoke(user)) {
             is PostLoginAccountSetup.UserCheckResult.Error -> {
                 // Disable account and prevent login.
                 accountWorkflow.handleAccountDisabled(userId)
+                Result.Error.UserCheckError(userCheckResult)
             }
+
             is PostLoginAccountSetup.UserCheckResult.Success -> {
                 // Last step, change account state to Ready.
                 accountWorkflow.handleAccountReady(userId)
+                Result.AccountReady(userId)
             }
         }
-        return userCheckResult
     }
 }

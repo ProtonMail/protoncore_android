@@ -67,9 +67,10 @@ class PostLoginAccountSetup @Inject constructor(
             data class TwoPassMode(val userId: UserId) : Need()
             data class ChangePassword(val userId: UserId) : Need()
             data class ChooseUsername(val userId: UserId) : Need()
+            data class DeviceSecret(val userId: UserId) : Need()
         }
 
-        data class UserUnlocked(val userId: UserId) : Result()
+        data class AccountReady(val userId: UserId) : Result()
     }
 
     sealed class UserCheckResult {
@@ -229,7 +230,7 @@ class PostLoginAccountSetup @Inject constructor(
                         onSetupSuccess?.invoke()
                         // Last step, change account state to Ready.
                         accountWorkflow.handleAccountReady(userId)
-                        Result.UserUnlocked(userId)
+                        Result.AccountReady(userId)
                     }
                 }
             }

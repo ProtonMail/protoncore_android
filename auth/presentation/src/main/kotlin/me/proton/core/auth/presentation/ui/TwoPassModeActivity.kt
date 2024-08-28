@@ -101,8 +101,9 @@ class TwoPassModeActivity : AuthActivity<ActivityMailboxLoginBinding>(ActivityMa
         when (result) {
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockPrimaryKeyError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result)
-            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId)
 
+            is PostLoginAccountSetup.Result.Need.DeviceSecret,
             is PostLoginAccountSetup.Result.Need.ChangePassword,
             is PostLoginAccountSetup.Result.Need.ChooseUsername,
             is PostLoginAccountSetup.Result.Need.SecondFactor,

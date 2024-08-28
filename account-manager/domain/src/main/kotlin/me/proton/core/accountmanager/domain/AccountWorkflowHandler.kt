@@ -97,6 +97,21 @@ interface AccountWorkflowHandler {
     suspend fun handleCreateAccountFailed(userId: UserId)
 
     /**
+     * Directly sets the account into a [AccountState.DeviceSecretNeeded] state.
+     */
+    suspend fun handleDeviceSecretNeeded(userId: UserId)
+
+    /**
+     * Handle Device Secret success.
+     */
+    suspend fun handleDeviceSecretSuccess(userId: UserId)
+
+    /**
+     * Handle Device Secret failure.
+     */
+    suspend fun handleDeviceSecretFailed(userId: UserId)
+
+    /**
      * Handle Unlock failure.
      */
     suspend fun handleUnlockFailed(userId: UserId)

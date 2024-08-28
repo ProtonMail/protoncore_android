@@ -253,7 +253,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
                 onSetupSuccess = any(),
                 internalAddressDomain = any()
             )
-        } returns PostLoginAccountSetup.Result.UserUnlocked(userId)
+        } returns PostLoginAccountSetup.Result.AccountReady(userId)
 
         flowTest(viewModel.state) {
             // WHEN
@@ -283,7 +283,7 @@ class ChooseAddressViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Cor
             val state = awaitItem()
             assertIs<ChooseAddressViewModel.State.AccountSetupResult>(state)
             val postLoginSetupResult =
-                assertIs<PostLoginAccountSetup.Result.UserUnlocked>(state.result)
+                assertIs<PostLoginAccountSetup.Result.AccountReady>(state.result)
             assertEquals(userId, postLoginSetupResult.userId)
 
             cancelAndConsumeRemainingEvents()

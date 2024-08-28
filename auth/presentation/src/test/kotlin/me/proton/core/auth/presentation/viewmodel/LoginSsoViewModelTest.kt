@@ -120,6 +120,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
         val url = "https://app-api.proton.domain/sso/login#token=token&uid=uid"
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns mockk {
             every { userId } returns testUserId
+            every { temporaryPassword } returns false
         }
         coEvery { postAccountSsoAccountSetup.invoke(any()) } returns mockk()
 

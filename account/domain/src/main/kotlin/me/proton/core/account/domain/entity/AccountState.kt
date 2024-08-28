@@ -92,6 +92,26 @@ enum class AccountState {
     CreateAccountFailed,
 
     /**
+     * A device secret is needed.
+     *
+     * Note: Usually followed by either [DeviceSecretSuccess] or [DeviceSecretFailed].
+     *
+     * @see [DeviceSecretSuccess]
+     * @see [DeviceSecretFailed].
+     */
+    DeviceSecretNeeded,
+
+    /**
+     * The device secret step has been successful.
+     */
+    DeviceSecretSuccess,
+
+    /**
+     * The device secret step has failed.
+     */
+    DeviceSecretFailed,
+
+    /**
      * Unlock User primary key has failed.
      */
     UnlockFailed,

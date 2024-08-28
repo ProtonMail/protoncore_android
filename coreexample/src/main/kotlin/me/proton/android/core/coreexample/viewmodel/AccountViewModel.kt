@@ -43,6 +43,8 @@ import me.proton.core.accountmanager.presentation.onAccountCreateAccountFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAccountNeeded
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressFailed
 import me.proton.core.accountmanager.presentation.onAccountCreateAddressNeeded
+import me.proton.core.accountmanager.presentation.onAccountDeviceSecretFailed
+import me.proton.core.accountmanager.presentation.onAccountDeviceSecretNeeded
 import me.proton.core.accountmanager.presentation.onAccountMigrationNeeded
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeFailed
 import me.proton.core.accountmanager.presentation.onAccountTwoPassModeNeeded
@@ -113,6 +115,8 @@ class AccountViewModel @Inject constructor(
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
                 .onAccountCreateAccountNeeded { startSignupWorkflow(accountType, cancellable = false) }
                 .onAccountCreateAccountFailed { accountManager.disableAccount(it.userId) }
+                .onAccountDeviceSecretNeeded { startDeviceSecretWorkflow(it) }
+                .onAccountDeviceSecretFailed { accountManager.disableAccount(it.userId) }
                 .onAccountTwoPassModeFailed { accountManager.disableAccount(it.userId) }
                 .onAccountCreateAddressFailed { accountManager.disableAccount(it.userId) }
                 .onAccountMigrationNeeded { context.showToast("MigrationNeeded") }

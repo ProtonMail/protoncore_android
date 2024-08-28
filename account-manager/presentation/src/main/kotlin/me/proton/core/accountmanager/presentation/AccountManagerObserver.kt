@@ -114,6 +114,22 @@ fun AccountManagerObserver.onAccountCreateAccountFailed(
     return this
 }
 
+fun AccountManagerObserver.onAccountDeviceSecretNeeded(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.DeviceSecretNeeded, initialState, block)
+    return this
+}
+
+fun AccountManagerObserver.onAccountDeviceSecretFailed(
+    initialState: Boolean = true,
+    block: suspend (Account) -> Unit
+): AccountManagerObserver {
+    addAccountStateListener(AccountState.DeviceSecretFailed, initialState, block)
+    return this
+}
+
 fun AccountManagerObserver.onAccountReady(
     initialState: Boolean = true,
     block: suspend (Account) -> Unit

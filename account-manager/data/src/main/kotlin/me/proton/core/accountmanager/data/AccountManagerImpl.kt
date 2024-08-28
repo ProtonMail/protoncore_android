@@ -31,6 +31,9 @@ import me.proton.core.account.domain.entity.AccountState.CreateAccountSuccess
 import me.proton.core.account.domain.entity.AccountState.CreateAddressFailed
 import me.proton.core.account.domain.entity.AccountState.CreateAddressNeeded
 import me.proton.core.account.domain.entity.AccountState.CreateAddressSuccess
+import me.proton.core.account.domain.entity.AccountState.DeviceSecretFailed
+import me.proton.core.account.domain.entity.AccountState.DeviceSecretNeeded
+import me.proton.core.account.domain.entity.AccountState.DeviceSecretSuccess
 import me.proton.core.account.domain.entity.AccountState.Disabled
 import me.proton.core.account.domain.entity.AccountState.NotReady
 import me.proton.core.account.domain.entity.AccountState.Ready
@@ -202,6 +205,18 @@ class AccountManagerImpl @Inject constructor(
 
     override suspend fun handleCreateAccountFailed(userId: UserId) {
         accountRepository.updateAccountState(userId, CreateAccountFailed)
+    }
+
+    override suspend fun handleDeviceSecretNeeded(userId: UserId) {
+        accountRepository.updateAccountState(userId, DeviceSecretNeeded)
+    }
+
+    override suspend fun handleDeviceSecretSuccess(userId: UserId) {
+        accountRepository.updateAccountState(userId, DeviceSecretSuccess)
+    }
+
+    override suspend fun handleDeviceSecretFailed(userId: UserId) {
+        accountRepository.updateAccountState(userId, DeviceSecretFailed)
     }
 
     override suspend fun handleUnlockFailed(userId: UserId) {

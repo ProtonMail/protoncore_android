@@ -198,11 +198,12 @@ class ChooseAddressActivity : AuthActivity<ActivityChooseAddressBinding>(
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckError(result.error)
 
+            is PostLoginAccountSetup.Result.Need.DeviceSecret,
             is PostLoginAccountSetup.Result.Need.ChangePassword,
             is PostLoginAccountSetup.Result.Need.ChooseUsername,
             is PostLoginAccountSetup.Result.Need.SecondFactor,
             is PostLoginAccountSetup.Result.Need.TwoPassMode,
-            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess()
+            is PostLoginAccountSetup.Result.AccountReady -> onSuccess()
         }
     }
 

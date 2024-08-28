@@ -27,6 +27,8 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
@@ -37,6 +39,7 @@ import kotlin.test.assertTrue
 
 class PostLoginSsoAccountSetupTest {
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
+    private lateinit var unlockUserPrimaryKey: UnlockUserPrimaryKey
     private lateinit var userCheck: PostLoginAccountSetup.UserCheck
     private lateinit var userManager: UserManager
     private lateinit var sessionManager: SessionManager
@@ -56,6 +59,9 @@ class PostLoginSsoAccountSetupTest {
         userCheck = mockk {
             coEvery { this@mockk.invoke(any()) } returns PostLoginAccountSetup.UserCheckResult.Success
         }
+        unlockUserPrimaryKey = mockk {
+            coEvery { this@mockk.invoke(any(), any<EncryptedString>()) } returns UserManager.UnlockResult.Success
+        }
         userManager = mockk {
             coEvery { getUser(any(), any()) } returns user
         }
@@ -63,17 +69,12 @@ class PostLoginSsoAccountSetupTest {
             coEvery { getSessionId(any()) } returns sessionId
             coEvery { refreshScopes(any()) } returns Unit
         }
-
-        tested = PostLoginSsoAccountSetup(
-            accountWorkflowHandler,
-            userCheck,
-            userManager,
-            sessionManager
-        )
     }
 
     @Test
     fun `user check error`() = runTest {
+        tested = mockTested(Product.Vpn)
+
         val setupError = mockk<PostLoginAccountSetup.UserCheckResult.Error>()
         val sessionInfo = mockSessionInfo()
 
@@ -81,12 +82,14 @@ class PostLoginSsoAccountSetupTest {
         coEvery { userCheck.invoke(any()) } returns setupError
 
         val result = tested.invoke(sessionInfo.userId)
-        assertTrue(result is PostLoginAccountSetup.UserCheckResult.Error)
+        assertTrue(result is PostLoginAccountSetup.Result.Error)
         coVerify { accountWorkflowHandler.handleAccountDisabled(testUserId) }
     }
 
     @Test
     fun `user check success`() = runTest {
+        tested = mockTested(Product.Vpn)
+
         val setupSuccess = mockk<PostLoginAccountSetup.UserCheckResult.Success>()
         val sessionInfo = mockSessionInfo()
 
@@ -94,9 +97,18 @@ class PostLoginSsoAccountSetupTest {
         coEvery { userCheck.invoke(any()) } returns setupSuccess
 
         val result = tested.invoke(sessionInfo.userId)
-        assertTrue(result is PostLoginAccountSetup.UserCheckResult.Success)
+        assertTrue(result is PostLoginAccountSetup.Result.AccountReady)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
     }
+
+    private fun mockTested(product: Product) = PostLoginSsoAccountSetup(
+        accountWorkflow = accountWorkflowHandler,
+        userCheck = userCheck,
+        unlockUserPrimaryKey = unlockUserPrimaryKey,
+        userManager = userManager,
+        sessionManager = sessionManager,
+        product = product
+    )
 
     private fun mockSessionInfo(
         secondFactorNeeded: Boolean = false,

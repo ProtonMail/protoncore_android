@@ -141,7 +141,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
                 any(),
                 any()
             )
-        } returns PostLoginAccountSetup.Result.UserUnlocked(testUserId)
+        } returns PostLoginAccountSetup.Result.AccountReady(testUserId)
 
         viewModel.state.test {
             // WHEN
@@ -153,7 +153,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
             val successState = awaitItem()
             assertTrue(successState is LoginViewModel.State.AccountSetupResult)
             val result = successState.result
-            assertTrue(result is PostLoginAccountSetup.Result.UserUnlocked)
+            assertTrue(result is PostLoginAccountSetup.Result.AccountReady)
             assertEquals(sessionInfo.userId, result.userId)
 
             verify { savedStateHandle.set(any(), any<String>()) }
@@ -435,7 +435,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         } coAnswers {
             result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Success }
             result("unlockUserPrimaryKey") { UserManager.UnlockResult.Success }
-            PostLoginAccountSetup.Result.UserUnlocked(mockk())
+            PostLoginAccountSetup.Result.AccountReady(mockk())
         }
         val viewModel = makeLoginViewModel()
         val loginData = mockk<SignupLoginTotal>()
@@ -536,7 +536,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         } coAnswers {
             result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Success }
             result("unlockUserPrimaryKey") { UserManager.UnlockResult.Success }
-            PostLoginAccountSetup.Result.UserUnlocked(mockk())
+            PostLoginAccountSetup.Result.AccountReady(mockk())
         }
         val viewModel = spyk(makeLoginViewModel(), recordPrivateCalls = true)
         every { viewModel.userId } answers { testUserId }

@@ -39,7 +39,6 @@ import me.proton.core.auth.fido.domain.entity.Fido2AuthenticationOptions
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
 import me.proton.core.auth.presentation.entity.NextStep
@@ -60,7 +59,6 @@ import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.validate
-import me.proton.core.util.kotlin.CoreLogger
 import me.proton.core.util.kotlin.exhaustive
 import java.util.Optional
 import javax.inject.Inject
@@ -143,11 +141,12 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         when (result) {
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result)
+            is PostLoginAccountSetup.Result.Need.DeviceSecret -> onSuccess(result.userId, NextStep.DeviceSecret)
             is PostLoginAccountSetup.Result.Need.ChangePassword -> onSuccess(result.userId, NextStep.None)
             is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)
             is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId, NextStep.SecondFactor)
             is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId, NextStep.TwoPassMode)
-            is PostLoginAccountSetup.Result.UserUnlocked -> onSuccess(result.userId, NextStep.None)
+            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId, NextStep.None)
         }.exhaustive
     }
 

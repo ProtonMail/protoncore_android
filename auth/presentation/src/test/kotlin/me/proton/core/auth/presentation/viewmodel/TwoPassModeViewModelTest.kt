@@ -49,7 +49,7 @@ class TwoPassModeViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Uncon
     private val testUserId = UserId("test-user-id")
     private val testPassword = "test-password"
     private val accountType = AccountType.Internal
-    private val success = PostLoginAccountSetup.Result.UserUnlocked(testUserId)
+    private val success = PostLoginAccountSetup.Result.AccountReady(testUserId)
     // endregion
 
     private lateinit var viewModel: TwoPassModeViewModel

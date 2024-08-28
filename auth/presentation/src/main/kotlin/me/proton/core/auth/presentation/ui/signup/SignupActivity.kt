@@ -192,7 +192,8 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         when (result) {
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onLoginError(result.error.localizedMessage)
-            is PostLoginAccountSetup.Result.UserUnlocked -> onLoginSuccess(result.userId)
+            is PostLoginAccountSetup.Result.AccountReady -> onLoginSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.DeviceSecret,
             is PostLoginAccountSetup.Result.Need.ChangePassword,
             is PostLoginAccountSetup.Result.Need.ChooseUsername,
             is PostLoginAccountSetup.Result.Need.SecondFactor,

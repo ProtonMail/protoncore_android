@@ -26,6 +26,7 @@ import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
+import me.proton.core.auth.presentation.entity.DeviceSecretResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.LoginSsoInput
@@ -130,6 +131,19 @@ object StartChooseAddress : ActivityResultContract<ChooseAddressInput, ChooseAdd
     override fun parseResult(resultCode: Int, result: Intent?): ChooseAddressResult? {
         if (resultCode != Activity.RESULT_OK) return null
         return result?.getParcelableExtra(ChooseAddressActivity.ARG_RESULT)
+    }
+}
+
+object StartDeviceSecret : ActivityResultContract<String, DeviceSecretResult?>() {
+
+    override fun createIntent(context: Context, input: String) =
+        Intent(context, DeviceSecretActivity::class.java).apply {
+            putExtra(DeviceSecretActivity.ARG_INPUT, input)
+        }
+
+    override fun parseResult(resultCode: Int, intent: Intent?): DeviceSecretResult? {
+        if (resultCode != Activity.RESULT_OK) return null
+        return intent?.getParcelableExtra(DeviceSecretActivity.ARG_RESULT)
     }
 }
 

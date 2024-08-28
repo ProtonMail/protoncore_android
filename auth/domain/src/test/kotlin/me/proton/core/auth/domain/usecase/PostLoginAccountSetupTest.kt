@@ -136,7 +136,7 @@ class PostLoginAccountSetupTest {
             temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
-        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        assertEquals(PostLoginAccountSetup.Result.AccountReady(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify(exactly = 1) { onSetupSuccess() }
     }
@@ -232,7 +232,7 @@ class PostLoginAccountSetupTest {
             onSetupSuccess = onSetupSuccess
         )
 
-        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        assertEquals(PostLoginAccountSetup.Result.AccountReady(testUserId), result)
         coVerify(exactly = 1) { onSetupSuccess() }
 
         val userId = slot<UserId>()
@@ -296,7 +296,7 @@ class PostLoginAccountSetupTest {
             onSetupSuccess = onSetupSuccess
         )
 
-        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        assertEquals(PostLoginAccountSetup.Result.AccountReady(testUserId), result)
         coVerify(exactly = 1) { onSetupSuccess() }
 
         val userId = slot<UserId>()
@@ -439,7 +439,7 @@ class PostLoginAccountSetupTest {
             onSetupSuccess = onSetupSuccess,
             internalAddressDomain = "test-domain"
         )
-        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        assertEquals(PostLoginAccountSetup.Result.AccountReady(testUserId), result)
         coVerify {
             setupPrimaryKeys.invoke(
                 userId = testUserId,
@@ -472,7 +472,7 @@ class PostLoginAccountSetupTest {
             onSetupSuccess = onSetupSuccess,
             internalAddressDomain = "test-domain"
         )
-        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        assertEquals(PostLoginAccountSetup.Result.AccountReady(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify { setupInternalAddress.invoke(testUserId, "test-domain") }
         coVerify(exactly = 1) { onSetupSuccess() }
@@ -497,7 +497,7 @@ class PostLoginAccountSetupTest {
             temporaryPassword = sessionInfo.temporaryPassword,
             onSetupSuccess = onSetupSuccess
         )
-        assertEquals(PostLoginAccountSetup.Result.UserUnlocked(testUserId), result)
+        assertEquals(PostLoginAccountSetup.Result.AccountReady(testUserId), result)
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
         coVerify { setupExternalAddressKeys.invoke(testUserId) }
         coVerify(exactly = 1) { onSetupSuccess() }

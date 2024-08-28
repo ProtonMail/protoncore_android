@@ -28,10 +28,9 @@ import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.ChooseAddressResult
+import me.proton.core.auth.presentation.entity.DeviceSecretResult
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
-import me.proton.core.auth.presentation.entity.LoginSsoInput
-import me.proton.core.auth.presentation.entity.LoginSsoResult
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
@@ -43,6 +42,7 @@ import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.auth.presentation.ui.StartAddAccount
 import me.proton.core.auth.presentation.ui.StartChooseAddress
+import me.proton.core.auth.presentation.ui.StartDeviceSecret
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartLoginTwoStep
 import me.proton.core.auth.presentation.ui.StartSecondFactor
@@ -63,8 +63,10 @@ class AuthOrchestrator @Inject constructor() {
     private var secondFactorWorkflowLauncher: ActivityResultLauncher<SecondFactorInput>? = null
     private var twoPassModeWorkflowLauncher: ActivityResultLauncher<TwoPassModeInput>? = null
     private var chooseAddressLauncher: ActivityResultLauncher<ChooseAddressInput>? = null
+    private var deviceSecretLauncher: ActivityResultLauncher<String>? = null
     private var signUpWorkflowLauncher: ActivityResultLauncher<SignUpInput>? = null
-    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? = null
+    private var confirmPasswordWorkflowLauncher: ActivityResultLauncher<ConfirmPasswordInput>? =
+        null
     // endregion
 
     private var onAddAccountResultListener: ((result: AddAccountResult?) -> Unit)? = {}
@@ -72,6 +74,7 @@ class AuthOrchestrator @Inject constructor() {
     private var onTwoPassModeResultListener: ((result: TwoPassModeResult?) -> Unit)? = {}
     private var onSecondFactorResultListener: ((result: SecondFactorResult?) -> Unit)? = {}
     private var onChooseAddressResultListener: ((result: ChooseAddressResult?) -> Unit)? = {}
+    private var onDeviceSecretResultListener: ((result: DeviceSecretResult?) -> Unit)? = {}
     private var onSignUpResultListener: ((result: SignUpResult?) -> Unit)? = {}
     private var onConfirmPasswordResultListener: ((result: ConfirmPasswordResult?) -> Unit)? = {}
 
@@ -93,6 +96,10 @@ class AuthOrchestrator @Inject constructor() {
 
     fun setOnChooseAddressResult(block: (result: ChooseAddressResult?) -> Unit) {
         onChooseAddressResultListener = block
+    }
+
+    fun setOnDeviceSecretResult(block: (result: DeviceSecretResult?) -> Unit) {
+        onDeviceSecretResultListener = block
     }
 
     fun setOnSignUpResult(block: (result: SignUpResult?) -> Unit) {
@@ -160,6 +167,15 @@ class AuthOrchestrator @Inject constructor() {
             onChooseAddressResultListener?.invoke(it)
         }
 
+    private fun registerDeviceSecretResult(
+        caller: ActivityResultCaller
+    ): ActivityResultLauncher<String> =
+        caller.registerForActivityResult(
+            StartDeviceSecret
+        ) {
+            onDeviceSecretResultListener?.invoke(it)
+        }
+
     private fun registerSignUpResult(
         caller: ActivityResultCaller
     ): ActivityResultLauncher<SignUpInput> =
@@ -217,6 +233,12 @@ class AuthOrchestrator @Inject constructor() {
         )
     }
 
+    private fun startDeviceSecretWorkflow(
+        userId: UserId,
+    ) {
+        checkRegistered(deviceSecretLauncher).launch(userId.id)
+    }
+
     // endregion
 
     // region public API
@@ -232,6 +254,7 @@ class AuthOrchestrator @Inject constructor() {
         secondFactorWorkflowLauncher = registerSecondFactorResult(caller)
         twoPassModeWorkflowLauncher = registerTwoPassModeResult(caller)
         chooseAddressLauncher = registerChooseAddressResult(caller)
+        deviceSecretLauncher = registerDeviceSecretResult(caller)
         signUpWorkflowLauncher = registerSignUpResult(caller)
         confirmPasswordWorkflowLauncher = registerConfirmPasswordResult(caller)
     }
@@ -246,6 +269,7 @@ class AuthOrchestrator @Inject constructor() {
         secondFactorWorkflowLauncher?.unregister()
         twoPassModeWorkflowLauncher?.unregister()
         chooseAddressLauncher?.unregister()
+        deviceSecretLauncher?.unregister()
         signUpWorkflowLauncher?.unregister()
 
         addAccountWorkflowLauncher = null
@@ -254,6 +278,7 @@ class AuthOrchestrator @Inject constructor() {
         secondFactorWorkflowLauncher = null
         twoPassModeWorkflowLauncher = null
         chooseAddressLauncher = null
+        deviceSecretLauncher = null
         signUpWorkflowLauncher = null
 
         onAddAccountResultListener = null
@@ -261,6 +286,7 @@ class AuthOrchestrator @Inject constructor() {
         onTwoPassModeResultListener = null
         onSecondFactorResultListener = null
         onChooseAddressResultListener = null
+        onDeviceSecretResultListener = null
         onSignUpResultListener = null
     }
 
@@ -375,6 +401,17 @@ class AuthOrchestrator @Inject constructor() {
     }
 
     /**
+     * Start the Device Secret workflow.
+     *
+     * @see [onDeviceSecretResult]
+     */
+    fun startDeviceSecretWorkflow(account: Account) {
+        startDeviceSecretWorkflow(
+            userId = account.userId,
+        )
+    }
+
+    /**
      * Starts the SignUp workflow.
      * If subscriptionDetails are provided, a new subscription will be created associated with the newly created account.
      * Note, this flow will take care of creating the subscription, but not plan validation nor token conversion.
@@ -444,6 +481,13 @@ fun AuthOrchestrator.onChooseAddressResult(
     block: (result: ChooseAddressResult?) -> Unit
 ): AuthOrchestrator {
     setOnChooseAddressResult { block(it) }
+    return this
+}
+
+fun AuthOrchestrator.onDeviceSecretResult(
+    block: (result: DeviceSecretResult?) -> Unit
+): AuthOrchestrator {
+    setOnDeviceSecretResult { block(it) }
     return this
 }
 

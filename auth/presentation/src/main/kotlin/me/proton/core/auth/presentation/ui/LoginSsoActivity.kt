@@ -186,8 +186,14 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
 
     private fun onAccountSetupResult(result: LoginSsoViewModel.State.AccountSetupResult) {
         when (result.result) {
-            is PostLoginAccountSetup.UserCheckResult.Error -> onUserCheckFailed(result.result)
-            is PostLoginAccountSetup.UserCheckResult.Success -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> showError(null)
+            is PostLoginAccountSetup.Result.Error.UserCheckError -> showError(result.result.error.localizedMessage)
+            is PostLoginAccountSetup.Result.Need.ChangePassword -> error("Unexpected")
+            is PostLoginAccountSetup.Result.Need.ChooseUsername -> error("Unexpected")
+            is PostLoginAccountSetup.Result.Need.SecondFactor -> error("Unexpected")
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> error("Unexpected")
+            is PostLoginAccountSetup.Result.Need.DeviceSecret -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId)
         }
     }
 

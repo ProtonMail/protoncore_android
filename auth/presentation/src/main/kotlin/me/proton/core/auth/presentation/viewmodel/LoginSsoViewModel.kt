@@ -51,7 +51,7 @@ class LoginSsoViewModel @Inject constructor(
         data class StartToken(val token: String) : State()
         data class AccountSetupResult(
             val userId: UserId,
-            val result: PostLoginAccountSetup.UserCheckResult
+            val result: PostLoginAccountSetup.Result
         ) : State()
 
         data class Error(val error: Throwable) : State()
@@ -95,7 +95,7 @@ class LoginSsoViewModel @Inject constructor(
             }
             val token = params?.getValue("token")
             val sessionInfo = createLoginSsoSession(email, requireNotNull(token), requiredAccountType)
-            val result = postLoginSsoAccountSetup(userId = sessionInfo.userId)
+            val result = postLoginSsoAccountSetup(sessionInfo.userId)
             emit(State.AccountSetupResult(sessionInfo.userId, result))
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))

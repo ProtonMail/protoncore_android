@@ -72,7 +72,7 @@ class SecondFactorViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Unco
     private val testSecondFactorCode = "123456"
     private val testSecondFactorProof = SecondFactorProof.SecondFactorCode(testSecondFactorCode)
     private val testLoginPassword = "123456"
-    private val success = PostLoginAccountSetup.Result.UserUnlocked(testUserId)
+    private val success = PostLoginAccountSetup.Result.AccountReady(testUserId)
     private val twoPassNeeded = PostLoginAccountSetup.Result.Need.TwoPassMode(testUserId)
 
     // endregion
