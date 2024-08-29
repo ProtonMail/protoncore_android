@@ -11,6 +11,18 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [27.1.0] - 2024-08-29
+
+### Features
+
+- auth:
+  - Add fork session use case
+
+### Bug Fixes
+
+- user:
+  - Refresh User Addresses after reactivateKey/resetPassword.
+
 ## [27.0.0] - 2024-08-15
 
 ### Breaking Changes
