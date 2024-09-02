@@ -36,11 +36,13 @@ import me.proton.core.network.domain.ApiManager
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.payment.domain.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.domain.entity.SubscriptionStatus
+import me.proton.core.payment.test.FakeIsPaymentsV5Enabled
 import me.proton.core.plan.data.api.PlansApi
 import me.proton.core.plan.data.entity.dynamicSubscription
 import me.proton.core.plan.data.usecase.GetSessionUserIdForPaymentApi
@@ -94,6 +96,7 @@ class PlansRepositoryImplTest {
     private val testUserId = "test-user-id"
     // endregion
 
+    private lateinit var paymentsV5Enabled: IsPaymentsV5Enabled
     private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
@@ -103,6 +106,7 @@ class PlansRepositoryImplTest {
         coEvery { getSessionUserIdForPaymentApi(any()) } answers { firstArg() }
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
         apiProvider = ApiProvider(apiFactory, sessionProvider, dispatcherProvider)
+        paymentsV5Enabled = FakeIsPaymentsV5Enabled(true)
         every {
             apiFactory.create(
                 interfaceClass = PlansApi::class
@@ -117,7 +121,8 @@ class PlansRepositoryImplTest {
         coEvery { userManager.getUser(any(), any()) } returns mockk {
             every { type } returns Type.Proton
         }
-        repository = PlansRepositoryImpl(apiProvider, endpointProvider, getSessionUserIdForPaymentApi, userManager)
+        repository =
+            PlansRepositoryImpl(apiProvider, endpointProvider, getSessionUserIdForPaymentApi, userManager, paymentsV5Enabled)
     }
 
     @Test

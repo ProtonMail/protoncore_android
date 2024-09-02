@@ -23,6 +23,7 @@ import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.response.CreatePaymentTokenResponse
 import me.proton.core.payment.data.api.response.PaymentMethodsResponse
 import me.proton.core.payment.data.api.response.PaymentStatusResponse
+import me.proton.core.payment.data.api.response.PaymentStatusV5Response
 import me.proton.core.payment.data.api.response.PaymentTokenStatusResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -39,6 +40,8 @@ internal interface PaymentsApi : BaseRetrofitApi {
     @POST("payments/v4/tokens")
     suspend fun createPaymentToken(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
+    @POST("payments/v5/tokens")
+    suspend fun createPaymentTokenV5(@Body body: CreatePaymentToken): CreatePaymentTokenResponse
 
     /**
      * Returns the status of payment processors.
@@ -46,6 +49,9 @@ internal interface PaymentsApi : BaseRetrofitApi {
      */
     @GET("payments/v4/status/{appVendor}")
     suspend fun paymentStatus(@Path("appVendor") appVendor: String): PaymentStatusResponse
+
+    @GET("payments/v5/status/{appVendor}")
+    suspend fun paymentStatusV5(@Path("appVendor") appVendor: String): PaymentStatusV5Response
 
     /**
      * Could be used during account creation as well as a regular Authenticated for plan upgrade for logged in users.
@@ -55,10 +61,16 @@ internal interface PaymentsApi : BaseRetrofitApi {
     @GET("payments/v4/tokens/{token}")
     suspend fun getPaymentTokenStatus(@Path("token") token: String): PaymentTokenStatusResponse
 
+    @GET("payments/v5/tokens/{token}")
+    suspend fun getPaymentTokenStatusV5(@Path("token") token: String): PaymentTokenStatusResponse
+
     /**
      * Returns existing already saved payment methods.
      * Authorized.
      */
     @GET("payments/v4/methods")
     suspend fun getPaymentMethods(): PaymentMethodsResponse
+
+    @GET("payments/v5/methods")
+    suspend fun getPaymentMethodsV5(): PaymentMethodsResponse
 }

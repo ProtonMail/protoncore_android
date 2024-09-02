@@ -25,12 +25,14 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import me.proton.core.payment.data.IsPaymentsV5EnabledImpl
 import me.proton.core.payment.data.PaymentManagerImpl
 import me.proton.core.payment.data.ProtonIAPBillingLibraryImpl
 import me.proton.core.payment.data.PurchaseManagerImpl
 import me.proton.core.payment.data.repository.GooglePurchaseRepositoryImpl
 import me.proton.core.payment.data.repository.PaymentsRepositoryImpl
 import me.proton.core.payment.data.repository.PurchaseRepositoryImpl
+import me.proton.core.payment.domain.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.PaymentManager
 import me.proton.core.payment.domain.PurchaseManager
 import me.proton.core.payment.domain.repository.GooglePurchaseRepository
@@ -106,4 +108,11 @@ public interface CorePaymentModule {
         @Singleton
         public fun provideSecureEndpoint(): SecureEndpoint = SecureEndpoint("secure.protonmail.com")
     }
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CorePaymentFeaturesModule {
+    @Binds
+    public fun bindIsPaymentsV5Enabled(impl: IsPaymentsV5EnabledImpl): IsPaymentsV5Enabled
 }

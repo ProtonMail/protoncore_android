@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.onParseErrorLog
+import me.proton.core.payment.domain.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentTokenEntity
 import me.proton.core.payment.domain.entity.SubscriptionCycle
@@ -53,7 +54,8 @@ class PlansRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val endpointProvider: PlanIconsEndpointProvider,
     private val getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi,
-    private val userManager: UserManager
+    private val userManager: UserManager,
+    private val isPaymentsV5Enabled: IsPaymentsV5Enabled,
 ) : PlansRepository {
 
     private val dynamicPlansCache =
@@ -111,9 +113,12 @@ class PlansRepositoryImpl @Inject constructor(
         cycle: SubscriptionCycle
     ): SubscriptionStatus = result("validateSubscription") {
         apiProvider.get<PlansApi>(getSessionUserIdForPaymentApi(sessionUserId)).invoke {
-            validateSubscription(
-                CheckSubscription(codes, plans, currency.name, cycle.value)
-            ).toSubscriptionStatus()
+            val requestBody = CheckSubscription(codes, plans, currency.name, cycle.value)
+            if (isPaymentsV5Enabled(sessionUserId)) {
+                validateSubscriptionV5(requestBody).toSubscriptionStatus()
+            } else {
+                validateSubscription(requestBody).toSubscriptionStatus()
+            }
         }.valueOrThrow
     }
 
@@ -144,17 +149,20 @@ class PlansRepositoryImpl @Inject constructor(
         subscriptionManagement: SubscriptionManagement
     ): Subscription = result("createOrUpdateSubscription") {
         apiProvider.get<PlansApi>(sessionUserId).invoke {
-            createUpdateSubscription(
-                body = CreateSubscription(
-                    amount = amount,
-                    currency = currency.name,
-                    paymentToken = payment?.token?.value,
-                    codes = codes,
-                    plans = plans,
-                    cycle = cycle.value,
-                    external = subscriptionManagement.value
-                )
-            ).subscription.toSubscription()
+            val requestBody = CreateSubscription(
+                amount = amount,
+                currency = currency.name,
+                paymentToken = payment?.token?.value,
+                codes = codes,
+                plans = plans,
+                cycle = cycle.value,
+                external = subscriptionManagement.value
+            )
+            if (isPaymentsV5Enabled(sessionUserId)) {
+                createUpdateSubscriptionV5(body = requestBody).subscription.toSubscription()
+            } else {
+                createUpdateSubscription(body = requestBody).subscription.toSubscription()
+            }
         }.valueOrThrow.apply {
             clearPlansCache()
         }

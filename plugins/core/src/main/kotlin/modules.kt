@@ -168,6 +168,7 @@ public object Module {
     public const val paymentData: String = "$payment:payment-data"
     public const val paymentDomain: String = "$payment:payment-domain"
     public const val paymentPresentation: String = "$payment:payment-presentation"
+    public const val paymentTest: String = "$payment:payment-test"
 
     // Payment-IAP
     public const val paymentIap: String = ":payment-iap"

@@ -192,6 +192,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:payment-data                          |
 | me.proton.core:payment-domain                        |
 | me.proton.core:payment-presentation                  |
+| me.proton.core:payment-test                          |
 | me.proton.core:payment-iap                           |
 | me.proton.core:payment-iap-dagger                    |
 | me.proton.core:payment-iap-data                      |

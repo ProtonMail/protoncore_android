@@ -60,6 +60,7 @@ dependencies {
 
     testImplementation(
         project(Module.kotlinTest),
+        project(Module.paymentTest),
         `coroutines-test`,
         junit,
         `kotlin-test`,

@@ -35,6 +35,7 @@ import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.network.domain.session.SessionProvider
 import me.proton.core.payment.data.api.PaymentsApi
+import me.proton.core.payment.domain.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.Details
@@ -46,6 +47,7 @@ import me.proton.core.payment.domain.entity.PaymentTokenResult
 import me.proton.core.payment.domain.entity.PaymentTokenStatus
 import me.proton.core.payment.domain.entity.PaymentType
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
+import me.proton.core.payment.test.FakeIsPaymentsV5Enabled
 import me.proton.core.plan.data.usecase.GetSessionUserIdForPaymentApi
 import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.assertIs
@@ -83,6 +85,7 @@ class PaymentsRepositoryImplTest {
     )
     // endregion
 
+    private lateinit var paymentsV5Enabled: IsPaymentsV5Enabled
     private val dispatcherProvider = TestDispatcherProvider()
 
     @Before
@@ -91,6 +94,7 @@ class PaymentsRepositoryImplTest {
         // GIVEN
         coEvery { getSessionUserIdForPaymentApi(any()) } answers { firstArg() }
         coEvery { sessionProvider.getSessionId(UserId(testUserId)) } returns SessionId(testSessionId)
+        paymentsV5Enabled = FakeIsPaymentsV5Enabled(true)
         apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
         every {
             apiManagerFactory.create(
@@ -103,7 +107,7 @@ class PaymentsRepositoryImplTest {
                 interfaceClass = PaymentsApi::class
             )
         } returns apiManager
-        repository = PaymentsRepositoryImpl(apiProvider, getSessionUserIdForPaymentApi)
+        repository = PaymentsRepositoryImpl(apiProvider, getSessionUserIdForPaymentApi, paymentsV5Enabled)
     }
 
     @Test

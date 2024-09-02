@@ -26,6 +26,7 @@ import me.proton.core.payment.data.api.request.CardDetailsBody
 import me.proton.core.payment.data.api.request.CreatePaymentToken
 import me.proton.core.payment.data.api.request.IAPDetailsBody
 import me.proton.core.payment.data.api.request.PaymentTypeEntity
+import me.proton.core.payment.domain.IsPaymentsV5Enabled
 import me.proton.core.payment.domain.entity.Card
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.PaymentMethod
@@ -42,6 +43,7 @@ import javax.inject.Inject
 public class PaymentsRepositoryImpl @Inject constructor(
     private val apiProvider: ApiProvider,
     private val getSessionUserIdForPaymentApi: GetSessionUserIdForPaymentApi,
+    private val isPaymentsV5Enabled: IsPaymentsV5Enabled,
 ) : PaymentsRepository {
 
     override suspend fun createPaymentToken(
@@ -101,7 +103,11 @@ public class PaymentsRepositoryImpl @Inject constructor(
             )
         }
         apiProvider.get<PaymentsApi>(getSessionUserIdForPaymentApi(sessionUserId)).invoke {
-            createPaymentToken(request).toCreatePaymentTokenResult()
+            if (isPaymentsV5Enabled(sessionUserId)) {
+                createPaymentTokenV5(request).toCreatePaymentTokenResult()
+            } else {
+                createPaymentToken(request).toCreatePaymentTokenResult()
+            }
         }.valueOrThrow
     }
 
@@ -110,14 +116,23 @@ public class PaymentsRepositoryImpl @Inject constructor(
         paymentToken: ProtonPaymentToken
     ): PaymentTokenResult.PaymentTokenStatusResult =
         apiProvider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentTokenStatus(paymentToken.value).toPaymentTokenStatusResult()
+            if (isPaymentsV5Enabled(sessionUserId)) {
+                getPaymentTokenStatusV5(paymentToken.value).toPaymentTokenStatusResult()
+            } else {
+                getPaymentTokenStatus(paymentToken.value).toPaymentTokenStatusResult()
+            }
         }.valueOrThrow
 
     override suspend fun getAvailablePaymentMethods(
         sessionUserId: SessionUserId
     ): List<PaymentMethod> = result("getAvailablePaymentMethods") {
         apiProvider.get<PaymentsApi>(sessionUserId).invoke {
-            getPaymentMethods().paymentMethods.map {
+            val paymentMethods = if (isPaymentsV5Enabled(sessionUserId)) {
+                getPaymentMethodsV5().paymentMethods
+            } else {
+                getPaymentMethods().paymentMethods
+            }
+            paymentMethods.map {
                 PaymentMethod(it.id, PaymentMethodType.map[it.type] ?: PaymentMethodType.CARD, it.toDetails())
             }
         }.valueOrThrow
@@ -125,7 +140,11 @@ public class PaymentsRepositoryImpl @Inject constructor(
 
     override suspend fun getPaymentStatus(sessionUserId: SessionUserId?, appStore: AppStore): PaymentStatus {
         return apiProvider.get<PaymentsApi>(sessionUserId).invoke {
-            paymentStatus(appStore.value).toPaymentStatus()
+            if (isPaymentsV5Enabled(sessionUserId)) {
+                paymentStatusV5(appStore.value).toPaymentStatus()
+            } else {
+                paymentStatus(appStore.value).toPaymentStatus()
+            }
         }.valueOrThrow
     }
 }

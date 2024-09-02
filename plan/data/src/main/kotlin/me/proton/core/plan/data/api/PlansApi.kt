@@ -60,6 +60,9 @@ internal interface PlansApi : BaseRetrofitApi {
     @POST("payments/v4/subscription")
     suspend fun createUpdateSubscription(@Body body: CreateSubscription): SubscriptionResponse
 
+    @POST("payments/v5/subscription")
+    suspend fun createUpdateSubscriptionV5(@Body body: CreateSubscription): SubscriptionResponse
+
     /**
      * Returns current active subscription.
      * Authorized.
@@ -78,4 +81,7 @@ internal interface PlansApi : BaseRetrofitApi {
      */
     @POST("payments/v4/subscription/check")
     suspend fun validateSubscription(@Body body: CheckSubscription): CheckSubscriptionResponse
+
+    @POST("payments/v5/subscription/check")
+    suspend fun validateSubscriptionV5(@Body body: CheckSubscription): CheckSubscriptionResponse
 }
