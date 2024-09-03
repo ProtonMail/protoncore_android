@@ -117,6 +117,7 @@ fun ProtonOutlinedTextFieldWithError(
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     errorText: String? = null,
+    helpText: String? = null,
     focusRequester: FocusRequester = remember { FocusRequester() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     label: (@Composable () -> Unit)? = null,
@@ -146,14 +147,18 @@ fun ProtonOutlinedTextFieldWithError(
             visualTransformation = visualTransformation
         )
         Text(
-            text = errorText ?: "",
+            text = helpText ?: errorText ?: "",
             maxLines = maxLines,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.ExtraSmallSpacing),
             overflow = TextOverflow.Ellipsis,
             style = ProtonTheme.typography.captionNorm,
-            color = ProtonTheme.colors.notificationError
+            color = if (helpText != null) {
+                ProtonTheme.colors.textWeak
+            } else {
+                ProtonTheme.colors.notificationError
+            }
         )
     }
 }
@@ -222,5 +227,15 @@ fun PreviewOutlinedTextFieldWithError() {
         text = "Some text",
         onValueChanged = {},
         errorText = "Validation failed!"
+    )
+}
+
+@Preview
+@Composable
+fun PreviewOutlinedTextFieldWithHelp() {
+    ProtonOutlinedTextFieldWithError(
+        text = "Some text",
+        onValueChanged = {},
+        helpText = "Field info"
     )
 }
