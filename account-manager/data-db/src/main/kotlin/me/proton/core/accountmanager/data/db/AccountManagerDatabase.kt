@@ -27,6 +27,8 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.auth.data.db.AuthDatabase
+import me.proton.core.auth.data.entity.DeviceSecretEntity
 import me.proton.core.challenge.data.db.ChallengeConverters
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
@@ -146,7 +148,9 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         // notifications
         NotificationEntity::class,
         // user-recovery
-        RecoveryFileEntity::class
+        RecoveryFileEntity::class,
+        // auth-data
+        DeviceSecretEntity::class
     ],
     version = AccountManagerDatabase.version,
     exportSchema = true
@@ -187,11 +191,12 @@ abstract class AccountManagerDatabase :
     TelemetryDatabase,
     KeyTransparencyDatabase,
     NotificationDatabase,
-    DeviceRecoveryDatabase {
+    DeviceRecoveryDatabase,
+    AuthDatabase {
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 50
+        const val version = 51
 
         val migrations = listOf(
             AccountManagerDatabaseMigrations.MIGRATION_1_2,
@@ -242,7 +247,8 @@ abstract class AccountManagerDatabase :
             AccountManagerDatabaseMigrations.MIGRATION_46_47,
             AccountManagerDatabaseMigrations.MIGRATION_47_48,
             AccountManagerDatabaseMigrations.MIGRATION_48_49,
-            AccountManagerDatabaseMigrations.MIGRATION_49_50
+            AccountManagerDatabaseMigrations.MIGRATION_49_50,
+            AccountManagerDatabaseMigrations.MIGRATION_50_51,
         )
 
         fun databaseBuilder(context: Context): Builder<AccountManagerDatabase> =
