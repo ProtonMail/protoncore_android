@@ -19,18 +19,28 @@
 package me.proton.core.auth.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
+import me.proton.core.auth.data.dao.AuthDeviceDao
 import me.proton.core.auth.data.dao.DeviceSecretDao
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface AuthDatabase : Database {
     fun deviceSecretDao(): DeviceSecretDao
+    fun authDeviceDao(): AuthDeviceDao
 
     companion object {
         val MIGRATION_0 = object : DatabaseMigration {
             override fun migrate(database: SupportSQLiteDatabase) {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `DeviceSecretEntity` (`userId` TEXT NOT NULL, `secret` TEXT NOT NULL, `token` TEXT NOT NULL, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_DeviceSecretEntity_userId` ON `DeviceSecretEntity` (`userId`)")
+            }
+        }
+
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS `AuthDeviceEntity` (`userId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `addressId` TEXT NOT NULL, `state` INTEGER NOT NULL, `name` TEXT NOT NULL, `localizedClientName` TEXT NOT NULL, `createdAtUtcSeconds` INTEGER NOT NULL, `activatedAtUtcSeconds` INTEGER, `rejectedAtUtcSeconds` INTEGER, `activationToken` TEXT, `lastActivityAtUtcSeconds` INTEGER NOT NULL, PRIMARY KEY(`userId`, `deviceId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_userId` ON `AuthDeviceEntity` (`userId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_addressId` ON `AuthDeviceEntity` (`addressId`)")
             }
         }
     }

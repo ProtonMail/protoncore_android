@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 51,
-    "identityHash": "9698d1d6cf4a4fdb25788930130277da",
+    "identityHash": "4cf42675ce9038e0e698aeed19b5a808",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -3228,12 +3228,124 @@
             ]
           }
         ]
+      },
+      {
+        "tableName": "AuthDeviceEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`userId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `addressId` TEXT NOT NULL, `state` INTEGER NOT NULL, `name` TEXT NOT NULL, `localizedClientName` TEXT NOT NULL, `createdAtUtcSeconds` INTEGER NOT NULL, `activatedAtUtcSeconds` INTEGER, `rejectedAtUtcSeconds` INTEGER, `activationToken` TEXT, `lastActivityAtUtcSeconds` INTEGER NOT NULL, PRIMARY KEY(`userId`, `deviceId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "userId",
+            "columnName": "userId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deviceId",
+            "columnName": "deviceId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "addressId",
+            "columnName": "addressId",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "state",
+            "columnName": "state",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "localizedClientName",
+            "columnName": "localizedClientName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAtUtcSeconds",
+            "columnName": "createdAtUtcSeconds",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "activatedAtUtcSeconds",
+            "columnName": "activatedAtUtcSeconds",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rejectedAtUtcSeconds",
+            "columnName": "rejectedAtUtcSeconds",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "activationToken",
+            "columnName": "activationToken",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastActivityAtUtcSeconds",
+            "columnName": "lastActivityAtUtcSeconds",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "userId",
+            "deviceId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_AuthDeviceEntity_userId",
+            "unique": false,
+            "columnNames": [
+              "userId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_userId` ON `${TABLE_NAME}` (`userId`)"
+          },
+          {
+            "name": "index_AuthDeviceEntity_addressId",
+            "unique": false,
+            "columnNames": [
+              "addressId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_addressId` ON `${TABLE_NAME}` (`addressId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "AccountEntity",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "userId"
+            ],
+            "referencedColumns": [
+              "userId"
+            ]
+          }
+        ]
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '9698d1d6cf4a4fdb25788930130277da')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4cf42675ce9038e0e698aeed19b5a808')"
     ]
   }
 }

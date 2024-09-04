@@ -27,7 +27,9 @@ import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.account.data.entity.AccountMetadataEntity
 import me.proton.core.account.data.entity.SessionDetailsEntity
 import me.proton.core.account.data.entity.SessionEntity
+import me.proton.core.auth.data.db.AuthConverters
 import me.proton.core.auth.data.db.AuthDatabase
+import me.proton.core.auth.data.entity.AuthDeviceEntity
 import me.proton.core.auth.data.entity.DeviceSecretEntity
 import me.proton.core.challenge.data.db.ChallengeConverters
 import me.proton.core.challenge.data.db.ChallengeDatabase
@@ -150,7 +152,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         // user-recovery
         RecoveryFileEntity::class,
         // auth-data
-        DeviceSecretEntity::class
+        DeviceSecretEntity::class,
+        AuthDeviceEntity::class
     ],
     version = AppDatabase.version,
     exportSchema = true
@@ -168,6 +171,7 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
     ChallengeConverters::class,
     PushConverters::class,
     NotificationConverters::class,
+    AuthConverters::class
 )
 abstract class AppDatabase :
     BaseDatabase(),
