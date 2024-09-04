@@ -16,14 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.util.android.sentry
+package me.proton.core.util.android.device
 
 import android.os.Build
 import javax.inject.Inject
 
-internal class DeviceMetadata @Inject constructor() {
-    fun osRelease(): String = Build.VERSION.RELEASE
-    fun osDisplay(): String = Build.DISPLAY
-    fun manufacturer(): String = Build.MANUFACTURER
-    fun deviceModel(): String = "${Build.MODEL}:${Build.DEVICE}"
+public class DeviceMetadata @Inject constructor() {
+    public fun osRelease(): String = Build.VERSION.RELEASE
+    public fun osDisplay(): String = Build.DISPLAY
+    public fun manufacturer(): String = Build.MANUFACTURER
+    public fun deviceModel(): String = "${Build.MODEL}:${Build.DEVICE}"
 }

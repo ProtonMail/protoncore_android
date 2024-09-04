@@ -1254,6 +1254,14 @@ class GOpenPGPCrypto : PGPCrypto {
         Helper.updatePrivateKeyPassphrase(privateKey, passphrase, newPassphrase)
     }.getOrElse { throw CryptoException("Passphrase cannot be changed for Private Key.", it) }
 
+    override fun generateNewDeviceSecret(): String {
+        val salt = ByteArray(32)
+        SecureRandom().nextBytes(salt)
+        val deviceSecret = Base64.encodeToString(salt, Base64.DEFAULT)
+        // Truncate newline character.
+        return deviceSecret.substring(0, deviceSecret.length - 1)
+    }
+
     // endregion
 
     // region Public Time

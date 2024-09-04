@@ -24,6 +24,7 @@ import io.sentry.Hint
 import io.sentry.SentryEvent
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.util.android.device.DeviceMetadata
 import me.proton.core.util.android.device.isDeviceRooted
 import javax.inject.Inject
 

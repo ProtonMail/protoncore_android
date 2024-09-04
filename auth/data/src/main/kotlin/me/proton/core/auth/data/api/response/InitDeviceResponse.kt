@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,30 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.auth.data.api.response
 
-plugins {
-    protonAndroidLibrary
-}
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.AuthDevice
 
-protonCoverage {
-    branchCoveragePercentage.set(0)
-    lineCoveragePercentage.set(0)
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.util.android.device"
-}
-
-dependencies {
-    implementation(
-        `androidx-core`,
-        `coroutines-core`
-    )
-    api(
-        `javax-inject`
+@Serializable
+data class InitDeviceResponse(
+    @SerialName("Device")
+    val authDevice: AuthDeviceResponse
+) {
+    fun toAuthDevice(): AuthDevice = AuthDevice(
+        id = authDevice.id,
+        token = authDevice.deviceToken
     )
 }
+
+@Serializable
+data class AuthDeviceResponse(
+    @SerialName("ID")
+    val id: String,
+    @SerialName("DeviceToken")
+    val deviceToken: String
+)

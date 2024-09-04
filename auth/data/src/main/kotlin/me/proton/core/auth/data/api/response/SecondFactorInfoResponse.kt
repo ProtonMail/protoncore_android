@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2020 Proton Technologies AG
  * This file is part of Proton Technologies AG and ProtonCore.

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,30 +16,15 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.core.auth.domain.usecase.sso
 
-plugins {
-    protonAndroidLibrary
-}
+import me.proton.core.crypto.common.context.CryptoContext
+import javax.inject.Inject
 
-protonCoverage {
-    branchCoveragePercentage.set(0)
-    lineCoveragePercentage.set(0)
-}
-
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.util.android.device"
-}
-
-dependencies {
-    implementation(
-        `androidx-core`,
-        `coroutines-core`
-    )
-    api(
-        `javax-inject`
-    )
+class GenerateDeviceSecret @Inject constructor(
+    private val context: CryptoContext
+) {
+    operator fun invoke(): String {
+        return context.pgpCrypto.generateNewDeviceSecret()
+    }
 }

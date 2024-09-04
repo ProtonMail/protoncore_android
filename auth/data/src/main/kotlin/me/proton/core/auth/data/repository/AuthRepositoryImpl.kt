@@ -24,11 +24,11 @@ import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialRequestOptionsResponse
-import me.proton.core.auth.fido.domain.ext.toJson
 import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.Fido2Request
 import me.proton.core.auth.data.api.request.ForkSessionRequest
+import me.proton.core.auth.data.api.request.InitDeviceRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
@@ -37,6 +37,7 @@ import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
+import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.AuthIntent
 import me.proton.core.auth.domain.entity.Modulus
@@ -45,11 +46,14 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
+import me.proton.core.auth.fido.domain.ext.toJson
 import me.proton.core.challenge.data.frame.ChallengeFrame
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
+import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.ApiResult
@@ -208,6 +212,15 @@ class AuthRepositoryImpl(
                 request = ForkSessionRequest(payload, childClientId, independent, userCode),
             )
         }.valueOrThrow.selector
+
+    override suspend fun initDevice(
+        sessionUserId: SessionUserId,
+        name: String, activationToken: String
+    ): AuthDevice =
+        provider.get<AuthenticationApi>(sessionUserId).invoke {
+            val request = InitDeviceRequest(name, activationToken)
+            initDevice(request).toAuthDevice()
+        }.valueOrThrow
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)

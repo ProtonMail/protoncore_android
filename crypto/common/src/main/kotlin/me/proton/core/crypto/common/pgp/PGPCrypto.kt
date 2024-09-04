@@ -876,6 +876,13 @@ interface PGPCrypto {
     ): Armored
 
     /**
+     * Generate new random device secret.
+     *
+     * @return 32-byte, base64-ed random salt as String, without newline character.
+     */
+    fun generateNewDeviceSecret(): String
+
+    /**
      * Update the current time used for crypto function (e.g. signing).
      *
      * @param epochSeconds Number of seconds from Epoch (1970-01-01T00:00:00Z).

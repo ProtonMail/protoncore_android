@@ -25,6 +25,7 @@ import io.sentry.android.core.SentryAndroidOptions
 import io.sentry.protocol.User
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
+import me.proton.core.util.android.device.DeviceMetadata
 import java.io.File
 import javax.inject.Inject
 

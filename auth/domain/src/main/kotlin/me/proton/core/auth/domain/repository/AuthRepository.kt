@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.repository
 
+import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.Modulus
 import me.proton.core.auth.domain.entity.ScopeInfo
@@ -25,6 +26,7 @@ import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.crypto.common.srp.SrpProofs
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
@@ -132,4 +134,13 @@ interface AuthRepository {
         independent: Long,
         userCode: String? = null,
     ): String
+
+    /**
+     * Init a new device.
+     */
+    suspend fun initDevice(
+        sessionUserId: SessionUserId,
+        name: String,
+        activationToken: String
+    ): AuthDevice
 }
