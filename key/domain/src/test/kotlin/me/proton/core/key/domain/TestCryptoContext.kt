@@ -20,6 +20,9 @@ package me.proton.core.key.domain
 
 import io.mockk.mockk
 import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.aead.AeadCrypto
+import me.proton.core.crypto.common.aead.AeadEncryptedByteArray
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -79,6 +82,21 @@ open class TestCryptoContext : CryptoContext {
 
         override fun decrypt(value: EncryptedByteArray): PlainByteArray =
             PlainByteArray(value.array.decrypt(defaultKey))
+    }
+
+    override val aeadCrypto: AeadCrypto = object : AeadCrypto {
+
+        override fun encrypt(value: String, key: ByteArray, aad: ByteArray?): AeadEncryptedString =
+            value.toByteArray().encrypt(key).fromByteArray()
+
+        override fun decrypt(value: AeadEncryptedString, key: ByteArray, aad: ByteArray?): String =
+            value.toByteArray(Charsets.UTF_8).decrypt(key).fromByteArray()
+
+        override fun encrypt(value: PlainByteArray, key: ByteArray, aad: ByteArray?): AeadEncryptedByteArray =
+            AeadEncryptedByteArray(value.array.encrypt(key))
+
+        override fun decrypt(value: AeadEncryptedByteArray, key: ByteArray, aad: ByteArray?): PlainByteArray =
+            PlainByteArray(value.array.decrypt(key))
     }
 
     // Map<PublicKey, UnlockedKey from PrivateKey> : Simulate encrypt(publicKey) -> decrypt(privateKey).

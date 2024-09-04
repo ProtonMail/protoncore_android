@@ -16,24 +16,25 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.crypto.common.context
-
-import me.proton.core.crypto.common.aead.AeadCrypto
-import me.proton.core.crypto.common.pgp.PGPCrypto
-import me.proton.core.crypto.common.keystore.KeyStoreCrypto
-import me.proton.core.crypto.common.srp.SrpCrypto
+package me.proton.core.crypto.common.aead
 
 /**
- * Context providing any needed dependencies for Crypto functions.
- *
- * @see [KeyStoreCrypto]
- * @see [AeadCrypto]
- * @see [PGPCrypto]
- * @see [SrpCrypto]
+ * Encrypted [String] provided by [AeadCrypto.encrypt].
  */
-interface CryptoContext {
-    val keyStoreCrypto: KeyStoreCrypto
-    val aeadCrypto: AeadCrypto
-    val pgpCrypto: PGPCrypto
-    val srpCrypto: SrpCrypto
-}
+typealias AeadEncryptedString = String
+
+/**
+ * Decrypt an [AeadEncryptedString] using a [AeadCrypto].
+ *
+ * @see AeadCrypto.decrypt
+ */
+fun AeadEncryptedString.decrypt(crypto: AeadCrypto, key: ByteArray, aad: ByteArray? = null) =
+    crypto.decrypt(value = this, key = key, aad = aad)
+
+/**
+ * Encrypt a [String] using a [AeadCrypto].
+ *
+ * @see AeadCrypto.encrypt
+ */
+fun String.encrypt(crypto: AeadCrypto, key: ByteArray, aad: ByteArray? = null) =
+    crypto.encrypt(value = this, key = key, aad = aad)

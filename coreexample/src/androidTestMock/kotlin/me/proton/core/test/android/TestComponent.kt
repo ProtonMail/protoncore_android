@@ -29,6 +29,7 @@ import me.proton.android.core.coreexample.api.CoreExampleApiClient
 import me.proton.android.core.coreexample.di.NetworkBindsModule
 import me.proton.android.core.coreexample.di.NetworkConstantsModule
 import me.proton.android.core.coreexample.di.WorkManagerModule
+import me.proton.core.crypto.common.aead.AeadCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.pgp.PGPCrypto
@@ -43,6 +44,7 @@ import me.proton.core.paymentiap.dagger.CorePaymentIapBillingModule
 import me.proton.core.paymentiap.domain.BillingClientFactory
 import me.proton.core.test.android.mocks.FakeApiClient
 import me.proton.core.test.android.mocks.FakeKeyStoreCrypto
+import me.proton.core.test.android.mocks.FakeAeadCrypto
 import me.proton.core.test.android.mocks.FakePGPCrypto
 import me.proton.core.test.android.mocks.FakeSrpCrypto
 import me.proton.core.test.android.mocks.FakeSrpChallenge
@@ -68,11 +70,17 @@ object TestComponent {
 
     @Provides
     @Singleton
+    fun provideAeadCrypto(): AeadCrypto = FakeAeadCrypto()
+
+    @Provides
+    @Singleton
     fun provideCryptoContext(
         keyStoreCrypto: KeyStoreCrypto,
+        aeadCrypto: AeadCrypto,
         srpCrypto: SrpCrypto
     ): CryptoContext = object : CryptoContext {
         override val keyStoreCrypto: KeyStoreCrypto = keyStoreCrypto
+        override val aeadCrypto: AeadCrypto = aeadCrypto
         override val pgpCrypto: PGPCrypto = FakePGPCrypto()
         override val srpCrypto: SrpCrypto = srpCrypto
     }

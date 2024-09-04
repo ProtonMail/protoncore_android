@@ -18,9 +18,11 @@
 
 package me.proton.core.crypto.android.context
 
+import me.proton.core.crypto.android.aead.AndroidAeadCrypto
 import me.proton.core.crypto.android.pgp.GOpenPGPCrypto
 import me.proton.core.crypto.android.keystore.AndroidKeyStoreCrypto
 import me.proton.core.crypto.android.srp.GOpenPGPSrpCrypto
+import me.proton.core.crypto.common.aead.AeadCrypto
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.PGPCrypto
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
@@ -31,11 +33,13 @@ import me.proton.core.util.kotlin.DefaultDispatcherProvider
  * [CryptoContext] for Android platform.
  *
  * @see AndroidKeyStoreCrypto
+ * @see AndroidAeadCrypto
  * @see GOpenPGPCrypto
  * @see SrpCrypto
  */
 class AndroidCryptoContext(
     override val keyStoreCrypto: KeyStoreCrypto = AndroidKeyStoreCrypto.default,
+    override val aeadCrypto: AeadCrypto = AndroidAeadCrypto.default,
     override val pgpCrypto: PGPCrypto = GOpenPGPCrypto(),
     override val srpCrypto: SrpCrypto = GOpenPGPSrpCrypto(DefaultDispatcherProvider())
 ) : CryptoContext
