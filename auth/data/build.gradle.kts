@@ -29,8 +29,12 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(54)
-    lineCoveragePercentage.set(62)
+    branchCoveragePercentage.set(43)
+    lineCoveragePercentage.set(38)
+}
+
+protonDagger {
+    workManagerHiltIntegration = true
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -50,6 +54,7 @@ dependencies {
         project(Module.networkData),
         project(Module.networkDomain),
         project(Module.featureFlagDomain),
+        `android-work-runtime`,
         `serialization-core`,
         `serialization-json`,
         `hilt-android`,

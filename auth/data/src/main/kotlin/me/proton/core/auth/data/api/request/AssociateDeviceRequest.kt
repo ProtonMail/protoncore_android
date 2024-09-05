@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,19 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.auth.data.api.request
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.DeviceTokenString
 
-data class DeviceSecret(
-    val userId: UserId,
-    val secret: DeviceSecretString,
-    val token: DeviceTokenString
+@Serializable
+data class AssociateDeviceRequest(
+    @SerialName("DeviceToken")
+    val deviceToken: DeviceTokenString
 )
-
-/** base64Encode(random(32bytes)), then encrypted via KeyStore. */
-typealias DeviceSecretString = EncryptedString
-
-/** Opaque string obtained from BE, then encrypted via KeyStore. */
-typealias DeviceTokenString = EncryptedString

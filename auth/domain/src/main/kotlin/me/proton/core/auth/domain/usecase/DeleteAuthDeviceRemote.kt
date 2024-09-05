@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,35 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.repository
+package me.proton.core.auth.domain.usecase
 
-import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
-import me.proton.core.auth.domain.entity.DeviceTokenString
-import me.proton.core.auth.domain.entity.InitDeviceStatus
-import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.extension.suspend
+import javax.inject.Inject
 
-interface AuthDeviceRemoteDataSource {
-    suspend fun associateDeviceWithSession(
-        sessionId: SessionId,
-        deviceId: AuthDeviceId,
-        deviceToken: DeviceTokenString
-    ): String
-
-    suspend fun deleteDevice(
+class DeleteAuthDeviceRemote @Inject constructor(
+    private val eventManagerProvider: EventManagerProvider,
+    private val remoteDataSource: AuthDeviceRemoteDataSource
+) {
+    suspend operator fun invoke(
         deviceId: AuthDeviceId,
         userId: UserId
-    )
-
-    suspend fun initDevice(
-        sessionUserId: SessionUserId,
-        name: String,
-        activationToken: String
-    ): InitDeviceStatus
-
-    suspend fun getAuthDevices(
-        sessionUserId: SessionUserId
-    ): List<AuthDevice>
+    ) {
+        eventManagerProvider.suspend(EventManagerConfig.Core(userId)) {
+            remoteDataSource.deleteDevice(deviceId, userId)
+        }
+    }
 }

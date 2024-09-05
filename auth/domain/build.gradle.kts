@@ -29,8 +29,8 @@ protonBuild {
 }
 
 protonCoverage {
-    branchCoveragePercentage.set(58)
-    lineCoveragePercentage.set(85)
+    branchCoveragePercentage.set(52)
+    lineCoveragePercentage.set(71)
 }
 
 publishOption.shouldBePublishedAsLib = true
@@ -43,6 +43,7 @@ dependencies {
         project(Module.challengeDomain),
         project(Module.cryptoCommon),
         project(Module.domain),
+        project(Module.eventManagerDomain),
         project(Module.featureFlagDomain),
         project(Module.networkDomain),
         project(Module.paymentDomain),

@@ -25,11 +25,35 @@ import me.proton.core.auth.domain.entity.InitDeviceStatus
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.network.data.ApiProvider
+import me.proton.core.auth.data.api.request.AssociateDeviceRequest
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.DeviceTokenString
+import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
 class AuthDeviceRemoteDataSourceImpl @Inject constructor(
     private val provider: ApiProvider,
 ) : AuthDeviceRemoteDataSource {
+    override suspend fun associateDeviceWithSession(
+        sessionId: SessionId,
+        deviceId: AuthDeviceId,
+        deviceToken: DeviceTokenString
+    ): String = provider.get<AuthenticationApi>(sessionId).invoke {
+        associateDevice(
+            deviceId = deviceId.id,
+            request = AssociateDeviceRequest(deviceToken)
+        ).device.encryptedSecret
+    }.valueOrThrow
+
+    override suspend fun deleteDevice(
+        deviceId: AuthDeviceId,
+        userId: UserId
+    ) {
+        provider.get<AuthenticationApi>(userId).invoke {
+            deleteDevice(deviceId.id)
+        }.valueOrThrow
+    }
 
     override suspend fun initDevice(
         sessionUserId: SessionUserId,

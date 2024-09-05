@@ -22,14 +22,28 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.InitDeviceStatus
 import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.AddressId
 
 interface AuthDeviceRepository {
+    /**
+     * @return Encrypted secret.
+     */
+    suspend fun associateDeviceWithSession(
+        sessionId: SessionId,
+        deviceId: AuthDeviceId,
+        deviceToken: DeviceTokenString
+    ): String
+
     fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>>
 
     suspend fun getByUserId(sessionUserId: SessionUserId, refresh: Boolean = false): List<AuthDevice>
     suspend fun getByAddressId(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean = false): List<AuthDevice>
+
+    suspend fun deleteById(deviceId: AuthDeviceId, userId: UserId)
 
     /**
      * Init a new device for SSO.
