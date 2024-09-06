@@ -20,14 +20,18 @@ package me.proton.core.auth.data.repository
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.auth.domain.entity.AuthDevice
+import me.proton.core.auth.domain.entity.InitDeviceStatus
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
+import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 import javax.inject.Inject
 
 class AuthDeviceRepositoryImpl @Inject constructor(
-    private val localDataSource: AuthDeviceLocalDataSource
+    private val localDataSource: AuthDeviceLocalDataSource,
+    private val remoteDataSource: AuthDeviceRemoteDataSource
 ) : AuthDeviceRepository {
 
     override fun observeByUserId(userId: UserId): Flow<List<AuthDevice>> {
@@ -44,5 +48,13 @@ class AuthDeviceRepositoryImpl @Inject constructor(
 
     override suspend fun getByAddressId(addressId: AddressId): List<AuthDevice> {
         return localDataSource.getByAddressId(addressId)
+    }
+
+    override suspend fun initDevice(
+        sessionUserId: SessionUserId,
+        name: String,
+        activationToken: String
+    ): InitDeviceStatus {
+        return remoteDataSource.initDevice(sessionUserId, name, activationToken)
     }
 }

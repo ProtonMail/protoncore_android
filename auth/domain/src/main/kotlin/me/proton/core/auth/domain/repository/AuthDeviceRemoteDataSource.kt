@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,27 +16,16 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.response
+package me.proton.core.auth.domain.repository
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.InitDeviceStatus
+import me.proton.core.domain.entity.SessionUserId
 
-@Serializable
-data class InitDeviceResponse(
-    @SerialName("Device")
-    val device: DeviceResponse
-) {
-    fun toInitDeviceStatus(): InitDeviceStatus = InitDeviceStatus(
-        id = device.id,
-        token = device.deviceToken
-    )
+interface AuthDeviceRemoteDataSource {
+
+    suspend fun initDevice(
+        sessionUserId: SessionUserId,
+        name: String,
+        activationToken: String
+    ): InitDeviceStatus
 }
-
-@Serializable
-data class DeviceResponse(
-    @SerialName("ID")
-    val id: String,
-    @SerialName("DeviceToken")
-    val deviceToken: String
-)

@@ -16,27 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.response
+package me.proton.core.auth.domain.entity
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.auth.domain.entity.InitDeviceStatus
-
-@Serializable
-data class InitDeviceResponse(
-    @SerialName("Device")
-    val device: DeviceResponse
-) {
-    fun toInitDeviceStatus(): InitDeviceStatus = InitDeviceStatus(
-        id = device.id,
-        token = device.deviceToken
-    )
-}
-
-@Serializable
-data class DeviceResponse(
-    @SerialName("ID")
+data class InitDeviceStatus(
     val id: String,
-    @SerialName("DeviceToken")
-    val deviceToken: String
+    val token: String
 )

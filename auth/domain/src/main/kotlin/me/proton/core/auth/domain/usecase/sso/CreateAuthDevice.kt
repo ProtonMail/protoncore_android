@@ -18,7 +18,7 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
-import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.encryptText
@@ -29,7 +29,7 @@ import javax.inject.Inject
 
 class CreateAuthDevice @Inject constructor(
     private val addressRepository: UserAddressRepository,
-    private val authRepository: AuthRepository,
+    private val authDeviceRepository: AuthDeviceRepository,
     private val context: CryptoContext
 ) {
     suspend operator fun invoke(
@@ -55,7 +55,7 @@ class CreateAuthDevice @Inject constructor(
 
         // 4. Call POST /auth/v4/devices with ActivationToken and obtain a DeviceToken
         val result =
-            authRepository.initDevice(sessionUserId = userId, name = deviceName, activationToken = activationToken)
+            authDeviceRepository.initDevice(sessionUserId = userId, name = deviceName, activationToken = activationToken)
         val deviceToken = result.token
         // todo: 5. store the device token in the DB for later use
         return deviceToken

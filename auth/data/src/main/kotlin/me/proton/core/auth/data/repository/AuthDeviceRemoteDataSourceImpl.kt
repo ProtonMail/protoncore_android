@@ -16,28 +16,27 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.repository
+package me.proton.core.auth.data.repository
 
-import kotlinx.coroutines.flow.Flow
-import me.proton.core.auth.domain.entity.AuthDevice
+import me.proton.core.auth.data.api.AuthenticationApi
+import me.proton.core.auth.data.api.request.InitDeviceRequest
 import me.proton.core.auth.domain.entity.InitDeviceStatus
+import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.network.data.ApiProvider
+import javax.inject.Inject
 
-interface AuthDeviceRepository {
-    fun observeByUserId(userId: UserId): Flow<List<AuthDevice>>
-    fun observeByAddressId(addressId: AddressId): Flow<List<AuthDevice>>
+class AuthDeviceRemoteDataSourceImpl @Inject constructor(
+    private val provider: ApiProvider,
+) : AuthDeviceRemoteDataSource {
 
-    suspend fun getByUserId(userId: UserId): List<AuthDevice>
-    suspend fun getByAddressId(addressId: AddressId): List<AuthDevice>
-
-    /**
-     * Init a new device for SSO.
-     */
-    suspend fun initDevice(
+    override suspend fun initDevice(
         sessionUserId: SessionUserId,
         name: String,
         activationToken: String
-    ): InitDeviceStatus
+    ): InitDeviceStatus =
+        provider.get<AuthenticationApi>(sessionUserId).invoke {
+            val request = InitDeviceRequest(name, activationToken)
+            initDevice(request).toInitDeviceStatus()
+        }.valueOrThrow
 }

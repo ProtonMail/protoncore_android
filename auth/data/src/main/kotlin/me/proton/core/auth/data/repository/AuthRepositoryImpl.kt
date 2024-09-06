@@ -212,15 +212,6 @@ class AuthRepositoryImpl(
                 request = ForkSessionRequest(payload, childClientId, independent, userCode),
             )
         }.valueOrThrow.selector
-
-    override suspend fun initDevice(
-        sessionUserId: SessionUserId,
-        name: String, activationToken: String
-    ): AuthDevice =
-        provider.get<AuthenticationApi>(sessionUserId).invoke {
-            val request = InitDeviceRequest(name, activationToken)
-            initDevice(request).toAuthDevice()
-        }.valueOrThrow
 }
 
 private fun ByteArray.toBase64(): String = Base64.encodeToString(this, Base64.NO_WRAP)
