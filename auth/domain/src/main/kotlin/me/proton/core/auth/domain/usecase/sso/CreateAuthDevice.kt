@@ -30,7 +30,8 @@ import javax.inject.Inject
 class CreateAuthDevice @Inject constructor(
     private val addressRepository: UserAddressRepository,
     private val authDeviceRepository: AuthDeviceRepository,
-    private val context: CryptoContext
+    private val context: CryptoContext,
+    private val generateDeviceSecret: GenerateDeviceSecret
 ) {
     suspend operator fun invoke(
         userId: UserId,
@@ -44,7 +45,7 @@ class CreateAuthDevice @Inject constructor(
         }
 
         // 2. Generate a 32-byte random string DeviceSecret, and encode as base64
-        val deviceSecret = pgp.generateNewDeviceSecret()
+        val deviceSecret = generateDeviceSecret()
 
         // 3. Encrypt the DeviceSecret to the primary address key as ActivationToken
         val activationToken =

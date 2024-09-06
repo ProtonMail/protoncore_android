@@ -1207,14 +1207,13 @@ class GOpenPGPCrypto : PGPCrypto {
     }
 
     override fun generateNewKeySalt(): String {
-        val salt = ByteArray(16)
-        SecureRandom().nextBytes(salt)
+        val salt = generateRandomBytes(16)
         val keySalt = Base64.encodeToString(salt, Base64.DEFAULT)
         // Truncate newline character.
         return keySalt.substring(0, keySalt.length - 1)
     }
 
-    override fun generateNewToken(size: Long): ByteArray {
+    override fun generateNewToken(size: Int): ByteArray {
         fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
         val secret = generateRandomBytes(size)
         val token = secret.toHexString().toByteArray(Charsets.UTF_8)
@@ -1222,9 +1221,10 @@ class GOpenPGPCrypto : PGPCrypto {
         return token
     }
 
-    override fun generateRandomBytes(size: Long): ByteArray {
-        val secret = Crypto.randomToken(size)
-        require(size == secret.size.toLong())
+    override fun generateRandomBytes(size: Int): ByteArray {
+        val secret = ByteArray(size)
+        SecureRandom().nextBytes(secret)
+        require(size == secret.size)
         return secret
     }
 
@@ -1253,14 +1253,6 @@ class GOpenPGPCrypto : PGPCrypto {
         checkNotNull(unlockOrNull(privateKey, passphrase)) { "The passphrase cannot unlock the private key." }
         Helper.updatePrivateKeyPassphrase(privateKey, passphrase, newPassphrase)
     }.getOrElse { throw CryptoException("Passphrase cannot be changed for Private Key.", it) }
-
-    override fun generateNewDeviceSecret(): String {
-        val salt = ByteArray(32)
-        SecureRandom().nextBytes(salt)
-        val deviceSecret = Base64.encodeToString(salt, Base64.DEFAULT)
-        // Truncate newline character.
-        return deviceSecret.substring(0, deviceSecret.length - 1)
-    }
 
     // endregion
 

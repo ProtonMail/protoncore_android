@@ -18,13 +18,9 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
-import me.proton.core.crypto.common.context.CryptoContext
-import javax.inject.Inject
-
-class GenerateDeviceSecret @Inject constructor(
-    private val context: CryptoContext
-) {
-    operator fun invoke(): String {
-        return context.pgpCrypto.generateNewDeviceSecret()
-    }
+interface GenerateDeviceSecret {
+    operator fun invoke(): String
 }
+
+
+

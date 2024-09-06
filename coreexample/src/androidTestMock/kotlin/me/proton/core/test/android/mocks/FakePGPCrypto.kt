@@ -439,11 +439,11 @@ class FakePGPCrypto : PGPCrypto {
         TODO("Not yet implemented: generateNewKeySalt")
     }
 
-    override fun generateNewToken(size: Long): ByteArray {
+    override fun generateNewToken(size: Int): ByteArray {
         TODO("Not yet implemented: generateNewToken")
     }
 
-    override fun generateRandomBytes(size: Long): ByteArray {
+    override fun generateRandomBytes(size: Int): ByteArray {
         TODO("Not yet implemented: generateRandomBytes")
     }
 

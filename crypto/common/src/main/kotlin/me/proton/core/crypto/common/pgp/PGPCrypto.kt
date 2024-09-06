@@ -834,7 +834,7 @@ interface PGPCrypto {
      * Note: The tokens are encoded in hexadecimal
      * and then treated as bytes.
      */
-    fun generateNewToken(size: Long = 32): ByteArray
+    fun generateNewToken(size: Int = 32): ByteArray
 
     /**
      * Generate a new random byte array.
@@ -843,7 +843,7 @@ interface PGPCrypto {
      * Note: contrary to [generateNewToken], this function
      * doesn't apply any kind of encoding to the bytes generated
      */
-    fun generateRandomBytes(size: Long = 32): ByteArray
+    fun generateRandomBytes(size: Int = 32): ByteArray
 
     /**
      * Generate new private key of type [KeyType.X25519].
@@ -874,13 +874,6 @@ interface PGPCrypto {
         passphrase: ByteArray,
         newPassphrase: ByteArray
     ): Armored
-
-    /**
-     * Generate new random device secret.
-     *
-     * @return 32-byte, base64-ed random salt as String, without newline character.
-     */
-    fun generateNewDeviceSecret(): String
 
     /**
      * Update the current time used for crypto function (e.g. signing).

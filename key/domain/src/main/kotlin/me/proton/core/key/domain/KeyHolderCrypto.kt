@@ -1463,7 +1463,7 @@ fun KeyHolderContext.generateNewHashKey(): HashKey = context.pgpCrypto.generateN
  *
  * Note: The tokens are encoded in hexadecimal and then treated as bytes.
  */
-fun KeyHolderContext.generateNewToken(size: Long = 32): ByteArray = context.pgpCrypto.generateNewToken(size)
+fun KeyHolderContext.generateNewToken(size: Int = 32): ByteArray = context.pgpCrypto.generateNewToken(size)
 
 /**
  * Generate random Bytes token.
@@ -1473,7 +1473,7 @@ fun KeyHolderContext.generateNewToken(size: Long = 32): ByteArray = context.pgpC
  * Note: The tokens are NOT encoded as hexadecimal as in generateNewToken.
  * @see generateNewToken
  */
-fun KeyHolderContext.generateRandomBytes(size: Long = 32): ByteArray = context.pgpCrypto.generateRandomBytes(size)
+fun KeyHolderContext.generateRandomBytes(size: Int = 32): ByteArray = context.pgpCrypto.generateRandomBytes(size)
 
 /**
  * Get Base64 encoded string from [array].
