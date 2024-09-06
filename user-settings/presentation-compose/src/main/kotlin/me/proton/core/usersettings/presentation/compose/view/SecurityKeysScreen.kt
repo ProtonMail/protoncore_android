@@ -120,7 +120,8 @@ fun SecurityKeysEmptyListFooter(
             Text(text = stringResource(R.string.settings_add_security_key))
             Icon(
                 painter = painterResource(id = R.drawable.ic_proton_arrow_out_square),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.padding(start = ProtonDimens.SmallSpacing)
             )
         }
     }

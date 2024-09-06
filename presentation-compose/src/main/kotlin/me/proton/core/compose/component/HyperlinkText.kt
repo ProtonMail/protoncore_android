@@ -29,6 +29,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
+import me.proton.core.compose.theme.LocalColors
 
 /**
  * This function can be used instead of regular Text function when there is a need
@@ -43,7 +44,8 @@ fun HyperlinkText(
     fullText: String,
     hyperLinks: Map<String, String>,
     textStyle: TextStyle = TextStyle.Default,
-    linkTextColor: Color = Color.Blue,
+    textColor: Color = LocalColors.current.textNorm,
+    linkTextColor: Color = LocalColors.current.textAccent,
     linkTextFontWeight: FontWeight = FontWeight.Normal,
     linkTextDecoration: TextDecoration = TextDecoration.None,
     fontSize: TextUnit = TextUnit.Unspecified
@@ -51,8 +53,16 @@ fun HyperlinkText(
     val annotatedString = buildAnnotatedString {
         append(fullText)
 
-        for ((key, value) in hyperLinks) {
+        addStyle(
+            style = SpanStyle(
+                fontSize = fontSize,
+                color = textColor
+            ),
+            start = 0,
+            end = fullText.length
+        )
 
+        for ((key, value) in hyperLinks) {
             val startIndex = fullText.indexOf(key)
             val endIndex = startIndex + key.length
             addStyle(
@@ -72,13 +82,6 @@ fun HyperlinkText(
                 end = endIndex
             )
         }
-        addStyle(
-            style = SpanStyle(
-                fontSize = fontSize
-            ),
-            start = 0,
-            end = fullText.length
-        )
     }
 
     val uriHandler = LocalUriHandler.current

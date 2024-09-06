@@ -135,7 +135,8 @@ internal fun SecurityKeyRow(
         icon = {
             Icon(
                 painter = painterResource(id = R.drawable.ic_proton_security_key),
-                contentDescription = ""
+                contentDescription = null,
+                tint = ProtonTheme.colors.iconNorm
             )
         }
     )
