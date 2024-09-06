@@ -48,11 +48,11 @@
   <string name="settings_recovery_email_success">復原電子郵件位址已更新</string>
   <string name="settings_password_management_success">密碼已更新</string>
   <string name="settings_password_management_start_recovery">忘記或想不起您的密碼？</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_learn_more">了解更多</string>
+  <string name="settings_manage_security_keys_info">要管理、新增或移除安全金鑰時，請使用 Proton 網頁應用程式。%s</string>
+  <string name="settings_add_security_key">新增安全金鑰</string>
+  <string name="settings_manage_security_keys">管理員安全金鑰</string>
+  <string name="settings_security_keys_empty_list">您的帳號並未註冊安全金鑰。要新增安全金鑰，請使用 Proton 網頁應用程式。%s</string>
   <string name="settings_security_keys_registered">這些是註冊在您帳號的安全性密鑰。</string>
   <string name="settings_security_keys_title">安全性密鑰</string>
   <string name="settings_security_keys_error">擷取安全性密鑰時出錯，請重新再試一次。</string>

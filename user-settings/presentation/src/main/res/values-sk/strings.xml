@@ -48,11 +48,11 @@
   <string name="settings_recovery_email_success">Email na obnovenie bol aktualizovaný</string>
   <string name="settings_password_management_success">Heslo bolo aktualizované</string>
   <string name="settings_password_management_start_recovery">Neviete, aké je vaše aktuálne heslo?</string>
-  <string name="settings_security_keys_learn_more">Learn more</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
-  <string name="settings_add_security_key">Add security key</string>
-  <string name="settings_manage_security_keys">Manage security keys</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_learn_more">Zistiť viac</string>
+  <string name="settings_manage_security_keys_info">Ak chcete spravovať, pridávať alebo odstraňovať bezpečnostné kľúče, použite, prosím, webovú aplikáciu Proton. %s</string>
+  <string name="settings_add_security_key">Pridať bezpečnostný kľúč</string>
+  <string name="settings_manage_security_keys">Spravovať bezpečnostné kľúče</string>
+  <string name="settings_security_keys_empty_list">K vášmu kontu nie sú zaregistrované žiadne bezpečnostné kľúče. Ak chcete pridať bezpečnostný kľúč, použite webovú aplikáciu Proton. %s</string>
   <string name="settings_security_keys_registered">Toto sú bezpečnostné kľúče zaregistrované k vášmu účtu.</string>
   <string name="settings_security_keys_title">Bezpečnostné kľúče</string>
   <string name="settings_security_keys_error">Chyba pri načítaní bezpečnostných kľúčov, skúste to znova, prosím.</string>

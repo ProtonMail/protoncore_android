@@ -49,10 +49,10 @@
   <string name="settings_password_management_success">Hasło zostało zaktualizowane</string>
   <string name="settings_password_management_start_recovery">Nie pamiętasz hasła?</string>
   <string name="settings_security_keys_learn_more">Dowiedz się więcej</string>
-  <string name="settings_manage_security_keys_info">To manage, add, or remove security keys, please use the Proton web application. %s</string>
+  <string name="settings_manage_security_keys_info">Zarządzaj, dodawaj i usuwaj klucze bezpieczeństwa na stronie aplikacji internetowej Proton. %s</string>
   <string name="settings_add_security_key">Dodaj klucz bezpieczeństwa</string>
   <string name="settings_manage_security_keys">Zarządzaj kluczami bezpieczeństwa</string>
-  <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
+  <string name="settings_security_keys_empty_list">Brak kluczy bezpieczeństwa zarejestrowanych na Twoim koncie. Dodaj klucz bezpieczeństwa na stronie aplikacji internetowej Proton. %s</string>
   <string name="settings_security_keys_registered">Te klucze bezpieczeństwa zostały zarejestrowane na Twoim koncie.</string>
   <string name="settings_security_keys_title">Klucze bezpieczeństwa</string>
   <string name="settings_security_keys_error">Pobieranie kluczy bezpieczeństwa nie powiodło się. Spróbuj ponownie.</string>

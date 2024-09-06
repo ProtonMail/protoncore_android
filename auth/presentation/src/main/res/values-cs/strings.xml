@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">Více informací</string>
   <string name="auth_2fa_use_2fa_code">Použít kód pro dvoufaktorové ověření</string>
   <string name="auth_2fa_error_empty_code">Zadejte 6-místný kód.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
-  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Došlo k chybě. Zkontrolujte prosím svůj klíč.</string>
+  <string name="auth_2fa_error_key_network_error">Došlo k síťové chybě. Zkuste to prosím znovu.</string>
   <string name="auth_mailbox_title">Odemknout Vaši poštovní schránku</string>
   <string name="auth_mailbox_password_label">Heslo k poštovní schránce</string>
   <string name="auth_mailbox_unlock_action">Odemknout</string>

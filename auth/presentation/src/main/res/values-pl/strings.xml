@@ -68,8 +68,8 @@
   <string name="auth_2fa_learn_more">Dowiedz się więcej</string>
   <string name="auth_2fa_use_2fa_code">Użyj kodu uwierzytelniającego</string>
   <string name="auth_2fa_error_empty_code">Wpisz 6-cyfrowy kod.</string>
-  <string name="auth_2fa_error_key_invalid_or_not_supported">An error has occurred. Please check your key.</string>
-  <string name="auth_2fa_error_key_network_error">A network error has occurred. Please try again.</string>
+  <string name="auth_2fa_error_key_invalid_or_not_supported">Wystąpił błąd. Sprawdź klucz.</string>
+  <string name="auth_2fa_error_key_network_error">Wystąpił błąd sieci. Spróbuj ponownie.</string>
   <string name="auth_mailbox_title">Odblokuj swoją skrzynkę pocztową</string>
   <string name="auth_mailbox_password_label">Hasło skrzynki pocztowej</string>
   <string name="auth_mailbox_unlock_action">Odblokuj</string>

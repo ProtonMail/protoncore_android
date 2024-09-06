@@ -89,7 +89,7 @@
     <item quantity="other">%d af #proton_addresses# adresser</item>
   </plurals>
   <plurals name="item_domain" comment="please do not modify the test between #">
-    <item quantity="one">Understøtter #proton_domains# brugerdefineret e-mail-domæne</item>
+    <item quantity="one">Understøtter #proton_domains# brugertilpasset e-mail-domæne</item>
     <item quantity="other">Understøtter #proton_domains# brugertilpassede e-mail-domæner</item>
   </plurals>
   <plurals name="item_calendar" comment="please do not modify the test between #">

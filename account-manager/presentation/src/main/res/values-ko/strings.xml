@@ -36,7 +36,7 @@
   <string name="account_settings_list_item_security_keys_hint_not_set">설정하지 않음</string>
   <string name="account_settings_list_item_security_keys_hint_single">%s</string>
   <plurals name="account_settings_list_item_security_keys_hint_many">
-    <item quantity="other">%d개 보안 링크 설정됨</item>
+    <item quantity="other">%d개 보안 키 설정됨</item>
   </plurals>
   <string name="account_signout_dialog_title">로그아웃하시겠습니까?</string>
   <string name="account_signout_dialog_text">사용자 계정과 연관되어 있는 데이터가 삭제하도록 설정하지 않는 한 이 장치에 유지됩니다.</string>
