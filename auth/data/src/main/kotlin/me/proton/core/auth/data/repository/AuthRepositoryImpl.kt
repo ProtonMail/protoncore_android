@@ -20,6 +20,7 @@ package me.proton.core.auth.data.repository
 
 import android.content.Context
 import android.util.Base64
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.fido2.AuthenticationOptionsData
 import me.proton.core.auth.data.api.fido2.PublicKeyCredentialDescriptorData
@@ -28,7 +29,6 @@ import me.proton.core.auth.data.api.request.AuthInfoRequest
 import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.Fido2Request
 import me.proton.core.auth.data.api.request.ForkSessionRequest
-import me.proton.core.auth.data.api.request.InitDeviceRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
@@ -37,7 +37,6 @@ import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.request.UniversalTwoFactorRequest
-import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.AuthIntent
 import me.proton.core.auth.domain.entity.Modulus
@@ -52,8 +51,6 @@ import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.framePrefix
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.data.protonApi.isSuccess
 import me.proton.core.network.domain.ApiResult
@@ -61,9 +58,11 @@ import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.coroutine.result
+import javax.inject.Inject
 
-class AuthRepositoryImpl(
+class AuthRepositoryImpl @Inject constructor(
     private val provider: ApiProvider,
+    @ApplicationContext
     private val context: Context,
     private val product: Product,
     private val validateServerProof: ValidateServerProof

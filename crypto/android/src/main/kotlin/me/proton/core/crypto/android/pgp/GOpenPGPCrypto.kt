@@ -43,6 +43,7 @@ import kotlinx.coroutines.withContext
 import me.proton.core.crypto.common.pgp.trimLinesEnd
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.DataPacket
 import me.proton.core.crypto.common.pgp.DecryptedData
 import me.proton.core.crypto.common.pgp.DecryptedFile
@@ -1172,13 +1173,13 @@ class GOpenPGPCrypto : PGPCrypto {
         Helper.getJsonSHA256Fingerprints(key).toString(Charsets.UTF_8)
     }.getOrElse { throw CryptoException("SHA256 Fingerprints cannot be extracted from key.", it) }
 
-    override fun getBase64Encoded(array: ByteArray): String =
+    override fun getBase64Encoded(array: ByteArray): Based64Encoded =
         Base64.encodeToString(array, Base64.DEFAULT)
 
-    override fun getBase64EncodedNoWrap(array: ByteArray): String =
+    override fun getBase64EncodedNoWrap(array: ByteArray): Based64Encoded =
         Base64.encodeToString(array, Base64.NO_WRAP)
 
-    override fun getBase64Decoded(string: String): ByteArray =
+    override fun getBase64Decoded(string: Based64Encoded): ByteArray =
         Base64.decode(string, Base64.DEFAULT)
 
     override fun getPassphrase(

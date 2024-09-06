@@ -57,8 +57,21 @@ interface AuthDatabase : Database {
                     createIndices = {
                         execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_userId` ON `AuthDeviceEntity` (`userId`)")
                         execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_addressId` ON `AuthDeviceEntity` (`addressId`)")
+                    }
+                )
+            }
+        }
+
+        val MIGRATION_3 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.recreateTable(
+                    table = "DeviceSecretEntity",
+                    createTable = {
+                        database.execSQL("CREATE TABLE IF NOT EXISTS `DeviceSecretEntity` (`userId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `secret` TEXT NOT NULL, `token` TEXT NOT NULL, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                     },
-                    columns = listOf("addressId")
+                    createIndices = {
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_DeviceSecretEntity_userId` ON `DeviceSecretEntity` (`userId`)")
+                    }
                 )
             }
         }

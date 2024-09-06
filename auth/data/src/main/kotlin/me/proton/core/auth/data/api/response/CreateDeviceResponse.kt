@@ -16,28 +16,30 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.usecase
+package me.proton.core.auth.data.api.response
 
-import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.encrypt
-import me.proton.core.crypto.common.keystore.use
-import javax.inject.Inject
 
-/**
- * Generate new random device secret.
- *
- * @return 32-byte, base64-ed random salt as String, without newline character.
- */
-class GenerateDeviceSecretImpl @Inject constructor(
-    private val cryptoContext: CryptoContext
-): GenerateDeviceSecret {
-
-    override fun invoke(): EncryptedString {
-        return cryptoContext.pgpCrypto.generateRandomBytes().use { secret ->
-            val deviceSecret = cryptoContext.pgpCrypto.getBase64EncodedNoWrap(secret.array)
-            deviceSecret.encrypt(cryptoContext.keyStoreCrypto)
-        }
-    }
+@Serializable
+data class CreateDeviceResponse(
+    @SerialName("Device")
+    val device: DeviceResource
+) {
+    fun toCreatedDevice(context: CryptoContext): CreatedDevice = CreatedDevice(
+        deviceId = AuthDeviceId(device.id),
+        deviceToken = device.deviceToken.encrypt(context.keyStoreCrypto)
+    )
 }
+
+@Serializable
+data class DeviceResource(
+    @SerialName("ID")
+    val id: String,
+    @SerialName("DeviceToken")
+    val deviceToken: String
+)

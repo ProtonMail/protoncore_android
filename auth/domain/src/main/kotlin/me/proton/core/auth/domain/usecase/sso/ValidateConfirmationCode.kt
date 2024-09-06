@@ -44,7 +44,8 @@ class ValidateConfirmationCode @Inject constructor(
         val deviceSecret = deviceSecretRepository.getByUserId(userId) ?: return Result.NoDeviceSecret
         val decryptedDeviceSecret = context.keyStoreCrypto.decrypt(deviceSecret.secret)
         val sha256DeviceSecret = HashUtils.sha256(decryptedDeviceSecret)
-        return if (encode(sha256DeviceSecret.toByteArray()).take(4) == confirmationCode) Result.ConfirmationCodeValid
+        val code = Crockford32.encode(sha256DeviceSecret.toByteArray()).take(4)
+        return if (code == confirmationCode) Result.ConfirmationCodeValid
         else Result.ConfirmationCodeInvalid
     }
 }

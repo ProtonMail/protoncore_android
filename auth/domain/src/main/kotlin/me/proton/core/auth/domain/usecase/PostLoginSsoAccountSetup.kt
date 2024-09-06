@@ -21,6 +21,8 @@ package me.proton.core.auth.domain.usecase
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
+import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
+import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -38,6 +40,8 @@ class PostLoginSsoAccountSetup @Inject constructor(
     private val userManager: UserManager,
     private val sessionManager: SessionManager,
     private val product: Product,
+    private val checkDeviceSecret: CheckDeviceSecret,
+    private val decryptEncryptedSecret: DecryptEncryptedSecret
 ) {
     suspend operator fun invoke(userId: UserId): Result {
         return when {
@@ -47,11 +51,11 @@ class PostLoginSsoAccountSetup @Inject constructor(
     }
 
     private suspend fun secretCheck(userId: UserId): Result {
-        val secret: EncryptedString = "?"
-        val isSecretValid = false
-        return when {
-            isSecretValid -> unlockUser(userId, secret)
-            else -> deviceSecretNeeded(userId)
+        val encryptedSecret = checkDeviceSecret.invoke(userId)
+        val decryptedSecret = decryptEncryptedSecret.invoke(userId, encryptedSecret)
+        return when (decryptedSecret) {
+            null -> deviceSecretNeeded(userId)
+            else -> unlockUser(userId, decryptedSecret)
         }
     }
 

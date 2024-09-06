@@ -18,7 +18,9 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
+import me.proton.core.auth.domain.entity.DeviceSecret
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.encryptText
@@ -28,37 +30,45 @@ import me.proton.core.user.domain.repository.UserAddressRepository
 import javax.inject.Inject
 
 class CreateAuthDevice @Inject constructor(
+    private val context: CryptoContext,
     private val addressRepository: UserAddressRepository,
     private val authDeviceRepository: AuthDeviceRepository,
-    private val context: CryptoContext,
-    private val generateDeviceSecret: GenerateDeviceSecret
+    private val generateDeviceSecret: GenerateDeviceSecret,
+    private val deviceSecretRepository: DeviceSecretRepository,
 ) {
     suspend operator fun invoke(
         userId: UserId,
         deviceName: String
-    ): String {
-        val pgp = context.pgpCrypto
-        // 1. Fetch via GET /addresses the address keys of the primary address
+    ) {
+        // Fetch via GET /addresses the address keys of the primary address
         val userAddresses = addressRepository.getAddresses(userId, refresh = true)
         val primaryUserAddress = requireNotNull(userAddresses.primary()) {
             "No primary account found."
         }
 
-        // 2. Generate a 32-byte random string DeviceSecret, and encode as base64
+        // Generate a 32-byte random string DeviceSecret, and encode as base64
         val deviceSecret = generateDeviceSecret()
 
-        // 3. Encrypt the DeviceSecret to the primary address key as ActivationToken
-        val activationToken =
-            // todo: validate with key transparency?
-            primaryUserAddress.useKeys(context) {
-                encryptText(deviceSecret)
+        // Encrypt the DeviceSecret to the primary address key as ActivationToken
+        val activationToken = primaryUserAddress.useKeys(context) {
+            encryptText(deviceSecret)
         }
 
-        // 4. Call POST /auth/v4/devices with ActivationToken and obtain a DeviceToken
-        val result =
-            authDeviceRepository.initDevice(sessionUserId = userId, name = deviceName, activationToken = activationToken)
-        val deviceToken = result.token
-        // todo: 5. store the device token in the DB for later use
-        return deviceToken
+        // Call POST /auth/v4/devices with ActivationToken and obtain a DeviceToken
+        val result = authDeviceRepository.createDevice(
+            userId = userId,
+            deviceName = deviceName,
+            activationToken = activationToken
+        )
+
+        // Persist DeviceSecret (secret, deviceId, token).
+        deviceSecretRepository.upsert(
+            DeviceSecret(
+                userId = userId,
+                deviceId = result.deviceId,
+                secret = deviceSecret,
+                token = result.deviceToken
+            )
+        )
     }
 }

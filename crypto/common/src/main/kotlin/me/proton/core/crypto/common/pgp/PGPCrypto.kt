@@ -783,21 +783,21 @@ interface PGPCrypto {
      *
      * @see getBase64Decoded
      */
-    fun getBase64Encoded(array: ByteArray): String
+    fun getBase64Encoded(array: ByteArray): Based64Encoded
 
     /**
      * Get Base64 encoded string from [array] no wrap.
      *
      * @see getBase64Decoded
      */
-    fun getBase64EncodedNoWrap(array: ByteArray): String
+    fun getBase64EncodedNoWrap(array: ByteArray): Based64Encoded
 
     /**
      * Get Base64 decoded array from [string].
      *
      * @see getBase64Encoded
      */
-    fun getBase64Decoded(string: String): ByteArray
+    fun getBase64Decoded(string: Based64Encoded): ByteArray
 
     /**
      * Get passphrase from [password] using [encodedSalt].

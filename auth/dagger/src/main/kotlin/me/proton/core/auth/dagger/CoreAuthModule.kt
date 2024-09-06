@@ -18,14 +18,10 @@
 
 package me.proton.core.auth.dagger
 
-import android.content.Context
 import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.auth.data.usecase.IsCommonPasswordCheckEnabledImpl
 import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.feature.IsFido2EnabledImpl
 import me.proton.core.auth.data.repository.AuthDeviceLocalDataSourceImpl
@@ -33,6 +29,7 @@ import me.proton.core.auth.data.repository.AuthDeviceRemoteDataSourceImpl
 import me.proton.core.auth.data.repository.AuthDeviceRepositoryImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.data.repository.DeviceSecretRepositoryImpl
+import me.proton.core.auth.data.usecase.IsCommonPasswordCheckEnabledImpl
 import me.proton.core.auth.data.usecase.IsCredentialLessEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoCustomTabEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoEnabledImpl
@@ -46,9 +43,6 @@ import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
 import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
-import me.proton.core.auth.domain.usecase.ValidateServerProof
-import me.proton.core.domain.entity.Product
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import javax.inject.Singleton
 
@@ -72,16 +66,8 @@ public interface CoreAuthModule {
     @Binds
     public fun bindAuthDeviceRepository(impl: AuthDeviceRepositoryImpl): AuthDeviceRepository
 
-    public companion object {
-        @Provides
-        @Singleton
-        public fun provideAuthRepository(
-            apiProvider: ApiProvider,
-            @ApplicationContext context: Context,
-            product: Product,
-            validateServerProof: ValidateServerProof
-        ): AuthRepository = AuthRepositoryImpl(apiProvider, context, product, validateServerProof)
-    }
+    @Binds
+    public fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
 }
 
 @Module

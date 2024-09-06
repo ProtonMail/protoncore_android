@@ -20,31 +20,37 @@ package me.proton.core.auth.domain.repository
 
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.DeviceTokenString
-import me.proton.core.auth.domain.entity.InitDeviceStatus
-import me.proton.core.domain.entity.SessionUserId
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 
 interface AuthDeviceRemoteDataSource {
-    suspend fun associateDeviceWithSession(
-        sessionId: SessionId,
+
+    suspend fun createDevice(
+        userId: UserId,
+        name: String,
+        activationToken: String
+    ): CreatedDevice
+
+    suspend fun associateDevice(
+        userId: UserId,
         deviceId: AuthDeviceId,
-        deviceToken: DeviceTokenString
+        deviceToken: String
     ): String
+
+    suspend fun activateDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        encryptedSecret: Based64Encoded
+    )
 
     suspend fun deleteDevice(
         deviceId: AuthDeviceId,
         userId: UserId
     )
 
-    suspend fun initDevice(
-        sessionUserId: SessionUserId,
-        name: String,
-        activationToken: String
-    ): InitDeviceStatus
-
     suspend fun getAuthDevices(
-        sessionUserId: SessionUserId
+        userId: UserId
     ): List<AuthDevice>
 }

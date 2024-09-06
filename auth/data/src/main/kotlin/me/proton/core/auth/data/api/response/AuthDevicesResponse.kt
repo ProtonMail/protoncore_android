@@ -41,15 +41,15 @@ data class AuthDeviceResponse(
     @SerialName("Name")
     val name: String,
     @SerialName("LocalizedClientName")
-    val localizedClientName: String, // todo: double check
+    val localizedClientName: String,
     @SerialName("CreateTime")
-    val createTime: Long, // todo: double check
+    val createTime: Long,
     @SerialName("ActivateTime")
-    val activateTime: Long?, // todo: double check
+    val activateTime: Long?,
     @SerialName("RejectTime")
-    val rejectTime: Long?, // todo: double check
+    val rejectTime: Long?,
     @SerialName("LastActivityTime")
-    val lastActivityTime: Long, // todo: double check
+    val lastActivityTime: Long,
     @SerialName("ActivationToken")
     val activationToken: String?,
     @SerialName("ActivationAddressID")
@@ -65,7 +65,7 @@ data class AuthDeviceResponse(
             activatedAtUtcSeconds = activateTime,
             rejectedAtUtcSeconds = rejectTime,
             lastActivityAtUtcSeconds = lastActivityTime,
-            state = AuthDeviceState.map[state] ?: AuthDeviceState.Inactive, // todo: inactive?
+            state = AuthDeviceState.map[state] ?: AuthDeviceState.Inactive,
             addressId = activationAddressID?.let { AddressId(it) },
             activationToken = activationToken
         )

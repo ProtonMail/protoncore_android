@@ -18,9 +18,24 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
-interface GenerateDeviceSecret {
-    operator fun invoke(): String
+import me.proton.core.auth.domain.entity.DeviceSecretString
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.crypto.common.keystore.use
+import javax.inject.Inject
+
+/**
+ * Generate new random device secret.
+ *
+ * @return 32-byte, base64-ed random salt as String, without newline character.
+ */
+class GenerateDeviceSecret @Inject constructor(
+    private val cryptoContext: CryptoContext
+) {
+    operator fun invoke(): DeviceSecretString {
+        return cryptoContext.pgpCrypto.generateRandomBytes().use { secret ->
+            val deviceSecret = cryptoContext.pgpCrypto.getBase64EncodedNoWrap(secret.array)
+            deviceSecret.encrypt(cryptoContext.keyStoreCrypto)
+        }
+    }
 }
-
-
-

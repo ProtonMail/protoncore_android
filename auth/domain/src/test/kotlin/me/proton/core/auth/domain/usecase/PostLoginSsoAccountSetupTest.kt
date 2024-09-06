@@ -27,6 +27,8 @@ import kotlinx.coroutines.test.runTest
 import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
+import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
@@ -38,11 +40,17 @@ import org.junit.Test
 import kotlin.test.assertTrue
 
 class PostLoginSsoAccountSetupTest {
+
+    private lateinit var userManager: UserManager
+    private lateinit var sessionManager: SessionManager
+
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
     private lateinit var unlockUserPrimaryKey: UnlockUserPrimaryKey
     private lateinit var userCheck: PostLoginAccountSetup.UserCheck
-    private lateinit var userManager: UserManager
-    private lateinit var sessionManager: SessionManager
+
+    private lateinit var checkDeviceSecret: CheckDeviceSecret
+    private lateinit var decryptEncryptedSecret: DecryptEncryptedSecret
+
     private lateinit var user: User
     private lateinit var sessionId: SessionId
 
@@ -68,6 +76,12 @@ class PostLoginSsoAccountSetupTest {
         sessionManager = mockk {
             coEvery { getSessionId(any()) } returns sessionId
             coEvery { refreshScopes(any()) } returns Unit
+        }
+        checkDeviceSecret = mockk {
+            coEvery { this@mockk.invoke(any()) } returns null
+        }
+        decryptEncryptedSecret = mockk {
+            coEvery { this@mockk.invoke(any(), any()) } returns null
         }
     }
 
@@ -107,7 +121,9 @@ class PostLoginSsoAccountSetupTest {
         unlockUserPrimaryKey = unlockUserPrimaryKey,
         userManager = userManager,
         sessionManager = sessionManager,
-        product = product
+        product = product,
+        checkDeviceSecret = checkDeviceSecret,
+        decryptEncryptedSecret = decryptEncryptedSecret
     )
 
     private fun mockSessionInfo(

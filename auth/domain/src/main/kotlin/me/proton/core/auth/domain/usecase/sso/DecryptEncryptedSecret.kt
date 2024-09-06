@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,21 +19,29 @@
 package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
+import me.proton.core.crypto.common.aead.AeadEncryptedString
+import me.proton.core.crypto.common.aead.decrypt
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
-import me.proton.core.util.kotlin.HashUtils
 import javax.inject.Inject
 
-class GenerateConfirmationCode @Inject constructor(
-    private val deviceSecretRepository: DeviceSecretRepository,
-    private val context: CryptoContext
+class DecryptEncryptedSecret @Inject constructor(
+    context: CryptoContext,
+    private val deviceSecretRepository: DeviceSecretRepository
 ) {
+    private val keyStoreCrypto = context.keyStoreCrypto
+    private val aeadCrypto = context.aeadCrypto
+    private val pgpCrypto = context.pgpCrypto
+
     suspend operator fun invoke(
-        userId: UserId
-    ): String {
-        val deviceSecret = checkNotNull(deviceSecretRepository.getByUserId(userId)) { "Device Secret not found." }
-        val decryptedDeviceSecret = context.keyStoreCrypto.decrypt(deviceSecret.secret)
-        val sha256DeviceSecret = HashUtils.sha256(decryptedDeviceSecret)
-        return Crockford32.encode(sha256DeviceSecret.toByteArray()).take(4)
+        userId: UserId,
+        encryptedSecret: AeadEncryptedString?,
+    ): EncryptedString? {
+        val deviceSecret = deviceSecretRepository.getByUserId(userId)?.secret ?: return null
+        val key = pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto))
+        return encryptedSecret?.decrypt(aeadCrypto, key = key)?.encrypt(keyStoreCrypto)
     }
 }

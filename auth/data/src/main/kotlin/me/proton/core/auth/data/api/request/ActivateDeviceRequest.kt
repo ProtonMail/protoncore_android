@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -20,11 +20,10 @@ package me.proton.core.auth.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.pgp.Based64Encoded
 
 @Serializable
-data class InitDeviceRequest(
-    @SerialName("Name")
-    val name: String,
-    @SerialName("ActivationToken")
-    val activationToken: String
+data class ActivateDeviceRequest(
+    @SerialName("EncryptedSecret")
+    val encryptedSecret: Based64Encoded
 )

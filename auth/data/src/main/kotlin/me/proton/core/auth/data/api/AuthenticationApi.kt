@@ -18,11 +18,9 @@
 
 package me.proton.core.auth.data.api
 
-import me.proton.core.auth.data.api.request.AssociateDeviceRequest
-import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.AuthInfoRequest
+import me.proton.core.auth.data.api.request.EmailValidationRequest
 import me.proton.core.auth.data.api.request.ForkSessionRequest
-import me.proton.core.auth.data.api.request.InitDeviceRequest
 import me.proton.core.auth.data.api.request.LoginLessRequest
 import me.proton.core.auth.data.api.request.LoginRequest
 import me.proton.core.auth.data.api.request.LoginSsoRequest
@@ -30,11 +28,8 @@ import me.proton.core.auth.data.api.request.PhoneValidationRequest
 import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
-import me.proton.core.auth.data.api.response.AssociateDeviceResponse
 import me.proton.core.auth.data.api.response.AuthInfoResponse
-import me.proton.core.auth.data.api.response.AuthDevicesResponse
 import me.proton.core.auth.data.api.response.ForkSessionResponse
-import me.proton.core.auth.data.api.response.InitDeviceResponse
 import me.proton.core.auth.data.api.response.LoginResponse
 import me.proton.core.auth.data.api.response.ModulusResponse
 import me.proton.core.auth.data.api.response.ScopesResponse
@@ -47,7 +42,6 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
-import retrofit2.http.Path
 import retrofit2.http.Tag
 
 interface AuthenticationApi : BaseRetrofitApi {
@@ -90,19 +84,4 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/v4/sessions/forks")
     suspend fun forkSession(@Body request: ForkSessionRequest): ForkSessionResponse
-
-    @POST("auth/v4/devices")
-    suspend fun initDevice(@Body request: InitDeviceRequest): InitDeviceResponse
-
-    @POST("auth/v4/devices/{deviceId}/associate")
-    suspend fun associateDevice(
-        @Path("deviceId") deviceId: String,
-        @Body request: AssociateDeviceRequest
-    ): AssociateDeviceResponse
-
-    @DELETE("auth/v4/devices/{deviceId}")
-    suspend fun deleteDevice(@Path("deviceId") deviceId: String): GenericResponse
-
-    @GET("auth/v4/devices")
-    suspend fun getAvailableDevices(): AuthDevicesResponse
 }

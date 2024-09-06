@@ -7,7 +7,6 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
-import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
@@ -18,15 +17,12 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
 import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.session.SessionId
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
 class AssociateAuthDeviceTest {
-    @MockK
-    private lateinit var accountRepository: AccountRepository
 
     @MockK
     private lateinit var authDeviceRepository: AuthDeviceRepository
@@ -49,7 +45,6 @@ class AssociateAuthDeviceTest {
     private val testEncryptedDeviceToken: DeviceTokenString = "encrypted-device-token"
     private val testDecryptedDeviceToken: String = "device-token"
     private val testEncryptedSecret = "encrypted-secret"
-    private val testSessionId: SessionId = SessionId("session-id")
     private val testUserId: UserId = UserId("user-id")
 
     @BeforeTest
@@ -58,10 +53,9 @@ class AssociateAuthDeviceTest {
         every { cryptoContext.keyStoreCrypto } returns keyStoreCrypto
         every { keyStoreCrypto.decrypt(testEncryptedDeviceToken) } returns testDecryptedDeviceToken
         tested = AssociateAuthDevice(
-            accountRepository,
+            cryptoContext,
             authDeviceRepository,
             checkOtherDevices,
-            cryptoContext,
             deviceSecretRepository,
         )
     }
@@ -69,21 +63,20 @@ class AssociateAuthDeviceTest {
     @Test
     fun `device successfully associated`() = runTest {
         // GIVEN
-        coEvery { accountRepository.getSessionIdOrNull(testUserId) } returns testSessionId
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } returns testEncryptedSecret
 
         // WHEN
         val result = tested(
-            testDeviceId,
-            testEncryptedDeviceToken,
-            hasTemporaryPassword = true,
-            userId = testUserId
+            userId = testUserId,
+            deviceId = testDeviceId,
+            deviceToken = testEncryptedDeviceToken,
+            hasTemporaryPassword = true
         )
 
         // THEN
@@ -95,21 +88,20 @@ class AssociateAuthDeviceTest {
         // GIVEN
         val exception = ApiException(ApiResult.Error.Http(500, "Server error"))
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws exception
 
         // WHEN
         val actual = assertFailsWith<ApiException> {
             tested(
-                testDeviceId,
-                testEncryptedDeviceToken,
-                hasTemporaryPassword = true,
-                sessionId = testSessionId,
-                userId = testUserId
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testEncryptedDeviceToken,
+                hasTemporaryPassword = true
             )
         }
 
@@ -121,10 +113,10 @@ class AssociateAuthDeviceTest {
     fun `device already associated`() = runTest {
         // GIVEN
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -136,11 +128,10 @@ class AssociateAuthDeviceTest {
 
         // WHEN
         val result = tested(
-            testDeviceId,
-            testEncryptedDeviceToken,
-            hasTemporaryPassword = true,
-            sessionId = testSessionId,
-            userId = testUserId
+            userId = testUserId,
+            deviceId = testDeviceId,
+            deviceToken = testEncryptedDeviceToken,
+            hasTemporaryPassword = true
         )
 
         // THEN
@@ -152,21 +143,20 @@ class AssociateAuthDeviceTest {
         // GIVEN
         val exception = ApiException(ApiResult.Error.Http(400, "Bad request"))
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws exception
 
         // WHEN
         val actual = assertFailsWith<ApiException> {
             tested(
-                testDeviceId,
-                testEncryptedDeviceToken,
-                hasTemporaryPassword = true,
-                sessionId = testSessionId,
-                userId = testUserId
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testEncryptedDeviceToken,
+                hasTemporaryPassword = true
             )
         }
 
@@ -179,21 +169,20 @@ class AssociateAuthDeviceTest {
         // GIVEN
         val exception = ApiException(ApiResult.Error.Http(422, "Unprocessable"))
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws exception
 
         // WHEN
         val actual = assertFailsWith<ApiException> {
             tested(
-                testDeviceId,
-                testEncryptedDeviceToken,
-                hasTemporaryPassword = true,
-                sessionId = testSessionId,
-                userId = testUserId
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testEncryptedDeviceToken,
+                hasTemporaryPassword = true
             )
         }
 
@@ -206,10 +195,10 @@ class AssociateAuthDeviceTest {
         // GIVEN
         coJustRun { deviceSecretRepository.deleteAll(testUserId) }
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -221,11 +210,10 @@ class AssociateAuthDeviceTest {
 
         // WHEN
         val result = tested(
-            testDeviceId,
-            testEncryptedDeviceToken,
-            hasTemporaryPassword = true,
-            sessionId = testSessionId,
-            userId = testUserId
+            userId = testUserId,
+            deviceId = testDeviceId,
+            deviceToken = testEncryptedDeviceToken,
+            hasTemporaryPassword = true
         )
 
         // THEN
@@ -236,12 +224,12 @@ class AssociateAuthDeviceTest {
     @Test
     fun `device not found`() = runTest {
         // GIVEN
-        coJustRun { authDeviceRepository.deleteById(testUserId, testDeviceId) }
+        coJustRun { authDeviceRepository.deleteByDeviceId(testUserId, testDeviceId) }
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -253,26 +241,25 @@ class AssociateAuthDeviceTest {
 
         // WHEN
         val result = tested(
-            testDeviceId,
-            testEncryptedDeviceToken,
-            hasTemporaryPassword = true,
-            sessionId = testSessionId,
-            userId = testUserId
+            userId = testUserId,
+            deviceId = testDeviceId,
+            deviceToken = testEncryptedDeviceToken,
+            hasTemporaryPassword = true
         )
 
         // THEN
         assertEquals(AssociateAuthDevice.Result.Error.DeviceNotFound, result)
-        coVerify { authDeviceRepository.deleteById(testUserId, testDeviceId) }
+        coVerify { authDeviceRepository.deleteByDeviceId(testUserId, testDeviceId) }
     }
 
     @Test
     fun `device not active`() = runTest {
         // GIVEN
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -290,11 +277,10 @@ class AssociateAuthDeviceTest {
 
         // WHEN
         val result = tested(
-            testDeviceId,
-            testEncryptedDeviceToken,
-            hasTemporaryPassword = true,
-            sessionId = testSessionId,
-            userId = testUserId
+            userId = testUserId,
+            deviceId = testDeviceId,
+            deviceToken = testEncryptedDeviceToken,
+            hasTemporaryPassword = true
         )
 
         // THEN
@@ -307,12 +293,12 @@ class AssociateAuthDeviceTest {
     @Test
     fun `device rejected`() = runTest {
         // GIVEN
-        coJustRun { authDeviceRepository.deleteById(testUserId, testDeviceId) }
+        coJustRun { authDeviceRepository.deleteByDeviceId(testUserId, testDeviceId) }
         coEvery {
-            authDeviceRepository.associateDeviceWithSession(
-                testSessionId,
-                testDeviceId,
-                testDecryptedDeviceToken
+            authDeviceRepository.associateDevice(
+                userId = testUserId,
+                deviceId = testDeviceId,
+                deviceToken = testDecryptedDeviceToken
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -324,15 +310,14 @@ class AssociateAuthDeviceTest {
 
         // WHEN
         val result = tested(
-            testDeviceId,
-            testEncryptedDeviceToken,
-            hasTemporaryPassword = true,
-            sessionId = testSessionId,
-            userId = testUserId
+            userId = testUserId,
+            deviceId = testDeviceId,
+            deviceToken = testEncryptedDeviceToken,
+            hasTemporaryPassword = true
         )
 
         // THEN
         assertEquals(AssociateAuthDevice.Result.Error.DeviceRejected, result)
-        coVerify { authDeviceRepository.deleteById(testUserId, testDeviceId) }
+        coVerify { authDeviceRepository.deleteByDeviceId(testUserId, testDeviceId) }
     }
 }

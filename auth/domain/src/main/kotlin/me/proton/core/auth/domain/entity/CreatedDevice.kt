@@ -18,7 +18,7 @@
 
 package me.proton.core.auth.domain.entity
 
-data class InitDeviceStatus(
-    val id: String,
-    val token: String
+data class CreatedDevice(
+    val deviceId: AuthDeviceId,
+    val deviceToken: DeviceTokenString
 )

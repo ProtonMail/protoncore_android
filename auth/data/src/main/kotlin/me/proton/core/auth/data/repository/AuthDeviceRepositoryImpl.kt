@@ -28,15 +28,13 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
-import me.proton.core.auth.domain.entity.DeviceTokenString
-import me.proton.core.auth.domain.entity.InitDeviceStatus
+import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.data.arch.buildProtonStore
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
@@ -60,39 +58,46 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         )
     ).buildProtonStore(scopeProvider)
 
-    override suspend fun associateDeviceWithSession(
-        sessionId: SessionId,
+    override suspend fun createDevice(
+        userId: UserId,
+        deviceName: String,
+        activationToken: String
+    ): CreatedDevice = remoteDataSource.createDevice(userId, deviceName, activationToken)
+
+    override suspend fun associateDevice(
+        userId: UserId,
         deviceId: AuthDeviceId,
-        deviceToken: DeviceTokenString
-    ): String = remoteDataSource.associateDeviceWithSession(sessionId, deviceId, deviceToken)
+        deviceToken: String
+    ): String = remoteDataSource.associateDevice(userId, deviceId, deviceToken)
+
+    override suspend fun activateDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        encryptedSecret: Based64Encoded
+    ): Unit = remoteDataSource.activateDevice(userId, deviceId, encryptedSecret)
 
     override fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>> =
         store.stream(StoreRequest.cached(userId, refresh = refresh))
             .map { it.dataOrNull().orEmpty() }
             .distinctUntilChanged()
 
-    override suspend fun getByUserId(sessionUserId: SessionUserId, refresh: Boolean): List<AuthDevice> {
-        return (if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId))
-    }
+    override suspend fun getByUserId(
+        userId: UserId,
+        refresh: Boolean
+    ): List<AuthDevice> = (if (refresh) store.fresh(userId) else store.get(userId))
 
-    override suspend fun getByAddressId(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean): List<AuthDevice> {
-        return getByUserId(sessionUserId).filter { it.addressId == addressId }
-    }
+    override suspend fun getByAddressId(
+        userId: UserId,
+        addressId: AddressId,
+        refresh: Boolean
+    ): List<AuthDevice> = getByUserId(userId).filter { it.addressId == addressId }
 
-    override suspend fun deleteById(userId: UserId, deviceId: AuthDeviceId) {
+    override suspend fun deleteByDeviceId(userId: UserId, deviceId: AuthDeviceId) {
         localDataSource.deleteByDeviceId(deviceId)
         workManager.enqueue(DeleteAuthDeviceWorker.makeWorkerRequest(deviceId, userId))
     }
 
     override suspend fun deleteByUserId(userId: UserId) {
         localDataSource.deleteAll(userId)
-    }
-
-    override suspend fun initDevice(
-        sessionUserId: SessionUserId,
-        name: String,
-        activationToken: String
-    ): InitDeviceStatus {
-        return remoteDataSource.initDevice(sessionUserId, name, activationToken)
     }
 }

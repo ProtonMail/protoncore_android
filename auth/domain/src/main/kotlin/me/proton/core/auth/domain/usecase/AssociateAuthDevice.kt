@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.domain.usecase
 
-import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
@@ -36,40 +35,28 @@ import me.proton.core.network.domain.ResponseCodes.AUTH_DEVICE_TOKEN_INVALID
 import me.proton.core.network.domain.ResponseCodes.NOT_ALLOWED
 import me.proton.core.network.domain.hasProtonErrorCode
 import me.proton.core.network.domain.isHttpError
-import me.proton.core.network.domain.session.SessionId
 import javax.inject.Inject
 
+/**
+ * Associate Device with user.
+ *
+ * Return an EncryptedSecret (that can be decrypted with a DeviceSecret).
+ */
 class AssociateAuthDevice @Inject constructor(
-    private val accountRepository: AccountRepository,
+    private val context: CryptoContext,
     private val authDeviceRepository: AuthDeviceRepository,
     private val checkOtherDevices: CheckOtherDevices,
-    private val context: CryptoContext,
     private val deviceSecretRepository: DeviceSecretRepository
 ) {
     suspend operator fun invoke(
-        deviceId: AuthDeviceId,
-        deviceToken: DeviceTokenString,
-        hasTemporaryPassword: Boolean,
         userId: UserId,
-    ): Result {
-        val sessionId = requireNotNull(accountRepository.getSessionIdOrNull(userId))
-        return invoke(deviceId, deviceToken, hasTemporaryPassword, sessionId, userId)
-    }
-
-    /**
-     * Associate current [session][sessionId] with the [device][deviceId].
-     * @return An EncryptedSecret (that can be decrypted with a DeviceSecret).
-     */
-    suspend operator fun invoke(
         deviceId: AuthDeviceId,
         deviceToken: DeviceTokenString,
-        hasTemporaryPassword: Boolean,
-        sessionId: SessionId,
-        userId: UserId
+        hasTemporaryPassword: Boolean
     ): Result {
         return try {
-            val encryptedSecret = authDeviceRepository.associateDeviceWithSession(
-                sessionId = sessionId,
+            val encryptedSecret = authDeviceRepository.associateDevice(
+                userId = userId,
                 deviceId = deviceId,
                 deviceToken = deviceToken.decrypt(context.keyStoreCrypto)
             )
@@ -86,7 +73,11 @@ class AssociateAuthDevice @Inject constructor(
     ): Result.Error = when {
         isHttpError(HTTP_UNPROCESSABLE) -> when {
             hasProtonErrorCode(AUTH_DEVICE_NOT_FOUND) -> onDeviceNotFound(deviceId, userId)
-            hasProtonErrorCode(AUTH_DEVICE_NOT_ACTIVE) -> onDeviceNotActive(hasTemporaryPassword, userId)
+            hasProtonErrorCode(AUTH_DEVICE_NOT_ACTIVE) -> onDeviceNotActive(
+                hasTemporaryPassword,
+                userId
+            )
+
             hasProtonErrorCode(AUTH_DEVICE_REJECTED) -> onDeviceRejected(deviceId, userId)
             hasProtonErrorCode(AUTH_DEVICE_TOKEN_INVALID) -> onDeviceTokenInvalid(userId)
             else -> throw this
@@ -97,7 +88,7 @@ class AssociateAuthDevice @Inject constructor(
     }
 
     private suspend fun onDeviceNotFound(deviceId: AuthDeviceId, userId: UserId): Result.Error {
-        authDeviceRepository.deleteById(userId, deviceId)
+        authDeviceRepository.deleteByDeviceId(userId, deviceId)
         return Result.Error.DeviceNotFound
     }
 
@@ -110,7 +101,7 @@ class AssociateAuthDevice @Inject constructor(
     }
 
     private suspend fun onDeviceRejected(deviceId: AuthDeviceId, userId: UserId): Result.Error {
-        authDeviceRepository.deleteById(userId, deviceId)
+        authDeviceRepository.deleteByDeviceId(userId, deviceId)
         return Result.Error.DeviceRejected // Continue by showing the error to the user and logging out.
     }
 

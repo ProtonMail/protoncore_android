@@ -23,6 +23,7 @@ import me.proton.core.domain.entity.UserId
 
 data class DeviceSecret(
     val userId: UserId,
+    val deviceId: AuthDeviceId,
     val secret: DeviceSecretString,
     val token: DeviceTokenString
 )

@@ -20,10 +20,9 @@ package me.proton.core.auth.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.auth.domain.entity.DeviceTokenString
 
 @Serializable
 data class AssociateDeviceRequest(
     @SerialName("DeviceToken")
-    val deviceToken: DeviceTokenString
+    val deviceToken: String
 )

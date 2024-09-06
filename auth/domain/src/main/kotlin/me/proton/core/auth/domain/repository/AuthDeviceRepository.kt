@@ -20,37 +20,63 @@ package me.proton.core.auth.domain.repository
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.auth.domain.entity.AuthDevice
-import me.proton.core.auth.domain.entity.InitDeviceStatus
-import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.auth.domain.entity.AuthDeviceId
-import me.proton.core.auth.domain.entity.DeviceTokenString
+import me.proton.core.auth.domain.entity.CreatedDevice
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.entity.AddressId
 
 interface AuthDeviceRepository {
+
     /**
-     * @return Encrypted secret.
+     * Create a new device remotely, returning Device Token.
      */
-    suspend fun associateDeviceWithSession(
-        sessionId: SessionId,
+    suspend fun createDevice(
+        userId: UserId,
+        deviceName: String,
+        activationToken: String
+    ): CreatedDevice
+
+    /**
+     * Associate [deviceId] remotely, returning Encrypted Secret.
+     */
+    suspend fun associateDevice(
+        userId: UserId,
         deviceId: AuthDeviceId,
-        deviceToken: DeviceTokenString
+        deviceToken: String
     ): String
 
-    fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>>
-
-    suspend fun getByUserId(sessionUserId: SessionUserId, refresh: Boolean = false): List<AuthDevice>
-    suspend fun getByAddressId(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean = false): List<AuthDevice>
-
-    suspend fun deleteById(userId: UserId, deviceId: AuthDeviceId)
-    suspend fun deleteByUserId(userId: UserId)
     /**
-     * Init a new device for SSO.
+     * Activate [deviceId] remotely, by uploading [encryptedSecret].
      */
-    suspend fun initDevice(
-        sessionUserId: SessionUserId,
-        name: String,
-        activationToken: String
-    ): InitDeviceStatus
+    suspend fun activateDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        encryptedSecret: Based64Encoded
+    )
+
+    fun observeByUserId(
+        userId: UserId,
+        refresh: Boolean
+    ): Flow<List<AuthDevice>>
+
+    suspend fun getByUserId(
+        userId: UserId,
+        refresh: Boolean = false
+    ): List<AuthDevice>
+
+    suspend fun getByAddressId(
+        userId: UserId,
+        addressId: AddressId,
+        refresh: Boolean = false
+    ): List<AuthDevice>
+
+    suspend fun deleteByUserId(
+        userId: UserId
+    )
+
+    suspend fun deleteByDeviceId(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    )
 }

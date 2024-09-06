@@ -22,6 +22,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.Index
 import me.proton.core.account.data.entity.AccountEntity
+import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.DeviceSecret
 import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.entity.DeviceTokenString
@@ -41,18 +42,21 @@ import me.proton.core.domain.entity.UserId
 )
 data class DeviceSecretEntity(
     val userId: UserId,
+    val deviceId: AuthDeviceId,
     val secret: DeviceSecretString,
     val token: DeviceTokenString
 )
 
 fun DeviceSecretEntity.toDeviceSecret() = DeviceSecret(
     userId = userId,
+    deviceId = deviceId,
     secret = secret,
     token = token
 )
 
 fun DeviceSecret.toDeviceSecretEntity() = DeviceSecretEntity(
     userId = userId,
+    deviceId = deviceId,
     secret = secret,
     token = token
 )

@@ -18,55 +18,72 @@
 
 package me.proton.core.auth.data.repository
 
-import me.proton.core.auth.data.api.AuthenticationApi
-import me.proton.core.auth.data.api.request.InitDeviceRequest
-import me.proton.core.auth.domain.entity.AuthDevice
-import me.proton.core.auth.domain.entity.InitDeviceStatus
-import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
-import me.proton.core.domain.entity.SessionUserId
-import me.proton.core.network.data.ApiProvider
+import me.proton.core.auth.data.api.AuthDeviceApi
+import me.proton.core.auth.data.api.request.ActivateDeviceRequest
 import me.proton.core.auth.data.api.request.AssociateDeviceRequest
+import me.proton.core.auth.data.api.request.CreateDeviceRequest
+import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.DeviceTokenString
+import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.decrypt
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.session.SessionId
+import me.proton.core.network.data.ApiProvider
+import me.proton.core.network.data.protonApi.isSuccess
 import javax.inject.Inject
 
 class AuthDeviceRemoteDataSourceImpl @Inject constructor(
     private val provider: ApiProvider,
+    private val context: CryptoContext
 ) : AuthDeviceRemoteDataSource {
-    override suspend fun associateDeviceWithSession(
-        sessionId: SessionId,
+
+    override suspend fun createDevice(
+        userId: UserId,
+        name: String,
+        activationToken: String
+    ): CreatedDevice =
+        provider.get<AuthDeviceApi>(userId).invoke {
+            val request = CreateDeviceRequest(name, activationToken)
+            createDevice(request).toCreatedDevice(context)
+        }.valueOrThrow
+
+    override suspend fun associateDevice(
+        userId: UserId,
         deviceId: AuthDeviceId,
-        deviceToken: DeviceTokenString
-    ): String = provider.get<AuthenticationApi>(sessionId).invoke {
+        deviceToken: String
+    ): String = provider.get<AuthDeviceApi>(userId).invoke {
         associateDevice(
             deviceId = deviceId.id,
             request = AssociateDeviceRequest(deviceToken)
         ).device.encryptedSecret
     }.valueOrThrow
 
+    override suspend fun activateDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        encryptedSecret: Based64Encoded
+    ): Unit = provider.get<AuthDeviceApi>(userId).invoke {
+        activateDevice(
+            deviceId = deviceId.id,
+            request = ActivateDeviceRequest(encryptedSecret)
+        )
+        Unit
+    }.valueOrThrow
+
     override suspend fun deleteDevice(
         deviceId: AuthDeviceId,
         userId: UserId
-    ) {
-        provider.get<AuthenticationApi>(userId).invoke {
-            deleteDevice(deviceId.id)
-        }.valueOrThrow
-    }
+    ): Unit = provider.get<AuthDeviceApi>(userId).invoke {
+        deleteDevice(deviceId.id)
+        Unit
+    }.valueOrThrow
 
-    override suspend fun initDevice(
-        sessionUserId: SessionUserId,
-        name: String,
-        activationToken: String
-    ): InitDeviceStatus =
-        provider.get<AuthenticationApi>(sessionUserId).invoke {
-            val request = InitDeviceRequest(name, activationToken)
-            initDevice(request).toInitDeviceStatus()
-        }.valueOrThrow
-
-    override suspend fun getAuthDevices(sessionUserId: SessionUserId): List<AuthDevice> =
-        provider.get<AuthenticationApi>(sessionUserId).invoke {
-            getAvailableDevices().devices.map { it.toAuthDevice(sessionUserId) }
-        }.valueOrThrow
+    override suspend fun getAuthDevices(
+        userId: UserId
+    ): List<AuthDevice> = provider.get<AuthDeviceApi>(userId).invoke {
+        getDevices().devices.map { it.toAuthDevice(userId) }
+    }.valueOrThrow
 }
