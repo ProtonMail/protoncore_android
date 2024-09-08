@@ -26,11 +26,10 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 
 interface AuthDeviceRepository {
-    fun observeByUserId(userId: UserId): Flow<List<AuthDevice>>
-    fun observeByAddressId(addressId: AddressId): Flow<List<AuthDevice>>
+    fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>>
 
-    suspend fun getByUserId(userId: UserId): List<AuthDevice>
-    suspend fun getByAddressId(addressId: AddressId): List<AuthDevice>
+    suspend fun getByUserId(sessionUserId: SessionUserId, refresh: Boolean = false): List<AuthDevice>
+    suspend fun getByAddressId(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean = false): List<AuthDevice>
 
     /**
      * Init a new device for SSO.

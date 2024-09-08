@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.repository
 
+import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.InitDeviceStatus
 import me.proton.core.domain.entity.SessionUserId
 
@@ -28,4 +29,8 @@ interface AuthDeviceRemoteDataSource {
         name: String,
         activationToken: String
     ): InitDeviceStatus
+
+    suspend fun getAuthDevices(
+        sessionUserId: SessionUserId
+    ): List<AuthDevice>
 }

@@ -26,12 +26,12 @@ import me.proton.core.user.domain.entity.AddressId
 
 interface AuthDeviceLocalDataSource {
     fun observeByUserId(userId: UserId): Flow<List<AuthDevice>>
-    fun observeByAddressId(addressId: AddressId): Flow<List<AuthDevice>>
 
     suspend fun getByUserId(userId: UserId): List<AuthDevice>
     suspend fun getByAddressId(addressId: AddressId): List<AuthDevice>
 
-    suspend fun upsert(authDevice: AuthDevice)
+    suspend fun upsert(authDevices: List<AuthDevice>)
     suspend fun deleteAll(userId: UserId)
+    suspend fun deleteAll()
     suspend fun deleteByDeviceId(deviceId: AuthDeviceId)
 }

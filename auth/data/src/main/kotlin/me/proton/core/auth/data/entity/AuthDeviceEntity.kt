@@ -47,7 +47,7 @@ import me.proton.core.user.domain.entity.AddressId
 data class AuthDeviceEntity(
     val userId: UserId,
     val deviceId: String,
-    val addressId: AddressId,
+    val addressId: AddressId?,
     val state: Int,
     val name: String,
     val localizedClientName: String,

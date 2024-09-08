@@ -20,6 +20,7 @@ package me.proton.core.auth.data.repository
 
 import me.proton.core.auth.data.api.AuthenticationApi
 import me.proton.core.auth.data.api.request.InitDeviceRequest
+import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.InitDeviceStatus
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.domain.entity.SessionUserId
@@ -38,5 +39,10 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
         provider.get<AuthenticationApi>(sessionUserId).invoke {
             val request = InitDeviceRequest(name, activationToken)
             initDevice(request).toInitDeviceStatus()
+        }.valueOrThrow
+
+    override suspend fun getAuthDevices(sessionUserId: SessionUserId): List<AuthDevice> =
+        provider.get<AuthenticationApi>(sessionUserId).invoke {
+            getAvailableDevices().devices.map { it.toAuthDevice(sessionUserId) }
         }.valueOrThrow
 }

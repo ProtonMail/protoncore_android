@@ -9,7 +9,7 @@ data class AuthDeviceId(val id: String)
 data class AuthDevice(
     val userId: UserId,
     val deviceId: AuthDeviceId,
-    val addressId: AddressId,
+    val addressId: AddressId?,
     val state: AuthDeviceState,
     val name: String,
     val localizedClientName: String,

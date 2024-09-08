@@ -61,7 +61,9 @@ dependencies {
         project(Module.accountData),
         project(Module.featureFlagData),
         project(Module.kotlinUtil),
+        project(Module.data),
         `coroutines-core`,
+        store4
     )
 
     testImplementation(

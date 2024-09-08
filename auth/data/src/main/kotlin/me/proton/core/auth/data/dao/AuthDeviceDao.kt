@@ -33,9 +33,6 @@ abstract class AuthDeviceDao : BaseDao<AuthDeviceEntity>() {
     @Query("SELECT * FROM AuthDeviceEntity WHERE userId = :userId")
     abstract fun observeByUserId(userId: UserId): Flow<List<AuthDeviceEntity>>
 
-    @Query("SELECT * FROM AuthDeviceEntity WHERE addressId = :addressId")
-    abstract fun observeByAddressId(addressId: AddressId): Flow<List<AuthDeviceEntity>>
-
     @Query("SELECT * FROM AuthDeviceEntity WHERE userId = :userId")
     abstract suspend fun getByUserId(userId: UserId): List<AuthDeviceEntity>
 
@@ -47,4 +44,7 @@ abstract class AuthDeviceDao : BaseDao<AuthDeviceEntity>() {
 
     @Query("DELETE FROM AuthDeviceEntity WHERE deviceId = :deviceId")
     abstract suspend fun deleteByDeviceId(deviceId: AuthDeviceId)
+
+    @Query("DELETE FROM AuthDeviceEntity")
+    abstract suspend fun deleteAll()
 }

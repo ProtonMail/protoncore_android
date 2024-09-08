@@ -30,6 +30,7 @@ import me.proton.core.auth.data.api.request.RefreshSessionRequest
 import me.proton.core.auth.data.api.request.RequestSessionRequest
 import me.proton.core.auth.data.api.request.SecondFactorRequest
 import me.proton.core.auth.data.api.response.AuthInfoResponse
+import me.proton.core.auth.data.api.response.AvailableDevicesResponse
 import me.proton.core.auth.data.api.response.ForkSessionResponse
 import me.proton.core.auth.data.api.response.InitDeviceResponse
 import me.proton.core.auth.data.api.response.LoginResponse
@@ -89,4 +90,7 @@ interface AuthenticationApi : BaseRetrofitApi {
 
     @POST("auth/v4/devices")
     suspend fun initDevice(@Body request: InitDeviceRequest): InitDeviceResponse
+
+    @GET("auth/v4/devices")
+    suspend fun getAvailableDevices(): AvailableDevicesResponse
 }

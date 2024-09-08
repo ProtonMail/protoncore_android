@@ -18,9 +18,11 @@
 
 package me.proton.core.auth.data.usecase
 
-import android.util.Base64
 import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.crypto.common.keystore.use
 import javax.inject.Inject
 
 /**
@@ -32,10 +34,10 @@ class GenerateDeviceSecretImpl @Inject constructor(
     private val cryptoContext: CryptoContext
 ): GenerateDeviceSecret {
 
-    override fun invoke(): String {
-        val salt = cryptoContext.pgpCrypto.generateRandomBytes()
-        val deviceSecret = Base64.encodeToString(salt, Base64.DEFAULT)
-        // Truncate newline character.
-        return deviceSecret.substring(0, deviceSecret.length - 1)
+    override fun invoke(): EncryptedString {
+        return cryptoContext.pgpCrypto.generateRandomBytes().use { secret ->
+            val deviceSecret = cryptoContext.pgpCrypto.getBase64EncodedNoWrap(secret.array)
+            deviceSecret.encrypt(cryptoContext.keyStoreCrypto)
+        }
     }
 }

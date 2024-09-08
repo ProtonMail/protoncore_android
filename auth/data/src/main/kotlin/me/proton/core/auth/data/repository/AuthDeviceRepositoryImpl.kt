@@ -18,36 +18,55 @@
 
 package me.proton.core.auth.data.repository
 
+import com.dropbox.android.external.store4.Fetcher
+import com.dropbox.android.external.store4.SourceOfTruth
+import com.dropbox.android.external.store4.StoreBuilder
+import com.dropbox.android.external.store4.StoreRequest
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.InitDeviceStatus
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.featureflag.domain.entity.FeatureId
 import me.proton.core.user.domain.entity.AddressId
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 class AuthDeviceRepositoryImpl @Inject constructor(
     private val localDataSource: AuthDeviceLocalDataSource,
-    private val remoteDataSource: AuthDeviceRemoteDataSource
+    private val remoteDataSource: AuthDeviceRemoteDataSource,
+    scopeProvider: CoroutineScopeProvider
 ) : AuthDeviceRepository {
 
-    override fun observeByUserId(userId: UserId): Flow<List<AuthDevice>> {
-        return localDataSource.observeByUserId(userId)
+    private val store = StoreBuilder.from(
+        fetcher = Fetcher.of { key: UserId ->
+            remoteDataSource.getAuthDevices(key)
+        },
+        sourceOfTruth = SourceOfTruth.of(
+            reader = { key -> localDataSource.observeByUserId(key) },
+            writer = { _, input -> localDataSource.upsert(input) },
+            delete = { key -> localDataSource.deleteAll(key) },
+            deleteAll = { localDataSource.deleteAll() }
+        )
+    ).buildProtonStore(scopeProvider)
+
+    override fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>> =
+        store.stream(StoreRequest.cached(userId, refresh = refresh))
+            .map { it.dataOrNull().orEmpty() }
+            .distinctUntilChanged()
+
+    override suspend fun getByUserId(sessionUserId: SessionUserId, refresh: Boolean): List<AuthDevice> {
+        return (if (refresh) store.fresh(sessionUserId) else store.get(sessionUserId))
     }
 
-    override fun observeByAddressId(addressId: AddressId): Flow<List<AuthDevice>> {
-        return localDataSource.observeByAddressId(addressId)
-    }
-
-    override suspend fun getByUserId(userId: UserId): List<AuthDevice> {
-        return localDataSource.getByUserId(userId)
-    }
-
-    override suspend fun getByAddressId(addressId: AddressId): List<AuthDevice> {
-        return localDataSource.getByAddressId(addressId)
+    override suspend fun getByAddressId(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean): List<AuthDevice> {
+        return getByUserId(sessionUserId).filter { it.addressId == addressId }
     }
 
     override suspend fun initDevice(

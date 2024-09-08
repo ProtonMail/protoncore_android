@@ -41,10 +41,6 @@ class AuthDeviceLocalDataSourceImpl @Inject constructor(
         return dao.observeByUserId(userId).map { list -> list.map { it.toAuthDevice() } }
     }
 
-    override fun observeByAddressId(addressId: AddressId): Flow<List<AuthDevice>> {
-        return dao.observeByAddressId(addressId).map { list -> list.map { it.toAuthDevice() } }
-    }
-
     override suspend fun getByUserId(userId: UserId): List<AuthDevice> {
         return dao.getByUserId(userId).map { it.toAuthDevice() }
     }
@@ -53,12 +49,15 @@ class AuthDeviceLocalDataSourceImpl @Inject constructor(
         return dao.getByAddressId(addressId).map { it.toAuthDevice() }
     }
 
-    override suspend fun upsert(authDevice: AuthDevice) {
-        dao.insertOrUpdate(authDevice.toAuthDeviceEntity())
-    }
+    override suspend fun upsert(authDevices: List<AuthDevice>): Unit =
+        dao.insertOrUpdate(*authDevices.map { it.toAuthDeviceEntity() }.toTypedArray())
 
     override suspend fun deleteAll(userId: UserId) {
         dao.deleteAll(userId)
+    }
+
+    override suspend fun deleteAll() {
+        dao.deleteAll()
     }
 
     override suspend fun deleteByDeviceId(deviceId: AuthDeviceId) {

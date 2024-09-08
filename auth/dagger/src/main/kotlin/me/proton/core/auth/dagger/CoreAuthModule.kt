@@ -46,8 +46,6 @@ import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.domain.entity.Product
-import me.proton.core.featureflag.domain.repository.FeatureFlagLocalDataSource
-import me.proton.core.featureflag.domain.repository.FeatureFlagRemoteDataSource
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import javax.inject.Singleton
@@ -64,11 +62,9 @@ public interface CoreAuthModule {
     public fun bindDeviceSecretRepository(impl: DeviceSecretRepositoryImpl): DeviceSecretRepository
 
     @Binds
-    @Singleton
     public fun bindAuthDeviceLocalDataSource(impl: AuthDeviceLocalDataSourceImpl): AuthDeviceLocalDataSource
 
     @Binds
-    @Singleton
     public fun bindAuthDeviceRemoteDataSource(impl: AuthDeviceRemoteDataSourceImpl): AuthDeviceRemoteDataSource
 
     public companion object {

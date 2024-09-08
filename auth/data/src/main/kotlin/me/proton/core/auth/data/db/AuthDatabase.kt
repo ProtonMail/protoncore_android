@@ -22,6 +22,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.auth.data.dao.AuthDeviceDao
 import me.proton.core.auth.data.dao.DeviceSecretDao
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
+import me.proton.core.data.room.db.extension.dropTableColumn
+import me.proton.core.data.room.db.extension.recreateTable
 import me.proton.core.data.room.db.migration.DatabaseMigration
 
 interface AuthDatabase : Database {
@@ -41,6 +44,22 @@ interface AuthDatabase : Database {
                 database.execSQL("CREATE TABLE IF NOT EXISTS `AuthDeviceEntity` (`userId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `addressId` TEXT NOT NULL, `state` INTEGER NOT NULL, `name` TEXT NOT NULL, `localizedClientName` TEXT NOT NULL, `createdAtUtcSeconds` INTEGER NOT NULL, `activatedAtUtcSeconds` INTEGER, `rejectedAtUtcSeconds` INTEGER, `activationToken` TEXT, `lastActivityAtUtcSeconds` INTEGER NOT NULL, PRIMARY KEY(`userId`, `deviceId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_userId` ON `AuthDeviceEntity` (`userId`)")
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_addressId` ON `AuthDeviceEntity` (`addressId`)")
+            }
+        }
+
+        val MIGRATION_2 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.recreateTable(
+                    table = "AuthDeviceEntity",
+                    createTable = {
+                        database.execSQL("CREATE TABLE IF NOT EXISTS `AuthDeviceEntity` (`userId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `addressId` TEXT, `state` INTEGER NOT NULL, `name` TEXT NOT NULL, `localizedClientName` TEXT NOT NULL, `createdAtUtcSeconds` INTEGER NOT NULL, `activatedAtUtcSeconds` INTEGER, `rejectedAtUtcSeconds` INTEGER, `activationToken` TEXT, `lastActivityAtUtcSeconds` INTEGER NOT NULL, PRIMARY KEY(`userId`, `deviceId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                    },
+                    createIndices = {
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_userId` ON `AuthDeviceEntity` (`userId`)")
+                        execSQL("CREATE INDEX IF NOT EXISTS `index_AuthDeviceEntity_addressId` ON `AuthDeviceEntity` (`addressId`)")
+                    },
+                    columns = listOf("addressId")
+                )
             }
         }
     }
