@@ -55,8 +55,8 @@
   <string name="auth_help_other">Še vedno potrebuješ pomoč? Kontaktirajte nas neposredno.</string>
   <string name="auth_help_option_customer_support">Podporo strankam</string>
   <string name="auth_2fa_title">Dvojno preverjanja pristnosti</string>
-  <string name="auth_2fa_subtitle">V vašem računu je konfiguriranih več 2FA mehanizmov. Izberite, s katerim želite potrditi svojo identiteto.</string>
-  <string name="auth_2fa_tab_one_time_code">Enkratno geslo</string>
+  <string name="auth_2fa_subtitle">V vašem računu je nastavljenih več 2FA mehanizmov. Izberite, s katerim želite potrditi svojo identiteto.</string>
+  <string name="auth_2fa_tab_one_time_code">Enkratna koda</string>
   <string name="auth_2fa_tab_security_key">Varnostni ključ</string>
   <string name="auth_2fa_insert_security_key">Predložite varnostni ključ, povezan z vašim Proton računom. <annotation link="more">Več informacij</annotation></string>
   <string name="auth_2fa_label">Geslo za dvojno preverjanje pristnosti</string>
@@ -107,7 +107,7 @@
     <item quantity="one">Dovoljen je le en brezplačni Proton račun.</item>
     <item quantity="two">Dovoljena sta le %d brezplačna Proton računa.</item>
     <item quantity="few">Dovoljeni so le %d brezplačni Proton računi.</item>
-    <item quantity="other">Dovoljeni so le %d brezplačni Proton računi.</item>
+    <item quantity="other">Dovoljenih je le %d brezplačnih Proton računov.</item>
   </plurals>
   <string name="auth_user_check_delinquent_error">Vaš račun je trenutno zadržan zaradi neplačanega računa.</string>
   <string name="auth_user_check_delinquent_action">Plačilo računa</string>
@@ -176,6 +176,6 @@
   <string name="auth_credentialless_vpn_subtitle">Brskajte zasebno, dostopajte do blokirane vsebine in uživajte v digitalni svobodi.</string>
   <string name="auth_credentialless_guest_button">Nadaljujte kot gost</string>
   <string name="auth_credentialless_terms" comment="Please do not modify the &lt;annotation link=&quot;terms&quot;&gt; tag, only its contents.">Z uporabo te aplikacije sprejemate naše <annotation link="terms">Pogoje storitve</annotation>.</string>
-  <string name="auth_credentialless_settings_title">Zakorakajte v zasebnost.</string>
+  <string name="auth_credentialless_settings_title">Naredite korak k večji zasebnosti.</string>
   <string name="auth_credentialless_settings_subtitle">Z brezplačnim računom Proton dobite upravljalnik gesel, šifrirano e-pošto in koledar ter 1 GB shrambe v oblaku.</string>
 </resources>

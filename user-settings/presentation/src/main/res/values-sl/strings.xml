@@ -55,7 +55,7 @@
   <string name="settings_security_keys_empty_list">There are no security keys registered to your account. To add a security key use the Proton web application. %s</string>
   <string name="settings_security_keys_registered">Ti varnostni ključi so registrirani v vašem računu.</string>
   <string name="settings_security_keys_title">Varnostni ključi</string>
-  <string name="settings_security_keys_error">Napaka pri pridobivanju varnostnih ključev. Prosimo, poskusite znova.</string>
+  <string name="settings_security_keys_error">Napaka pri pridobivanju varnostnih ključev. Poskusite znova.</string>
   <!-- device/local settings -->
   <string name="device_settings_telemetry_title">Anonimna telemetrija</string>
   <string name="device_settings_telemetry_hint">Za izboljšanje naših storitev občasno zbiramo anonimne podatke o uporabi.</string>

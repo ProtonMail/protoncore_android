@@ -37,7 +37,7 @@
   <string name="account_recovery_cancelled_subtitle">Če niste zahtevali spremembe gesla, je lahko vaš račun ogrožen.\n\nZavarujte vaš račun s spremembo vašega gesla.</string>
   <!-- Password change period -->
   <string name="account_recovery_password_started_title">Ponastavitev gesla je na voljo.</string>
-  <string name="account_recovery_password_started_subtitle">Za ponastavitev gesla uporabite napravo in brskalnik, s katerim ste sprožili zahtevo za ponastavitev gesla.\n\nTo morate storiti pred %s.\n\nČe niste zaprosili za ponastavitev gesla, prekinite postopek.</string>
+  <string name="account_recovery_password_started_subtitle">Za ponastavitev gesla znova uporabite napravo, aplikacijo ali brskalnik, s katerim ste sprožili zahtevo za ponastavitev gesla.\n\nTo morate storiti pred %s.\n\nČe niste zaprosili za ponastavitev gesla, prekinite postopek.</string>
   <string name="account_recovery_password_started_self_initiated_subtitle">Sedaj lahko ponastavite geslo.\n\nTo morate narediti pred %s.\n\nČe niste zaprosili za ponastavitev gesla, prekinite postopek.</string>
   <!-- Recovery window ended -->
   <string name="account_recovery_window_ended_title">Ponastavitev gesla je potekla.</string>
@@ -52,10 +52,10 @@
   <string name="account_recovery_info_grace_description">Da bi se prepričali, da geslo res želite ponastaviti vi, z odobritvijo zahtevkov počakamo 72 ur.\n\nČe niste zaprosili za ponastavitev gesla, prekličite zahtevek zdaj.</string>
   <string name="account_recovery_info_cancelled_title">Ponastavitev gesla je preklicana.</string>
   <string name="account_recovery_info_cancelled_subtitle">Dne %1s je bil podan zahtevek za ponastavitev gesla.</string>
-  <string name="account_recovery_info_cancelled_description">Če ne prepoznate zahteve je možno, da ima nekdo dostop do vašega Proton računa.\n\nZaščitite svoj račun.</string>
+  <string name="account_recovery_info_cancelled_description">Če ne prepoznate zahteve je možno, da ima nekdo dostop do vašega Proton računa.\n\nTakoj zaščitite svoj račun.</string>
   <string name="account_recovery_info_insecure_title">Ponastavitev gesla je na voljo.</string>
   <string name="account_recovery_info_insecure_subtitle">Zdaj lahko ponastavite geslo. Ponastavitev gesla je na voljo do %1s.</string>
-  <string name="account_recovery_info_insecure_description">Tega niste zahtevali?\n\nČe niste zahtevali ponastavitve gesla prekinite postopek.</string>
+  <string name="account_recovery_info_insecure_description">Tega niste zahtevali?\n\nČe niste zahtevali ponastavitve gesla, prekinite postopek.</string>
   <!-- Password Reset Dialog -->
   <string name="account_recovery_reset_dialog_title">Ponastavi geslo?</string>
   <string name="account_recovery_reset_dialog_text">"Iz varnostnih razlogov boste morali počakati 72 ur, preden lahko spremenite geslo za %1s.\n\nČe imate nastavljen način za obnovitev računa, raje poskusite z obnovitvijo računa. Tako boste lahko takoj spremenili geslo."</string>
