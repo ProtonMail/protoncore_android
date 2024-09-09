@@ -11,6 +11,36 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [27.2.0] - 2024-09-09
+
+### Breaking Changes
+
+- DB Migrations:
+  - AuthDatabase.MIGRATION_0: new AuthDatabase + DeviceSecretEntity.
+  - AuthDatabase.MIGRATION_1: new AuthDeviceEntity + AuthConverters.
+
+### Chores
+
+- presentation: Add 2 new icons (ic_proton_paper_plane_clock, ic_proton_pen_sparks).
+
+### Features
+
+- auth: Preparing new Global SSO feature.
+- crypto: Added AeadCrypto (AES-GCM).
+- payment: Add v5 subscriptions endpoints.
+- plan: Add v5 subscriptions endpoints.
+- presentation-compose: Add `help` parameter to `ProtonOutlinedTextFieldWithError`.
+- presentation-compose: Add `ProtonPasswordOutlinedTextFieldWithError` composable.
+
+### Bug Fixes
+
+- user-settings: Fix colors in dark theme when displaying the list of security keys.
+
+### Internationalization
+
+- Upgrade translations from crowdin (6c2319e1).
+- Upgrade translations from crowdin (374d02c2).
+
 ## [27.1.0] - 2024-08-29
 
 ### Features
