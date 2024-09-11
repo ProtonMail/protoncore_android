@@ -24,6 +24,7 @@ import me.proton.core.auth.data.api.request.CreateDeviceRequest
 import me.proton.core.auth.data.api.response.AssociateDeviceResponse
 import me.proton.core.auth.data.api.response.AuthDevicesResponse
 import me.proton.core.auth.data.api.response.CreateDeviceResponse
+import me.proton.core.auth.data.api.response.PendingMemberDevicesResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.Body
@@ -58,4 +59,7 @@ interface AuthDeviceApi : BaseRetrofitApi {
 
     @GET("auth/v4/devices")
     suspend fun getDevices(): AuthDevicesResponse
+
+    @GET("core/v4/members/devices/pending")
+    suspend fun getPendingMemberDevices(): PendingMemberDevicesResponse
 }

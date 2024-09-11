@@ -21,6 +21,7 @@ package me.proton.core.auth.data.db
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.auth.data.dao.AuthDeviceDao
 import me.proton.core.auth.data.dao.DeviceSecretDao
+import me.proton.core.auth.data.dao.MemberDeviceDao
 import me.proton.core.data.room.db.Database
 import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.extension.dropTableColumn
@@ -30,6 +31,7 @@ import me.proton.core.data.room.db.migration.DatabaseMigration
 interface AuthDatabase : Database {
     fun deviceSecretDao(): DeviceSecretDao
     fun authDeviceDao(): AuthDeviceDao
+    fun memberDeviceDao(): MemberDeviceDao
 
     companion object {
         val MIGRATION_0 = object : DatabaseMigration {
@@ -73,6 +75,15 @@ interface AuthDatabase : Database {
                         execSQL("CREATE INDEX IF NOT EXISTS `index_DeviceSecretEntity_userId` ON `DeviceSecretEntity` (`userId`)")
                     }
                 )
+            }
+        }
+
+        val MIGRATION_4 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("CREATE TABLE IF NOT EXISTS `MemberDeviceEntity` (`userId` TEXT NOT NULL, `deviceId` TEXT NOT NULL, `memberId` TEXT NOT NULL, `addressId` TEXT, `state` INTEGER NOT NULL, `name` TEXT NOT NULL, `localizedClientName` TEXT NOT NULL, `platform` TEXT, `createdAtUtcSeconds` INTEGER NOT NULL, `activatedAtUtcSeconds` INTEGER, `rejectedAtUtcSeconds` INTEGER, `activationToken` TEXT, `lastActivityAtUtcSeconds` INTEGER NOT NULL, PRIMARY KEY(`userId`, `deviceId`), FOREIGN KEY(`userId`) REFERENCES `AccountEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_MemberDeviceEntity_userId` ON `MemberDeviceEntity` (`userId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_MemberDeviceEntity_memberId` ON `MemberDeviceEntity` (`memberId`)")
+                database.execSQL("CREATE INDEX IF NOT EXISTS `index_MemberDeviceEntity_addressId` ON `MemberDeviceEntity` (`addressId`)")
             }
         }
     }

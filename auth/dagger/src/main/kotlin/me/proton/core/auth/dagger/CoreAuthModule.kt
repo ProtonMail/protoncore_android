@@ -30,6 +30,9 @@ import me.proton.core.auth.data.repository.AuthDeviceRepositoryImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.data.repository.DeviceSecretRepositoryImpl
 import me.proton.core.auth.data.usecase.IsCommonPasswordCheckEnabledImpl
+import me.proton.core.auth.data.repository.MemberDeviceLocalDataSourceImpl
+import me.proton.core.auth.data.repository.MemberDeviceRemoteDataSourceImpl
+import me.proton.core.auth.data.repository.MemberDeviceRepositoryImpl
 import me.proton.core.auth.data.usecase.IsCredentialLessEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoCustomTabEnabledImpl
 import me.proton.core.auth.data.usecase.IsSsoEnabledImpl
@@ -40,6 +43,9 @@ import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
+import me.proton.core.auth.domain.repository.MemberDeviceLocalDataSource
+import me.proton.core.auth.domain.repository.MemberDeviceRemoteDataSource
+import me.proton.core.auth.domain.repository.MemberDeviceRepository
 import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
 import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.usecase.IsSsoEnabled
@@ -68,6 +74,15 @@ public interface CoreAuthModule {
 
     @Binds
     public fun bindAuthRepository(impl: AuthRepositoryImpl): AuthRepository
+
+    @Binds
+    public fun bindMemberDeviceLocalDataSource(impl: MemberDeviceLocalDataSourceImpl): MemberDeviceLocalDataSource
+
+    @Binds
+    public fun bindMemberDeviceRemoteDataSource(impl: MemberDeviceRemoteDataSourceImpl): MemberDeviceRemoteDataSource
+
+    @Binds
+    public fun bindMemberDeviceRepository(impl: MemberDeviceRepositoryImpl): MemberDeviceRepository
 }
 
 @Module

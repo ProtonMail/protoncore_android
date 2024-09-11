@@ -31,6 +31,7 @@ import me.proton.core.auth.data.db.AuthConverters
 import me.proton.core.auth.data.db.AuthDatabase
 import me.proton.core.auth.data.entity.AuthDeviceEntity
 import me.proton.core.auth.data.entity.DeviceSecretEntity
+import me.proton.core.auth.data.entity.MemberDeviceEntity
 import me.proton.core.challenge.data.db.ChallengeConverters
 import me.proton.core.challenge.data.db.ChallengeDatabase
 import me.proton.core.challenge.data.entity.ChallengeFrameEntity
@@ -153,7 +154,8 @@ import me.proton.core.usersettings.data.entity.UserSettingsEntity
         RecoveryFileEntity::class,
         // auth-data
         DeviceSecretEntity::class,
-        AuthDeviceEntity::class
+        AuthDeviceEntity::class,
+        MemberDeviceEntity::class
     ],
     version = AppDatabase.version,
     exportSchema = true
@@ -200,7 +202,7 @@ abstract class AppDatabase :
 
     companion object {
         const val name = "db-account-manager"
-        const val version = 53
+        const val version = 54
 
         val migrations = listOf(
             AppDatabaseMigrations.MIGRATION_1_2,
@@ -255,6 +257,7 @@ abstract class AppDatabase :
             AppDatabaseMigrations.MIGRATION_50_51,
             AppDatabaseMigrations.MIGRATION_51_52,
             AppDatabaseMigrations.MIGRATION_52_53,
+            AppDatabaseMigrations.MIGRATION_53_54,
         )
 
         fun buildDatabase(context: Context): AppDatabase =
