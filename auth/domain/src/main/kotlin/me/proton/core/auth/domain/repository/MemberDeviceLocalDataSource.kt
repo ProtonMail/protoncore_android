@@ -26,8 +26,8 @@ import me.proton.core.domain.entity.UserId
 interface MemberDeviceLocalDataSource {
     suspend fun deleteAll()
     suspend fun deleteAll(userId: UserId)
-    suspend fun deleteByMemberId(userId: UserId, memberId: UserId)
-    suspend fun deleteByDeviceId(userId: UserId, deviceId: MemberDeviceId)
+    suspend fun deleteByMemberId(userId: UserId, memberIds: List<UserId>)
+    suspend fun deleteByDeviceId(userId: UserId, deviceIds: List<MemberDeviceId>)
     fun observeByUserId(userId: UserId): Flow<List<MemberDevice>>
     suspend fun upsert(devices: List<MemberDevice>)
 }

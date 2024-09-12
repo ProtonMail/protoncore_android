@@ -24,6 +24,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
 import me.proton.core.auth.data.AuthDeviceEventListener
+import me.proton.core.auth.data.event.MemberDeviceEventListener
 import me.proton.core.contact.data.ContactEmailEventListener
 import me.proton.core.contact.data.ContactEventListener
 import me.proton.core.eventmanager.domain.EventListener
@@ -56,6 +57,7 @@ object EventManagerModule {
         pushEventListener: PushEventListener,
         notificationEventListener: NotificationEventListener,
         authDeviceEventListener: AuthDeviceEventListener,
+        memberDeviceEventListener: MemberDeviceEventListener,
     ): Set<EventListener<*, *>> = setOf(
         userEventListener,
         userAddressEventListener,
@@ -66,6 +68,7 @@ object EventManagerModule {
         labelEventListener,
         pushEventListener,
         notificationEventListener,
-        authDeviceEventListener
+        authDeviceEventListener,
+        memberDeviceEventListener
     )
 }

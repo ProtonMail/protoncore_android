@@ -42,12 +42,12 @@ class MemberDeviceLocalDataSourceImpl @Inject constructor(
         dao.deleteAll(userId)
     }
 
-    override suspend fun deleteByMemberId(userId: UserId, memberId: UserId) {
-        dao.deleteAll(userId, memberId)
+    override suspend fun deleteByMemberId(userId: UserId, memberIds: List<UserId>) {
+        dao.deleteByMemberId(userId, memberIds)
     }
 
-    override suspend fun deleteByDeviceId(userId: UserId, deviceId: MemberDeviceId) {
-        dao.deleteAll(userId, deviceId)
+    override suspend fun deleteByDeviceId(userId: UserId, deviceIds: List<MemberDeviceId>) {
+        dao.deleteByDeviceId(userId, deviceIds)
     }
 
     override fun observeByUserId(userId: UserId): Flow<List<MemberDevice>> =

@@ -20,6 +20,7 @@ package me.proton.core.auth.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.auth.data.entity.MemberDeviceEntity
 import me.proton.core.auth.domain.entity.MemberDeviceId
@@ -46,15 +47,29 @@ abstract class MemberDeviceDao : BaseDao<MemberDeviceEntity>() {
     @Query("SELECT * FROM MemberDeviceEntity WHERE userId = :userId")
     abstract fun observeByUserId(userId: UserId): Flow<List<MemberDeviceEntity>>
 
+    @Query("DELETE FROM MemberDeviceEntity")
+    abstract suspend fun deleteAll()
+
     @Query("DELETE FROM MemberDeviceEntity WHERE userId = :userId")
     abstract suspend fun deleteAll(userId: UserId)
 
-    @Query("DELETE FROM MemberDeviceEntity WHERE userId = :userId AND memberId = :memberId")
-    abstract suspend fun deleteAll(userId: UserId, memberId: UserId)
+    @Transaction
+    open suspend fun deleteByMemberId(userId: UserId, memberIds: List<UserId>) {
+        memberIds.chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            deleteByMemberIdBatch(userId, it)
+        }
+    }
 
-    @Query("DELETE FROM MemberDeviceEntity WHERE userId = :userId AND deviceId = :deviceId")
-    abstract suspend fun deleteAll(userId: UserId, deviceId: MemberDeviceId)
+    @Transaction
+    open suspend fun deleteByDeviceId(userId: UserId, deviceIds: List<MemberDeviceId>) {
+        deviceIds.chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            deleteByDeviceIdBatch(userId, it)
+        }
+    }
 
-    @Query("DELETE FROM MemberDeviceEntity")
-    abstract suspend fun deleteAll()
+    @Query("DELETE FROM MemberDeviceEntity WHERE userId = :userId AND memberId IN (:memberIds)")
+    protected abstract suspend fun deleteByMemberIdBatch(userId: UserId, memberIds: List<UserId>)
+
+    @Query("DELETE FROM MemberDeviceEntity WHERE userId = :userId AND deviceId IN (:deviceIds)")
+    protected abstract suspend fun deleteByDeviceIdBatch(userId: UserId, deviceIds: List<MemberDeviceId>)
 }
