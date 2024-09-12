@@ -97,7 +97,7 @@ class AssociateAuthDevice @Inject constructor(
     }
 
     private suspend fun onDeviceNotFound(deviceId: AuthDeviceId, userId: UserId): Result.Error {
-        authDeviceRepository.deleteById(deviceId, userId)
+        authDeviceRepository.deleteById(userId, deviceId)
         return Result.Error.DeviceNotFound
     }
 
@@ -110,7 +110,7 @@ class AssociateAuthDevice @Inject constructor(
     }
 
     private suspend fun onDeviceRejected(deviceId: AuthDeviceId, userId: UserId): Result.Error {
-        authDeviceRepository.deleteById(deviceId, userId)
+        authDeviceRepository.deleteById(userId, deviceId)
         return Result.Error.DeviceRejected // Continue by showing the error to the user and logging out.
     }
 

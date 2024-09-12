@@ -30,6 +30,7 @@ import me.proton.core.auth.data.MissingScopeListenerImpl
 import me.proton.core.auth.data.feature.IsFido2EnabledImpl
 import me.proton.core.auth.data.repository.AuthDeviceLocalDataSourceImpl
 import me.proton.core.auth.data.repository.AuthDeviceRemoteDataSourceImpl
+import me.proton.core.auth.data.repository.AuthDeviceRepositoryImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.data.repository.DeviceSecretRepositoryImpl
 import me.proton.core.auth.data.usecase.IsCredentialLessEnabledImpl
@@ -39,6 +40,7 @@ import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
@@ -66,6 +68,9 @@ public interface CoreAuthModule {
 
     @Binds
     public fun bindAuthDeviceRemoteDataSource(impl: AuthDeviceRemoteDataSourceImpl): AuthDeviceRemoteDataSource
+
+    @Binds
+    public fun bindAuthDeviceRepository(impl: AuthDeviceRepositoryImpl): AuthDeviceRepository
 
     public companion object {
         @Provides

@@ -43,8 +43,8 @@ interface AuthDeviceRepository {
     suspend fun getByUserId(sessionUserId: SessionUserId, refresh: Boolean = false): List<AuthDevice>
     suspend fun getByAddressId(sessionUserId: SessionUserId, addressId: AddressId, refresh: Boolean = false): List<AuthDevice>
 
-    suspend fun deleteById(deviceId: AuthDeviceId, userId: UserId)
-
+    suspend fun deleteById(userId: UserId, deviceId: AuthDeviceId)
+    suspend fun deleteByUserId(userId: UserId)
     /**
      * Init a new device for SSO.
      */

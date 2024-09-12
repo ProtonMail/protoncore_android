@@ -236,7 +236,7 @@ class AssociateAuthDeviceTest {
     @Test
     fun `device not found`() = runTest {
         // GIVEN
-        coJustRun { authDeviceRepository.deleteById(testDeviceId, testUserId) }
+        coJustRun { authDeviceRepository.deleteById(testUserId, testDeviceId) }
         coEvery {
             authDeviceRepository.associateDeviceWithSession(
                 testSessionId,
@@ -262,7 +262,7 @@ class AssociateAuthDeviceTest {
 
         // THEN
         assertEquals(AssociateAuthDevice.Result.Error.DeviceNotFound, result)
-        coVerify { authDeviceRepository.deleteById(testDeviceId, testUserId) }
+        coVerify { authDeviceRepository.deleteById(testUserId, testDeviceId) }
     }
 
     @Test
@@ -307,7 +307,7 @@ class AssociateAuthDeviceTest {
     @Test
     fun `device rejected`() = runTest {
         // GIVEN
-        coJustRun { authDeviceRepository.deleteById(testDeviceId, testUserId) }
+        coJustRun { authDeviceRepository.deleteById(testUserId, testDeviceId) }
         coEvery {
             authDeviceRepository.associateDeviceWithSession(
                 testSessionId,
@@ -333,6 +333,6 @@ class AssociateAuthDeviceTest {
 
         // THEN
         assertEquals(AssociateAuthDevice.Result.Error.DeviceRejected, result)
-        coVerify { authDeviceRepository.deleteById(testDeviceId, testUserId) }
+        coVerify { authDeviceRepository.deleteById(testUserId, testDeviceId) }
     }
 }

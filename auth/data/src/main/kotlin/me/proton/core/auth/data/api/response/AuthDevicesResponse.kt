@@ -27,13 +27,13 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 
 @Serializable
-data class AvailableDevicesResponse(
+data class AuthDevicesResponse(
     @SerialName("Devices")
-    val devices: List<AvailableDeviceResponse>
+    val devices: List<AuthDeviceResponse>
 )
 
 @Serializable
-data class AvailableDeviceResponse(
+data class AuthDeviceResponse(
     @SerialName("ID")
     val id: String,
     @SerialName("State")

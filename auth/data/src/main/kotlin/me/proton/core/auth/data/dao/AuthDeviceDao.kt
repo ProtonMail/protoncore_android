@@ -39,11 +39,11 @@ abstract class AuthDeviceDao : BaseDao<AuthDeviceEntity>() {
     @Query("SELECT * FROM AuthDeviceEntity WHERE addressId = :addressId")
     abstract suspend fun getByAddressId(addressId: AddressId): List<AuthDeviceEntity>
 
-    @Query("DELETE FROM AuthDeviceEntity WHERE userId = :userId")
-    abstract suspend fun deleteAll(userId: UserId)
+    @Query("DELETE FROM AuthDeviceEntity WHERE userId IN (:userIds)")
+    abstract suspend fun deleteAll(vararg userIds: UserId)
 
-    @Query("DELETE FROM AuthDeviceEntity WHERE deviceId = :deviceId")
-    abstract suspend fun deleteByDeviceId(deviceId: AuthDeviceId)
+    @Query("DELETE FROM AuthDeviceEntity WHERE deviceId IN (:deviceId)")
+    abstract suspend fun deleteByDeviceId(vararg deviceId: AuthDeviceId)
 
     @Query("DELETE FROM AuthDeviceEntity")
     abstract suspend fun deleteAll()

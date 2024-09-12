@@ -79,9 +79,13 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         return getByUserId(sessionUserId).filter { it.addressId == addressId }
     }
 
-    override suspend fun deleteById(deviceId: AuthDeviceId, userId: UserId) {
+    override suspend fun deleteById(userId: UserId, deviceId: AuthDeviceId) {
         localDataSource.deleteByDeviceId(deviceId)
         workManager.enqueue(DeleteAuthDeviceWorker.makeWorkerRequest(deviceId, userId))
+    }
+
+    override suspend fun deleteByUserId(userId: UserId) {
+        localDataSource.deleteAll(userId)
     }
 
     override suspend fun initDevice(

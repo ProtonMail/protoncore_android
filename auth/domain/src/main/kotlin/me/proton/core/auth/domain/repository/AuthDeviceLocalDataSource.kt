@@ -31,7 +31,7 @@ interface AuthDeviceLocalDataSource {
     suspend fun getByAddressId(addressId: AddressId): List<AuthDevice>
 
     suspend fun upsert(authDevices: List<AuthDevice>)
-    suspend fun deleteAll(userId: UserId)
+    suspend fun deleteAll(vararg userIds: UserId)
     suspend fun deleteAll()
-    suspend fun deleteByDeviceId(deviceId: AuthDeviceId)
+    suspend fun deleteByDeviceId(vararg deviceIds: AuthDeviceId)
 }

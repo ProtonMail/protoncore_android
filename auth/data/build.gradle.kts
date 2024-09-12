@@ -53,6 +53,7 @@ dependencies {
         project(Module.domain),
         project(Module.networkData),
         project(Module.networkDomain),
+        project(Module.eventManagerDomain),
         project(Module.featureFlagDomain),
         `android-work-runtime`,
         `serialization-core`,

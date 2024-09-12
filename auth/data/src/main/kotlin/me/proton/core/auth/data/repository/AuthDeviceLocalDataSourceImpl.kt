@@ -52,15 +52,15 @@ class AuthDeviceLocalDataSourceImpl @Inject constructor(
     override suspend fun upsert(authDevices: List<AuthDevice>): Unit =
         dao.insertOrUpdate(*authDevices.map { it.toAuthDeviceEntity() }.toTypedArray())
 
-    override suspend fun deleteAll(userId: UserId) {
-        dao.deleteAll(userId)
+    override suspend fun deleteAll(vararg userIds: UserId) {
+        dao.deleteAll(*userIds)
     }
 
     override suspend fun deleteAll() {
         dao.deleteAll()
     }
 
-    override suspend fun deleteByDeviceId(deviceId: AuthDeviceId) {
-        dao.deleteByDeviceId(deviceId)
+    override suspend fun deleteByDeviceId(vararg deviceIds: AuthDeviceId) {
+        dao.deleteByDeviceId(*deviceIds)
     }
 }
