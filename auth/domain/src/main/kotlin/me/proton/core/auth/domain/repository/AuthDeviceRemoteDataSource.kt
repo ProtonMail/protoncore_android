@@ -21,7 +21,6 @@ package me.proton.core.auth.domain.repository
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
-import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
 
@@ -53,4 +52,6 @@ interface AuthDeviceRemoteDataSource {
     suspend fun getAuthDevices(
         userId: UserId
     ): List<AuthDevice>
+
+    suspend fun rejectAuthDevice(userId: UserId, deviceId: AuthDeviceId)
 }

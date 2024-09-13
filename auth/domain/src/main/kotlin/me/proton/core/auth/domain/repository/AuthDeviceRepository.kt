@@ -79,4 +79,9 @@ interface AuthDeviceRepository {
         userId: UserId,
         deviceId: AuthDeviceId
     )
+
+    suspend fun rejectAuthDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    )
 }

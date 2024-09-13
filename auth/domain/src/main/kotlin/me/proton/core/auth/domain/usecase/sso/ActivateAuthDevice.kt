@@ -37,6 +37,8 @@ import javax.inject.Inject
  * Upload new EncryptedSecret (derived from password), and activate device (final step of LoginWithBackup).
  *
  * When: We can decrypt the keys, but we have a local invalid secret.
+ *
+ * @see RejectAuthDevice
  */
 class ActivateAuthDevice @Inject constructor(
     context: CryptoContext,

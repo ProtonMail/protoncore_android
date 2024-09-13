@@ -25,14 +25,11 @@ import me.proton.core.auth.data.api.request.CreateDeviceRequest
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
-import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
-import me.proton.core.network.data.protonApi.isSuccess
 import javax.inject.Inject
 
 class AuthDeviceRemoteDataSourceImpl @Inject constructor(
@@ -86,4 +83,10 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
     ): List<AuthDevice> = provider.get<AuthDeviceApi>(userId).invoke {
         getDevices().devices.map { it.toAuthDevice(userId) }
     }.valueOrThrow
+
+    override suspend fun rejectAuthDevice(userId: UserId, deviceId: AuthDeviceId) {
+        provider.get<AuthDeviceApi>(userId).invoke {
+            rejectAuthDevice(deviceId.id)
+        }.valueOrThrow
+    }
 }

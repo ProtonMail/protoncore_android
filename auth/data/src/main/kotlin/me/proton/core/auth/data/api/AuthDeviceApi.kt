@@ -31,6 +31,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface AuthDeviceApi : BaseRetrofitApi {
@@ -62,4 +63,9 @@ interface AuthDeviceApi : BaseRetrofitApi {
 
     @GET("core/v4/members/devices/pending")
     suspend fun getPendingMemberDevices(): PendingMemberDevicesResponse
+
+    @PUT("auth/v4/devices/{deviceId}/reject")
+    suspend fun rejectAuthDevice(
+        @Path("deviceId") deviceId: String
+    ): GenericResponse
 }

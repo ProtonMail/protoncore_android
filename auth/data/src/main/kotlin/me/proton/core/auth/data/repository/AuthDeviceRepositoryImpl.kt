@@ -100,4 +100,11 @@ class AuthDeviceRepositoryImpl @Inject constructor(
     override suspend fun deleteByUserId(userId: UserId) {
         localDataSource.deleteAll(userId)
     }
+
+    override suspend fun rejectAuthDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    ) {
+        remoteDataSource.rejectAuthDevice(userId, deviceId)
+    }
 }
