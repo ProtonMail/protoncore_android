@@ -290,6 +290,7 @@ class UserManagerImpl @Inject constructor(
             addresses
                 .flatMap { it.keys }
                 .filter { !it.active }
+                .filter { it.token != null && it.signature != null }
                 .filter { key ->
                     val decryptedPassphrase = userAddressKeySecretProvider.getPassphrase(
                         userId = userId,
