@@ -53,16 +53,14 @@ abstract class MemberDeviceDao : BaseDao<MemberDeviceEntity>() {
     @Query("DELETE FROM MemberDeviceEntity WHERE userId = :userId")
     abstract suspend fun deleteAll(userId: UserId)
 
-    @Transaction
-    open suspend fun deleteByMemberId(userId: UserId, memberIds: List<UserId>) {
-        memberIds.chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+    suspend fun deleteByMemberId(userId: UserId, memberIds: List<UserId>) {
+        deleteChunked(memberIds) {
             deleteByMemberIdBatch(userId, it)
         }
     }
 
-    @Transaction
-    open suspend fun deleteByDeviceId(userId: UserId, deviceIds: List<MemberDeviceId>) {
-        deviceIds.chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+    suspend fun deleteByDeviceId(userId: UserId, deviceIds: List<MemberDeviceId>) {
+        deleteChunked(deviceIds) {
             deleteByDeviceIdBatch(userId, it)
         }
     }

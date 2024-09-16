@@ -41,6 +41,17 @@ abstract class BaseDao<in T> {
     @Delete
     abstract suspend fun delete(vararg entities: T)
 
+    /**
+     * When using `DELETE FROM table WHERE column IN (item1.., itemN)`,
+     * there is a maximum number of items that SQLite can handle at once.
+     */
+    @Transaction
+    open suspend fun <V> deleteChunked(entities: List<V>, delete: suspend (List<V>) -> Unit) {
+        entities.chunked(SQLITE_MAX_VARIABLE_NUMBER).forEach {
+            delete(it)
+        }
+    }
+
     companion object {
         /** Maximum Number Of Host Parameters In A Single SQL Statement
          * https://www.sqlite.org/limits.html
