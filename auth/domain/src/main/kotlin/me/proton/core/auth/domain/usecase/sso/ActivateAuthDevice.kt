@@ -21,6 +21,7 @@ package me.proton.core.auth.domain.usecase.sso
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
@@ -44,13 +45,21 @@ class ActivateAuthDevice @Inject constructor(
 
     suspend operator fun invoke(
         userId: UserId,
-        deviceId: AuthDeviceId,
-        passphrase: EncryptedByteArray
+        passphrase: EncryptedByteArray,
+        deviceId: AuthDeviceId? = null,
     ) {
         val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
         passphrase.decrypt(keyStoreCrypto).use { decryptedPassphrase ->
-            val aesEncryptedSecret = getEncryptedSecret(decryptedPassphrase, deviceSecret.secret)
-            authDeviceRepository.activateDevice(userId, deviceId, aesEncryptedSecret)
+            val aesEncryptedSecret = getEncryptedSecret.invoke(decryptedPassphrase, deviceSecret.secret)
+            authDeviceRepository.activateDevice(userId, deviceId ?: deviceSecret.deviceId, aesEncryptedSecret)
         }
+    }
+
+    suspend operator fun invoke(
+        userId: UserId,
+        encryptedSecret: AeadEncryptedString
+    ) {
+        val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
+        authDeviceRepository.activateDevice(userId, deviceSecret.deviceId, encryptedSecret)
     }
 }

@@ -22,9 +22,10 @@ import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.aead.decrypt
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
+import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
@@ -39,9 +40,12 @@ class DecryptEncryptedSecret @Inject constructor(
     suspend operator fun invoke(
         userId: UserId,
         encryptedSecret: AeadEncryptedString?,
-    ): EncryptedString? {
+    ): EncryptedByteArray? {
+        if (encryptedSecret == null) return null
         val deviceSecret = deviceSecretRepository.getByUserId(userId)?.secret ?: return null
-        val key = pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto))
-        return encryptedSecret?.decrypt(aeadCrypto, key = key)?.encrypt(keyStoreCrypto)
+        return pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
+            val decryptedSecret = encryptedSecret.decrypt(aeadCrypto, key = key.array)
+            pgpCrypto.getBase64Decoded(decryptedSecret).use { it.encrypt(keyStoreCrypto) }
+        }
     }
 }

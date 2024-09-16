@@ -50,6 +50,7 @@ dependencies {
         project(Module.telemetryDomain),
         project(Module.presentationCompose),
         project(Module.userSettingsDomain),
+        project(Module.androidUtilDatetime),
         `androidx-navigation-common`,
         coilCompose,
         `compose-foundation-layout`,

@@ -89,13 +89,13 @@ class SetupPrimaryKeysTest {
         srpCrypto = mockk()
         keyStoreCrypto = mockk()
         tested = SetupPrimaryKeys(
-            userManager,
-            userAddressRepository,
-            authRepository,
-            domainRepository,
-            sessionProvider,
-            srpCrypto,
-            keyStoreCrypto
+            userManager = userManager,
+            userAddressRepository = userAddressRepository,
+            authRepository = authRepository,
+            domainRepository = domainRepository,
+            sessionProvider = sessionProvider,
+            srpCrypto = srpCrypto,
+            keyStoreCrypto = keyStoreCrypto
         )
     }
 
@@ -105,7 +105,7 @@ class SetupPrimaryKeysTest {
 
         tested.invoke(testUserId, encryptedPassword, mockk(), testDomain)
 
-        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any()) wasNot Called }
+        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any(), any(), any()) wasNot Called }
         coVerify { userAddressRepository wasNot Called }
         coVerify { authRepository wasNot Called }
         coVerify { domainRepository wasNot Called }
@@ -125,26 +125,28 @@ class SetupPrimaryKeysTest {
         userManager.mockSetupPrimaryKeys(testUsername, domain = testDomain)
 
         tested.invoke(
-            testUserId,
-            encryptedPassword,
-            AccountType.Internal,
+            userId = testUserId,
+            password = encryptedPassword,
+            accountType = AccountType.Internal,
             internalDomain = testDomain
         )
 
         coVerify(exactly = 1) {
             userAddressRepository.createAddress(
-                testUserId,
-                testUsername,
-                testDomain
+                sessionUserId = testUserId,
+                displayName = testUsername,
+                domain = testDomain
             )
         }
         coVerify(exactly = 1) {
             userManager.setupPrimaryKeys(
-                testUserId,
-                testUsername,
-                testDomain,
-                testAuth,
-                withArg { it contentEquals decryptedPassword.toByteArray() }
+                sessionUserId = testUserId,
+                username = testUsername,
+                domain = testDomain,
+                auth = testAuth,
+                password = withArg { it contentEquals decryptedPassword.toByteArray() },
+                organizationPublicKey = null,
+                deviceSecret = null
             )
         }
     }
@@ -165,11 +167,13 @@ class SetupPrimaryKeysTest {
         coVerify { userAddressRepository wasNot Called }
         coVerify(exactly = 1) {
             userManager.setupPrimaryKeys(
-                testUserId,
-                testUsername,
-                testDomain,
-                testAuth,
-                withArg { it contentEquals decryptedPassword.toByteArray() }
+                sessionUserId = testUserId,
+                username = testUsername,
+                domain = testDomain,
+                auth = testAuth,
+                password = withArg { it contentEquals decryptedPassword.toByteArray() },
+                organizationPublicKey = null,
+                deviceSecret = null
             )
         }
     }
@@ -180,7 +184,7 @@ class SetupPrimaryKeysTest {
 
         tested.invoke(testUserId, encryptedPassword, AccountType.External, testDomain)
 
-        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any()) wasNot Called }
+        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any(), any(), any()) wasNot Called }
         coVerify { userAddressRepository wasNot Called }
         coVerify { authRepository wasNot Called }
     }
@@ -220,7 +224,7 @@ class SetupPrimaryKeysTest {
         val data = ApiResult.Error.ProtonData(NOT_ALLOWED, "Primary key exists")
         val apiException = ApiException(ApiResult.Error.Http(400, "Bad request", data))
         userManager.mockSetupPrimaryKeys(
-            testUsername,
+            username = testUsername,
             domain = testDomain,
             withException = apiException
         )
@@ -255,26 +259,28 @@ class SetupPrimaryKeysTest {
         userManager.mockSetupPrimaryKeys(testUsername, domain = testDomain)
 
         tested.invoke(
-            testUserId,
-            encryptedPassword,
-            AccountType.Internal,
+            userId = testUserId,
+            password = encryptedPassword,
+            accountType = AccountType.Internal,
             internalDomain = null // passing null should result in selecting the default domain
         )
 
         coVerify(exactly = 1) {
             userAddressRepository.createAddress(
-                testUserId,
-                testUsername,
-                testDomain
+                sessionUserId = testUserId,
+                displayName = testUsername,
+                domain = testDomain
             )
         }
         coVerify(exactly = 1) {
             userManager.setupPrimaryKeys(
-                testUserId,
-                testUsername,
-                testDomain,
-                testAuth,
-                withArg { it contentEquals decryptedPassword.toByteArray() }
+                sessionUserId = testUserId,
+                username = testUsername,
+                domain = testDomain,
+                auth = testAuth,
+                password = withArg { it contentEquals decryptedPassword.toByteArray() },
+                organizationPublicKey = null,
+                deviceSecret = null
             )
         }
     }
@@ -309,11 +315,13 @@ class SetupPrimaryKeysTest {
         }
         coVerify(exactly = 1) {
             userManager.setupPrimaryKeys(
-                testUserId,
-                testUsername,
-                testAlternativeDomain,
-                testAuth,
-                withArg { it contentEquals decryptedPassword.toByteArray() }
+                sessionUserId = testUserId,
+                username = testUsername,
+                domain = testAlternativeDomain,
+                auth = testAuth,
+                password = withArg { it contentEquals decryptedPassword.toByteArray() },
+                organizationPublicKey = null,
+                deviceSecret = null
             )
         }
     }
@@ -396,7 +404,7 @@ class SetupPrimaryKeysTest {
         domain: String,
         withException: Throwable? = null
     ) {
-        coEvery { setupPrimaryKeys(testUserId, username, domain, testAuth, any()) }.apply {
+        coEvery { setupPrimaryKeys(testUserId, username, domain, testAuth, any(), any(), any()) }.apply {
             if (withException != null) {
                 throws(withException)
             } else {

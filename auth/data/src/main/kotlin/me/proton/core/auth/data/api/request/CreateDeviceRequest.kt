@@ -26,5 +26,5 @@ data class CreateDeviceRequest(
     @SerialName("Name")
     val name: String,
     @SerialName("ActivationToken")
-    val activationToken: String
+    val activationToken: String? = null
 )

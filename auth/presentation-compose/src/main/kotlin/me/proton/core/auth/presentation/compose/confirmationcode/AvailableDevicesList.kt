@@ -45,40 +45,32 @@ internal fun AvailableDevicesList(
     modifier: Modifier = Modifier,
     devices: List<AvailableDeviceUIModel>?
 ) {
-    LazyColumn(
-        modifier = modifier
-            .padding(
-                horizontal = ProtonDimens.DefaultSpacing,
-                vertical = ProtonDimens.DefaultSpacing
-            )
-            .fillMaxWidth()
-    ) {
-        item {
-            Text(
-                modifier = Modifier
-                    .padding(top = ProtonDimens.MediumSpacing),
-                text = stringResource(id = R.string.auth_login_devices_available),
-                style = ProtonTypography.Default.defaultSmallWeak
-            )
-        }
-        if (devices == null) {
-            item {
-                DeferredCircularProgressIndicator(
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        } else if (devices.isEmpty()) {
-            item {
-                Text(
-                    modifier = Modifier
-                        .padding(top = ProtonDimens.MediumSpacing),
-                    text = stringResource(id = R.string.auth_login_no_devices_available),
-                    style = ProtonTypography.Default.defaultSmallWeak
-                )
-            }
-        } else {
-            items(devices, { device -> device.id }) { device ->
-                AvailableDeviceRow(device = device)
+    Column(modifier = modifier) {
+        Text(
+            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+            text = stringResource(id = R.string.auth_login_devices_available),
+            style = ProtonTypography.Default.defaultSmallWeak
+        )
+        LazyColumn {
+            if (devices == null) {
+                item {
+                    DeferredCircularProgressIndicator(
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            } else if (devices.isEmpty()) {
+                item {
+                    Text(
+                        modifier = Modifier
+                            .padding(top = ProtonDimens.MediumSpacing),
+                        text = stringResource(id = R.string.auth_login_no_devices_available),
+                        style = ProtonTypography.Default.defaultSmallWeak
+                    )
+                }
+            } else {
+                items(devices, { device -> device.id }) { device ->
+                    AvailableDeviceRow(device = device)
+                }
             }
         }
     }

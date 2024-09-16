@@ -32,6 +32,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -54,19 +55,21 @@ import me.proton.core.compose.theme.defaultSmallWeak
 @Composable
 public fun SignInSentForApprovalScreen(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit = {},
+    onCloseClicked: () -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
+    onEnterBackupPasswordClicked: () -> Unit = {},
+    onAskAdminHelpClicked: () -> Unit = {},
     viewModel: SignInSentForApprovalViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     SignInSentForApprovalScreen(
         modifier = modifier,
-        onClose = onClose,
+        onClose = onCloseClicked,
         onCloseClicked = { viewModel.submit(SignInSentForApprovalAction.Close) },
         onErrorMessage = onErrorMessage,
-        onUseBackUpClicked = { viewModel.submit(it) },
-        onAskAdminClicked = { viewModel.submit(it) },
+        onUseBackUpClicked = onEnterBackupPasswordClicked,
+        onAskAdminClicked = onAskAdminHelpClicked,
         state = state
     )
 }
@@ -77,43 +80,35 @@ public fun SignInSentForApprovalScreen(
     onClose: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
-    onUseBackUpClicked: (SignInSentForApprovalAction.UseBackUpPassword) -> Unit,
-    onAskAdminClicked: (SignInSentForApprovalAction.AskAdminForHelp) -> Unit,
+    onUseBackUpClicked: () -> Unit,
+    onAskAdminClicked: () -> Unit,
     state: SignInSentForApprovalState
 ) {
-    when (state) {
-        is SignInSentForApprovalState.DataLoaded -> {
-            SignInSentForApprovalScreen(
-                modifier = modifier,
-                onCloseClicked = onCloseClicked,
-                onUseBackUpClicked = onUseBackUpClicked,
-                onAskAdminForHelpClicked = onAskAdminClicked,
-                confirmationCode = state.confirmationCode.toCharArray().asList(),
-                availableDevices = state.availableDevices
-            )
+    LaunchedEffect(state) {
+        when (state) {
+            is SignInSentForApprovalState.Close -> onClose()
+            is SignInSentForApprovalState.Error -> onErrorMessage(state.message)
+            else -> Unit
         }
-
-        is SignInSentForApprovalState.Loading -> {
-            SignInSentForApprovalScreen(
-                modifier = modifier,
-                onCloseClicked = onCloseClicked,
-                onUseBackUpClicked = onUseBackUpClicked,
-                onAskAdminForHelpClicked = onAskAdminClicked
-            )
-        }
-
-        is SignInSentForApprovalState.Error -> LaunchedEffect(state) { onErrorMessage(state.message) }
-
-        is SignInSentForApprovalState.Close -> LaunchedEffect(state) { onClose() }
     }
+
+    val data = remember(state) { state as? SignInSentForApprovalState.DataLoaded }
+    SignInSentForApprovalScreen(
+        modifier = modifier,
+        onCloseClicked = onCloseClicked,
+        onUseBackUpClicked = onUseBackUpClicked,
+        onAskAdminClicked = onAskAdminClicked,
+        confirmationCode = data?.confirmationCode?.toCharArray()?.asList(),
+        availableDevices = data?.availableDevices
+    )
 }
 
 @Composable
 public fun SignInSentForApprovalScreen(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit,
-    onUseBackUpClicked: (SignInSentForApprovalAction.UseBackUpPassword) -> Unit,
-    onAskAdminForHelpClicked: (SignInSentForApprovalAction.AskAdminForHelp) -> Unit,
+    onUseBackUpClicked: () -> Unit,
+    onAskAdminClicked: () -> Unit,
     confirmationCode: List<Char>? = null,
     availableDevices: List<AvailableDeviceUIModel>? = null
 ) {
@@ -151,15 +146,16 @@ public fun SignInSentForApprovalScreen(
 
                 ConfirmationDigits(digits = confirmationCode)
 
-                Spacer(Modifier.size(ProtonDimens.DefaultSpacing))
-
-                AvailableDevicesList(devices = availableDevices)
+                AvailableDevicesList(
+                    modifier = Modifier.weight(1f, fill = false),
+                    devices = availableDevices
+                )
 
                 Spacer(Modifier.size(ProtonDimens.DefaultSpacing))
 
                 ProtonSolidButton(
                     contained = false,
-                    onClick = { onUseBackUpClicked(SignInSentForApprovalAction.UseBackUpPassword) },
+                    onClick = { onUseBackUpClicked() },
                     modifier = Modifier
                         .padding(top = ProtonDimens.MediumSpacing)
                         .height(ProtonDimens.DefaultButtonMinHeight)
@@ -169,7 +165,7 @@ public fun SignInSentForApprovalScreen(
 
                 ProtonTextButton(
                     contained = false,
-                    onClick = { onAskAdminForHelpClicked(SignInSentForApprovalAction.AskAdminForHelp) },
+                    onClick = { onAskAdminClicked() },
                     modifier = Modifier
                         .padding(vertical = ProtonDimens.MediumSpacing)
                         .height(ProtonDimens.DefaultButtonMinHeight),
@@ -206,10 +202,38 @@ internal fun ApproveSignInScreenPreview() {
                     localizedClientName = "Proton Mail Android",
                     lastActivityTime = 1724945205966,
                     clientType = ClientType.Android
+                ),
+                AvailableDeviceUIModel(
+                    id = "id3",
+                    authDeviceName = "Google Pixel 8",
+                    localizedClientName = "Proton Mail Android",
+                    lastActivityTime = 1724945205966,
+                    clientType = ClientType.Android
+                ),
+                AvailableDeviceUIModel(
+                    id = "id4",
+                    authDeviceName = "Google Pixel 8 Pro",
+                    localizedClientName = "Proton Mail Android",
+                    lastActivityTime = 1724945205966,
+                    clientType = ClientType.Android
+                ),
+                AvailableDeviceUIModel(
+                    id = "id5",
+                    authDeviceName = "Google Pixel 9 Pro",
+                    localizedClientName = "Proton Mail Android",
+                    lastActivityTime = 1724945205966,
+                    clientType = ClientType.Android
+                ),
+                AvailableDeviceUIModel(
+                    id = "id6",
+                    authDeviceName = "Google Pixel 10 Pro",
+                    localizedClientName = "Proton Mail Android",
+                    lastActivityTime = 1724945205966,
+                    clientType = ClientType.Android
                 )
             ),
             onUseBackUpClicked = {},
-            onAskAdminForHelpClicked = {},
+            onAskAdminClicked = {},
             onCloseClicked = {}
         )
     }
@@ -225,11 +249,11 @@ internal fun ApproveSignInScreenPreview() {
 internal fun ApproveSignInScreenLoadingPreview() {
     ProtonTheme {
         SignInSentForApprovalScreen(
-            confirmationCode = null,
-            availableDevices = null,
+            onCloseClicked = {},
             onUseBackUpClicked = {},
-            onAskAdminForHelpClicked = {},
-            onCloseClicked = {}
+            onAskAdminClicked = {},
+            confirmationCode = null,
+            availableDevices = null
         )
     }
 }

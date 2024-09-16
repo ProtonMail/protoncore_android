@@ -26,6 +26,7 @@ import io.mockk.spyk
 import io.mockk.unmockkStatic
 import kotlinx.coroutines.test.runTest
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
+import me.proton.core.auth.domain.usecase.sso.GetEncryptedSecret
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -76,6 +77,7 @@ class UserManagerPasswordTests {
     private val keySaltRepository: KeySaltRepositoryImpl = mockk(relaxed = true)
     private val privateKeyRepository: PrivateKeyRepository = mockk(relaxed = true)
     private val accountRecoveryRepository: AccountRecoveryRepository = mockk(relaxed = true)
+    private val getEncryptedSecret: GetEncryptedSecret = mockk(relaxed = true)
     private val generateSignedKeyList: GenerateSignedKeyList = mockk()
     private val signedKeyListChangeListener: SignedKeyListChangeListener = mockk()
     // endregion
@@ -142,8 +144,8 @@ class UserManagerPasswordTests {
 
         // UserRepositoryImpl implements PassphraseRepository.
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
-            userRepository,
-            cryptoContext
+            passphraseRepository = userRepository,
+            cryptoContext = cryptoContext
         )
 
         val userAddressRepository = mockk<UserAddressRepository>()
@@ -151,16 +153,17 @@ class UserManagerPasswordTests {
         coEvery { userAddressRepository.getAddresses(any(), any()) } returns listOf(userAddress)
 
         userManager = UserManagerImpl(
-            userRepository,
-            userAddressRepository,
-            passphraseRepository,
-            keySaltRepository,
-            privateKeyRepository,
-            accountRecoveryRepository,
-            userAddressKeySecretProvider,
-            cryptoContext,
-            generateSignedKeyList,
-            Optional.of(signedKeyListChangeListener)
+            userRepository = userRepository,
+            userAddressRepository = userAddressRepository,
+            passphraseRepository = passphraseRepository,
+            keySaltRepository = keySaltRepository,
+            privateKeyRepository = privateKeyRepository,
+            accountRecoveryRepository = accountRecoveryRepository,
+            userAddressKeySecretProvider = userAddressKeySecretProvider,
+            cryptoContext = cryptoContext,
+            generateSignedKeyList = generateSignedKeyList,
+            signedKeyListChangeListener = Optional.of(signedKeyListChangeListener),
+            getEncryptedSecret = getEncryptedSecret
         )
     }
 

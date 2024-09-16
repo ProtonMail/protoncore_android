@@ -163,7 +163,7 @@ interface UserManager {
         auth: Auth,
         password: ByteArray,
         organizationPublicKey: Armored? = null,
-        encryptedSecret: Based64Encoded? = null
+        deviceSecret: EncryptedString? = null
     ): User
 
     /**

@@ -39,7 +39,7 @@ import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
 import me.proton.core.auth.domain.usecase.sso.RejectAuthDevice
 import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode
 import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode.Result
-import me.proton.core.auth.presentation.compose.confirmationcode.ShareConfirmationCodeWithAdminScreen.getUserId
+import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Arg.getUserId
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
@@ -102,7 +102,7 @@ public class SignInRequestedForApprovalViewModel @Inject constructor(
         emit(SignInRequestedForApprovalState.Loading(email = getUserEmail()))
         val device = requireNotNull(getDevicePendingActivation())
         val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
-        activateAuthDevice(userId, device.deviceId, passphrase)
+        activateAuthDevice.invoke(userId, passphrase, device.deviceId)
         emit(SignInRequestedForApprovalState.ConfirmedSuccessfully)
     }.catch { throwable ->
         when (throwable) {

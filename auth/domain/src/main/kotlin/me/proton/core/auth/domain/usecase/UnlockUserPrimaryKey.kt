@@ -45,6 +45,13 @@ class UnlockUserPrimaryKey @Inject constructor(
     /**
      * Try to unlock the user with the given password.
      */
+    @Deprecated(
+        message = "This intermediate use case will be removed.",
+        replaceWith = ReplaceWith(
+            expression = "UserManager.unlockWithPassword(userId, password)",
+            imports = ["me.proton.core.user.domain.UserManager"]
+        )
+    )
     suspend operator fun invoke(
         userId: UserId,
         password: EncryptedString

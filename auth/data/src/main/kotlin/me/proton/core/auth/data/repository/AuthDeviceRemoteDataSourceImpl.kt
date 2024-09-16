@@ -27,8 +27,8 @@ import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.ApiProvider
 import javax.inject.Inject
@@ -41,7 +41,7 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
     override suspend fun createDevice(
         userId: UserId,
         name: String,
-        activationToken: String
+        activationToken: String?
     ): CreatedDevice =
         provider.get<AuthDeviceApi>(userId).invoke {
             val request = CreateDeviceRequest(name, activationToken)
@@ -62,7 +62,7 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
     override suspend fun activateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
-        encryptedSecret: Based64Encoded
+        encryptedSecret: AeadEncryptedString
     ): Unit = provider.get<AuthDeviceApi>(userId).invoke {
         activateDevice(
             deviceId = deviceId.id,

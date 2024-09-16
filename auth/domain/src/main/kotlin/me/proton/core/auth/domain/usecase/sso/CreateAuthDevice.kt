@@ -19,11 +19,14 @@
 package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.entity.DeviceSecret
+import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.encryptText
+import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.useKeys
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.UserAddressRepository
@@ -38,20 +41,16 @@ class CreateAuthDevice @Inject constructor(
 ) {
     suspend operator fun invoke(
         userId: UserId,
-        deviceName: String
+        deviceName: String,
+        deviceSecret: DeviceSecretString = generateDeviceSecret.invoke(),
     ) {
         // Fetch via GET /addresses the address keys of the primary address
-        val userAddresses = addressRepository.getAddresses(userId, refresh = true)
-        val primaryUserAddress = requireNotNull(userAddresses.primary()) {
-            "No primary account found."
-        }
-
-        // Generate a 32-byte random string DeviceSecret, and encode as base64
-        val deviceSecret = generateDeviceSecret()
+        val userAddresses = addressRepository.getAddresses(userId)
+        val activePrimaryAddressKey = userAddresses.primary()?.takeIf { it.keys.primary()?.privateKey?.isActive == true }
 
         // Encrypt the DeviceSecret to the primary address key as ActivationToken
-        val activationToken = primaryUserAddress.useKeys(context) {
-            encryptText(deviceSecret)
+        val activationToken = activePrimaryAddressKey?.useKeys(context) {
+            encryptText(deviceSecret.decrypt(context.keyStoreCrypto))
         }
 
         // Call POST /auth/v4/devices with ActivationToken and obtain a DeviceToken

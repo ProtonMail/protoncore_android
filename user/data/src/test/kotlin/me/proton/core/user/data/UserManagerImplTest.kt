@@ -151,7 +151,8 @@ class UserManagerImplTest {
             userAddressKeySecretProvider = userAddressKeySecretProvider,
             cryptoContext = cryptoContext,
             generateSignedKeyList = mockk(relaxed = true),
-            signedKeyListChangeListener = mockk(relaxed = true)
+            signedKeyListChangeListener = mockk(relaxed = true),
+            getEncryptedSecret = mockk(relaxed = true)
         )
     }
 
@@ -470,7 +471,8 @@ class UserManagerImplTest {
             userAddressKeySecretProvider = userAddressKeySecretProvider,
             cryptoContext = cryptoContext,
             generateSignedKeyList = mockk(relaxed = true),
-            signedKeyListChangeListener = mockk(relaxed = true)
+            signedKeyListChangeListener = mockk(relaxed = true),
+            getEncryptedSecret = mockk(relaxed = true)
         )
         // When
         val result = manager.reactivateKey(testUserKeyMock)

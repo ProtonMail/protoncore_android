@@ -70,6 +70,6 @@ interface AuthDeviceApi : BaseRetrofitApi {
         @Path("deviceId") deviceId: String
     ): GenericResponse
 
-    @GET("auth/v4/members/me/unprivatize")
+    @GET("core/v4/members/me/unprivatize")
     suspend fun getUnprivatizationInfo(): UnprivatizationInfoResponse
 }

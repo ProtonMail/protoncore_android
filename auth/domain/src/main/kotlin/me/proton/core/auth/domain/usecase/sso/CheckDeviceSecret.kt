@@ -20,11 +20,12 @@ package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.AssociateAuthDevice
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
 /**
- * Check for a local valid DeviceSecret, and remotely associate Device.
+ * Check for a local valid DeviceSecret, remotely associate Device and return EncryptedSecret.
  */
 class CheckDeviceSecret @Inject constructor(
     private val associateAuthDevice: AssociateAuthDevice,
@@ -33,13 +34,12 @@ class CheckDeviceSecret @Inject constructor(
 
     suspend operator fun invoke(
         userId: UserId
-    ): String? {
+    ): AeadEncryptedString? {
         val deviceSecret = deviceSecretRepository.getByUserId(userId) ?: return null
         val associateResult = associateAuthDevice.invoke(
             userId = userId,
             deviceId = deviceSecret.deviceId,
             deviceToken = deviceSecret.token,
-            hasTemporaryPassword = false // TODO: Fix me.
         )
         return when (associateResult) {
             is AssociateAuthDevice.Result.Error.DeviceNotActive -> null

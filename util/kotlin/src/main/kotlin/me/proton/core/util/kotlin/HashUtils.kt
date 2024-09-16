@@ -37,7 +37,7 @@ object HashUtils {
     fun hmacSha512(input: String, key: ByteArray) = hmacString("HmacSHA512", input, key)
     fun hmacSha256(input: String, key: ByteArray) = hmacString("HmacSHA256", input, key)
 
-    fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
+    private fun ByteArray.toHexString() = joinToString("") { "%02x".format(it) }
 
     private fun shaString(type: String, input: String): String =
         MessageDigest.getInstance(type)

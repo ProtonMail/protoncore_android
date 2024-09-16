@@ -23,7 +23,7 @@ import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
 import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
-import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
@@ -36,7 +36,6 @@ import javax.inject.Inject
 class PostLoginSsoAccountSetup @Inject constructor(
     private val accountWorkflow: AccountWorkflowHandler,
     private val userCheck: PostLoginAccountSetup.UserCheck,
-    private val unlockUserPrimaryKey: UnlockUserPrimaryKey,
     private val userManager: UserManager,
     private val sessionManager: SessionManager,
     private val product: Product,
@@ -52,10 +51,9 @@ class PostLoginSsoAccountSetup @Inject constructor(
 
     private suspend fun secretCheck(userId: UserId): Result {
         val encryptedSecret = checkDeviceSecret.invoke(userId)
-        val decryptedSecret = decryptEncryptedSecret.invoke(userId, encryptedSecret)
-        return when (decryptedSecret) {
+        return when (val decryptedSecret = decryptEncryptedSecret.invoke(userId, encryptedSecret)) {
             null -> deviceSecretNeeded(userId)
-            else -> unlockUser(userId, decryptedSecret)
+            else -> unlockUserWithPassphrase(userId, decryptedSecret)
         }
     }
 
@@ -64,11 +62,11 @@ class PostLoginSsoAccountSetup @Inject constructor(
         return Result.Need.DeviceSecret(userId)
     }
 
-    private suspend fun unlockUser(
+    private suspend fun unlockUserWithPassphrase(
         userId: UserId,
-        secret: EncryptedString
+        passphrase: EncryptedByteArray
     ): Result {
-        return when (val result = unlockUserPrimaryKey.invoke(userId, secret)) {
+        return when (val result = userManager.unlockWithPassphrase(userId, passphrase)) {
             UnlockResult.Error.NoKeySaltsForPrimaryKey -> unrecoverable(userId, result)
             UnlockResult.Error.NoPrimaryKey -> unrecoverable(userId, result)
             UnlockResult.Error.PrimaryKeyInvalidPassphrase -> recoverable(userId, result)

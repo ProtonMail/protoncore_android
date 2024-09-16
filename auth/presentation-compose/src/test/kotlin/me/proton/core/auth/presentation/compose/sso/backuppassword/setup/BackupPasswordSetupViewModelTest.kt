@@ -27,6 +27,12 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.yield
+import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
+import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
+import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
+import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
+import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -37,8 +43,24 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
+
+    @MockK
+    private lateinit var context: CryptoContext
+
     @MockK
     private lateinit var getOrganization: GetOrganization
+
+    @MockK
+    private lateinit var generateDeviceSecret: GenerateDeviceSecret
+
+    @MockK
+    private lateinit var verifyUnprivatization: VerifyUnprivatization
+
+    @MockK
+    private lateinit var setupPrimaryKeys: SetupPrimaryKeys
+
+    @MockK
+    private lateinit var createAuthDevice: CreateAuthDevice
 
     private lateinit var tested: BackupPasswordSetupViewModel
 
@@ -46,7 +68,14 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
     fun setUp() {
         MockKAnnotations.init(this)
         tested = BackupPasswordSetupViewModel(
-            getOrganization, Product.Mail, SavedStateHandle(mapOf(BackupPasswordSetupScreen.KEY_USERID to "user-id"))
+            savedStateHandle = SavedStateHandle(mapOf(DeviceSecretRoutes.Arg.KEY_USER_ID to "user-id")),
+            product = Product.Mail,
+            context = context,
+            getOrganization = getOrganization,
+            generateDeviceSecret = generateDeviceSecret,
+            verifyUnprivatization = verifyUnprivatization,
+            setupPrimaryKeys = setupPrimaryKeys,
+            createAuthDevice = createAuthDevice
         )
     }
 
@@ -114,7 +143,7 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
             )
 
             assertEquals(
-                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Error(loadingError)),
+                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Error(loadingError.localizedMessage)),
                 awaitItem()
             )
         }

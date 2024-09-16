@@ -37,6 +37,7 @@ import me.proton.core.accountmanager.data.db.AccountManagerDatabase
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
 import me.proton.core.auth.domain.usecase.ValidateServerProof
+import me.proton.core.auth.domain.usecase.sso.GetEncryptedSecret
 import me.proton.core.crypto.android.context.AndroidCryptoContext
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -101,9 +102,6 @@ UserManagerImplTests {
     private lateinit var addressApi: AddressApi
 
     @MockK(relaxed = true)
-    private lateinit var keyStoreCrypto: KeyStoreCrypto
-
-    @MockK(relaxed = true)
     private lateinit var accountRecoveryRepository: AccountRecoveryRepository
 
     private val cryptoContext: CryptoContext = AndroidCryptoContext(
@@ -129,6 +127,7 @@ UserManagerImplTests {
     private lateinit var keySaltRepository: KeySaltRepositoryImpl
     private lateinit var privateKeyRepository: PrivateKeyRepository
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
+    private val getEncryptedSecret = mockk<GetEncryptedSecret>()
     private val signedKeyListChangeListener = mockk<SignedKeyListChangeListener>()
     private val generateSignedKeyList = mockk<GenerateSignedKeyList>()
 
@@ -163,53 +162,54 @@ UserManagerImplTests {
 
         // UserRepositoryImpl implements PassphraseRepository.
         userRepository = UserRepositoryImpl(
-            apiProvider,
-            context,
-            product,
-            validateServerProof,
-            scopeProvider,
-            userLocalDataSource,
-            userRemoteDataSource
+            provider = apiProvider,
+            context = context,
+            product = product,
+            validateServerProof = validateServerProof,
+            scopeProvider = scopeProvider,
+            userLocalDataSource = userLocalDataSource,
+            userRemoteDataSource = userRemoteDataSource
         )
         passphraseRepository = userRepository
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
-            userRepository,
-            cryptoContext
+            passphraseRepository = userRepository,
+            cryptoContext = cryptoContext
         )
 
         // UserManagerImpl need UserAddressRepository.
         userAddressRepository = UserAddressRepositoryImpl(
-            db,
-            apiProvider,
-            userRepository,
-            userAddressKeySecretProvider,
-            cryptoContext,
-            scopeProvider
+            db = db,
+            apiProvider = apiProvider,
+            userRepository = userRepository,
+            userAddressKeySecretProvider = userAddressKeySecretProvider,
+            context = cryptoContext,
+            scopeProvider = scopeProvider
         )
 
         // Implementation we want to test.
         userManager = UserManagerImpl(
-            userRepository,
-            userAddressRepository,
-            passphraseRepository,
-            keySaltRepository,
-            privateKeyRepository,
-            accountRecoveryRepository,
-            userAddressKeySecretProvider,
-            cryptoContext,
-            generateSignedKeyList,
-            Optional.of(signedKeyListChangeListener)
+            userRepository = userRepository,
+            userAddressRepository = userAddressRepository,
+            passphraseRepository = passphraseRepository,
+            keySaltRepository = keySaltRepository,
+            privateKeyRepository = privateKeyRepository,
+            accountRecoveryRepository = accountRecoveryRepository,
+            userAddressKeySecretProvider = userAddressKeySecretProvider,
+            cryptoContext = cryptoContext,
+            generateSignedKeyList = generateSignedKeyList,
+            signedKeyListChangeListener = Optional.of(signedKeyListChangeListener),
+            getEncryptedSecret = getEncryptedSecret
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
-            Product.Mail,
-            UnconfinedTestCoroutineScopeProvider(),
-            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
-            mockk(relaxed = true),
-            userManager,
-            TestSessionListener()
+            product = Product.Mail,
+            scopeProvider = UnconfinedTestCoroutineScopeProvider(),
+            accountRepository = AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
+            authRepository = mockk(relaxed = true),
+            userManager = userManager,
+            sessionListener = TestSessionListener()
         )
 
         // Before fetching any User, account need to be added to AccountManager (if not -> foreign key exception).

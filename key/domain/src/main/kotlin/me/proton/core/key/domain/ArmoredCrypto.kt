@@ -61,7 +61,7 @@ fun Armored.toArmoredKey(
     else -> throw CryptoException("Invalid Armored Key.")
 }
 
-internal fun Armored.toPublicKey(
+fun Armored.toPublicKey(
     isPrimary: Boolean = true,
     isActive: Boolean = true,
     canEncrypt: Boolean = true,
@@ -74,7 +74,7 @@ internal fun Armored.toPublicKey(
     isActive = isActive
 )
 
-internal fun Armored.toPrivateKey(
+fun Armored.toPrivateKey(
     isPrimary: Boolean = true,
     isActive: Boolean = true,
     canEncrypt: Boolean = true,

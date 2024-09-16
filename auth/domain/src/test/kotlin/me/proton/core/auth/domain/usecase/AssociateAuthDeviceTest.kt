@@ -28,9 +28,6 @@ class AssociateAuthDeviceTest {
     private lateinit var authDeviceRepository: AuthDeviceRepository
 
     @MockK
-    private lateinit var checkOtherDevices: CheckOtherDevices
-
-    @MockK
     private lateinit var cryptoContext: CryptoContext
 
     @MockK
@@ -55,7 +52,6 @@ class AssociateAuthDeviceTest {
         tested = AssociateAuthDevice(
             cryptoContext,
             authDeviceRepository,
-            checkOtherDevices,
             deviceSecretRepository,
         )
     }
@@ -75,8 +71,7 @@ class AssociateAuthDeviceTest {
         val result = tested(
             userId = testUserId,
             deviceId = testDeviceId,
-            deviceToken = testEncryptedDeviceToken,
-            hasTemporaryPassword = true
+            deviceToken = testEncryptedDeviceToken
         )
 
         // THEN
@@ -100,8 +95,7 @@ class AssociateAuthDeviceTest {
             tested(
                 userId = testUserId,
                 deviceId = testDeviceId,
-                deviceToken = testEncryptedDeviceToken,
-                hasTemporaryPassword = true
+                deviceToken = testEncryptedDeviceToken
             )
         }
 
@@ -130,8 +124,7 @@ class AssociateAuthDeviceTest {
         val result = tested(
             userId = testUserId,
             deviceId = testDeviceId,
-            deviceToken = testEncryptedDeviceToken,
-            hasTemporaryPassword = true
+            deviceToken = testEncryptedDeviceToken
         )
 
         // THEN
@@ -155,8 +148,7 @@ class AssociateAuthDeviceTest {
             tested(
                 userId = testUserId,
                 deviceId = testDeviceId,
-                deviceToken = testEncryptedDeviceToken,
-                hasTemporaryPassword = true
+                deviceToken = testEncryptedDeviceToken
             )
         }
 
@@ -181,8 +173,7 @@ class AssociateAuthDeviceTest {
             tested(
                 userId = testUserId,
                 deviceId = testDeviceId,
-                deviceToken = testEncryptedDeviceToken,
-                hasTemporaryPassword = true
+                deviceToken = testEncryptedDeviceToken
             )
         }
 
@@ -212,8 +203,7 @@ class AssociateAuthDeviceTest {
         val result = tested(
             userId = testUserId,
             deviceId = testDeviceId,
-            deviceToken = testEncryptedDeviceToken,
-            hasTemporaryPassword = true
+            deviceToken = testEncryptedDeviceToken
         )
 
         // THEN
@@ -243,8 +233,7 @@ class AssociateAuthDeviceTest {
         val result = tested(
             userId = testUserId,
             deviceId = testDeviceId,
-            deviceToken = testEncryptedDeviceToken,
-            hasTemporaryPassword = true
+            deviceToken = testEncryptedDeviceToken
         )
 
         // THEN
@@ -268,24 +257,17 @@ class AssociateAuthDeviceTest {
                 ApiResult.Error.ProtonData(ResponseCodes.AUTH_DEVICE_NOT_ACTIVE, "Device not active")
             )
         )
-        coEvery {
-            checkOtherDevices(
-                any(),
-                testUserId
-            )
-        } returns CheckOtherDevices.Result.LoginWithBackupPasswordAvailable
 
         // WHEN
         val result = tested(
             userId = testUserId,
             deviceId = testDeviceId,
-            deviceToken = testEncryptedDeviceToken,
-            hasTemporaryPassword = true
+            deviceToken = testEncryptedDeviceToken
         )
 
         // THEN
         assertEquals(
-            AssociateAuthDevice.Result.Error.DeviceNotActive(CheckOtherDevices.Result.LoginWithBackupPasswordAvailable),
+            AssociateAuthDevice.Result.Error.DeviceNotActive,
             result
         )
     }
@@ -312,8 +294,7 @@ class AssociateAuthDeviceTest {
         val result = tested(
             userId = testUserId,
             deviceId = testDeviceId,
-            deviceToken = testEncryptedDeviceToken,
-            hasTemporaryPassword = true
+            deviceToken = testEncryptedDeviceToken
         )
 
         // THEN

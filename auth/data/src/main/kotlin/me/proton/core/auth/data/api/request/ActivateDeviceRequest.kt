@@ -20,10 +20,10 @@ package me.proton.core.auth.data.api.request
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
-import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 
 @Serializable
 data class ActivateDeviceRequest(
     @SerialName("EncryptedSecret")
-    val encryptedSecret: Based64Encoded
+    val encryptedSecret: AeadEncryptedString
 )

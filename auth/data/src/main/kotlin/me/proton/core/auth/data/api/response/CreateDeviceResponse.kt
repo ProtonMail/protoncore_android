@@ -27,7 +27,7 @@ import me.proton.core.crypto.common.keystore.encrypt
 
 @Serializable
 data class CreateDeviceResponse(
-    @SerialName("Device")
+    @SerialName("AuthDevice")
     val device: DeviceResource
 ) {
     fun toCreatedDevice(context: CryptoContext): CreatedDevice = CreatedDevice(

@@ -27,6 +27,9 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import javax.inject.Inject
 
+/**
+ * Get EncryptedSecret from Passphrase + DeviceSecret.
+ */
 class GetEncryptedSecret @Inject constructor(
     context: CryptoContext
 ) {

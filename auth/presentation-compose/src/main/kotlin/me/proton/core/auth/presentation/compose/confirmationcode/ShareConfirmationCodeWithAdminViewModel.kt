@@ -34,9 +34,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.sso.GenerateConfirmationCode
-import me.proton.core.auth.presentation.compose.confirmationcode.ShareConfirmationCodeWithAdminScreen.getUserId
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
-import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.user.domain.usecase.GetUser
 import javax.inject.Inject
@@ -100,9 +99,4 @@ public class ShareConfirmationCodeWithAdminViewModel @Inject constructor(
     private fun onClose() = flow<ShareConfirmationCodeWithAdminState> {
         emit(ShareConfirmationCodeWithAdminState.Close)
     }
-}
-
-public object ShareConfirmationCodeWithAdminScreen {
-    public const val KEY_USERID: String = "UserId"
-    public fun SavedStateHandle.getUserId(): UserId = UserId(get<String>(KEY_USERID)!!)
 }

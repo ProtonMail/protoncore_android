@@ -22,7 +22,5 @@ public sealed interface SignInSentForApprovalOperation
 
 public sealed interface SignInSentForApprovalAction : SignInSentForApprovalOperation {
     public data object Close : SignInSentForApprovalAction
-
-    public data object UseBackUpPassword : SignInSentForApprovalAction
-    public data object AskAdminForHelp : SignInSentForApprovalAction
+    public data object Load : SignInSentForApprovalAction
 }

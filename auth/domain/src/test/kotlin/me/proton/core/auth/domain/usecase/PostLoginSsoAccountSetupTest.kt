@@ -118,7 +118,6 @@ class PostLoginSsoAccountSetupTest {
     private fun mockTested(product: Product) = PostLoginSsoAccountSetup(
         accountWorkflow = accountWorkflowHandler,
         userCheck = userCheck,
-        unlockUserPrimaryKey = unlockUserPrimaryKey,
         userManager = userManager,
         sessionManager = sessionManager,
         product = product,

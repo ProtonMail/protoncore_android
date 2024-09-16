@@ -23,7 +23,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class AssociateDeviceResponse(
-    @SerialName("Device")
+    @SerialName("AuthDevice")
     val device: AssociateAuthDeviceOutput
 )
 

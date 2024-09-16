@@ -21,7 +21,7 @@ package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 public sealed interface BackupPasswordSetupUiState {
     public data object Idle : BackupPasswordSetupUiState
     public data object Loading : BackupPasswordSetupUiState
-    public data class Error(val cause: Throwable) : BackupPasswordSetupUiState
+    public data class Error(val message: String?) : BackupPasswordSetupUiState
     public data class FormError(val cause: BackupPasswordSetupFormError) : BackupPasswordSetupUiState
     public data object Success : BackupPasswordSetupUiState
 }

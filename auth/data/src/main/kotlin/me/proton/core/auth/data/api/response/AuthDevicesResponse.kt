@@ -28,7 +28,7 @@ import me.proton.core.user.domain.entity.AddressId
 
 @Serializable
 data class AuthDevicesResponse(
-    @SerialName("Devices")
+    @SerialName("AuthDevices")
     val devices: List<AuthDeviceResponse>
 )
 

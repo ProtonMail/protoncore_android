@@ -55,7 +55,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.max
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
@@ -71,7 +70,6 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.util.formatBold
 import me.proton.core.domain.entity.Product
-import me.proton.core.domain.entity.UserId
 import me.proton.core.domain.entity.displayName
 import me.proton.core.presentation.utils.StringBox
 
@@ -79,15 +77,10 @@ private val CompanyLogoSize = 56.dp
 private val CompanyLogoFallbackIconSize = 32.dp
 private val MaxFormWidth = 600.dp
 
-public object BackupPasswordSetupScreen {
-    public const val KEY_USERID: String = "UserId"
-    public fun SavedStateHandle.getUserId(): UserId = UserId(get<String>(KEY_USERID)!!)
-}
-
 @Composable
 public fun BackupPasswordSetupScreen(
-    onClose: () -> Unit,
-    onError: (Throwable) -> Unit,
+    onCloseClicked: () -> Unit,
+    onError: (String?) -> Unit,
     onSuccess: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BackupPasswordSetupViewModel = hiltViewModel()
@@ -99,7 +92,7 @@ public fun BackupPasswordSetupScreen(
         data = data,
         state = state,
         modifier = modifier,
-        onCloseClicked = onClose,
+        onCloseClicked = onCloseClicked,
         onContinueClicked = { viewModel.submit(it) },
         onError = onError,
         onSuccess = onSuccess
@@ -113,7 +106,7 @@ public fun BackupPasswordSetupScreen(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onContinueClicked: (BackupPasswordSetupAction.Submit) -> Unit = {},
-    onError: (Throwable) -> Unit = {},
+    onError: (String?) -> Unit = {},
     onSuccess: () -> Unit = {},
 ) {
     val backupPasswordError =
@@ -123,7 +116,7 @@ public fun BackupPasswordSetupScreen(
 
     LaunchedEffect(state) {
         when (state) {
-            is BackupPasswordSetupUiState.Error -> onError(state.cause)
+            is BackupPasswordSetupUiState.Error -> onError(state.message)
             is BackupPasswordSetupUiState.Success -> onSuccess()
             else -> Unit
         }

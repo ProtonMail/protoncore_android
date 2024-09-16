@@ -54,9 +54,9 @@ import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
 public fun BackupPasswordInputScreen(
-    onAskAdminForHelp: () -> Unit,
-    onClose: () -> Unit,
-    onError: (Throwable) -> Unit,
+    onAskAdminHelpClicked: () -> Unit,
+    onCloseClicked: () -> Unit,
+    onError: (String?) -> Unit,
     onSuccess: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BackupPasswordInputViewModel = hiltViewModel()
@@ -65,8 +65,8 @@ public fun BackupPasswordInputScreen(
     BackupPasswordInputScreen(
         state = state,
         modifier = modifier,
-        onAskAdminForHelp = onAskAdminForHelp,
-        onClose = onClose,
+        onAskAdminForHelp = onAskAdminHelpClicked,
+        onClose = onCloseClicked,
         onError = onError,
         onPasswordSubmitted = { viewModel.submit(it) },
         onSuccess = onSuccess,
@@ -78,14 +78,14 @@ public fun BackupPasswordInputScreen(
     modifier: Modifier = Modifier,
     onAskAdminForHelp: () -> Unit = {},
     onClose: () -> Unit = {},
-    onError: (Throwable) -> Unit = {},
+    onError: (String?) -> Unit = {},
     onPasswordSubmitted: (BackupPasswordInputAction.Submit) -> Unit = {},
     onSuccess: () -> Unit = {},
     state: BackupPasswordInputState = BackupPasswordInputState.Idle,
 ) {
     LaunchedEffect(state) {
         when (state) {
-            is BackupPasswordInputState.Error -> onError(state.cause)
+            is BackupPasswordInputState.Error -> onError(state.message)
             is BackupPasswordInputState.Success -> onSuccess()
             else -> Unit
         }

@@ -33,7 +33,7 @@ import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
-import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
@@ -62,24 +62,43 @@ class AuthDeviceRepositoryImpl @Inject constructor(
     override suspend fun createDevice(
         userId: UserId,
         deviceName: String,
-        activationToken: String
-    ): CreatedDevice = remoteDataSource.createDevice(userId, deviceName, activationToken)
+        activationToken: String?
+    ): CreatedDevice = remoteDataSource.createDevice(userId, deviceName, activationToken).apply {
+        localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
+    }
 
     override suspend fun associateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
         deviceToken: String
-    ): String = remoteDataSource.associateDevice(userId, deviceId, deviceToken)
+    ): String = remoteDataSource.associateDevice(userId, deviceId, deviceToken).apply {
+        localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
+    }
 
     override suspend fun activateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
-        encryptedSecret: Based64Encoded
-    ): Unit = remoteDataSource.activateDevice(userId, deviceId, encryptedSecret)
+        encryptedSecret: AeadEncryptedString
+    ): Unit = remoteDataSource.activateDevice(userId, deviceId, encryptedSecret).apply {
+        localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
+    }
+
+    override suspend fun rejectAuthDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    ): Unit = remoteDataSource.rejectAuthDevice(userId, deviceId).apply {
+        localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
+    }
 
     override fun observeByUserId(userId: UserId, refresh: Boolean): Flow<List<AuthDevice>> =
         store.stream(StoreRequest.cached(userId, refresh = refresh))
             .map { it.dataOrNull().orEmpty() }
+            .distinctUntilChanged()
+
+    override fun observeByDeviceId(userId: UserId, deviceId: AuthDeviceId, refresh: Boolean): Flow<AuthDevice?> =
+        store.stream(StoreRequest.cached(userId, refresh))
+            .map { it.dataOrNull().orEmpty() }
+            .map { devices -> devices.firstOrNull { it.deviceId == deviceId } }
             .distinctUntilChanged()
 
     override suspend fun getByUserId(
@@ -93,6 +112,10 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         refresh: Boolean
     ): List<AuthDevice> = getByUserId(userId).filter { it.addressId == addressId }
 
+    override suspend fun deleteByUserId(userId: UserId) {
+        localDataSource.deleteAll(userId)
+    }
+
     override suspend fun deleteByDeviceId(userId: UserId, deviceId: AuthDeviceId) {
         localDataSource.deleteByDeviceId(deviceId)
         workManager.enqueue(DeleteAuthDeviceWorker.makeWorkerRequest(deviceId, userId))
@@ -100,15 +123,4 @@ class AuthDeviceRepositoryImpl @Inject constructor(
 
     override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
         remoteDataSource.getUnprivatizationInfo(userId)
-
-    override suspend fun deleteByUserId(userId: UserId) {
-        localDataSource.deleteAll(userId)
-    }
-
-    override suspend fun rejectAuthDevice(
-        userId: UserId,
-        deviceId: AuthDeviceId
-    ) {
-        remoteDataSource.rejectAuthDevice(userId, deviceId)
-    }
 }

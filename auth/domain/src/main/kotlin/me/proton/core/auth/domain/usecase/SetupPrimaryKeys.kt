@@ -19,13 +19,13 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
@@ -61,7 +61,7 @@ class SetupPrimaryKeys @Inject constructor(
         accountType: AccountType,
         internalDomain: Domain?,
         organizationPublicKey: Armored? = null,
-        encryptedSecret: Based64Encoded? = null
+        deviceSecret: DeviceSecretString? = null
     ) {
         val user = userManager.getUser(userId, refresh = true)
         if (user.keys.primary() != null) return
@@ -94,7 +94,7 @@ class SetupPrimaryKeys @Inject constructor(
                 auth = auth,
                 password = decryptedPassword.array,
                 organizationPublicKey = organizationPublicKey,
-                encryptedSecret = encryptedSecret
+                deviceSecret = deviceSecret
             )
         }
     }

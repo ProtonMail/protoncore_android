@@ -21,24 +21,21 @@ package me.proton.core.auth.presentation.compose.confirmationcode
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
+import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,36 +51,38 @@ internal fun ConfirmationDigits(
     digits: List<Char>?,
     @StringRes titleText: Int = R.string.auth_login_confirmation_code
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(ProtonDimens.SmallSpacing))
-            .border(BorderStroke(1.dp, ProtonTheme.colors.separatorNorm))
-            .padding(ProtonDimens.DefaultSpacing)
+    Card(
+        modifier = modifier,
+        backgroundColor = Color.Transparent,
+        contentColor = ProtonTheme.colors.textNorm,
+        border = BorderStroke(1.dp, ProtonTheme.colors.separatorNorm),
+        elevation = 0.dp
     ) {
-        Column(
-            modifier = Modifier
-                .padding(start = ProtonDimens.DefaultSpacing)
+        Box(
+            modifier = modifier.padding(ProtonDimens.DefaultSpacing),
+            contentAlignment = Alignment.Center
         ) {
-            Text(
-                modifier = Modifier.align(Alignment.CenterHorizontally),
-                text = stringResource(id = titleText),
-                style = ProtonTheme.typography.body2Regular
-            )
-            if (digits == null) {
-                DeferredCircularProgressIndicator(
-                    modifier = Modifier.fillMaxWidth()
+            Column(
+                modifier = Modifier.padding(start = ProtonDimens.DefaultSpacing)
+            ) {
+                Text(
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
+                    text = stringResource(id = titleText),
+                    style = ProtonTheme.typography.body2Regular
                 )
-            } else {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    for (digit in digits) {
-                        ConfirmationCodeDigit(digit = digit)
+                if (digits == null) {
+                    DeferredCircularProgressIndicator(
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                } else {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        for (digit in digits) {
+                            ConfirmationCodeDigit(digit = digit)
+                        }
                     }
                 }
             }
@@ -95,18 +94,21 @@ internal fun ConfirmationDigits(
 private fun ConfirmationCodeDigit(
     digit: Char
 ) {
-    Box(
-        contentAlignment = Alignment.Center,
+    Card(
         modifier = Modifier
             .padding(ProtonDimens.ExtraSmallSpacing)
-            .size(height = 52.dp, width = 41.dp)
-            .clip(RoundedCornerShape(ProtonDimens.SmallSpacing))
-            .background(ProtonTheme.colors.backgroundSecondary)
+            .size(height = 52.dp, width = 41.dp),
+        backgroundColor = ProtonTheme.colors.backgroundSecondary,
+        contentColor = ProtonTheme.colors.textNorm,
+        elevation = 0.dp
     ) {
-        Text(
-            text = digit.toString(),
-            style = ProtonTheme.typography.hero
-        )
+        Box(contentAlignment = Alignment.Center) {
+            Text(
+                textAlign = TextAlign.Center,
+                text = digit.toString(),
+                style = ProtonTheme.typography.hero
+            )
+        }
     }
 }
 

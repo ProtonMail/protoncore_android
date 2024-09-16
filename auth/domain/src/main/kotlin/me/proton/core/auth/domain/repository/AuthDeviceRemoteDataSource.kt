@@ -22,7 +22,7 @@ import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.UnprivatizationInfo
-import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.domain.entity.UserId
 
 interface AuthDeviceRemoteDataSource {
@@ -30,7 +30,7 @@ interface AuthDeviceRemoteDataSource {
     suspend fun createDevice(
         userId: UserId,
         name: String,
-        activationToken: String
+        activationToken: String?
     ): CreatedDevice
 
     suspend fun associateDevice(
@@ -42,7 +42,7 @@ interface AuthDeviceRemoteDataSource {
     suspend fun activateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
-        encryptedSecret: Based64Encoded
+        encryptedSecret: AeadEncryptedString
     )
 
     suspend fun deleteDevice(
@@ -54,7 +54,10 @@ interface AuthDeviceRemoteDataSource {
         userId: UserId
     ): List<AuthDevice>
 
-    suspend fun rejectAuthDevice(userId: UserId, deviceId: AuthDeviceId)
+    suspend fun rejectAuthDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    )
 
     suspend fun getUnprivatizationInfo(
         userId: UserId

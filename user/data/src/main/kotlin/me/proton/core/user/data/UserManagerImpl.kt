@@ -20,6 +20,8 @@ package me.proton.core.user.data
 
 import kotlinx.coroutines.flow.Flow
 import me.proton.core.accountrecovery.domain.repository.AccountRecoveryRepository
+import me.proton.core.auth.domain.entity.DeviceSecretString
+import me.proton.core.auth.domain.usecase.sso.GetEncryptedSecret
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -29,7 +31,6 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
-import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -37,14 +38,15 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
 import me.proton.core.key.domain.encryptAndSignData
-import me.proton.core.key.domain.encryptAndSignText
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
+import me.proton.core.key.domain.entity.key.PublicKeyRing
 import me.proton.core.key.domain.extension.keyHolder
 import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.key.domain.toPublicKey
 import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.useKeysAs
 import me.proton.core.user.data.usecase.GenerateSignedKeyList
@@ -60,7 +62,6 @@ import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
-import me.proton.core.util.kotlin.HashUtils.toHexString
 import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -76,7 +77,8 @@ class UserManagerImpl @Inject constructor(
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
     private val cryptoContext: CryptoContext,
     private val generateSignedKeyList: GenerateSignedKeyList,
-    private val signedKeyListChangeListener: Optional<SignedKeyListChangeListener>
+    private val signedKeyListChangeListener: Optional<SignedKeyListChangeListener>,
+    private val getEncryptedSecret: GetEncryptedSecret,
 ) : UserManager {
 
     private val keyStore = cryptoContext.keyStoreCrypto
@@ -198,7 +200,7 @@ class UserManagerImpl @Inject constructor(
         auth: Auth,
         password: ByteArray,
         organizationPublicKey: Armored?,
-        encryptedSecret: Based64Encoded?
+        deviceSecret: DeviceSecretString?
     ): User {
         val primaryKeySalt = pgp.generateNewKeySalt()
         pgp.getPassphrase(password, primaryKeySalt).use { passphrase ->
@@ -226,7 +228,7 @@ class UserManagerImpl @Inject constructor(
                     generateNewKeyFormat = userAddresses.generateNewKeyFormat(),
                     userAddress = address,
                     userPrivateKey = userPrivateKey,
-                    isPrimary = true
+                    isPrimary = true // TODO: More than 1 key ?
                 )
             }
 
@@ -258,28 +260,34 @@ class UserManagerImpl @Inject constructor(
                 )
             }
 
-            val (orgActivationToken, orgPrimaryUserKey) = if (organizationPublicKey != null) {
-                // Generate a 32-bytes random secret, encode it to hex,
-                pgp.generateNewToken().use { randomSecret ->
-                    // and encrypt it to the organization key
-                    // signing it with the newly created address key
-                    // and the context account.key-token.user-unprivatization as OrgActivationToken
+            val (orgActivationToken, orgPrimaryUserKey) = organizationPublicKey?.let { orgPublicKey ->
+                pgp.generateNewToken().use { token ->
+                    // Encrypt token using organization key, and sign using primary address key.
+                    val orgPublicKeyRing = PublicKeyRing(listOf(orgPublicKey.toPublicKey()))
+                    // TODO: What if userAddressesWithNewKeys has more than 1 key ?
                     val orgActivationToken = userAddressesWithNewKeys.primary()?.useKeys(cryptoContext) {
                         encryptAndSignData(
-                            data = randomSecret.array,
+                            encryptKeyRing = orgPublicKeyRing,
+                            data = token.array,
                             signatureContext = SignatureContext(
-                                value = "account.key-token.user-unprivatization"
+                                value = "account.key-token.user-unprivatization",
+                                isCritical = true
                             )
                         )
                     }
-
-                    // OrgPrimaryUserKey = Encrypt a copy of the primary USER key with the "random secret" encoded to hex as OrgPrimaryUserKey
-                    val user = userRepository.getUser(sessionUserId)
-                    val userPrimaryKey = requireNotNull(user.keys.primary())
-                    val orgPrimaryUserKey = userPrimaryKey.updatePrivateKeyPassphraseOrNull(cryptoContext, randomSecret.array)
-                    orgActivationToken to orgPrimaryUserKey?.privateKey
+                    // Encrypt/lock a copy of primary user key with the token.
+                    val updatedUserPrivateKey = privateKey.updatePrivateKeyPassphraseOrNull(
+                        cryptoContext = cryptoContext,
+                        passphrase = passphrase.array,
+                        newPassphrase = token.array
+                    )
+                    orgActivationToken to updatedUserPrivateKey
                 }
-            } else null to null
+            } ?: (null to null)
+
+            val encryptedSecret = deviceSecret?.let {
+                getEncryptedSecret.invoke(passphrase, deviceSecret)
+            }
 
             // Setup initial primary UserKey and UserAddressKey, remotely.
             privateKeyRepository.setupInitialKeys(

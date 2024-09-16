@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 
+import android.os.Build
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -31,8 +32,15 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupScreen.getUserId
+import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
+import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
+import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
+import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
@@ -45,9 +53,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 public class BackupPasswordSetupViewModel @Inject constructor(
-    private val getOrganization: GetOrganization,
+    savedStateHandle: SavedStateHandle,
     private val product: Product,
-    savedStateHandle: SavedStateHandle
+    private val context: CryptoContext,
+    private val getOrganization: GetOrganization,
+    private val generateDeviceSecret: GenerateDeviceSecret,
+    private val verifyUnprivatization: VerifyUnprivatization,
+    private val setupPrimaryKeys: SetupPrimaryKeys,
+    private val createAuthDevice: CreateAuthDevice,
 ) : ViewModel() {
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
@@ -73,9 +86,11 @@ public class BackupPasswordSetupViewModel @Inject constructor(
         setupBackupPassword(action.backupPassword)
         _state.emit(BackupPasswordSetupUiState.Success)
     } catch (e: ApiException) {
-        _state.emit(BackupPasswordSetupUiState.Error(e))
+        _state.emit(BackupPasswordSetupUiState.Error(e.message))
     } catch (e: FormValidationError) {
         _state.emit(BackupPasswordSetupUiState.FormError(e.formError))
+    } catch (e: IllegalStateException) {
+        _state.emit(BackupPasswordSetupUiState.Error(null))
     }
 
     private fun loadData(userId: UserId) = flow {
@@ -96,14 +111,29 @@ public class BackupPasswordSetupViewModel @Inject constructor(
         _state.emit(BackupPasswordSetupUiState.Idle)
     }.catch {
         when (it) {
-            is ApiException -> _state.emit(BackupPasswordSetupUiState.Error(it))
+            is ApiException -> _state.emit(BackupPasswordSetupUiState.Error(it.message))
             else -> throw it
         }
     }
 
-    private fun setupBackupPassword(backupPassword: String) {
-        // TODO setup the backupPassword with the BE
-        //  Note: should throw an error if the setup fails.
+    private suspend fun setupBackupPassword(backupPassword: String) {
+        val password = backupPassword.encrypt(context.keyStoreCrypto)
+        val verifyResult = verifyUnprivatization.invoke(userId)
+        check(verifyResult is VerifyUnprivatization.Result.UnprivatizeUserSuccess)
+        val deviceSecret = generateDeviceSecret.invoke()
+        setupPrimaryKeys.invoke(
+            userId = userId,
+            password = password,
+            accountType = AccountType.External,
+            internalDomain = null,
+            organizationPublicKey = verifyResult.organizationPublicKey,
+            deviceSecret = deviceSecret
+        )
+        createAuthDevice.invoke(
+            userId = userId,
+            deviceName = Build.MODEL,
+            deviceSecret = deviceSecret
+        )
     }
 
     /**

@@ -23,7 +23,7 @@ import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.UnprivatizationInfo
-import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
 
@@ -35,7 +35,7 @@ interface AuthDeviceRepository {
     suspend fun createDevice(
         userId: UserId,
         deviceName: String,
-        activationToken: String
+        activationToken: String?
     ): CreatedDevice
 
     /**
@@ -53,13 +53,24 @@ interface AuthDeviceRepository {
     suspend fun activateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
-        encryptedSecret: Based64Encoded
+        encryptedSecret: AeadEncryptedString
+    )
+
+    suspend fun rejectAuthDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId
     )
 
     fun observeByUserId(
         userId: UserId,
-        refresh: Boolean
+        refresh: Boolean = false
     ): Flow<List<AuthDevice>>
+
+    fun observeByDeviceId(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        refresh: Boolean = false
+    ): Flow<AuthDevice?>
 
     suspend fun getByUserId(
         userId: UserId,
@@ -77,11 +88,6 @@ interface AuthDeviceRepository {
     )
 
     suspend fun deleteByDeviceId(
-        userId: UserId,
-        deviceId: AuthDeviceId
-    )
-
-    suspend fun rejectAuthDevice(
         userId: UserId,
         deviceId: AuthDeviceId
     )

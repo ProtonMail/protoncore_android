@@ -19,7 +19,9 @@
 package me.proton.core.auth.domain.usecase
 
 import me.proton.core.auth.domain.entity.AuthDevice
+import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
@@ -31,8 +33,9 @@ class CheckOtherDevices @Inject constructor(
         userId: UserId
     ): Result {
         val devices = authDeviceRepository.getByUserId(userId)
+        val activeDevices = devices.filter { it.state == AuthDeviceState.Active }
         return when {
-            devices.isNotEmpty() -> Result.OtherDevicesAvailable(devices)
+            activeDevices.isNotEmpty() -> Result.OtherDevicesAvailable(devices)
             hasTemporaryPassword -> Result.AdminHelpRequired
             else -> Result.LoginWithBackupPasswordAvailable
         }

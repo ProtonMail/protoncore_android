@@ -54,17 +54,17 @@ import me.proton.core.compose.theme.defaultSmallWeak
 @Composable
 public fun ShareConfirmationCodeWithAdminScreen(
     modifier: Modifier = Modifier,
-    onClose: () -> Unit = {},
-    onErrorMessage: (String?) -> Unit,
+    onCloseClicked: () -> Unit = {},
+    onError: (String?) -> Unit,
     viewModel: ShareConfirmationCodeWithAdminViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     ShareConfirmationCodeWithAdminScreen(
         modifier = modifier,
-        onClose = onClose,
+        onClose = onCloseClicked,
         onCloseClicked = { viewModel.submit(ShareConfirmationCodeAction.Close) },
-        onErrorMessage = onErrorMessage,
+        onErrorMessage = onError,
         onCancelClicked = { viewModel.submit(it) },
         onUseBackUpClicked = { viewModel.submit(it) },
         state = state

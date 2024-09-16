@@ -23,16 +23,29 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceSecretAction
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
 import me.proton.core.auth.presentation.compose.DeviceSecretScreen
 import me.proton.core.auth.presentation.compose.DeviceSecretViewModel
+import me.proton.core.auth.presentation.entity.DeviceSecretResult
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addEnterBackupPasswordScreen
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addMainScreen
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.errorToast
 
 @AndroidEntryPoint
 public class DeviceSecretActivity : ProtonActivity() {
+
+    private val userId: UserId by lazy {
+        UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
+    }
 
     private val viewModel by viewModels<DeviceSecretViewModel>()
 
@@ -43,9 +56,24 @@ public class DeviceSecretActivity : ProtonActivity() {
 
         setContent {
             ProtonTheme {
-                DeviceSecretScreen(
-                    onClose = { onClose() },
-                )
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = DeviceSecretRoutes.Route.Main.get(userId)
+                ) {
+                    addMainScreen(
+                        userId = userId,
+                        navController = navController,
+                        onClose = { onClose() },
+                        onError = { onErrorMessage(it) },
+                        onSuccess = { onSuccess(it) }
+                    )
+                    addEnterBackupPasswordScreen(
+                        userId = userId,
+                        navController = navController,
+                        onError = { onErrorMessage(it) },
+                    )
+                }
             }
         }
     }
@@ -55,14 +83,18 @@ public class DeviceSecretActivity : ProtonActivity() {
         finish()
     }
 
-    private fun onSuccess() {
-        val intent = Intent()
+    private fun onErrorMessage(message: String?) {
+        errorToast(message ?: getString(R.string.presentation_error_general))
+    }
+
+    private fun onSuccess(userId: UserId) {
+        val intent = Intent().putExtra(ARG_RESULT, DeviceSecretResult(userId.id))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
     companion object {
-        const val ARG_INPUT = DeviceSecretScreen.KEY_USERID
+        const val ARG_INPUT = "arg.userId"
         const val ARG_RESULT = "arg.result"
     }
 }

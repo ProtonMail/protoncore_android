@@ -18,34 +18,74 @@
 
 package me.proton.core.auth.presentation.compose.confirmationcode
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.entity.AuthDeviceState
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.auth.domain.usecase.sso.GenerateConfirmationCode
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
+import me.proton.core.auth.presentation.compose.confirmationcode.SignInSentForApprovalAction.Close
+import me.proton.core.auth.presentation.compose.confirmationcode.SignInSentForApprovalAction.Load
+import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.util.android.datetime.DateTimeFormat
 import javax.inject.Inject
 
 @HiltViewModel
 public class SignInSentForApprovalViewModel @Inject constructor(
-    // TODO: create use case for generating confirmation code & reading available devices from API
+    savedStateHandle: SavedStateHandle,
+    private val authDeviceRepository: AuthDeviceRepository,
+    private val generateConfirmationCode: GenerateConfirmationCode,
+    private val dateTimeFormat: DateTimeFormat,
 ) : ViewModel() {
-    private val mutableState: MutableStateFlow<SignInSentForApprovalState> =
-        MutableStateFlow(SignInSentForApprovalState.Loading)
 
-    public val state: StateFlow<SignInSentForApprovalState> = mutableState.asStateFlow()
+    private val userId by lazy { savedStateHandle.getUserId() }
+
+    private val mutableAction = MutableStateFlow<SignInSentForApprovalAction>(Load)
+
+    public val state: StateFlow<SignInSentForApprovalState> =
+        mutableAction.flatMapLatest { action ->
+            when (action) {
+                is Close -> onClose()
+                is Load -> onLoad()
+            }
+        }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), SignInSentForApprovalState.Loading)
 
     public fun submit(action: SignInSentForApprovalAction): Job = viewModelScope.launch {
-        when (action) {
-            SignInSentForApprovalAction.AskAdminForHelp -> TODO()
-            SignInSentForApprovalAction.Close -> onClose()
-            SignInSentForApprovalAction.UseBackUpPassword -> TODO()
-        }
+        mutableAction.emit(action)
     }
 
-    private suspend fun onClose() {
-        mutableState.emit(SignInSentForApprovalState.Close)
+    private suspend fun onClose() = flow {
+        emit(SignInSentForApprovalState.Close)
+    }
+
+    private fun onLoad() = flow {
+        emit(SignInSentForApprovalState.Loading)
+        val confirmationCode = generateConfirmationCode.invoke(userId)
+        val devices = authDeviceRepository.getByUserId(userId, refresh = true)
+        val availableDevices = devices.filter { it.state == AuthDeviceState.Active }
+        val uiModels = availableDevices.map {
+            AvailableDeviceUIModel(
+                id = it.deviceId.id,
+                authDeviceName = it.name,
+                localizedClientName = it.localizedClientName,
+                lastActivityTime = it.lastActivityAtUtcSeconds,
+                lastActivityReadable = dateTimeFormat.format(
+                    epochSeconds = it.lastActivityAtUtcSeconds,
+                    style = DateTimeFormat.DateTimeForm.MEDIUM_DATE
+                ),
+                clientType = ClientType.Android // TODO: Add ClientType -> Platform
+            )
+        }
+        emit(SignInSentForApprovalState.DataLoaded(confirmationCode, uiModels))
     }
 }

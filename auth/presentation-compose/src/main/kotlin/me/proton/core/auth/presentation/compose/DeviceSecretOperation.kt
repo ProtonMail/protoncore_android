@@ -21,5 +21,6 @@ package me.proton.core.auth.presentation.compose
 public sealed interface DeviceSecretOperation
 
 public sealed interface DeviceSecretAction : DeviceSecretOperation {
+    public data object Load : DeviceSecretAction
     public data object Close : DeviceSecretAction
 }
