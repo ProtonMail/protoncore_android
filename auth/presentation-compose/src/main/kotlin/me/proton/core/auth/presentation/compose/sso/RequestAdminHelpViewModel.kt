@@ -72,15 +72,18 @@ public class RequestAdminHelpViewModel @Inject constructor(
     }
 
     private fun onLoad(userId: UserId) = flow {
-        emit(Loading(state.value.data))
+        var data = state.value.data
+        emit(Loading(data))
 
         val signature = requireNotNull(organizationRepository.getOrganizationSignature(userId))
-        emit(Idle(state.value.data.copy(organizationAdminEmail = signature.fingerprintSignatureAddress)))
+        data = data.copy(organizationAdminEmail = signature.fingerprintSignatureAddress)
+        emit(Idle(data))
 
         val settings = organizationRepository.getOrganizationSettings(userId)
         val logo = settings.logoId?.let { organizationRepository.getOrganizationLogo(userId, it) }
 
-        emit(Idle(state.value.data.copy(organizationIcon = logo)))
+        data = data.copy(organizationIcon = logo)
+        emit(Idle(data))
     }.catchAll(LogTag.ORGANIZATION_LOAD) { error ->
         emit(Error(state.value.data, error))
     }
