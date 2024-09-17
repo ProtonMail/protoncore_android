@@ -24,6 +24,8 @@ import me.proton.core.auth.data.api.response.isSuccess
 import me.proton.core.auth.domain.usecase.ValidateServerProof
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -70,15 +72,21 @@ class PrivateKeyRepositoryImpl @Inject constructor(
         primaryKey: Armored,
         primaryKeySalt: String,
         addressKeys: List<PrivateAddressKey>,
-        auth: Auth
+        auth: Auth,
+        orgPrimaryUserKey: Armored?,
+        orgActivationToken: Signature?,
+        encryptedSecret: Based64Encoded?
     ) {
         return provider.get<KeyApi>(sessionUserId).invoke {
             setupInitialKeys(
                 SetupInitialKeysRequest(
                     primaryKey = primaryKey,
                     keySalt = primaryKeySalt,
+                    orgPrimaryUserKey = orgPrimaryUserKey,
+                    orgActivationToken = orgActivationToken,
                     auth = AuthRequest.from(auth),
-                    addressKeys = addressKeys.map { key -> key.creationRequest() }
+                    addressKeys = addressKeys.map { key -> key.creationRequest() },
+                    encryptedSecret = encryptedSecret
                 )
             )
         }.throwIfError()

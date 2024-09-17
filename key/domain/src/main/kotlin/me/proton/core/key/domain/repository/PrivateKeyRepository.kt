@@ -20,6 +20,8 @@ package me.proton.core.key.domain.repository
 
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.pgp.Signature
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -40,7 +42,10 @@ interface PrivateKeyRepository {
         primaryKey: Armored,
         primaryKeySalt: String,
         addressKeys: List<PrivateAddressKey>,
-        auth: Auth
+        auth: Auth,
+        orgPrimaryUserKey: Armored? = null,
+        orgActivationToken: Signature? = null,
+        encryptedSecret: Based64Encoded? = null
     )
 
     /**

@@ -25,6 +25,7 @@ import me.proton.core.auth.data.api.request.CreateDeviceRequest
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
+import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.pgp.Based64Encoded
@@ -89,4 +90,9 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
             rejectAuthDevice(deviceId.id)
         }.valueOrThrow
     }
+
+    override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
+        provider.get<AuthDeviceApi>(userId).invoke {
+            getUnprivatizationInfo().toUnprivatizationInfo()
+        }.valueOrThrow
 }

@@ -23,6 +23,8 @@ import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.PlainByteArray
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
@@ -159,7 +161,9 @@ interface UserManager {
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray
+        password: ByteArray,
+        organizationPublicKey: Armored? = null,
+        encryptedSecret: Based64Encoded? = null
     ): User
 
     /**

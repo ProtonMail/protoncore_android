@@ -29,6 +29,7 @@ import kotlinx.coroutines.flow.map
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
+import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
@@ -96,6 +97,9 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         localDataSource.deleteByDeviceId(deviceId)
         workManager.enqueue(DeleteAuthDeviceWorker.makeWorkerRequest(deviceId, userId))
     }
+
+    override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
+        remoteDataSource.getUnprivatizationInfo(userId)
 
     override suspend fun deleteByUserId(userId: UserId) {
         localDataSource.deleteAll(userId)

@@ -28,11 +28,16 @@ import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.canUnlock
+import me.proton.core.key.domain.encryptAndSignData
+import me.proton.core.key.domain.encryptAndSignText
 import me.proton.core.key.domain.entity.key.PrivateAddressKey
 import me.proton.core.key.domain.entity.key.PrivateKey
 import me.proton.core.key.domain.extension.keyHolder
@@ -40,6 +45,7 @@ import me.proton.core.key.domain.extension.primary
 import me.proton.core.key.domain.extension.updatePrivateKeyPassphraseOrNull
 import me.proton.core.key.domain.repository.KeySaltRepository
 import me.proton.core.key.domain.repository.PrivateKeyRepository
+import me.proton.core.key.domain.useKeys
 import me.proton.core.key.domain.useKeysAs
 import me.proton.core.user.data.usecase.GenerateSignedKeyList
 import me.proton.core.user.domain.SignedKeyListChangeListener
@@ -50,9 +56,11 @@ import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserKey
 import me.proton.core.user.domain.extension.generateNewKeyFormat
 import me.proton.core.user.domain.extension.hasMigratedKey
+import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
+import me.proton.core.util.kotlin.HashUtils.toHexString
 import java.util.Optional
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -188,7 +196,9 @@ class UserManagerImpl @Inject constructor(
         username: String,
         domain: String,
         auth: Auth,
-        password: ByteArray
+        password: ByteArray,
+        organizationPublicKey: Armored?,
+        encryptedSecret: Based64Encoded?
     ): User {
         val primaryKeySalt = pgp.generateNewKeySalt()
         pgp.getPassphrase(password, primaryKeySalt).use { passphrase ->
@@ -248,13 +258,39 @@ class UserManagerImpl @Inject constructor(
                 )
             }
 
+            val (orgActivationToken, orgPrimaryUserKey) = if (organizationPublicKey != null) {
+                // Generate a 32-bytes random secret, encode it to hex,
+                pgp.generateNewToken().use { randomSecret ->
+                    // and encrypt it to the organization key
+                    // signing it with the newly created address key
+                    // and the context account.key-token.user-unprivatization as OrgActivationToken
+                    val orgActivationToken = userAddressesWithNewKeys.primary()?.useKeys(cryptoContext) {
+                        encryptAndSignData(
+                            data = randomSecret.array,
+                            signatureContext = SignatureContext(
+                                value = "account.key-token.user-unprivatization"
+                            )
+                        )
+                    }
+
+                    // OrgPrimaryUserKey = Encrypt a copy of the primary USER key with the "random secret" encoded to hex as OrgPrimaryUserKey
+                    val user = userRepository.getUser(sessionUserId)
+                    val userPrimaryKey = requireNotNull(user.keys.primary())
+                    val orgPrimaryUserKey = userPrimaryKey.updatePrivateKeyPassphraseOrNull(cryptoContext, randomSecret.array)
+                    orgActivationToken to orgPrimaryUserKey?.privateKey
+                }
+            } else null to null
+
             // Setup initial primary UserKey and UserAddressKey, remotely.
             privateKeyRepository.setupInitialKeys(
                 sessionUserId = sessionUserId,
                 primaryKey = privateKey,
                 primaryKeySalt = primaryKeySalt,
                 addressKeys = newAddressKeys,
-                auth = auth
+                auth = auth,
+                orgActivationToken = orgActivationToken,
+                orgPrimaryUserKey = orgPrimaryUserKey,
+                encryptedSecret = encryptedSecret
             )
 
             // We know we can unlock the key with this passphrase as we just generated from it.

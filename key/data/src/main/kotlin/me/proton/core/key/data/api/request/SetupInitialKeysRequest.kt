@@ -28,10 +28,16 @@ data class SetupInitialKeysRequest(
     val primaryKey: String,
     @SerialName("KeySalt")
     val keySalt: String,
+    @SerialName("OrgPrimaryUserKey")
+    val orgPrimaryUserKey: String? = null,
+    @SerialName("OrgActivationToken")
+    val orgActivationToken: String? = null,
     @SerialName("AddressKeys")
     val addressKeys: List<CreateAddressKeyRequest>? = null,
     @SerialName("Auth")
-    val auth: AuthRequest
+    val auth: AuthRequest,
+    @SerialName("EncryptedSecret")
+    val encryptedSecret: String? = null
 )
 
 @Serializable

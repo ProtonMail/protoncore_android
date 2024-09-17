@@ -24,6 +24,8 @@ import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.srp.SrpCrypto
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.primary
@@ -57,7 +59,9 @@ class SetupPrimaryKeys @Inject constructor(
         userId: UserId,
         password: EncryptedString,
         accountType: AccountType,
-        internalDomain: Domain?
+        internalDomain: Domain?,
+        organizationPublicKey: Armored? = null,
+        encryptedSecret: Based64Encoded? = null
     ) {
         val user = userManager.getUser(userId, refresh = true)
         if (user.keys.primary() != null) return
@@ -88,7 +92,9 @@ class SetupPrimaryKeys @Inject constructor(
                 username = email.username,
                 domain = email.domain,
                 auth = auth,
-                password = decryptedPassword.array
+                password = decryptedPassword.array,
+                organizationPublicKey = organizationPublicKey,
+                encryptedSecret = encryptedSecret
             )
         }
     }

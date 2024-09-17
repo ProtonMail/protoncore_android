@@ -25,6 +25,7 @@ import me.proton.core.auth.data.api.response.AssociateDeviceResponse
 import me.proton.core.auth.data.api.response.AuthDevicesResponse
 import me.proton.core.auth.data.api.response.CreateDeviceResponse
 import me.proton.core.auth.data.api.response.PendingMemberDevicesResponse
+import me.proton.core.auth.data.api.response.UnprivatizationInfoResponse
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.network.data.protonApi.GenericResponse
 import retrofit2.http.Body
@@ -68,4 +69,7 @@ interface AuthDeviceApi : BaseRetrofitApi {
     suspend fun rejectAuthDevice(
         @Path("deviceId") deviceId: String
     ): GenericResponse
+
+    @GET("auth/v4/members/me/unprivatize")
+    suspend fun getUnprivatizationInfo(): UnprivatizationInfoResponse
 }

@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.Flow
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.CreatedDevice
+import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
@@ -84,4 +85,8 @@ interface AuthDeviceRepository {
         userId: UserId,
         deviceId: AuthDeviceId
     )
+
+    suspend fun getUnprivatizationInfo(
+        userId: UserId
+    ): UnprivatizationInfo
 }
