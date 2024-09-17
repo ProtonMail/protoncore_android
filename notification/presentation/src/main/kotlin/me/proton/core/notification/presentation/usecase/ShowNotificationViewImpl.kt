@@ -32,6 +32,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.entity.Notification
 import me.proton.core.notification.domain.entity.NotificationPayload
+import me.proton.core.notification.domain.entity.isDismissible
 import me.proton.core.notification.domain.usecase.GetNotificationChannelId
 import me.proton.core.notification.domain.usecase.ShowNotificationView
 import me.proton.core.notification.presentation.NotificationDeeplink
@@ -61,12 +62,14 @@ public class ShowNotificationViewImpl @Inject internal constructor(
         notificationId: Int,
         notificationTag: String,
         payload: NotificationPayload,
+        dismissible: Boolean,
         build: NotificationCompat.Builder.() -> Unit
     ) {
         if (!hasNotificationPermission()) return
         if (payload !is NotificationPayload.Unencrypted) return
 
         val builder = NotificationCompat.Builder(context, getNotificationChannelId()).apply {
+            setOngoing(!dismissible)
             setSmallIcon(getSmallIcon())
             setContentTitle(payload.title)
             setSubText(payload.subtitle)
@@ -89,12 +92,14 @@ public class ShowNotificationViewImpl @Inject internal constructor(
         payload: NotificationPayload,
         contentDeeplink: String?,
         deleteDeeplink: String?,
+        dismissible: Boolean
     ) {
         show(
             userId = userId,
             notificationId = notificationId,
             notificationTag = notificationTag,
             payload = payload,
+            dismissible = dismissible,
             build = {
                 contentDeeplink?.let { setContentIntent(makeContentIntent(contentDeeplink)) }
                 deleteDeeplink?.let { setDeleteIntent(makeOnDeleteIntent(deleteDeeplink)) }
@@ -111,6 +116,7 @@ public class ShowNotificationViewImpl @Inject internal constructor(
             notificationId = getNotificationId(notification),
             notificationTag = getNotificationTag(notification),
             payload = notification.payload,
+            dismissible = notification.isDismissible,
             build = {
                 addExtras(bundleOf(ExtraNotificationId to notification.notificationId.id))
                 setWhen(notification.time * 1000L)

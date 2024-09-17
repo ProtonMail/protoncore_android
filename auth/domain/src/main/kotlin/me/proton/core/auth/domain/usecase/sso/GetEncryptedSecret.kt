@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,16 +19,16 @@
 package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.entity.DeviceSecretString
+import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.aead.encrypt
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.pgp.Based64Encoded
 import javax.inject.Inject
 
 class GetEncryptedSecret @Inject constructor(
-    context: CryptoContext,
+    context: CryptoContext
 ) {
     private val keyStoreCrypto = context.keyStoreCrypto
     private val aeadCrypto = context.aeadCrypto
@@ -37,9 +37,9 @@ class GetEncryptedSecret @Inject constructor(
     operator fun invoke(
         passphrase: PlainByteArray,
         deviceSecret: DeviceSecretString
-    ): Based64Encoded {
-        return pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto))
-            .use { key -> passphrase.encrypt(aeadCrypto, key = key.array).array }
-            .use { encryptedSecret -> pgpCrypto.getBase64Encoded(encryptedSecret.array) }
+    ): AeadEncryptedString {
+        return pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
+            pgpCrypto.getBase64Encoded(passphrase.array).encrypt(aeadCrypto, key = key.array)
+        }
     }
 }

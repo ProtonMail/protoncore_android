@@ -63,6 +63,7 @@ dependencies {
         project(Module.networkData),
         project(Module.networkDomain),
         project(Module.networkPresentation),
+        project(Module.notificationPresentation),
         project(Module.observabilityDomain),
         project(Module.paymentDomain),
         project(Module.paymentPresentation),

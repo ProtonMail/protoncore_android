@@ -32,6 +32,12 @@ public data class Notification(
     val payload: NotificationPayload
 )
 
+public val Notification.isDismissible: Boolean
+    get() = when (type) {
+        "auth_device" -> false
+        else -> true
+    }
+
 public sealed class NotificationPayload(
     public open val raw: String
 ) {

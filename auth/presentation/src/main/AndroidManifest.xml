@@ -77,7 +77,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data android:scheme="@string/core_feature_auth_sso_redirect_scheme" />
-                <data android:path="/sso/login"/>
+                <data android:path="/sso/login" />
             </intent-filter>
         </activity>
 
@@ -94,6 +94,11 @@
         <activity
             android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
             android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".ui.DeviceApprovalActivity"
+            android:autoRemoveFromRecents="true"
             android:windowSoftInputMode="adjustResize" />
 
         <provider

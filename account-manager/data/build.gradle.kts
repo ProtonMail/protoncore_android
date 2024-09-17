@@ -47,6 +47,7 @@ dependencies {
         project(Module.accountDomain),
         project(Module.accountManagerDomain),
         project(Module.authDomain),
+        project(Module.authPresentation),
         project(Module.domain),
         project(Module.kotlinUtil),
         project(Module.networkDomain),

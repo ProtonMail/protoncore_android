@@ -56,7 +56,7 @@ data class MemberDeviceResource(
     val lastActivityTime: Long,
     @SerialName("ActivationToken")
     val activationToken: String?,
-    @SerialName("AddressID")
+    @SerialName("ActivationAddressID")
     val activationAddressID: String?
 ) {
     fun toMemberDevice(userId: UserId): MemberDevice = MemberDevice(

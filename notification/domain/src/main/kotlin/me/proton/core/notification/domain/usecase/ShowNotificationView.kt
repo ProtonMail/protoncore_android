@@ -43,6 +43,7 @@ public interface ShowNotificationView {
         payload: NotificationPayload,
         contentDeeplink: String? = null,
         deleteDeeplink: String? = null,
+        dismissible: Boolean = true
     )
 
     public companion object {

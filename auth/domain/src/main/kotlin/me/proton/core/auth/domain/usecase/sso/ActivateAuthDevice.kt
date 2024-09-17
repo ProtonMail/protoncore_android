@@ -21,16 +21,10 @@ package me.proton.core.auth.domain.usecase.sso
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.crypto.common.aead.encrypt
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.crypto.common.keystore.EncryptedString
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
-import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.extension.getByKeyId
-import me.proton.core.key.domain.extension.primary
-import me.proton.core.key.domain.repository.KeySaltRepository
-import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
 /**
@@ -42,34 +36,21 @@ import javax.inject.Inject
  */
 class ActivateAuthDevice @Inject constructor(
     context: CryptoContext,
-    private val userRepository: UserRepository,
     private val authDeviceRepository: AuthDeviceRepository,
     private val deviceSecretRepository: DeviceSecretRepository,
-    private val keySaltRepository: KeySaltRepository,
+    private val getEncryptedSecret: GetEncryptedSecret,
 ) {
     private val keyStoreCrypto = context.keyStoreCrypto
-    private val aeadCrypto = context.aeadCrypto
-    private val pgpCrypto = context.pgpCrypto
 
     suspend operator fun invoke(
         userId: UserId,
         deviceId: AuthDeviceId,
-        password: EncryptedString
+        passphrase: EncryptedByteArray
     ) {
-        val user = userRepository.getUser(userId)
-        val userPrimaryKey = requireNotNull(user.keys.primary())
         val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
-        val salts = keySaltRepository.getKeySalts(userId)
-        val primaryKeySalt = requireNotNull(salts.getByKeyId(userPrimaryKey.keyId))
-        password.decrypt(keyStoreCrypto).toByteArray().use { decryptedPassword ->
-            pgpCrypto.getPassphrase(decryptedPassword.array, primaryKeySalt).use { passphrase ->
-                pgpCrypto.getBase64Decoded(deviceSecret.secret.decrypt(keyStoreCrypto))
-                    .use { key -> passphrase.encrypt(aeadCrypto, key = key.array).array }
-                    .use { encryptedSecret ->
-                        val base64Encoded = pgpCrypto.getBase64Encoded(encryptedSecret.array)
-                        authDeviceRepository.activateDevice(userId, deviceId, base64Encoded)
-                    }
-            }
+        passphrase.decrypt(keyStoreCrypto).use { decryptedPassphrase ->
+            val aesEncryptedSecret = getEncryptedSecret(decryptedPassphrase, deviceSecret.secret)
+            authDeviceRepository.activateDevice(userId, deviceId, aesEncryptedSecret)
         }
     }
 }

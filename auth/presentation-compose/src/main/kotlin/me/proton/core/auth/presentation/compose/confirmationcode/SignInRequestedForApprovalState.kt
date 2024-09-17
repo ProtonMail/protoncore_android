@@ -20,10 +20,13 @@ package me.proton.core.auth.presentation.compose.confirmationcode
 
 public sealed interface SignInRequestedForApprovalState {
     public data object Idle : SignInRequestedForApprovalState
+    public data object Loading : SignInRequestedForApprovalState
     public data class ConfirmationCodeResult(
         val success: Boolean
     ) : SignInRequestedForApprovalState
-    public data object Close : SignInRequestedForApprovalState
 
+    public data object Close : SignInRequestedForApprovalState
     public data class Error(val message: String?) : SignInRequestedForApprovalState
+    public data object ConfirmedSuccessfully : SignInRequestedForApprovalState
+    public data object RejectedSuccessfully : SignInRequestedForApprovalState
 }

@@ -26,13 +26,28 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.entity.AuthDevice
+import me.proton.core.auth.domain.entity.AuthDeviceState
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
+import me.proton.core.auth.domain.usecase.sso.RejectAuthDevice
 import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode
 import me.proton.core.auth.presentation.compose.confirmationcode.ShareConfirmationCodeWithAdminScreen.getUserId
+import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.user.domain.UserManager
+import me.proton.core.user.domain.repository.PassphraseRepository
 import javax.inject.Inject
 
 @HiltViewModel
 public class SignInRequestedForApprovalViewModel @Inject constructor(
+    private val activateAuthDevice: ActivateAuthDevice,
+    private val authDeviceRepository: AuthDeviceRepository,
+    private val passphraseRepository: PassphraseRepository,
+    private val rejectAuthDevice: RejectAuthDevice,
     private val savedStateHandle: SavedStateHandle,
     private val validateConfirmationCode: ValidateConfirmationCode
 ) : ViewModel() {
@@ -69,15 +84,35 @@ public class SignInRequestedForApprovalViewModel @Inject constructor(
         mutableState.emit(newState)
     }
 
-    private fun confirmRequest() {
+    private fun confirmRequest() = flow {
+        emit(SignInRequestedForApprovalState.Loading)
+        val device = requireNotNull(getDevicePendingActivation())
+        val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
+        activateAuthDevice(userId, device.deviceId, passphrase)
+        emit(SignInRequestedForApprovalState.ConfirmedSuccessfully)
+    }.catch { throwable ->
+        when (throwable) {
+            is IllegalArgumentException -> emit(SignInRequestedForApprovalState.Error(throwable.message))
+            else -> throw throwable
+        }
+    }.launchIn(viewModelScope)
 
-    }
-
-    private fun rejectRequest() {
-
-    }
+    private fun rejectRequest() = flow {
+        emit(SignInRequestedForApprovalState.Loading)
+        val device = requireNotNull(getDevicePendingActivation())
+        rejectAuthDevice(userId, device.deviceId)
+        emit(SignInRequestedForApprovalState.RejectedSuccessfully)
+    }.catch { throwable ->
+        when (throwable) {
+            is IllegalArgumentException -> emit(SignInRequestedForApprovalState.Error(throwable.message))
+            else -> throw throwable
+        }
+    }.launchIn(viewModelScope)
 
     private suspend fun close() {
         mutableState.emit(SignInRequestedForApprovalState.Close)
     }
+
+    private suspend fun getDevicePendingActivation(): AuthDevice? =
+        authDeviceRepository.getByUserId(userId).firstOrNull { it.state == AuthDeviceState.PendingActivation }
 }

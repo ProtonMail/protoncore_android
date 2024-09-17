@@ -68,7 +68,7 @@ class MemberDeviceEventListenerTest {
                     "MemberAuthDevice": {
                         "ID": "device-1",
                         "MemberID": "member-1",
-                        "AddressID": "address-1",
+                        "ActivationAddressID": "address-1",
                         "State": 1,
                         "Name": "Mobile Phone 1",
                         "LocalizedClientName": "Proton Account for Web",

@@ -28,6 +28,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.LogTag
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup
+import me.proton.core.auth.presentation.DeviceApprovalNotificationSetup
 import me.proton.core.domain.entity.Product
 import me.proton.core.notification.presentation.NotificationSetup
 import me.proton.core.user.domain.UserManager
@@ -47,6 +48,7 @@ class AccountStateHandler @Inject constructor(
     private val notificationSetup: NotificationSetup,
     private val accountRecoveryNotificationSetup: AccountRecoveryNotificationSetup,
     private val product: Product,
+    private val deviceApprovalNotificationSetup: DeviceApprovalNotificationSetup
 ) {
     fun start() {
         disableInitialNotReadyAccounts()
@@ -68,6 +70,7 @@ class AccountStateHandler @Inject constructor(
 
         notificationSetup()
         accountRecoveryNotificationSetup()
+        deviceApprovalNotificationSetup()
     }
 }
 

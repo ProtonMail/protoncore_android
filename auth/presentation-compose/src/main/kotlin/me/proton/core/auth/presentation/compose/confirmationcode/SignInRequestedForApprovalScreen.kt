@@ -87,31 +87,29 @@ public fun SignInRequestedForApprovalScreen(
     onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit = {},
     state: SignInRequestedForApprovalState
 ) {
-    when (state) {
-        is SignInRequestedForApprovalState.Idle -> {
-            SignInRequestedForApprovalScaffold(
-                modifier = modifier,
-                onCloseClicked = onCloseClicked,
-                onConfirmClicked = onConfirmClicked,
-                onConfirmationCodeInputChange = onConfirmationCodeInputChange,
-                onRejectClicked = onRejectClicked
-            )
+    LaunchedEffect(state) {
+        when (state) {
+            is SignInRequestedForApprovalState.Close -> onClose()
+            is SignInRequestedForApprovalState.ConfirmationCodeResult -> Unit
+            is SignInRequestedForApprovalState.ConfirmedSuccessfully -> onClose()
+            is SignInRequestedForApprovalState.Error -> onErrorMessage(state.message)
+            is SignInRequestedForApprovalState.Idle -> Unit
+            is SignInRequestedForApprovalState.Loading -> Unit
+            is SignInRequestedForApprovalState.RejectedSuccessfully -> onClose()
         }
-
-        is SignInRequestedForApprovalState.ConfirmationCodeResult -> {
-            SignInRequestedForApprovalScaffold(
-                modifier = modifier,
-                onCloseClicked = onCloseClicked,
-                onConfirmClicked = onConfirmClicked,
-                onRejectClicked = onRejectClicked,
-                onConfirmationCodeInputChange = onConfirmationCodeInputChange,
-                confirmationButtonClickable = state.success
-            )
-        }
-
-        is SignInRequestedForApprovalState.Error -> LaunchedEffect(state) { onErrorMessage(state.message) }
-        is SignInRequestedForApprovalState.Close -> LaunchedEffect(state) { onClose() }
     }
+
+    val isCodeVerified = (state as? SignInRequestedForApprovalState.ConfirmationCodeResult)?.success ?: false
+
+    SignInRequestedForApprovalScaffold(
+        modifier = modifier,
+        onCloseClicked = onCloseClicked,
+        onConfirmClicked = onConfirmClicked,
+        onConfirmationCodeInputChange = onConfirmationCodeInputChange,
+        onRejectClicked = onRejectClicked,
+        confirmationButtonClickable = isCodeVerified,
+        isLoading = state is SignInRequestedForApprovalState.Loading
+    )
 }
 
 @Composable
@@ -121,7 +119,8 @@ public fun SignInRequestedForApprovalScaffold(
     onConfirmClicked: (SignInRequestedForApprovalAction.Confirm) -> Unit,
     onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit,
     onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit,
-    confirmationButtonClickable: Boolean = false
+    confirmationButtonClickable: Boolean,
+    isLoading: Boolean
 ) {
     Scaffold(
         modifier = modifier,
@@ -145,7 +144,8 @@ public fun SignInRequestedForApprovalScaffold(
                 onConfirmClicked = onConfirmClicked,
                 onRejectClicked = onRejectClicked,
                 onConfirmationCodeInputChange = onConfirmationCodeInputChange,
-                confirmationButtonClickable = confirmationButtonClickable
+                confirmationButtonClickable = confirmationButtonClickable,
+                isLoading = isLoading
             )
         }
     }
@@ -156,7 +156,8 @@ private fun ConfirmationCodeInputScreen(
     onConfirmClicked: (SignInRequestedForApprovalAction.Confirm) -> Unit,
     onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit,
     onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit,
-    confirmationButtonClickable: Boolean = false
+    confirmationButtonClickable: Boolean = false,
+    isLoading: Boolean = false
 ) {
     var confirmationCode by remember { mutableStateOf("") }
 
@@ -178,6 +179,7 @@ private fun ConfirmationCodeInputScreen(
                 confirmationCode = it
                 onConfirmationCodeInputChange(SignInRequestedForApprovalAction.ValidateConfirmationCode(confirmationCode))
             },
+            enabled = !isLoading,
             label = { Text(text = stringResource(id = R.string.auth_login_confirmation_code)) },
             singleLine = true,
             modifier = Modifier
@@ -196,7 +198,7 @@ private fun ConfirmationCodeInputScreen(
         ProtonSolidButton(
             contained = false,
             onClick = { onConfirmClicked(SignInRequestedForApprovalAction.Confirm) },
-            enabled = confirmationButtonClickable,
+            enabled = confirmationButtonClickable && !isLoading,
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
                 .height(ProtonDimens.DefaultButtonMinHeight)
@@ -207,6 +209,7 @@ private fun ConfirmationCodeInputScreen(
         ProtonTextButton(
             contained = false,
             onClick = { onRejectClicked(SignInRequestedForApprovalAction.Reject) },
+            enabled = !isLoading,
             modifier = Modifier
                 .padding(vertical = ProtonDimens.MediumSpacing)
                 .height(ProtonDimens.DefaultButtonMinHeight),
