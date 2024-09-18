@@ -18,15 +18,18 @@
 
 package me.proton.core.auth.presentation.compose.confirmationcode
 
-public sealed interface SignInRequestedForApprovalState {
-    public data object Idle : SignInRequestedForApprovalState
-    public data object Loading : SignInRequestedForApprovalState
+public sealed class SignInRequestedForApprovalState(public open val email: String? = null) {
+    public data class Idle(override val email: String?) : SignInRequestedForApprovalState()
+    public data class Loading(override val email: String?) : SignInRequestedForApprovalState()
     public data class ConfirmationCodeResult(
+        override val email: String?,
         val success: Boolean
-    ) : SignInRequestedForApprovalState
+    ) : SignInRequestedForApprovalState()
 
-    public data object Close : SignInRequestedForApprovalState
-    public data class Error(val message: String?) : SignInRequestedForApprovalState
-    public data object ConfirmedSuccessfully : SignInRequestedForApprovalState
-    public data object RejectedSuccessfully : SignInRequestedForApprovalState
+    public data class Error(override val email: String?, val message: String?) : SignInRequestedForApprovalState()
+
+    // Terminal states:
+    public data object Close : SignInRequestedForApprovalState()
+    public data object ConfirmedSuccessfully : SignInRequestedForApprovalState()
+    public data object RejectedSuccessfully : SignInRequestedForApprovalState()
 }

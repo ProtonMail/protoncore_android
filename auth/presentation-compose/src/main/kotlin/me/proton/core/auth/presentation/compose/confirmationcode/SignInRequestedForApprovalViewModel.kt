@@ -24,11 +24,13 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onSubscription
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceState
@@ -36,6 +38,7 @@ import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
 import me.proton.core.auth.domain.usecase.sso.RejectAuthDevice
 import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode
+import me.proton.core.auth.domain.usecase.sso.ValidateConfirmationCode.Result
 import me.proton.core.auth.presentation.compose.confirmationcode.ShareConfirmationCodeWithAdminScreen.getUserId
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.user.domain.UserManager
@@ -49,15 +52,17 @@ public class SignInRequestedForApprovalViewModel @Inject constructor(
     private val passphraseRepository: PassphraseRepository,
     private val rejectAuthDevice: RejectAuthDevice,
     private val savedStateHandle: SavedStateHandle,
+    private val userManager: UserManager,
     private val validateConfirmationCode: ValidateConfirmationCode
 ) : ViewModel() {
 
     private val userId by lazy { savedStateHandle.getUserId() }
 
-    private val mutableState: MutableStateFlow<SignInRequestedForApprovalState> =
-        MutableStateFlow(SignInRequestedForApprovalState.Idle)
+    private val mutableState: MutableStateFlow<SignInRequestedForApprovalState> = MutableStateFlow(initialState)
 
-    public val state: StateFlow<SignInRequestedForApprovalState> = mutableState.asStateFlow()
+    public val state: StateFlow<SignInRequestedForApprovalState> = mutableState
+        .onSubscription { emit(SignInRequestedForApprovalState.Idle(getUserEmail())) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(stopTimeoutMillis), initialState)
 
     public fun submit(action: SignInRequestedForApprovalAction): Job = viewModelScope.launch {
         when (action) {
@@ -70,41 +75,62 @@ public class SignInRequestedForApprovalViewModel @Inject constructor(
 
     private suspend fun validateCode(confirmationCode: String) {
         val newState = when (validateConfirmationCode(userId, confirmationCode)) {
-            ValidateConfirmationCode.Result.ConfirmationCodeInputError -> SignInRequestedForApprovalState.Error("")
-            ValidateConfirmationCode.Result.ConfirmationCodeInvalid -> SignInRequestedForApprovalState.ConfirmationCodeResult(
+            Result.ConfirmationCodeInputError -> SignInRequestedForApprovalState.Error(
+                email = getUserEmail(),
+                null
+            )
+
+            Result.ConfirmationCodeInvalid -> SignInRequestedForApprovalState.ConfirmationCodeResult(
+                email = getUserEmail(),
                 success = false
             )
 
-            ValidateConfirmationCode.Result.ConfirmationCodeValid -> SignInRequestedForApprovalState.ConfirmationCodeResult(
+            Result.ConfirmationCodeValid -> SignInRequestedForApprovalState.ConfirmationCodeResult(
+                email = getUserEmail(),
                 success = true
             )
 
-            ValidateConfirmationCode.Result.NoDeviceSecret -> SignInRequestedForApprovalState.Error("")
+            Result.NoDeviceSecret -> SignInRequestedForApprovalState.Error(
+                email = getUserEmail(),
+                null
+            )
         }
         mutableState.emit(newState)
     }
 
     private fun confirmRequest() = flow {
-        emit(SignInRequestedForApprovalState.Loading)
+        emit(SignInRequestedForApprovalState.Loading(email = getUserEmail()))
         val device = requireNotNull(getDevicePendingActivation())
         val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
         activateAuthDevice(userId, device.deviceId, passphrase)
         emit(SignInRequestedForApprovalState.ConfirmedSuccessfully)
     }.catch { throwable ->
         when (throwable) {
-            is IllegalArgumentException -> emit(SignInRequestedForApprovalState.Error(throwable.message))
+            is IllegalArgumentException -> emit(
+                SignInRequestedForApprovalState.Error(
+                    email = getUserEmail(),
+                    throwable.message
+                )
+            )
+
             else -> throw throwable
         }
     }.launchIn(viewModelScope)
 
     private fun rejectRequest() = flow {
-        emit(SignInRequestedForApprovalState.Loading)
+        emit(SignInRequestedForApprovalState.Loading(email = getUserEmail()))
         val device = requireNotNull(getDevicePendingActivation())
         rejectAuthDevice(userId, device.deviceId)
         emit(SignInRequestedForApprovalState.RejectedSuccessfully)
     }.catch { throwable ->
         when (throwable) {
-            is IllegalArgumentException -> emit(SignInRequestedForApprovalState.Error(throwable.message))
+            is IllegalArgumentException -> emit(
+                SignInRequestedForApprovalState.Error(
+                    email = getUserEmail(),
+                    throwable.message
+                )
+            )
+
             else -> throw throwable
         }
     }.launchIn(viewModelScope)
@@ -115,4 +141,12 @@ public class SignInRequestedForApprovalViewModel @Inject constructor(
 
     private suspend fun getDevicePendingActivation(): AuthDevice? =
         authDeviceRepository.getByUserId(userId).firstOrNull { it.state == AuthDeviceState.PendingActivation }
+
+    private suspend fun getUserEmail(): String = userManager.getUser(userId).run {
+        email ?: name ?: displayName ?: ""
+    }
+
+    internal companion object {
+        private val initialState = SignInRequestedForApprovalState.Idle(email = null)
+    }
 }

@@ -30,6 +30,7 @@ import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.migrator.AccountMigrator
 import me.proton.core.accountrecovery.presentation.compose.AccountRecoveryNotificationSetup
+import me.proton.core.auth.presentation.DeviceApprovalNotificationSetup
 import me.proton.core.domain.entity.Product
 import me.proton.core.notification.presentation.NotificationSetup
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -44,6 +45,9 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var accountMigrator: AccountMigrator
+
+    @MockK(relaxed = true)
+    private lateinit var deviceApprovalNotificationSetup: DeviceApprovalNotificationSetup
 
     @MockK
     private lateinit var notificationSetup: NotificationSetup
@@ -89,7 +93,8 @@ internal class AccountStateHandlerTest : CoroutinesTest by CoroutinesTest() {
             accountMigrator = accountMigrator,
             notificationSetup = notificationSetup,
             accountRecoveryNotificationSetup = accountRecoveryNotificationSetup,
-            product = product
+            product = product,
+            deviceApprovalNotificationSetup = deviceApprovalNotificationSetup
         ).let { spyk(it) }
     }
 }

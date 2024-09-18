@@ -37,7 +37,7 @@
     <string name="auth_login_share_confirmation_code_with_admin">Share the confirmation code with your administrator</string>
     <string name="auth_login_share_confirmation_code_with_admin_subtitle">To make sure it’s really you trying to sign-in, share the confirmation code with your administrator admin@privacybydefault.com so that they can approve the request for %s.</string>
     <string name="auth_login_signin_requested">Sign-in requested on another device. Was it you?</string>
-    <string name="auth_login_signin_requested_subtitle">Check that the confirmation code match the code on your other device.</string>
+    <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
     <string name="auth_login_signin_requested_note">If you didn\'t make this request, cancel it now.</string>
     <string name="auth_login_yes_it_was_me">Yes, it was me</string>
     <string name="auth_login_no_it_wasnt_me">No, it wasn\'t me</string>

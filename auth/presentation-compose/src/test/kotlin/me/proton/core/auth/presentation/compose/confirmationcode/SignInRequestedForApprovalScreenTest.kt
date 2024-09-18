@@ -24,7 +24,7 @@ class SignInRequestedForApprovalScreenTest {
                 onCloseClicked = {},
                 onConfirmClicked = {},
                 onRejectClicked = {},
-                state = SignInRequestedForApprovalState.Idle
+                state = SignInRequestedForApprovalState.Idle(email = "user@example.test")
             )
         }
     }

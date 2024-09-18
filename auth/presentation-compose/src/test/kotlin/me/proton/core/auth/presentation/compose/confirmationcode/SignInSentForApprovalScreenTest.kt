@@ -33,6 +33,7 @@ class SignInSentForApprovalScreenTest {
                             authDeviceName = "Device Name",
                             localizedClientName = "Chrome",
                             lastActivityTime = 242344233124,
+                            lastActivityReadable = "7 hours ago",
                             clientType = ClientType.Web
                         )
                     )

@@ -108,7 +108,8 @@ public fun SignInRequestedForApprovalScreen(
         onConfirmationCodeInputChange = onConfirmationCodeInputChange,
         onRejectClicked = onRejectClicked,
         confirmationButtonClickable = isCodeVerified,
-        isLoading = state is SignInRequestedForApprovalState.Loading
+        isLoading = state is SignInRequestedForApprovalState.Loading,
+        email = state.email ?: ""
     )
 }
 
@@ -120,7 +121,8 @@ public fun SignInRequestedForApprovalScaffold(
     onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit,
     onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit,
     confirmationButtonClickable: Boolean,
-    isLoading: Boolean
+    isLoading: Boolean,
+    email: String
 ) {
     Scaffold(
         modifier = modifier,
@@ -144,6 +146,7 @@ public fun SignInRequestedForApprovalScaffold(
                 onConfirmClicked = onConfirmClicked,
                 onRejectClicked = onRejectClicked,
                 onConfirmationCodeInputChange = onConfirmationCodeInputChange,
+                email = email,
                 confirmationButtonClickable = confirmationButtonClickable,
                 isLoading = isLoading
             )
@@ -156,8 +159,9 @@ private fun ConfirmationCodeInputScreen(
     onConfirmClicked: (SignInRequestedForApprovalAction.Confirm) -> Unit,
     onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit,
     onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit,
+    email: String,
     confirmationButtonClickable: Boolean = false,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
 ) {
     var confirmationCode by remember { mutableStateOf("") }
 
@@ -169,7 +173,7 @@ private fun ConfirmationCodeInputScreen(
 
         Text(
             modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-            text = stringResource(id = R.string.auth_login_signin_requested_subtitle),
+            text = stringResource(id = R.string.auth_login_signin_requested_subtitle, email),
             style = ProtonTypography.Default.defaultSmallWeak
         )
 
@@ -231,7 +235,7 @@ internal fun ConfirmationCodeSignInRequestedForApprovalScreenPreview() {
     ProtonTheme {
         SignInRequestedForApprovalScreen(
             onErrorMessage = {},
-            state = SignInRequestedForApprovalState.Idle
+            state = SignInRequestedForApprovalState.Idle(email = "user@example.test")
         )
     }
 }
