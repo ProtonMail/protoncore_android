@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton Technologies AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,10 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain
+package me.proton.core.auth.presentation.compose.sso.admin
 
-object LogTag {
-    const val INVALID_SRP_PROOF = "core.auth.domain.srp.invalid.server.proof"
-    const val PERFORM_SUBSCRIBE = "core.auth.domain.perform.subscribe"
-    const val ORGANIZATION_LOAD = "core.auth.domain.organization.load"
+public sealed interface AskAdminState {
+    public data object Loading : AskAdminState
+    public data object Close : AskAdminState
+    public data class Error(val cause: Throwable) : AskAdminState
+    public data class DataLoaded(
+        val organizationAdminEmail: String? = null,
+        val organizationIcon: Any? = null
+    ) : AskAdminState
 }

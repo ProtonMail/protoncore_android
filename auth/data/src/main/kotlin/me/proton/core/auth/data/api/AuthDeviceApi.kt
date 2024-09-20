@@ -72,4 +72,9 @@ interface AuthDeviceApi : BaseRetrofitApi {
 
     @GET("core/v4/members/me/unprivatize")
     suspend fun getUnprivatizationInfo(): UnprivatizationInfoResponse
+
+    @PUT("auth/v4/devices/{deviceId}/admin")
+    suspend fun pingAdminForHelp(
+        @Path("deviceId") deviceId: String
+    ): GenericResponse
 }

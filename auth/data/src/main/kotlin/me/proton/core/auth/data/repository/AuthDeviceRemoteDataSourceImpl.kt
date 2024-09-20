@@ -95,4 +95,10 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
         provider.get<AuthDeviceApi>(userId).invoke {
             getUnprivatizationInfo().toUnprivatizationInfo()
         }.valueOrThrow
+
+    override suspend fun pingAdminForHelp(userId: UserId, deviceId: AuthDeviceId) {
+        provider.get<AuthDeviceApi>(userId).invoke {
+            pingAdminForHelp(deviceId.id)
+        }.valueOrThrow
+    }
 }

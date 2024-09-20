@@ -123,4 +123,11 @@ class AuthDeviceRepositoryImpl @Inject constructor(
 
     override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
         remoteDataSource.getUnprivatizationInfo(userId)
+
+    override suspend fun pingAdminForHelp(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    ) {
+        remoteDataSource.pingAdminForHelp(userId, deviceId)
+    }
 }

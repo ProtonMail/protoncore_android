@@ -95,4 +95,9 @@ interface AuthDeviceRepository {
     suspend fun getUnprivatizationInfo(
         userId: UserId
     ): UnprivatizationInfo
+
+    suspend fun pingAdminForHelp(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    )
 }

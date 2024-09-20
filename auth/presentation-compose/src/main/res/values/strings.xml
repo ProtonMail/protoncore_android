@@ -66,5 +66,9 @@
     <string name="auth_login_access_denied_contact_admin">Contact your administrator if the problem persists.</string>
     <string name="auth_login_access_granted">Access Granted</string>
     <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
+
+    <string name="auth_login_ask_admin_for_access">Ask your administrator for access?</string>
+    <string name="auth_login_ask_admin_device_id_error">Device error</string>
+    <string name="auth_login_ask_admin_for_access_note">This will sign you out of your other devices and you will have to create a new backup password.</string>
 </resources>
 

@@ -22,7 +22,6 @@ import android.content.res.Configuration
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,7 +32,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -58,15 +56,12 @@ import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSetti
 import me.proton.core.accountmanager.presentation.compose.viewmodel.AccountSettingsViewState
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
+import me.proton.core.compose.component.RowWithComposables
 import me.proton.core.compose.flow.rememberAsState
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.captionNorm
 import me.proton.core.compose.theme.defaultNorm
-import me.proton.core.compose.theme.defaultSmallStrongUnspecified
-import me.proton.core.compose.theme.defaultWeak
 import me.proton.core.compose.viewmodel.hiltViewModelOrNull
-import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
 import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
@@ -228,6 +223,10 @@ fun AccountSettingsLoggedIn(
         modifier = modifier
     ) {
         RowWithComposables(
+            modifier = modifier.padding(
+                vertical = ProtonDimens.DefaultSpacing,
+                horizontal = ProtonDimens.DefaultSpacing
+            ),
             leadingComposable = {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -254,27 +253,6 @@ fun AccountSettingsLoggedIn(
             )
         }
     }
-}
-
-@Composable
-private fun RowWithIcon(
-    modifier: Modifier = Modifier,
-    @DrawableRes icon: Int,
-    title: String,
-    onClick: () -> Unit = { }
-) {
-    RowWithComposables(
-        leadingComposable = {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = null,
-                tint = ProtonTheme.colors.iconNorm,
-            )
-        },
-        title = title,
-        onClick = onClick,
-        modifier = modifier
-    )
 }
 
 @Composable
@@ -366,46 +344,28 @@ private fun SignInButton(
 }
 
 @Composable
-private fun RowWithComposables(
+private fun RowWithIcon(
     modifier: Modifier = Modifier,
-    leadingComposable: @Composable () -> Unit,
+    @DrawableRes icon: Int,
     title: String,
-    subtitle: String? = null,
-    onClick: () -> Unit = { },
+    onClick: () -> Unit = { }
 ) {
-    Row(
+    RowWithComposables(
+        leadingComposable = {
+            Icon(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                tint = ProtonTheme.colors.iconNorm,
+            )
+        },
+        title = title,
+        onClick = onClick,
         modifier = modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
             .padding(
                 vertical = ProtonDimens.DefaultSpacing,
                 horizontal = ProtonDimens.DefaultSpacing
-            ),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Box(
-            modifier = Modifier.width(ProtonDimens.LargeSpacing),
-            contentAlignment = Alignment.Center
-        ) {
-            leadingComposable()
-        }
-        Column(
-            modifier = Modifier
-                .padding(start = ProtonDimens.DefaultSpacing)
-                .weight(1f)
-        ) {
-            Text(
-                text = title,
-                style = ProtonTheme.typography.defaultNorm
             )
-            subtitle?.let {
-                Text(
-                    text = it,
-                    style = ProtonTheme.typography.defaultWeak
-                )
-            }
-        }
-    }
+    )
 }
 
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_NO, showBackground = true)
