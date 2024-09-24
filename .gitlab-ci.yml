@@ -19,9 +19,19 @@ include:
 
   - local: '/ci/templates/tools.gitlab-ci.yml'
 
-  - project: 'proton/devops/atlas-deploy'
-    ref: main
-    file: '/scenarios/pipeline-env.yml'
+  - component: gitlab.protontech.ch/proton/devops/cicd-components/kubernetes/atlas-deploy/pipenv@0.7.0
+    inputs:
+      cleanup-stage: cleanup
+      key: env-pipenv-$CI_PROJECT_ID-$CI_PIPELINE_ID
+      features: $FEATURES
+    rules:
+      # Don't run if environment was already provided.
+      - if: $DYNAMIC_DOMAIN != null
+        when: never
+      # Run for MRs targeting main branch and scheduled pipelines.
+      - if: $CI_PIPELINE_SOURCE == "merge_request_event" ||  $CI_PIPELINE_SOURCE == "schedule" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+        when: always
+      - when: never
 
 default:
   image: ${PROTON_CI_REGISTRY}/android-shared/docker-android/oci:v2.1.1
@@ -67,14 +77,11 @@ prepare-environment:
   extends: .script-job
   stage: prepare
   when: always
-  image: $CI_REGISTRY/proton/devops/atlas-cli
   variables:
-    NAMESERVICE_URL: "https://nameservice.$ATLAS_BASE_DOMAIN/api/env"
     REQUEST_DATA: "--header 'Content-Type:application/x-www-form-urlencoded' --data app=${CI_PROJECT_PATH} --data branch=${CI_COMMIT_REF_SLUG} --data tag=${CI_COMMIT_REF_SLUG}"
     SENSITIVE_DIR: "test/quark/src/main/resources/sensitive"
   script:
-    - echo PROXY_TOKEN="$(curl -o - https://proxy.$ATLAS_BASE_DOMAIN/token/get)" >> local.properties
-    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
+    - echo PROXY_TOKEN="$(curl -o - $GET_PROXY_TOKEN_URL)" >> local.properties
     - mkdir -p $SENSITIVE_DIR
     - cat $TEST_USERS > $SENSITIVE_DIR/users.json
     - cat $TEST_USERS_VPN_USERNAME > $SENSITIVE_DIR/users-vpn-username.json
@@ -281,7 +288,12 @@ pass-integration-tests:
   tags:
     - shared-medium
   allow_failure: false
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" ||  $CI_PIPELINE_SOURCE == "schedule" || $CI_COMMIT_REF_NAME == $CI_DEFAULT_BRANCH
+      when: always
+    - when: never
   script:
+    - echo HOST="$DYNAMIC_DOMAIN" >> local.properties
     - gcloud config set project $CLOUD_PROJECT_ID_CORE
     - gcloud auth activate-service-account --key-file $GOOGLE_SERVICE_ACCOUNT
     - gcloud firebase test android run
@@ -305,8 +317,9 @@ pass-integration-tests:
     - gsutil -m cp -r $FIREBASE_BUCKET_URL/$RESULTS_DIR/$DEVICE_MODEL_RESULTS_DIR/artifacts/sdcard/screenshots ./screenshots 2> /dev/null || true
     - python3 coreexample/ci/process_report.py test_result_1.xml test_result.xml
   needs:
-    - assemble
-    - deploy:review
+    - job: assemble
+    - job: atlas:deploy:pipenv
+      optional: true
   artifacts:
     when: always
     reports:
@@ -317,8 +330,6 @@ pass-integration-tests:
       - logcat.txt
       - video.mp4
       - logs
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 uitest:coreexample:hilt-tests:
   allow_failure: true
