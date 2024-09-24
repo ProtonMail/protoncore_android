@@ -18,21 +18,39 @@
 
 package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 
-public sealed interface BackupPasswordSetupUiState {
-    public data object Idle : BackupPasswordSetupUiState
-    public data object Loading : BackupPasswordSetupUiState
-    public data class Error(val message: String?) : BackupPasswordSetupUiState
-    public data class FormError(val cause: BackupPasswordSetupFormError) : BackupPasswordSetupUiState
-    public data object Success : BackupPasswordSetupUiState
+public sealed class BackupPasswordSetupState(
+    public open val data: BackupPasswordSetupData
+) {
+    public data class Idle(
+        override val data: BackupPasswordSetupData
+    ) : BackupPasswordSetupState(data)
+
+    public data class Loading(
+        override val data: BackupPasswordSetupData
+    ) : BackupPasswordSetupState(data)
+
+    public data class Error(
+        override val data: BackupPasswordSetupData,
+        val message: String?
+    ) : BackupPasswordSetupState(data)
+
+    public data class FormError(
+        override val data: BackupPasswordSetupData,
+        val cause: BackupPasswordSetupFormError
+    ) : BackupPasswordSetupState(data)
+
+    public data class Success(
+        override val data: BackupPasswordSetupData
+    ) : BackupPasswordSetupState(data)
 }
 
-internal fun BackupPasswordSetupUiState.formErrorOrNull(): BackupPasswordSetupFormError? =
-    (this as? BackupPasswordSetupUiState.FormError)?.cause
+internal fun BackupPasswordSetupState.formErrorOrNull(): BackupPasswordSetupFormError? =
+    (this as? BackupPasswordSetupState.FormError)?.cause
 
-internal fun BackupPasswordSetupUiState.isPasswordTooShort(): Boolean =
+internal fun BackupPasswordSetupState.isPasswordTooShort(): Boolean =
     formErrorOrNull() == BackupPasswordSetupFormError.PasswordTooShort
 
-internal fun BackupPasswordSetupUiState.arePasswordsNotMatching(): Boolean =
+internal fun BackupPasswordSetupState.arePasswordsNotMatching(): Boolean =
     formErrorOrNull() == BackupPasswordSetupFormError.PasswordsDoNotMatch
 
 public sealed interface BackupPasswordSetupFormError {

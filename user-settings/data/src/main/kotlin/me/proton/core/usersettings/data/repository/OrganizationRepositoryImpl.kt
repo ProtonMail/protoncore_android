@@ -22,6 +22,7 @@ import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
 import com.dropbox.android.external.store4.StoreRequest
+import io.github.reactivecircus.cache4k.Cache
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import me.proton.core.data.arch.buildProtonStore
@@ -29,6 +30,7 @@ import me.proton.core.data.arch.toDataResult
 import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.toPublicKey
 import me.proton.core.network.data.ApiProvider
 import me.proton.core.usersettings.data.api.OrganizationApi
 import me.proton.core.usersettings.data.db.OrganizationDatabase
@@ -37,9 +39,12 @@ import me.proton.core.usersettings.data.extension.fromResponse
 import me.proton.core.usersettings.data.extension.toEntity
 import me.proton.core.usersettings.domain.entity.Organization
 import me.proton.core.usersettings.domain.entity.OrganizationKeys
+import me.proton.core.usersettings.domain.entity.OrganizationSettings
+import me.proton.core.usersettings.domain.entity.OrganizationSignature
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
+import kotlin.time.Duration.Companion.hours
 
 class OrganizationRepositoryImpl @Inject constructor(
     db: OrganizationDatabase,
@@ -77,6 +82,14 @@ class OrganizationRepositoryImpl @Inject constructor(
             deleteAll = { deleteAllOrganizationKeys() }
         )
     ).disableCache().buildProtonStore(scopeProvider) // We don't want potential stale data from memory cache
+
+    private val organizationSignature = Cache.Builder()
+        .expireAfterWrite(1.hours)
+        .build<String, OrganizationSignature>()
+
+    private val organizationSettings = Cache.Builder()
+        .expireAfterWrite(1.hours)
+        .build<String, OrganizationSettings>()
 
     private fun observeOrganizationByUserId(userId: UserId): Flow<Organization?> =
         organizationDao.observeByUserId(userId).map { it?.fromEntity() }
@@ -120,4 +133,37 @@ class OrganizationRepositoryImpl @Inject constructor(
 
     override suspend fun getOrganizationKeys(sessionUserId: SessionUserId, refresh: Boolean) =
         if (refresh) storeOrganizationKeys.fresh(sessionUserId) else storeOrganizationKeys.get(sessionUserId)
+
+    override suspend fun getOrganizationSignature(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): OrganizationSignature = organizationSignature.get(sessionUserId.id) {
+        apiProvider.get<OrganizationApi>(sessionUserId).invoke {
+            val signature = getOrganizationSignature()
+            OrganizationSignature(
+                publicKey = signature.publicKey.toPublicKey(),
+                fingerprintSignature = signature.fingerprintSignature,
+                fingerprintSignatureAddress = signature.fingerprintSignatureAddress
+            )
+        }.valueOrThrow
+    }
+
+    override suspend fun getOrganizationSettings(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): OrganizationSettings = organizationSettings.get(sessionUserId.id) {
+        apiProvider.get<OrganizationApi>(sessionUserId).invoke {
+            val settings = getOrganizationSettings()
+            OrganizationSettings(
+                logoId = settings.logoId
+            )
+        }.valueOrThrow
+    }
+
+    override suspend fun getOrganizationLogo(
+        sessionUserId: SessionUserId,
+        logoId: String
+    ): ByteArray = apiProvider.get<OrganizationApi>(sessionUserId).invoke {
+        getOrganizationLogo(logoId).bytes()
+    }.valueOrThrow
 }

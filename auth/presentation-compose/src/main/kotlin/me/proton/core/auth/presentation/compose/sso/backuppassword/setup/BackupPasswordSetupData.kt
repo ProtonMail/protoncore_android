@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,24 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import coil.request.ImageRequest
+import me.proton.core.crypto.common.pgp.Armored
 
-data class DeviceSecret(
-    val userId: UserId,
-    val deviceId: AuthDeviceId,
-    val secret: DeviceSecretString,
-    val token: DeviceTokenString
-) {
-    companion object {
-        const val DEVICE_SECRET_CONTEXT = "account.device-secret"
-    }
-}
-
-/** base64Encode(random(32bytes)), then encrypted via KeyStore. */
-typealias DeviceSecretString = EncryptedString
-
-/** Opaque string obtained from BE, then encrypted via KeyStore. */
-typealias DeviceTokenString = EncryptedString
+/**
+ * @param organizationIcon Anything that is accepted by [ImageRequest.Builder.data].
+ */
+public data class BackupPasswordSetupData(
+    val organizationAdminEmail: String? = null,
+    val organizationIcon: Any? = null,
+    val organizationName: String? = null,
+    val organizationPublicKey: Armored? = null
+)

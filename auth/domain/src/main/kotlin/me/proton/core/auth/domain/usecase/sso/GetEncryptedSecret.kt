@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
+import me.proton.core.auth.domain.entity.DeviceSecret
 import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.aead.encrypt
@@ -42,7 +43,11 @@ class GetEncryptedSecret @Inject constructor(
         deviceSecret: DeviceSecretString
     ): AeadEncryptedString {
         return pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
-            pgpCrypto.getBase64Encoded(passphrase.array).encrypt(aeadCrypto, key = key.array)
+            pgpCrypto.getBase64Encoded(passphrase.array).encrypt(
+                crypto = aeadCrypto,
+                key = key.array,
+                aad = DeviceSecret.DEVICE_SECRET_CONTEXT.toByteArray()
+            )
         }
     }
 }

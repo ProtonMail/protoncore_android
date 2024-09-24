@@ -24,13 +24,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -80,12 +80,12 @@ public class DeviceSecretViewModel @Inject constructor(
 
     private val userId by lazy { savedStateHandle.getUserId() }
 
-    private val mutableAction = MutableStateFlow<DeviceSecretAction>(DeviceSecretAction.Load)
+    private val mutableAction = MutableStateFlow<DeviceSecretAction>(DeviceSecretAction.Load())
 
     public val state: StateFlow<DeviceSecretViewState> = mutableAction.flatMapLatest { action ->
         when (action) {
-            DeviceSecretAction.Close -> onClose()
-            DeviceSecretAction.Load -> onLoad()
+            is DeviceSecretAction.Close -> onClose()
+            is DeviceSecretAction.Load -> onLoad(action.background)
         }
     }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Loading)
 
@@ -106,18 +106,23 @@ public class DeviceSecretViewModel @Inject constructor(
                     .filterNotNull()
                     .flatMapLatest { device ->
                         when (device.state) {
-                            AuthDeviceState.Inactive -> emptyFlow()
-                            AuthDeviceState.PendingActivation -> emptyFlow()
-                            AuthDeviceState.PendingAdminActivation -> emptyFlow()
-                            AuthDeviceState.NoSession -> emptyFlow()
+                            AuthDeviceState.Inactive -> reload()
+                            AuthDeviceState.PendingActivation -> reload()
+                            AuthDeviceState.PendingAdminActivation -> reload()
+                            AuthDeviceState.NoSession -> onDeviceActivated()
                             AuthDeviceState.Active -> onDeviceActivated()
                             AuthDeviceState.Rejected -> onDeviceRejected()
                         }
                     }
             }
 
-    private fun onLoad(): Flow<DeviceSecretViewState> = flow {
-        emit(Loading)
+    private suspend fun reload(delay: Long = 10000): Flow<DeviceSecretViewState> = flow {
+        delay(delay)
+        emitAll(onLoad(background = true))
+    }
+
+    private fun onLoad(background: Boolean = false): Flow<DeviceSecretViewState> = flow {
+        if (!background) { emit(Loading) }
         emitAll(
             when (val deviceSecret = deviceSecretRepository.getByUserId(userId)) {
                 null -> onMissingDeviceSecret()
@@ -136,32 +141,32 @@ public class DeviceSecretViewModel @Inject constructor(
             }
         )
     }.catch {
-        emit(Error(it.localizedMessage)) // TODO: User should be able to retry (onLoad).
+        emit(Error(it.message))
     }
 
-    private fun onMissingDeviceSecret(): Flow<DeviceSecretViewState> = flow {
+    private fun onMissingDeviceSecret() = flow {
         emit(Loading)
-        val user = userManager.getUser(userId)
+        val user = userManager.getUser(userId, refresh = true)
         when {
             user.keys.isEmpty() -> emitAll(onFirstLogin())
             else -> emitAll(onCreateDevice())
         }
     }
 
-    private fun onFirstLogin(): Flow<DeviceSecretViewState> = flow {
+    private fun onFirstLogin() = flow {
         emit(FirstLogin)
         // BackupPasswordSetupViewModel is creating a AuthDevice.
         emitAll(observeAuthDevice())
     }
 
-    private fun onCreateDevice(): Flow<DeviceSecretViewState> = flow {
+    private fun onCreateDevice() = flow {
         emit(Loading)
         createAuthDevice.invoke(userId, Build.MODEL)
         emitAll(onLoad())
     }
 
-    private fun onDeviceNotActive(): Flow<DeviceSecretViewState> = flow {
-        when (checkOtherDevices.invoke(false, userId)) {
+    private fun onDeviceNotActive() = flow {
+        when (checkOtherDevices.invoke(false /*TODO*/, userId)) {
             is DevicesResult.AdminHelpRequired -> {
                 emit(InvalidSecret.NoDevice.WaitingAdmin)
                 emitAll(observeAuthDevice())
@@ -182,15 +187,18 @@ public class DeviceSecretViewModel @Inject constructor(
                 emit(InvalidSecret.NoDevice.EnterBackupPassword)
                 emitAll(observeAuthDevice())
             }
-            else -> onDeviceActivated()
+
+            else -> emitAll(onDeviceActivated())
         }
     }
 
     private fun onDeviceRejected(): Flow<DeviceSecretViewState> = flow {
+        // TODO: DELETE /device/id
+        accountWorkflow.handleAccountDisabled(userId)
         emit(DeviceRejected)
     }
 
-    private fun onDeviceAssociated(encryptedSecret: AeadEncryptedString): Flow<DeviceSecretViewState> = flow {
+    private fun onDeviceAssociated(encryptedSecret: AeadEncryptedString) = flow {
         emit(Loading)
         activateAuthDevice.invoke(userId, encryptedSecret)
         emitAll(onDeviceActivated())

@@ -21,5 +21,9 @@ package me.proton.core.auth.presentation.compose.sso.backuppassword.input
 public sealed interface BackupPasswordInputOperation
 
 public sealed interface BackupPasswordInputAction : BackupPasswordInputOperation {
-    public data class Submit(val backupPassword: String) : BackupPasswordInputAction
+    public data class Submit(
+        val backupPassword: String,
+        // Unused: force emitting a new state each action.
+        val unused: Long = System.currentTimeMillis()
+    ) : BackupPasswordInputAction
 }

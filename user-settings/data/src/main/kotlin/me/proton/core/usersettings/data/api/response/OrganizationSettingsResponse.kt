@@ -16,24 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.usersettings.data.api.response
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-data class DeviceSecret(
-    val userId: UserId,
-    val deviceId: AuthDeviceId,
-    val secret: DeviceSecretString,
-    val token: DeviceTokenString
-) {
-    companion object {
-        const val DEVICE_SECRET_CONTEXT = "account.device-secret"
-    }
-}
-
-/** base64Encode(random(32bytes)), then encrypted via KeyStore. */
-typealias DeviceSecretString = EncryptedString
-
-/** Opaque string obtained from BE, then encrypted via KeyStore. */
-typealias DeviceTokenString = EncryptedString
+@Serializable
+data class OrganizationSettingsResponse(
+    @SerialName("LogoID")
+    val logoId: String?,
+)

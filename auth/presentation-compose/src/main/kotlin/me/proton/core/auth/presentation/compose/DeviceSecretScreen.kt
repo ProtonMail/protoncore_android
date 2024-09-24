@@ -18,10 +18,14 @@
 
 package me.proton.core.auth.presentation.compose
 
+import android.content.res.Configuration
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Devices
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
@@ -30,13 +34,14 @@ import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Error
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.FirstLogin
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.InvalidSecret
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.SetBackupPasswordNeeded
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
 import me.proton.core.auth.presentation.compose.confirmationcode.ShareConfirmationCodeWithAdminScreen
 import me.proton.core.auth.presentation.compose.confirmationcode.SignInSentForApprovalScreen
 import me.proton.core.auth.presentation.compose.sso.backuppassword.input.BackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupScreen
 import me.proton.core.compose.component.ProtonCenteredProgress
+import me.proton.core.compose.component.ProtonErrorMessageWithAction
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 
 @Composable
@@ -56,6 +61,7 @@ public fun DeviceSecretScreen(
         onClose = onClose,
         onError = onError,
         onSuccess = onSuccess,
+        onLoad = { viewModel.submit(DeviceSecretAction.Load()) },
         onCloseClicked = { viewModel.submit(DeviceSecretAction.Close) },
         onNavigateToAskAdminHelp = onNavigateToAskAdminHelp,
         onNavigateToEnterBackupPassword = onNavigateToEnterBackupPassword,
@@ -69,30 +75,30 @@ public fun DeviceSecretScreen(
     onClose: () -> Unit = {},
     onError: (String?) -> Unit = {},
     onSuccess: (userId: UserId) -> Unit = {},
+    onLoad: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
     onNavigateToAskAdminHelp: () -> Unit = {},
     onNavigateToEnterBackupPassword: () -> Unit = {},
     state: DeviceSecretViewState
 ) {
-    LaunchedEffect(state) {
-        when (state) {
-            is Close -> onClose()
-            is Error -> onError(state.message)
-            else -> Unit
-        }
-    }
-
     when (state) {
-        is Close -> Unit
-        is Error -> Unit
-
+        is Close -> onClose()
+        is Success -> onSuccess(state.userId)
+        // TODO: Replace ProtonCenteredProgress by a new screen.
         is Loading -> ProtonCenteredProgress()
+        // TODO: Replace ProtonErrorMessageWithAction by a new screen.
+        is Error -> ProtonErrorMessageWithAction(
+            errorMessage = state.message ?: "Unknown",
+            action = stringResource(R.string.presentation_retry),
+            onAction = { onLoad() },
+            elevation = 0.dp
+        )
 
         is FirstLogin -> BackupPasswordSetupScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
             onError = onError,
-            onSuccess = { Unit }
+            onSuccess = { onLoad() }
         )
 
         is InvalidSecret.NoDevice.EnterBackupPassword -> BackupPasswordInputScreen(
@@ -117,14 +123,36 @@ public fun DeviceSecretScreen(
             onAskAdminHelpClicked = onNavigateToAskAdminHelp
         )
 
-        is SetBackupPasswordNeeded -> BackupPasswordSetupScreen(
-            modifier = modifier,
-            onCloseClicked = onCloseClicked,
-            onError = onError,
-            onSuccess = { Unit }
-        )
-
         is DeviceRejected -> TODO()
-        is Success -> onSuccess(state.userId)
+    }
+}
+
+@Preview(name = "Light mode")
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "Small screen height", heightDp = SMALL_SCREEN_HEIGHT)
+@Preview(name = "Foldable", device = Devices.FOLDABLE)
+@Preview(name = "Tablet", device = Devices.PIXEL_C)
+@Preview(name = "Horizontal", widthDp = 800, heightDp = 360)
+@Composable
+private fun DeviceSecretScreenErrorPreview() {
+    ProtonTheme {
+        DeviceSecretScreen(
+            state = Error("An error occurs. Please try again.")
+        )
+    }
+}
+
+@Preview(name = "Light mode")
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Preview(name = "Small screen height", heightDp = SMALL_SCREEN_HEIGHT)
+@Preview(name = "Foldable", device = Devices.FOLDABLE)
+@Preview(name = "Tablet", device = Devices.PIXEL_C)
+@Preview(name = "Horizontal", widthDp = 800, heightDp = 360)
+@Composable
+private fun DeviceSecretScreenLoadingPreview() {
+    ProtonTheme {
+        DeviceSecretScreen(
+            state = Loading
+        )
     }
 }

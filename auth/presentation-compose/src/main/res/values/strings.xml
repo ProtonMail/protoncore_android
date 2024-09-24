@@ -53,7 +53,7 @@
     <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
     <string name="backup_password_input_title">Enter your backup password</string>
     <string name="backup_password_setup_title" comment="1 - company name">Join %1$s</string>
-    <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin; 2 - Name of a Proton product">%1$s invited you to join their organization on %2$s.</string>
+    <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s added you to their Proton organization.</string>
     <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
     <string name="backup_password_setup_password_label">Backup password</string>
     <string name="backup_password_setup_repeat_password_label">Repeat backup password</string>

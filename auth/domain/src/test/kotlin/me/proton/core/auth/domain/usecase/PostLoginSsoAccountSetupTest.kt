@@ -29,12 +29,14 @@ import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
+import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.repository.PassphraseRepository
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertTrue
@@ -43,6 +45,7 @@ class PostLoginSsoAccountSetupTest {
 
     private lateinit var userManager: UserManager
     private lateinit var sessionManager: SessionManager
+    private lateinit var passphraseRepository: PassphraseRepository
 
     private lateinit var accountWorkflowHandler: AccountWorkflowHandler
     private lateinit var unlockUserPrimaryKey: UnlockUserPrimaryKey
@@ -57,6 +60,7 @@ class PostLoginSsoAccountSetupTest {
     private lateinit var tested: PostLoginSsoAccountSetup
 
     private val testUserId: UserId = UserId("user-id")
+    private val passphrase = EncryptedByteArray(ByteArray(0))
 
     @Before
     fun setUp() {
@@ -72,6 +76,9 @@ class PostLoginSsoAccountSetupTest {
         }
         userManager = mockk {
             coEvery { getUser(any(), any()) } returns user
+        }
+        passphraseRepository = mockk {
+            coEvery { getPassphrase(any()) } returns passphrase
         }
         sessionManager = mockk {
             coEvery { getSessionId(any()) } returns sessionId
@@ -121,6 +128,7 @@ class PostLoginSsoAccountSetupTest {
         userManager = userManager,
         sessionManager = sessionManager,
         product = product,
+        passphraseRepository = passphraseRepository,
         checkDeviceSecret = checkDeviceSecret,
         decryptEncryptedSecret = decryptEncryptedSecret
     )

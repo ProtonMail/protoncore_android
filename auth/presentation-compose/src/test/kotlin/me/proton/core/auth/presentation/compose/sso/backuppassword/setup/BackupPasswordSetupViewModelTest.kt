@@ -21,22 +21,15 @@ package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
-import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
-import io.mockk.mockk
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.yield
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
 import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
 import me.proton.core.crypto.common.context.CryptoContext
-import me.proton.core.domain.entity.Product
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
 import me.proton.core.test.kotlin.CoroutinesTest
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.usersettings.domain.usecase.GetOrganization
 import kotlin.test.BeforeTest
 import kotlin.test.Test
@@ -62,6 +55,9 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var createAuthDevice: CreateAuthDevice
 
+    @MockK
+    private lateinit var organizationRepository: OrganizationRepository
+
     private lateinit var tested: BackupPasswordSetupViewModel
 
     @BeforeTest
@@ -69,99 +65,31 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
         MockKAnnotations.init(this)
         tested = BackupPasswordSetupViewModel(
             savedStateHandle = SavedStateHandle(mapOf(DeviceSecretRoutes.Arg.KEY_USER_ID to "user-id")),
-            product = Product.Mail,
             context = context,
-            getOrganization = getOrganization,
             generateDeviceSecret = generateDeviceSecret,
             verifyUnprivatization = verifyUnprivatization,
             setupPrimaryKeys = setupPrimaryKeys,
-            createAuthDevice = createAuthDevice
+            createAuthDevice = createAuthDevice,
+            organizationRepository = organizationRepository
         )
-    }
-
-    @Test
-    fun `loading organization data`() = coroutinesTest {
-        // GIVEN
-        coEvery { getOrganization(any(), any()) } coAnswers {
-            yield()
-            mockk {
-                every { displayName } returns "Test Organization"
-            }
-        }
-
-        tested.data.combine(tested.state) { data, state -> data to state }.test {
-            assertEquals(
-                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Idle),
-                awaitItem()
-            )
-
-            assertEquals(
-                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Loading),
-                awaitItem()
-            )
-
-            assertEquals(
-                Pair(
-                    BackupPasswordSetupUiData(
-                        organizationName = "Test Organization",
-                        product = Product.Mail
-                    ), BackupPasswordSetupUiState.Loading
-                ),
-                awaitItem()
-            )
-
-            assertEquals(
-                Pair(
-                    BackupPasswordSetupUiData(
-                        organizationName = "Test Organization",
-                        product = Product.Mail
-                    ), BackupPasswordSetupUiState.Idle
-                ),
-                awaitItem()
-            )
-        }
-    }
-
-    @Test
-    fun `loading organization data - failure`() = coroutinesTest {
-        // GIVEN
-        val loadingError = ApiException(ApiResult.Error.Timeout(isConnectedToNetwork = true))
-        coEvery { getOrganization(any(), any()) } coAnswers {
-            yield()
-            throw loadingError
-        }
-
-        tested.data.combine(tested.state) { data, state -> data to state }.test {
-            assertEquals(
-                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Idle),
-                awaitItem()
-            )
-
-            assertEquals(
-                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Loading),
-                awaitItem()
-            )
-
-            assertEquals(
-                Pair(BackupPasswordSetupUiData(product = Product.Mail), BackupPasswordSetupUiState.Error(loadingError.localizedMessage)),
-                awaitItem()
-            )
-        }
     }
 
     @Test
     fun `password too short`() = coroutinesTest {
         tested.state.test {
-            assertEquals(BackupPasswordSetupUiState.Idle, awaitItem())
+            assertEquals(BackupPasswordSetupState.Idle(BackupPasswordSetupData()), awaitItem())
 
             // WHEN
-            tested.submit(BackupPasswordSetupAction.Submit("1234", "1234")).join()
+            tested.submit(BackupPasswordSetupAction.SetPassword("1234", "1234")).join()
 
             // THEN
-            assertEquals(BackupPasswordSetupUiState.Loading, awaitItem())
+            assertEquals(BackupPasswordSetupState.Loading(BackupPasswordSetupData()), awaitItem())
             assertEquals(
-                BackupPasswordSetupUiState.FormError(BackupPasswordSetupFormError.PasswordTooShort),
-                awaitItem()
+                expected = BackupPasswordSetupState.FormError(
+                    data = BackupPasswordSetupData(),
+                    cause = BackupPasswordSetupFormError.PasswordTooShort
+                ),
+                actual = awaitItem()
             )
         }
     }
@@ -169,15 +97,19 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
     @Test
     fun `passwords not matching`() = coroutinesTest {
         tested.state.test {
-            assertEquals(BackupPasswordSetupUiState.Idle, awaitItem())
+            assertEquals(BackupPasswordSetupState.Idle(BackupPasswordSetupData()), awaitItem())
 
             // WHEN
-            tested.submit(BackupPasswordSetupAction.Submit("12341234", "123412345")).join()
+            tested.submit(BackupPasswordSetupAction.SetPassword("12341234", "123412345")).join()
 
             // THEN
-            assertEquals(BackupPasswordSetupUiState.Loading, awaitItem())
+            assertEquals(BackupPasswordSetupState.Loading(BackupPasswordSetupData()), awaitItem())
             assertEquals(
-                BackupPasswordSetupUiState.FormError(BackupPasswordSetupFormError.PasswordsDoNotMatch), awaitItem()
+                expected = BackupPasswordSetupState.FormError(
+                    data = BackupPasswordSetupData(),
+                    cause = BackupPasswordSetupFormError.PasswordsDoNotMatch
+                ),
+                actual = awaitItem()
             )
         }
     }

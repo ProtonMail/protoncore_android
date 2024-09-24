@@ -16,24 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.entity
+package me.proton.core.usersettings.domain.entity
 
-import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.UserId
+import me.proton.core.crypto.common.pgp.Signature
+import me.proton.core.key.domain.entity.key.PublicKey
 
-data class DeviceSecret(
-    val userId: UserId,
-    val deviceId: AuthDeviceId,
-    val secret: DeviceSecretString,
-    val token: DeviceTokenString
-) {
-    companion object {
-        const val DEVICE_SECRET_CONTEXT = "account.device-secret"
-    }
-}
-
-/** base64Encode(random(32bytes)), then encrypted via KeyStore. */
-typealias DeviceSecretString = EncryptedString
-
-/** Opaque string obtained from BE, then encrypted via KeyStore. */
-typealias DeviceTokenString = EncryptedString
+data class OrganizationSignature(
+    val publicKey: PublicKey,
+    val fingerprintSignature: Signature,
+    val fingerprintSignatureAddress: String
+)

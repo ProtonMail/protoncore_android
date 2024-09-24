@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
+import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.DeviceSecret
 import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
@@ -43,7 +44,7 @@ class CreateAuthDevice @Inject constructor(
         userId: UserId,
         deviceName: String,
         deviceSecret: DeviceSecretString = generateDeviceSecret.invoke(),
-    ) {
+    ): CreatedDevice {
         // Fetch via GET /addresses the address keys of the primary address
         val userAddresses = addressRepository.getAddresses(userId)
         val activePrimaryAddressKey = userAddresses.primary()?.takeIf { it.keys.primary()?.privateKey?.isActive == true }
@@ -69,5 +70,6 @@ class CreateAuthDevice @Inject constructor(
                 token = result.deviceToken
             )
         )
+        return result
     }
 }

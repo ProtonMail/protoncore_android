@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,17 +16,19 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
+package me.proton.core.usersettings.data.api.response
 
-import coil.request.ImageRequest
-import me.proton.core.domain.entity.Product
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Signature
 
-/**
- * @param organizationIcon Anything that is accepted by [ImageRequest.Builder.data].
- */
-public data class BackupPasswordSetupUiData(
-    val product: Product,
-    val organizationAdminEmail: String? = null,
-    val organizationIcon: Any? = null,
-    val organizationName: String? = null,
+@Serializable
+data class OrganizationSignatureResponse(
+    @SerialName("PublicKey")
+    val publicKey: Armored,
+    @SerialName("FingerprintSignature")
+    val fingerprintSignature: Signature,
+    @SerialName("Signature")
+    val fingerprintSignatureAddress: String,
 )

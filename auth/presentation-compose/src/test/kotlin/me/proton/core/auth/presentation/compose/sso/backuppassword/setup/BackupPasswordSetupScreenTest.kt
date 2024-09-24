@@ -20,9 +20,10 @@ package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
+import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupState.FormError
+import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupState.Idle
+import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupState.Loading
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.domain.entity.Product
-import me.proton.core.presentation.utils.StringBox
 import org.junit.Rule
 import kotlin.test.Test
 
@@ -38,8 +39,7 @@ class BackupPasswordSetupScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordSetupScreen(
-                    data = BackupPasswordSetupUiData(Product.Mail),
-                    state = BackupPasswordSetupUiState.Loading
+                    state = Loading(data = BackupPasswordSetupData())
                 )
             }
         }
@@ -50,13 +50,13 @@ class BackupPasswordSetupScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordSetupScreen(
-                    data = BackupPasswordSetupUiData(
-                        Product.Mail,
-                        organizationAdminEmail = "admin@example.test",
-                        organizationIcon = null,
-                        organizationName = "Example Organization",
-                    ),
-                    state = BackupPasswordSetupUiState.Idle
+                    state = Idle(
+                        data = BackupPasswordSetupData(
+                            organizationAdminEmail = "admin@example.test",
+                            organizationIcon = null,
+                            organizationName = "Example Organization",
+                        )
+                    )
                 )
             }
         }
@@ -67,13 +67,14 @@ class BackupPasswordSetupScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordSetupScreen(
-                    data = BackupPasswordSetupUiData(
-                        Product.Mail,
-                        organizationAdminEmail = "admin@example.test",
-                        organizationIcon = null,
-                        organizationName = "Example Organization",
-                    ),
-                    state = BackupPasswordSetupUiState.FormError(BackupPasswordSetupFormError.PasswordTooShort)
+                    state = FormError(
+                        data = BackupPasswordSetupData(
+                            organizationAdminEmail = "admin@example.test",
+                            organizationIcon = null,
+                            organizationName = "Example Organization",
+                        ),
+                        cause = BackupPasswordSetupFormError.PasswordTooShort
+                    )
                 )
             }
         }
@@ -84,13 +85,14 @@ class BackupPasswordSetupScreenTest {
         paparazzi.snapshot {
             ProtonTheme {
                 BackupPasswordSetupScreen(
-                    data = BackupPasswordSetupUiData(
-                        Product.Mail,
-                        organizationAdminEmail = "admin@example.test",
-                        organizationIcon = null,
-                        organizationName = "Example Organization",
-                    ),
-                    state = BackupPasswordSetupUiState.FormError(BackupPasswordSetupFormError.PasswordsDoNotMatch)
+                    state = FormError(
+                        data = BackupPasswordSetupData(
+                            organizationAdminEmail = "admin@example.test",
+                            organizationIcon = null,
+                            organizationName = "Example Organization",
+                        ),
+                        cause = BackupPasswordSetupFormError.PasswordsDoNotMatch
+                    )
                 )
             }
         }

@@ -20,8 +20,13 @@ package me.proton.core.usersettings.data.api
 
 import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.usersettings.data.api.response.OrganizationKeysResponse
+import me.proton.core.usersettings.data.api.response.OrganizationSettingsResponse
+import me.proton.core.usersettings.data.api.response.OrganizationSignatureResponse
 import me.proton.core.usersettings.data.api.response.SingleOrganizationResponse
+import okhttp3.ResponseBody
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Streaming
 
 interface OrganizationApi : BaseRetrofitApi {
     @GET("core/v4/organizations")
@@ -29,4 +34,14 @@ interface OrganizationApi : BaseRetrofitApi {
 
     @GET("core/v4/organizations/keys")
     suspend fun getOrganizationKeys(): OrganizationKeysResponse
+
+    @GET("core/v4/organizations/keys/signature")
+    suspend fun getOrganizationSignature(): OrganizationSignatureResponse
+
+    @GET("core/v4/organizations/settings")
+    suspend fun getOrganizationSettings(): OrganizationSettingsResponse
+
+    @Streaming
+    @GET("core/v4/organizations/logo/{logoId}")
+    suspend fun getOrganizationLogo(@Path("logoId") logoId: String): ResponseBody
 }

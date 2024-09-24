@@ -47,6 +47,7 @@ class VerifyUnprivatization @Inject constructor(
         object PublicAddressKeysError : Result
         object VerificationError : Result
         data class UnprivatizeUserSuccess(
+            val adminEmail: String,
             val organizationPublicKey: Armored
         ) : Result
     }
@@ -79,7 +80,10 @@ class VerifyUnprivatization @Inject constructor(
             verificationContext = VerificationContext("account.organization-fingerprint", ContextRequirement.Required.Always)
         )
         return if (verificationResult) {
-            Result.UnprivatizeUserSuccess(unprivatizationInfo.orgPublicKey)
+            Result.UnprivatizeUserSuccess(
+                adminEmail = adminEmail,
+                organizationPublicKey = unprivatizationInfo.orgPublicKey
+            )
         } else {
             Result.VerificationError
         }

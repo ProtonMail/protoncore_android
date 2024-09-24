@@ -21,6 +21,10 @@ package me.proton.core.auth.presentation.compose
 public sealed interface DeviceSecretOperation
 
 public sealed interface DeviceSecretAction : DeviceSecretOperation {
-    public data object Load : DeviceSecretAction
+    public data class Load(
+        val background: Boolean = false,
+        // Unused: force emitting a new state each action.
+        val unused: Long = System.currentTimeMillis()
+    ) : DeviceSecretAction
     public data object Close : DeviceSecretAction
 }

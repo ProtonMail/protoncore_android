@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
+import me.proton.core.user.domain.repository.PassphraseRepository
 import javax.inject.Inject
 
 /**
@@ -39,10 +40,13 @@ class PostLoginSsoAccountSetup @Inject constructor(
     private val userManager: UserManager,
     private val sessionManager: SessionManager,
     private val product: Product,
+    private val passphraseRepository: PassphraseRepository,
     private val checkDeviceSecret: CheckDeviceSecret,
     private val decryptEncryptedSecret: DecryptEncryptedSecret
 ) {
     suspend operator fun invoke(userId: UserId): Result {
+        // Make sure we have the User in DB.
+        userManager.getUser(userId)
         return when {
             product == Product.Vpn -> userCheck(userId)
             else -> secretCheck(userId)
@@ -50,10 +54,17 @@ class PostLoginSsoAccountSetup @Inject constructor(
     }
 
     private suspend fun secretCheck(userId: UserId): Result {
-        val encryptedSecret = checkDeviceSecret.invoke(userId)
-        return when (val decryptedSecret = decryptEncryptedSecret.invoke(userId, encryptedSecret)) {
-            null -> deviceSecretNeeded(userId)
-            else -> unlockUserWithPassphrase(userId, decryptedSecret)
+        val passphrase = passphraseRepository.getPassphrase(userId)
+        return when {
+            passphrase != null -> unlockUserWithPassphrase(userId, passphrase)
+            else -> {
+                val encryptedSecret = checkDeviceSecret.invoke(userId)
+                val decryptedSecret = decryptEncryptedSecret.invoke(userId, encryptedSecret)
+                return when (decryptedSecret) {
+                    null -> deviceSecretNeeded(userId)
+                    else -> unlockUserWithPassphrase(userId, decryptedSecret)
+                }
+            }
         }
     }
 

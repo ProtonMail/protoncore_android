@@ -29,7 +29,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceSecretAction
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
-import me.proton.core.auth.presentation.compose.DeviceSecretScreen
 import me.proton.core.auth.presentation.compose.DeviceSecretViewModel
 import me.proton.core.auth.presentation.entity.DeviceSecretResult
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addEnterBackupPasswordScreen

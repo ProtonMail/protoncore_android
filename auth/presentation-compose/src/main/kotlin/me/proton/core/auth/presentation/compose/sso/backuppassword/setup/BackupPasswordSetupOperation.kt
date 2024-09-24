@@ -21,8 +21,11 @@ package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 public sealed interface BackupPasswordSetupOperation
 
 public sealed interface BackupPasswordSetupAction : BackupPasswordSetupOperation {
-    public data class Submit(
+    public data object Load: BackupPasswordSetupAction
+    public data class SetPassword(
         val backupPassword: String,
-        val repeatBackupPassword: String
+        val repeatBackupPassword: String,
+        // Unused: force emitting a new state each action.
+        val unused: Long = System.currentTimeMillis()
     ) : BackupPasswordSetupAction
 }

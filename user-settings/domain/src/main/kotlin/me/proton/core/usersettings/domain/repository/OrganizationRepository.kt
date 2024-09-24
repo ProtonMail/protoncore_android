@@ -23,6 +23,8 @@ import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.usersettings.domain.entity.Organization
 import me.proton.core.usersettings.domain.entity.OrganizationKeys
+import me.proton.core.usersettings.domain.entity.OrganizationSettings
+import me.proton.core.usersettings.domain.entity.OrganizationSignature
 
 interface OrganizationRepository {
 
@@ -47,4 +49,19 @@ interface OrganizationRepository {
         sessionUserId: SessionUserId,
         refresh: Boolean = false
     ): OrganizationKeys
+
+    suspend fun getOrganizationSignature(
+        sessionUserId: SessionUserId,
+        refresh: Boolean
+    ): OrganizationSignature
+
+    suspend fun getOrganizationSettings(
+        sessionUserId: SessionUserId,
+        refresh: Boolean = false
+    ): OrganizationSettings
+
+    suspend fun getOrganizationLogo(
+        sessionUserId: SessionUserId,
+        logoId: String
+    ): ByteArray
 }

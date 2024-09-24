@@ -36,8 +36,6 @@ public sealed interface DeviceSecretViewState {
         }
     }
 
-    public data object SetBackupPasswordNeeded : DeviceSecretViewState
-
     public data object DeviceRejected : DeviceSecretViewState
 
     public data class Error(val message: String?) : DeviceSecretViewState
