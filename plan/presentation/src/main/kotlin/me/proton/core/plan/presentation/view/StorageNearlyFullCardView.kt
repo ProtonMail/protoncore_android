@@ -22,6 +22,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import me.proton.core.domain.entity.Product
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.StorageNearlyFullBinding.inflate
@@ -58,12 +59,14 @@ class StorageNearlyFullCardView @JvmOverloads constructor(
     }
 
     fun onUpgradeAvailable(listener: () -> Unit) {
-        binding.actionButton.setOnClickListener { listener() }
-        binding.actionButton.text = context.getString(R.string.plans_subscription_storage_get_more)
+        binding.actionButton.apply {
+            setOnClickListener { listener() }
+        }
     }
 
     fun onUpgradeUnavailable() {
-        binding.actionButton.setOnClickListener(null)
-        binding.actionButton.text = context.getString(R.string.plans_can_not_upgrade_from_mobile)
+        binding.actionButton.apply {
+            setOnClickListener(null)
+        }
     }
 }

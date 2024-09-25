@@ -92,6 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/plans_subscription_storage_get_more"
+                android:drawableEnd="@drawable/ic_proton_arrow_out_square"
+                android:drawableTint="@color/btn_text_outlined_selector"
+                android:drawablePadding="@dimen/gap_small"
                 app:layout_constraintStart_toEndOf="@id/barrier"
                 app:layout_constraintTop_toBottomOf="@id/bodyView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
