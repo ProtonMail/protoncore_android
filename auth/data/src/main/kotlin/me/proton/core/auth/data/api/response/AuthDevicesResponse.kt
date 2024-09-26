@@ -22,6 +22,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.entity.AddressId
@@ -42,6 +43,8 @@ data class AuthDeviceResponse(
     val name: String,
     @SerialName("LocalizedClientName")
     val localizedClientName: String,
+    @SerialName("Platform")
+    val platform: String?,
     @SerialName("CreateTime")
     val createTime: Long,
     @SerialName("ActivateTime")
@@ -61,6 +64,7 @@ data class AuthDeviceResponse(
             deviceId = AuthDeviceId(id),
             name = name,
             localizedClientName = localizedClientName,
+            platform = AuthDevicePlatform.enumOf(platform),
             createdAtUtcSeconds = createTime,
             activatedAtUtcSeconds = activateTime,
             rejectedAtUtcSeconds = rejectTime,

@@ -109,6 +109,7 @@ public class DeviceSecretViewModel @Inject constructor(
                             AuthDeviceState.Inactive -> emptyFlow()
                             AuthDeviceState.PendingActivation -> emptyFlow()
                             AuthDeviceState.PendingAdminActivation -> emptyFlow()
+                            AuthDeviceState.NoSession -> emptyFlow()
                             AuthDeviceState.Active -> onDeviceActivated()
                             AuthDeviceState.Rejected -> onDeviceRejected()
                         }

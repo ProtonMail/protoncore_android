@@ -381,4 +381,10 @@ object AppDatabaseMigrations {
             AuthDatabase.MIGRATION_4.migrate(db)
         }
     }
+
+    val MIGRATION_54_55 = object : Migration(54, 55) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            AuthDatabase.MIGRATION_5.migrate(db)
+        }
+    }
 }

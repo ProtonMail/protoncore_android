@@ -24,6 +24,7 @@ import androidx.room.Index
 import me.proton.core.account.data.entity.AccountEntity
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.crypto.common.pgp.EncryptedMessage
 import me.proton.core.domain.entity.UserId
@@ -51,6 +52,7 @@ data class AuthDeviceEntity(
     val state: Int,
     val name: String,
     val localizedClientName: String,
+    val platform: String?,
     val createdAtUtcSeconds: Long,
     val activatedAtUtcSeconds: Long?,
     val rejectedAtUtcSeconds: Long?,
@@ -65,6 +67,7 @@ fun AuthDeviceEntity.toAuthDevice() = AuthDevice(
     state = AuthDeviceState.map[state] ?: AuthDeviceState.Inactive,
     name = name,
     localizedClientName = localizedClientName,
+    platform = AuthDevicePlatform.enumOf(platform),
     createdAtUtcSeconds = createdAtUtcSeconds,
     activatedAtUtcSeconds = activatedAtUtcSeconds,
     rejectedAtUtcSeconds = rejectedAtUtcSeconds,
@@ -79,6 +82,7 @@ fun AuthDevice.toAuthDeviceEntity() = AuthDeviceEntity(
     state = state.value,
     name = name,
     localizedClientName = localizedClientName,
+    platform = platform?.value,
     createdAtUtcSeconds = createdAtUtcSeconds,
     activatedAtUtcSeconds = activatedAtUtcSeconds,
     rejectedAtUtcSeconds = rejectedAtUtcSeconds,

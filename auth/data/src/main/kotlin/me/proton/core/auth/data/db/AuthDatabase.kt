@@ -86,5 +86,15 @@ interface AuthDatabase : Database {
                 database.execSQL("CREATE INDEX IF NOT EXISTS `index_MemberDeviceEntity_addressId` ON `MemberDeviceEntity` (`addressId`)")
             }
         }
+
+        val MIGRATION_5 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "AuthDeviceEntity",
+                    column = "platform",
+                    type = "TEXT"
+                )
+            }
+        }
     }
 }
