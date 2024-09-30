@@ -60,6 +60,9 @@
     <string name="backup_password_setup_continue_action">Continue</string>
     <string name="backup_password_setup_password_too_short">Password should be at least 8 characters long.</string>
     <string name="backup_password_setup_password_not_matching">Passwords do not match.</string>
+    <string name="backup_password_invalid">Invalid backup password.</string>
+    <string name="backup_password_no_primary_key">No Primary Key.</string>
+    <string name="backup_password_no_key_salts">No Key Salts.</string>
 
     <string name="auth_login_back_to_sign_in">Back to sign-in</string>
     <string name="auth_login_access_denied">Access Denied</string>

@@ -22,4 +22,5 @@ object LogTag {
     const val INVALID_SRP_PROOF = "core.auth.domain.srp.invalid.server.proof"
     const val PERFORM_SUBSCRIBE = "core.auth.domain.perform.subscribe"
     const val ORGANIZATION_LOAD = "core.auth.domain.organization.load"
+    const val BACKUP_PASS_UNLOCK_USER = "core.auth.domain.perform.backuppass.unlockuser"
 }

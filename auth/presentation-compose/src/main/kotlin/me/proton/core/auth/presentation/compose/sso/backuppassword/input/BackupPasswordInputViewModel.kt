@@ -36,6 +36,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.R
@@ -46,6 +47,7 @@ import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.util.kotlin.catchAll
 import javax.inject.Inject
 
 @HiltViewModel
@@ -85,13 +87,13 @@ public class BackupPasswordInputViewModel @Inject constructor(
         emit(BackupPasswordInputState.Loading)
         backupPassword.toByteArray().use { password ->
             when (userManager.unlockWithPassword(userId, password)) {
-                UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> error("No Key Salts")
-                UserManager.UnlockResult.Error.NoPrimaryKey -> error("No Primary Key")
-                UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> error("Invalid backup password")
+                UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> error(context.getString(R.string.backup_password_no_key_salts))
+                UserManager.UnlockResult.Error.NoPrimaryKey -> error(context.getString(R.string.backup_password_no_primary_key))
+                UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> error(context.getString(R.string.backup_password_invalid))
                 UserManager.UnlockResult.Success -> emitAll(onActivateDevice())
             }
         }
-    }.catch {
+    }.catchAll(LogTag.BACKUP_PASS_UNLOCK_USER) {
         emit(BackupPasswordInputState.Error(it.message))
     }
 
