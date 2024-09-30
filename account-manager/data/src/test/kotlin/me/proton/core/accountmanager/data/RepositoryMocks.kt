@@ -217,6 +217,6 @@ class RepositoryMocks(
         val sessionIdSlot = slot<SessionId>()
 
         // Assume revokeSession is done successfully.
-        coEvery { authRepository.revokeSession(capture(sessionIdSlot)) } returns true
+        coEvery { authRepository.revokeSession(capture(sessionIdSlot), any()) } returns true
     }
 }

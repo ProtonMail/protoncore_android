@@ -333,7 +333,7 @@ class AuthRepositoryImplTest {
         // GIVEN
         coEvery { apiManager.invoke<Boolean>(any(), any()) } returns ApiResult.Success(true)
         // WHEN
-        val response = repository.revokeSession(testSessionId)
+        val response = repository.revokeSession(testSessionId, false)
         // THEN
         assertTrue(response)
     }
@@ -347,7 +347,7 @@ class AuthRepositoryImplTest {
             proton = ApiResult.Error.ProtonData(1, "test login error")
         )
         // WHEN
-        val response = repository.revokeSession(testSessionId)
+        val response = repository.revokeSession(testSessionId, false)
         // THEN
         assertTrue(response)
     }
@@ -359,7 +359,7 @@ class AuthRepositoryImplTest {
             isConnectedToNetwork = false, cause = ConnectException("connection refused")
         )
         // WHEN
-        val response = repository.revokeSession(testSessionId)
+        val response = repository.revokeSession(testSessionId, false)
         // THEN
         assertTrue(response)
     }

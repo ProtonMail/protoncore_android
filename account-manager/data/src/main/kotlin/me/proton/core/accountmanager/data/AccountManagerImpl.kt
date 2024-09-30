@@ -72,11 +72,11 @@ class AccountManagerImpl @Inject constructor(
 
     private val removeSessionLock = Mutex()
 
-    private suspend fun removeSession(sessionId: SessionId) {
+    private suspend fun removeSession(sessionId: SessionId, revokeAuthDevice: Boolean) {
         removeSessionLock.withLock {
             accountRepository.getAccountOrNull(sessionId)?.let { account ->
                 if (account.sessionState == SessionState.Authenticated) {
-                    authRepository.revokeSession(sessionId)
+                    authRepository.revokeSession(sessionId, revokeAuthDevice)
                 }
             }
             accountRepository.deleteSession(sessionId)
@@ -86,7 +86,7 @@ class AccountManagerImpl @Inject constructor(
     private fun removeAccount(account: Account): Job {
         return scopeProvider.GlobalDefaultSupervisedScope.launch {
             accountRepository.updateAccountState(account.userId, Removed)
-            account.sessionId?.let { removeSession(it) }
+            account.sessionId?.let { removeSession(it, revokeAuthDevice = true) }
             accountRepository.deleteAccount(account.userId)
         }
     }
@@ -94,7 +94,7 @@ class AccountManagerImpl @Inject constructor(
     private fun disableAccount(account: Account, keepSession: Boolean): Job {
         return scopeProvider.GlobalDefaultSupervisedScope.launch {
             accountRepository.updateAccountState(account.userId, Disabled)
-            account.sessionId?.takeUnless { keepSession }?.let { removeSession(it) }
+            account.sessionId?.takeUnless { keepSession }?.let { removeSession(it, revokeAuthDevice = false) }
             userManager.lock(account.userId)
         }
     }
@@ -152,7 +152,7 @@ class AccountManagerImpl @Inject constructor(
     override suspend fun handleSession(account: Account, session: Session) {
         sessionListener.withLock(session.sessionId) {
             // Remove any existing Session.
-            accountRepository.getSessionIdOrNull(account.userId)?.let { removeSession(it) }
+            accountRepository.getSessionIdOrNull(account.userId)?.let { removeSession(it, revokeAuthDevice = false) }
             // Account state must be != Ready if SecondFactorNeeded.
             val state = if (account.isReady() && account.isSecondFactorNeeded()) NotReady else account.state
             accountRepository.createOrUpdateAccountSession(account.copy(state = state), session)

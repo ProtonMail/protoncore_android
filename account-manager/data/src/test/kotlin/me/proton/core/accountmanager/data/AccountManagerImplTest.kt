@@ -168,7 +168,7 @@ class AccountManagerImplTest {
 
         coVerify(exactly = 1) { mocks.accountRepository.createOrUpdateAccountSession(any(), any()) }
         coVerify(exactly = 1) { mocks.accountRepository.deleteSession(any()) }
-        coVerify(exactly = 1) { mocks.authRepository.revokeSession(any()) }
+        coVerify(exactly = 1) { mocks.authRepository.revokeSession(any(), any()) }
     }
 
     @Test

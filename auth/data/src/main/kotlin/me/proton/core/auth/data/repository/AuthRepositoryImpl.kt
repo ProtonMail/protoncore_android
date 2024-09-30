@@ -58,6 +58,7 @@ import me.proton.core.network.domain.TimeoutOverride
 import me.proton.core.network.domain.session.Session
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.util.kotlin.coroutine.result
+import me.proton.core.util.kotlin.toInt
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
@@ -150,14 +151,15 @@ class AuthRepositoryImpl @Inject constructor(
         }.valueOrThrow
     }
 
-    override suspend fun revokeSession(sessionId: SessionId): Boolean =
+    override suspend fun revokeSession(sessionId: SessionId, revokeAuthDevice: Boolean): Boolean =
         provider.get<AuthenticationApi>(sessionId).invoke(forceNoRetryOnConnectionErrors = true) {
             revokeSession(
                 TimeoutOverride(
                     connectionTimeoutSeconds = 1,
                     readTimeoutSeconds = 1,
                     writeTimeoutSeconds = 1
-                )
+                ),
+                revokeAuthDevice = revokeAuthDevice.toInt()
             ).isSuccess()
         }.valueOrNull ?: true // Ignore any error.
 

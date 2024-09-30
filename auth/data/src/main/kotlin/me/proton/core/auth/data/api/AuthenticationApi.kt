@@ -42,6 +42,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Query
 import retrofit2.http.Tag
 
 interface AuthenticationApi : BaseRetrofitApi {
@@ -68,7 +69,7 @@ interface AuthenticationApi : BaseRetrofitApi {
     suspend fun performSecondFactor(@Body request: SecondFactorRequest): SecondFactorResponse
 
     @DELETE("auth/v4")
-    suspend fun revokeSession(@Tag timeout: TimeoutOverride): GenericResponse
+    suspend fun revokeSession(@Tag timeout: TimeoutOverride, @Query("AuthDevice") revokeAuthDevice: Int): GenericResponse
 
     @POST("auth/v4/sessions")
     suspend fun requestSession(@Body request: RequestSessionRequest): SessionResponse

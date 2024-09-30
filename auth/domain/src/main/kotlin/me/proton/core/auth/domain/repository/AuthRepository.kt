@@ -84,7 +84,8 @@ interface AuthRepository {
      * Revoke session for a given [SessionId].
      */
     suspend fun revokeSession(
-        sessionId: SessionId
+        sessionId: SessionId,
+        revokeAuthDevice: Boolean
     ): Boolean
 
     /**
