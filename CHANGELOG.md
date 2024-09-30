@@ -11,6 +11,31 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [28.0.0] - 2024-09-30
+
+### Breaking Changes
+
+- DB Migrations:
+  - AuthDatabase.MIGRATION_2: Updated AuthDeviceEntity.
+  - AuthDatabase.MIGRATION_3: Update DeviceSecretEntity.
+  - AuthDatabase.MIGRATION_4: Added MemberDeviceEntity.
+
+### Bug Fixes
+
+- plan: Storage full UI fix.
+- user: Filter non-migrated User Address Keys from reactivation (already in 27.2.1).
+
+### Internationalization
+
+- Upgrade translations from crowdin (55f22216).
+
+### Refactoring
+
+- data-room:
+  - Add `BaseDao.deleteChunked` method.
+
+    When using `DELETE FROM table WHERE column IN (item1.., itemN)`,, there is a maximum number of items that SQLite can handle at once.
+
 ## [27.2.0] - 2024-09-09
 
 ### Breaking Changes
