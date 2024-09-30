@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [28.1.0] - 2024-09-30
+
+### Tests
+
+- Reworked ProtonRule to work with multiple @SeedUser annotations.
+- Updated module tests with test rules package.
+
 ## [28.0.0] - 2024-09-30
 
 ### Breaking Changes
