@@ -30,4 +30,7 @@ object LogTag {
 
     /** Info related to Purchases. */
     const val PURCHASE_INFO: String = "core.plan.purchase.info"
+
+    /** Tag related to Dynamic Plan Prices. */
+    const val PRICE_ERROR: String = "core.plan.purchase.price.error"
 }

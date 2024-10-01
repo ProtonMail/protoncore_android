@@ -25,9 +25,11 @@ import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
+import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.entity.DynamicPlanPrice
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.repository.PlansRepository
+import me.proton.core.util.kotlin.CoreLogger
 import java.util.Optional
 import javax.inject.Inject
 
@@ -45,6 +47,9 @@ class GetDynamicPlansAdjustedPrices @Inject constructor(
         if (!getAvailablePaymentProviders(userId).contains(PaymentProvider.GoogleInAppPurchase)) return dynamicPlans
 
         return dynamicPlans.copy(plans = dynamicPlans.plans.map { plan ->
+            if (plan.instances.values.any { it.price.isEmpty() }) {
+                CoreLogger.e(LogTag.PRICE_ERROR, "Plan ${plan.name} prices empty error.")
+            }
             val instances = plan.instances.values.map { instance ->
                 val productId = instance.vendors[AppStore.GooglePlay]?.productId
                 when (val prices = productId?.let { getStorePrice.get().invoke(ProductId(it)) }) {
