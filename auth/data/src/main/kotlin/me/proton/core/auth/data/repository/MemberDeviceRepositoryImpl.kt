@@ -38,6 +38,7 @@ class MemberDeviceRepositoryImpl @Inject constructor(
     private val remoteDataSource: MemberDeviceRemoteDataSource,
     scopeProvider: CoroutineScopeProvider,
 ) : MemberDeviceRepository {
+
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { key: UserId -> remoteDataSource.getPendingMemberDevices(key) },
         sourceOfTruth = SourceOfTruth.Companion.of(
@@ -46,7 +47,7 @@ class MemberDeviceRepositoryImpl @Inject constructor(
             delete = { key -> localDataSource.deleteAll(key) },
             deleteAll = { localDataSource.deleteAll() }
         )
-    ).buildProtonStore(scopeProvider)
+    ).disableCache().buildProtonStore(scopeProvider)
 
     override suspend fun getByMemberId(userId: UserId, memberId: UserId, refresh: Boolean): List<MemberDevice> =
         (if (refresh) store.fresh(userId) else store.get(userId)).filter { it.memberId == memberId }

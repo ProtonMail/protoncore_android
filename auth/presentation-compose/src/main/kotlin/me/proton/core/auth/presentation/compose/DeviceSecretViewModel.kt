@@ -41,8 +41,8 @@ import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.auth.domain.usecase.AssociateAuthDevice
-import me.proton.core.auth.domain.usecase.CheckOtherDevices
+import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice
+import me.proton.core.auth.domain.usecase.sso.CheckOtherDevices
 import me.proton.core.auth.domain.usecase.PostLoginSsoAccountSetup
 import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
 import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
@@ -59,8 +59,8 @@ import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
 import javax.inject.Inject
-import me.proton.core.auth.domain.usecase.AssociateAuthDevice.Result as AssociateResult
-import me.proton.core.auth.domain.usecase.CheckOtherDevices.Result as DevicesResult
+import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice.Result as AssociateResult
+import me.proton.core.auth.domain.usecase.sso.CheckOtherDevices.Result as DevicesResult
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result as SetupResult
 
 @HiltViewModel
@@ -87,15 +87,16 @@ public class DeviceSecretViewModel @Inject constructor(
             is DeviceSecretAction.Close -> onClose()
             is DeviceSecretAction.Load -> onLoad(action.background)
         }
-    }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Loading)
+    }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Loading(null))
 
     public fun submit(action: DeviceSecretAction): Job = viewModelScope.launch {
         mutableAction.emit(action)
     }
 
     private fun onClose(): Flow<DeviceSecretViewState> = flow {
+        accountWorkflow.handleDeviceSecretFailed(userId)
         accountWorkflow.handleAccountRemoved(userId)
-        emit(Close)
+        emit(Close(email = state.value.email))
     }
 
     private fun observeAuthDevice(): Flow<DeviceSecretViewState> =
@@ -116,13 +117,13 @@ public class DeviceSecretViewModel @Inject constructor(
                     }
             }
 
-    private suspend fun reload(delay: Long = 10000): Flow<DeviceSecretViewState> = flow {
+    private fun reload(delay: Long = 10000): Flow<DeviceSecretViewState> = flow {
         delay(delay)
         emitAll(onLoad(background = true))
     }
 
     private fun onLoad(background: Boolean = false): Flow<DeviceSecretViewState> = flow {
-        if (!background) { emit(Loading) }
+        if (!background) { emit(Loading(userManager.getUser(userId).email)) }
         emitAll(
             when (val deviceSecret = deviceSecretRepository.getByUserId(userId)) {
                 null -> onCreateDevice()
@@ -141,11 +142,11 @@ public class DeviceSecretViewModel @Inject constructor(
             }
         )
     }.catch {
-        emit(Error(it.message))
+        emit(Error(email = state.value.email, it.message))
     }
 
     private fun onCreateDevice() = flow {
-        emit(Loading)
+        emit(Loading(email = state.value.email))
         createAuthDevice.invoke(userId, Build.MODEL)
         emitAll(onLoad())
     }
@@ -159,19 +160,19 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onFirstLogin() = flow {
-        emit(FirstLogin)
+        emit(FirstLogin(email = state.value.email))
         emitAll(observeAuthDevice())
     }
 
     private fun onCheckOtherDevices() = flow {
         when (checkOtherDevices.invoke(false /*TODO*/, userId)) {
             is DevicesResult.AdminHelpRequired -> {
-                emit(InvalidSecret.NoDevice.WaitingAdmin)
+                emit(InvalidSecret.NoDevice.WaitingAdmin(email = state.value.email))
                 emitAll(observeAuthDevice())
             }
 
             is DevicesResult.OtherDevicesAvailable -> {
-                emit(InvalidSecret.OtherDevice.WaitingMember)
+                emit(InvalidSecret.OtherDevice.WaitingMember(email = state.value.email))
                 emitAll(observeAuthDevice())
             }
 
@@ -182,7 +183,7 @@ public class DeviceSecretViewModel @Inject constructor(
     private fun onLoginWithBackup() = flow {
         when (passphraseRepository.getPassphrase(userId)) {
             null -> {
-                emit(InvalidSecret.NoDevice.EnterBackupPassword)
+                emit(InvalidSecret.NoDevice.EnterBackupPassword(email = state.value.email))
                 emitAll(observeAuthDevice())
             }
 
@@ -195,21 +196,21 @@ public class DeviceSecretViewModel @Inject constructor(
             authDeviceRepository.deleteByDeviceId(userId, deviceId)
         }
         accountWorkflow.handleAccountDisabled(userId)
-        emit(DeviceRejected)
+        emit(DeviceRejected(email = state.value.email))
     }
 
     private fun onDeviceAssociated(encryptedSecret: AeadEncryptedString) = flow {
-        emit(Loading)
+        emit(Loading(email = state.value.email))
         activateAuthDevice.invoke(userId, encryptedSecret)
         emitAll(onDeviceActivated())
     }
 
     private fun onDeviceActivated(): Flow<DeviceSecretViewState> = flow {
-        emit(Loading)
+        emit(Loading(email = state.value.email))
         when (val result = postLoginSsoAccountSetup.invoke(userId)) {
-            is SetupResult.AccountReady -> emit(Success(userId))
-            is SetupResult.Error.UnlockPrimaryKeyError -> emit(Error(null))
-            is SetupResult.Error.UserCheckError -> emit(Error(result.error.localizedMessage))
+            is SetupResult.AccountReady -> emit(Success(email = state.value.email, userId))
+            is SetupResult.Error.UnlockPrimaryKeyError -> emit(Error(email = state.value.email, null))
+            is SetupResult.Error.UserCheckError -> emit(Error(email = state.value.email, result.error.localizedMessage))
             is SetupResult.Need -> error("Unexpected state for SSO user.")
         }
     }

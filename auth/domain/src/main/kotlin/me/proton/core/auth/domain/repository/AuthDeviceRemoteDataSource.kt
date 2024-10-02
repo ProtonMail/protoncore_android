@@ -59,7 +59,10 @@ interface AuthDeviceRemoteDataSource {
         deviceId: AuthDeviceId
     )
 
-    suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo
+    suspend fun requestAdminHelp(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    )
 
-    suspend fun pingAdminForHelp(userId: UserId, deviceId: AuthDeviceId)
+    suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo
 }

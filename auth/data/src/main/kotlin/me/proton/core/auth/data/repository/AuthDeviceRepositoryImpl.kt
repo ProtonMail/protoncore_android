@@ -56,13 +56,15 @@ class AuthDeviceRepositoryImpl @Inject constructor(
             delete = { key -> localDataSource.deleteAll(key) },
             deleteAll = { localDataSource.deleteAll() }
         )
-    ).buildProtonStore(scopeProvider)
+    ).disableCache().buildProtonStore(scopeProvider)
 
     override suspend fun createDevice(
         userId: UserId,
         deviceName: String,
         activationToken: String?
-    ): CreatedDevice = remoteDataSource.createDevice(userId, deviceName, activationToken).apply {
+    ): CreatedDevice = try {
+        remoteDataSource.createDevice(userId, deviceName, activationToken)
+    } finally {
         localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
     }
 
@@ -70,7 +72,9 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         userId: UserId,
         deviceId: AuthDeviceId,
         deviceToken: String
-    ): String = remoteDataSource.associateDevice(userId, deviceId, deviceToken).apply {
+    ): String = try {
+        remoteDataSource.associateDevice(userId, deviceId, deviceToken)
+    } finally {
         localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
     }
 
@@ -78,14 +82,27 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         userId: UserId,
         deviceId: AuthDeviceId,
         encryptedSecret: AeadEncryptedString
-    ): Unit = remoteDataSource.activateDevice(userId, deviceId, encryptedSecret).apply {
+    ) = try {
+        remoteDataSource.activateDevice(userId, deviceId, encryptedSecret)
+    } finally {
         localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
     }
 
     override suspend fun rejectAuthDevice(
         userId: UserId,
         deviceId: AuthDeviceId
-    ): Unit = remoteDataSource.rejectAuthDevice(userId, deviceId).apply {
+    ) = try {
+        remoteDataSource.rejectAuthDevice(userId, deviceId)
+    } finally {
+        localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
+    }
+
+    override suspend fun requestAdminHelp(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    ) = try {
+        remoteDataSource.requestAdminHelp(userId, deviceId)
+    } finally {
         localDataSource.upsert(remoteDataSource.getAuthDevices(userId))
     }
 
@@ -122,11 +139,4 @@ class AuthDeviceRepositoryImpl @Inject constructor(
 
     override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
         remoteDataSource.getUnprivatizationInfo(userId)
-
-    override suspend fun pingAdminForHelp(
-        userId: UserId,
-        deviceId: AuthDeviceId
-    ) {
-        remoteDataSource.pingAdminForHelp(userId, deviceId)
-    }
 }

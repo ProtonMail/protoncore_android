@@ -11,6 +11,7 @@ import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
+import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.KeyStoreCrypto
 import me.proton.core.domain.entity.UserId

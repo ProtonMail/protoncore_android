@@ -52,7 +52,7 @@ interface OrganizationRepository {
 
     suspend fun getOrganizationSignature(
         sessionUserId: SessionUserId,
-        refresh: Boolean
+        refresh: Boolean = false
     ): OrganizationSignature
 
     suspend fun getOrganizationSettings(

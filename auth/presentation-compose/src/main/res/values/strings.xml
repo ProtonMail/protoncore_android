@@ -43,9 +43,13 @@
     <string name="auth_login_no_it_wasnt_me">No, it wasn\'t me</string>
     <string name="auth_login_devices_available">Devices available:</string>
     <string name="auth_login_no_devices_available">No devices available:</string>
-    <string name="auth_login_device_last_used">Last used %s</string>
+    <string name="auth_login_device_last_used">Last used %s ago</string>
     <string name="auth_login_cancel">Cancel</string>
     <string name="auth_login_not_available">N/A</string>
+
+    <string name="auth_login_sso_main_signing_you_in">Signing you in</string>
+    <string name="auth_login_sso_main_to_your_organization">to your organization</string>
+
     <string name="backup_password_input_password_empty">Password cannot be empty</string>
     <string name="backup_password_input_action_continue">Continue</string>
     <string name="backup_password_input_action_help">Ask administrator for help</string>

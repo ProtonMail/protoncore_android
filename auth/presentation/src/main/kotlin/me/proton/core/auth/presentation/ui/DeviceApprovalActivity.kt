@@ -27,7 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Route
-import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.addMemberSelfApprovalScreen
+import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.addMemberApprovalScreen
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
@@ -35,8 +35,12 @@ import me.proton.core.presentation.utils.errorToast
 
 @AndroidEntryPoint
 class DeviceApprovalActivity : ProtonActivity() {
-    private val memberUserId: UserId? get() = intent.getStringExtra(KEY_MEMBER_USER_ID)?.let { UserId(it) }
-    private val userId: UserId get() = UserId(requireNotNull(intent.getStringExtra(KEY_USER_ID)))
+
+    private val memberUserId: UserId?
+        get() = intent.getStringExtra(KEY_MEMBER_USER_ID)?.let { UserId(it) }
+
+    private val userId: UserId
+        get() = UserId(requireNotNull(intent.getStringExtra(KEY_USER_ID)))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +51,11 @@ class DeviceApprovalActivity : ProtonActivity() {
                     navController = rememberNavController(),
                     startDestination = getStartDestination()
                 ) {
-                    addMemberSelfApprovalScreen(
+                    addMemberApprovalScreen(
                         userId = userId,
-                        onClose = this@DeviceApprovalActivity::onClose,
-                        onError = this@DeviceApprovalActivity::onError
+                        onCloseClicked = { onClose() },
+                        onErrorMessage = { onError(it) },
+                        onSuccess = { onClose() }
                     )
                     // TODO: addAdminApprovalScreen(userId)
                 }
@@ -70,7 +75,7 @@ class DeviceApprovalActivity : ProtonActivity() {
         val memberUserId = memberUserId
         return when {
             memberUserId != null -> Route.AdminApproval.get(userId, memberUserId)
-            else -> Route.SelfApproval.get(userId)
+            else -> Route.MemberApproval.get(userId)
         }
     }
 

@@ -25,7 +25,6 @@ import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.UnprivatizationInfo
 import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 
 interface AuthDeviceRepository {
 
@@ -96,7 +95,7 @@ interface AuthDeviceRepository {
         userId: UserId
     ): UnprivatizationInfo
 
-    suspend fun pingAdminForHelp(
+    suspend fun requestAdminHelp(
         userId: UserId,
         deviceId: AuthDeviceId
     )

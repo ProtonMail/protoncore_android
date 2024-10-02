@@ -19,7 +19,6 @@
 package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.auth.domain.usecase.AssociateAuthDevice
 import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject

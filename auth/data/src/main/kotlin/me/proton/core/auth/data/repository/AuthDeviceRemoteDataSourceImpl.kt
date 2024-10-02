@@ -42,11 +42,10 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
         userId: UserId,
         name: String,
         activationToken: String?
-    ): CreatedDevice =
-        provider.get<AuthDeviceApi>(userId).invoke {
-            val request = CreateDeviceRequest(name, activationToken)
-            createDevice(request).toCreatedDevice(context)
-        }.valueOrThrow
+    ): CreatedDevice = provider.get<AuthDeviceApi>(userId).invoke {
+        val request = CreateDeviceRequest(name, activationToken)
+        createDevice(request).toCreatedDevice(context)
+    }.valueOrThrow
 
     override suspend fun associateDevice(
         userId: UserId,
@@ -85,20 +84,25 @@ class AuthDeviceRemoteDataSourceImpl @Inject constructor(
         getDevices().devices.map { it.toAuthDevice(userId) }
     }.valueOrThrow
 
-    override suspend fun rejectAuthDevice(userId: UserId, deviceId: AuthDeviceId) {
-        provider.get<AuthDeviceApi>(userId).invoke {
-            rejectAuthDevice(deviceId.id)
-        }.valueOrThrow
-    }
+    override suspend fun rejectAuthDevice(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    ): Unit = provider.get<AuthDeviceApi>(userId).invoke {
+        rejectAuthDevice(deviceId.id)
+        Unit
+    }.valueOrThrow
 
-    override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
-        provider.get<AuthDeviceApi>(userId).invoke {
-            getUnprivatizationInfo().toUnprivatizationInfo()
-        }.valueOrThrow
+    override suspend fun requestAdminHelp(
+        userId: UserId,
+        deviceId: AuthDeviceId
+    ): Unit = provider.get<AuthDeviceApi>(userId).invoke {
+        pingAdminForHelp(deviceId.id)
+        Unit
+    }.valueOrThrow
 
-    override suspend fun pingAdminForHelp(userId: UserId, deviceId: AuthDeviceId) {
-        provider.get<AuthDeviceApi>(userId).invoke {
-            pingAdminForHelp(deviceId.id)
-        }.valueOrThrow
-    }
+    override suspend fun getUnprivatizationInfo(
+        userId: UserId
+    ): UnprivatizationInfo = provider.get<AuthDeviceApi>(userId).invoke {
+        getUnprivatizationInfo().toUnprivatizationInfo()
+    }.valueOrThrow
 }

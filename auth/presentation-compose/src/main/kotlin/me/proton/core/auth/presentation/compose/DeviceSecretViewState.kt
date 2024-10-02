@@ -2,42 +2,49 @@ package me.proton.core.auth.presentation.compose
 
 import me.proton.core.domain.entity.UserId
 
-public sealed interface DeviceSecretViewState {
-    public data object Close : DeviceSecretViewState
-    public data object Loading : DeviceSecretViewState
+public sealed class DeviceSecretViewState(public open val email: String?) {
+    public data class Close(override val email: String?) : DeviceSecretViewState(email)
+    public data class Loading(override val email: String?) : DeviceSecretViewState(email)
 
     /**
      * When: No User Keys (no DeviceSecret).
      * Next step: Join organization and set backup password.
      */
-    public data object FirstLogin : DeviceSecretViewState
+    public data class FirstLogin(override val email: String?) : DeviceSecretViewState(email)
 
     /**
      * When: User Keys exist, but invalid DeviceSecret.
      * Next step: Get a valid DeviceSecret.
      */
-    public sealed interface InvalidSecret : DeviceSecretViewState {
+    public sealed class InvalidSecret(override val email: String?) : DeviceSecretViewState(email) {
 
         /**
          * When: No other logged-in Device.
          * Next step: Enter backup password or ask admin help.
          */
-        public sealed interface NoDevice : InvalidSecret {
-            public data object EnterBackupPassword : NoDevice
-            public data object WaitingAdmin : NoDevice
+        public sealed class NoDevice(override val email: String?) : InvalidSecret(email) {
+            public data class EnterBackupPassword(override val email: String?) : NoDevice(email)
+            public data class WaitingAdmin(override val email: String?) : NoDevice(email)
         }
 
         /**
          * When: Other logged-in devices available.
          * Next step: Approval from other device, enter backup password or ask admin help.
          */
-        public sealed interface OtherDevice : InvalidSecret {
-            public data object WaitingMember : OtherDevice
+        public sealed class OtherDevice(override val email: String?) : InvalidSecret(email) {
+            public data class WaitingMember(override val email: String?) : OtherDevice(email)
         }
     }
 
-    public data object DeviceRejected : DeviceSecretViewState
+    public data class DeviceRejected(override val email: String?) : DeviceSecretViewState(email)
 
-    public data class Error(val message: String?) : DeviceSecretViewState
-    public data class Success(val userId: UserId) : DeviceSecretViewState
+    public data class Error(
+        override val email: String?,
+        val message: String?
+    ) : DeviceSecretViewState(email)
+
+    public data class Success(
+        override val email: String?,
+        val userId: UserId
+    ) : DeviceSecretViewState(email)
 }

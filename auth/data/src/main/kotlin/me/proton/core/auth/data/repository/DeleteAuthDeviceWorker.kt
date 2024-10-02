@@ -31,7 +31,7 @@ import androidx.work.workDataOf
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import me.proton.core.auth.domain.entity.AuthDeviceId
-import me.proton.core.auth.domain.usecase.DeleteAuthDeviceRemote
+import me.proton.core.auth.domain.usecase.sso.DeleteAuthDeviceRemote
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.isRetryable

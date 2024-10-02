@@ -29,9 +29,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceSecretAction
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addRequestAdminHelpScreen
 import me.proton.core.auth.presentation.compose.DeviceSecretViewModel
 import me.proton.core.auth.presentation.entity.DeviceSecretResult
-import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addEnterBackupPasswordScreen
+import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addBackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addMainScreen
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
@@ -40,7 +41,7 @@ import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorToast
 
 @AndroidEntryPoint
-public class DeviceSecretActivity : ProtonActivity() {
+class DeviceSecretActivity : ProtonActivity() {
 
     private val userId: UserId by lazy {
         UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
@@ -64,13 +65,18 @@ public class DeviceSecretActivity : ProtonActivity() {
                         userId = userId,
                         navController = navController,
                         onClose = { onClose() },
-                        onError = { onErrorMessage(it) },
+                        onErrorMessage = { onErrorMessage(it) },
                         onSuccess = { onSuccess(it) }
                     )
-                    addEnterBackupPasswordScreen(
+                    addBackupPasswordInputScreen(
                         userId = userId,
                         navController = navController,
-                        onError = { onErrorMessage(it) },
+                        onErrorMessage = { onErrorMessage(it) },
+                    )
+                    addRequestAdminHelpScreen(
+                        userId = userId,
+                        navController = navController,
+                        onErrorMessage = { onErrorMessage(it) }
                     )
                 }
             }

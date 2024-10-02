@@ -24,7 +24,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import me.proton.core.auth.domain.entity.MemberDeviceId
-import me.proton.core.auth.presentation.compose.sso.member.MemberSelfApprovalScreen
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalScreen
 import me.proton.core.domain.entity.UserId
 
 public object DeviceApprovalRoutes {
@@ -51,19 +51,20 @@ public object DeviceApprovalRoutes {
                 "auth/${userId.id}/member/${memberId.id}/device/approval"
         }
 
-        public object SelfApproval {
+        public object MemberApproval {
             public const val Deeplink: String = "auth/{${Arg.KEY_USER_ID}}/device/approval"
             public fun get(userId: UserId): String = "auth/${userId.id}/device/approval"
         }
     }
 
-    public fun NavGraphBuilder.addMemberSelfApprovalScreen(
+    public fun NavGraphBuilder.addMemberApprovalScreen(
         userId: UserId,
-        onClose: () -> Unit,
-        onError: (String?) -> Unit
+        onSuccess: () -> Unit,
+        onCloseClicked: () -> Unit,
+        onErrorMessage: (String?) -> Unit
     ) {
         composable(
-            route = Route.SelfApproval.Deeplink,
+            route = Route.MemberApproval.Deeplink,
             arguments = listOf(
                 navArgument(Arg.KEY_USER_ID) {
                     type = NavType.StringType
@@ -71,9 +72,10 @@ public object DeviceApprovalRoutes {
                 }
             ),
         ) {
-            MemberSelfApprovalScreen(
-                onClose = onClose,
-                onErrorMessage = onError
+            MemberApprovalScreen(
+                onCloseClicked = onCloseClicked,
+                onErrorMessage = onErrorMessage,
+                onSuccess = onSuccess
             )
         }
     }

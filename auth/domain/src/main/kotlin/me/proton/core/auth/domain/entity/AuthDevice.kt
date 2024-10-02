@@ -50,3 +50,7 @@ enum class AuthDevicePlatform(val value: String) {
         fun enumOf(value: String?) = value?.let { StringEnum(it, map[it]) }
     }
 }
+
+fun AuthDevice.isActive() = state == AuthDeviceState.Active
+fun AuthDevice.isPendingMember() = state == AuthDeviceState.PendingActivation
+fun AuthDevice.isPendingAdmin() = state == AuthDeviceState.PendingAdminActivation

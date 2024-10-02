@@ -29,6 +29,6 @@ data class OrganizationSignatureResponse(
     val publicKey: Armored,
     @SerialName("FingerprintSignature")
     val fingerprintSignature: Signature,
-    @SerialName("Signature")
+    @SerialName("FingerprintSignatureAddress")
     val fingerprintSignatureAddress: String,
 )

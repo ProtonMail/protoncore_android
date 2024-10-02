@@ -19,10 +19,31 @@
 package me.proton.core.auth.presentation.compose
 
 import android.content.res.Configuration
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Scaffold
+import androidx.compose.material.SnackbarDuration
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -35,23 +56,31 @@ import me.proton.core.auth.presentation.compose.DeviceSecretViewState.FirstLogin
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.InvalidSecret
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
-import me.proton.core.auth.presentation.compose.confirmationcode.ShareConfirmationCodeWithAdminScreen
-import me.proton.core.auth.presentation.compose.confirmationcode.SignInSentForApprovalScreen
-import me.proton.core.auth.presentation.compose.sso.backuppassword.input.BackupPasswordInputScreen
-import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupScreen
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupScreen
+import me.proton.core.auth.presentation.compose.sso.WaitingAdminScreen
+import me.proton.core.auth.presentation.compose.sso.WaitingMemberScreen
 import me.proton.core.compose.component.ProtonCenteredProgress
-import me.proton.core.compose.component.ProtonErrorMessageWithAction
+import me.proton.core.compose.component.ProtonSnackbarHost
+import me.proton.core.compose.component.ProtonSnackbarHostState
+import me.proton.core.compose.component.ProtonSnackbarType
+import me.proton.core.compose.component.appbar.ProtonTopAppBar
+import me.proton.core.compose.theme.LocalColors
+import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.ProtonTypography
+import me.proton.core.compose.theme.defaultSmallNorm
+import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
 
 @Composable
 public fun DeviceSecretScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
-    onError: (String?) -> Unit = {},
     onSuccess: (userId: UserId) -> Unit = {},
-    onNavigateToEnterBackupPassword: () -> Unit = {},
-    onNavigateToAskAdminHelp: () -> Unit = {},
+    onErrorMessage: (String?) -> Unit = {},
+    onNavigateToBackupPasswordInput: () -> Unit = {},
+    onNavigateToRequestAdminHelp: () -> Unit = {},
     viewModel: DeviceSecretViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -59,12 +88,12 @@ public fun DeviceSecretScreen(
     DeviceSecretScreen(
         modifier = modifier,
         onClose = onClose,
-        onError = onError,
+        onErrorMessage = onErrorMessage,
         onSuccess = onSuccess,
-        onLoad = { viewModel.submit(DeviceSecretAction.Load()) },
+        onReloadState = { viewModel.submit(DeviceSecretAction.Load()) },
         onCloseClicked = { viewModel.submit(DeviceSecretAction.Close) },
-        onNavigateToAskAdminHelp = onNavigateToAskAdminHelp,
-        onNavigateToEnterBackupPassword = onNavigateToEnterBackupPassword,
+        onNavigateToRequestAdminHelp = onNavigateToRequestAdminHelp,
+        onNavigateToBackupPasswordInput = onNavigateToBackupPasswordInput,
         state = state
     )
 }
@@ -73,60 +102,171 @@ public fun DeviceSecretScreen(
 public fun DeviceSecretScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
-    onError: (String?) -> Unit = {},
     onSuccess: (userId: UserId) -> Unit = {},
-    onLoad: () -> Unit = {},
+    onErrorMessage: (String?) -> Unit = {},
+    onReloadState: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
-    onNavigateToAskAdminHelp: () -> Unit = {},
-    onNavigateToEnterBackupPassword: () -> Unit = {},
+    onNavigateToRequestAdminHelp: () -> Unit = {},
+    onNavigateToBackupPasswordInput: () -> Unit = {},
     state: DeviceSecretViewState
 ) {
     when (state) {
         is Close -> onClose()
         is Success -> onSuccess(state.userId)
-        // TODO: Replace ProtonCenteredProgress by a new screen.
-        is Loading -> ProtonCenteredProgress()
-        // TODO: Replace ProtonErrorMessageWithAction by a new screen.
-        is Error -> ProtonErrorMessageWithAction(
-            errorMessage = state.message ?: "Unknown",
-            action = stringResource(R.string.presentation_retry),
-            onAction = { onLoad() },
-            elevation = 0.dp
+        is Loading -> DeviceSecretScaffold(
+            onCloseClicked = onCloseClicked,
+            onRetryClicked = onReloadState,
+            isLoading = true,
+            email = state.email
+        )
+        is Error -> DeviceSecretScaffold(
+            onCloseClicked = onCloseClicked,
+            onRetryClicked = onReloadState,
+            email = state.email,
+            error = state.message
         )
 
         is FirstLogin -> BackupPasswordSetupScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
-            onError = onError,
-            onSuccess = { onLoad() }
+            onErrorMessage = onErrorMessage,
+            onSuccess = { onReloadState() }
         )
 
         is InvalidSecret.NoDevice.EnterBackupPassword -> BackupPasswordInputScreen(
             modifier = modifier,
-            onAskAdminHelpClicked = onNavigateToAskAdminHelp,
             onCloseClicked = onCloseClicked,
-            onError = onError,
-            onSuccess = { Unit }
+            onErrorMessage = onErrorMessage,
+            onSuccess = { Unit },
+            onRequestAdminHelpClicked = onNavigateToRequestAdminHelp
         )
 
-        is InvalidSecret.NoDevice.WaitingAdmin -> ShareConfirmationCodeWithAdminScreen(
+        is InvalidSecret.NoDevice.WaitingAdmin -> WaitingAdminScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
-            onError = onError
+            onErrorMessage = onErrorMessage,
+            onBackupPasswordClicked = onNavigateToBackupPasswordInput
         )
 
-        is InvalidSecret.OtherDevice.WaitingMember -> SignInSentForApprovalScreen(
+        is InvalidSecret.OtherDevice.WaitingMember -> WaitingMemberScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
-            onErrorMessage = onError,
-            onEnterBackupPasswordClicked = onNavigateToEnterBackupPassword,
-            onAskAdminHelpClicked = onNavigateToAskAdminHelp
+            onErrorMessage = onErrorMessage,
+            onBackupPasswordClicked = onNavigateToBackupPasswordInput,
+            onRequestAdminHelpClicked = onNavigateToRequestAdminHelp
         )
-
+        /*
+        is InvalidSecret.NoDevice.WaitingAdminAccessDenied -> RequestAccessDeniedScreen(
+                onCloseClicked = onCloseClicked,
+                onBackToSignInClicked = onCloseClicked
+            )
+        is InvalidSecret.NoDevice.WaitingAdminAccessGranted -> RequestAccessGrantedScreen(
+                modifier = modifier,
+                onCloseClicked = onCloseClicked,
+                onContinueClicked = onNavigateToEnterBackupPassword
+            )
+        */
         is DeviceRejected -> onClose()
     }
 }
 
+@Composable
+public fun DeviceSecretScaffold(
+    modifier: Modifier = Modifier,
+    onCloseClicked: () -> Unit = {},
+    onRetryClicked: () -> Unit= {},
+    isLoading: Boolean = false,
+    error: String? = null,
+    email: String? = null
+) {
+    val hostState = remember { ProtonSnackbarHostState() }
+    val retry = stringResource(R.string.presentation_retry)
+    LaunchedEffect(error) {
+        error?.let {
+            hostState.showSnackbar(
+                type = ProtonSnackbarType.ERROR,
+                message = error,
+                actionLabel = retry,
+                duration = SnackbarDuration.Indefinite
+            ).also { onRetryClicked() }
+        }
+    }
+
+    Scaffold(
+        snackbarHost = { ProtonSnackbarHost(hostState) },
+        modifier = modifier,
+        topBar = {
+            ProtonTopAppBar(
+                title = {},
+                navigationIcon = {
+                    IconButton(onClick = onCloseClicked) {
+                        Icon(
+                            painterResource(id = R.drawable.ic_proton_close),
+                            contentDescription = stringResource(id = R.string.auth_login_close)
+                        )
+                    }
+                },
+                backgroundColor = LocalColors.current.backgroundNorm
+            )
+        }
+    ) { paddingValues ->
+        Box(
+            modifier = Modifier.padding(paddingValues)
+        ) {
+            Column(
+                modifier = Modifier.fillMaxWidth().padding(ProtonDimens.DefaultSpacing),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Box(modifier = Modifier.size(ProtonDimens.DefaultIconWithPadding)) {
+                    if (isLoading) {
+                        ProtonCenteredProgress()
+                    } else {
+                        val defaultLogo = painterResource(R.drawable.default_org_logo)
+                        Image(painter = defaultLogo, contentDescription = null)
+                    }
+                }
+                Text(
+                    text = stringResource(R.string.auth_login_sso_main_signing_you_in),
+                    style = ProtonTypography.Default.headline,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = ProtonDimens.MediumSpacing)
+                )
+                Text(
+                    text = stringResource(R.string.auth_login_sso_main_to_your_organization),
+                    style = ProtonTypography.Default.defaultSmallWeak,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.padding(top = ProtonDimens.SmallSpacing)
+                )
+                Card(
+                    modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+                    backgroundColor = Color.Transparent,
+                    contentColor = ProtonTheme.colors.textNorm,
+                    border = BorderStroke(1.dp, ProtonTheme.colors.separatorNorm),
+                    elevation = 0.dp
+                ) {
+                    Row(
+                        modifier = Modifier.padding(ProtonDimens.SmallSpacing),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.default_org_logo),
+                            modifier = Modifier.size(ProtonDimens.DefaultIconSizeLogo),
+                            contentDescription = null,
+                        )
+                        Text(
+                            text = email ?: "",
+                            modifier = Modifier.padding(ProtonDimens.SmallSpacing),
+                            style = ProtonTypography.Default.defaultSmallNorm,
+                            textAlign = TextAlign.Center,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
 @Preview(name = "Light mode")
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(name = "Small screen height", heightDp = SMALL_SCREEN_HEIGHT)
@@ -137,7 +277,10 @@ public fun DeviceSecretScreen(
 private fun DeviceSecretScreenErrorPreview() {
     ProtonTheme {
         DeviceSecretScreen(
-            state = Error("An error occurs. Please try again.")
+            state = Error(
+                email = "user@domain.com",
+                message = "An error occurs. Please try again."
+            )
         )
     }
 }
@@ -152,7 +295,9 @@ private fun DeviceSecretScreenErrorPreview() {
 private fun DeviceSecretScreenLoadingPreview() {
     ProtonTheme {
         DeviceSecretScreen(
-            state = Loading
+            state = Loading(
+                email = "user@domain.com"
+            )
         )
     }
 }

@@ -24,7 +24,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import me.proton.core.auth.presentation.compose.sso.backuppassword.input.BackupPasswordInputScreen
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
+import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpScreen
 import me.proton.core.domain.entity.UserId
 
 public object DeviceSecretRoutes {
@@ -43,12 +44,12 @@ public object DeviceSecretRoutes {
             public fun get(userId: UserId): String = "auth/${userId.id}/device/secret"
         }
 
-        public object EnterBackupPassword {
-            public const val Deeplink: String = "auth/{${Arg.KEY_USER_ID}}/device/secret/password"
-            public fun get(userId: UserId): String = "auth/${userId.id}/device/secret/password"
+        public object BackupPasswordInput {
+            public const val Deeplink: String = "auth/{${Arg.KEY_USER_ID}}/device/secret/input"
+            public fun get(userId: UserId): String = "auth/${userId.id}/device/secret/input"
         }
 
-        public object AskAdminHelp {
+        public object RequestAdminHelp {
             public const val Deeplink: String = "auth/{${Arg.KEY_USER_ID}}/device/secret/admin"
             public fun get(userId: UserId): String = "auth/${userId.id}/device/secret/admin"
         }
@@ -58,7 +59,7 @@ public object DeviceSecretRoutes {
         userId: UserId,
         navController: NavHostController,
         onClose: () -> Unit,
-        onError: (String?) -> Unit,
+        onErrorMessage: (String?) -> Unit,
         onSuccess: (userId: UserId) -> Unit
     ) {
         composable(
@@ -72,22 +73,25 @@ public object DeviceSecretRoutes {
         ) {
             DeviceSecretScreen(
                 onClose = { onClose() },
-                onError = { onError(it) },
+                onErrorMessage = { onErrorMessage(it) },
                 onSuccess = { onSuccess(it) },
-                onNavigateToEnterBackupPassword = {
-                    navController.navigate(Route.EnterBackupPassword.get(userId))
+                onNavigateToBackupPasswordInput = {
+                    navController.navigate(Route.BackupPasswordInput.get(userId))
+                },
+                onNavigateToRequestAdminHelp = {
+                    navController.navigate(Route.RequestAdminHelp.get(userId))
                 }
             )
         }
     }
 
-    public fun NavGraphBuilder.addEnterBackupPasswordScreen(
+    public fun NavGraphBuilder.addBackupPasswordInputScreen(
         userId: UserId,
         navController: NavHostController,
-        onError: (String?) -> Unit
+        onErrorMessage: (String?) -> Unit
     ) {
         composable(
-            route = Route.EnterBackupPassword.Deeplink,
+            route = Route.BackupPasswordInput.Deeplink,
             arguments = listOf(
                 navArgument(Arg.KEY_USER_ID) {
                     type = NavType.StringType
@@ -96,21 +100,24 @@ public object DeviceSecretRoutes {
             ),
         ) {
             BackupPasswordInputScreen(
-                onAskAdminHelpClicked = { navController.navigate(Route.AskAdminHelp.get(userId)) },
+                onRequestAdminHelpClicked = {
+                    navController.popBackStack()
+                    navController.navigate(Route.RequestAdminHelp.get(userId))
+                },
                 onCloseClicked = { navController.popBackStack() },
-                onError = { onError(it) },
+                onErrorMessage = { onErrorMessage(it) },
                 onSuccess = { navController.popBackStack() }
             )
         }
     }
 
-    internal fun NavGraphBuilder.addAskAdminHelpScreen(
+    public fun NavGraphBuilder.addRequestAdminHelpScreen(
         userId: UserId,
         navController: NavHostController,
-        onError: (String?) -> Unit
+        onErrorMessage: (String?) -> Unit
     ) {
         composable(
-            route = Route.AskAdminHelp.Deeplink,
+            route = Route.RequestAdminHelp.Deeplink,
             arguments = listOf(
                 navArgument(Arg.KEY_USER_ID) {
                     type = NavType.StringType
@@ -118,7 +125,11 @@ public object DeviceSecretRoutes {
                 }
             ),
         ) {
-            TODO()
+            RequestAdminHelpScreen(
+                onBackClicked = { navController.popBackStack() },
+                onErrorMessage = { onErrorMessage(it) },
+                onSuccess = { navController.popBackStack() },
+            )
         }
     }
 }
