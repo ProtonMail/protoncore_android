@@ -37,6 +37,7 @@ import me.proton.core.account.domain.entity.AccountState
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
+import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
@@ -65,6 +66,9 @@ class NotificationSetupTest {
     private lateinit var notificationManager: ProtonNotificationManager
 
     @MockK
+    private lateinit var notificationRepository: NotificationRepository
+
+    @MockK
     private lateinit var observePushNotifications: ObservePushNotifications
 
     @MockK(relaxed = true)
@@ -87,6 +91,7 @@ class NotificationSetupTest {
             hasNotificationPermission,
             isNotificationsEnabled,
             notificationManager,
+            notificationRepository,
             observePushNotifications,
             scopeProvider,
             deeplinkManager

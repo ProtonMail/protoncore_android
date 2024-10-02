@@ -36,6 +36,8 @@ import me.proton.core.auth.domain.usecase.sso.GenerateConfirmationCode
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.confirmationcode.SignInSentForApprovalAction.Close
 import me.proton.core.auth.presentation.compose.confirmationcode.SignInSentForApprovalAction.Load
+import me.proton.core.auth.presentation.compose.sso.device.AvailableDeviceUIModel
+import me.proton.core.auth.presentation.compose.sso.device.ClientType
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.util.android.datetime.DateTimeFormat
 import javax.inject.Inject

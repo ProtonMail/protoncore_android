@@ -3,6 +3,8 @@ package me.proton.core.auth.presentation.compose.confirmationcode
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import app.cash.paparazzi.detectEnvironment
+import me.proton.core.auth.presentation.compose.sso.device.AvailableDeviceUIModel
+import me.proton.core.auth.presentation.compose.sso.device.ClientType
 import org.junit.Rule
 import org.junit.Test
 

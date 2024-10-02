@@ -18,6 +18,8 @@
 
 package me.proton.core.auth.presentation.compose.confirmationcode
 
+import me.proton.core.auth.presentation.compose.sso.device.AvailableDeviceUIModel
+
 public sealed interface SignInSentForApprovalState {
     public data object Loading : SignInSentForApprovalState
     public data object Close : SignInSentForApprovalState

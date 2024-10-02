@@ -3,10 +3,12 @@ package me.proton.core.auth.presentation.compose.confirmationcode
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import app.cash.paparazzi.detectEnvironment
+import me.proton.core.auth.presentation.compose.sso.member.MemberSelfApprovalScreen
+import me.proton.core.auth.presentation.compose.sso.member.MemberSelfApprovalState
 import org.junit.Rule
 import org.junit.Test
 
-class SignInRequestedForApprovalScreenTest {
+class MemberSelfApprovalScreenTest {
     @get:Rule
     val paparazzi = Paparazzi(
         deviceConfig = DeviceConfig.PIXEL_5,
@@ -20,11 +22,11 @@ class SignInRequestedForApprovalScreenTest {
     @Test
     fun signInRequestedForApprovalScreenTest() {
         paparazzi.snapshot {
-            SignInRequestedForApprovalScreen(
+            MemberSelfApprovalScreen(
                 onCloseClicked = {},
                 onConfirmClicked = {},
                 onRejectClicked = {},
-                state = SignInRequestedForApprovalState.Idle(email = "user@example.test")
+                state = MemberSelfApprovalState.Idle(email = "user@example.test")
             )
         }
     }

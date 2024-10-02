@@ -123,7 +123,7 @@ public fun DeviceSecretScreen(
             onAskAdminHelpClicked = onNavigateToAskAdminHelp
         )
 
-        is DeviceRejected -> TODO()
+        is DeviceRejected -> onClose()
     }
 }
 

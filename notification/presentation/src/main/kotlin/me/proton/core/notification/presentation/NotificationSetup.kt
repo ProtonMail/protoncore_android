@@ -38,6 +38,8 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.entity.NotificationId
+import me.proton.core.notification.domain.entity.isDismissible
+import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.deeplink.DeeplinkContext
@@ -58,6 +60,7 @@ public class NotificationSetup @Inject internal constructor(
     private val hasNotificationPermission: HasNotificationPermission,
     private val isNotificationsEnabled: IsNotificationsEnabled,
     private val notificationManager: ProtonNotificationManager,
+    private val notificationRepository: NotificationRepository,
     private val observePushNotifications: ObservePushNotifications,
     private val scopeProvider: CoroutineScopeProvider,
     private val deeplinkManager: DeeplinkManager
@@ -129,15 +132,18 @@ public class NotificationSetup @Inject internal constructor(
     }
 
     private fun setupDeeplink() {
-        deeplinkManager.register(NotificationDeeplink.Delete.Deeplink) { onNotificationConsumed(it) }
-        deeplinkManager.register(NotificationDeeplink.Open.Deeplink) { onNotificationConsumed(it) }
+        deeplinkManager.register(NotificationDeeplink.Delete.Deeplink) { onNotificationDeeplink(it) }
+        deeplinkManager.register(NotificationDeeplink.Open.Deeplink) { onNotificationDeeplink(it) }
     }
 
-    private fun onNotificationConsumed(link: DeeplinkContext): Boolean {
+    private fun onNotificationDeeplink(link: DeeplinkContext): Boolean {
         val userId = UserId(link.args[0])
         val notificationId = NotificationId(link.args[1])
         scopeProvider.GlobalDefaultSupervisedScope.launch {
-            notificationManager.onNotificationConsumed(notificationId, userId)
+            val notification = notificationRepository.getNotificationById(userId, notificationId)
+            if (notification?.isDismissible == true) {
+                notificationManager.onNotificationConsumed(notificationId, userId)
+            }
         }
         return true
     }

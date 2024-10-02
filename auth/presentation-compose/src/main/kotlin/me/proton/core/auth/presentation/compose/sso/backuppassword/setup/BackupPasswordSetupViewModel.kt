@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation.compose.sso.backuppassword.setup
 
-import android.os.Build
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -34,9 +33,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
-import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.sso.backuppassword.setup.BackupPasswordSetupAction.Load
@@ -62,10 +60,9 @@ import javax.inject.Inject
 public class BackupPasswordSetupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val context: CryptoContext,
-    private val generateDeviceSecret: GenerateDeviceSecret,
+    private val deviceSecretRepository: DeviceSecretRepository,
     private val verifyUnprivatization: VerifyUnprivatization,
     private val setupPrimaryKeys: SetupPrimaryKeys,
-    private val createAuthDevice: CreateAuthDevice,
     private val organizationRepository: OrganizationRepository,
 ) : ViewModel() {
 
@@ -149,18 +146,13 @@ public class BackupPasswordSetupViewModel @Inject constructor(
     ) = flow {
         emit(Loading(state.value.data))
         val password = backupPassword.encrypt(context.keyStoreCrypto)
-        val deviceSecret = generateDeviceSecret.invoke()
+        val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId)?.secret)
         setupPrimaryKeys.invoke(
             userId = userId,
             password = password,
             accountType = AccountType.External,
             internalDomain = null,
             organizationPublicKey = organizationPublicKey,
-            deviceSecret = deviceSecret
-        )
-        createAuthDevice.invoke(
-            userId = userId,
-            deviceName = Build.MODEL,
             deviceSecret = deviceSecret
         )
         emit(Success(state.value.data))

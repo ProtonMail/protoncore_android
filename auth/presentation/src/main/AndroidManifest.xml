@@ -49,6 +49,11 @@
             android:windowSoftInputMode="adjustResize" />
 
         <activity
+            android:name="me.proton.core.auth.presentation.ui.DeviceApprovalActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
             android:name="me.proton.core.auth.presentation.ui.ConfirmPasswordActivity"
             android:screenOrientation="behind"
             android:theme="@style/ProtonTheme.Transparent"
@@ -94,11 +99,6 @@
         <activity
             android:name="me.proton.core.auth.presentation.ui.signup.SignupActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
-
-        <activity
-            android:name=".ui.DeviceApprovalActivity"
-            android:autoRemoveFromRecents="true"
             android:windowSoftInputMode="adjustResize" />
 
         <provider

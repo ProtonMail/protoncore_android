@@ -36,7 +36,6 @@ import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
@@ -106,11 +105,11 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         refresh: Boolean
     ): List<AuthDevice> = (if (refresh) store.fresh(userId) else store.get(userId))
 
-    override suspend fun getByAddressId(
+    override suspend fun getByDeviceId(
         userId: UserId,
-        addressId: AddressId,
+        deviceId: AuthDeviceId,
         refresh: Boolean
-    ): List<AuthDevice> = getByUserId(userId).filter { it.addressId == addressId }
+    ): AuthDevice? = getByUserId(userId).firstOrNull { it.deviceId == deviceId }
 
     override suspend fun deleteByUserId(userId: UserId) {
         localDataSource.deleteAll(userId)

@@ -22,15 +22,13 @@ import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
 import io.mockk.impl.annotations.MockK
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
-import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
-import me.proton.core.auth.domain.usecase.sso.GenerateDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
-import me.proton.core.usersettings.domain.usecase.GetOrganization
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -41,19 +39,13 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
     private lateinit var context: CryptoContext
 
     @MockK
-    private lateinit var getOrganization: GetOrganization
-
-    @MockK
-    private lateinit var generateDeviceSecret: GenerateDeviceSecret
+    private lateinit var deviceSecretRepository: DeviceSecretRepository
 
     @MockK
     private lateinit var verifyUnprivatization: VerifyUnprivatization
 
     @MockK
     private lateinit var setupPrimaryKeys: SetupPrimaryKeys
-
-    @MockK
-    private lateinit var createAuthDevice: CreateAuthDevice
 
     @MockK
     private lateinit var organizationRepository: OrganizationRepository
@@ -66,10 +58,9 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
         tested = BackupPasswordSetupViewModel(
             savedStateHandle = SavedStateHandle(mapOf(DeviceSecretRoutes.Arg.KEY_USER_ID to "user-id")),
             context = context,
-            generateDeviceSecret = generateDeviceSecret,
+            deviceSecretRepository = deviceSecretRepository,
             verifyUnprivatization = verifyUnprivatization,
             setupPrimaryKeys = setupPrimaryKeys,
-            createAuthDevice = createAuthDevice,
             organizationRepository = organizationRepository
         )
     }

@@ -238,6 +238,10 @@ class AccountManagerImpl @Inject constructor(
         disableAccount(userId)
     }
 
+    override suspend fun handleAccountRemoved(userId: UserId) {
+        removeAccount(userId)
+    }
+
     // endregion
 
     private suspend fun disableCredentialLessAccounts(readyUserId: UserId) {

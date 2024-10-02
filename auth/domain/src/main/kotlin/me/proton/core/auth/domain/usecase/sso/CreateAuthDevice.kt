@@ -20,38 +20,42 @@ package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.entity.CreatedDevice
 import me.proton.core.auth.domain.entity.DeviceSecret
-import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.encryptText
 import me.proton.core.key.domain.extension.primary
-import me.proton.core.key.domain.useKeys
+import me.proton.core.key.domain.publicKey
+import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
-import me.proton.core.user.domain.repository.UserAddressRepository
 import javax.inject.Inject
 
 class CreateAuthDevice @Inject constructor(
     private val context: CryptoContext,
-    private val addressRepository: UserAddressRepository,
+    private val userManager: UserManager,
     private val authDeviceRepository: AuthDeviceRepository,
     private val generateDeviceSecret: GenerateDeviceSecret,
     private val deviceSecretRepository: DeviceSecretRepository,
 ) {
     suspend operator fun invoke(
         userId: UserId,
-        deviceName: String,
-        deviceSecret: DeviceSecretString = generateDeviceSecret.invoke(),
+        deviceName: String
     ): CreatedDevice {
+        // Generate new deviceSecret.
+        val deviceSecret = generateDeviceSecret.invoke()
+        val user = userManager.getUser(userId, refresh = true)
+        val userHasKeys = user.keys.isNotEmpty()
+
         // Fetch via GET /addresses the address keys of the primary address
-        val userAddresses = addressRepository.getAddresses(userId)
-        val activePrimaryAddressKey = userAddresses.primary()?.takeIf { it.keys.primary()?.privateKey?.isActive == true }
+        val userAddresses = userManager.getAddresses(userId)
+        val primaryPrivateKey = userAddresses.primary()?.keys?.primary()?.privateKey
+        val primaryPublicKey = primaryPrivateKey?.publicKey(context)
 
         // Encrypt the DeviceSecret to the primary address key as ActivationToken
-        val activationToken = activePrimaryAddressKey?.useKeys(context) {
-            encryptText(deviceSecret.decrypt(context.keyStoreCrypto))
+        val activationToken = primaryPublicKey?.takeIf { userHasKeys }?.let {
+            // Bypass normal KeyHolder/PublicKey logic (isActive).
+            context.pgpCrypto.encryptText(deviceSecret.decrypt(context.keyStoreCrypto), it.key)
         }
 
         // Call POST /auth/v4/devices with ActivationToken and obtain a DeviceToken

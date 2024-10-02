@@ -94,7 +94,7 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onClose(): Flow<DeviceSecretViewState> = flow {
-        accountWorkflow.handleAccountDisabled(userId)
+        accountWorkflow.handleAccountRemoved(userId)
         emit(Close)
     }
 
@@ -125,7 +125,7 @@ public class DeviceSecretViewModel @Inject constructor(
         if (!background) { emit(Loading) }
         emitAll(
             when (val deviceSecret = deviceSecretRepository.getByUserId(userId)) {
-                null -> onMissingDeviceSecret()
+                null -> onCreateDevice()
                 else -> when (val result = associateAuthDevice.invoke(
                     userId = userId,
                     deviceId = deviceSecret.deviceId,
@@ -144,21 +144,6 @@ public class DeviceSecretViewModel @Inject constructor(
         emit(Error(it.message))
     }
 
-    private fun onMissingDeviceSecret() = flow {
-        emit(Loading)
-        val user = userManager.getUser(userId, refresh = true)
-        when {
-            user.keys.isEmpty() -> emitAll(onFirstLogin())
-            else -> emitAll(onCreateDevice())
-        }
-    }
-
-    private fun onFirstLogin() = flow {
-        emit(FirstLogin)
-        // BackupPasswordSetupViewModel is creating a AuthDevice.
-        emitAll(observeAuthDevice())
-    }
-
     private fun onCreateDevice() = flow {
         emit(Loading)
         createAuthDevice.invoke(userId, Build.MODEL)
@@ -166,6 +151,19 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onDeviceNotActive() = flow {
+        val user = userManager.getUser(userId)
+        when {
+            user.keys.isEmpty() -> emitAll(onFirstLogin())
+            else -> emitAll(onCheckOtherDevices())
+        }
+    }
+
+    private fun onFirstLogin() = flow {
+        emit(FirstLogin)
+        emitAll(observeAuthDevice())
+    }
+
+    private fun onCheckOtherDevices() = flow {
         when (checkOtherDevices.invoke(false /*TODO*/, userId)) {
             is DevicesResult.AdminHelpRequired -> {
                 emit(InvalidSecret.NoDevice.WaitingAdmin)
@@ -193,7 +191,9 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onDeviceRejected(): Flow<DeviceSecretViewState> = flow {
-        // TODO: DELETE /device/id
+        deviceSecretRepository.getByUserId(userId)?.deviceId?.let { deviceId ->
+            authDeviceRepository.deleteByDeviceId(userId, deviceId)
+        }
         accountWorkflow.handleAccountDisabled(userId)
         emit(DeviceRejected)
     }

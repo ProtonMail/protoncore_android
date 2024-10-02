@@ -27,7 +27,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Route
-import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.addSelfApprovalScreen
+import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.addMemberSelfApprovalScreen
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
@@ -47,7 +47,7 @@ class DeviceApprovalActivity : ProtonActivity() {
                     navController = rememberNavController(),
                     startDestination = getStartDestination()
                 ) {
-                    addSelfApprovalScreen(
+                    addMemberSelfApprovalScreen(
                         userId = userId,
                         onClose = this@DeviceApprovalActivity::onClose,
                         onError = this@DeviceApprovalActivity::onError
@@ -59,7 +59,6 @@ class DeviceApprovalActivity : ProtonActivity() {
     }
 
     private fun onClose() {
-        setResult(RESULT_CANCELED)
         finish()
     }
 

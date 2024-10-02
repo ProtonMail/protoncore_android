@@ -21,6 +21,9 @@ package me.proton.core.auth.domain.usecase.sso
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.extension.suspend
 import javax.inject.Inject
 
 /**
@@ -29,12 +32,16 @@ import javax.inject.Inject
  * @see ActivateAuthDevice
  */
 class RejectAuthDevice @Inject constructor(
-    private val authDeviceRepository: AuthDeviceRepository
+    private val authDeviceRepository: AuthDeviceRepository,
+    private val eventManagerProvider: EventManagerProvider,
 ) {
     suspend operator fun invoke(
         userId: UserId,
         deviceId: AuthDeviceId
     ) {
-        authDeviceRepository.rejectAuthDevice(userId, deviceId)
+        // Force Event Loop to update Pushes/Notifications.
+        eventManagerProvider.suspend(EventManagerConfig.Core(userId)) {
+            authDeviceRepository.rejectAuthDevice(userId, deviceId)
+        }
     }
 }

@@ -19,6 +19,7 @@
 package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.crypto.common.aead.AeadEncryptedString
@@ -26,40 +27,72 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
+import me.proton.core.eventmanager.domain.EventManagerConfig
+import me.proton.core.eventmanager.domain.EventManagerProvider
+import me.proton.core.eventmanager.domain.extension.suspend
 import javax.inject.Inject
 
 /**
- * Upload new EncryptedSecret (derived from password), and activate device (final step of LoginWithBackup).
- *
- * When: We can decrypt the keys, but we have a local invalid secret.
+ * Activate device, by upload new EncryptedSecret.
  *
  * @see RejectAuthDevice
  */
 class ActivateAuthDevice @Inject constructor(
-    context: CryptoContext,
+    private val context: CryptoContext,
     private val authDeviceRepository: AuthDeviceRepository,
     private val deviceSecretRepository: DeviceSecretRepository,
     private val getEncryptedSecret: GetEncryptedSecret,
+    private val eventManagerProvider: EventManagerProvider,
 ) {
-    private val keyStoreCrypto = context.keyStoreCrypto
 
-    suspend operator fun invoke(
+    private suspend operator fun invoke(
         userId: UserId,
-        passphrase: EncryptedByteArray,
-        deviceId: AuthDeviceId? = null,
+        deviceId: AuthDeviceId,
+        encryptedSecret: AeadEncryptedString
     ) {
-        val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
-        passphrase.decrypt(keyStoreCrypto).use { decryptedPassphrase ->
-            val aesEncryptedSecret = getEncryptedSecret.invoke(decryptedPassphrase, deviceSecret.secret)
-            authDeviceRepository.activateDevice(userId, deviceId ?: deviceSecret.deviceId, aesEncryptedSecret)
+        authDeviceRepository.activateDevice(userId, deviceId, encryptedSecret)
+    }
+
+    private suspend operator fun invoke(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        passphrase: EncryptedByteArray,
+        deviceSecret: DeviceSecretString,
+    ) {
+        passphrase.decrypt(context.keyStoreCrypto).use { decryptedPassphrase ->
+            val aesEncryptedSecret = getEncryptedSecret.invoke(decryptedPassphrase, deviceSecret)
+            invoke(userId, deviceId, aesEncryptedSecret)
         }
     }
 
+    /** Activate my local device using AeadEncryptedString. */
     suspend operator fun invoke(
         userId: UserId,
         encryptedSecret: AeadEncryptedString
     ) {
         val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
-        authDeviceRepository.activateDevice(userId, deviceSecret.deviceId, encryptedSecret)
+        invoke(userId, deviceSecret.deviceId, encryptedSecret)
+    }
+
+    /** Activate my local device using EncryptedByteArray. */
+    suspend operator fun invoke(
+        userId: UserId,
+        passphrase: EncryptedByteArray
+    ) {
+        val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
+        invoke(userId, deviceSecret.deviceId, passphrase, deviceSecret.secret)
+    }
+
+    /** Activate another device. */
+    suspend operator fun invoke(
+        userId: UserId,
+        deviceId: AuthDeviceId,
+        deviceSecret: DeviceSecretString,
+        passphrase: EncryptedByteArray,
+    ) {
+        // Force Event Loop to update Pushes/Notifications.
+        eventManagerProvider.suspend(EventManagerConfig.Core(userId)) {
+            invoke(userId, deviceId, passphrase, deviceSecret)
+        }
     }
 }

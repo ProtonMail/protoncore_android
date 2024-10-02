@@ -18,34 +18,48 @@
 
 package me.proton.core.auth.domain.usecase.sso
 
-import me.proton.core.auth.domain.repository.DeviceSecretRepository
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.DeviceSecretString
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
+import me.proton.core.key.domain.decryptText
+import me.proton.core.key.domain.useKeys
+import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.util.kotlin.HashUtils
 import javax.inject.Inject
 
 class ValidateConfirmationCode @Inject constructor(
-    private val deviceSecretRepository: DeviceSecretRepository,
+    private val userAddressRepository: UserAddressRepository,
+    private val authDeviceRepository: AuthDeviceRepository,
     private val context: CryptoContext
 ) {
 
     sealed interface Result {
-        object NoDeviceSecret : Result
-        object ConfirmationCodeInputError : Result
-        object ConfirmationCodeInvalid : Result
-        object ConfirmationCodeValid : Result
+        data object NoDeviceSecret : Result
+        data object Invalid : Result
+        class Valid(val deviceSecret: DeviceSecretString) : Result
     }
 
     suspend operator fun invoke(
         userId: UserId,
+        deviceId: AuthDeviceId,
         confirmationCode: String
     ): Result {
-        if (confirmationCode.isEmpty() or (confirmationCode.length != 4)) return Result.ConfirmationCodeInputError
-        val deviceSecret = deviceSecretRepository.getByUserId(userId) ?: return Result.NoDeviceSecret
-        val decryptedDeviceSecret = context.keyStoreCrypto.decrypt(deviceSecret.secret)
+        if (confirmationCode.length != 4) return Result.Invalid
+        val authDevice = authDeviceRepository.getByDeviceId(userId, deviceId) ?: return Result.NoDeviceSecret
+        val activationToken = authDevice.activationToken ?: return Result.NoDeviceSecret
+        val userAddressId = authDevice.addressId ?: return Result.NoDeviceSecret
+        val userAddress = userAddressRepository.getAddress(userId, userAddressId) ?: return Result.NoDeviceSecret
+        val decryptedDeviceSecret = userAddress.useKeys(context) { decryptText(activationToken) }
         val sha256DeviceSecret = HashUtils.sha256(decryptedDeviceSecret)
         val code = Crockford32.encode(sha256DeviceSecret.toByteArray()).take(4)
-        return if (code == confirmationCode) Result.ConfirmationCodeValid
-        else Result.ConfirmationCodeInvalid
+        return if (code == confirmationCode) {
+            val deviceSecret = decryptedDeviceSecret.encrypt(context.keyStoreCrypto)
+            Result.Valid(deviceSecret)
+        } else {
+            Result.Invalid
+        }
     }
 }

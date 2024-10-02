@@ -24,7 +24,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import me.proton.core.auth.domain.entity.MemberDeviceId
-import me.proton.core.auth.presentation.compose.confirmationcode.SignInRequestedForApprovalScreen
+import me.proton.core.auth.presentation.compose.sso.member.MemberSelfApprovalScreen
 import me.proton.core.domain.entity.UserId
 
 public object DeviceApprovalRoutes {
@@ -57,7 +57,7 @@ public object DeviceApprovalRoutes {
         }
     }
 
-    public fun NavGraphBuilder.addSelfApprovalScreen(
+    public fun NavGraphBuilder.addMemberSelfApprovalScreen(
         userId: UserId,
         onClose: () -> Unit,
         onError: (String?) -> Unit
@@ -71,7 +71,7 @@ public object DeviceApprovalRoutes {
                 }
             ),
         ) {
-            SignInRequestedForApprovalScreen(
+            MemberSelfApprovalScreen(
                 onClose = onClose,
                 onErrorMessage = onError
             )

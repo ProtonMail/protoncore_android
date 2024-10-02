@@ -130,4 +130,9 @@ interface AccountWorkflowHandler {
      * Directly sets the account into a [AccountState.Disabled] state.
      */
     suspend fun handleAccountDisabled(userId: UserId)
+
+    /**
+     * Directly sets the account into a [AccountState.Removed] state.
+     */
+    suspend fun handleAccountRemoved(userId: UserId)
 }

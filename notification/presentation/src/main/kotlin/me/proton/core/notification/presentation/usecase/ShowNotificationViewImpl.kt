@@ -70,6 +70,7 @@ public class ShowNotificationViewImpl @Inject internal constructor(
 
         val builder = NotificationCompat.Builder(context, getNotificationChannelId()).apply {
             setOngoing(!dismissible)
+            setAutoCancel(dismissible)
             setSmallIcon(getSmallIcon())
             setContentTitle(payload.title)
             setSubText(payload.subtitle)
@@ -103,7 +104,6 @@ public class ShowNotificationViewImpl @Inject internal constructor(
             build = {
                 contentDeeplink?.let { setContentIntent(makeContentIntent(contentDeeplink)) }
                 deleteDeeplink?.let { setDeleteIntent(makeOnDeleteIntent(deleteDeeplink)) }
-                setAutoCancel(true)
             }
         )
     }
@@ -123,7 +123,6 @@ public class ShowNotificationViewImpl @Inject internal constructor(
                 setShowWhen(true)
                 setContentIntent(makeContentIntent(notification))
                 setDeleteIntent(makeOnDeleteIntent(notification))
-                setAutoCancel(true)
             }
         )
     }

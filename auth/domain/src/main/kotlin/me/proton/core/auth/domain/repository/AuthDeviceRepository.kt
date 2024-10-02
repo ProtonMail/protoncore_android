@@ -77,11 +77,11 @@ interface AuthDeviceRepository {
         refresh: Boolean = false
     ): List<AuthDevice>
 
-    suspend fun getByAddressId(
+    suspend fun getByDeviceId(
         userId: UserId,
-        addressId: AddressId,
+        deviceId: AuthDeviceId,
         refresh: Boolean = false
-    ): List<AuthDevice>
+    ): AuthDevice?
 
     suspend fun deleteByUserId(
         userId: UserId

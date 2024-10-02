@@ -42,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.SMALL_SCREEN_HEIGHT
+import me.proton.core.auth.presentation.compose.sso.device.ConfirmationDigits
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar

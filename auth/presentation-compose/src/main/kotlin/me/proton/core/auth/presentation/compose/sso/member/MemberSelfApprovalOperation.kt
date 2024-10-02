@@ -16,13 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.compose.confirmationcode
+package me.proton.core.auth.presentation.compose.sso.member
 
-public sealed interface SignInRequestedForApprovalOperation
+public sealed interface MemberApprovalOperation
 
-public sealed interface SignInRequestedForApprovalAction : SignInRequestedForApprovalOperation {
-    public data object Close : SignInRequestedForApprovalAction
-    public data class ValidateConfirmationCode(val confirmationCode: String) : SignInRequestedForApprovalAction
-    public data object Confirm : SignInRequestedForApprovalAction
-    public data object Reject : SignInRequestedForApprovalAction
+public sealed interface MemberApprovalAction : MemberApprovalOperation {
+    public data object Load : MemberApprovalAction
+    public data object Close : MemberApprovalAction
+    public data class ValidateCode(val code: String) : MemberApprovalAction
+    public data object Confirm : MemberApprovalAction
+    public data object Reject : MemberApprovalAction
 }

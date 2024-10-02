@@ -16,7 +16,7 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.compose.confirmationcode
+package me.proton.core.auth.presentation.compose.sso.member
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -38,6 +39,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -45,6 +48,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.SMALL_SCREEN_HEIGHT
+import me.proton.core.auth.presentation.compose.sso.device.CONFIRMATION_CODE_FIELD_TAG
+import me.proton.core.auth.presentation.compose.sso.member.MemberApprovalAction.*
+import me.proton.core.auth.presentation.compose.sso.member.MemberSelfApprovalState.*
+import me.proton.core.auth.presentation.compose.sso.member.MemberSelfApprovalState.Closed
 import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
@@ -56,18 +63,18 @@ import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
 
 @Composable
-public fun SignInRequestedForApprovalScreen(
+public fun MemberSelfApprovalScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
-    viewModel: SignInRequestedForApprovalViewModel = hiltViewModel()
+    viewModel: MemberSelfApprovalViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    SignInRequestedForApprovalScreen(
+    MemberSelfApprovalScreen(
         modifier = modifier,
         onClose = onClose,
-        onCloseClicked = { viewModel.submit(SignInRequestedForApprovalAction.Close) },
+        onCloseClicked = { viewModel.submit(Close) },
         onErrorMessage = onErrorMessage,
         onConfirmClicked = { viewModel.submit(it) },
         onRejectClicked = { viewModel.submit(it) },
@@ -77,51 +84,53 @@ public fun SignInRequestedForApprovalScreen(
 }
 
 @Composable
-public fun SignInRequestedForApprovalScreen(
+public fun MemberSelfApprovalScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
     onCloseClicked: () -> Unit = {},
-    onConfirmClicked: (SignInRequestedForApprovalAction.Confirm) -> Unit = {},
-    onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit = {},
-    onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit = {},
-    state: SignInRequestedForApprovalState
+    onConfirmClicked: (Confirm) -> Unit = {},
+    onRejectClicked: (Reject) -> Unit = {},
+    onConfirmationCodeInputChange: (ValidateCode) -> Unit = {},
+    state: MemberSelfApprovalState
 ) {
     LaunchedEffect(state) {
         when (state) {
-            is SignInRequestedForApprovalState.Close -> onClose()
-            is SignInRequestedForApprovalState.ConfirmationCodeResult -> Unit
-            is SignInRequestedForApprovalState.ConfirmedSuccessfully -> onClose()
-            is SignInRequestedForApprovalState.Error -> onErrorMessage(state.message)
-            is SignInRequestedForApprovalState.Idle -> Unit
-            is SignInRequestedForApprovalState.Loading -> Unit
-            is SignInRequestedForApprovalState.RejectedSuccessfully -> onClose()
+            is Closed -> onClose()
+            is ConfirmedSuccessfully -> onClose()
+            is RejectedSuccessfully -> onClose()
+            is Error -> onErrorMessage(state.message)
+            else -> Unit
         }
     }
 
-    val isCodeVerified = (state as? SignInRequestedForApprovalState.ConfirmationCodeResult)?.success ?: false
+    val isCodeVerified = (state is Valid)
 
-    SignInRequestedForApprovalScaffold(
+    MemberSelfApprovalScaffold(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onConfirmClicked = onConfirmClicked,
         onConfirmationCodeInputChange = onConfirmationCodeInputChange,
         onRejectClicked = onRejectClicked,
         confirmationButtonClickable = isCodeVerified,
-        isLoading = state is SignInRequestedForApprovalState.Loading,
+        isLoading = state is Loading,
+        isConfirming = state is Confirming,
+        isRejecting = state is Rejecting,
         email = state.email ?: ""
     )
 }
 
 @Composable
-public fun SignInRequestedForApprovalScaffold(
+public fun MemberSelfApprovalScaffold(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit,
-    onConfirmClicked: (SignInRequestedForApprovalAction.Confirm) -> Unit,
-    onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit,
-    onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit,
+    onConfirmClicked: (Confirm) -> Unit,
+    onRejectClicked: (Reject) -> Unit,
+    onConfirmationCodeInputChange: (ValidateCode) -> Unit,
     confirmationButtonClickable: Boolean,
     isLoading: Boolean,
+    isConfirming: Boolean,
+    isRejecting: Boolean,
     email: String
 ) {
     Scaffold(
@@ -148,7 +157,9 @@ public fun SignInRequestedForApprovalScaffold(
                 onConfirmationCodeInputChange = onConfirmationCodeInputChange,
                 email = email,
                 confirmationButtonClickable = confirmationButtonClickable,
-                isLoading = isLoading
+                isLoading = isLoading,
+                isConfirming = isConfirming,
+                isRejecting = isRejecting,
             )
         }
     }
@@ -156,12 +167,14 @@ public fun SignInRequestedForApprovalScaffold(
 
 @Composable
 private fun ConfirmationCodeInputScreen(
-    onConfirmClicked: (SignInRequestedForApprovalAction.Confirm) -> Unit,
-    onRejectClicked: (SignInRequestedForApprovalAction.Reject) -> Unit,
-    onConfirmationCodeInputChange: (SignInRequestedForApprovalAction.ValidateConfirmationCode) -> Unit,
+    onConfirmClicked: (Confirm) -> Unit,
+    onRejectClicked: (Reject) -> Unit,
+    onConfirmationCodeInputChange: (ValidateCode) -> Unit,
     email: String,
     confirmationButtonClickable: Boolean = false,
     isLoading: Boolean = false,
+    isConfirming: Boolean = false,
+    isRejecting: Boolean = false,
 ) {
     var confirmationCode by remember { mutableStateOf("") }
 
@@ -180,10 +193,15 @@ private fun ConfirmationCodeInputScreen(
         ProtonOutlinedTextFieldWithError(
             text = confirmationCode,
             onValueChanged = {
-                confirmationCode = it
-                onConfirmationCodeInputChange(SignInRequestedForApprovalAction.ValidateConfirmationCode(confirmationCode))
+                confirmationCode = it.uppercase().take(4)
+                onConfirmationCodeInputChange(ValidateCode(confirmationCode))
             },
-            enabled = !isLoading,
+            keyboardOptions = KeyboardOptions(
+                autoCorrect = false,
+                capitalization = KeyboardCapitalization.Characters,
+                keyboardType = KeyboardType.Text
+            ),
+            enabled = !isLoading && !isConfirming && !isRejecting,
             label = { Text(text = stringResource(id = R.string.auth_login_confirmation_code)) },
             singleLine = true,
             modifier = Modifier
@@ -193,16 +211,16 @@ private fun ConfirmationCodeInputScreen(
         )
 
         Text(
-            modifier = Modifier
-                .padding(top = ProtonDimens.MediumSpacing),
+            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
             text = stringResource(id = R.string.auth_login_signin_requested_note),
             style = ProtonTypography.Default.defaultSmallWeak
         )
 
         ProtonSolidButton(
             contained = false,
-            onClick = { onConfirmClicked(SignInRequestedForApprovalAction.Confirm) },
-            enabled = confirmationButtonClickable && !isLoading,
+            onClick = { onConfirmClicked(Confirm) },
+            enabled = confirmationButtonClickable && !isLoading && !isConfirming && !isRejecting,
+            loading = isConfirming,
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
                 .height(ProtonDimens.DefaultButtonMinHeight)
@@ -212,8 +230,9 @@ private fun ConfirmationCodeInputScreen(
 
         ProtonTextButton(
             contained = false,
-            onClick = { onRejectClicked(SignInRequestedForApprovalAction.Reject) },
-            enabled = !isLoading,
+            onClick = { onRejectClicked(Reject) },
+            enabled = !isLoading && !isConfirming && !isRejecting,
+            loading = isRejecting,
             modifier = Modifier
                 .padding(vertical = ProtonDimens.MediumSpacing)
                 .height(ProtonDimens.DefaultButtonMinHeight),
@@ -231,11 +250,10 @@ private fun ConfirmationCodeInputScreen(
 @Preview(name = "Tablet", device = Devices.PIXEL_C)
 @Preview(name = "Horizontal", widthDp = 800, heightDp = 360)
 @Composable
-internal fun ConfirmationCodeSignInRequestedForApprovalScreenPreview() {
+internal fun MemberApprovalScreenPreview() {
     ProtonTheme {
-        SignInRequestedForApprovalScreen(
-            onErrorMessage = {},
-            state = SignInRequestedForApprovalState.Idle(email = "user@example.test")
+        MemberSelfApprovalScreen(
+            state = Idle(email = "user@example.test")
         )
     }
 }
