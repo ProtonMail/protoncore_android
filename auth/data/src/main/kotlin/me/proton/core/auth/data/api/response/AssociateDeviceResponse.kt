@@ -20,6 +20,7 @@ package me.proton.core.auth.data.api.response
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
+import me.proton.core.crypto.common.pgp.Based64Encoded
 
 @Serializable
 data class AssociateDeviceResponse(
@@ -34,5 +35,5 @@ data class AssociateAuthDeviceOutput(
     val id: String,
     /** Base64-encoded, AES-GCM-encrypted secret using the DeviceSecret as key. */
     @SerialName("EncryptedSecret")
-    val encryptedSecret: String
+    val encryptedSecret: Based64Encoded
 )

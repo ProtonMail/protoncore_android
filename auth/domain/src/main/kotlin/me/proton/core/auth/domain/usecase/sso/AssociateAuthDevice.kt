@@ -22,7 +22,6 @@ import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.DeviceTokenString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.domain.entity.UserId
@@ -116,6 +115,6 @@ class AssociateAuthDevice @Inject constructor(
         // The caller can continue with DecryptEncryptedSecret:
         // - The FE decrypts the EncryptedSecret with the stored DeviceSecret using plain AES256-GCM.
         // - The FE continues with the normal login flow, decrypting the user keys using the secret.
-        data class Success(val encryptedSecret: AeadEncryptedString) : Result
+        data class Success(val encryptedSecret: Based64EncodedAeadEncryptedSecret) : Result
     }
 }

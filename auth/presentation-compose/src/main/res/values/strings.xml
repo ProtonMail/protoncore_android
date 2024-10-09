@@ -29,7 +29,7 @@
     <string name="auth_login_password">Enter your password</string>
     <string name="auth_login_assistive_text">Please enter your Proton email or username.</string>
 
-    <string name="auth_login_confirmation_code">Confirmation Code</string>
+    <string name="auth_login_confirmation_code">Confirmation code</string>
     <string name="auth_login_use_backup_password">Use backup password instead</string>
     <string name="auth_login_ask_admin_for_help">Ask admin for help</string>
     <string name="auth_login_approve_signin_another_device">Approve the sign-in from another device</string>
@@ -41,8 +41,8 @@
     <string name="auth_login_signin_requested_note">If you didn\'t make this request, cancel it now.</string>
     <string name="auth_login_yes_it_was_me">Yes, it was me</string>
     <string name="auth_login_no_it_wasnt_me">No, it wasn\'t me</string>
-    <string name="auth_login_devices_available">Devices available:</string>
-    <string name="auth_login_no_devices_available">No devices available:</string>
+    <string name="auth_login_devices_available">Devices available</string>
+    <string name="auth_login_no_devices_available">No devices available</string>
     <string name="auth_login_device_last_used">Last used %s ago</string>
     <string name="auth_login_cancel">Cancel</string>
     <string name="auth_login_not_available">N/A</string>

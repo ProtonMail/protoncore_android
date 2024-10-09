@@ -274,7 +274,7 @@ class AccountManagerImplTest {
         val stateLists = accountManager.onAccountStateChanged().toList()
         assertEquals(2, stateLists.size)
         assertEquals(AccountState.UnlockFailed, stateLists[0].state)
-        assertEquals(AccountState.Disabled, stateLists[1].state)
+        assertEquals(AccountState.Removed, stateLists[1].state)
     }
 
     @Test

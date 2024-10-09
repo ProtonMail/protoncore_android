@@ -217,11 +217,12 @@ class AccountManagerImpl @Inject constructor(
 
     override suspend fun handleDeviceSecretFailed(userId: UserId) {
         accountRepository.updateAccountState(userId, DeviceSecretFailed)
+        removeAccount(userId)
     }
 
     override suspend fun handleUnlockFailed(userId: UserId) {
         accountRepository.updateAccountState(userId, UnlockFailed)
-        disableAccount(userId)
+        removeAccount(userId)
     }
 
     override suspend fun handleAccountReady(userId: UserId) {
@@ -236,10 +237,6 @@ class AccountManagerImpl @Inject constructor(
 
     override suspend fun handleAccountDisabled(userId: UserId) {
         disableAccount(userId)
-    }
-
-    override suspend fun handleAccountRemoved(userId: UserId) {
-        removeAccount(userId)
     }
 
     // endregion

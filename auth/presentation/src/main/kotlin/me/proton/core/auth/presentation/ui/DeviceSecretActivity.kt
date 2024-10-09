@@ -22,15 +22,14 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableStateFlow
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceSecretAction
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addRequestAdminHelpScreen
-import me.proton.core.auth.presentation.compose.DeviceSecretViewModel
 import me.proton.core.auth.presentation.entity.DeviceSecretResult
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addBackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addMainScreen
@@ -47,12 +46,12 @@ class DeviceSecretActivity : ProtonActivity() {
         UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
     }
 
-    private val viewModel by viewModels<DeviceSecretViewModel>()
+    private val mutableAction = MutableStateFlow<DeviceSecretAction?>(null)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addOnBackPressedCallback { viewModel.submit(DeviceSecretAction.Close) }
+        addOnBackPressedCallback { mutableAction.tryEmit(DeviceSecretAction.Close) }
 
         setContent {
             ProtonTheme {
@@ -65,18 +64,22 @@ class DeviceSecretActivity : ProtonActivity() {
                         userId = userId,
                         navController = navController,
                         onClose = { onClose() },
+                        onCloseMessage = { onCloseMessage(it) },
                         onErrorMessage = { onErrorMessage(it) },
-                        onSuccess = { onSuccess(it) }
+                        onSuccess = { onSuccess(it) },
+                        externalAction = mutableAction
                     )
                     addBackupPasswordInputScreen(
                         userId = userId,
                         navController = navController,
+                        onCloseMessage = { onCloseMessage(it) },
                         onErrorMessage = { onErrorMessage(it) },
                     )
                     addRequestAdminHelpScreen(
                         userId = userId,
                         navController = navController,
-                        onErrorMessage = { onErrorMessage(it) }
+                        onErrorMessage = { onErrorMessage(it) },
+                        onReloadState = { onReloadState() }
                     )
                 }
             }
@@ -86,6 +89,15 @@ class DeviceSecretActivity : ProtonActivity() {
     private fun onClose() {
         setResult(Activity.RESULT_CANCELED)
         finish()
+    }
+
+    private fun onCloseMessage(message: String?) {
+        onErrorMessage(message)
+        mutableAction.tryEmit(DeviceSecretAction.Close)
+    }
+
+    private fun onReloadState() {
+        mutableAction.tryEmit(DeviceSecretAction.Load())
     }
 
     private fun onErrorMessage(message: String?) {

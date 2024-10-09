@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +32,9 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.entity.isPendingAdmin
 import me.proton.core.auth.domain.entity.isPendingMember
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
@@ -43,12 +46,22 @@ import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Arg.getUser
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Confirm
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Load
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Reject
-import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.ValidateCode
-import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.*
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.SetInput
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Closed
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Confirmed
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Confirming
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Error
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Idle
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Loading
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Rejected
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Rejecting
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.getDisplayName
+import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DurationFormat
+import me.proton.core.util.android.datetime.UtcClock
 import javax.inject.Inject
 
 @HiltViewModel
@@ -59,7 +72,9 @@ public class MemberApprovalViewModel @Inject constructor(
     private val rejectAuthDevice: RejectAuthDevice,
     private val savedStateHandle: SavedStateHandle,
     private val userManager: UserManager,
-    private val validateCode: ValidateConfirmationCode
+    private val validateCode: ValidateConfirmationCode,
+    private val durationFormat: DurationFormat,
+    @UtcClock private val clock: Clock
 ) : ViewModel() {
 
     private val userId by lazy { savedStateHandle.getUserId() }
@@ -68,62 +83,64 @@ public class MemberApprovalViewModel @Inject constructor(
 
     public val state: StateFlow<MemberApprovalState> = mutableAction.flatMapLatest { action ->
         when (action) {
-            is Load -> onLoad()
-            is Confirm -> onConfirm()
-            is Reject -> onReject()
-            is ValidateCode -> onValidateCode(action.code)
+            is Load -> onLoad(action.background)
+            is SetInput -> onValidate(action.deviceId, action.code)
+            is Confirm -> onConfirm(action.deviceId, action.deviceSecret)
+            is Reject -> onReject(action.deviceId)
         }
-    }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Idle())
+    }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Idle(MemberApprovalData()))
 
     public fun submit(action: MemberApprovalAction): Job = viewModelScope.launch {
         mutableAction.emit(action)
     }
 
-    private suspend fun onLoad() = flow {
-        emit(Loading(userManager.getUser(userId).getDisplayName()))
-        when (getPendingDeviceId()) {
-            null -> emit(Closed)
-            else -> emit(Idle(state.value.email))
-        }
+    private fun reload(delay: Long = 30000) = viewModelScope.launch {
+        delay(delay)
+        submit(Load(background = true))
     }
 
-    private suspend fun onValidateCode(code: String) = flow {
-        val deviceId = requireNotNull(getPendingDeviceId())
-        val newState = when (val result = validateCode.invoke(userId, deviceId, code)) {
-            is Result.NoDeviceSecret -> Idle(state.value.email)
-            is Result.Invalid -> Idle(state.value.email)
-            is Result.Valid -> Valid(state.value.email, result.deviceSecret)
+    private suspend fun onLoad(background: Boolean = false) = flow {
+        val email = userManager.getUser(userId).getEmail()
+        if (!background) {
+            emit(Loading(state.value.data.copy(email = email)))
         }
-        emit(newState)
+        val devices = getPendingDevices().map { it.toData(clock, durationFormat) }
+        when {
+            devices.isEmpty() -> emit(Closed)
+            else -> emit(Idle(state.value.data.copy(email = email, pendingDevices = devices)))
+        }
+        reload()
+    }
+
+    private suspend fun onValidate(deviceId: AuthDeviceId?, code: String?) = flow<MemberApprovalState> {
+        when (val result = validateCode.invoke(userId, deviceId, code)) {
+            is Result.NoDeviceSecret -> emit(Idle(state.value.data.copy(deviceSecret = null)))
+            is Result.Invalid -> emit(Idle(state.value.data.copy(deviceSecret = null)))
+            is Result.Valid -> emit(Idle(state.value.data.copy(deviceSecret = result.deviceSecret)))
+        }
     }.catch { error ->
-        emit(Error(email = state.value.email, error.message))
+        emit(Error(data = state.value.data, error.message))
     }
 
-    private fun onConfirm() = flow {
-        val deviceId = requireNotNull(getPendingDeviceId())
-        emit(Confirming(email = state.value.email))
-        val state = state.value
-        check(state is Valid)
-        val deviceSecret = state.deviceSecret
+    private fun onConfirm(deviceId: AuthDeviceId?, deviceSecret: DeviceSecretString?) = flow {
+        emit(Confirming(data = state.value.data))
         val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
-        activateAuthDevice.invoke(userId, deviceId, deviceSecret, passphrase)
+        activateAuthDevice.invoke(userId, requireNotNull(deviceId), requireNotNull(deviceSecret), passphrase)
         emit(Confirmed)
     }.catch { error ->
-        emit(Error(email = state.value.email, error.message))
+        emit(Error(data = state.value.data, error.message))
     }
 
-    private fun onReject() = flow {
-        val deviceId = requireNotNull(getPendingDeviceId())
-        emit(Rejecting(email = state.value.email))
+    private fun onReject(deviceId: AuthDeviceId) = flow {
+        emit(Rejecting(data = state.value.data))
         rejectAuthDevice(userId, deviceId)
         emit(Rejected)
     }.catch { error ->
-        emit(Error(email = state.value.email, error.message))
+        emit(Error(data = state.value.data, error.message))
     }
 
-    private suspend fun getPendingDeviceId(): AuthDeviceId? =
-        // TODO: Add multi PendingActivation support (+UI to pick it, +refresh periodic).
+    private suspend fun getPendingDevices(): List<AuthDevice> =
         authDeviceRepository.getByUserId(userId, refresh = true)
-            .sortedBy { it.createdAtUtcSeconds }
-            .lastOrNull { it.isPendingMember() || it.isPendingAdmin() }?.deviceId
+            .sortedByDescending { it.createdAtUtcSeconds }
+            .filter { it.isPendingMember() || it.isPendingAdmin() }
 }

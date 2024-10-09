@@ -32,7 +32,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import me.proton.core.auth.domain.entity.isActive
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.usecase.sso.GenerateConfirmationCode
@@ -46,8 +45,6 @@ import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DurationFormat
 import me.proton.core.util.android.datetime.UtcClock
 import javax.inject.Inject
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
 @HiltViewModel
 public class WaitingMemberViewModel @Inject constructor(
@@ -84,22 +81,7 @@ public class WaitingMemberViewModel @Inject constructor(
         val confirmationCode = generateConfirmationCode.invoke(userId)
         val devices = authDeviceRepository.getByUserId(userId, refresh = true)
         val availableDevices = devices.filter { it.isActive() }
-        val now = clock.currentEpochSeconds()
-        val uiModels = availableDevices.map {
-            val delta = now - it.lastActivityAtUtcSeconds
-            AvailableDeviceUIModel(
-                id = it.deviceId.id,
-                authDeviceName = it.name,
-                localizedClientName = it.localizedClientName,
-                lastActivityTime = it.lastActivityAtUtcSeconds,
-                lastActivityReadable = durationFormat.format(
-                    duration = delta.toDuration(DurationUnit.SECONDS),
-                    startUnit = DurationUnit.HOURS,
-                    endUnit = DurationUnit.MINUTES
-                ),
-                platform = it.platform?.enum ?: AuthDevicePlatform.Android
-            )
-        }
+        val uiModels = availableDevices.map { it.toData(clock, durationFormat) }
         emit(DataLoaded(confirmationCode, uiModels))
         reload()
     }.catch {

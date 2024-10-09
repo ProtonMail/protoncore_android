@@ -41,12 +41,14 @@ import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice
 import me.proton.core.auth.domain.usecase.sso.CheckOtherDevices
 import me.proton.core.auth.domain.usecase.PostLoginSsoAccountSetup
 import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
 import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
+import me.proton.core.auth.presentation.compose.DeviceSecretViewState.ChangePassword
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceRejected
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Error
@@ -55,7 +57,7 @@ import me.proton.core.auth.presentation.compose.DeviceSecretViewState.InvalidSec
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
-import me.proton.core.crypto.common.aead.AeadEncryptedString
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
 import javax.inject.Inject
@@ -95,7 +97,6 @@ public class DeviceSecretViewModel @Inject constructor(
 
     private fun onClose(): Flow<DeviceSecretViewState> = flow {
         accountWorkflow.handleDeviceSecretFailed(userId)
-        accountWorkflow.handleAccountRemoved(userId)
         emit(Close(email = state.value.email))
     }
 
@@ -165,25 +166,32 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onCheckOtherDevices() = flow {
-        when (checkOtherDevices.invoke(false /*TODO*/, userId)) {
-            is DevicesResult.AdminHelpRequired -> {
-                emit(InvalidSecret.NoDevice.WaitingAdmin(email = state.value.email))
-                emitAll(observeAuthDevice())
-            }
-
+        when (checkOtherDevices.invoke(userId)) {
             is DevicesResult.OtherDevicesAvailable -> {
                 emit(InvalidSecret.OtherDevice.WaitingMember(email = state.value.email))
                 emitAll(observeAuthDevice())
             }
 
-            is DevicesResult.LoginWithBackupPasswordAvailable -> emitAll(onLoginWithBackup())
+            is DevicesResult.AdminHelpRequested -> {
+                emit(InvalidSecret.NoDevice.WaitingAdmin(email = state.value.email))
+                emitAll(observeAuthDevice())
+            }
+
+            is DevicesResult.AdminHelpRequired -> {
+                emit(InvalidSecret.NoDevice.RequireAdmin(email = state.value.email))
+                emitAll(observeAuthDevice())
+            }
+
+            is DevicesResult.BackupPassword -> {
+                emitAll(onLoginWithBackup())
+            }
         }
     }
 
     private fun onLoginWithBackup() = flow {
         when (passphraseRepository.getPassphrase(userId)) {
             null -> {
-                emit(InvalidSecret.NoDevice.EnterBackupPassword(email = state.value.email))
+                emit(InvalidSecret.NoDevice.BackupPassword(email = state.value.email))
                 emitAll(observeAuthDevice())
             }
 
@@ -192,14 +200,10 @@ public class DeviceSecretViewModel @Inject constructor(
     }
 
     private fun onDeviceRejected(): Flow<DeviceSecretViewState> = flow {
-        deviceSecretRepository.getByUserId(userId)?.deviceId?.let { deviceId ->
-            authDeviceRepository.deleteByDeviceId(userId, deviceId)
-        }
-        accountWorkflow.handleAccountDisabled(userId)
         emit(DeviceRejected(email = state.value.email))
     }
 
-    private fun onDeviceAssociated(encryptedSecret: AeadEncryptedString) = flow {
+    private fun onDeviceAssociated(encryptedSecret: Based64Encoded) = flow {
         emit(Loading(email = state.value.email))
         activateAuthDevice.invoke(userId, encryptedSecret)
         emitAll(onDeviceActivated())
@@ -211,7 +215,10 @@ public class DeviceSecretViewModel @Inject constructor(
             is SetupResult.AccountReady -> emit(Success(email = state.value.email, userId))
             is SetupResult.Error.UnlockPrimaryKeyError -> emit(Error(email = state.value.email, null))
             is SetupResult.Error.UserCheckError -> emit(Error(email = state.value.email, result.error.localizedMessage))
-            is SetupResult.Need -> error("Unexpected state for SSO user.")
+            is SetupResult.Need -> when (result) {
+                is PostLoginAccountSetup.Result.Need.ChangePassword -> emit(ChangePassword(email = state.value.email))
+                else -> error("Unexpected state for Global SSO user.")
+            }
         }
     }
 }

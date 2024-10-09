@@ -22,7 +22,6 @@ import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.DeviceSecretString
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.decrypt
@@ -48,7 +47,7 @@ class ActivateAuthDevice @Inject constructor(
     private suspend operator fun invoke(
         userId: UserId,
         deviceId: AuthDeviceId,
-        encryptedSecret: AeadEncryptedString
+        encryptedSecret: Based64EncodedAeadEncryptedSecret
     ) {
         authDeviceRepository.activateDevice(userId, deviceId, encryptedSecret)
     }
@@ -65,10 +64,10 @@ class ActivateAuthDevice @Inject constructor(
         }
     }
 
-    /** Activate my local device using AeadEncryptedString. */
+    /** Activate my local device using Based64Encoded Aead EncryptedSecret. */
     suspend operator fun invoke(
         userId: UserId,
-        encryptedSecret: AeadEncryptedString
+        encryptedSecret: Based64EncodedAeadEncryptedSecret
     ) {
         val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId))
         invoke(userId, deviceSecret.deviceId, encryptedSecret)

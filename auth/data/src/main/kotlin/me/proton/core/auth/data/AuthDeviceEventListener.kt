@@ -84,7 +84,6 @@ class AuthDeviceEventListener @Inject constructor(
     }
 
     override suspend fun onResetAll(config: EventManagerConfig) {
-        authDeviceRepository.deleteByUserId(config.userId)
         authDeviceRepository.getByUserId(config.userId, refresh = true)
     }
 }

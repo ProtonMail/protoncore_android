@@ -49,6 +49,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceRejected
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Error
@@ -58,6 +60,8 @@ import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupScreen
+import me.proton.core.auth.presentation.compose.sso.RequestAccessDeniedScreen
+import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpScreen
 import me.proton.core.auth.presentation.compose.sso.WaitingAdminScreen
 import me.proton.core.auth.presentation.compose.sso.WaitingMemberScreen
 import me.proton.core.compose.component.ProtonCenteredProgress
@@ -78,16 +82,22 @@ public fun DeviceSecretScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
     onSuccess: (userId: UserId) -> Unit = {},
+    onCloseMessage: (String?) -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
     onNavigateToBackupPasswordInput: () -> Unit = {},
     onNavigateToRequestAdminHelp: () -> Unit = {},
+    externalAction: StateFlow<DeviceSecretAction?> = MutableStateFlow(null),
     viewModel: DeviceSecretViewModel = hiltViewModel()
 ) {
+    val action by externalAction.collectAsStateWithLifecycle()
+    action?.let { viewModel.submit(it) }
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     DeviceSecretScreen(
         modifier = modifier,
         onClose = onClose,
+        onCloseMessage = onCloseMessage,
         onErrorMessage = onErrorMessage,
         onSuccess = onSuccess,
         onReloadState = { viewModel.submit(DeviceSecretAction.Load()) },
@@ -103,6 +113,7 @@ public fun DeviceSecretScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
     onSuccess: (userId: UserId) -> Unit = {},
+    onCloseMessage: (String?) -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
     onReloadState: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
@@ -130,12 +141,13 @@ public fun DeviceSecretScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
             onErrorMessage = onErrorMessage,
-            onSuccess = { onReloadState() }
+            onSuccess = onReloadState
         )
 
-        is InvalidSecret.NoDevice.EnterBackupPassword -> BackupPasswordInputScreen(
+        is InvalidSecret.NoDevice.BackupPassword -> BackupPasswordInputScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
+            onCloseMessage = onCloseMessage,
             onErrorMessage = onErrorMessage,
             onSuccess = { Unit },
             onRequestAdminHelpClicked = onNavigateToRequestAdminHelp
@@ -155,18 +167,21 @@ public fun DeviceSecretScreen(
             onBackupPasswordClicked = onNavigateToBackupPasswordInput,
             onRequestAdminHelpClicked = onNavigateToRequestAdminHelp
         )
-        /*
-        is InvalidSecret.NoDevice.WaitingAdminAccessDenied -> RequestAccessDeniedScreen(
-                onCloseClicked = onCloseClicked,
-                onBackToSignInClicked = onCloseClicked
-            )
-        is InvalidSecret.NoDevice.WaitingAdminAccessGranted -> RequestAccessGrantedScreen(
-                modifier = modifier,
-                onCloseClicked = onCloseClicked,
-                onContinueClicked = onNavigateToEnterBackupPassword
-            )
-        */
-        is DeviceRejected -> onClose()
+
+        is InvalidSecret.NoDevice.RequireAdmin -> RequestAdminHelpScreen(
+            onBackClicked = onCloseClicked,
+            onErrorMessage = onErrorMessage,
+            onSuccess = onReloadState,
+        )
+
+        is DeviceRejected -> RequestAccessDeniedScreen(
+            modifier = modifier,
+            onCloseClicked = onCloseClicked,
+            onBackToSignInClicked = onCloseClicked
+        )
+
+        // TODO: Replace with BackupPasswordChangeScreen()
+        is DeviceSecretViewState.ChangePassword -> onClose()
     }
 }
 
@@ -214,7 +229,9 @@ public fun DeviceSecretScaffold(
             modifier = Modifier.padding(paddingValues)
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(ProtonDimens.DefaultSpacing),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(ProtonDimens.DefaultSpacing),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Box(modifier = Modifier.size(ProtonDimens.DefaultIconWithPadding)) {

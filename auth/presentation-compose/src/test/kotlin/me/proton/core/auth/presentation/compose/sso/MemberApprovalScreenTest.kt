@@ -21,6 +21,8 @@ package me.proton.core.auth.presentation.compose.sso
 import app.cash.paparazzi.DeviceConfig
 import app.cash.paparazzi.Paparazzi
 import app.cash.paparazzi.detectEnvironment
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import org.junit.Rule
 import org.junit.Test
 
@@ -42,7 +44,21 @@ class MemberApprovalScreenTest {
                 onCloseClicked = {},
                 onConfirmClicked = {},
                 onRejectClicked = {},
-                state = MemberApprovalState.Idle(email = "user@example.test")
+                state = MemberApprovalState.Idle(
+                    data = MemberApprovalData(
+                        email = "user@example.test",
+                        pendingDevices = listOf(
+                            AuthDeviceData(
+                                deviceId = AuthDeviceId("id"),
+                                name = "Google Pixel 8",
+                                localizedClientName = "Proton for Android",
+                                platform = AuthDevicePlatform.Android,
+                                lastActivityTime = 0,
+                                lastActivityReadable = "10:22 AM"
+                            )
+                        )
+                    ),
+                )
             )
         }
     }

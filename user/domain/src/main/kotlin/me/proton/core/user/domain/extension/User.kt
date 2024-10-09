@@ -94,6 +94,12 @@ fun User.getUsedDriveSpacePercentage(): Int? = getUsedPercentage(usedDriveSpace,
 /** Returns current usage of total space 0 - 100 percent. */
 fun User.getUsedTotalSpacePercentage(): Int = getUsedPercentage(usedSpace, maxSpace)!!
 
+/**
+ * @return true if the user have a temporary password.
+ */
+fun User.hasTemporaryPassword() = false
+
+
 @Suppress("MagicNumber")
 private fun getUsedPercentage(used: Long?, max: Long?): Int? {
     if (used == null || max == null) return null

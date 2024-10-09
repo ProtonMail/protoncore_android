@@ -42,11 +42,15 @@ import me.proton.core.auth.presentation.compose.R
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.util.kotlin.catchAll
+import me.proton.core.util.kotlin.catchWhen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -92,6 +96,8 @@ public class BackupPasswordInputViewModel @Inject constructor(
                 UserManager.UnlockResult.Success -> emitAll(onActivateDevice())
             }
         }
+    }.catchWhen(Throwable::isActionNotAllowed) {
+        emit(BackupPasswordInputState.Close(it.message))
     }.catchAll(LogTag.UNLOCK_USER) {
         emit(BackupPasswordInputState.Error(it.message))
     }
@@ -105,4 +111,10 @@ public class BackupPasswordInputViewModel @Inject constructor(
     }.catchAll(LogTag.ACTIVATE_DEVICE) {
         emit(BackupPasswordInputState.Error(it.message))
     }
+}
+
+private fun Throwable.isActionNotAllowed(): Boolean {
+    if (this !is ApiException) return false
+    val error = error as? ApiResult.Error.Http
+    return error?.proton?.code == ResponseCodes.NOT_ALLOWED
 }

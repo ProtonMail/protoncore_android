@@ -20,16 +20,23 @@ package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.entity.DeviceSecret
 import me.proton.core.auth.domain.entity.DeviceSecretString
-import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.crypto.common.aead.encrypt
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.PlainByteArray
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import javax.inject.Inject
 
 /**
  * Get EncryptedSecret from Passphrase + DeviceSecret.
+ *
+ * ```
+ * EncryptedSecret = base64Encode(aesGcm(data = passphrase, key = base64Decoded(deviceSecret), context))
+ * Passphrase = bcrypt(password, salt)
+ * Context = "account.device-secret"
+ * ```
+ * @see DecryptEncryptedSecret
  */
 class GetEncryptedSecret @Inject constructor(
     context: CryptoContext
@@ -41,13 +48,15 @@ class GetEncryptedSecret @Inject constructor(
     operator fun invoke(
         passphrase: PlainByteArray,
         deviceSecret: DeviceSecretString
-    ): AeadEncryptedString {
-        return pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
-            pgpCrypto.getBase64Encoded(passphrase.array).encrypt(
+    ): Based64EncodedAeadEncryptedSecret = pgpCrypto.getBase64Encoded(
+        pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
+            passphrase.encrypt(
                 crypto = aeadCrypto,
                 key = key.array,
                 aad = DeviceSecret.DEVICE_SECRET_CONTEXT.toByteArray()
-            )
+            ).array
         }
-    }
+    )
 }
+
+internal typealias Based64EncodedAeadEncryptedSecret = Based64Encoded

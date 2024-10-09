@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import kotlinx.coroutines.flow.StateFlow
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpScreen
 import me.proton.core.domain.entity.UserId
@@ -59,8 +60,10 @@ public object DeviceSecretRoutes {
         userId: UserId,
         navController: NavHostController,
         onClose: () -> Unit,
+        onCloseMessage: (String?) -> Unit,
         onErrorMessage: (String?) -> Unit,
-        onSuccess: (userId: UserId) -> Unit
+        onSuccess: (userId: UserId) -> Unit,
+        externalAction: StateFlow<DeviceSecretAction?>
     ) {
         composable(
             route = Route.Main.Deeplink,
@@ -73,6 +76,7 @@ public object DeviceSecretRoutes {
         ) {
             DeviceSecretScreen(
                 onClose = { onClose() },
+                onCloseMessage = { onCloseMessage(it) },
                 onErrorMessage = { onErrorMessage(it) },
                 onSuccess = { onSuccess(it) },
                 onNavigateToBackupPasswordInput = {
@@ -80,7 +84,8 @@ public object DeviceSecretRoutes {
                 },
                 onNavigateToRequestAdminHelp = {
                     navController.navigate(Route.RequestAdminHelp.get(userId))
-                }
+                },
+                externalAction = externalAction
             )
         }
     }
@@ -88,6 +93,7 @@ public object DeviceSecretRoutes {
     public fun NavGraphBuilder.addBackupPasswordInputScreen(
         userId: UserId,
         navController: NavHostController,
+        onCloseMessage: (String?) -> Unit,
         onErrorMessage: (String?) -> Unit
     ) {
         composable(
@@ -105,6 +111,7 @@ public object DeviceSecretRoutes {
                     navController.navigate(Route.RequestAdminHelp.get(userId))
                 },
                 onCloseClicked = { navController.popBackStack() },
+                onCloseMessage = { navController.popBackStack(); onCloseMessage(it) },
                 onErrorMessage = { onErrorMessage(it) },
                 onSuccess = { navController.popBackStack() }
             )
@@ -114,7 +121,8 @@ public object DeviceSecretRoutes {
     public fun NavGraphBuilder.addRequestAdminHelpScreen(
         userId: UserId,
         navController: NavHostController,
-        onErrorMessage: (String?) -> Unit
+        onErrorMessage: (String?) -> Unit,
+        onReloadState: () -> Unit
     ) {
         composable(
             route = Route.RequestAdminHelp.Deeplink,
@@ -128,7 +136,7 @@ public object DeviceSecretRoutes {
             RequestAdminHelpScreen(
                 onBackClicked = { navController.popBackStack() },
                 onErrorMessage = { onErrorMessage(it) },
-                onSuccess = { navController.popBackStack() },
+                onSuccess = { navController.popBackStack(); onReloadState() },
             )
         }
     }

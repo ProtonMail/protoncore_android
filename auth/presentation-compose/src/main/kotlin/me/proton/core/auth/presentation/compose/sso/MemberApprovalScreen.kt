@@ -16,15 +16,23 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package me.proton.core.auth.presentation.compose.sso
 
 import android.content.res.Configuration
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Card
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.ExposedDropdownMenuBox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -46,11 +54,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.SMALL_SCREEN_HEIGHT
-import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.*
-import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.*
-import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Confirm
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.Reject
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalAction.SetInput
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Closed
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Confirmed
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Confirming
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Error
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Idle
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Loading
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Rejected
+import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Rejecting
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.ProtonTextButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -73,9 +91,9 @@ public fun MemberApprovalScreen(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onErrorMessage = onErrorMessage,
+        onInputChanged = { viewModel.submit(it) },
         onConfirmClicked = { viewModel.submit(it) },
         onRejectClicked = { viewModel.submit(it) },
-        onConfirmationCodeInputChange = { viewModel.submit(it) },
         onSuccess = onSuccess,
         state = state
     )
@@ -86,9 +104,9 @@ public fun MemberApprovalScreen(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
+    onInputChanged: (SetInput) -> Unit = {},
     onConfirmClicked: (Confirm) -> Unit = {},
     onRejectClicked: (Reject) -> Unit = {},
-    onConfirmationCodeInputChange: (ValidateCode) -> Unit = {},
     onSuccess: () -> Unit = {},
     state: MemberApprovalState
 ) {
@@ -103,15 +121,15 @@ public fun MemberApprovalScreen(
     }
     MemberApprovalScaffold(
         modifier = modifier,
+        onInputChanged = onInputChanged,
         onCloseClicked = onCloseClicked,
         onConfirmClicked = onConfirmClicked,
-        onConfirmationCodeInputChange = onConfirmationCodeInputChange,
         onRejectClicked = onRejectClicked,
-        confirmationButtonClickable = state is Valid,
+        confirmationButtonClickable = state.data.hasValidCode(),
         isLoading = state is Loading,
         isConfirming = state is Confirming,
         isRejecting = state is Rejecting,
-        email = state.email ?: ""
+        data = state.data
     )
 }
 
@@ -119,14 +137,14 @@ public fun MemberApprovalScreen(
 public fun MemberApprovalScaffold(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit,
+    onInputChanged: (SetInput) -> Unit = {},
     onConfirmClicked: (Confirm) -> Unit,
     onRejectClicked: (Reject) -> Unit,
-    onConfirmationCodeInputChange: (ValidateCode) -> Unit,
     confirmationButtonClickable: Boolean,
     isLoading: Boolean,
     isConfirming: Boolean,
     isRejecting: Boolean,
-    email: String
+    data: MemberApprovalData
 ) {
     Scaffold(
         modifier = modifier,
@@ -147,14 +165,14 @@ public fun MemberApprovalScaffold(
     ) { paddingValues ->
         Box(modifier = Modifier.padding(paddingValues)) {
             ConfirmationCodeInputScreen(
+                onInputChanged = onInputChanged,
                 onConfirmClicked = onConfirmClicked,
                 onRejectClicked = onRejectClicked,
-                onConfirmationCodeInputChange = onConfirmationCodeInputChange,
-                email = email,
-                confirmationButtonClickable = confirmationButtonClickable,
+                isConfirmButtonEnabled = confirmationButtonClickable,
                 isLoading = isLoading,
                 isConfirming = isConfirming,
                 isRejecting = isRejecting,
+                data = data,
             )
         }
     }
@@ -162,47 +180,91 @@ public fun MemberApprovalScaffold(
 
 @Composable
 private fun ConfirmationCodeInputScreen(
-    onConfirmClicked: (Confirm) -> Unit,
-    onRejectClicked: (Reject) -> Unit,
-    onConfirmationCodeInputChange: (ValidateCode) -> Unit,
-    email: String,
-    confirmationButtonClickable: Boolean = false,
+    onInputChanged: (SetInput) -> Unit = {},
+    onConfirmClicked: (Confirm) -> Unit = {},
+    onRejectClicked: (Reject) -> Unit = {},
+    isConfirmButtonEnabled: Boolean = false,
     isLoading: Boolean = false,
     isConfirming: Boolean = false,
     isRejecting: Boolean = false,
+    data: MemberApprovalData,
 ) {
     var confirmationCode by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+    var selected by remember(data) { mutableStateOf(data.pendingDevices.getOrNull(0)) }
 
-    Column(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
         Text(
             text = stringResource(id = R.string.auth_login_signin_requested),
             style = ProtonTypography.Default.headline
         )
 
+        ExposedDropdownMenuBox(
+            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+            expanded = expanded && !isLoading,
+            onExpandedChange = {}
+        ) {
+            Card(
+                modifier = Modifier.clickable { expanded = !expanded },
+                contentColor = ProtonTheme.colors.textNorm,
+                elevation = 0.dp
+            ) {
+                AuthDeviceListItem(
+                    device = selected,
+                    lastActivityVisible = false,
+                    trailing = {
+                        if (data.pendingDevices.size > 1) {
+                            TrailingIcon(expanded = expanded)
+                        }
+                    }
+                )
+            }
+
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                data.pendingDevices.forEach { device ->
+                    DropdownMenuItem(
+                        onClick = {
+                            expanded = false
+                            selected = device
+                            onInputChanged(SetInput(device.deviceId, confirmationCode))
+                        },
+                        contentPadding = PaddingValues(0.dp, 0.dp)
+                    ) {
+                        AuthDeviceListItem(device = device)
+                    }
+                }
+            }
+        }
+
         Text(
             modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-            text = stringResource(id = R.string.auth_login_signin_requested_subtitle, email),
+            text = stringResource(
+                R.string.auth_login_signin_requested_subtitle,
+                data.email ?: "..."
+            ),
             style = ProtonTypography.Default.defaultSmallWeak
         )
 
-        ProtonOutlinedTextFieldWithError(
-            text = confirmationCode,
-            onValueChanged = {
-                confirmationCode = it.uppercase().take(4)
-                onConfirmationCodeInputChange(ValidateCode(confirmationCode))
+        ConfirmationDigitTextField(
+            value = confirmationCode,
+            onValueChange = { code ->
+                confirmationCode = code.uppercase().take(4)
+                selected?.let { onInputChanged(SetInput(it.deviceId, confirmationCode)) }
             },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = ProtonDimens.DefaultSpacing)
+                .testTag(CONFIRMATION_CODE_FIELD_TAG),
             keyboardOptions = KeyboardOptions(
                 autoCorrect = false,
                 capitalization = KeyboardCapitalization.Characters,
                 keyboardType = KeyboardType.Text
             ),
             enabled = !isLoading && !isConfirming && !isRejecting,
-            label = { Text(text = stringResource(id = R.string.auth_login_confirmation_code)) },
             singleLine = true,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = ProtonDimens.DefaultSpacing)
-                .testTag(CONFIRMATION_CODE_FIELD_TAG)
         )
 
         Text(
@@ -213,8 +275,8 @@ private fun ConfirmationCodeInputScreen(
 
         ProtonSolidButton(
             contained = false,
-            onClick = { onConfirmClicked(Confirm()) },
-            enabled = confirmationButtonClickable && !isLoading && !isConfirming && !isRejecting,
+            onClick = { selected?.let { onConfirmClicked(Confirm(it.deviceId, data.deviceSecret)) } },
+            enabled = isConfirmButtonEnabled && !isLoading && !isConfirming && !isRejecting,
             loading = isConfirming,
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
@@ -225,7 +287,7 @@ private fun ConfirmationCodeInputScreen(
 
         ProtonTextButton(
             contained = false,
-            onClick = { onRejectClicked(Reject()) },
+            onClick = { selected?.let { onRejectClicked(Reject(it.deviceId)) } },
             enabled = !isLoading && !isConfirming && !isRejecting,
             loading = isRejecting,
             modifier = Modifier
@@ -237,6 +299,36 @@ private fun ConfirmationCodeInputScreen(
     }
 }
 
+@Preview(name = "Light mode", showBackground = true)
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+internal fun ConfirmationCodeInputScreenPreview() {
+    ProtonTheme {
+        ConfirmationCodeInputScreen(
+            data = MemberApprovalData(
+                email = "user@domain.com",
+                pendingDevices = listOf(
+                    AuthDeviceData(
+                        deviceId = AuthDeviceId("1"),
+                        name = "Google Pixel 8",
+                        localizedClientName = "Proton for Android",
+                        platform = AuthDevicePlatform.Android,
+                        lastActivityTime = 0,
+                        lastActivityReadable = "10 minutes"
+                    ),
+                    AuthDeviceData(
+                        deviceId = AuthDeviceId("2"),
+                        name = "Google Pixel 9",
+                        localizedClientName = "Proton for Android",
+                        platform = AuthDevicePlatform.Android,
+                        lastActivityTime = 0,
+                        lastActivityReadable = "14 minutes"
+                    )
+                )
+            )
+        )
+    }
+}
 
 @Preview(name = "Light mode")
 @Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
@@ -248,7 +340,21 @@ private fun ConfirmationCodeInputScreen(
 internal fun MemberApprovalScreenPreview() {
     ProtonTheme {
         MemberApprovalScreen(
-            state = Idle(email = "user@example.test")
+            state = Idle(
+                data = MemberApprovalData(
+                    email = "user@domain.com",
+                    pendingDevices = listOf(
+                        AuthDeviceData(
+                            deviceId = AuthDeviceId("id"),
+                            name = "Google Pixel 8",
+                            localizedClientName = "Proton for Android",
+                            platform = AuthDevicePlatform.Android,
+                            lastActivityTime = 0,
+                            lastActivityReadable = "10 minutes"
+                        )
+                    )
+                )
+            )
         )
     }
 }

@@ -18,37 +18,30 @@
 
 package me.proton.core.auth.presentation.compose.sso
 
-import me.proton.core.auth.domain.entity.DeviceSecretString
-
 public sealed class MemberApprovalState(
-    public open val email: String? = null
+    public open val data: MemberApprovalData = MemberApprovalData()
 ) {
 
     public data class Idle(
-        override val email: String? = null
-    ) : MemberApprovalState()
+        override val data: MemberApprovalData
+    ) : MemberApprovalState(data)
 
     public data class Loading(
-        override val email: String? = null
-    ) : MemberApprovalState()
+        override val data: MemberApprovalData
+    ) : MemberApprovalState(data)
 
     public data class Confirming(
-        override val email: String? = null
-    ) : MemberApprovalState()
+        override val data: MemberApprovalData
+    ) : MemberApprovalState(data)
 
     public data class Rejecting(
-        override val email: String? = null
-    ) : MemberApprovalState()
-
-    public data class Valid(
-        override val email: String? = null,
-        val deviceSecret: DeviceSecretString
-    ) : MemberApprovalState(email)
+        override val data: MemberApprovalData
+    ) : MemberApprovalState(data)
 
     public data class Error(
-        override val email: String? = null,
+        override val data: MemberApprovalData,
         val message: String? = null
-    ) : MemberApprovalState()
+    ) : MemberApprovalState(data)
 
     // Terminal states:
     public data object Closed : MemberApprovalState()

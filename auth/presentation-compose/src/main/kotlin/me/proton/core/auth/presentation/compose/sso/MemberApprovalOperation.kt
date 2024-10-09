@@ -18,23 +18,30 @@
 
 package me.proton.core.auth.presentation.compose.sso
 
+import me.proton.core.auth.domain.entity.AuthDeviceId
+import me.proton.core.auth.domain.entity.DeviceSecretString
+
 public sealed interface MemberApprovalOperation
 
 public sealed interface MemberApprovalAction : MemberApprovalOperation {
     public data class Load(
+        val background: Boolean = false,
         val unused: Long = System.currentTimeMillis()
     ) : MemberApprovalAction
 
-    public data class ValidateCode(
-        val code: String,
-        val unused: Long = System.currentTimeMillis()
+    public data class SetInput(
+        val deviceId: AuthDeviceId,
+        val code: String
     ) : MemberApprovalAction
 
     public data class Confirm(
+        val deviceId: AuthDeviceId,
+        val deviceSecret: DeviceSecretString?,
         val unused: Long = System.currentTimeMillis()
     ) : MemberApprovalAction
 
     public data class Reject(
+        val deviceId: AuthDeviceId,
         val unused: Long = System.currentTimeMillis()
     ) : MemberApprovalAction
 }

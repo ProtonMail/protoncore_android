@@ -32,7 +32,7 @@ import me.proton.core.user.domain.entity.AddressId
 import javax.inject.Inject
 
 class AuthDeviceLocalDataSourceImpl @Inject constructor(
-    db: AuthDatabase
+    private val db: AuthDatabase
 ) : AuthDeviceLocalDataSource {
 
     private val dao: AuthDeviceDao = db.authDeviceDao()
@@ -49,8 +49,18 @@ class AuthDeviceLocalDataSourceImpl @Inject constructor(
         return dao.getByAddressId(addressId).map { it.toAuthDevice() }
     }
 
-    override suspend fun upsert(authDevices: List<AuthDevice>): Unit =
+    override suspend fun upsert(authDevices: List<AuthDevice>) {
         dao.insertOrUpdate(*authDevices.map { it.toAuthDeviceEntity() }.toTypedArray())
+    }
+
+    override suspend fun replaceAll(authDevices: List<AuthDevice>) {
+        db.inTransaction {
+            authDevices.groupBy { it.userId }.forEach { entry ->
+                deleteAll(entry.key)
+                upsert(entry.value)
+            }
+        }
+    }
 
     override suspend fun deleteAll(vararg userIds: UserId) {
         dao.deleteAll(*userIds)

@@ -44,18 +44,19 @@ class ValidateConfirmationCode @Inject constructor(
 
     suspend operator fun invoke(
         userId: UserId,
-        deviceId: AuthDeviceId,
-        confirmationCode: String
+        deviceId: AuthDeviceId?,
+        code: String?
     ): Result {
-        if (confirmationCode.length != 4) return Result.Invalid
+        if (deviceId == null) return Result.NoDeviceSecret
+        if (code?.length != 4) return Result.Invalid
         val authDevice = authDeviceRepository.getByDeviceId(userId, deviceId) ?: return Result.NoDeviceSecret
         val activationToken = authDevice.activationToken ?: return Result.NoDeviceSecret
         val userAddressId = authDevice.addressId ?: return Result.NoDeviceSecret
         val userAddress = userAddressRepository.getAddress(userId, userAddressId) ?: return Result.NoDeviceSecret
         val decryptedDeviceSecret = userAddress.useKeys(context) { decryptText(activationToken) }
         val sha256DeviceSecret = HashUtils.sha256(decryptedDeviceSecret)
-        val code = Crockford32.encode(sha256DeviceSecret.toByteArray()).take(4)
-        return if (code == confirmationCode) {
+        val decryptedCode = Crockford32.encode(sha256DeviceSecret.toByteArray()).take(4)
+        return if (decryptedCode == code) {
             val deviceSecret = decryptedDeviceSecret.encrypt(context.keyStoreCrypto)
             Result.Valid(deviceSecret)
         } else {

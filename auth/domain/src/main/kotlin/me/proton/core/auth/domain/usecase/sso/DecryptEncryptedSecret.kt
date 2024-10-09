@@ -20,7 +20,7 @@ package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.entity.DeviceSecret
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.crypto.common.aead.AeadEncryptedString
+import me.proton.core.crypto.common.aead.AeadEncryptedByteArray
 import me.proton.core.crypto.common.aead.decrypt
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
@@ -30,6 +30,19 @@ import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
+/**
+ * Decrypt Passphrase from EncryptedSecret + DeviceSecret.
+ *
+ * ```
+ * EncryptedSecret = base64Encode(aesGcm(data = passphrase, key = base64Decoded(deviceSecret), context))
+ * Passphrase = bcrypt(password, salt)
+ * Context = "account.device-secret"
+ *
+ * Passphrase = aesGcm(data = base64Decode(encryptedSecret), key = base64Decoded(deviceSecret), context)
+ * ```
+ *
+ * @see GetEncryptedSecret
+ */
 class DecryptEncryptedSecret @Inject constructor(
     context: CryptoContext,
     private val deviceSecretRepository: DeviceSecretRepository
@@ -40,17 +53,16 @@ class DecryptEncryptedSecret @Inject constructor(
 
     suspend operator fun invoke(
         userId: UserId,
-        encryptedSecret: AeadEncryptedString?,
+        encryptedSecret: Based64EncodedAeadEncryptedSecret?,
     ): EncryptedByteArray? {
         if (encryptedSecret == null) return null
         val deviceSecret = deviceSecretRepository.getByUserId(userId)?.secret ?: return null
         return pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
-            val decryptedSecret = encryptedSecret.decrypt(
+            AeadEncryptedByteArray(pgpCrypto.getBase64Decoded(encryptedSecret)).decrypt(
                 crypto = aeadCrypto,
                 key = key.array,
                 aad = DeviceSecret.DEVICE_SECRET_CONTEXT.toByteArray()
-            )
-            pgpCrypto.getBase64Decoded(decryptedSecret).use { it.encrypt(keyStoreCrypto) }
+            ).use { it.encrypt(keyStoreCrypto) }
         }
     }
 }

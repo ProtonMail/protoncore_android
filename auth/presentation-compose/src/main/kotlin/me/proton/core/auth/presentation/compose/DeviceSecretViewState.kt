@@ -23,8 +23,9 @@ public sealed class DeviceSecretViewState(public open val email: String?) {
          * Next step: Enter backup password or ask admin help.
          */
         public sealed class NoDevice(override val email: String?) : InvalidSecret(email) {
-            public data class EnterBackupPassword(override val email: String?) : NoDevice(email)
+            public data class BackupPassword(override val email: String?) : NoDevice(email)
             public data class WaitingAdmin(override val email: String?) : NoDevice(email)
+            public data class RequireAdmin(override val email: String?) : NoDevice(email)
         }
 
         /**
@@ -36,6 +37,16 @@ public sealed class DeviceSecretViewState(public open val email: String?) {
         }
     }
 
+    /**
+     * When: After Admin approval.
+     * Next: Change password.
+     */
+    public data class ChangePassword(override val email: String?) : DeviceSecretViewState(email)
+
+    /**
+     * When: After Member/Admin reject.
+     * Next: Logout.
+     */
     public data class DeviceRejected(override val email: String?) : DeviceSecretViewState(email)
 
     public data class Error(

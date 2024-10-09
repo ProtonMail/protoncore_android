@@ -24,16 +24,29 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -42,22 +55,25 @@ import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.SMALL_SCREEN_HEIGHT
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.defaultNorm
 
 @Composable
 internal fun ConfirmationDigits(
     modifier: Modifier = Modifier,
     digits: List<Char>?,
-    @StringRes titleText: Int = R.string.auth_login_confirmation_code
+    @StringRes titleText: Int = R.string.auth_login_confirmation_code,
+    border: BorderStroke = BorderStroke(1.dp, ProtonTheme.colors.separatorNorm),
+    digitStyle: TextStyle = ProtonTheme.typography.hero
 ) {
     Card(
         modifier = modifier,
         backgroundColor = Color.Transparent,
         contentColor = ProtonTheme.colors.textNorm,
-        border = BorderStroke(1.dp, ProtonTheme.colors.separatorNorm),
+        border = border,
         elevation = 0.dp
     ) {
         Box(
-            modifier = modifier.padding(ProtonDimens.DefaultSpacing),
+            modifier = modifier.padding(18.dp),
             contentAlignment = Alignment.Center
         ) {
             Column(
@@ -66,15 +82,16 @@ internal fun ConfirmationDigits(
                 Text(
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     text = stringResource(id = titleText),
-                    style = ProtonTheme.typography.body2Regular
+                    style = ProtonTheme.typography.body2Medium
                 )
+                Spacer(modifier = Modifier.size(ProtonDimens.SmallSpacing))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center
                 ) {
                     for (digit in digits ?: listOf(' ', ' ', ' ', ' ')) {
-                        ConfirmationCodeDigit(digit = digit)
+                        ConfirmationCodeDigit(digit = digit, textStyle = digitStyle)
                     }
                 }
             }
@@ -84,7 +101,8 @@ internal fun ConfirmationDigits(
 
 @Composable
 private fun ConfirmationCodeDigit(
-    digit: Char
+    digit: Char,
+    textStyle: TextStyle = ProtonTheme.typography.hero
 ) {
     Card(
         modifier = Modifier
@@ -98,9 +116,63 @@ private fun ConfirmationCodeDigit(
             Text(
                 textAlign = TextAlign.Center,
                 text = digit.toString(),
-                style = ProtonTheme.typography.hero
+                style = textStyle
             )
         }
+    }
+}
+
+@Composable
+internal fun ConfirmationDigitTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    focusRequester: FocusRequester = remember { FocusRequester() },
+    textStyle: TextStyle = TextStyle.Default,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    singleLine: Boolean = false,
+    maxLines: Int = if (singleLine) 1 else Int.MAX_VALUE,
+    minLines: Int = 1
+) {
+    var focused: Boolean by rememberSaveable { mutableStateOf(false) }
+    BasicTextField(
+        value = value.padEnd(4),
+        onValueChange = onValueChange,
+        modifier = modifier
+            .focusRequester(focusRequester)
+            .onFocusChanged { focused = it.isFocused },
+        keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
+        enabled = enabled,
+        readOnly = readOnly,
+        textStyle = textStyle,
+        singleLine = true,
+        maxLines = maxLines,
+        minLines = minLines,
+    ) {
+        ConfirmationDigits(
+            digits = value.padEnd(4).toList(),
+            border = when (focused) {
+                true -> BorderStroke(1.dp, ProtonTheme.colors.interactionNorm)
+                false -> BorderStroke(1.dp, ProtonTheme.colors.separatorNorm)
+            },
+            digitStyle = ProtonTheme.typography.defaultNorm
+        )
+    }
+}
+
+@Preview(name = "Light mode", showBackground = true)
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+internal fun ConfirmationDigitTextFieldPreview() {
+    ProtonTheme {
+        ConfirmationDigitTextField(
+            value = "64S",
+            onValueChange = {}
+        )
     }
 }
 

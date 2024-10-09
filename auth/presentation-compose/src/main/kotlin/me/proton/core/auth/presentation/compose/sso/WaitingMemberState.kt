@@ -22,7 +22,7 @@ public sealed interface WaitingMemberState {
     public data object Loading : WaitingMemberState
     public data class DataLoaded(
         val confirmationCode: String,
-        val availableDevices: List<AvailableDeviceUIModel>
+        val availableDevices: List<AuthDeviceData>
     ) : WaitingMemberState
 
     public data class Error(val message: String?) : WaitingMemberState

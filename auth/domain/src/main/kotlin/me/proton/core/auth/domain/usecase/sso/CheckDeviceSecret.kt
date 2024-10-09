@@ -19,7 +19,6 @@
 package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
-import me.proton.core.crypto.common.aead.AeadEncryptedString
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 
@@ -33,7 +32,7 @@ class CheckDeviceSecret @Inject constructor(
 
     suspend operator fun invoke(
         userId: UserId
-    ): AeadEncryptedString? {
+    ): Based64EncodedAeadEncryptedSecret? {
         val deviceSecret = deviceSecretRepository.getByUserId(userId) ?: return null
         val associateResult = associateAuthDevice.invoke(
             userId = userId,

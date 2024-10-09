@@ -28,6 +28,7 @@ import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
+import me.proton.core.user.domain.extension.hasTemporaryPassword
 import me.proton.core.user.domain.repository.PassphraseRepository
 import javax.inject.Inject
 
@@ -45,8 +46,8 @@ class PostLoginSsoAccountSetup @Inject constructor(
     private val decryptEncryptedSecret: DecryptEncryptedSecret
 ) {
     suspend operator fun invoke(userId: UserId): Result {
-        // Make sure we have the User in DB.
-        userManager.getUser(userId)
+        // Make sure we have a fresh User in DB.
+        userManager.getUser(userId, refresh = true)
         return when {
             product == Product.Vpn -> userCheck(userId)
             else -> secretCheck(userId)
@@ -99,7 +100,7 @@ class PostLoginSsoAccountSetup @Inject constructor(
         // Refresh scopes.
         sessionManager.refreshScopes(checkNotNull(sessionManager.getSessionId(userId)))
         // First get the User to invoke UserCheck.
-        val user = userManager.getUser(userId, refresh = true)
+        val user = userManager.getUser(userId)
         return when (val userCheckResult = userCheck.invoke(user)) {
             is PostLoginAccountSetup.UserCheckResult.Error -> {
                 // Disable account and prevent login.
@@ -108,9 +109,17 @@ class PostLoginSsoAccountSetup @Inject constructor(
             }
 
             is PostLoginAccountSetup.UserCheckResult.Success -> {
-                // Last step, change account state to Ready.
-                accountWorkflow.handleAccountReady(userId)
-                Result.AccountReady(userId)
+                when (user.hasTemporaryPassword()) {
+                    true -> {
+                        accountWorkflow.handleDeviceSecretNeeded(userId)
+                        Result.Need.ChangePassword(userId)
+                    }
+                    false -> {
+                        // Last step, change account state to Ready.
+                        accountWorkflow.handleAccountReady(userId)
+                        Result.AccountReady(userId)
+                    }
+                }
             }
         }
     }

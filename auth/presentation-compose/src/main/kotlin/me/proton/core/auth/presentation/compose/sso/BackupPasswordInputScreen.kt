@@ -56,6 +56,7 @@ import me.proton.core.compose.theme.ProtonTheme
 public fun BackupPasswordInputScreen(
     onRequestAdminHelpClicked: () -> Unit,
     onCloseClicked: () -> Unit,
+    onCloseMessage: (String?) -> Unit,
     onErrorMessage: (String?) -> Unit,
     onSuccess: () -> Unit,
     modifier: Modifier = Modifier,
@@ -66,8 +67,9 @@ public fun BackupPasswordInputScreen(
         state = state,
         modifier = modifier,
         onAskAdminForHelp = onRequestAdminHelpClicked,
-        onClose = onCloseClicked,
-        onError = onErrorMessage,
+        onCloseClicked = onCloseClicked,
+        onCloseMessage = onCloseMessage,
+        onErrorMessage = onErrorMessage,
         onPasswordSubmitted = { viewModel.submit(it) },
         onSuccess = onSuccess,
     )
@@ -77,15 +79,17 @@ public fun BackupPasswordInputScreen(
 public fun BackupPasswordInputScreen(
     modifier: Modifier = Modifier,
     onAskAdminForHelp: () -> Unit = {},
-    onClose: () -> Unit = {},
-    onError: (String?) -> Unit = {},
+    onCloseClicked: () -> Unit = {},
+    onCloseMessage: (String?) -> Unit = {},
+    onErrorMessage: (String?) -> Unit = {},
     onPasswordSubmitted: (BackupPasswordInputAction.Submit) -> Unit = {},
     onSuccess: () -> Unit = {},
     state: BackupPasswordInputState = BackupPasswordInputState.Idle,
 ) {
     LaunchedEffect(state) {
         when (state) {
-            is BackupPasswordInputState.Error -> onError(state.message)
+            is BackupPasswordInputState.Error -> onErrorMessage(state.message)
+            is BackupPasswordInputState.Close -> onCloseMessage(state.message)
             is BackupPasswordInputState.Success -> onSuccess()
             else -> Unit
         }
@@ -101,7 +105,7 @@ public fun BackupPasswordInputScreen(
             ProtonTopAppBar(
                 title = {},
                 navigationIcon = {
-                    IconButton(onClick = onClose) {
+                    IconButton(onClick = onCloseClicked) {
                         Icon(
                             painterResource(id = R.drawable.ic_proton_arrow_back),
                             contentDescription = stringResource(id = R.string.presentation_back)

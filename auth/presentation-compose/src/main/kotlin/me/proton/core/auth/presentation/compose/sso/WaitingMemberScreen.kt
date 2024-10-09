@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.SMALL_SCREEN_HEIGHT
@@ -109,7 +110,7 @@ public fun WaitingMemberScaffold(
     onBackupPasswordClicked: () -> Unit,
     onRequestAdminHelpClicked: () -> Unit,
     confirmationCode: List<Char>? = null,
-    availableDevices: List<AvailableDeviceUIModel>? = null
+    availableDevices: List<AuthDeviceData>? = null
 ) {
     Scaffold(
         modifier = modifier,
@@ -148,9 +149,9 @@ public fun WaitingMemberScaffold(
                     digits = confirmationCode
                 )
 
-                AvailableDevicesList(
+                AuthDeviceList(
                     modifier = Modifier.weight(1f, fill = false),
-                    devices = availableDevices
+                    devices = availableDevices,
                 )
 
                 Spacer(Modifier.size(ProtonDimens.DefaultSpacing))
@@ -191,44 +192,44 @@ internal fun ApproveSignInScreenPreview() {
         WaitingMemberScaffold(
             confirmationCode = listOf('6', '4', 'S', '3'),
             availableDevices = listOf(
-                AvailableDeviceUIModel(
-                    id = "id1",
-                    authDeviceName = "MacOS",
+                AuthDeviceData(
+                    deviceId = AuthDeviceId("id1"),
+                    name = "MacOS",
                     localizedClientName = "Proton Mail Chrome",
                     lastActivityTime = 1724945205966,
                     platform = AuthDevicePlatform.Web
                 ),
-                AvailableDeviceUIModel(
-                    id = "id2",
-                    authDeviceName = "Google Pixel 7a",
+                AuthDeviceData(
+                    deviceId = AuthDeviceId("id2"),
+                    name = "Google Pixel 7a",
                     localizedClientName = "Proton Mail Android",
                     lastActivityTime = 1724945205966,
                     platform = AuthDevicePlatform.Android
                 ),
-                AvailableDeviceUIModel(
-                    id = "id3",
-                    authDeviceName = "Google Pixel 8",
+                AuthDeviceData(
+                    deviceId = AuthDeviceId("id3"),
+                    name = "Google Pixel 8",
                     localizedClientName = "Proton Mail Android",
                     lastActivityTime = 1724945205966,
                     platform = AuthDevicePlatform.Android
                 ),
-                AvailableDeviceUIModel(
-                    id = "id4",
-                    authDeviceName = "Google Pixel 8 Pro",
+                AuthDeviceData(
+                    deviceId = AuthDeviceId("id4"),
+                    name = "Google Pixel 8 Pro",
                     localizedClientName = "Proton Mail Android",
                     lastActivityTime = 1724945205966,
                     platform = AuthDevicePlatform.Android
                 ),
-                AvailableDeviceUIModel(
-                    id = "id5",
-                    authDeviceName = "Google Pixel 9 Pro",
+                AuthDeviceData(
+                    deviceId = AuthDeviceId("id5"),
+                    name = "Google Pixel 9 Pro",
                     localizedClientName = "Proton Mail Android",
                     lastActivityTime = 1724945205966,
                     platform = AuthDevicePlatform.Android
                 ),
-                AvailableDeviceUIModel(
-                    id = "id6",
-                    authDeviceName = "Google Pixel 10 Pro",
+                AuthDeviceData(
+                    deviceId = AuthDeviceId("id6"),
+                    name = "Google Pixel 10 Pro",
                     localizedClientName = "Proton Mail Android",
                     lastActivityTime = 1724945205966,
                     platform = AuthDevicePlatform.Android
