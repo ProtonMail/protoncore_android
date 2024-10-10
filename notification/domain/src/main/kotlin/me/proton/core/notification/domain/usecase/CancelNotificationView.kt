@@ -28,4 +28,7 @@ public interface CancelNotificationView {
 
     /** Cancels any notification views with a given [notificationId] and tagged with [userId]. */
     public operator fun invoke(notificationId: NotificationId, userId: UserId)
+
+    /** Cancels any notification views with a given [userId]. */
+    public operator fun invoke(userId: UserId)
 }

@@ -132,7 +132,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
 
         // THEN
         verify(exactly = 0) { getNotificationChannelId() }
-        verify(exactly = 0) { cancelNotificationView(any()) }
+        verify(exactly = 0) { cancelNotificationView(notification = any()) }
         verify(exactly = 0) { showNotificationView(any()) }
     }
 
@@ -147,7 +147,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
 
         // THEN
         verify(exactly = 0) { getNotificationChannelId() }
-        verify(exactly = 0) { cancelNotificationView(any()) }
+        verify(exactly = 0) { cancelNotificationView(notification = any()) }
     }
 
     @Test
@@ -178,7 +178,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
             )
         )
         every { isNotificationsEnabled(any()) } returns true
-        justRun { cancelNotificationView(any()) }
+        justRun { cancelNotificationView(notification = any()) }
         justRun { cancelNotificationView(any(), any()) }
 
         // WHEN
@@ -301,7 +301,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
         tested.show(unknownNotification)
 
         // THEN
-        verify(exactly = 0) { cancelNotificationView(any()) }
+        verify(exactly = 0) { cancelNotificationView(notification = any()) }
         verify(exactly = 1) { showNotificationView(notification) }
     }
 
@@ -322,7 +322,7 @@ class ProtonNotificationManagerTest : CoroutinesTest by CoroutinesTest() {
         tested.show(unknownNotification)
 
         // THEN
-        verify(exactly = 0) { cancelNotificationView(any()) }
+        verify(exactly = 0) { cancelNotificationView(notification = any()) }
         verify(exactly = 1) { showNotificationView(unknownNotification) }
     }
 }

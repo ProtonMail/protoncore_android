@@ -18,6 +18,7 @@
 
 package me.proton.core.notification.presentation.usecase
 
+import android.app.NotificationManager
 import android.content.Context
 import androidx.core.app.NotificationManagerCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -32,8 +33,12 @@ import javax.inject.Inject
 public class CancelNotificationViewImpl @Inject internal constructor(
     @ApplicationContext private val context: Context,
     private val getNotificationId: GetNotificationId,
-    private val getNotificationTag: GetNotificationTag
+    private val getNotificationTag: GetNotificationTag,
 ) : CancelNotificationView {
+
+    private val notificationManager: NotificationManager
+        get() = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
     override fun invoke(notification: Notification) {
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.cancel(getNotificationTag(notification), getNotificationId(notification))
@@ -42,5 +47,12 @@ public class CancelNotificationViewImpl @Inject internal constructor(
     override fun invoke(notificationId: NotificationId, userId: UserId) {
         val notificationManager = NotificationManagerCompat.from(context)
         notificationManager.cancel(getNotificationTag(userId), getNotificationId(notificationId))
+    }
+
+    override fun invoke(userId: UserId) {
+        val activeNotificationIds = notificationManager.getActiveNotificationIds(userId)
+        activeNotificationIds.forEach {
+            invoke(it, userId)
+        }
     }
 }

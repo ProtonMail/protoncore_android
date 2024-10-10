@@ -53,12 +53,13 @@ public class ReplaceNotificationViewsImpl @Inject constructor(
         }
     }
 
-    private fun NotificationManager.getActiveNotificationIds(userId: UserId): Set<NotificationId> =
-        activeNotifications
-            .filter { statusBarNotification ->
-                statusBarNotification.notification.extras.getString(ExtraUserId) == userId.id
-            }.mapNotNull { statusBarNotification ->
-                statusBarNotification.notification.extras.getString(ExtraNotificationId)
-                    ?.let { NotificationId(it) }
-            }.toSet()
 }
+
+internal fun NotificationManager.getActiveNotificationIds(userId: UserId): Set<NotificationId> =
+    activeNotifications
+        .filter { statusBarNotification ->
+            statusBarNotification.notification.extras.getString(ExtraUserId) == userId.id
+        }.mapNotNull { statusBarNotification ->
+            statusBarNotification.notification.extras.getString(ExtraNotificationId)
+                ?.let { NotificationId(it) }
+        }.toSet()

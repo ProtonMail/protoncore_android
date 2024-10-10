@@ -19,6 +19,7 @@
 package me.proton.core.notification.presentation
 
 import android.app.Activity
+import android.content.Context
 import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
@@ -38,6 +39,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.repository.NotificationRepository
+import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
@@ -74,6 +76,12 @@ class NotificationSetupTest {
     @MockK(relaxed = true)
     private lateinit var deeplinkManager: DeeplinkManager
 
+    @MockK
+    private lateinit var context: Context
+
+    @MockK(relaxed = true)
+    private lateinit var cancelNotificationView: CancelNotificationView
+
     private lateinit var scopeProvider: TestCoroutineScopeProvider
 
     private lateinit var tested: NotificationSetup
@@ -94,7 +102,8 @@ class NotificationSetupTest {
             notificationRepository,
             observePushNotifications,
             scopeProvider,
-            deeplinkManager
+            deeplinkManager,
+            cancelNotificationView
         )
     }
 

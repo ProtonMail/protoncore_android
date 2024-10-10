@@ -19,7 +19,10 @@
 package me.proton.core.notification.presentation
 
 import android.app.Activity
+import android.app.NotificationManager
+import android.content.Context
 import androidx.lifecycle.DefaultLifecycleObserver
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -38,6 +41,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.entity.NotificationId
+import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.entity.isDismissible
 import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
@@ -59,11 +63,12 @@ public class NotificationSetup @Inject internal constructor(
     private val activityProvider: ActivityProvider,
     private val hasNotificationPermission: HasNotificationPermission,
     private val isNotificationsEnabled: IsNotificationsEnabled,
-    private val notificationManager: ProtonNotificationManager,
+    private val protonNotificationManager: ProtonNotificationManager,
     private val notificationRepository: NotificationRepository,
     private val observePushNotifications: ObservePushNotifications,
     private val scopeProvider: CoroutineScopeProvider,
-    private val deeplinkManager: DeeplinkManager
+    private val deeplinkManager: DeeplinkManager,
+    private val cancelNotificationView: CancelNotificationView
 ) : DefaultLifecycleObserver {
     private val observeJobMap: MutableMap<UserId, Job> = mutableMapOf()
 
@@ -89,7 +94,9 @@ public class NotificationSetup @Inject internal constructor(
         accountManager.onAccountStateChanged(initialState = true).onEach { account ->
             when (account.state) {
                 AccountState.Ready -> observePushes(account.userId)
-                else -> cancelPushes(account.userId)
+                else -> {
+                    cancelPushes(account.userId)
+                }
             }
         }.collect()
     }
@@ -101,6 +108,11 @@ public class NotificationSetup @Inject internal constructor(
 
     private fun cancelPushes(userId: UserId) {
         observeJobMap[userId]?.cancel()
+        cancelActiveNotifications(userId)
+    }
+
+    private fun cancelActiveNotifications(userId: UserId) {
+        cancelNotificationView(userId)
     }
 
     /** App in foreground, an account is ready. */
@@ -121,7 +133,7 @@ public class NotificationSetup @Inject internal constructor(
 
     private fun setupNotifications(activity: Activity) {
         if (hasNotificationPermission()) {
-            notificationManager.setupNotificationChannel()
+            protonNotificationManager.setupNotificationChannel()
         } else {
             startNotificationPermissionActivity(activity)
         }
@@ -142,7 +154,7 @@ public class NotificationSetup @Inject internal constructor(
         scopeProvider.GlobalDefaultSupervisedScope.launch {
             val notification = notificationRepository.getNotificationById(userId, notificationId)
             if (notification?.isDismissible == true) {
-                notificationManager.onNotificationConsumed(notificationId, userId)
+                protonNotificationManager.onNotificationConsumed(notificationId, userId)
             }
         }
         return true
