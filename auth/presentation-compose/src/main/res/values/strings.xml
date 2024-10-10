@@ -56,6 +56,7 @@
     <string name="backup_password_input_label">Backup password</string>
     <string name="backup_password_input_subtitle">To make sure it’s really you trying to sign-in, please enter your backup password.</string>
     <string name="backup_password_input_title">Enter your backup password</string>
+
     <string name="backup_password_setup_title" comment="1 - company name">Join %1$s</string>
     <string name="backup_password_setup_subtitle" comment="1 - email address of organization's admin">%1$s added you to their Proton organization.</string>
     <string name="backup_password_setup_description">Set a backup password to add an extra layer of protection.</string>
@@ -64,6 +65,10 @@
     <string name="backup_password_setup_continue_action">Continue</string>
     <string name="backup_password_setup_password_too_short">Password should be at least 8 characters long.</string>
     <string name="backup_password_setup_password_not_matching">Passwords do not match.</string>
+
+    <string name="backup_password_change_title">Set backup password</string>
+    <string name="backup_password_change_description">This password adds an extra layer of protection and allows you to sign in if you get locked out. Make sure to keep it somewhere safe.</string>
+
     <string name="backup_password_invalid">Invalid backup password.</string>
     <string name="backup_password_no_primary_key">No Primary Key.</string>
     <string name="backup_password_no_key_salts">No Key Salts.</string>

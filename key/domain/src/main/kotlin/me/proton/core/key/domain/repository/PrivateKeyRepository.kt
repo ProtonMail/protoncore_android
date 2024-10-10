@@ -59,12 +59,13 @@ interface PrivateKeyRepository {
     suspend fun updatePrivateKeys(
         sessionUserId: SessionUserId,
         keySalt: String,
-        srpProofs: SrpProofs,
-        srpSession: String,
-        secondFactorProof: SecondFactorProof?,
-        auth: Auth?,
+        srpProofs: SrpProofs? = null,
+        srpSession: String? = null,
+        secondFactorProof: SecondFactorProof? = null,
+        auth: Auth? = null,
         keys: List<Key>? = null,
-        userKeys: List<Key>? = null
+        userKeys: List<Key>? = null,
+        encryptedSecret: Based64Encoded? = null
     ): Boolean
 
     suspend fun reactivatePrivateKey(

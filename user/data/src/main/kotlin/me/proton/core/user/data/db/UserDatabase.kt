@@ -130,5 +130,19 @@ interface UserDatabase : Database, UserKeyDatabase {
                 )
             }
         }
+
+        /**
+         * - Added UserEntity column: flags.
+         */
+        val MIGRATION_6 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "UserEntity",
+                    column = "flags",
+                    type = "TEXT",
+                    defaultValue = null
+                )
+            }
+        }
     }
 }

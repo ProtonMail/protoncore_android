@@ -184,6 +184,7 @@ class PasswordManagementFragment :
                         showSuccess()
                     }
 
+                    is PasswordManagementViewModel.State.CannotChangePassword -> showError(getString(R.string.settings_password_management_cannot_change_password))
                     is PasswordManagementViewModel.State.Error -> showError(it.error.getUserMessage(resources))
                 }
             }.launchIn(viewLifecycleOwner.lifecycleScope)

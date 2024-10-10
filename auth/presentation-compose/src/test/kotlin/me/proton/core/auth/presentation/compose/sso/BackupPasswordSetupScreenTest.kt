@@ -73,7 +73,7 @@ class BackupPasswordSetupScreenTest {
                             organizationIcon = null,
                             organizationName = "Example Organization",
                         ),
-                        cause = BackupPasswordSetupFormError.PasswordTooShort
+                        cause = PasswordFormError.PasswordTooShort
                     )
                 )
             }
@@ -91,7 +91,7 @@ class BackupPasswordSetupScreenTest {
                             organizationIcon = null,
                             organizationName = "Example Organization",
                         ),
-                        cause = BackupPasswordSetupFormError.PasswordsDoNotMatch
+                        cause = PasswordFormError.PasswordsDoNotMatch
                     )
                 )
             }

@@ -66,7 +66,9 @@ class PostLoginSsoAccountSetupTest {
     fun setUp() {
         accountWorkflowHandler = mockk()
 
-        user = mockk()
+        user = mockk {
+            every { flags } returns emptyMap()
+        }
         sessionId = mockk()
         userCheck = mockk {
             coEvery { this@mockk.invoke(any()) } returns PostLoginAccountSetup.UserCheckResult.Success

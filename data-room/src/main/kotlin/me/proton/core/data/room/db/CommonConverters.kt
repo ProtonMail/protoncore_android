@@ -22,6 +22,8 @@ import androidx.room.TypeConverter
 import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.deserializeMapOrNull
+import me.proton.core.util.kotlin.serialize
 
 class CommonConverters {
 
@@ -36,6 +38,12 @@ class CommonConverters {
 
     @TypeConverter
     fun fromStringToListOfInt(value: String?): List<Int>? = Companion.fromStringToListOfInt(value)
+
+    @TypeConverter
+    fun fromMapOfStringBooleanToString(value: Map<String, Boolean>?): String? = value.orEmpty().serialize()
+
+    @TypeConverter
+    fun fromStringToMapOfStringBoolean(value: String?): Map<String, Boolean>? = value?.deserializeMapOrNull<String, Boolean>().orEmpty()
 
     @TypeConverter
     fun fromProductToString(value: Product?): String? = value?.name

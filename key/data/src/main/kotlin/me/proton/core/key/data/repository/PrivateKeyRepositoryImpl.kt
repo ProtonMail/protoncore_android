@@ -109,19 +109,20 @@ class PrivateKeyRepositoryImpl @Inject constructor(
     override suspend fun updatePrivateKeys(
         sessionUserId: SessionUserId,
         keySalt: String,
-        srpProofs: SrpProofs,
-        srpSession: String,
+        srpProofs: SrpProofs?,
+        srpSession: String?,
         secondFactorProof: SecondFactorProof?,
         auth: Auth?,
         keys: List<Key>?,
-        userKeys: List<Key>?
+        userKeys: List<Key>?,
+        encryptedSecret: Based64Encoded?
     ): Boolean {
         return provider.get<KeyApi>(sessionUserId).invoke {
             val response = updatePrivateKeys(
                 UpdateKeysForPasswordChangeRequest(
                     keySalt = keySalt,
-                    clientEphemeral = srpProofs.clientEphemeral,
-                    clientProof = srpProofs.clientProof,
+                    clientEphemeral = srpProofs?.clientEphemeral,
+                    clientProof = srpProofs?.clientProof,
                     srpSession = srpSession,
                     twoFactorCode = secondFactorProof.toSecondFactorCode(),
                     fido2 = secondFactorProof.toSecondFactorFido(),
@@ -131,10 +132,11 @@ class PrivateKeyRepositoryImpl @Inject constructor(
                     },
                     userKeys = userKeys?.map {
                         PrivateKeyRequest(privateKey = it.privateKey, id = it.keyId.id)
-                    }
+                    },
+                    encryptedSecret = encryptedSecret
                 )
             )
-            validateServerProof(response.serverProof, srpProofs.expectedServerProof) { "key update failed" }
+            validateServerProof(response.serverProof, srpProofs?.expectedServerProof) { "key update failed" }
             response.isSuccess()
         }.valueOrThrow
     }

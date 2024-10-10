@@ -46,6 +46,7 @@ class UserKtTest {
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         type = Type.Proton
     )
 

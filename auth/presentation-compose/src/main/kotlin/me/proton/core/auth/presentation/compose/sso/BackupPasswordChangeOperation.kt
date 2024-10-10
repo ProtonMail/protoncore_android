@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,19 +16,14 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.data.api.response
+package me.proton.core.auth.presentation.compose.sso
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-import me.proton.core.auth.domain.entity.ServerProof
-import me.proton.core.network.domain.ResponseCodes
+public sealed interface BackupPasswordChangeOperation
 
-@Serializable
-data class SRPAuthenticationResponse(
-    @SerialName("Code")
-    val code: Int,
-    @SerialName("ServerProof")
-    val serverProof: ServerProof? = null,
-)
-
-fun SRPAuthenticationResponse.isSuccess(): Boolean = code == ResponseCodes.OK
+public sealed interface BackupPasswordChangeAction : BackupPasswordChangeOperation {
+    public data class ChangePassword(
+        val backupPassword: String,
+        val repeatBackupPassword: String,
+        val unused: Long = System.currentTimeMillis()
+    ) : BackupPasswordChangeAction
+}

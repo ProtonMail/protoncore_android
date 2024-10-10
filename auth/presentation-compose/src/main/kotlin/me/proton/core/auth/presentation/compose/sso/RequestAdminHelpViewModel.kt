@@ -32,11 +32,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.LogTag
+import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpAction.Load
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpAction.Submit
+import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.AdminHelpHelpRequested
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Error
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Idle
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Loading
@@ -86,8 +88,12 @@ public class RequestAdminHelpViewModel @Inject constructor(
     private fun onSubmit() = flow {
         emit(Loading(state.value.data))
         val deviceId = requireNotNull(deviceSecretRepository.getByUserId(userId)?.deviceId)
+        val device = authDeviceRepository.getByDeviceId(userId, deviceId)
+        check(device?.state != AuthDeviceState.PendingAdminActivation) {
+            "Device is already pending admin activation."
+        }
         authDeviceRepository.requestAdminHelp(userId, deviceId)
-        emit(RequestAdminHelpState.AdminHelpHelpRequested(state.value.data))
+        emit(AdminHelpHelpRequested(state.value.data))
     }.catch { error ->
         emit(Error(state.value.data, error))
     }

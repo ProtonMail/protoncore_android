@@ -51,6 +51,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import me.proton.core.auth.presentation.compose.DeviceSecretViewState.ChangePassword
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceRejected
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Error
@@ -58,6 +59,7 @@ import me.proton.core.auth.presentation.compose.DeviceSecretViewState.FirstLogin
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.InvalidSecret
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordChangeScreen
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupScreen
 import me.proton.core.auth.presentation.compose.sso.RequestAccessDeniedScreen
@@ -125,12 +127,14 @@ public fun DeviceSecretScreen(
         is Close -> onClose()
         is Success -> onSuccess(state.userId)
         is Loading -> DeviceSecretScaffold(
+            modifier = modifier,
             onCloseClicked = onCloseClicked,
             onRetryClicked = onReloadState,
             isLoading = true,
             email = state.email
         )
         is Error -> DeviceSecretScaffold(
+            modifier = modifier,
             onCloseClicked = onCloseClicked,
             onRetryClicked = onReloadState,
             email = state.email,
@@ -169,6 +173,7 @@ public fun DeviceSecretScreen(
         )
 
         is InvalidSecret.NoDevice.RequireAdmin -> RequestAdminHelpScreen(
+            modifier = modifier,
             onBackClicked = onCloseClicked,
             onErrorMessage = onErrorMessage,
             onSuccess = onReloadState,
@@ -180,8 +185,13 @@ public fun DeviceSecretScreen(
             onBackToSignInClicked = onCloseClicked
         )
 
-        // TODO: Replace with BackupPasswordChangeScreen()
-        is DeviceSecretViewState.ChangePassword -> onClose()
+        is ChangePassword -> BackupPasswordChangeScreen(
+            modifier = modifier,
+            onCloseClicked = onCloseClicked,
+            onCloseMessage = onCloseMessage,
+            onErrorMessage = onErrorMessage,
+            onSuccess = onReloadState,
+        )
     }
 }
 

@@ -45,6 +45,7 @@ object TestUsers {
             email = "user1@example.com",
             displayName = "user 1 name",
             keys = listOf(Key1.response, Key2Inactive.response),
+            flags = emptyMap(),
             type = Type.Proton.value
         )
 
@@ -93,6 +94,7 @@ object TestUsers {
             email = "user1@example.com",
             displayName = "user 1 name",
             keys = listOf(Key1.response),
+            flags = emptyMap(),
             type = Type.Proton.value
         )
 

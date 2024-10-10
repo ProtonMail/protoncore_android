@@ -45,6 +45,8 @@ import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.AccountRecoveryResetTotal
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.user.domain.entity.UserRecovery
+import me.proton.core.user.domain.extension.isSso
+import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.usersettings.domain.usecase.IsSessionAccountRecoveryEnabled
 import me.proton.core.usersettings.domain.usecase.ObserveUserSettings
 import me.proton.core.usersettings.domain.usecase.PerformUpdateLoginPassword
@@ -56,6 +58,7 @@ import javax.inject.Inject
 @HiltViewModel
 class PasswordManagementViewModel @Inject constructor(
     private val keyStoreCrypto: KeyStoreCrypto,
+    private val observeUser: ObserveUser,
     private val observeUserRecovery: ObserveUserRecovery,
     private val observeUserSettings: ObserveUserSettings,
     private val observeUserRecoverySelfInitiated: ObserveUserRecoverySelfInitiated,
@@ -72,6 +75,10 @@ class PasswordManagementViewModel @Inject constructor(
 
     private val currentAction = MutableStateFlow<Action?>(null)
     private val currentUserId = MutableStateFlow<UserId?>(null)
+
+    private val currentUser = currentUserId.filterNotNull().flatMapLatest {
+        observeUser(it)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, null)
 
     private val currentUserRecovery = currentUserId.filterNotNull().flatMapLatest {
         observeUserRecovery(it)
@@ -94,7 +101,7 @@ class PasswordManagementViewModel @Inject constructor(
             userId = userId,
             loginPasswordAvailable = true,
             mailboxPasswordAvailable = isMailboxPassword && product != Product.Vpn,
-            recoveryResetAvailable = recoveryResetAvailable(userId),
+            recoveryResetAvailable = recoveryResetAvailable(userId) && !isUserSso,
             recoveryResetEnabled = isRecoveryResetEnabled,
             currentLoginPasswordNeeded = !isRecoveryResetEnabled || !isRecoveryInsecure || !isSelfInitiated,
             twoFactorEnabled = isTwoFactorEnabled,
@@ -117,6 +124,8 @@ class PasswordManagementViewModel @Inject constructor(
             resetPassword(action)
         }
 
+        isUserSso -> updateBackupPassword(action)
+
         else -> when (action.type) {
             PasswordType.Login -> when (isMailboxPassword) {
                 true -> updateLoginPassword(action)
@@ -125,6 +134,12 @@ class PasswordManagementViewModel @Inject constructor(
             PasswordType.Mailbox -> updateMailboxPassword(action)
             PasswordType.Both -> updateBothPassword(action)
         }
+    }
+
+    private fun updateBackupPassword(action: Action.UpdatePassword): Flow<State> = flow {
+        // Currently not supported to change password for Global SSO user.
+        emit(State.CannotChangePassword)
+        perform(Action.ObserveState(action.userId))
     }
 
     private fun updateLoginPassword(action: Action.UpdatePassword): Flow<State> = flow {
@@ -190,8 +205,10 @@ class PasswordManagementViewModel @Inject constructor(
         return observeState(action.userId)
     }
 
+    private val user get() = currentUser.value
     private val userRecovery get() = currentUserRecovery.value
     private val userSettings get() = currentUserSettings.value
+    private val isUserSso get() = user?.isSso() ?: false
     private val isSelfInitiated get() = currentSelfInitiated.value
     private val isMailboxPassword get() = userSettings?.password?.mode == 2
     private val isTwoFactorEnabled get() = userSettings?.twoFA?.enabled ?: false
@@ -241,6 +258,7 @@ class PasswordManagementViewModel @Inject constructor(
 
         data object TwoFactorNeeded : State()
         data object UpdatingPassword : State()
+        data object CannotChangePassword : State()
         data object Success : State()
         data class Error(val error: Throwable) : State()
     }

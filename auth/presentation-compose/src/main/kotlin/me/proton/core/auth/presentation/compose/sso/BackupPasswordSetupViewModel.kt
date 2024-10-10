@@ -124,14 +124,14 @@ public class BackupPasswordSetupViewModel @Inject constructor(
             text = action.backupPassword,
             validationType = ValidationType.PasswordMinLength
         ).onFailure {
-            emit(FormError(state.value.data, BackupPasswordSetupFormError.PasswordTooShort))
+            emit(FormError(state.value.data, PasswordFormError.PasswordTooShort))
         }.onSuccess {
             InputValidationResult(
                 text = action.backupPassword,
                 validationType = ValidationType.PasswordMatch,
                 additionalText = action.repeatBackupPassword
             ).onFailure {
-                emit(FormError(state.value.data, BackupPasswordSetupFormError.PasswordsDoNotMatch))
+                emit(FormError(state.value.data, PasswordFormError.PasswordsDoNotMatch))
             }.onSuccess {
                 when (val organizationPublicKey = state.value.data.organizationPublicKey) {
                     null -> emit(Error(state.value.data, null))

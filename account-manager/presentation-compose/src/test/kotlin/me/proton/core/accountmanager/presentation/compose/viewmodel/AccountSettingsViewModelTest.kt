@@ -81,6 +81,7 @@ class AccountSettingsViewModelTest : CoroutinesTest by CoroutinesTest() {
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         type = Type.Proton
     )
 

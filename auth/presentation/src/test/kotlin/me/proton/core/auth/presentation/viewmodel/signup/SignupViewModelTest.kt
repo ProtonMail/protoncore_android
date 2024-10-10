@@ -167,6 +167,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         type = Type.Proton
     )
 

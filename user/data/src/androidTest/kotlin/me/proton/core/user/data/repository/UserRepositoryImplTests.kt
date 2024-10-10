@@ -718,6 +718,7 @@ class UserRepositoryImplTests {
                 delinquent = null,
                 recovery = null,
                 passphrase = null,
+                flags = emptyMap(),
                 maxBaseSpace = null,
                 maxDriveSpace = null,
                 usedBaseSpace = null,

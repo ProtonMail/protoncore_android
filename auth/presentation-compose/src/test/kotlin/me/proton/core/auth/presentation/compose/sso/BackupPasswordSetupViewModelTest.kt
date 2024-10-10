@@ -78,7 +78,7 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
             assertEquals(
                 expected = BackupPasswordSetupState.FormError(
                     data = BackupPasswordSetupData(),
-                    cause = BackupPasswordSetupFormError.PasswordTooShort
+                    cause = PasswordFormError.PasswordTooShort
                 ),
                 actual = awaitItem()
             )
@@ -98,7 +98,7 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
             assertEquals(
                 expected = BackupPasswordSetupState.FormError(
                     data = BackupPasswordSetupData(),
-                    cause = BackupPasswordSetupFormError.PasswordsDoNotMatch
+                    cause = PasswordFormError.PasswordsDoNotMatch
                 ),
                 actual = awaitItem()
             )

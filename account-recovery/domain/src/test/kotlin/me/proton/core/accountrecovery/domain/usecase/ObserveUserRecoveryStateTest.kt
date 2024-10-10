@@ -61,7 +61,8 @@ class ObserveUserRecoveryStateTest {
             sessionId = SessionId("test-session-id"),
             reason = UserRecovery.Reason.Authentication
     ),
-        keys = emptyList()
+        keys = emptyList(),
+        flags = emptyMap(),
     )
     private val testUserNullRecovery = testUser.copy(recovery = null)
 

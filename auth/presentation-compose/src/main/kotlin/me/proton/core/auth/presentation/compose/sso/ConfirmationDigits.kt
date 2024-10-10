@@ -47,6 +47,8 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,7 +57,6 @@ import me.proton.core.auth.presentation.compose.R
 import me.proton.core.auth.presentation.compose.SMALL_SCREEN_HEIGHT
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.theme.defaultNorm
 
 @Composable
 internal fun ConfirmationDigits(
@@ -116,7 +117,8 @@ private fun ConfirmationCodeDigit(
             Text(
                 textAlign = TextAlign.Center,
                 text = digit.toString(),
-                style = textStyle
+                style = textStyle,
+                fontFamily = FontFamily.Monospace
             )
         }
     }
@@ -159,7 +161,7 @@ internal fun ConfirmationDigitTextField(
                 true -> BorderStroke(1.dp, ProtonTheme.colors.interactionNorm)
                 false -> BorderStroke(1.dp, ProtonTheme.colors.separatorNorm)
             },
-            digitStyle = ProtonTheme.typography.defaultNorm
+            digitStyle = ProtonTheme.typography.hero.copy(fontWeight = FontWeight.Normal)
         )
     }
 }

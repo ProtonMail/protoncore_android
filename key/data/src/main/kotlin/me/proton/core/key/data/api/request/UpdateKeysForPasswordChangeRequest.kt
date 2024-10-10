@@ -21,19 +21,20 @@ package me.proton.core.key.data.api.request
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.proton.core.auth.data.api.request.Fido2Request
+import me.proton.core.crypto.common.pgp.Based64Encoded
 
 @Serializable
 data class UpdateKeysForPasswordChangeRequest(
     @SerialName("KeySalt")
     val keySalt: String,
     @SerialName("ClientEphemeral")
-    val clientEphemeral: String,
+    val clientEphemeral: String? = null,
     @SerialName("ClientProof")
-    val clientProof: String,
+    val clientProof: String? = null,
     @SerialName("SRPSession")
-    val srpSession: String,
+    val srpSession: String? = null,
     @SerialName("TwoFactorCode")
-    val twoFactorCode: String?,
+    val twoFactorCode: String? = null,
     @SerialName("FIDO2")
     val fido2: Fido2Request? = null,
     @SerialName("Auth")
@@ -41,7 +42,9 @@ data class UpdateKeysForPasswordChangeRequest(
     @SerialName("Keys")
     val keys: List<PrivateKeyRequest>? = null,
     @SerialName("UserKeys")
-    val userKeys: List<PrivateKeyRequest>? = null
+    val userKeys: List<PrivateKeyRequest>? = null,
+    @SerialName("EncryptedSecret")
+    val encryptedSecret: Based64Encoded? = null,
 )
 
 @Serializable
@@ -51,4 +54,3 @@ data class PrivateKeyRequest(
     @SerialName("ID")
     val id: String
 )
-

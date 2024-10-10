@@ -130,8 +130,7 @@ public fun WaitingAdminScaffold(
 
                 if (username != null) {
                     Text(
-                        modifier = Modifier
-                            .padding(top = ProtonDimens.MediumSpacing),
+                        modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
                         text = stringResource(
                             id = R.string.auth_login_share_confirmation_code_with_admin_subtitle,
                             username

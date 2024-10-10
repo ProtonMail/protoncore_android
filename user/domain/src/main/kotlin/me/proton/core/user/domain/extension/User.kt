@@ -95,10 +95,14 @@ fun User.getUsedDriveSpacePercentage(): Int? = getUsedPercentage(usedDriveSpace,
 fun User.getUsedTotalSpacePercentage(): Int = getUsedPercentage(usedSpace, maxSpace)!!
 
 /**
- * @return true if the user have a temporary password.
+ * @return true if the user has a temporary password.
  */
-fun User.hasTemporaryPassword() = false
+fun User.hasTemporaryPassword(): Boolean = flags.getOrDefault("has-temporary-password", false)
 
+/**
+ * @return true if the user is SSO.
+ */
+fun User.isSso(): Boolean = flags.getOrDefault("sso", false)
 
 @Suppress("MagicNumber")
 private fun getUsedPercentage(used: Long?, max: Long?): Int? {

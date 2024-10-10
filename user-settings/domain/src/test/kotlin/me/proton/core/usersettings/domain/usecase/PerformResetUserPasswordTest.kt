@@ -91,7 +91,8 @@ class PerformResetUserPasswordTest {
         subscribed = 0,
         delinquent = null,
         recovery = null,
-        keys = emptyList()
+        keys = emptyList(),
+        flags = emptyMap(),
     )
     // endregion
 

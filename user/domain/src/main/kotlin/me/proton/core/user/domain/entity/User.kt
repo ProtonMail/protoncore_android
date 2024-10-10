@@ -99,6 +99,7 @@ data class User(
      * @see [UserManager.lock]
      * */
     override val keys: List<UserKey>,
+    val flags: Map<String, Boolean>,
     val maxBaseSpace: Long? = null,
     val maxDriveSpace: Long? = null,
     val usedBaseSpace: Long? = null,

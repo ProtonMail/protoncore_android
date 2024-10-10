@@ -138,9 +138,10 @@ interface UserManager {
         userId: UserId,
         newPassword: EncryptedString,
         secondFactorProof: SecondFactorProof?,
-        proofs: SrpProofs,
-        srpSession: String,
-        auth: Auth?
+        proofs: SrpProofs?,
+        srpSession: String?,
+        auth: Auth?,
+        encryptedSecret: Based64Encoded?
     ): Boolean
 
     /**

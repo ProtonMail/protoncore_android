@@ -95,7 +95,8 @@ class PerformUpdateLoginPasswordTest {
         subscribed = 0,
         delinquent = null,
         recovery = null,
-        keys = emptyList()
+        keys = emptyList(),
+        flags = emptyMap(),
     )
 
     private val testUserSettingsResponse = UserSettings.nil(testUserId).copy(

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -21,15 +21,11 @@ package me.proton.core.auth.presentation.compose.sso
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
@@ -40,47 +36,39 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.AsyncImage
 import me.proton.core.auth.presentation.compose.R
 import me.proton.core.compose.component.ProtonPasswordOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
 import me.proton.core.compose.theme.LocalColors
-import me.proton.core.compose.theme.LocalShapes
-import me.proton.core.compose.theme.LocalTypography
 import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
-import me.proton.core.compose.util.formatBold
-
-private val CompanyLogoSize = 56.dp
-private val MaxFormWidth = 600.dp
+import me.proton.core.compose.theme.ProtonTypography
 
 @Composable
-public fun BackupPasswordSetupScreen(
+public fun BackupPasswordChangeScreen(
     onCloseClicked: () -> Unit,
+    onCloseMessage: (String?) -> Unit,
     onErrorMessage: (String?) -> Unit,
     onSuccess: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: BackupPasswordSetupViewModel = hiltViewModel()
+    viewModel: BackupPasswordChangeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
-    BackupPasswordSetupScreen(
+    BackupPasswordChangeScreen(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onContinueClicked = { viewModel.submit(it) },
+        onCloseMessage = onCloseMessage,
         onErrorMessage = onErrorMessage,
         onSuccess = onSuccess,
         state = state
@@ -88,42 +76,38 @@ public fun BackupPasswordSetupScreen(
 }
 
 @Composable
-public fun BackupPasswordSetupScreen(
+public fun BackupPasswordChangeScreen(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
-    onContinueClicked: (BackupPasswordSetupAction.SetPassword) -> Unit = {},
+    onContinueClicked: (BackupPasswordChangeAction.ChangePassword) -> Unit = {},
+    onCloseMessage: (String?) -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
     onSuccess: () -> Unit = {},
-    state: BackupPasswordSetupState,
+    state: BackupPasswordChangeState,
 ) {
     LaunchedEffect(state) {
         when (state) {
-            is BackupPasswordSetupState.Error -> onErrorMessage(state.message)
-            is BackupPasswordSetupState.Success -> onSuccess()
+            is BackupPasswordChangeState.Close -> onCloseMessage(state.message)
+            is BackupPasswordChangeState.Error -> onErrorMessage(state.message)
+            is BackupPasswordChangeState.Success -> onSuccess()
             else -> Unit
         }
     }
-    BackupPasswordSetupScaffold(
+    BackupPasswordChangeScaffold(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onContinueClicked = onContinueClicked,
-        organizationAdminEmail = state.data.organizationAdminEmail,
-        organizationIcon = state.data.organizationIcon,
-        organizationName = state.data.organizationName,
         isPasswordTooShort = state.isPasswordTooShort(),
         arePasswordsNotMatching = state.arePasswordsNotMatching(),
-        isLoading = state is BackupPasswordSetupState.Loading
+        isLoading = state is BackupPasswordChangeState.Loading
     )
 }
 
 @Composable
-public fun BackupPasswordSetupScaffold(
+public fun BackupPasswordChangeScaffold(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
-    onContinueClicked: (BackupPasswordSetupAction.SetPassword) -> Unit = {},
-    organizationAdminEmail: String? = null,
-    organizationIcon: Any? = null,
-    organizationName: String? = null,
+    onContinueClicked: (BackupPasswordChangeAction.ChangePassword) -> Unit = {},
     isPasswordTooShort: Boolean = false,
     arePasswordsNotMatching: Boolean = false,
     isLoading: Boolean = false,
@@ -153,27 +137,15 @@ public fun BackupPasswordSetupScaffold(
                     .verticalScroll(rememberScrollState())
                     .padding(ProtonDimens.DefaultSpacing),
             ) {
-                OrganizationAdminInfoHeader(
-                    organizationAdminEmail = organizationAdminEmail,
-                    organizationIcon = organizationIcon,
-                    organizationName = organizationName
-                )
-                Divider(
-                    modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-                    color = LocalColors.current.separatorNorm
-                )
 
                 val errorTooShort = stringResource(R.string.backup_password_setup_password_too_short)
                 val errorNotMatch = stringResource(R.string.backup_password_setup_password_not_matching)
 
-                BackupPasswordSetupForm(
+                BackupPasswordChangeForm(
                     backupPasswordError = errorTooShort.takeIf { isPasswordTooShort },
                     backupPasswordRepeatedError = errorNotMatch.takeIf { arePasswordsNotMatching },
                     onContinueClicked = onContinueClicked,
                     isLoading = isLoading,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = ProtonDimens.MediumSpacing)
                 )
             }
         }
@@ -181,74 +153,27 @@ public fun BackupPasswordSetupScaffold(
 }
 
 @Composable
-private fun OrganizationAdminInfoHeader(
-    organizationAdminEmail: String?,
-    organizationIcon: Any?,
-    organizationName: String?,
-    modifier: Modifier = Modifier,
-) {
-    Column(
-        modifier = modifier.fillMaxWidth(),
-    ) {
-        Box(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .clip(LocalShapes.current.large)
-        ) {
-            val defaultLogo = painterResource(R.drawable.default_org_logo)
-            AsyncImage(
-                model = organizationIcon,
-                error = defaultLogo,
-                fallback = defaultLogo,
-                placeholder = defaultLogo,
-                modifier = Modifier.size(CompanyLogoSize),
-                contentDescription = null,
-            )
-        }
-
-        if (organizationName != null) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = ProtonDimens.MediumSpacing),
-                style = LocalTypography.current.headline,
-                text = stringResource(id = R.string.backup_password_setup_title, organizationName)
-            )
-        }
-
-        if (organizationAdminEmail != null) {
-            Text(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(top = ProtonDimens.SmallSpacing),
-                style = LocalTypography.current.body2Medium,
-                textAlign = TextAlign.Center,
-                text = stringResource(R.string.backup_password_setup_subtitle).formatBold(
-                    organizationAdminEmail
-                )
-            )
-        }
-    }
-}
-
-@Composable
-private fun BackupPasswordSetupForm(
+private fun BackupPasswordChangeForm(
     backupPasswordError: String?,
     backupPasswordRepeatedError: String?,
     isLoading: Boolean,
-    onContinueClicked: (BackupPasswordSetupAction.SetPassword) -> Unit,
+    onContinueClicked: (BackupPasswordChangeAction.ChangePassword) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     var backupPassword by rememberSaveable { mutableStateOf("") }
     var repeatBackupPassword by rememberSaveable { mutableStateOf("") }
 
     Column(
-        modifier = modifier.widthIn(max = MaxFormWidth)
+        modifier = modifier
     ) {
         Text(
-            color = LocalColors.current.textWeak,
-            style = LocalTypography.current.body2Regular,
-            text = stringResource(id = R.string.backup_password_setup_description)
+            text = stringResource(id = R.string.backup_password_change_title),
+            style = ProtonTypography.Default.headline
+        )
+        Text(
+            modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+            text = stringResource(id = R.string.backup_password_change_description),
+            style = ProtonTypography.Default.body2Regular
         )
         ProtonPasswordOutlinedTextFieldWithError(
             text = backupPassword,
@@ -278,11 +203,9 @@ private fun BackupPasswordSetupForm(
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
                 .height(ProtonDimens.DefaultButtonMinHeight),
-            onClick = { onContinueClicked(BackupPasswordSetupAction.SetPassword(backupPassword, repeatBackupPassword)) }
+            onClick = { onContinueClicked(BackupPasswordChangeAction.ChangePassword(backupPassword, repeatBackupPassword)) }
         ) {
-            Text(
-                text = stringResource(id = R.string.backup_password_setup_continue_action)
-            )
+            Text(text = stringResource(id = R.string.backup_password_setup_continue_action))
         }
     }
 }
@@ -291,15 +214,8 @@ private fun BackupPasswordSetupForm(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 @Preview(device = Devices.TABLET)
 @Composable
-private fun BackupPasswordSetupScreenPreview() {
+private fun BackupPasswordChangeScreenPreview() {
     ProtonTheme {
-        BackupPasswordSetupScreen(
-            state = BackupPasswordSetupState.Idle(
-                data = BackupPasswordSetupData(
-                    organizationAdminEmail = "admin@company.test",
-                    organizationName = "The Company",
-                )
-            )
-        )
+        BackupPasswordChangeScreen(state = BackupPasswordChangeState.Idle)
     }
 }

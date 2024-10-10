@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,78 +16,65 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.usersettings.domain.usecase
+package me.proton.core.auth.domain.usecase.sso
 
 import me.proton.core.account.domain.repository.AccountRepository
 import me.proton.core.auth.domain.repository.AuthRepository
-import me.proton.core.auth.fido.domain.entity.SecondFactorProof
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.use
-import me.proton.core.crypto.common.srp.SrpProofs
 import me.proton.core.domain.entity.UserId
-import me.proton.core.key.domain.extension.areAllInactive
 import me.proton.core.user.domain.UserManager
-import me.proton.core.user.domain.extension.hasKeys
 import me.proton.core.user.domain.extension.nameNotNull
+import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserRepository
 import javax.inject.Inject
 
-class PerformUpdateUserPassword @Inject constructor(
+class ChangeBackupPassword @Inject constructor(
     context: CryptoContext,
     private val accountRepository: AccountRepository,
     private val authRepository: AuthRepository,
     private val userManager: UserManager,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val passphraseRepository: PassphraseRepository,
+    private val deviceSecretRepository: DeviceSecretRepository,
+    private val getEncryptedSecret: GetEncryptedSecret,
 ) {
     private val keyStore = context.keyStoreCrypto
     private val srp = context.srpCrypto
 
     suspend operator fun invoke(
-        twoPasswordMode: Boolean,
         userId: UserId,
-        loginPassword: EncryptedString,
-        newPassword: EncryptedString,
-        secondFactorProof: SecondFactorProof?
+        newBackupPassword: EncryptedString,
     ): Boolean {
         val user = userRepository.getUser(userId)
         val username = user.nameNotNull()
         val account = accountRepository.getAccountOrNull(userId)
         val sessionId = requireNotNull(account?.sessionId)
-        val loginInfo = authRepository.getAuthInfoSrp(sessionId, username)
         val modulus = authRepository.randomModulus(sessionId)
-        loginPassword.decrypt(keyStore).toByteArray().use { decryptedLoginPassword ->
-            newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
-                val clientProofs: SrpProofs = srp.generateSrpProofs(
+        val currentPassphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
+        val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId)?.secret)
+        currentPassphrase.decrypt(keyStore).use { decryptedCurrentPassphrase ->
+            newBackupPassword.decrypt(keyStore).toByteArray().use { decryptedBackupPassword ->
+                val auth = srp.calculatePasswordVerifier(
                     username = username,
-                    password = decryptedLoginPassword.array,
-                    version = loginInfo.version.toLong(),
-                    salt = loginInfo.salt,
-                    modulus = loginInfo.modulus,
-                    serverEphemeral = loginInfo.serverEphemeral
-                )
-
-                val auth = if (!twoPasswordMode) srp.calculatePasswordVerifier(
-                    username = username,
-                    password = decryptedNewPassword.array,
+                    password = decryptedBackupPassword.array,
                     modulusId = modulus.modulusId,
                     modulus = modulus.modulus
-                ) else null
-
-                // Unlock user if locked/inactive.
-                if (user.hasKeys() && user.keys.areAllInactive()) {
-                    userManager.unlockWithPassword(userId, decryptedLoginPassword)
-                }
-
+                )
                 return userManager.changePassword(
                     userId = userId,
-                    newPassword = newPassword,
-                    secondFactorProof = secondFactorProof,
-                    proofs = clientProofs,
-                    srpSession = loginInfo.srpSession,
+                    newPassword = newBackupPassword,
+                    secondFactorProof = null,
+                    proofs = null,
+                    srpSession = null,
                     auth = auth,
-                    encryptedSecret = null
+                    encryptedSecret = getEncryptedSecret.invoke(
+                        passphrase = decryptedCurrentPassphrase,
+                        deviceSecret = deviceSecret
+                    )
                 )
             }
         }

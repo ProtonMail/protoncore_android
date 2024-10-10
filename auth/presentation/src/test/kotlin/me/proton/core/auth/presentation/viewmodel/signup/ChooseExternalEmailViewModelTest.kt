@@ -95,6 +95,7 @@ class ChooseExternalEmailViewModelTest : ArchTest by ArchTest(),
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         type = Type.Proton
     )
 

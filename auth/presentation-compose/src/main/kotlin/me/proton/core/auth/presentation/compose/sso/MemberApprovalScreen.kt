@@ -191,7 +191,11 @@ private fun ConfirmationCodeInputScreen(
 ) {
     var confirmationCode by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
-    var selected by remember(data) { mutableStateOf(data.pendingDevices.getOrNull(0)) }
+    var selected by remember { mutableStateOf<AuthDeviceData?>(null) }
+    when (selected?.deviceId) {
+        null -> selected = data.pendingDevices.firstOrNull()
+        !in data.pendingDevices.map { it.deviceId } -> selected = data.pendingDevices.firstOrNull()
+    }
 
     Column(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
         Text(

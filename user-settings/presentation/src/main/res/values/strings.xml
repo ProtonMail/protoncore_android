@@ -38,6 +38,7 @@
     <string name="settings_password_management_tab_second_password">Second password</string>
     <string name="settings_password_management_change_password_note">To change either of your passwords, you\'ll need to know your main password. <a href="https://account.proton.me/reset-password">Forgot your main password?</a></string>
     <string name="settings_password_management_header">Change password</string>
+    <string name="settings_password_management_cannot_change_password">You can\'t change your backup password. Please contact your administrator.</string>
     <string name="settings_main_password_hint_current">Current main password</string>
     <string name="settings_main_password_hint_new">New main password</string>
     <string name="settings_main_password_hint_new_confirm">Confirm new main password</string>

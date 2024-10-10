@@ -30,7 +30,7 @@ class ValidateServerProof @Inject constructor() {
      * Throws an [InvalidServerAuthenticationException] with the result of calling [lazyMessage]
      * if the [ServerProof] isn't the one expected.
      */
-    operator fun invoke(serverProof: ServerProof, expectedProof: String, lazyMessage: () -> Any) {
+    operator fun invoke(serverProof: ServerProof?, expectedProof: String?, lazyMessage: () -> Any) {
         if (serverProof != expectedProof) {
             val message = "Server returned invalid srp proof, ${lazyMessage.invoke()}"
             val exception = InvalidServerAuthenticationException(message)

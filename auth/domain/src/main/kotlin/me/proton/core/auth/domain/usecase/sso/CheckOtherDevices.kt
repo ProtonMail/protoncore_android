@@ -42,8 +42,8 @@ class CheckOtherDevices @Inject constructor(
         val devices = authDeviceRepository.getByUserId(userId)
         val activeDevices = devices.filter { it.state == AuthDeviceState.Active }
         return when {
-            hasTemporaryPassword -> Result.AdminHelpRequired
             localDevice.isPendingAdmin() -> Result.AdminHelpRequested
+            hasTemporaryPassword -> Result.AdminHelpRequired
             activeDevices.isNotEmpty() -> Result.OtherDevicesAvailable(devices)
             else -> Result.BackupPassword
         }

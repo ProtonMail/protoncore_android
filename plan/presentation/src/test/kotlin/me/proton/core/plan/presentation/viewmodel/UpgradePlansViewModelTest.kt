@@ -213,6 +213,7 @@ class UpgradePlansViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coro
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         type = Type.Proton
     )
 

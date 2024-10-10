@@ -175,5 +175,17 @@ interface AccountDatabase : Database {
                 )
             }
         }
+
+        /**
+         * - Added [User.flags], insert migration to populate the value from backend (see AccountMigrator).
+         */
+        val MIGRATION_9 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                // If there are no migrations the value is NULL.
+                database.execSQL("UPDATE AccountMetadataEntity SET migrations = IFNULL(migrations || ';RefreshUser', 'RefreshUser')")
+                database.execSQL("UPDATE AccountEntity SET state = 'MigrationNeeded' WHERE state = 'Ready'")
+            }
+        }
+
     }
 }

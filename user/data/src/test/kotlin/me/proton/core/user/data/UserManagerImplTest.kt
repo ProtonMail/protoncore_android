@@ -275,6 +275,7 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
+            encryptedSecret = null
         )
         // Then
         assertFalse(result)
@@ -296,6 +297,7 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
+            encryptedSecret = null
         )
         // Then
         coVerify {
@@ -325,6 +327,7 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
+            encryptedSecret = null
         )
         // Then
         coVerify {
@@ -351,6 +354,7 @@ class UserManagerImplTest {
             proofs = mockk(),
             srpSession = "srp",
             auth = mockk(),
+            encryptedSecret = null
         )
         // Then
         coVerify {

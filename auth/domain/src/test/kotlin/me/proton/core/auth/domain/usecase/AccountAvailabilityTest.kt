@@ -70,7 +70,8 @@ internal class AccountAvailabilityTest {
         delinquent = null,
         recovery = null,
         keys = emptyList(),
-        type = Type.Proton
+        type = Type.Proton,
+        flags = emptyMap(),
     )
 
     @BeforeTest

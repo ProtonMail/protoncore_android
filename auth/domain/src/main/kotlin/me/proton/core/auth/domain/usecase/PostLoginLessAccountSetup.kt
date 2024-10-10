@@ -78,6 +78,7 @@ class PostLoginLessAccountSetup @Inject constructor(
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         maxBaseSpace = 0,
         maxDriveSpace = 0,
         usedBaseSpace = 0,

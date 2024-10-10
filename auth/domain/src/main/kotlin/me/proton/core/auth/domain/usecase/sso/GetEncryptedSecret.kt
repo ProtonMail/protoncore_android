@@ -48,7 +48,7 @@ class GetEncryptedSecret @Inject constructor(
     operator fun invoke(
         passphrase: PlainByteArray,
         deviceSecret: DeviceSecretString
-    ): Based64EncodedAeadEncryptedSecret = pgpCrypto.getBase64Encoded(
+    ): Based64EncodedAeadEncryptedSecret = pgpCrypto.getBase64EncodedNoWrap(
         pgpCrypto.getBase64Decoded(deviceSecret.decrypt(keyStoreCrypto)).use { key ->
             passphrase.encrypt(
                 crypto = aeadCrypto,

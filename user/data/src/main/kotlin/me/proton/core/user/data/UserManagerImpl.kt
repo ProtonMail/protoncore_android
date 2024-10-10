@@ -31,6 +31,7 @@ import me.proton.core.crypto.common.keystore.decrypt
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.crypto.common.pgp.Armored
+import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.crypto.common.pgp.SignatureContext
 import me.proton.core.crypto.common.srp.Auth
 import me.proton.core.crypto.common.srp.SrpProofs
@@ -153,9 +154,10 @@ class UserManagerImpl @Inject constructor(
         userId: UserId,
         newPassword: EncryptedString,
         secondFactorProof: SecondFactorProof?,
-        proofs: SrpProofs,
-        srpSession: String,
-        auth: Auth?
+        proofs: SrpProofs?,
+        srpSession: String?,
+        auth: Auth?,
+        encryptedSecret: Based64Encoded?
     ): Boolean {
         newPassword.decrypt(keyStore).toByteArray().use { decryptedNewPassword ->
             val keySalt = pgp.generateNewKeySalt()
@@ -181,7 +183,8 @@ class UserManagerImpl @Inject constructor(
                     secondFactorProof = secondFactorProof,
                     auth = auth,
                     keys = updatedKeys,
-                    userKeys = updatedUserKeys
+                    userKeys = updatedUserKeys,
+                    encryptedSecret = encryptedSecret
                 )
 
                 lock(userId)

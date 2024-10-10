@@ -230,7 +230,8 @@ class UserManagerPasswordTests {
             ),
             srpSession = "test-srp-session",
             auth = mockk(),
-            secondFactorProof = null
+            secondFactorProof = null,
+            encryptedSecret = null
         )
 
         // THEN

@@ -112,9 +112,3 @@ public class BackupPasswordInputViewModel @Inject constructor(
         emit(BackupPasswordInputState.Error(it.message))
     }
 }
-
-private fun Throwable.isActionNotAllowed(): Boolean {
-    if (this !is ApiException) return false
-    val error = error as? ApiResult.Error.Http
-    return error?.proton?.code == ResponseCodes.NOT_ALLOWED
-}

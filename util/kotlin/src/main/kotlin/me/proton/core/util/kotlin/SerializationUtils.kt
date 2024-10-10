@@ -97,6 +97,16 @@ inline fun <reified T : Any> String.deserializeList(): List<T> = Serializer.deco
 inline fun <reified T : Any, reified V : Any> String.deserializeMap(): Map<T, V> =
     Serializer.decodeFromString(this)
 
+/**
+ * @return [Map] of [T], [V] object from the receiver [String]
+ * This uses reflection: TODO improve for avoid it
+ */
+@NeedSerializable
+inline fun <reified T : Any, reified V : Any> String.deserializeMapOrNull(): Map<T, V>? = try {
+    deserializeMap()
+} catch (e: SerializationException) {
+    null
+}
 
 /**
  * @return [String] from the receiver [T] object

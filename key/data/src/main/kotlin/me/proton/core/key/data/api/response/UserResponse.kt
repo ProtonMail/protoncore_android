@@ -65,6 +65,8 @@ data class UserResponse(
     val recovery: UserRecoveryResponse? = null,
     @SerialName("Keys")
     val keys: List<UserKeyResponse>,
+    @SerialName("Flags")
+    val flags: Map<String, Boolean>? = null,
     @SerialName("MaxBaseSpace")
     val maxBaseSpace: Long? = null,
     @SerialName("MaxDriveSpace")

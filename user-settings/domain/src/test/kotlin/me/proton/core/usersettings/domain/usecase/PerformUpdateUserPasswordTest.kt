@@ -93,7 +93,8 @@ class PerformUpdateUserPasswordTest {
         subscribed = 0,
         delinquent = null,
         recovery = null,
-        keys = emptyList()
+        keys = emptyList(),
+        flags = emptyMap(),
     )
     // endregion
 
@@ -121,7 +122,8 @@ class PerformUpdateUserPasswordTest {
                 secondFactorProof = any(),
                 proofs = any(),
                 srpSession = any(),
-                auth = any()
+                auth = any(),
+                encryptedSecret = any()
             )
         } returns true
 
@@ -199,7 +201,8 @@ class PerformUpdateUserPasswordTest {
                 secondFactorProof = secondFactorFido,
                 proofs = any(),
                 srpSession = any(),
-                auth = any()
+                auth = any(),
+                encryptedSecret = any()
             )
         } returns true
 

@@ -26,4 +26,5 @@ object LogTag {
     const val ACTIVATE_DEVICE = "core.auth.domain.perform.backuppass.activate"
     const val UNPRIVATIZE_USER = "core.auth.domain.perform.backuppass.unprivatize"
     const val SETUP_KEYS = "core.auth.domain.perform.backuppass.setup.keys"
+    const val CHANGE_BACKUP_PASSWORD = "core.auth.domain.perform.backuppass.change"
 }

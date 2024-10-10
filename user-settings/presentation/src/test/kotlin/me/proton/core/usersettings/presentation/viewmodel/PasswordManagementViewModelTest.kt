@@ -37,6 +37,7 @@ import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.test.kotlin.flowTest
 import me.proton.core.user.domain.entity.Type
 import me.proton.core.user.domain.entity.User
+import me.proton.core.user.domain.usecase.ObserveUser
 import me.proton.core.usersettings.domain.entity.PasswordSetting
 import me.proton.core.usersettings.domain.entity.RecoverySetting
 import me.proton.core.usersettings.domain.entity.TwoFASetting
@@ -60,6 +61,7 @@ import kotlin.test.assertTrue
 
 class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesTest() {
     // region mocks
+    private val observeUser = mockk<ObserveUser>()
     private val observeUserRecovery = mockk<ObserveUserRecovery>()
     private val observeUserSettings = mockk<ObserveUserSettings>()
     private val observeUserRecoverySelfInitiated = mockk<ObserveUserRecoverySelfInitiated>()
@@ -109,6 +111,7 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
         delinquent = null,
         recovery = null,
         keys = emptyList(),
+        flags = emptyMap(),
         type = Type.Proton
     )
     // endregion
@@ -118,12 +121,14 @@ class PasswordManagementViewModelTest : ArchTest by ArchTest(), CoroutinesTest b
     @Before
     fun beforeEveryTest() {
         coEvery { isAccountRecoveryResetEnabled.invoke(testUserId) } returns false
+        coEvery { observeUser.invoke(testUserId) } returns flowOf(testUser)
         coEvery { observeUserRecovery.invoke(testUserId) } returns flowOf(testUser.recovery)
         coEvery { observeUserSettings.invoke(testUserId) } returns flowOf(testUserSettingsResponse)
         coEvery { observeUserRecoverySelfInitiated.invoke(testUserId) } returns flowOf(false)
         viewModel =
             PasswordManagementViewModel(
                 keyStoreCrypto,
+                observeUser,
                 observeUserRecovery,
                 observeUserSettings,
                 observeUserRecoverySelfInitiated,
