@@ -231,4 +231,9 @@ class MailSettingsRepositoryImpl @Inject constructor(
         updateSettingsProperty(userId, SettingsProperty.EnableFolderColor(enable.toInt())) {
             it.copy(enableFolderColor = enable)
         }
+
+    override suspend fun updateAutoDeleteSpamAndTrashDays(userId: UserId, autoDeleteSpamAndTrashDays: Int) =
+        updateSettingsProperty(userId, SettingsProperty.AutoDeleteSpamAndTrashDays(autoDeleteSpamAndTrashDays)) {
+            it.copy(autoDeleteSpamAndTrashDays = autoDeleteSpamAndTrashDays)
+        }
 }

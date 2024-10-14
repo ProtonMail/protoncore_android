@@ -50,6 +50,7 @@ data class MailSettingsEntity(
     val shortcuts: Int?,
     val pmSignature: Int?,
     val numMessagePerPage: Int?,
+    val autoDeleteSpamAndTrashDays: Int?,
     val draftMimeType: String?,
     val receiveMimeType: String?,
     val showMimeType: String?,

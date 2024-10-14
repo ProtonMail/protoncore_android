@@ -494,4 +494,21 @@ class MailSettingsRepositoryTests {
             coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
             verify { settingsWorker.enqueue(userId, SettingsProperty.EnableFolderColor(0)) }
         }
+
+    @Test
+    fun `AutoDeleteSpamAndTrashDays setting is updated locally and remotely when changed`() =
+        runTest(dispatcherProvider.Main) {
+            // GIVEN
+            every { mailSettingsDao.observeByUserId(any()) } returns flowOf(
+                MailSettingsTestData.mailSettingsEntity
+            )
+            // WHEN
+            mailSettingsRepository.updateAutoDeleteSpamAndTrashDays(userId, 0)
+            // THEN
+            val updatedMailSettings = MailSettingsTestData.mailSettingsEntity.copy(
+                autoDeleteSpamAndTrashDays = 0
+            )
+            coVerify { mailSettingsDao.insertOrUpdate(updatedMailSettings) }
+            verify { settingsWorker.enqueue(userId, SettingsProperty.AutoDeleteSpamAndTrashDays(0)) }
+        }
 }

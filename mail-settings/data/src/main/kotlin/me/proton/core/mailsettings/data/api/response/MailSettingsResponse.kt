@@ -57,6 +57,8 @@ data class MailSettingsResponse(
     val pmSignature: Int?,
     @SerialName("NumMessagePerPage")
     val numMessagePerPage: Int?,
+    @SerialName("AutoDeleteSpamAndTrashDays")
+    val autoDeleteSpamAndTrashDays: Int?,
     @SerialName("DraftMIMEType")
     val draftMimeType: String?,
     @SerialName("ReceiveMIMEType")

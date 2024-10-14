@@ -38,6 +38,7 @@ data class MailSettings(
     val shortcuts: Boolean?,
     val pmSignature: IntEnum<PMSignature>?,
     val numMessagePerPage: Int?,
+    val autoDeleteSpamAndTrashDays: Int?,
     val draftMimeType: StringEnum<MimeType>?,
     val receiveMimeType: StringEnum<MimeType>?,
     val showMimeType: StringEnum<MimeType>?,

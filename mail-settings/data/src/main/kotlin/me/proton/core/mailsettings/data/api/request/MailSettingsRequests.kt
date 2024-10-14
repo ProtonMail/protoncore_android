@@ -152,3 +152,9 @@ data class UpdateEnableFolderColorRequest(
     @SerialName("EnableFolderColor")
     val enableFolderColor: Int,
 )
+
+@Serializable
+data class UpdateAutoDeleteSpamAndTrashDaysRequest(
+    @SerialName("Days")
+    val autoDeleteSpamAndTrashDays: Int
+)

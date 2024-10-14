@@ -39,6 +39,7 @@ import dagger.assisted.AssistedInject
 import me.proton.core.domain.entity.UserId
 import me.proton.core.mailsettings.data.api.MailSettingsApi
 import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
+import me.proton.core.mailsettings.data.api.request.UpdateAutoDeleteSpamAndTrashDaysRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAutoSaveContactsRequest
 import me.proton.core.mailsettings.data.api.request.UpdateComposerModeRequest
 import me.proton.core.mailsettings.data.api.request.UpdateConfirmLinkRequest
@@ -62,6 +63,7 @@ import me.proton.core.mailsettings.data.api.request.UpdateViewLayoutRequest
 import me.proton.core.mailsettings.data.api.request.UpdateViewModeRequest
 import me.proton.core.mailsettings.data.api.response.SingleMailSettingsResponse
 import me.proton.core.mailsettings.data.worker.SettingsProperty.AttachPublicKey
+import me.proton.core.mailsettings.data.worker.SettingsProperty.AutoDeleteSpamAndTrashDays
 import me.proton.core.mailsettings.data.worker.SettingsProperty.AutoSaveContacts
 import me.proton.core.mailsettings.data.worker.SettingsProperty.ComposerMode
 import me.proton.core.mailsettings.data.worker.SettingsProperty.ConfirmLink
@@ -157,6 +159,9 @@ class UpdateSettingsWorker @AssistedInject constructor(
         is SwipeRight -> updateSwipeRight(UpdateSwipeRightRequest(property.value))
         is ViewLayout -> updateViewLayout(UpdateViewLayoutRequest(property.value))
         is ViewMode -> updateViewMode(UpdateViewModeRequest(property.value))
+        is AutoDeleteSpamAndTrashDays -> updateAutoDeleteSpamAndTrashDays(
+            UpdateAutoDeleteSpamAndTrashDaysRequest(property.value)
+        )
     }.exhaustive
 
     class Enqueuer @Inject constructor(

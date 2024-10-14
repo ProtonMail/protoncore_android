@@ -20,6 +20,7 @@ package me.proton.core.mailsettings.data.db
 
 import androidx.sqlite.db.SupportSQLiteDatabase
 import me.proton.core.data.room.db.Database
+import me.proton.core.data.room.db.extension.addTableColumn
 import me.proton.core.data.room.db.migration.DatabaseMigration
 import me.proton.core.mailsettings.data.db.dao.MailSettingsDao
 
@@ -34,6 +35,19 @@ interface MailSettingsDatabase : Database {
             override fun migrate(database: SupportSQLiteDatabase) {
                 // Added Table MailSettingsEntity.
                 database.execSQL("CREATE TABLE IF NOT EXISTS `MailSettingsEntity` (`userId` TEXT NOT NULL, `displayName` TEXT, `signature` TEXT, `autoSaveContacts` INTEGER, `composerMode` INTEGER, `messageButtons` INTEGER, `showImages` INTEGER, `showMoved` INTEGER, `viewMode` INTEGER, `viewLayout` INTEGER, `swipeLeft` INTEGER, `swipeRight` INTEGER, `shortcuts` INTEGER, `pmSignature` INTEGER, `numMessagePerPage` INTEGER, `draftMimeType` TEXT, `receiveMimeType` TEXT, `showMimeType` TEXT, `enableFolderColor` INTEGER, `inheritParentFolderColor` INTEGER, `rightToLeft` INTEGER, `attachPublicKey` INTEGER, `sign` INTEGER, `pgpScheme` INTEGER, `promptPin` INTEGER, `stickyLabels` INTEGER, `confirmLink` INTEGER, PRIMARY KEY(`userId`), FOREIGN KEY(`userId`) REFERENCES `UserEntity`(`userId`) ON UPDATE NO ACTION ON DELETE CASCADE )")
+            }
+        }
+
+        /**
+         * Added column "autoDeleteSpamAndTrashDays".
+         */
+        val MIGRATION_1 = object : DatabaseMigration {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.addTableColumn(
+                    table = "MailSettingsEntity",
+                    column = "autoDeleteSpamAndTrashDays",
+                    type = "INTEGER"
+                )
             }
         }
     }

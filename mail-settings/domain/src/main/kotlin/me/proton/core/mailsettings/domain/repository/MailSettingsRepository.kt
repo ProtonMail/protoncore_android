@@ -176,6 +176,11 @@ interface MailSettingsRepository {
      * Update [enable] for [userId]
      */
     suspend fun updateEnableFolderColor(userId: UserId, enable: Boolean): MailSettings
+
+    /**
+     * Update [autoDeleteSpamAndTrashDays] for [userId]
+     */
+    suspend fun updateAutoDeleteSpamAndTrashDays(userId: UserId, autoDeleteSpamAndTrashDays: Int): MailSettings
 }
 
 /**

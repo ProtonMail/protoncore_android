@@ -354,6 +354,7 @@ class ObtainSendPreferencesTests {
         shortcuts = true,
         pmSignature = IntEnum(1, PMSignature.Disabled),
         numMessagePerPage = 1,
+        autoDeleteSpamAndTrashDays = 30,
         draftMimeType = StringEnum("text/plain", MimeType.PlainText),
         receiveMimeType = StringEnum("text/plain", MimeType.PlainText),
         showMimeType = StringEnum("text/plain", MimeType.PlainText),

@@ -19,6 +19,7 @@
 package me.proton.core.mailsettings.data.api
 
 import me.proton.core.mailsettings.data.api.request.UpdateAttachPublicKeyRequest
+import me.proton.core.mailsettings.data.api.request.UpdateAutoDeleteSpamAndTrashDaysRequest
 import me.proton.core.mailsettings.data.api.request.UpdateAutoSaveContactsRequest
 import me.proton.core.mailsettings.data.api.request.UpdateComposerModeRequest
 import me.proton.core.mailsettings.data.api.request.UpdateConfirmLinkRequest
@@ -122,4 +123,7 @@ interface MailSettingsApi : BaseRetrofitApi {
 
     @PUT("mail/v4/settings/enablefoldercolor")
     suspend fun updateEnableFolderColor(@Body request: UpdateEnableFolderColorRequest): SingleMailSettingsResponse
+
+    @PUT("mail/v4/settings/auto-delete-spam-and-trash-days")
+    suspend fun updateAutoDeleteSpamAndTrashDays(@Body request: UpdateAutoDeleteSpamAndTrashDaysRequest): SingleMailSettingsResponse
 }
