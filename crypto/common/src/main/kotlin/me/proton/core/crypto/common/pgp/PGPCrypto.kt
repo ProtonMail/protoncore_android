@@ -755,13 +755,6 @@ interface PGPCrypto {
     fun getPublicKey(privateKey: Armored): Armored
 
     /**
-     * Get fingerprint from [key].
-     *
-     * @throws [CryptoException] if fingerprint cannot be extracted from [key].
-     */
-    fun getFingerprint(key: Armored): String
-
-    /**
      * Checks if armored Key is expired.
      */
     fun isKeyExpired(key: Armored): Boolean
@@ -770,6 +763,20 @@ interface PGPCrypto {
      * Checks if armored Key is revoked.
      */
     fun isKeyRevoked(key: Armored): Boolean
+
+    /**
+     * Get fingerprint from [key].
+     *
+     * @throws [CryptoException] if fingerprint cannot be extracted from [key].
+     */
+    fun getFingerprint(key: Armored): String
+
+    /**
+     * Get SHA256 fingerprint from [key].
+     *
+     * @throws [CryptoException] if fingerprint cannot be extracted from [key].
+     */
+    fun getSHA256Fingerprint(key: Armored): String
 
     /**
      * Get JSON SHA256 fingerprints from [key] and corresponding sub-keys.

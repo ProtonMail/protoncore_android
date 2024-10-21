@@ -1153,12 +1153,6 @@ class GOpenPGPCrypto : PGPCrypto {
         privateKey.key().armoredPublicKey
     }.getOrElse { throw CryptoException("Public key cannot be extracted from privateKey.", it) }
 
-    override fun getFingerprint(
-        key: Armored
-    ): String = runCatching {
-        key.key().fingerprint
-    }.getOrElse { throw CryptoException("Fingerprint cannot be extracted from key.", it) }
-
     override fun isKeyExpired(key: Armored): Boolean = runCatching {
         key.key().isExpired
     }.getOrElse { throw CryptoException("Key can not be checked for expiration.", it) }
@@ -1166,6 +1160,18 @@ class GOpenPGPCrypto : PGPCrypto {
     override fun isKeyRevoked(key: Armored): Boolean = runCatching {
         key.key().isRevoked
     }.getOrElse { throw CryptoException("Key can not be checked for revocation.", it) }
+
+    override fun getFingerprint(
+        key: Armored
+    ): String = runCatching {
+        key.key().fingerprint
+    }.getOrElse { throw CryptoException("Fingerprint cannot be extracted from key.", it) }
+
+    override fun getSHA256Fingerprint(
+        key: Armored
+    ): String = runCatching {
+        key.key().shA256Fingerprint
+    }.getOrElse { throw CryptoException("SHA256 Fingerprint cannot be extracted from key.", it) }
 
     override fun getJsonSHA256Fingerprints(
         key: Armored

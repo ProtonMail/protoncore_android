@@ -29,7 +29,6 @@ import me.proton.core.key.domain.extension.publicKeyRing
 import me.proton.core.key.domain.repository.PublicAddressRepository
 import me.proton.core.key.domain.repository.getPublicKeysInfoOrNull
 import me.proton.core.key.domain.verifyText
-import me.proton.core.util.kotlin.deserialize
 import javax.inject.Inject
 
 /**
@@ -70,8 +69,7 @@ class VerifyUnprivatization @Inject constructor(
             else -> Unit
         }
         // Verify the SHA265 fingerprint of the OrgPublicKey using the OrgKeyFingerprintSignature and the fetched admin address key.
-        val jsonFingerprint = cryptoContext.pgpCrypto.getJsonSHA256Fingerprints(unprivatizationInfo.orgPublicKey)
-        val fingerprint = jsonFingerprint.deserialize<List<String>>().first()
+        val fingerprint = cryptoContext.pgpCrypto.getSHA256Fingerprint(unprivatizationInfo.orgPublicKey)
         val verificationResult = publicAddressKey.publicKeyRing().verifyText(
             context = cryptoContext,
             text = fingerprint,
