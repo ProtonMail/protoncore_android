@@ -11,6 +11,38 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.0.0] - 2024-10-22
+
+### Breaking Changes
+
+**Migrations**
+
+- AuthDatabase.MIGRATION_2: Updated AuthDeviceEntity.
+- AuthDatabase.MIGRATION_3: Update DeviceSecretEntity.
+- AuthDatabase.MIGRATION_4: Added MemberDeviceEntity.
+- AuthDatabase.MIGRATION_5: Added AuthDevice Platform.
+- UserDatabase.MIGRATION_6: Added UserEntity column: flags.
+- AccountDatabase.MIGRATION_9: Insert migration to populate User flags (see AccountMigrator).
+
+### Chores
+
+- network: Added Certificate Transparency support.
+- plan: Add Sentry logs to plan prices.
+
+### Crypto
+
+- Added getSHA256Fingerprint.
+
+### Features
+
+- auth: Added Global SSO support.
+- gopenpgp: Update to gopenpgp v2.8.0-beta.1-proton.
+- mail-settings: Add "autoDeleteSpamAndTrashDays" field to MailSettings.
+
+### Bug Fixes
+
+- notification: Cancel user notifications on logout.
+
 ## [28.1.0] - 2024-09-30
 
 ### Tests
