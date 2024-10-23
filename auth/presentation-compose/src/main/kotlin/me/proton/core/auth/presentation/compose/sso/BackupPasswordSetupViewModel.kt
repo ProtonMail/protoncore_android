@@ -83,15 +83,17 @@ public class BackupPasswordSetupViewModel @Inject constructor(
     }
 
     private fun onLoad() = flow {
-        emit(Loading(state.value.data))
+        var data = state.value.data
+        emit(Loading(data))
         val organization = organizationRepository.getOrganization(userId)
+        data = data.copy(organizationName = organization.displayName)
+        emit(Loading(data))
+
         val settings = organizationRepository.getOrganizationSettings(userId)
         val logo = settings.logoId?.let { id -> organizationRepository.getOrganizationLogo(userId, id) }
-        val data = BackupPasswordSetupData(
-            organizationIcon = logo,
-            organizationName = organization.displayName,
-        )
+        data = data.copy(organizationIcon = logo)
         emit(Idle(data))
+
         emitAll(onVerifyUnprivatization())
     }.catchAll(LogTag.ORGANIZATION_LOAD) {
         emit(Error(state.value.data, it.message))
