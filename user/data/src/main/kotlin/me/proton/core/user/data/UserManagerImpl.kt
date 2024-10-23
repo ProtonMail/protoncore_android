@@ -188,6 +188,7 @@ class UserManagerImpl @Inject constructor(
                 )
 
                 lock(userId)
+                keySaltRepository.getKeySalts(userId, refresh = true)
                 userAddressRepository.getAddresses(userId, refresh = true)
                 userRepository.getUser(userId, refresh = true)
                 unlockWithPassphrase(userId, newPassphrase.encrypt(keyStore))
