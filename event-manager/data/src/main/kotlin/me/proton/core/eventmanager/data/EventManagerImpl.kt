@@ -452,6 +452,10 @@ class EventManagerImpl @AssistedInject constructor(
         lock.withLock { internalStop() }
     }
 
+    override suspend fun resume() {
+        lock.withLock { enqueueOrStop(immediately = true, failure = false) }
+    }
+
     override suspend fun <R> suspend(block: suspend () -> R): R {
         lock.withLock { return internalSuspend(block) }
     }

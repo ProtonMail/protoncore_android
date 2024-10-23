@@ -52,6 +52,13 @@ interface EventManager {
     suspend fun stop()
 
     /**
+     * Resume the Event loop execution.
+     *
+     * This call can be used to force the Event loop to run on demand, regardless of its existing schedule.
+     */
+    suspend fun resume()
+
+    /**
      * Pause the Event loop, calls the specified function [block], and resume the loop.
      *
      * Note: The loop will not be paused/resumed if it was not already started.
