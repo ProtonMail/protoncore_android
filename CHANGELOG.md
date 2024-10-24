@@ -11,6 +11,21 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.1.0] - 2024-10-24
+
+### Features
+
+- event-manager: Added EventManager resume function.
+
+### Bug Fixes
+
+- auth:
+  - Fixed AddAccountActivity fragments registered result issue on Activity recreation.
+  - Fixed updating organization data on BackupPasswordSetup screen.
+  - Fixed updating organizationAdminEmail on RequestAdminHelp screen.
+- user:
+  - Refresh KeySalts after changePassword (to be able to derive passphrase from password).
+
 ## [29.0.0] - 2024-10-22
 
 ### Breaking Changes
