@@ -22,20 +22,15 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.UserCheckAction
-import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentCredentialLessWelcomeBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
-import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.AddAccountWorkflow
-import me.proton.core.auth.presentation.onLoginResult
-import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.auth.presentation.ui.signup.showTermsConditions
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink
 import me.proton.core.auth.presentation.viewmodel.CredentialLessViewModel
@@ -53,7 +48,7 @@ import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
-import javax.inject.Inject
+import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 @ProductMetrics(
@@ -76,9 +71,6 @@ import javax.inject.Inject
 internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_credential_less_welcome),
     UiComponentProductMetricsDelegateOwner {
 
-    @Inject
-    lateinit var authOrchestrator: AuthOrchestrator
-
     private val viewModel by viewModels<CredentialLessViewModel>()
 
     private val binding by viewBinding(FragmentCredentialLessWelcomeBinding::bind)
@@ -87,21 +79,8 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
         requireNotNull(requireArguments().getParcelable<AddAccountInput>(ARG_ADD_ACCOUNT_INPUT))
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        authOrchestrator.register(this)
-        authOrchestrator.onLoginResult {
-            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn)
-        }
-        authOrchestrator.onOnSignUpResult {
-            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignUp)
-        }
-    }
-
-    override fun onDestroy() {
-        authOrchestrator.unregister()
-        super.onDestroy()
-    }
+    private val addAccountActivity by lazy { WeakReference(activity as AddAccountActivity) }
+    private val authOrchestrator by lazy { addAccountActivity.get()?.authOrchestrator }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -112,10 +91,10 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
             viewModel.startLoginLessWorkflow()
         }
         binding.signIn.onClick {
-            authOrchestrator.startLoginWorkflow(input.requiredAccountType, input.loginUsername)
+            authOrchestrator?.startLoginWorkflow(input.requiredAccountType, input.loginUsername)
         }
         binding.signUp.onClick {
-            authOrchestrator.startSignupWorkflow(input.creatableAccountType)
+            authOrchestrator?.startSignupWorkflow(input.creatableAccountType)
         }
         binding.terms.setTextWithAnnotatedLink(R.string.auth_credentialless_terms, "terms") {
             parentFragmentManager.showTermsConditions()
@@ -194,7 +173,6 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
 
             is PostLoginAccountSetup.UserCheckResult.Success -> onSuccess(
                 userId = userId.id,
-                workflow = AddAccountWorkflow.CredentialLess
             )
         }
     }
@@ -213,17 +191,11 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
         }
     }
 
-    private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {
-        val resultBundle = bundleOf(
-            ARG_ADD_ACCOUNT_RESULT to AddAccountResult(userId = userId, workflow = workflow)
-        )
-        setFragmentResult(CREDENTIAL_LESS_REQUEST_KEY, resultBundle)
+    private fun onSuccess(userId: String) {
+        addAccountActivity.get()?.onSuccess(userId, AddAccountWorkflow.CredentialLess)
     }
 
     companion object {
-        const val CREDENTIAL_LESS_REQUEST_KEY = "CREDENTIAL_LESS_REQUEST_KEY"
-        const val ARG_ADD_ACCOUNT_RESULT = "ARG_ADD_ACCOUNT_RESULT"
-
         private const val ARG_ADD_ACCOUNT_INPUT = "ARG_ADD_ACCOUNT_INPUT"
 
         operator fun invoke(input: AddAccountInput) = CredentialLessWelcomeFragment().apply {

@@ -25,25 +25,30 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityAddAccountBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.AddAccountWorkflow
+import me.proton.core.auth.presentation.onLoginResult
+import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.auth.presentation.viewmodel.AddAccountViewModel
 import me.proton.core.presentation.ui.ProtonViewBindingActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.inTransaction
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AddAccountActivity :
     ProtonViewBindingActivity<ActivityAddAccountBinding>(ActivityAddAccountBinding::inflate) {
+
+    @Inject
+    lateinit var authOrchestrator: AuthOrchestrator
 
     private var foregroundCall: (() -> Unit)? = null
 
@@ -60,13 +65,15 @@ class AddAccountActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        authOrchestrator.register(this)
+        authOrchestrator.onLoginResult {
+            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn)
+        }
+        authOrchestrator.onOnSignUpResult {
+            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignUp)
+        }
+
         addOnBackPressedCallback { onClose() }
-        supportFragmentManager.onAddAccountFragmentResult(this) {
-            if (it != null) onSuccess(it.userId, it.workflow)
-        }
-        supportFragmentManager.onCredentialLessFragmentResult(this) {
-            if (it != null) onSuccess(it.userId, it.workflow)
-        }
 
         binding.progressIndicator.isVisible = true
         lifecycleScope.launch {
@@ -81,6 +88,11 @@ class AddAccountActivity :
             }
             binding.progressIndicator.isVisible = false
         }
+    }
+
+    override fun onDestroy() {
+        authOrchestrator.unregister()
+        super.onDestroy()
     }
 
     override fun onResume() {
@@ -99,9 +111,8 @@ class AddAccountActivity :
         }
     }
 
-    private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {
-        val intent =
-            Intent().putExtra(ARG_RESULT, AddAccountResult(userId = userId, workflow = workflow))
+    internal fun onSuccess(userId: String, workflow: AddAccountWorkflow) {
+        val intent = Intent().putExtra(ARG_RESULT, AddAccountResult(userId, workflow))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -128,33 +139,5 @@ private fun FragmentManager.showCredentialLessFragment(input: AddAccountInput): 
     inTransaction {
         replace(R.id.fragment_container, CredentialLessWelcomeFragment(input))
         setTransition(TRANSIT_FRAGMENT_FADE)
-    }
-}
-
-private fun FragmentManager.onAddAccountFragmentResult(
-    lifecycleOwner: LifecycleOwner,
-    block: (AddAccountResult?) -> Unit
-) {
-    setFragmentResultListener(
-        AddAccountFragment.ADD_ACCOUNT_REQUEST_KEY,
-        lifecycleOwner
-    ) { _, bundle ->
-        val result =
-            bundle.getParcelable<AddAccountResult>(AddAccountFragment.ARG_ADD_ACCOUNT_RESULT)
-        block(result)
-    }
-}
-
-private fun FragmentManager.onCredentialLessFragmentResult(
-    lifecycleOwner: LifecycleOwner,
-    block: (AddAccountResult?) -> Unit
-) {
-    setFragmentResultListener(
-        CredentialLessWelcomeFragment.CREDENTIAL_LESS_REQUEST_KEY,
-        lifecycleOwner
-    ) { _, bundle ->
-        val result =
-            bundle.getParcelable<AddAccountResult>(CredentialLessWelcomeFragment.ARG_ADD_ACCOUNT_RESULT)
-        block(result)
     }
 }

@@ -21,16 +21,10 @@ package me.proton.core.auth.presentation.ui
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.setFragmentResult
 import dagger.hilt.android.AndroidEntryPoint
-import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentAddAccountBinding
 import me.proton.core.auth.presentation.entity.AddAccountInput
-import me.proton.core.auth.presentation.entity.AddAccountResult
-import me.proton.core.auth.presentation.entity.AddAccountWorkflow
-import me.proton.core.auth.presentation.onLoginResult
-import me.proton.core.auth.presentation.onOnSignUpResult
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
@@ -40,7 +34,7 @@ import me.proton.core.telemetry.presentation.annotation.ProductMetrics
 import me.proton.core.telemetry.presentation.annotation.ScreenClosed
 import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
 import me.proton.core.telemetry.presentation.annotation.ViewClicked
-import javax.inject.Inject
+import java.lang.ref.WeakReference
 
 @AndroidEntryPoint
 @ProductMetrics(
@@ -64,9 +58,6 @@ internal class AddAccountFragment :
     ProtonFragment(R.layout.fragment_add_account),
     UiComponentProductMetricsDelegateOwner {
 
-    @Inject
-    lateinit var authOrchestrator: AuthOrchestrator
-
     private val binding by viewBinding(FragmentAddAccountBinding::bind)
 
     private val input by lazy {
@@ -75,16 +66,8 @@ internal class AddAccountFragment :
 
     private var isLoginTwoStepEnabled: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        authOrchestrator.register(this)
-        authOrchestrator.onLoginResult {
-            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignIn)
-        }
-        authOrchestrator.onOnSignUpResult {
-            if (it != null) onSuccess(it.userId, AddAccountWorkflow.SignUp)
-        }
-    }
+    private val addAccountActivity by lazy { WeakReference(activity as AddAccountActivity) }
+    private val authOrchestrator by lazy { addAccountActivity.get()?.authOrchestrator }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,38 +79,23 @@ internal class AddAccountFragment :
 
         binding.signIn.onClick {
             when (isLoginTwoStepEnabled) {
-                true -> authOrchestrator.startLoginTwoStepWorkflow(
+                true -> authOrchestrator?.startLoginTwoStepWorkflow(
                     requiredAccountType = input.requiredAccountType,
                     username = input.loginUsername
                 )
 
-                false -> authOrchestrator.startLoginWorkflow(
+                false -> authOrchestrator?.startLoginWorkflow(
                     requiredAccountType = input.requiredAccountType,
                     username = input.loginUsername
                 )
             }
         }
         binding.signUp.onClick {
-            authOrchestrator.startSignupWorkflow(input.creatableAccountType)
+            authOrchestrator?.startSignupWorkflow(input.creatableAccountType)
         }
     }
 
-    override fun onDestroy() {
-        authOrchestrator.unregister()
-        super.onDestroy()
-    }
-
-    private fun onSuccess(userId: String, workflow: AddAccountWorkflow) {
-        val resultBundle = bundleOf(
-            ARG_ADD_ACCOUNT_RESULT to AddAccountResult(userId = userId, workflow = workflow)
-        )
-        setFragmentResult(ADD_ACCOUNT_REQUEST_KEY, resultBundle)
-    }
-
     companion object {
-        const val ADD_ACCOUNT_REQUEST_KEY = "ADD_ACCOUNT_REQUEST_KEY"
-        const val ARG_ADD_ACCOUNT_RESULT = "ARG_ADD_ACCOUNT_RESULT"
-
         private const val ARG_ADD_ACCOUNT_INPUT = "ARG_ADD_ACCOUNT_INPUT"
 
         operator fun invoke(input: AddAccountInput) = AddAccountFragment().apply {
