@@ -43,7 +43,6 @@ import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Error
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Idle
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Loading
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
-import me.proton.core.domain.entity.UserId
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.catchAll
 import javax.inject.Inject
@@ -62,7 +61,7 @@ public class RequestAdminHelpViewModel @Inject constructor(
 
     public val state: StateFlow<RequestAdminHelpState> = mutableAction.flatMapLatest { action ->
         when (action) {
-            is Load -> onLoad(userId)
+            is Load -> onLoad()
             is Submit -> onSubmit()
         }
     }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Loading(RequestAdminHelpData()))
@@ -71,7 +70,7 @@ public class RequestAdminHelpViewModel @Inject constructor(
         mutableAction.emit(action)
     }
 
-    private fun onLoad(userId: UserId) = flow {
+    private fun onLoad() = flow {
         var data = state.value.data
         emit(Loading(data))
 

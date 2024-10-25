@@ -91,6 +91,7 @@ public fun WaitingAdminScreen(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onBackupPasswordClicked = onBackupPasswordClicked,
+        adminEmail = data?.adminEmail,
         username = data?.username,
         confirmationCode = data?.confirmationCode?.toCharArray()?.asList(),
         canUseBackupPassword = data?.canUseBackupPassword ?: false
@@ -102,6 +103,7 @@ public fun WaitingAdminScaffold(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onBackupPasswordClicked: () -> Unit = {},
+    adminEmail: String? = null,
     username: String? = null,
     confirmationCode: List<Char>? = null,
     canUseBackupPassword: Boolean = true
@@ -130,16 +132,15 @@ public fun WaitingAdminScaffold(
                     style = ProtonTypography.Default.headline
                 )
 
-                if (username != null) {
-                    Text(
-                        modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-                        text = stringResource(
-                            id = R.string.auth_login_share_confirmation_code_with_admin_subtitle,
-                            username
-                        ),
-                        style = ProtonTypography.Default.defaultSmallWeak
-                    )
-                }
+                Text(
+                    modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+                    text = stringResource(
+                        id = R.string.auth_login_share_confirmation_code_with_admin_subtitle,
+                        adminEmail ?: "...",
+                        username ?: "..."
+                    ),
+                    style = ProtonTypography.Default.defaultSmallWeak
+                )
 
                 Spacer(Modifier.size(ProtonDimens.DefaultSpacing))
 
@@ -181,12 +182,26 @@ public fun WaitingAdminScaffold(
 @Preview(name = "Tablet", device = Devices.PIXEL_C)
 @Preview(name = "Horizontal", widthDp = 800, heightDp = 360)
 @Composable
-internal fun WaitingAdminScaffoldPreview() {
+internal fun WaitingAdminScreenPreview() {
     ProtonTheme {
-        WaitingAdminScaffold(
-            confirmationCode = listOf('6', '4', 'S', '3'),
-            username = "test@protonmail.com",
-            canUseBackupPassword = true
+        WaitingAdminScreen(
+            state = WaitingAdminState.DataLoaded(
+                confirmationCode = "64S3",
+                adminEmail = "admin@company.com",
+                username = "test@company.com",
+                canUseBackupPassword = true
+            )
+        )
+    }
+}
+
+@Preview(name = "Light mode")
+@Preview(name = "Dark mode", uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+internal fun WaitingAdminScreenLoadingPreview() {
+    ProtonTheme {
+        WaitingAdminScreen(
+            state = WaitingAdminState.Loading
         )
     }
 }

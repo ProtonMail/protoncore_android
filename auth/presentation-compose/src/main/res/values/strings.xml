@@ -35,7 +35,7 @@
     <string name="auth_login_approve_signin_another_device">Approve the sign-in from another device</string>
     <string name="auth_login_approve_signin_another_device_subtitle">To make sure it’s really you trying to sign in to your account, review the confirmation code and approve the request from another device.</string>
     <string name="auth_login_share_confirmation_code_with_admin">Share the confirmation code with your administrator</string>
-    <string name="auth_login_share_confirmation_code_with_admin_subtitle">To make sure it’s really you trying to sign-in, share the confirmation code with your administrator admin@privacybydefault.com so that they can approve the request for %s.</string>
+    <string name="auth_login_share_confirmation_code_with_admin_subtitle">To make sure it’s really you trying to sign-in, share the confirmation code with your administrator %1s so that they can approve the request for %2s.</string>
     <string name="auth_login_signin_requested">Sign-in requested on another device. Was it you?</string>
     <string name="auth_login_signin_requested_subtitle">Enter the confirmation code we sent on your other device for %1$s.</string>
     <string name="auth_login_signin_requested_note">If you didn\'t make this request, cancel it now.</string>

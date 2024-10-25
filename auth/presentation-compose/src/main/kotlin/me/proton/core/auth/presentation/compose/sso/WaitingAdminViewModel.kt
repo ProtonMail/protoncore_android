@@ -41,12 +41,14 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.displayNameNotNull
 import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.extension.hasTemporaryPassword
+import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import javax.inject.Inject
 
 @HiltViewModel
 public class WaitingAdminViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val generateConfirmationCode: GenerateConfirmationCode,
+    private val organizationRepository: OrganizationRepository,
     private val userManager: UserManager
 ) : ViewModel() {
 
@@ -68,13 +70,18 @@ public class WaitingAdminViewModel @Inject constructor(
         emit(Loading)
         val user = userManager.getUser(userId)
         val confirmationCode = generateConfirmationCode(userId)
-        emit(
-            WaitingAdminState.DataLoaded(
-                username = user.getEmail() ?: user.displayNameNotNull(),
-                confirmationCode = confirmationCode,
-                canUseBackupPassword = !user.hasTemporaryPassword()
-            )
+        var data = WaitingAdminState.DataLoaded(
+            adminEmail = null,
+            username = user.getEmail() ?: user.displayNameNotNull(),
+            confirmationCode = confirmationCode,
+            canUseBackupPassword = !user.hasTemporaryPassword()
         )
+        emit(data)
+        val signature = runCatching {
+            organizationRepository.getOrganizationSignature(userId)
+        }.getOrNull()
+        data = data.copy(adminEmail = signature?.fingerprintSignatureAddress)
+        emit(data)
     }.catch {
         emit(Error(it.message))
     }

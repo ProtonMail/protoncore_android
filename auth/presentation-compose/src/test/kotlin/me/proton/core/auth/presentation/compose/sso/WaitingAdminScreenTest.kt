@@ -26,6 +26,7 @@ class WaitingAdminScreenTest {
                 onErrorMessage = {},
                 state = WaitingAdminState.DataLoaded(
                     confirmationCode = "64S3",
+                    adminEmail = "admin@privacybydefault.com",
                     username = "test-username",
                     canUseBackupPassword = true
                 )

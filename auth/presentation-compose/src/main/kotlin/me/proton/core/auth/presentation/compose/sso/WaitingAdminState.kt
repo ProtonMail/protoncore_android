@@ -21,6 +21,7 @@ package me.proton.core.auth.presentation.compose.sso
 public sealed interface WaitingAdminState {
     public data object Loading : WaitingAdminState
     public data class DataLoaded(
+        val adminEmail: String?,
         val username: String,
         val confirmationCode: String,
         val canUseBackupPassword: Boolean
