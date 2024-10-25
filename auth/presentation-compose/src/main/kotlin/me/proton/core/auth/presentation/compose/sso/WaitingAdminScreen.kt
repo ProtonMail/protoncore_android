@@ -92,7 +92,8 @@ public fun WaitingAdminScreen(
         onCloseClicked = onCloseClicked,
         onBackupPasswordClicked = onBackupPasswordClicked,
         username = data?.username,
-        confirmationCode = data?.confirmationCode?.toCharArray()?.asList()
+        confirmationCode = data?.confirmationCode?.toCharArray()?.asList(),
+        canUseBackupPassword = data?.canUseBackupPassword ?: false
     )
 }
 
@@ -102,7 +103,8 @@ public fun WaitingAdminScaffold(
     onCloseClicked: () -> Unit = {},
     onBackupPasswordClicked: () -> Unit = {},
     username: String? = null,
-    confirmationCode: List<Char>? = null
+    confirmationCode: List<Char>? = null,
+    canUseBackupPassword: Boolean = true
 ) {
     Scaffold(
         modifier = modifier,
@@ -146,14 +148,16 @@ public fun WaitingAdminScaffold(
                     digits = confirmationCode
                 )
 
-                ProtonSolidButton(
-                    contained = false,
-                    onClick = onBackupPasswordClicked,
-                    modifier = Modifier
-                        .padding(top = ProtonDimens.MediumSpacing)
-                        .height(ProtonDimens.DefaultButtonMinHeight)
-                ) {
-                    Text(text = stringResource(R.string.auth_login_use_backup_password))
+                if (canUseBackupPassword) {
+                    ProtonSolidButton(
+                        contained = false,
+                        onClick = onBackupPasswordClicked,
+                        modifier = Modifier
+                            .padding(top = ProtonDimens.MediumSpacing)
+                            .height(ProtonDimens.DefaultButtonMinHeight)
+                    ) {
+                        Text(text = stringResource(R.string.auth_login_use_backup_password))
+                    }
                 }
 
                 ProtonTextButton(
@@ -181,7 +185,8 @@ internal fun WaitingAdminScaffoldPreview() {
     ProtonTheme {
         WaitingAdminScaffold(
             confirmationCode = listOf('6', '4', 'S', '3'),
-            username = "test@protonmail.com"
+            username = "test@protonmail.com",
+            canUseBackupPassword = true
         )
     }
 }

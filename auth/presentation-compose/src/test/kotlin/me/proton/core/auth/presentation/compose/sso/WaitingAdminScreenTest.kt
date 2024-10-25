@@ -27,6 +27,7 @@ class WaitingAdminScreenTest {
                 state = WaitingAdminState.DataLoaded(
                     confirmationCode = "64S3",
                     username = "test-username",
+                    canUseBackupPassword = true
                 )
             )
         }

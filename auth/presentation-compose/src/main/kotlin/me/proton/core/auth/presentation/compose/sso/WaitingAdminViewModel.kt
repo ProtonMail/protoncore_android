@@ -40,6 +40,7 @@ import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.displayNameNotNull
 import me.proton.core.user.domain.extension.getEmail
+import me.proton.core.user.domain.extension.hasTemporaryPassword
 import javax.inject.Inject
 
 @HiltViewModel
@@ -70,7 +71,8 @@ public class WaitingAdminViewModel @Inject constructor(
         emit(
             WaitingAdminState.DataLoaded(
                 username = user.getEmail() ?: user.displayNameNotNull(),
-                confirmationCode = confirmationCode
+                confirmationCode = confirmationCode,
+                canUseBackupPassword = !user.hasTemporaryPassword()
             )
         )
     }.catch {

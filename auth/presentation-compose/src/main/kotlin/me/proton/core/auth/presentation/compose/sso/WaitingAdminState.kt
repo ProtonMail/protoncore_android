@@ -22,7 +22,8 @@ public sealed interface WaitingAdminState {
     public data object Loading : WaitingAdminState
     public data class DataLoaded(
         val username: String,
-        val confirmationCode: String
+        val confirmationCode: String,
+        val canUseBackupPassword: Boolean
     ) : WaitingAdminState
 
     public data class Error(val message: String?) : WaitingAdminState
