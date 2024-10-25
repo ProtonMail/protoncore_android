@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.1.1] - 2024-10-25
+
+### Bug Fixes
+
+- auth: Don't show UseBackupPassword button if user hasTemporaryPassword.
+
 ## [29.1.0] - 2024-10-24
 
 ### Features
