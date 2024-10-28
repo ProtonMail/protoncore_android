@@ -143,9 +143,7 @@ internal fun AuthDeviceListItem(
                 }
                 if (lastActivityVisible) {
                     Text(
-                        text = device?.lastActivityReadable?.let {
-                            stringResource(R.string.auth_login_device_last_used, it)
-                        } ?: stringResource(R.string.auth_login_not_available),
+                        text = device?.lastActivityReadable ?: stringResource(R.string.auth_login_not_available),
                         style = ProtonTypography.Default.defaultSmallWeak
                     )
                 }
@@ -181,7 +179,7 @@ public fun AvailableDeviceListPreview() {
                     localizedClientName = "Proton Pass for Android",
                     platform = AuthDevicePlatform.Android,
                     lastActivityTime = 0,
-                    lastActivityReadable = "24 minutes"
+                    lastActivityReadable = "Last used 24 minutes ago"
                 ),
                 AuthDeviceData(
                     deviceId = AuthDeviceId("2"),
@@ -189,7 +187,7 @@ public fun AvailableDeviceListPreview() {
                     localizedClientName = "Proton Pass for Web",
                     platform = AuthDevicePlatform.Web,
                     lastActivityTime = 0,
-                    lastActivityReadable = "4 minutes"
+                    lastActivityReadable = "Last used 4 minutes ago"
                 )
             )
         )
@@ -209,7 +207,7 @@ public fun AvailableDeviceListItemPreview() {
                 localizedClientName = "Proton Pass for Android",
                 platform = AuthDevicePlatform.Android,
                 lastActivityTime = 0,
-                lastActivityReadable = "24 minutes"
+                lastActivityReadable = "Last used 24 minutes ago"
             )
         )
     }
@@ -228,7 +226,7 @@ public fun AvailableDeviceListItemWithTrailingPreview() {
                 localizedClientName = "Proton Pass for Android",
                 platform = AuthDevicePlatform.Android,
                 lastActivityTime = 0,
-                lastActivityReadable = "24 minutes"
+                lastActivityReadable = "Last used 24 minutes ago"
             ),
             trailing = { TrailingIcon(expanded = false) }
         )

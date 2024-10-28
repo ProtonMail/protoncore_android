@@ -18,11 +18,16 @@
 
 package me.proton.core.auth.presentation.compose.sso
 
+import android.content.Context
 import me.proton.core.auth.domain.entity.AuthDevice
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.AuthDevicePlatform
+import me.proton.core.auth.presentation.compose.R
 import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DurationFormat
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
@@ -36,21 +41,46 @@ public data class AuthDeviceData(
 )
 
 public fun AuthDevice.toData(
+    context: Context,
     clock: Clock,
-    durationFormat: DurationFormat
+    durationFormat: DurationFormat,
+    dateTimeFormat: DateTimeFormat
 ): AuthDeviceData {
     val now = clock.currentEpochSeconds()
     val delta = (now - lastActivityAtUtcSeconds).coerceAtLeast(60)
+    val duration = delta.toDuration(DurationUnit.SECONDS)
     return AuthDeviceData(
         deviceId = deviceId,
         name = name,
         localizedClientName = localizedClientName,
         lastActivityTime = lastActivityAtUtcSeconds,
-        lastActivityReadable = durationFormat.format(
-            duration = delta.toDuration(DurationUnit.SECONDS),
-            startUnit = DurationUnit.HOURS,
-            endUnit = DurationUnit.MINUTES
-        ),
+        lastActivityReadable = when {
+            duration > 24.hours -> dateTimeFormat.formatDate(context, lastActivityAtUtcSeconds)
+            else -> durationFormat.formatDuration(context, duration)
+        },
         platform = platform?.enum ?: AuthDevicePlatform.Android
     )
 }
+
+private fun DateTimeFormat.formatDate(
+    context: Context,
+    epochSeconds: Long
+): String = context.getString(
+    R.string.auth_login_device_last_used_on_date,
+    format(
+        epochSeconds = epochSeconds,
+        style = DateTimeFormat.DateTimeForm.MEDIUM_DATE
+    )
+)
+
+private fun DurationFormat.formatDuration(
+    context: Context,
+    duration: Duration
+): String = context.getString(
+    R.string.auth_login_device_last_used_duration_ago,
+    format(
+        duration = duration,
+        startUnit = DurationUnit.HOURS,
+        endUnit = DurationUnit.MINUTES
+    )
+)

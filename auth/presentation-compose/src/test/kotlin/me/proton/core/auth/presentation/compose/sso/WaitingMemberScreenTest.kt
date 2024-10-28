@@ -35,7 +35,7 @@ class WaitingMemberScreenTest {
                             name = "Device Name",
                             localizedClientName = "Chrome",
                             lastActivityTime = 242344233124,
-                            lastActivityReadable = "7 hours ago",
+                            lastActivityReadable = "Last used 7 hours ago",
                             platform = AuthDevicePlatform.Web
                         )
                     )

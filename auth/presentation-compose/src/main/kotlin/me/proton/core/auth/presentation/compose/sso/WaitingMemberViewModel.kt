@@ -18,10 +18,12 @@
 
 package me.proton.core.auth.presentation.compose.sso
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,6 +44,7 @@ import me.proton.core.auth.presentation.compose.sso.WaitingMemberState.Error
 import me.proton.core.auth.presentation.compose.sso.WaitingMemberState.Loading
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DurationFormat
 import me.proton.core.util.android.datetime.UtcClock
 import javax.inject.Inject
@@ -52,6 +55,8 @@ public class WaitingMemberViewModel @Inject constructor(
     private val authDeviceRepository: AuthDeviceRepository,
     private val generateConfirmationCode: GenerateConfirmationCode,
     private val durationFormat: DurationFormat,
+    private val dateTimeFormat: DateTimeFormat,
+    @ApplicationContext private val context: Context,
     @UtcClock private val clock: Clock
 ) : ViewModel() {
 
@@ -81,7 +86,7 @@ public class WaitingMemberViewModel @Inject constructor(
         val confirmationCode = generateConfirmationCode.invoke(userId)
         val devices = authDeviceRepository.getByUserId(userId, refresh = true)
         val availableDevices = devices.filter { it.isActive() }
-        val uiModels = availableDevices.map { it.toData(clock, durationFormat) }
+        val uiModels = availableDevices.map { it.toData(context, clock, durationFormat, dateTimeFormat) }
         emit(DataLoaded(confirmationCode, uiModels))
         reload()
     }.catch {

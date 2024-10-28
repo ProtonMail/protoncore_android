@@ -18,10 +18,12 @@
 
 package me.proton.core.auth.presentation.compose.sso
 
+import android.content.Context
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -60,6 +62,7 @@ import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.util.android.datetime.Clock
+import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DurationFormat
 import me.proton.core.util.android.datetime.UtcClock
 import javax.inject.Inject
@@ -74,6 +77,8 @@ public class MemberApprovalViewModel @Inject constructor(
     private val userManager: UserManager,
     private val validateCode: ValidateConfirmationCode,
     private val durationFormat: DurationFormat,
+    private val dateTimeFormat: DateTimeFormat,
+    @ApplicationContext private val context: Context,
     @UtcClock private val clock: Clock
 ) : ViewModel() {
 
@@ -104,7 +109,7 @@ public class MemberApprovalViewModel @Inject constructor(
         if (!background) {
             emit(Loading(state.value.data.copy(email = email)))
         }
-        val devices = getPendingDevices().map { it.toData(clock, durationFormat) }
+        val devices = getPendingDevices().map { it.toData(context, clock, durationFormat, dateTimeFormat) }
         when {
             devices.isEmpty() -> emit(Closed)
             else -> emit(Idle(state.value.data.copy(email = email, pendingDevices = devices)))
