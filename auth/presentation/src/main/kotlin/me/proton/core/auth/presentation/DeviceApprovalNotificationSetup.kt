@@ -18,7 +18,6 @@
 
 package me.proton.core.auth.presentation
 
-import me.proton.core.auth.domain.usecase.IsSsoEnabled
 import me.proton.core.auth.presentation.ui.DeviceApprovalActivity
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.presentation.NotificationDeeplink
@@ -26,12 +25,9 @@ import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import javax.inject.Inject
 
 class DeviceApprovalNotificationSetup @Inject constructor(
-    private val isSsoEnabled: IsSsoEnabled,
     private val deeplinkManager: DeeplinkManager
 ) {
     operator fun invoke() {
-        if (!isSsoEnabled()) return
-
         deeplinkManager.register(deeplink) { link ->
             val userId = UserId(link.args[0])
             DeviceApprovalActivity.start(requireNotNull(link.context), userId = userId, memberUserId = null)
