@@ -11,6 +11,17 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.1.2] - 2024-10-29
+
+### Bug Fixes
+
+- auth:
+  - Don't navigate to RequestAdminHelp screen if device already PendingAdminActivation.
+  - AuthDeviceListItem display Date if Duration > 24 hours.
+  - Display AdminEmail on WaitingAdmin screen.
+- notification:
+  - Don't check for FeatureFlag to handle Notification Deeplink.
+
 ## [29.1.1] - 2024-10-25
 
 ### Bug Fixes
