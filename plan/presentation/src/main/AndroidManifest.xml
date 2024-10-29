@@ -24,7 +24,6 @@
             android:name=".ui.UnredeemedPurchaseActivity"
             android:theme="@style/ProtonTheme.Transparent" />
 
-        <activity android:name=".ui.UpgradeActivity" />
         <activity android:name=".ui.DynamicSelectPlanActivity" />
         <activity android:name=".ui.DynamicUpgradePlanActivity" />
 

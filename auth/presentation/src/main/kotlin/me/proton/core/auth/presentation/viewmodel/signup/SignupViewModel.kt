@@ -59,7 +59,6 @@ import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
@@ -86,7 +85,6 @@ internal class SignupViewModel @Inject constructor(
     private val challengeConfig: SignupChallengeConfig,
     override val observabilityManager: ObservabilityManager,
     private val canUpgradeToPaid: CanUpgradeToPaid,
-    private val isDynamicPlanEnabled: IsDynamicPlanEnabled,
     override val telemetryManager: TelemetryManager,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel(), ObservabilityContext, ProductMetricsDelegateAuth, TelemetryContext {
@@ -125,10 +123,7 @@ internal class SignupViewModel @Inject constructor(
         object PreloadingPlans : State()
 
         @Parcelize
-        data class CreateUserInputReady(
-            val paidOptionAvailable: Boolean,
-            val isDynamicPlanEnabled: Boolean
-        ) : State()
+        data class CreateUserInputReady(val paidOptionAvailable: Boolean) : State()
 
         @Parcelize
         object CreateUserProcessing : State()
@@ -175,12 +170,7 @@ internal class SignupViewModel @Inject constructor(
         emit(State.PreloadingPlans)
         _recoveryMethod = recoveryMethod
         setExternalRecoveryEmail(recoveryMethod)
-        emit(
-            State.CreateUserInputReady(
-                paidOptionAvailable = canUpgradeToPaid(),
-                isDynamicPlanEnabled = isDynamicPlanEnabled(userId = null)
-            )
-        )
+        emit(State.CreateUserInputReady(paidOptionAvailable = canUpgradeToPaid()))
     }.catch {
         emit(State.Error.Message(it.message))
     }.onEach {

@@ -57,7 +57,6 @@ import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.plan.domain.IsDynamicPlanEnabled
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
 import me.proton.core.plan.presentation.PlansOrchestrator
@@ -129,9 +128,6 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
 
     @MockK(relaxed = true)
     private lateinit var srpCrypto: SrpCrypto
-
-    @MockK(relaxed = true)
-    private lateinit var isDynamicPlanEnabled: IsDynamicPlanEnabled
 
     @MockK(relaxed = true)
     private lateinit var getPrimaryUser: GetPrimaryUser
@@ -228,7 +224,6 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
             signupChallengeConfig,
             observabilityManager,
             canUpgradeToPaid,
-            isDynamicPlanEnabled,
             telemetryManager,
             mockk(relaxed = true)
         )

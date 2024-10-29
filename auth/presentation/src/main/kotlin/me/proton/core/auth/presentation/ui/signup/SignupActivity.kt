@@ -54,7 +54,6 @@ import me.proton.core.observability.domain.metrics.SignupUnlockUserTotalV1
 import me.proton.core.observability.domain.metrics.SignupUserCheckTotalV1
 import me.proton.core.payment.domain.entity.ProtonPaymentToken
 import me.proton.core.payment.presentation.entity.BillingResult
-import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_BILLING_DETAILS
 import me.proton.core.plan.presentation.ui.BasePlansFragment.Companion.BUNDLE_KEY_PLAN
@@ -138,8 +137,7 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     is SignupViewModel.State.Idle -> Unit
                     is SignupViewModel.State.PreloadingPlans -> Unit
                     is SignupViewModel.State.CreateUserInputReady -> onCreateUserInputReady(
-                        paidOptionAvailable = it.paidOptionAvailable,
-                        isDynamicPlanEnabled = it.isDynamicPlanEnabled
+                        paidOptionAvailable = it.paidOptionAvailable
                     )
                     is SignupViewModel.State.CreateUserProcessing -> onCreateUserProcessing()
                     is SignupViewModel.State.CreateUserSuccess -> onCreateUserSuccess(it)
@@ -201,9 +199,9 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         }.exhaustive
     }
 
-    private fun onCreateUserInputReady(paidOptionAvailable: Boolean, isDynamicPlanEnabled: Boolean) {
+    private fun onCreateUserInputReady(paidOptionAvailable: Boolean) {
         if (paidOptionAvailable && !supportFragmentManager.hasPlanSignupFragment()) {
-            supportFragmentManager.showPlansSignup(planInput = PlanInput(), isDynamicPlanEnabled = isDynamicPlanEnabled)
+            supportFragmentManager.showPlansSignup()
         } else if (!paidOptionAvailable) {
             val selectedPlan = SelectedPlan.free(resources)
             signUpViewModel.subscriptionDetails = SubscriptionDetails(

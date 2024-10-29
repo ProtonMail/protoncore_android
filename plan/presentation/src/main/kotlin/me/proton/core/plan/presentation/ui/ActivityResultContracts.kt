@@ -26,27 +26,15 @@ import me.proton.core.plan.presentation.entity.PlanInput
 import me.proton.core.plan.presentation.entity.UnredeemedPurchaseResult
 import me.proton.core.plan.presentation.entity.UpgradeResult
 
-object StartStaticUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?>() {
-    override fun createIntent(context: Context, input: PlanInput): Intent =
-        Intent(context, UpgradeActivity::class.java).apply {
-            putExtra(UpgradeActivity.ARG_INPUT, input)
-        }
-
-    override fun parseResult(resultCode: Int, intent: Intent?): UpgradeResult? {
-        if (resultCode != Activity.RESULT_OK) return null
-        return intent?.getParcelableExtra(UpgradeActivity.ARG_RESULT)
-    }
-}
-
 object StartDynamicUpgradePlan : ActivityResultContract<PlanInput, UpgradeResult?>() {
     override fun createIntent(context: Context, input: PlanInput): Intent =
         Intent(context, DynamicUpgradePlanActivity::class.java).apply {
-            putExtra(UpgradeActivity.ARG_INPUT, input)
+            putExtra(DynamicUpgradePlanActivity.ARG_INPUT, input)
         }
 
     override fun parseResult(resultCode: Int, intent: Intent?): UpgradeResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return intent?.getParcelableExtra(UpgradeActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(DynamicUpgradePlanActivity.ARG_RESULT)
     }
 }
 

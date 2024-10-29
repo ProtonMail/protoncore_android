@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <public name="core_feature_dynamic_plan_enabled" type="bool" />
     <public name="core_feature_dynamic_plan_adjusted_prices_enabled" type="bool" />
     <public name="core_feature_storage_split_enabled" type="bool" />
 </resources>
