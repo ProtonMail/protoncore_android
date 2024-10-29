@@ -33,7 +33,6 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.dynamicSubscription
 import me.proton.core.plan.domain.entity.dynamicSubscriptionPaid
@@ -51,9 +50,6 @@ import kotlin.test.assertFailsWith
 
 class GetDynamicSubscriptionAdjustedPricesTest {
     // region mocks
-    @MockK
-    private lateinit var isDynamicPlanAdjustedPriceEnabled: IsDynamicPlanAdjustedPriceEnabled
-
     @MockK
     private lateinit var storePrices: GetStorePrice
 
@@ -73,6 +69,7 @@ class GetDynamicSubscriptionAdjustedPricesTest {
 
     private lateinit var useCase: GetDynamicSubscriptionAdjustedPrices
     private lateinit var optionalStorePrices: Optional<GetStorePrice>
+
     @Before
     fun beforeEveryTest() {
         MockKAnnotations.init(this)
@@ -80,29 +77,13 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         useCase = GetDynamicSubscriptionAdjustedPrices(
             repository,
             AppStore.GooglePlay,
-            optionalStorePrices,
-            isDynamicPlanAdjustedPriceEnabled
+            optionalStorePrices
         )
-    }
-
-    @Test
-    fun `get subscription returns success store prices disabled, enqueue getsubscription observability success`() = runTest {
-        // GIVEN
-        coEvery { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns false
-        coEvery { storePrices.invoke(any()) } returns null
-        coEvery { repository.getDynamicSubscriptions(testUserId) } returns testSubscriptions
-        // WHEN
-        val result = useCase.invoke(testUserId)
-        // THEN
-        assertEquals(testSubscription, result)
-        assertNotNull(result)
-        assertEquals(0L, result.amount)
     }
 
     @Test
     fun `get subscription returns success dyn plans prices disabled`() = runTest {
         // GIVEN
-        coEvery { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns true
         coEvery { optionalStorePrices.isPresent } returns false
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testSubscriptions
         // WHEN
@@ -116,7 +97,6 @@ class GetDynamicSubscriptionAdjustedPricesTest {
     @Test
     fun `get subscription returns success all enabled`() = runTest {
         // GIVEN
-        coEvery { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns true
         coEvery { optionalStorePrices.isPresent } returns true
         every { optionalStorePrices.get() } returns storePrices
         coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns ProductPrice(
@@ -142,7 +122,6 @@ class GetDynamicSubscriptionAdjustedPricesTest {
     @Test
     fun `get subscription returns success all enabled but plan not found`() = runTest {
         // GIVEN
-        coEvery { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns true
         coEvery { optionalStorePrices.isPresent } returns true
         every { optionalStorePrices.get() } returns storePrices
         coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns ProductPrice(
@@ -168,7 +147,6 @@ class GetDynamicSubscriptionAdjustedPricesTest {
     @Test
     fun `get subscription returns proton managed subscription`() = runTest {
         // GIVEN
-        coEvery { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns true
         coEvery { optionalStorePrices.isPresent } returns true
         every { optionalStorePrices.get() } returns storePrices
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testPaidSubscriptionsProtonManaged

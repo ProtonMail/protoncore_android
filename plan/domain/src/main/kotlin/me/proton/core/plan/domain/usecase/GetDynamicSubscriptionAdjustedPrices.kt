@@ -22,7 +22,6 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.GetStorePrice
-import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
@@ -38,14 +37,12 @@ import javax.inject.Inject
 class GetDynamicSubscriptionAdjustedPrices @Inject constructor(
     private val plansRepository: PlansRepository,
     private val appStore: AppStore,
-    private val getStorePrice: Optional<GetStorePrice>,
-    private val isDynamicPlanAdjustedPriceEnabled: IsDynamicPlanAdjustedPriceEnabled
+    private val getStorePrice: Optional<GetStorePrice>
 ) {
     suspend operator fun invoke(userId: UserId): DynamicSubscription {
         val dynamicSubscription = plansRepository.getDynamicSubscriptions(userId).first()
         if (dynamicSubscription.external == SubscriptionManagement.PROTON_MANAGED) return dynamicSubscription
         if (dynamicSubscription.cycleMonths == null) return dynamicSubscription
-        if (!isDynamicPlanAdjustedPriceEnabled(userId)) return dynamicSubscription
         if (!getStorePrice.isPresent) return dynamicSubscription
 
         // we pass null for userId in the getDynamicPlans because API will omit the paid plans for a paid user

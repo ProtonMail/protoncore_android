@@ -20,16 +20,14 @@ package me.proton.core.plan.domain.usecase
 
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
-import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.test.runTest
 import me.proton.core.domain.entity.AppStore
-import me.proton.core.payment.domain.entity.ProductPrice
 import me.proton.core.payment.domain.entity.ProductId
+import me.proton.core.payment.domain.entity.ProductPrice
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.freePlan
 import me.proton.core.plan.domain.entity.unlimitedPlan
@@ -50,9 +48,6 @@ class GetDynamicPlansAdjustedPricesTest {
     @MockK
     private lateinit var storePrices: GetStorePrice
 
-    @MockK
-    private lateinit var isDynamicPlanAdjustedPriceEnabled: IsDynamicPlanAdjustedPriceEnabled
-
     private lateinit var tested: GetDynamicPlansAdjustedPrices
 
     @BeforeTest
@@ -62,11 +57,8 @@ class GetDynamicPlansAdjustedPricesTest {
             plansRepository,
             AppStore.GooglePlay,
             getAvailablePaymentProviders,
-            Optional.of(storePrices),
-            isDynamicPlanAdjustedPriceEnabled
+            Optional.of(storePrices)
         )
-
-        every { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns true
     }
 
     @Test
@@ -165,8 +157,7 @@ class GetDynamicPlansAdjustedPricesTest {
             plansRepository,
             AppStore.GooglePlay,
             getAvailablePaymentProviders,
-            Optional.empty(),
-            isDynamicPlanAdjustedPriceEnabled
+            Optional.empty()
         )
 
         coEvery { plansRepository.getDynamicPlans(any(), any()) } returns DynamicPlans(
@@ -215,38 +206,6 @@ class GetDynamicPlansAdjustedPricesTest {
             formattedPriceAndCurrency = "CHF 100"
         )
         coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns null
-
-        // WHEN
-        val plans = tested(userId = null).plans
-
-        // THEN
-        assertEquals(2, plans.size)
-        assertEquals(freePlan, plans[0])
-        val paidPlan = plans[1]
-        val paidPlanInstance = paidPlan.instances[1]
-        assertEquals(499, paidPlanInstance?.price?.get("CHF")?.current)
-    }
-
-    @Test
-    fun `dynamic plans adjusted prices feature flag off`() = runTest {
-        // GIVEN
-        every { isDynamicPlanAdjustedPriceEnabled.invoke(any()) } returns false
-
-        coEvery { plansRepository.getDynamicPlans(any(), any()) } returns DynamicPlans(
-            defaultCycle = null,
-            plans = listOf(
-                freePlan,
-                unlimitedPlan,
-            )
-        )
-
-        coEvery { getAvailablePaymentProviders.invoke(any()) } returns PaymentProvider.values().toSet()
-        coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns ProductPrice(
-            provider = PaymentProvider.GoogleInAppPurchase,
-            priceAmountMicros = 1000000,
-            currency = "CHF",
-            formattedPriceAndCurrency = "CHF 100"
-        )
 
         // WHEN
         val plans = tested(userId = null).plans

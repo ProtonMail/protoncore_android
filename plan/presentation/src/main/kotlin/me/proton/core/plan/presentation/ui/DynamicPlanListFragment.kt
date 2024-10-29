@@ -28,9 +28,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.payment.presentation.view.ProtonPaymentEventListener
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
-import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.firstSubtitleOrNull
@@ -38,6 +38,7 @@ import me.proton.core.plan.domain.entity.firstTitleOrNull
 import me.proton.core.plan.domain.entity.isFree
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanListBinding
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.getSelectedPlan
 import me.proton.core.plan.presentation.view.DynamicPlanCardView
@@ -46,21 +47,16 @@ import me.proton.core.plan.presentation.view.toView
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanListViewModel.State
-import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
-import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.viewBinding
 import java.util.Objects
-import javax.inject.Inject
 import kotlin.math.abs
 
 @Suppress("TooManyFunctions")
 @AndroidEntryPoint
 class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_list) {
-    @Inject
-    internal lateinit var isDynamicPlanAdjustedPriceEnabled: IsDynamicPlanAdjustedPriceEnabled
 
     private val binding by viewBinding(FragmentDynamicPlanListBinding::bind)
     private val viewModel by viewModels<DynamicPlanListViewModel>()
@@ -167,19 +163,16 @@ class DynamicPlanListFragment : ProtonFragment(R.layout.fragment_dynamic_plan_li
         plan.entitlements.forEach { entitlements.addView(it.toView(context)) }
         contentButtonIsVisible = true
         contentButtonText = String.format(context.getString(R.string.plans_get_proton), plan.title)
+        contentButtonIsVisible = plan.isFree()
 
-        if (isDynamicPlanAdjustedPriceEnabled(userId)) {
-            contentButtonIsVisible = plan.isFree()
-
-            val paymentButton = inflatePaymentButton(id = Objects.hash(plan.name, currency, cycle))
-            paymentButton.isVisible = !plan.isFree()
-            paymentButton.currency = currency
-            paymentButton.cycle = cycle
-            paymentButton.plan = plan
-            paymentButton.paymentProvider = null // determined automatically
-            paymentButton.userId = userId
-            paymentButton.setOnEventListener(this@DynamicPlanListFragment::onProtonPaymentEvent)
-        }
+        val paymentButton = inflatePaymentButton(id = Objects.hash(plan.name, currency, cycle))
+        paymentButton.isVisible = !plan.isFree()
+        paymentButton.currency = currency
+        paymentButton.cycle = cycle
+        paymentButton.plan = plan
+        paymentButton.paymentProvider = null // determined automatically
+        paymentButton.userId = userId
+        paymentButton.setOnEventListener(this@DynamicPlanListFragment::onProtonPaymentEvent)
     }
 
     private fun onProtonPaymentEvent(event: ProtonPaymentEvent) {

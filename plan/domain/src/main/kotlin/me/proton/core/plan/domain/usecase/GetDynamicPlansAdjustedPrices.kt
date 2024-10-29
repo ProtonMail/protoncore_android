@@ -24,7 +24,6 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.plan.domain.IsDynamicPlanAdjustedPriceEnabled
 import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.entity.DynamicPlanPrice
 import me.proton.core.plan.domain.entity.DynamicPlans
@@ -37,12 +36,10 @@ class GetDynamicPlansAdjustedPrices @Inject constructor(
     private val plansRepository: PlansRepository,
     private val appStore: AppStore,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
-    private val getStorePrice: Optional<GetStorePrice>,
-    private val isDynamicPlanAdjustedPriceEnabled: IsDynamicPlanAdjustedPriceEnabled
+    private val getStorePrice: Optional<GetStorePrice>
 ) {
     suspend operator fun invoke(userId: UserId?): DynamicPlans {
         val dynamicPlans = plansRepository.getDynamicPlans(userId, appStore)
-        if (!isDynamicPlanAdjustedPriceEnabled(userId)) return dynamicPlans
         if (!getStorePrice.isPresent) return dynamicPlans
         if (!getAvailablePaymentProviders(userId).contains(PaymentProvider.GoogleInAppPurchase)) return dynamicPlans
 
