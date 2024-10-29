@@ -25,4 +25,12 @@ public sealed interface BackupPasswordInputAction : BackupPasswordInputOperation
         val backupPassword: String,
         val unused: Long = System.currentTimeMillis()
     ) : BackupPasswordInputAction
+
+    public data class RequestAdminHelp(
+        val unused: Long = System.currentTimeMillis()
+    ) : BackupPasswordInputAction
+
+    public data class SetNavigationDone(
+        val unused: Long = System.currentTimeMillis()
+    ) : BackupPasswordInputAction
 }

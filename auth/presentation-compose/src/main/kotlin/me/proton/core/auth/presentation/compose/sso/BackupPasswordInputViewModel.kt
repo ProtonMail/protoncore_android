@@ -36,15 +36,26 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.LogTag
+import me.proton.core.auth.domain.entity.AuthDeviceState
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
+import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.R
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputAction.RequestAdminHelp
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputAction.SetNavigationDone
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputAction.Submit
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Close
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Error
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.FormError
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Idle
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Loading
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.NavigateToRequestAdminHelp
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.NavigateToRoot
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Success
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.user.domain.UserManager
@@ -60,6 +71,8 @@ public class BackupPasswordInputViewModel @Inject constructor(
     private val activateAuthDevice: ActivateAuthDevice,
     private val userManager: UserManager,
     private val passphraseRepository: PassphraseRepository,
+    private val deviceSecretRepository: DeviceSecretRepository,
+    private val authDeviceRepository: AuthDeviceRepository,
 ) : ViewModel() {
 
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
@@ -68,26 +81,32 @@ public class BackupPasswordInputViewModel @Inject constructor(
 
     public val state: StateFlow<BackupPasswordInputState> = mutableAction.flatMapLatest { action ->
         when (action) {
-            is BackupPasswordInputAction.Submit -> onBackupPassword(action.backupPassword)
-            null -> flowOf(BackupPasswordInputState.Idle)
+            null -> flowOf(Idle)
+            is Submit -> onBackupPassword(action.backupPassword)
+            is RequestAdminHelp -> onRequestAdminHelp()
+            is SetNavigationDone -> onSetNavigationDone()
         }
-    }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), BackupPasswordInputState.Idle)
+    }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Idle)
 
     public fun submit(action: BackupPasswordInputAction): Job = viewModelScope.launch {
         mutableAction.emit(action)
     }
 
+    private fun onSetNavigationDone(): Flow<BackupPasswordInputState> = flow {
+        emit(Idle)
+    }
+
     private fun onBackupPassword(backupPassword: String): Flow<BackupPasswordInputState> = flow {
-        emit(BackupPasswordInputState.Loading)
+        emit(Loading)
         val isValid = InputValidationResult(backupPassword, ValidationType.Password).isValid
         when {
-            !isValid -> emit(BackupPasswordInputState.FormError(R.string.backup_password_input_password_empty))
+            !isValid -> emit(FormError(R.string.backup_password_input_password_empty))
             else -> emitAll(onUnlockUser(backupPassword))
         }
     }
 
     private fun onUnlockUser(backupPassword: String): Flow<BackupPasswordInputState> = flow {
-        emit(BackupPasswordInputState.Loading)
+        emit(Loading)
         backupPassword.toByteArray().use { password ->
             when (userManager.unlockWithPassword(userId, password)) {
                 UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> error(context.getString(R.string.backup_password_no_key_salts))
@@ -97,18 +116,28 @@ public class BackupPasswordInputViewModel @Inject constructor(
             }
         }
     }.catchWhen(Throwable::isActionNotAllowed) {
-        emit(BackupPasswordInputState.Close(it.message))
+        emit(Close(it.message))
     }.catchAll(LogTag.UNLOCK_USER) {
-        emit(BackupPasswordInputState.Error(it.message))
+        emit(Error(it.message))
     }
 
     private fun onActivateDevice(): Flow<BackupPasswordInputState> = flow {
-        emit(BackupPasswordInputState.Loading)
+        emit(Loading)
         // unlockWithPassword set the passphrase.
         val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
         activateAuthDevice.invoke(userId, passphrase)
-        emit(BackupPasswordInputState.Success)
+        emit(Success)
     }.catchAll(LogTag.ACTIVATE_DEVICE) {
-        emit(BackupPasswordInputState.Error(it.message))
+        emit(Error(it.message))
+    }
+
+    private fun onRequestAdminHelp(): Flow<BackupPasswordInputState> = flow {
+        emit(Loading)
+        val deviceId = deviceSecretRepository.getByUserId(userId)?.deviceId
+        val state = deviceId?.let { authDeviceRepository.getByDeviceId(userId, it)?.state }
+        when {
+            state == AuthDeviceState.PendingAdminActivation -> emit(NavigateToRoot)
+            else -> emit(NavigateToRequestAdminHelp)
+        }
     }
 }

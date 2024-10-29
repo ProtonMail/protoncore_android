@@ -23,6 +23,8 @@ import androidx.annotation.StringRes
 public sealed interface BackupPasswordInputState {
     public data object Idle : BackupPasswordInputState
     public data object Loading : BackupPasswordInputState
+    public data object NavigateToRoot : BackupPasswordInputState
+    public data object NavigateToRequestAdminHelp : BackupPasswordInputState
     public data class Close(val message: String?) : BackupPasswordInputState
     public data class Error(val message: String?) : BackupPasswordInputState
     public data class FormError(@StringRes val message: Int) : BackupPasswordInputState

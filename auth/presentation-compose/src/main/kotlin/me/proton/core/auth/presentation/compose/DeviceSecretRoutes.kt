@@ -106,7 +106,8 @@ public object DeviceSecretRoutes {
             ),
         ) {
             BackupPasswordInputScreen(
-                onRequestAdminHelpClicked = {
+                onNavigateToRoot = { navController.popBackStack() },
+                onNavigateToRequestAdminHelp = {
                     navController.popBackStack()
                     navController.navigate(Route.RequestAdminHelp.get(userId))
                 },

@@ -42,6 +42,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.auth.presentation.compose.R
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputAction.SetNavigationDone
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputAction.RequestAdminHelp
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputAction.Submit
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.FormError
 import me.proton.core.compose.component.ProtonPasswordOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
@@ -54,7 +57,8 @@ import me.proton.core.compose.theme.ProtonTheme
 
 @Composable
 public fun BackupPasswordInputScreen(
-    onRequestAdminHelpClicked: () -> Unit,
+    onNavigateToRoot: () -> Unit,
+    onNavigateToRequestAdminHelp: () -> Unit,
     onCloseClicked: () -> Unit,
     onCloseMessage: (String?) -> Unit,
     onErrorMessage: (String?) -> Unit,
@@ -66,10 +70,18 @@ public fun BackupPasswordInputScreen(
     BackupPasswordInputScreen(
         state = state,
         modifier = modifier,
-        onAskAdminForHelp = onRequestAdminHelpClicked,
+        onNavigateToRoot = {
+            onNavigateToRoot()
+            viewModel.submit(SetNavigationDone())
+        },
+        onNavigateToRequestAdminHelp = {
+            onNavigateToRequestAdminHelp()
+            viewModel.submit(SetNavigationDone())
+        },
         onCloseClicked = onCloseClicked,
         onCloseMessage = onCloseMessage,
         onErrorMessage = onErrorMessage,
+        onAdminHelpClicked = { viewModel.submit(it) },
         onPasswordSubmitted = { viewModel.submit(it) },
         onSuccess = onSuccess,
     )
@@ -78,16 +90,20 @@ public fun BackupPasswordInputScreen(
 @Composable
 public fun BackupPasswordInputScreen(
     modifier: Modifier = Modifier,
-    onAskAdminForHelp: () -> Unit = {},
+    onNavigateToRoot: () -> Unit = {},
+    onNavigateToRequestAdminHelp: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
     onCloseMessage: (String?) -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
-    onPasswordSubmitted: (BackupPasswordInputAction.Submit) -> Unit = {},
+    onAdminHelpClicked: (RequestAdminHelp) -> Unit = {},
+    onPasswordSubmitted: (Submit) -> Unit = {},
     onSuccess: () -> Unit = {},
     state: BackupPasswordInputState = BackupPasswordInputState.Idle,
 ) {
     LaunchedEffect(state) {
         when (state) {
+            is BackupPasswordInputState.NavigateToRoot -> onNavigateToRoot()
+            is BackupPasswordInputState.NavigateToRequestAdminHelp -> onNavigateToRequestAdminHelp()
             is BackupPasswordInputState.Error -> onErrorMessage(state.message)
             is BackupPasswordInputState.Close -> onCloseMessage(state.message)
             is BackupPasswordInputState.Success -> onSuccess()
@@ -148,7 +164,7 @@ public fun BackupPasswordInputScreen(
                     modifier = Modifier
                         .padding(top = ProtonDimens.MediumSpacing)
                         .height(ProtonDimens.DefaultButtonMinHeight),
-                    onClick = { onPasswordSubmitted(BackupPasswordInputAction.Submit(password)) }
+                    onClick = { onPasswordSubmitted(Submit(password)) }
                 ) {
                     Text(
                         text = stringResource(id = R.string.backup_password_input_action_continue)
@@ -160,7 +176,7 @@ public fun BackupPasswordInputScreen(
                     modifier = Modifier
                         .padding(top = ProtonDimens.SmallSpacing)
                         .height(ProtonDimens.DefaultButtonMinHeight),
-                    onClick = onAskAdminForHelp
+                    onClick = { onAdminHelpClicked(RequestAdminHelp()) }
                 ) {
                     Text(
                         text = stringResource(id = R.string.backup_password_input_action_help)

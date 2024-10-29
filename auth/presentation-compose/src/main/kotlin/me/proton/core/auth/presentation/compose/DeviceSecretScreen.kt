@@ -154,7 +154,8 @@ public fun DeviceSecretScreen(
             onCloseMessage = onCloseMessage,
             onErrorMessage = onErrorMessage,
             onSuccess = { Unit },
-            onRequestAdminHelpClicked = onNavigateToRequestAdminHelp
+            onNavigateToRoot = { Unit },
+            onNavigateToRequestAdminHelp = onNavigateToRequestAdminHelp
         )
 
         is InvalidSecret.NoDevice.WaitingAdmin -> WaitingAdminScreen(
