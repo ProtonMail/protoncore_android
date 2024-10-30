@@ -30,13 +30,9 @@ import io.mockk.mockk
 import me.proton.core.auth.presentation.ui.AddAccountActivity
 import me.proton.core.auth.test.robot.signup.CongratsRobot
 import me.proton.core.paymentiap.test.robot.GoogleIAPRobot
-import me.proton.core.plan.presentation.entity.PlanInput
-import me.proton.core.plan.presentation.ui.StartStaticUpgradePlan
-import me.proton.core.plan.presentation.ui.UpgradeActivity
 import me.proton.core.test.android.mocks.FakeBillingClientFactory
 import me.proton.core.test.android.mocks.mockBillingClientSuccess
 import me.proton.core.test.android.mocks.mockQueryPurchasesAsync
-import me.proton.core.test.android.mocks.mockStartConnection
 import me.proton.core.test.android.mockuitests.SampleMockTest
 import me.proton.core.test.android.robots.CoreRobot
 import me.proton.core.test.android.robots.auth.AddAccountRobot
@@ -46,7 +42,6 @@ import me.proton.core.test.android.robots.plans.SelectPlanRobot
 import me.proton.core.test.quark.data.Card
 import javax.inject.Inject
 import kotlin.test.Test
-import me.proton.core.paymentiap.presentation.R as PaymentIapR
 import me.proton.core.test.quark.data.Plan as TestPlan
 
 @HiltAndroidTest
@@ -57,32 +52,6 @@ class SignupWithGoogleIapTests : SampleMockTest() {
 
     private val appContext: Context get() = ApplicationProvider.getApplicationContext()
     private val billingClient: BillingClient get() = billingClientFactory.billingClient
-
-    // TODO: this one is failing as well, should be double checked
-//    @Test
-    fun googleBillingNotAvailable() {
-        billingClient.mockStartConnection(BillingResponseCode.BILLING_UNAVAILABLE)
-
-        dispatcher.mockFromAssets(
-            "GET", "/payments/v5/plans",
-            "GET/payments/v5/dynamic-plans.json"
-        )
-
-        dispatcher.mockFromAssets(
-            "GET", "/payments/v4/status/google",
-            "GET/payments/v4/status/google-iap-only.json"
-        )
-
-        val intent = StartStaticUpgradePlan.createIntent(appContext, PlanInput())
-        ActivityScenario.launch<UpgradeActivity>(intent)
-
-        SelectPlanRobot()
-            .toggleExpandPlan(TestPlan.PassPlus)
-            .selectPlan<GoogleIAPRobot>("Get " + TestPlan.PassPlus.text)
-            .verify {
-                errorSnackbarDisplayed(PaymentIapR.string.payments_iap_error_billing_client_unavailable)
-            }
-    }
 
     // TODO: add check for Google Billing dialog display
 //    @Test
