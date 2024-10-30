@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">登录</string>
   <string name="auth_sign_in_sso">登录到您的组织</string>
   <string name="auth_sign_in_with_password">使用密码登录</string>
-  <string name="auth_continue_to_proton_vpn">以使用 Proton VPN</string>
+  <string name="auth_continue_to_proton">以使用 Proton</string>
   <string name="auth_sign_in_with_sso">使用SSO登录</string>
   <string name="auth_help_label">帮助</string>
   <string name="auth_login_assistive_text">请输入您的 Proton 邮箱或用户名。</string>

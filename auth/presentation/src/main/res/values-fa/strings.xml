@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">ورود</string>
   <string name="auth_sign_in_sso">به سازمان خود وارد شوید</string>
   <string name="auth_sign_in_with_password">ورود با گذرواژه</string>
-  <string name="auth_continue_to_proton_vpn">برای ادامه به Proton VPN</string>
+  <string name="auth_continue_to_proton">برای ادامه به Proton</string>
   <string name="auth_sign_in_with_sso">ورود با احراز هویت یکپارچه</string>
   <string name="auth_help_label">راهنما</string>
   <string name="auth_login_assistive_text">لطفا ایمیل Proton یا نام کاربری خود را وارد کنید.</string>

@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Autentificare</string>
   <string name="auth_sign_in_sso">Autentificare la organizație</string>
   <string name="auth_sign_in_with_password">Autentificare cu e-mail și parolă</string>
-  <string name="auth_continue_to_proton_vpn">pentru a continua cu Proton VPN</string>
+  <string name="auth_continue_to_proton">pentru a continua cu Proton</string>
   <string name="auth_sign_in_with_sso">Autentificare cu SSO</string>
   <string name="auth_help_label">Ajutor</string>
   <string name="auth_login_assistive_text">Introduceți adresa de e-mail Proton sau numele de utilizator.</string>

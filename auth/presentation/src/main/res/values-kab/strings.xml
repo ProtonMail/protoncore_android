@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Qqen</string>
   <string name="auth_sign_in_sso">Kcem ɣer tkebbanit-ik</string>
   <string name="auth_sign_in_with_password">Qqen s wawal uffir</string>
-  <string name="auth_continue_to_proton_vpn">i unekcum ɣer Proton VPN</string>
+  <string name="auth_continue_to_proton">i unekcum ɣer Proton</string>
   <string name="auth_sign_in_with_sso">Qqen s SSO</string>
   <string name="auth_help_label">Tallalt</string>
   <string name="auth_login_assistive_text">Ttxil-k sekcem imayl neɣ isem-ik n useqdac n Proton.</string>

@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Bejelentkezés</string>
   <string name="auth_sign_in_sso">Jelentkezzen be a szervezetébe</string>
   <string name="auth_sign_in_with_password">Bejelentkezés jelszóval</string>
-  <string name="auth_continue_to_proton_vpn">a Proton VPN-re való továbblépéshez</string>
+  <string name="auth_continue_to_proton">a Proton-re való továbblépéshez</string>
   <string name="auth_sign_in_with_sso">Bejelentkezés SSO használatával</string>
   <string name="auth_help_label">Súgó</string>
   <string name="auth_login_assistive_text">Adja meg a Proton email címét vagy a felhasználónevét.</string>

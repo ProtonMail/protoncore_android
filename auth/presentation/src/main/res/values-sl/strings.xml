@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Prijava</string>
   <string name="auth_sign_in_sso">Prijavite se v svojo organizacijo</string>
   <string name="auth_sign_in_with_password">Prijava z geslom</string>
-  <string name="auth_continue_to_proton_vpn">da nadaljujete v Proton VPN</string>
+  <string name="auth_continue_to_proton">da nadaljujete v Proton</string>
   <string name="auth_sign_in_with_sso">Prijavite se z SSO</string>
   <string name="auth_help_label">Pomoč</string>
   <string name="auth_login_assistive_text">Vnesite e-poštno sporočilo ali uporabniško ime Proton.</string>

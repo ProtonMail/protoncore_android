@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Log ind</string>
   <string name="auth_sign_in_sso">Log ind på din organisation</string>
   <string name="auth_sign_in_with_password">Log ind med en adgangskode</string>
-  <string name="auth_continue_to_proton_vpn">for at fortsætte til Proton VPN</string>
+  <string name="auth_continue_to_proton">for at fortsætte til Proton</string>
   <string name="auth_sign_in_with_sso">Log ind med SSO</string>
   <string name="auth_help_label">Hjælp</string>
   <string name="auth_login_assistive_text">Indtast venligst din Proton e-mail eller brugernavn.</string>

@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">შესვლა</string>
   <string name="auth_sign_in_sso">შედით თქვენს ორგანიზაციაში</string>
   <string name="auth_sign_in_with_password">პაროლით შესვლა</string>
-  <string name="auth_continue_to_proton_vpn">Proton VPN-ზე გასაგრძელებლად</string>
+  <string name="auth_continue_to_proton">Proton-ზე გასაგრძელებლად</string>
   <string name="auth_sign_in_with_sso">SSO-ით შესვლა</string>
   <string name="auth_help_label">დახმარება</string>
   <string name="auth_login_assistive_text">შეიყვანეთ Proton-ის ანგარიშის თქვენი ელფოსტის ან მომხმარებლის სახელი.</string>

@@ -75,7 +75,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/auth_subtitle_top_margin"
                 android:gravity="center"
-                android:text="@string/auth_continue_to_proton_vpn" />
+                android:text="@string/auth_continue_to_proton" />
 
             <me.proton.core.challenge.presentation.ProtonMetadataInput
                 android:id="@+id/emailInput"

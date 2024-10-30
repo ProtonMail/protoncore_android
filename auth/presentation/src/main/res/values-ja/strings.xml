@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">サインイン</string>
   <string name="auth_sign_in_sso">組織にサインインする</string>
   <string name="auth_sign_in_with_password">パスワードを使ってサインインする</string>
-  <string name="auth_continue_to_proton_vpn">Proton VPNに進む</string>
+  <string name="auth_continue_to_proton">Protonに進む</string>
   <string name="auth_sign_in_with_sso">SSOでサインインする</string>
   <string name="auth_help_label">ヘルプ</string>
   <string name="auth_login_assistive_text">Proton のメールアドレスまたはユーザー名を入力してください。</string>

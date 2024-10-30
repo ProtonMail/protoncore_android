@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Inloggen</string>
   <string name="auth_sign_in_sso">Aanmelden bij uw organisatie</string>
   <string name="auth_sign_in_with_password">Aanmelden met wachtwoord</string>
-  <string name="auth_continue_to_proton_vpn">om verder to gaan naar Proton VPN</string>
+  <string name="auth_continue_to_proton">om verder to gaan naar Proton</string>
   <string name="auth_sign_in_with_sso">Inloggen met SSO</string>
   <string name="auth_help_label">Hulp</string>
   <string name="auth_login_assistive_text">Voer uw Proton e-mail of gebruikersnaam in.</string>

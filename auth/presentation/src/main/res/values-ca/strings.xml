@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Inicia la sessió</string>
   <string name="auth_sign_in_sso">Inicieu la sessió a la vostra organització</string>
   <string name="auth_sign_in_with_password">Inicieu la sessió amb una contrasenya</string>
-  <string name="auth_continue_to_proton_vpn">per a continuar a Proton VPN</string>
+  <string name="auth_continue_to_proton">per a continuar a Proton</string>
   <string name="auth_sign_in_with_sso">Inicia la sessió amb SSO</string>
   <string name="auth_help_label">Ajuda</string>
   <string name="auth_login_assistive_text">Introduïu el correu electrònic o nom d\'usuari de Proton.</string>

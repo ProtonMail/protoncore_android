@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Войти</string>
   <string name="auth_sign_in_sso">Войдите в вашу организацию</string>
   <string name="auth_sign_in_with_password">Войти с паролем</string>
-  <string name="auth_continue_to_proton_vpn">чтобы продолжить в Proton VPN</string>
+  <string name="auth_continue_to_proton">чтобы продолжить в Proton</string>
   <string name="auth_sign_in_with_sso">Войти с помощью системы единого входа</string>
   <string name="auth_help_label">Помощь</string>
   <string name="auth_login_assistive_text">Введите ваш адрес электронной почты Proton или имя пользователя.</string>

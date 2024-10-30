@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">Oturum aç</string>
   <string name="auth_sign_in_sso">Kuruluşunuzda oturum açın</string>
   <string name="auth_sign_in_with_password">Parola ile oturum açın</string>
-  <string name="auth_continue_to_proton_vpn">Proton VPN ile ilerleyin</string>
+  <string name="auth_continue_to_proton">Proton ile ilerleyin</string>
   <string name="auth_sign_in_with_sso">Tek oturum açma ile oturum aç</string>
   <string name="auth_help_label">Yardım</string>
   <string name="auth_login_assistive_text">Lütfen Proton e-posta adresinizi ya da kullanıcı adınızı yazın.</string>

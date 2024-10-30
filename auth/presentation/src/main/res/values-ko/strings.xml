@@ -43,7 +43,7 @@
   <string name="auth_sign_in_action">로그인</string>
   <string name="auth_sign_in_sso">조직에 로그인</string>
   <string name="auth_sign_in_with_password">비밀번호로 로그인</string>
-  <string name="auth_continue_to_proton_vpn">Proton VPN으로 계속하기</string>
+  <string name="auth_continue_to_proton">Proton으로 계속하기</string>
   <string name="auth_sign_in_with_sso">SSO로 로그인</string>
   <string name="auth_help_label">지원</string>
   <string name="auth_login_assistive_text">Proton 이메일 또는 사용자 이름을 입력해 주세요.</string>
