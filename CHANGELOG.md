@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.1.3] - 2024-10-31
+
+### Bug Fixes
+
+- auth: Removed app name from SSO login screen.
+- notification: Setup Notification Channel on Root Activity resumed.
+
 ## [29.1.2] - 2024-10-29
 
 ### Bug Fixes
