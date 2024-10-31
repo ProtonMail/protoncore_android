@@ -83,7 +83,6 @@ open class UserAddressEventListener @Inject constructor(
     }
 
     override suspend fun onResetAll(config: EventManagerConfig) {
-        userAddressRepository.deleteAllAddresses(config.userId)
         userAddressRepository.getAddresses(config.userId, refresh = true)
     }
 }

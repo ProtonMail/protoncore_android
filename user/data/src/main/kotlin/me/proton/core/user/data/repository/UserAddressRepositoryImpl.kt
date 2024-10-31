@@ -18,6 +18,7 @@
 
 package me.proton.core.user.data.repository
 
+import com.dropbox.android.external.store4.ExperimentalStoreApi
 import com.dropbox.android.external.store4.Fetcher
 import com.dropbox.android.external.store4.SourceOfTruth
 import com.dropbox.android.external.store4.StoreBuilder
@@ -28,8 +29,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.data.arch.buildProtonStore
-import me.proton.core.data.arch.toDataResult
-import me.proton.core.domain.arch.DataResult
 import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.updateIsActive
@@ -85,7 +84,7 @@ class UserAddressRepositoryImpl @Inject constructor(
                 }
             },
             writer = { userId, addresses ->
-                insertOrUpdate(addresses.plus(userId.getFetchedTagAddress()))
+                replaceAll(addresses.plus(userId.getFetchedTagAddress()))
             },
             delete = null, // Not used.
             deleteAll = null // Not used.
@@ -96,6 +95,7 @@ class UserAddressRepositoryImpl @Inject constructor(
         userRepository.addOnPassphraseChangedListener(this)
     }
 
+    @OptIn(ExperimentalStoreApi::class)
     private suspend fun invalidateMemCache(userId: UserId? = null): Unit =
         if (userId != null) store.clear(userId) else store.clearAll()
 
@@ -113,21 +113,35 @@ class UserAddressRepositoryImpl @Inject constructor(
     private fun observeAddressesLocal(userId: UserId): Flow<List<UserAddress>> =
         addressWithKeysDao.observeByUserId(userId).mapLatest { list -> list.map { it.toUserAddress() } }
 
+    private suspend fun insertOrUpdate(userId: UserId, addresses: List<UserAddress>) {
+        // Update isActive and passphrase.
+        val addressKeys = addresses.flatMap { it.keys }.updateIsActive(userId)
+        // Insert in Database.
+        addressDao.insertOrUpdate(*addresses.map { it.toEntity() }.toTypedArray())
+        addresses.forEach { address -> addressKeyDao.deleteAllByAddressId(address.addressId) }
+        addressKeyDao.insertOrUpdate(*addressKeys.map { it.toEntity() }.toTypedArray())
+        invalidateMemCache(userId)
+    }
+
+    private suspend fun replaceAll(userId: UserId, addresses: List<UserAddress>) {
+        val oldAddressIds = addressDao.getByUserId(userId).map { it.addressId }
+        val newAddressIds = addresses.map { it.addressId }
+        val deletedAddresses = oldAddressIds.filterNot { it in newAddressIds }
+        addressDao.delete(deletedAddresses)
+        insertOrUpdate(userId, addresses)
+    }
+
+    private suspend fun replaceAll(addresses: List<UserAddress>): Unit =
+        db.inTransaction {
+            addresses.groupBy { it.userId }.entries.forEach { (userId, addresses) ->
+                replaceAll(userId, addresses)
+            }
+        }
+
     private suspend fun insertOrUpdate(addresses: List<UserAddress>): Unit =
         db.inTransaction {
-            // Group UserAddresses by userId.
-            val addressesByUser = addresses.fold(mutableMapOf<UserId, MutableList<UserAddress>>()) { acc, address ->
-                acc.apply { getOrPut(address.userId) { mutableListOf() }.add(address) }
-            }
-            // For each List<UserAddress> by userId:
-            addressesByUser.entries.forEach { (userId, addresses) ->
-                // Update isActive and passphrase.
-                val addressKeys = addresses.flatMap { it.keys }.updateIsActive(userId)
-                // Insert in Database.
-                addressDao.insertOrUpdate(*addresses.map { it.toEntity() }.toTypedArray())
-                addresses.forEach { address -> addressKeyDao.deleteAllByAddressId(address.addressId) }
-                addressKeyDao.insertOrUpdate(*addressKeys.map { it.toEntity() }.toTypedArray())
-                invalidateMemCache(userId)
+            addresses.groupBy { it.userId }.entries.forEach { (userId, addresses) ->
+                insertOrUpdate(userId, addresses)
             }
         }
 
