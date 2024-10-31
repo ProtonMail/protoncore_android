@@ -41,6 +41,7 @@ import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.repository.NotificationRepository
 import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.IsNotificationsPermissionRequestEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
 import me.proton.core.notification.presentation.internal.HasNotificationPermission
@@ -65,6 +66,9 @@ class NotificationSetupTest {
     private lateinit var isNotificationsEnabled: IsNotificationsEnabled
 
     @MockK
+    private lateinit var isNotificationsPermissionRequestEnabled: IsNotificationsPermissionRequestEnabled
+
+    @MockK
     private lateinit var notificationManager: ProtonNotificationManager
 
     @MockK
@@ -75,9 +79,6 @@ class NotificationSetupTest {
 
     @MockK(relaxed = true)
     private lateinit var deeplinkManager: DeeplinkManager
-
-    @MockK
-    private lateinit var context: Context
 
     @MockK(relaxed = true)
     private lateinit var cancelNotificationView: CancelNotificationView
@@ -98,6 +99,7 @@ class NotificationSetupTest {
             activityProvider,
             hasNotificationPermission,
             isNotificationsEnabled,
+            isNotificationsPermissionRequestEnabled,
             notificationManager,
             notificationRepository,
             observePushNotifications,
@@ -157,11 +159,11 @@ class NotificationSetupTest {
 
         // WHEN
         launch {
+            allAccountsFlow.value = listOf(mockAccount(AccountState.Ready))
+            accountStateFlow.value = mockAccount(AccountState.Ready)
             yield()
             activityStateFlow.value = WeakReference(mockActivity())
             yield()
-            allAccountsFlow.value = listOf(mockAccount(AccountState.Ready))
-            accountStateFlow.value = mockAccount(AccountState.Ready)
         }
         tested()
         runCurrent()
@@ -181,6 +183,7 @@ class NotificationSetupTest {
         val activityStateflow = MutableStateFlow(WeakReference(activity))
 
         every { isNotificationsEnabled(any()) } returns true
+        every { isNotificationsPermissionRequestEnabled() } returns true
         every { accountManager.getAccounts() } returns MutableStateFlow(listOf(account))
         every { accountManager.onAccountStateChanged(any()) } returns accountStateFlow
         every { activityProvider.activityFlow } returns activityStateflow
@@ -308,9 +311,11 @@ class NotificationSetupTest {
         }
 
     private fun mockActivity(
+        isTaskRoot: Boolean = true,
         isDestroyed: Boolean = false,
         isFinishing: Boolean = false
     ) = mockk<Activity>(relaxed = true) {
+        every { this@mockk.isTaskRoot } returns isTaskRoot
         every { this@mockk.isDestroyed } returns isDestroyed
         every { this@mockk.isFinishing } returns isFinishing
     }

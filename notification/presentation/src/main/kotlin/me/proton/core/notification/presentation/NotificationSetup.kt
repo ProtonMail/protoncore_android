@@ -19,10 +19,7 @@
 package me.proton.core.notification.presentation
 
 import android.app.Activity
-import android.app.NotificationManager
-import android.content.Context
 import androidx.lifecycle.DefaultLifecycleObserver
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
@@ -31,8 +28,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountState
@@ -41,10 +36,11 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.UserId
 import me.proton.core.notification.domain.ProtonNotificationManager
 import me.proton.core.notification.domain.entity.NotificationId
-import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.entity.isDismissible
 import me.proton.core.notification.domain.repository.NotificationRepository
+import me.proton.core.notification.domain.usecase.CancelNotificationView
 import me.proton.core.notification.domain.usecase.IsNotificationsEnabled
+import me.proton.core.notification.domain.usecase.IsNotificationsPermissionRequestEnabled
 import me.proton.core.notification.domain.usecase.ObservePushNotifications
 import me.proton.core.notification.presentation.deeplink.DeeplinkContext
 import me.proton.core.notification.presentation.deeplink.DeeplinkManager
@@ -52,9 +48,9 @@ import me.proton.core.notification.presentation.internal.HasNotificationPermissi
 import me.proton.core.notification.presentation.ui.NotificationPermissionActivity
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import java.lang.ref.WeakReference
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.time.Duration.Companion.milliseconds
 
 @Suppress("LongParameterList")
 @Singleton
@@ -63,6 +59,7 @@ public class NotificationSetup @Inject internal constructor(
     private val activityProvider: ActivityProvider,
     private val hasNotificationPermission: HasNotificationPermission,
     private val isNotificationsEnabled: IsNotificationsEnabled,
+    private val isPermissionRequestEnabled: IsNotificationsPermissionRequestEnabled,
     private val protonNotificationManager: ProtonNotificationManager,
     private val notificationRepository: NotificationRepository,
     private val observePushNotifications: ObservePushNotifications,
@@ -72,6 +69,9 @@ public class NotificationSetup @Inject internal constructor(
 ) : DefaultLifecycleObserver {
     private val observeJobMap: MutableMap<UserId, Job> = mutableMapOf()
 
+    private var notificationChannelSet: Boolean = false
+    private var permissionActivityStarted: Boolean = false
+
     public operator fun invoke() {
         if (!isNotificationsEnabled(userId = null)) return
 
@@ -80,8 +80,7 @@ public class NotificationSetup @Inject internal constructor(
 
         scopeProvider.GlobalDefaultSupervisedScope.launch {
             // Setup for notification permissions.
-            val activity = waitForConditions()
-            setupNotifications(activity)
+            setupNotificationsOnRootTaskResumed()
         }
 
         scopeProvider.GlobalDefaultSupervisedScope.launch {
@@ -90,13 +89,43 @@ public class NotificationSetup @Inject internal constructor(
         }
     }
 
+    @OptIn(FlowPreview::class)
+    private suspend fun setupNotificationsOnRootTaskResumed() {
+        activityProvider.activityFlow
+            .filterNotNull()
+            .filter { it.get()?.isTaskRoot == true }
+            .filter { accountManager.getAccounts().first().any { it.isReady() } }
+            .distinctUntilChanged()
+            .debounce(1000)
+            .onEach {
+                when {
+                    hasNotificationPermission() -> setNotificationChannelIfNeeded()
+                    isPermissionRequestEnabled() -> startPermissionActivityIfNeeded(it)
+                }
+            }.collect()
+    }
+
+    private fun setNotificationChannelIfNeeded() {
+        if (!notificationChannelSet) {
+            protonNotificationManager.setupNotificationChannel()
+        } else {
+            notificationChannelSet = true
+        }
+    }
+
+    private fun startPermissionActivityIfNeeded(it: WeakReference<Activity>) {
+        if (!permissionActivityStarted) {
+            startNotificationPermissionActivity(it)
+        } else {
+            permissionActivityStarted = true
+        }
+    }
+
     private suspend fun observeAccountState() {
         accountManager.onAccountStateChanged(initialState = true).onEach { account ->
             when (account.state) {
                 AccountState.Ready -> observePushes(account.userId)
-                else -> {
-                    cancelPushes(account.userId)
-                }
+                else -> cancelPushes(account.userId)
             }
         }.collect()
     }
@@ -115,32 +144,8 @@ public class NotificationSetup @Inject internal constructor(
         cancelNotificationView(userId)
     }
 
-    /** App in foreground, an account is ready. */
-    @OptIn(FlowPreview::class)
-    private suspend fun waitForConditions(): Activity {
-        return accountManager.getAccounts()
-            .filter { accounts -> accounts.any { it.isReady() } }
-            .distinctUntilChanged()
-            .flatMapLatest {
-                activityProvider.activityFlow
-                    .map { it?.get() }
-                    .filterNotNull()
-                    .filter { !it.isFinishing && !it.isDestroyed }
-            }
-            .debounce(600.milliseconds)
-            .first()
-    }
-
-    private fun setupNotifications(activity: Activity) {
-        if (hasNotificationPermission()) {
-            protonNotificationManager.setupNotificationChannel()
-        } else {
-            startNotificationPermissionActivity(activity)
-        }
-    }
-
-    private fun startNotificationPermissionActivity(activity: Activity) {
-        activity.startActivity(NotificationPermissionActivity(activity))
+    private fun startNotificationPermissionActivity(ref: WeakReference<Activity>) {
+        ref.get()?.let { it.startActivity(NotificationPermissionActivity(it)) }
     }
 
     private fun setupDeeplink() {
