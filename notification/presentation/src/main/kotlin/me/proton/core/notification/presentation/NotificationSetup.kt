@@ -108,7 +108,6 @@ public class NotificationSetup @Inject internal constructor(
     private fun setNotificationChannelIfNeeded() {
         if (!notificationChannelSet) {
             protonNotificationManager.setupNotificationChannel()
-        } else {
             notificationChannelSet = true
         }
     }
@@ -116,7 +115,6 @@ public class NotificationSetup @Inject internal constructor(
     private fun startPermissionActivityIfNeeded(it: WeakReference<Activity>) {
         if (!permissionActivityStarted) {
             startNotificationPermissionActivity(it)
-        } else {
             permissionActivityStarted = true
         }
     }
