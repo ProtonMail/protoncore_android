@@ -11,6 +11,13 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.1.4] - 2024-11-01
+
+### Bug Fixes
+
+- user: Refresh/replace all UserAddresses on EventLoop onResetAll.
+- notification: Fixed Notification Setup boolean flags.
+
 ## [29.1.3] - 2024-10-31
 
 ### Bug Fixes
