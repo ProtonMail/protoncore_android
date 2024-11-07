@@ -30,11 +30,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
@@ -42,10 +44,10 @@ import me.proton.core.auth.domain.entity.AuthDeviceState
 import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
-import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice
-import me.proton.core.auth.domain.usecase.sso.CheckOtherDevices
 import me.proton.core.auth.domain.usecase.PostLoginSsoAccountSetup
 import me.proton.core.auth.domain.usecase.sso.ActivateAuthDevice
+import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice
+import me.proton.core.auth.domain.usecase.sso.CheckOtherDevices
 import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.ChangePassword
@@ -58,12 +60,30 @@ import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.pgp.Based64Encoded
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSsoActivateDeviceTotal
+import me.proton.core.observability.domain.metrics.LoginSsoAssociateDeviceTotal
+import me.proton.core.observability.domain.metrics.LoginSsoCreateDeviceTotal
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.close
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.deviceRejected
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.error
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.loading
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.passwordChange
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.passwordInput
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.passwordSetup
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.requireAdmin
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.success
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.waitingAdmin
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.waitingMember
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
+import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result as SetupResult
 import me.proton.core.auth.domain.usecase.sso.AssociateAuthDevice.Result as AssociateResult
 import me.proton.core.auth.domain.usecase.sso.CheckOtherDevices.Result as DevicesResult
-import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result as SetupResult
 
 @HiltViewModel
 public class DeviceSecretViewModel @Inject constructor(
@@ -78,7 +98,8 @@ public class DeviceSecretViewModel @Inject constructor(
     private val postLoginSsoAccountSetup: PostLoginSsoAccountSetup,
     private val deviceSecretRepository: DeviceSecretRepository,
     private val authDeviceRepository: AuthDeviceRepository,
-) : ViewModel() {
+    override val observabilityManager: ObservabilityManager,
+) : ViewModel(), ObservabilityContext {
 
     private val userId by lazy { savedStateHandle.getUserId() }
 
@@ -89,11 +110,27 @@ public class DeviceSecretViewModel @Inject constructor(
             is DeviceSecretAction.Close -> onClose()
             is DeviceSecretAction.Load -> onLoad(action.background)
         }
+    }.distinctUntilChanged().onEach { state ->
+        enqueueScreenState(state)
     }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Loading(null))
 
     public fun submit(action: DeviceSecretAction): Job = viewModelScope.launch {
         mutableAction.emit(action)
     }
+
+    private fun enqueueScreenState(state: DeviceSecretViewState) = when (state) {
+        is Close -> close
+        is ChangePassword -> passwordChange
+        is DeviceRejected -> deviceRejected
+        is FirstLogin -> passwordSetup
+        is InvalidSecret.NoDevice.BackupPassword -> passwordInput
+        is InvalidSecret.NoDevice.RequireAdmin -> requireAdmin
+        is InvalidSecret.NoDevice.WaitingAdmin -> waitingAdmin
+        is InvalidSecret.OtherDevice.WaitingMember -> waitingMember
+        is Error -> error
+        is Loading -> loading
+        is Success -> success
+    }.let { enqueueObservability(LoginSsoDeviceSecretScreenStateTotal(it)) }
 
     private fun onClose(): Flow<DeviceSecretViewState> = flow {
         accountWorkflow.handleDeviceSecretFailed(userId)
@@ -120,10 +157,12 @@ public class DeviceSecretViewModel @Inject constructor(
 
     private fun reload(delay: Long = 10000): Flow<DeviceSecretViewState> = flow {
         delay(delay)
-        emitAll(onLoad(background = true))
+        submit(DeviceSecretAction.Load(background = true))
     }
 
-    private fun onLoad(background: Boolean = false): Flow<DeviceSecretViewState> = flow {
+    private fun onLoad(background: Boolean = false): Flow<DeviceSecretViewState> = flowWithResultContext {
+        onResultEnqueueObservability("associateDevice") { LoginSsoAssociateDeviceTotal(this) }
+
         if (!background) { emit(Loading(userManager.getUser(userId).email)) }
         emitAll(
             when (val deviceSecret = deviceSecretRepository.getByUserId(userId)) {
@@ -146,10 +185,12 @@ public class DeviceSecretViewModel @Inject constructor(
         emit(Error(email = state.value.email, it.message))
     }
 
-    private fun onCreateDevice() = flow {
+    private fun onCreateDevice() = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoCreateDeviceTotal(this) }
+
         emit(Loading(email = state.value.email))
         createAuthDevice.invoke(userId, Build.MODEL)
-        emitAll(onLoad())
+        submit(DeviceSecretAction.Load())
     }
 
     private fun onDeviceNotActive() = flow {
@@ -203,7 +244,9 @@ public class DeviceSecretViewModel @Inject constructor(
         emit(DeviceRejected(email = state.value.email))
     }
 
-    private fun onDeviceAssociated(encryptedSecret: Based64Encoded) = flow {
+    private fun onDeviceAssociated(encryptedSecret: Based64Encoded) = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoActivateDeviceTotal(this) }
+
         emit(Loading(email = state.value.email))
         activateAuthDevice.invoke(userId, encryptedSecret)
         emitAll(onDeviceActivated())
@@ -216,9 +259,13 @@ public class DeviceSecretViewModel @Inject constructor(
             is SetupResult.Error.UnlockPrimaryKeyError -> emit(Error(email = state.value.email, null))
             is SetupResult.Error.UserCheckError -> emit(Error(email = state.value.email, result.error.localizedMessage))
             is SetupResult.Need -> when (result) {
-                is PostLoginAccountSetup.Result.Need.ChangePassword -> emit(ChangePassword(email = state.value.email))
+                is PostLoginAccountSetup.Result.Need.ChangePassword -> emitAll(onChangePassword())
                 else -> error("Unexpected state for Global SSO user.")
             }
         }
+    }
+
+    private fun onChangePassword(): Flow<DeviceSecretViewState> = flow {
+        emit(ChangePassword(email = state.value.email))
     }
 }

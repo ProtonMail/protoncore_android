@@ -30,8 +30,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.entity.AuthDevice
@@ -58,6 +60,19 @@ import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Loading
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Rejected
 import me.proton.core.auth.presentation.compose.sso.MemberApprovalState.Rejecting
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSsoActivateDeviceTotal
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.closed
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.confirmed
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.confirming
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.error
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.idle
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.loading
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.rejected
+import me.proton.core.observability.domain.metrics.LoginSsoMemberApprovalScreenStateTotal.StateId.rejecting
+import me.proton.core.observability.domain.metrics.LoginSsoRejectDeviceTotal
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.getEmail
 import me.proton.core.user.domain.repository.PassphraseRepository
@@ -65,6 +80,7 @@ import me.proton.core.util.android.datetime.Clock
 import me.proton.core.util.android.datetime.DateTimeFormat
 import me.proton.core.util.android.datetime.DurationFormat
 import me.proton.core.util.android.datetime.UtcClock
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -79,8 +95,9 @@ public class MemberApprovalViewModel @Inject constructor(
     private val durationFormat: DurationFormat,
     private val dateTimeFormat: DateTimeFormat,
     @ApplicationContext private val context: Context,
-    @UtcClock private val clock: Clock
-) : ViewModel() {
+    @UtcClock private val clock: Clock,
+    override val observabilityManager: ObservabilityManager
+) : ViewModel(), ObservabilityContext {
 
     private val userId by lazy { savedStateHandle.getUserId() }
 
@@ -93,11 +110,24 @@ public class MemberApprovalViewModel @Inject constructor(
             is Confirm -> onConfirm(action.deviceId, action.deviceSecret)
             is Reject -> onReject(action.deviceId)
         }
+    }.distinctUntilChanged().onEach { state ->
+        enqueueScreenState(state)
     }.stateIn(viewModelScope, WhileSubscribed(stopTimeoutMillis), Idle(MemberApprovalData()))
 
     public fun submit(action: MemberApprovalAction): Job = viewModelScope.launch {
         mutableAction.emit(action)
     }
+
+    private fun enqueueScreenState(state: MemberApprovalState) = when (state) {
+        is Closed -> closed
+        is Confirmed -> confirmed
+        is Confirming -> confirming
+        is Error -> error
+        is Idle -> idle
+        is Loading -> loading
+        is Rejected -> rejected
+        is Rejecting -> rejecting
+    }.let { enqueueObservability(LoginSsoMemberApprovalScreenStateTotal(it)) }
 
     private fun reload(delay: Long = 30000) = viewModelScope.launch {
         delay(delay)
@@ -115,6 +145,8 @@ public class MemberApprovalViewModel @Inject constructor(
             else -> emit(Idle(state.value.data.copy(email = email, pendingDevices = devices)))
         }
         reload()
+    }.catch { error ->
+        emit(Error(data = state.value.data, error.message))
     }
 
     private suspend fun onValidate(deviceId: AuthDeviceId?, code: String?) = flow<MemberApprovalState> {
@@ -127,7 +159,9 @@ public class MemberApprovalViewModel @Inject constructor(
         emit(Error(data = state.value.data, error.message))
     }
 
-    private fun onConfirm(deviceId: AuthDeviceId?, deviceSecret: DeviceSecretString?) = flow {
+    private fun onConfirm(deviceId: AuthDeviceId?, deviceSecret: DeviceSecretString?) = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoActivateDeviceTotal(this) }
+
         emit(Confirming(data = state.value.data))
         val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))
         activateAuthDevice.invoke(userId, requireNotNull(deviceId), requireNotNull(deviceSecret), passphrase)
@@ -136,7 +170,9 @@ public class MemberApprovalViewModel @Inject constructor(
         emit(Error(data = state.value.data, error.message))
     }
 
-    private fun onReject(deviceId: AuthDeviceId) = flow {
+    private fun onReject(deviceId: AuthDeviceId) = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoRejectDeviceTotal(this) }
+
         emit(Rejecting(data = state.value.data))
         rejectAuthDevice(userId, deviceId)
         emit(Rejected)

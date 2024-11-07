@@ -56,12 +56,21 @@ import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Suc
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSsoActivateDeviceTotal
+import me.proton.core.observability.domain.metrics.LoginSsoInputPasswordTotal
+import me.proton.core.observability.domain.metrics.LoginSsoInputPasswordTotal.InputPasswordStatus.invalidPassphrase
+import me.proton.core.observability.domain.metrics.LoginSsoInputPasswordTotal.InputPasswordStatus.noKeySalt
+import me.proton.core.observability.domain.metrics.LoginSsoInputPasswordTotal.InputPasswordStatus.noPrimaryKey
+import me.proton.core.observability.domain.metrics.LoginSsoInputPasswordTotal.InputPasswordStatus.unlockSuccess
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -73,7 +82,8 @@ public class BackupPasswordInputViewModel @Inject constructor(
     private val passphraseRepository: PassphraseRepository,
     private val deviceSecretRepository: DeviceSecretRepository,
     private val authDeviceRepository: AuthDeviceRepository,
-) : ViewModel() {
+    override val observabilityManager: ObservabilityManager,
+) : ViewModel(), ObservabilityContext {
 
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
@@ -105,23 +115,41 @@ public class BackupPasswordInputViewModel @Inject constructor(
         }
     }
 
-    private fun onUnlockUser(backupPassword: String): Flow<BackupPasswordInputState> = flow {
+    private fun onUnlockUser(backupPassword: String): Flow<BackupPasswordInputState> = flowWithResultContext {
+        onFailureEnqueueObservability { LoginSsoInputPasswordTotal(this) }
+
         emit(Loading)
         backupPassword.toByteArray().use { password ->
             when (userManager.unlockWithPassword(userId, password)) {
-                UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> error(context.getString(R.string.backup_password_no_key_salts))
-                UserManager.UnlockResult.Error.NoPrimaryKey -> error(context.getString(R.string.backup_password_no_primary_key))
-                UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> error(context.getString(R.string.backup_password_invalid))
-                UserManager.UnlockResult.Success -> emitAll(onActivateDevice())
+                UserManager.UnlockResult.Error.NoKeySaltsForPrimaryKey -> {
+                    enqueueObservability(LoginSsoInputPasswordTotal(noKeySalt))
+                    emit(Error(context.getString(R.string.backup_password_no_key_salts)))
+                }
+                UserManager.UnlockResult.Error.NoPrimaryKey -> {
+                    enqueueObservability(LoginSsoInputPasswordTotal(noPrimaryKey))
+                    emit(Error(context.getString(R.string.backup_password_no_primary_key)))
+                }
+                UserManager.UnlockResult.Error.PrimaryKeyInvalidPassphrase -> {
+                    enqueueObservability(LoginSsoInputPasswordTotal(invalidPassphrase))
+                    emit(Error(context.getString(R.string.backup_password_invalid)))
+                }
+                UserManager.UnlockResult.Success -> {
+                    enqueueObservability(LoginSsoInputPasswordTotal(unlockSuccess))
+                    emitAll(onActivateDevice())
+                }
             }
         }
     }.catchWhen(Throwable::isActionNotAllowed) {
+        emit(Close(it.message))
+    }.catchWhen(Throwable::isMissingScope) {
         emit(Close(it.message))
     }.catchAll(LogTag.UNLOCK_USER) {
         emit(Error(it.message))
     }
 
-    private fun onActivateDevice(): Flow<BackupPasswordInputState> = flow {
+    private fun onActivateDevice(): Flow<BackupPasswordInputState> = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoActivateDeviceTotal(this) }
+
         emit(Loading)
         // unlockWithPassword set the passphrase.
         val passphrase = requireNotNull(passphraseRepository.getPassphrase(userId))

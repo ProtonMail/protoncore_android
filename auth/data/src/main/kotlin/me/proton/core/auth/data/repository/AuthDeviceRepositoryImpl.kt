@@ -37,6 +37,7 @@ import me.proton.core.crypto.common.pgp.Based64Encoded
 import me.proton.core.data.arch.buildProtonStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.util.kotlin.CoroutineScopeProvider
+import me.proton.core.util.kotlin.coroutine.result
 import javax.inject.Inject
 
 class AuthDeviceRepositoryImpl @Inject constructor(
@@ -62,48 +63,58 @@ class AuthDeviceRepositoryImpl @Inject constructor(
         userId: UserId,
         deviceName: String,
         activationToken: String?
-    ): CreatedDevice = try {
-        remoteDataSource.createDevice(userId, deviceName, activationToken)
-    } finally {
-        refreshDevices(userId)
+    ): CreatedDevice = result("createDevice") {
+        try {
+            remoteDataSource.createDevice(userId, deviceName, activationToken)
+        } finally {
+            refreshDevices(userId)
+        }
     }
 
     override suspend fun associateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
         deviceToken: String
-    ): Based64Encoded = try {
-        remoteDataSource.associateDevice(userId, deviceId, deviceToken)
-    } finally {
-        refreshDevices(userId)
+    ): Based64Encoded = result("associateDevice") {
+        try {
+            remoteDataSource.associateDevice(userId, deviceId, deviceToken)
+        } finally {
+            refreshDevices(userId)
+        }
     }
 
     override suspend fun activateDevice(
         userId: UserId,
         deviceId: AuthDeviceId,
         encryptedSecret: Based64Encoded
-    ) = try {
-        remoteDataSource.activateDevice(userId, deviceId, encryptedSecret)
-    } finally {
-        refreshDevices(userId)
+    ) = result("activateDevice") {
+        try {
+            remoteDataSource.activateDevice(userId, deviceId, encryptedSecret)
+        } finally {
+            refreshDevices(userId)
+        }
     }
 
     override suspend fun rejectAuthDevice(
         userId: UserId,
         deviceId: AuthDeviceId
-    ) = try {
-        remoteDataSource.rejectAuthDevice(userId, deviceId)
-    } finally {
-        refreshDevices(userId)
+    ) = result("rejectAuthDevice") {
+        try {
+            remoteDataSource.rejectAuthDevice(userId, deviceId)
+        } finally {
+            refreshDevices(userId)
+        }
     }
 
     override suspend fun requestAdminHelp(
         userId: UserId,
         deviceId: AuthDeviceId
-    ) = try {
-        remoteDataSource.requestAdminHelp(userId, deviceId)
-    } finally {
-        refreshDevices(userId)
+    ) = result("requestAdminHelp") {
+        try {
+            remoteDataSource.requestAdminHelp(userId, deviceId)
+        } finally {
+            refreshDevices(userId)
+        }
     }
 
     override suspend fun refreshDevices(userId: UserId) {
@@ -142,5 +153,7 @@ class AuthDeviceRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUnprivatizationInfo(userId: UserId): UnprivatizationInfo =
-        remoteDataSource.getUnprivatizationInfo(userId)
+        result("getUnprivatizationInfo") {
+            remoteDataSource.getUnprivatizationInfo(userId)
+        }
 }

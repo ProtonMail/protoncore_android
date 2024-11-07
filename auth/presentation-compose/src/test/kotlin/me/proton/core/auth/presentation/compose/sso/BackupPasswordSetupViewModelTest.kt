@@ -27,6 +27,7 @@ import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
 import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
 import me.proton.core.crypto.common.context.CryptoContext
+import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import kotlin.test.BeforeTest
@@ -37,6 +38,9 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var context: CryptoContext
+
+    @MockK
+    private lateinit var observabilityManager: ObservabilityManager
 
     @MockK
     private lateinit var deviceSecretRepository: DeviceSecretRepository
@@ -61,7 +65,8 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
             deviceSecretRepository = deviceSecretRepository,
             verifyUnprivatization = verifyUnprivatization,
             setupPrimaryKeys = setupPrimaryKeys,
-            organizationRepository = organizationRepository
+            organizationRepository = organizationRepository,
+            observabilityManager = observabilityManager
         )
     }
 

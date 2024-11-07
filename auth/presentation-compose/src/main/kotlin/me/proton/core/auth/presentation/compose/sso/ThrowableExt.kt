@@ -9,3 +9,9 @@ public fun Throwable.isActionNotAllowed(): Boolean {
     val error = error as? ApiResult.Error.Http
     return error?.proton?.code == ResponseCodes.NOT_ALLOWED
 }
+
+public fun Throwable.isMissingScope(): Boolean {
+    if (this !is ApiException) return false
+    val error = error as? ApiResult.Error.Http
+    return error?.proton?.code in listOf(ResponseCodes.SCOPE_REAUTH_LOCKED, ResponseCodes.SCOPE_REAUTH_PASSWORD)
+}

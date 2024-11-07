@@ -43,8 +43,13 @@ import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Error
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Idle
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpState.Loading
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSsoLoadOrganizationTotal
+import me.proton.core.observability.domain.metrics.LoginSsoRequestAdminHelpTotal
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.catchAll
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -52,8 +57,9 @@ public class RequestAdminHelpViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val authDeviceRepository: AuthDeviceRepository,
     private val deviceSecretRepository: DeviceSecretRepository,
-    private val organizationRepository: OrganizationRepository
-) : ViewModel() {
+    private val organizationRepository: OrganizationRepository,
+    override val observabilityManager: ObservabilityManager
+) : ViewModel(), ObservabilityContext {
 
     private val userId by lazy { savedStateHandle.getUserId() }
 
@@ -70,7 +76,9 @@ public class RequestAdminHelpViewModel @Inject constructor(
         mutableAction.emit(action)
     }
 
-    private fun onLoad() = flow {
+    private fun onLoad() = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoLoadOrganizationTotal(this) }
+
         var data = state.value.data
         emit(Loading(data))
 
@@ -87,7 +95,9 @@ public class RequestAdminHelpViewModel @Inject constructor(
         emit(Error(state.value.data, error))
     }
 
-    private fun onSubmit() = flow {
+    private fun onSubmit() = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoRequestAdminHelpTotal(this) }
+
         emit(Loading(state.value.data))
         val deviceId = requireNotNull(deviceSecretRepository.getByUserId(userId)?.deviceId)
         val device = authDeviceRepository.getByDeviceId(userId, deviceId)

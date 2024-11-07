@@ -45,20 +45,25 @@ import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSsoChangePasswordTotal
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
 public class BackupPasswordChangeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val context: CryptoContext,
-    private val changeBackupPassword: ChangeBackupPassword
-) : ViewModel() {
+    private val changeBackupPassword: ChangeBackupPassword,
+    override val observabilityManager: ObservabilityManager
+) : ViewModel(), ObservabilityContext {
 
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
@@ -95,7 +100,9 @@ public class BackupPasswordChangeViewModel @Inject constructor(
         }
     }
 
-    private fun onChangeBackupPassword(backupPassword: String) = flow {
+    private fun onChangeBackupPassword(backupPassword: String) = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoChangePasswordTotal(this) }
+
         emit(Loading)
         val password = backupPassword.encrypt(context.keyStoreCrypto)
         changeBackupPassword.invoke(userId, password)

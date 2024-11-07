@@ -121,16 +121,16 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         password: String,
         secondFactorProof: SecondFactorProof? = null
     ) = flowWithResultContext {
-        it.onResultEnqueueObservability("unlockUserForPasswordScope") {
+        onResultEnqueueObservability("unlockUserForPasswordScope") {
             toConfirmPasswordSubmissionTotal(secondFactorProof)
         }
 
-        send(State.ProcessingObtainScope)
+        emit(State.ProcessingObtainScope)
         yield()
 
         val account = accountManager.getAccount(userId).firstOrNull()
         if (account == null) {
-            send(State.Error.InvalidAccount)
+            emit(State.Error.InvalidAccount)
             return@flowWithResultContext
         }
         val result = when (missingScope) {
@@ -151,9 +151,9 @@ class ConfirmPasswordDialogViewModel @Inject constructor(
         }.exhaustive
 
         if (result) {
-            send(State.Success(MissingScopeState.ScopeObtainSuccess))
+            emit(State.Success(MissingScopeState.ScopeObtainSuccess))
         } else {
-            send(State.Error.Unknown)
+            emit(State.Error.Unknown)
         }
     }.catch { error ->
         emit(State.Error.General(error))

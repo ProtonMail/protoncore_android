@@ -39,8 +39,8 @@ import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupAction.Load
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupAction.SetPassword
-import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.FormError
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.Error
+import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.FormError
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.Idle
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.Loading
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupState.Success
@@ -49,12 +49,24 @@ import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.crypto.common.keystore.encrypt
 import me.proton.core.crypto.common.pgp.Armored
 import me.proton.core.domain.entity.UserId
+import me.proton.core.observability.domain.ObservabilityContext
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginSsoGetUnprivatizationTotal
+import me.proton.core.observability.domain.metrics.LoginSsoLoadOrganizationTotal
+import me.proton.core.observability.domain.metrics.LoginSsoSetupPrimaryKeysTotal
+import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal
+import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus
+import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failure
+import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failurePublicAddressKeysError
+import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failureUnprivatizeStateError
+import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failureVerificationError
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import me.proton.core.util.kotlin.catchAll
+import me.proton.core.util.kotlin.coroutine.flowWithResultContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,7 +77,8 @@ public class BackupPasswordSetupViewModel @Inject constructor(
     private val verifyUnprivatization: VerifyUnprivatization,
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val organizationRepository: OrganizationRepository,
-) : ViewModel() {
+    override val observabilityManager: ObservabilityManager,
+) : ViewModel(), ObservabilityContext {
 
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
@@ -82,7 +95,9 @@ public class BackupPasswordSetupViewModel @Inject constructor(
         mutableAction.emit(action)
     }
 
-    private fun onLoad() = flow {
+    private fun onLoad() = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoLoadOrganizationTotal(this) }
+
         var data = state.value.data
         emit(Loading(data))
         val organization = organizationRepository.getOrganization(userId)
@@ -99,10 +114,13 @@ public class BackupPasswordSetupViewModel @Inject constructor(
         emit(Error(state.value.data, it.message))
     }
 
-    private fun onVerifyUnprivatization() = flow {
+    private fun onVerifyUnprivatization() = flowWithResultContext {
+        onResultEnqueueObservability("getUnprivatizationInfo") { LoginSsoGetUnprivatizationTotal(this) }
+
         emit(Loading(state.value.data))
         when (val result = verifyUnprivatization.invoke(userId)) {
             is VerifyUnprivatization.Result.UnprivatizeUserSuccess -> {
+                enqueueObservability(LoginSsoVerifyUnprivatizationTotal(VerifyStatus.success))
                 val data = state.value.data.copy(
                     organizationAdminEmail = result.adminEmail,
                     organizationPublicKey = result.organizationPublicKey
@@ -110,9 +128,16 @@ public class BackupPasswordSetupViewModel @Inject constructor(
                 emit(Idle(data))
             }
 
-            is VerifyUnprivatization.Result.PublicAddressKeysError,
-            is VerifyUnprivatization.Result.UnprivatizeStateError,
+            is VerifyUnprivatization.Result.PublicAddressKeysError -> {
+                enqueueObservability(LoginSsoVerifyUnprivatizationTotal(failurePublicAddressKeysError))
+                emit(Error(state.value.data, null))
+            }
+            is VerifyUnprivatization.Result.UnprivatizeStateError -> {
+                enqueueObservability(LoginSsoVerifyUnprivatizationTotal(failureUnprivatizeStateError))
+                emit(Error(state.value.data, null))
+            }
             is VerifyUnprivatization.Result.VerificationError -> {
+                enqueueObservability(LoginSsoVerifyUnprivatizationTotal(failureVerificationError))
                 emit(Error(state.value.data, null))
             }
         }
@@ -146,7 +171,9 @@ public class BackupPasswordSetupViewModel @Inject constructor(
     private fun onSetupPrimaryKeys(
         backupPassword: String,
         organizationPublicKey: Armored
-    ) = flow {
+    ) = flowWithResultContext {
+        onCompleteEnqueueObservability { LoginSsoSetupPrimaryKeysTotal(this) }
+
         emit(Loading(state.value.data))
         val password = backupPassword.encrypt(context.keyStoreCrypto)
         val deviceSecret = requireNotNull(deviceSecretRepository.getByUserId(userId)?.secret)
