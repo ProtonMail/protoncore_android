@@ -24,6 +24,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -60,11 +61,12 @@ import kotlin.coroutines.coroutineContext
  * @see [ResultCollector]
  */
 suspend fun <T> withResultContext(
+    allowDuplicateResultKey: Boolean = true,
     block: suspend ResultCollector<*>.() -> T,
 ): T {
     val resultContext = coroutineContext[ResultCoroutineContextElement] ?: ResultCoroutineContextElement()
     val resultCollector = ResultCollector { key, onResult ->
-        resultContext.addObserver(key, onResult)
+        resultContext.addObserver(allowDuplicateResultKey, key, onResult)
     }
     return withContext(coroutineContext + resultContext) {
         result(resultCollector.key()) { block(resultCollector) }
@@ -97,7 +99,8 @@ internal class ResultCoroutineContextElement : AbstractCoroutineContextElement(K
 
     private val observerMap = ConcurrentHashMap<String, MutableList<suspend Result<*>.(key: String) -> Unit>>()
 
-    fun addObserver(key: String, onResult: suspend Result<*>.(key: String) -> Unit) {
+    fun addObserver(allowDuplicateKey: Boolean, key: String, onResult: suspend Result<*>.(key: String) -> Unit) {
+        check(allowDuplicateKey || !observerMap.containsKey(key)) { "Duplicate Result key not allowed." }
         observerMap.getOrPut(key) { mutableListOf() }.add(onResult)
     }
 
@@ -190,20 +193,49 @@ fun <T> CoroutineScope.launchWithResultContext(
     context: CoroutineContext = EmptyCoroutineContext,
     start: CoroutineStart = CoroutineStart.DEFAULT,
     block: suspend ResultCollector<*>.() -> T
-): Job = launch(context, start) { withResultContext(block) }
+): Job = launch(context, start) { withResultContext(allowDuplicateResultKey = true, block) }
 
 /**
- * Creates an instance of a cold Flow with elements that are sent to a SendChannel provided
- * to the builder's block of code via ProducerScope. It allows elements to be produced by code that
- * is running in a different context or concurrently.
+ * [FlowResultCollector] is used as collector of the [Flow] and [Result].
  *
- * The coroutine context is wrapped with a [ResultCoroutineContextElement] using [withResultContext].
+ * @see [FlowCollector]
+ * @see [ResultCollector]
+ * @see [flowWithResultContext]
+ */
+class FlowResultCollector<T>(
+    private val producerScope: ProducerScope<T>,
+    private val resultCollector: ResultCollector<T>
+) : FlowCollector<T>, ResultCollector<T> {
+
+    override fun key(): String = resultCollector.key()
+
+    override suspend fun emit(value: T) {
+        producerScope.send(value)
+    }
+
+    override suspend fun onResult(key: String, action: suspend Result<T>.(key: String) -> Unit) {
+        resultCollector.onResult(key, action)
+    }
+}
+
+/**
+ * Creates a cold flow from the given suspendable block.
  *
- * @see channelFlow
+ * The provided [FlowResultCollector] can be used to as a [FlowCollector] and [ResultCollector].
+ *
+ * Note: Allowing duplicate [result] key can lead to undesirable side-effect.
+ *
+ * @see [FlowResultCollector]
+ * @see [withResultContext]
  */
 fun <T> flowWithResultContext(
-    block: suspend ProducerScope<T>.(ResultCollector<*>) -> Unit
+    allowDuplicateResultKey: Boolean = false,
+    block: suspend FlowResultCollector<T>.() -> Unit
 ): Flow<T> = channelFlow {
     val producerScope = this
-    withResultContext { block(producerScope, this) }
+    withResultContext(allowDuplicateResultKey) {
+        val resultCollector = this as ResultCollector<T>
+        val collector = FlowResultCollector(producerScope, resultCollector)
+        block(collector)
+    }
 }

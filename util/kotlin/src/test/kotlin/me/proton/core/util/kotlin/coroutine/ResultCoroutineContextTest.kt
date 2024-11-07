@@ -284,6 +284,19 @@ class ResultCoroutineContextTest : ManagerContext {
         verify(exactly = 2) { manager.enqueue(Event("any", 1)) }
     }
 
+    @Test
+    fun resultCollectorMultipleResultKeyNotAllowed() = runTest {
+        assertFailsWith<IllegalStateException> {
+            withResultContext(allowDuplicateResultKey = false) {
+                onResult("key1") { enqueue { toEvent("key1.1") } }
+                onResult("key1") { enqueue { toEvent("key1.2") } }
+                onResult { enqueue { toEvent("any") } }
+
+                producerKey1()
+            }
+        }
+    }
+
     @Test(expected = IllegalStateException::class)
     fun resultCollectorThrowOnResult() = runTest {
         withResultContext {
