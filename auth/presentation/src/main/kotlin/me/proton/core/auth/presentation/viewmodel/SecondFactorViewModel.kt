@@ -126,14 +126,14 @@ class SecondFactorViewModel @Inject constructor(
         requiredAccountType: AccountType,
         isTwoPassModeNeeded: Boolean,
         proof: SecondFactorProof
-    ) = flowWithResultContext {
-        it.onResultEnqueueObservability("performSecondFactor") { onPerformSecondFactorResult(proof, this) }
+    ) = flowWithResultContext(allowDuplicateResultKey = true) {
+        onResultEnqueueObservability("performSecondFactor") { onPerformSecondFactorResult(proof, this) }
 
-        send(State.Processing)
+        emit(State.Processing)
 
         val sessionId = sessionProvider.getSessionId(userId)
         if (sessionId == null) {
-            send(State.Error.Unrecoverable("No session for this user."))
+            emit(State.Error.Unrecoverable("No session for this user."))
             return@flowWithResultContext
         }
 
@@ -148,7 +148,7 @@ class SecondFactorViewModel @Inject constructor(
             isTwoPassModeNeeded = isTwoPassModeNeeded,
             temporaryPassword = false
         )
-        send(State.AccountSetupResult(result))
+        emit(State.AccountSetupResult(result))
     }.retryOnceWhen(Throwable::primaryKeyExists) {
         CoreLogger.e(LogTag.FLOW_ERROR_RETRY, it, "Retrying second factor flow")
     }.catch { error ->

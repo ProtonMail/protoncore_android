@@ -184,15 +184,15 @@ class PasswordManagementViewModel @Inject constructor(
     }
 
     private suspend fun resetPassword(action: Action.UpdatePassword): Flow<State> = flowWithResultContext {
-        it.onResultEnqueueObservability("account_recovery.reset") { AccountRecoveryResetTotal(this) }
+        onResultEnqueueObservability("account_recovery.reset") { AccountRecoveryResetTotal(this) }
 
-        send(State.UpdatingPassword)
+        emit(State.UpdatingPassword)
         val encryptedNewPassword = action.newPassword.encrypt(keyStoreCrypto)
         performResetPassword(
             userId = action.userId,
             newPassword = encryptedNewPassword,
         )
-        send(State.Success)
+        emit(State.Success)
     }
 
     private suspend fun setTwoFactor(action: Action.SetTwoFactor): Flow<State> {

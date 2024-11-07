@@ -103,12 +103,12 @@ internal class DynamicPlanListViewModel @Inject constructor(
     }
 
     private suspend fun loadDynamicPlans(filter: DynamicPlanFilter) = flowWithResultContext {
-        it.onResultEnqueueObservability("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
-        it.onResultEnqueueGiapBillingProductQueryObservability()
-        send(State.Loading)
+        onResultEnqueueObservability("getDynamicPlans") { CheckoutGetDynamicPlansTotal(this) }
+        onResultEnqueueGiapBillingProductQueryObservability()
+        emit(State.Loading)
         val filteredPlans = getDynamicPlans(filter.userId).plans.filterBy(filter.cycle, filter.currency)
         mutablePlanList.emit(filteredPlans)
-        send(State.Success(filteredPlans, filter))
+        emit(State.Success(filteredPlans, filter))
     }.catch {
         emit(State.Error(it))
     }

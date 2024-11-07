@@ -83,11 +83,11 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         .flatMapLatest { (userId, currency) -> loadSubscription(userId, currency) }
 
     private suspend fun loadSubscription(userId: UserId?, currency: String) = flowWithResultContext {
-        it.onResultEnqueueObservability("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
-        send(State.Loading)
+        onResultEnqueueObservability("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
+        emit(State.Loading)
         when (userId) {
-            null -> send(State.UserNotExist)
-            else -> send(
+            null -> emit(State.UserNotExist)
+            else -> emit(
                 State.Success(
                     dynamicSubscription = getDynamicSubscriptionAdjustedPrices(userId),
                     canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId),

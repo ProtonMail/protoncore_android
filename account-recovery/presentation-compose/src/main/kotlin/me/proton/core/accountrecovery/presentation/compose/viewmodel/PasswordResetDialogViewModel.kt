@@ -80,11 +80,11 @@ class PasswordResetDialogViewModel @Inject constructor(
     }
 
     private suspend fun requestReset(): Flow<State> = flowWithResultContext {
-        it.onResultEnqueueObservability("account_recovery.start") { AccountRecoveryStartTotal(this) }
+        onResultEnqueueObservability("account_recovery.start") { AccountRecoveryStartTotal(this) }
 
-        send(State.Loading(currentUser.value?.getEmail()))
+        emit(State.Loading(currentUser.value?.getEmail()))
         startRecovery(userId)
-        send(State.ResetRequested)
+        emit(State.ResetRequested)
     }
 
     fun perform(action: Action) = currentAction.tryEmit(action)
