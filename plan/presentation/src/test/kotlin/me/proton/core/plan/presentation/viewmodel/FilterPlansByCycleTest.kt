@@ -20,66 +20,14 @@ package me.proton.core.plan.presentation.viewmodel
 
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.presentation.entity.PaymentVendorDetails
-import me.proton.core.plan.domain.entity.PlanDuration
-import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.plan.presentation.entity.PlanCycle
 import me.proton.core.plan.presentation.entity.PlanVendorDetails
+import me.proton.core.plan.presentation.ui.filterByCycle
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
-class BasePlansViewModelTest {
-    @Test
-    fun `convert empty map to plan vendor details`() {
-        assertTrue(emptyMap<AppStore, PlanVendorData>().toPlanVendorDetailsMap().isEmpty())
-    }
-
-    @Test
-    fun `convert to plan vendor details`() {
-        val input = mapOf(
-            Pair(
-                AppStore.GooglePlay,
-                PlanVendorData(
-                    customerId = "c-1",
-                    names = mapOf(
-                        PlanDuration(1) to "googlemail_mail2022_1_renewing",
-                        PlanDuration(12) to "googlemail_mail2022_12_renewing",
-                        PlanDuration(13) to "googlemail_mail2022_13_renewing"
-                    )
-                )
-            ),
-            Pair(
-                AppStore.FDroid,
-                PlanVendorData(
-                    customerId = "c-2",
-                    names = emptyMap()
-                )
-            )
-        )
-
-        val expected = mapOf(
-            Pair(
-                AppStore.GooglePlay,
-                PlanVendorDetails(
-                    customerId = "c-1",
-                    names = mapOf(
-                        PlanCycle.MONTHLY to "googlemail_mail2022_1_renewing",
-                        PlanCycle.YEARLY to "googlemail_mail2022_12_renewing"
-                    )
-                )
-            ),
-            Pair(
-                AppStore.FDroid,
-                PlanVendorDetails(
-                    customerId = "c-2",
-                    names = mapOf()
-                )
-            )
-        )
-
-        assertEquals(expected, input.toPlanVendorDetailsMap())
-    }
-
+class FilterPlansByCycleTest {
     @Test
     fun `filter empty map`() {
         assertTrue(mapOf<AppStore, PlanVendorDetails>().filterByCycle(PlanCycle.YEARLY).isEmpty())

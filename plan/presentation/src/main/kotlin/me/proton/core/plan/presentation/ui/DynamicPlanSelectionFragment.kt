@@ -21,6 +21,7 @@ package me.proton.core.plan.presentation.ui
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle.State.RESUMED
@@ -28,14 +29,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.payment.domain.entity.Currency
 import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
+import me.proton.core.payment.presentation.entity.PaymentVendorDetails
 import me.proton.core.payment.presentation.entity.PlanShortDetails
 import me.proton.core.payment.presentation.onPaymentResult
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
@@ -46,12 +47,13 @@ import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanSelectionBinding
 import me.proton.core.plan.presentation.entity.DynamicPlanFilters
 import me.proton.core.plan.presentation.entity.DynamicUser
+import me.proton.core.plan.presentation.entity.PlanCycle
+import me.proton.core.plan.presentation.entity.PlanVendorDetails
 import me.proton.core.plan.presentation.entity.SelectedPlan
 import me.proton.core.plan.presentation.entity.getSelectedPlan
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicPlanSelectionViewModel.State
-import me.proton.core.plan.presentation.viewmodel.filterByCycle
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.onItemSelected
@@ -278,4 +280,15 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
             plan.getSelectedPlan(resources = resources, cycle = cycle, currency = currency)
         viewModel.perform(Action.SelectPlan(selectedPlan))
     }
+}
+
+@VisibleForTesting
+fun Map<AppStore, PlanVendorDetails>.filterByCycle(
+    planCycle: PlanCycle
+): Map<AppStore, PaymentVendorDetails> {
+    return mapNotNull { (appVendor, details: PlanVendorDetails) ->
+        details.names[planCycle]?.let { vendorPlanName ->
+            appVendor to PaymentVendorDetails(customerId = details.customerId, vendorPlanName)
+        }
+    }.toMap()
 }

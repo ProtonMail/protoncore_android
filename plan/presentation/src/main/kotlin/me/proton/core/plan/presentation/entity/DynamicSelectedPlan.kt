@@ -19,9 +19,10 @@
 package me.proton.core.plan.presentation.entity
 
 import android.content.res.Resources
+import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.entity.isFree
-import me.proton.core.plan.presentation.viewmodel.toPlanVendorDetailsMap
 
 fun DynamicPlan.getSelectedPlan(
     resources: Resources,
@@ -40,4 +41,13 @@ fun DynamicPlan.getSelectedPlan(
         type = type?.value ?: 0,
         vendorNames = instances[cycle]?.vendors?.toPlanVendorDetailsMap(cycle).orEmpty()
     )
+}
+
+private fun Map<AppStore, DynamicPlanVendor>.toPlanVendorDetailsMap(cycle: Int): Map<AppStore, PlanVendorDetails> {
+    return mapValues { entry ->
+        PlanVendorDetails(
+            customerId = entry.value.customerId,
+            names = mapOf(requireNotNull(PlanCycle.map[cycle]) to entry.value.productId)
+        )
+    }
 }
