@@ -65,6 +65,7 @@ import me.proton.core.test.kotlin.TestDispatcherProvider
 import me.proton.core.test.kotlin.UnconfinedTestCoroutineScopeProvider
 import me.proton.core.user.data.api.AddressApi
 import me.proton.core.user.data.api.UserApi
+import me.proton.core.user.data.repository.UserAddressRemoteDataSourceImpl
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
 import me.proton.core.user.data.repository.UserLocalDataSourceImpl
 import me.proton.core.user.data.repository.UserRemoteDataSourceImpl
@@ -74,6 +75,7 @@ import me.proton.core.user.domain.SignedKeyListChangeListener
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.extension.primary
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.user.domain.repository.UserAddressRemoteDataSource
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
 import org.junit.After
@@ -126,6 +128,7 @@ UserManagerImplTests {
     private lateinit var passphraseRepository: PassphraseRepository
     private lateinit var keySaltRepository: KeySaltRepositoryImpl
     private lateinit var privateKeyRepository: PrivateKeyRepository
+    private lateinit var userAddressRemoteDataSource: UserAddressRemoteDataSource
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
     private val getEncryptedSecret = mockk<GetEncryptedSecret>()
     private val signedKeyListChangeListener = mockk<SignedKeyListChangeListener>()
@@ -152,13 +155,30 @@ UserManagerImplTests {
         val dispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
         val scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
+        apiProvider = ApiProvider(
+            apiManagerFactory = apiManagerFactory,
+            sessionProvider = sessionProvider,
+            dispatcherProvider = dispatcherProvider
+        )
 
-        keySaltRepository = KeySaltRepositoryImpl(db, apiProvider, scopeProvider)
-        privateKeyRepository = PrivateKeyRepositoryImpl(apiProvider, validateServerProof)
+        keySaltRepository = KeySaltRepositoryImpl(
+            db = db,
+            provider = apiProvider,
+            scopeProvider = scopeProvider
+        )
+        privateKeyRepository = PrivateKeyRepositoryImpl(
+            provider = apiProvider,
+            validateServerProof = validateServerProof
+        )
 
-        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db)
-        userRemoteDataSource = UserRemoteDataSourceImpl(apiProvider, userLocalDataSource)
+        userLocalDataSource = UserLocalDataSourceImpl(
+            cryptoContext = cryptoContext,
+            db = db
+        )
+        userRemoteDataSource = UserRemoteDataSourceImpl(
+            apiProvider = apiProvider,
+            userLocalDataSource = userLocalDataSource
+        )
 
         // UserRepositoryImpl implements PassphraseRepository.
         userRepository = UserRepositoryImpl(
@@ -172,6 +192,11 @@ UserManagerImplTests {
         )
         passphraseRepository = userRepository
 
+        userAddressRemoteDataSource = UserAddressRemoteDataSourceImpl(
+            apiProvider = apiProvider,
+            userLocalDataSource = userLocalDataSource
+        )
+
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
             passphraseRepository = userRepository,
             cryptoContext = cryptoContext
@@ -180,8 +205,8 @@ UserManagerImplTests {
         // UserManagerImpl need UserAddressRepository.
         userAddressRepository = UserAddressRepositoryImpl(
             db = db,
-            apiProvider = apiProvider,
             userRepository = userRepository,
+            userAddressRemoteDataSource = userAddressRemoteDataSource,
             userAddressKeySecretProvider = userAddressKeySecretProvider,
             context = cryptoContext,
             scopeProvider = scopeProvider

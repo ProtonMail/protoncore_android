@@ -72,6 +72,7 @@ import me.proton.core.user.data.repository.UserAddressRepositoryImpl.Companion.i
 import me.proton.core.user.domain.extension.canEncrypt
 import me.proton.core.user.domain.extension.canVerify
 import me.proton.core.user.domain.extension.primary
+import me.proton.core.user.domain.repository.UserAddressRemoteDataSource
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
@@ -120,6 +121,7 @@ class UserAddressRepositoryImplTests {
     private lateinit var userLocalDataSource: UserLocalDataSource
     private lateinit var userRemoteDataSource: UserRemoteDataSource
     private lateinit var userAddressRepository: UserAddressRepository
+    private lateinit var userAddressRemoteDataSource: UserAddressRemoteDataSource
     private lateinit var userAddressKeySecretProvider: UserAddressKeySecretProvider
 
     private val product = Product.Mail
@@ -142,42 +144,57 @@ class UserAddressRepositoryImplTests {
         val dispatcherProvider = TestDispatcherProvider(UnconfinedTestDispatcher())
         val scopeProvider = TestCoroutineScopeProvider(dispatcherProvider)
 
-        apiProvider = ApiProvider(apiManagerFactory, sessionProvider, dispatcherProvider)
+        apiProvider = ApiProvider(
+            apiManagerFactory = apiManagerFactory,
+            sessionProvider = sessionProvider,
+            dispatcherProvider = dispatcherProvider
+        )
 
-        userLocalDataSource = UserLocalDataSourceImpl(cryptoContext, db)
-        userRemoteDataSource = UserRemoteDataSourceImpl(apiProvider, userLocalDataSource)
+        userLocalDataSource = UserLocalDataSourceImpl(
+            cryptoContext = cryptoContext,
+            db = db
+        )
+        userRemoteDataSource = UserRemoteDataSourceImpl(
+            apiProvider = apiProvider,
+            userLocalDataSource = userLocalDataSource
+        )
         userRepository = UserRepositoryImpl(
-            apiProvider,
-            context,
-            product,
-            validateServerProof,
-            scopeProvider,
-            userLocalDataSource,
-            userRemoteDataSource
+            provider = apiProvider,
+            context = context,
+            product = product,
+            validateServerProof = validateServerProof,
+            scopeProvider = scopeProvider,
+            userLocalDataSource = userLocalDataSource,
+            userRemoteDataSource = userRemoteDataSource
+        )
+
+        userAddressRemoteDataSource = UserAddressRemoteDataSourceImpl(
+            apiProvider = apiProvider,
+            userLocalDataSource = userLocalDataSource
         )
 
         userAddressKeySecretProvider = UserAddressKeySecretProvider(
-            userRepository,
-            cryptoContext
+            passphraseRepository = userRepository,
+            cryptoContext = cryptoContext
         )
 
         userAddressRepository = UserAddressRepositoryImpl(
-            db,
-            apiProvider,
-            userRepository,
-            userAddressKeySecretProvider,
-            cryptoContext,
-            scopeProvider
+            db = db,
+            userRepository = userRepository,
+            userAddressRemoteDataSource = userAddressRemoteDataSource,
+            userAddressKeySecretProvider = userAddressKeySecretProvider,
+            context = cryptoContext,
+            scopeProvider = scopeProvider
         )
 
         // Needed to addAccount (User.userId foreign key -> Account.userId).
         accountManager = AccountManagerImpl(
-            Product.Mail,
-            UnconfinedTestCoroutineScopeProvider(),
-            AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
-            mockk(relaxed = true),
-            mockk(relaxed = true),
-            TestSessionListener()
+            product = Product.Mail,
+            scopeProvider = UnconfinedTestCoroutineScopeProvider(),
+            accountRepository = AccountRepositoryImpl(Product.Mail, db, cryptoContext.keyStoreCrypto),
+            authRepository = mockk(relaxed = true),
+            userManager = mockk(relaxed = true),
+            sessionListener = TestSessionListener()
         )
 
         // Before fetching any User, account need to be added to AccountManager (if not -> foreign key exception).

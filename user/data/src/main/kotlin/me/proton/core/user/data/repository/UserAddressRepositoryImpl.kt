@@ -33,22 +33,15 @@ import me.proton.core.domain.entity.SessionUserId
 import me.proton.core.domain.entity.UserId
 import me.proton.core.key.domain.extension.updateIsActive
 import me.proton.core.key.domain.useKeysAs
-import me.proton.core.network.data.ApiProvider
 import me.proton.core.user.data.UserAddressKeySecretProvider
-import me.proton.core.user.data.api.AddressApi
-import me.proton.core.user.data.api.request.CreateAddressRequest
-import me.proton.core.user.data.api.request.UpdateAddressRequest
-import me.proton.core.user.data.api.request.UpdateOrderRequest
 import me.proton.core.user.data.db.AddressDatabase
-import me.proton.core.user.data.extension.toAddress
 import me.proton.core.user.data.extension.toEntity
-import me.proton.core.user.data.extension.toEntityList
 import me.proton.core.user.data.extension.toUserAddress
-import me.proton.core.user.data.extension.toUserAddressKey
 import me.proton.core.user.domain.entity.AddressId
 import me.proton.core.user.domain.entity.UserAddress
 import me.proton.core.user.domain.entity.UserAddressKey
 import me.proton.core.user.domain.repository.PassphraseRepository
+import me.proton.core.user.domain.repository.UserAddressRemoteDataSource
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.util.kotlin.CoroutineScopeProvider
@@ -59,8 +52,8 @@ import javax.inject.Singleton
 @Suppress("TooManyFunctions")
 class UserAddressRepositoryImpl @Inject constructor(
     private val db: AddressDatabase,
-    private val apiProvider: ApiProvider,
     private val userRepository: UserRepository,
+    private val userAddressRemoteDataSource: UserAddressRemoteDataSource,
     private val userAddressKeySecretProvider: UserAddressKeySecretProvider,
     private val context: CryptoContext,
     scopeProvider: CoroutineScopeProvider
@@ -72,10 +65,7 @@ class UserAddressRepositoryImpl @Inject constructor(
 
     private val store = StoreBuilder.from(
         fetcher = Fetcher.of { userId: UserId ->
-            val list = apiProvider.get<AddressApi>(userId).invoke {
-                getAddresses().addresses
-            }.valueOrThrow
-            list.map { it.toAddress(userId) }
+            userAddressRemoteDataSource.fetchAll(userId)
         },
         sourceOfTruth = SourceOfTruth.of(
             reader = { userId: UserId ->
@@ -191,14 +181,9 @@ class UserAddressRepositoryImpl @Inject constructor(
         displayName: String,
         domain: String
     ): UserAddress {
-        return apiProvider.get<AddressApi>(sessionUserId).invoke {
-            val response = createAddress(CreateAddressRequest(displayName = displayName, domain = domain))
-            val address = response.address.toEntity(sessionUserId)
-            val addressId = address.addressId
-            val addressKeys = response.address.keys?.toEntityList(addressId).orEmpty()
-            insertOrUpdate(listOf(address.toUserAddress(addressKeys.map { it.toUserAddressKey() })))
-            checkNotNull(getAddress(sessionUserId, addressId))
-        }.valueOrThrow
+        val address = userAddressRemoteDataSource.createAddress(sessionUserId, displayName, domain)
+        insertOrUpdate(listOf(address))
+        return checkNotNull(getAddress(sessionUserId, address.addressId))
     }
 
     override suspend fun updateAddress(
@@ -207,20 +192,16 @@ class UserAddressRepositoryImpl @Inject constructor(
         displayName: String?,
         signature: String?
     ): UserAddress {
-        return apiProvider.get<AddressApi>(sessionUserId).invoke {
-            updateAddress(addressId.id, UpdateAddressRequest(displayName = displayName, signature = signature))
-            checkNotNull(getAddress(sessionUserId, addressId, refresh = true))
-        }.valueOrThrow
+        userAddressRemoteDataSource.updateAddress(sessionUserId, addressId, displayName, signature)
+        return checkNotNull(getAddress(sessionUserId, addressId, refresh = true))
     }
 
     override suspend fun updateOrder(
         sessionUserId: SessionUserId,
         addressIds: List<AddressId>
     ): List<UserAddress> {
-        return apiProvider.get<AddressApi>(sessionUserId).invoke {
-            updateOrder(UpdateOrderRequest(ids = addressIds.map { it.id }))
-            getAddresses(sessionUserId, refresh = true)
-        }.valueOrThrow
+        userAddressRemoteDataSource.updateOrder(sessionUserId, addressIds)
+        return getAddresses(sessionUserId, refresh = true)
     }
 
     companion object {

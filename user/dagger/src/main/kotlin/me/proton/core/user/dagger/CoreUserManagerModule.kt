@@ -26,6 +26,7 @@ import dagger.hilt.components.SingletonComponent
 import me.proton.core.user.data.UserAddressManagerImpl
 import me.proton.core.user.data.UserManagerImpl
 import me.proton.core.user.data.repository.DomainRepositoryImpl
+import me.proton.core.user.data.repository.UserAddressRemoteDataSourceImpl
 import me.proton.core.user.data.repository.UserAddressRepositoryImpl
 import me.proton.core.user.data.repository.UserLocalDataSourceImpl
 import me.proton.core.user.data.repository.UserRemoteDataSourceImpl
@@ -37,6 +38,7 @@ import me.proton.core.user.domain.repository.PassphraseRepository
 import me.proton.core.user.domain.repository.UserAddressRepository
 import me.proton.core.user.domain.repository.UserRepository
 import me.proton.core.user.domain.SignedKeyListChangeListener
+import me.proton.core.user.domain.repository.UserAddressRemoteDataSource
 import me.proton.core.user.domain.repository.UserLocalDataSource
 import me.proton.core.user.domain.repository.UserRemoteDataSource
 import javax.inject.Singleton
@@ -71,6 +73,14 @@ public interface CoreUserDataSourceModule {
     @Binds
     @Singleton
     public fun provideUserRemoteDataSource(impl: UserRemoteDataSourceImpl): UserRemoteDataSource
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+public interface CoreUserAddressDataSourceModule {
+    @Binds
+    @Singleton
+    public fun provideUserAddressRemoteDataSource(impl: UserAddressRemoteDataSourceImpl): UserAddressRemoteDataSource
 }
 
 @Module
