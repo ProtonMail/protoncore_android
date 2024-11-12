@@ -11,6 +11,28 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.2.0] - 2024-11-12
+
+### Chores
+
+- Added Global SSO observability metrics.
+- Remove `IsDynamicPlanAdjustedPriceEnabled` flag.
+- Remove `IsDynamicPlanEnabled` flag.
+
+### Features
+
+- Migrated atlas environment deploy to Atlas 2.6.
+- presentation-compose: Add `ProtonCloseButton`.
+
+### Bug Fixes
+
+- user: Don't fetch CredentialLess User Address.
+
+### Refactoring
+
+- Refactored flowWithResultContext usage.
+- util-kotlin: Improved flowWithResultContext by adding FlowResultCollector.
+
 ## [29.1.4] - 2024-11-01
 
 ### Bug Fixes
