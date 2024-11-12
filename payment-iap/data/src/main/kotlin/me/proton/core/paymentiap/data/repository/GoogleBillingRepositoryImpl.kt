@@ -88,7 +88,7 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
             .build()
         retry(predicate = ::isRetryable) {
             val result = connectedBillingClient.withClient { it.acknowledgePurchase(params) }
-            result.checkOk()
+            result.checkOk(LogTag.GIAP_ERROR_ACK)
         }
     }
 
@@ -112,11 +112,11 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         val result = retry(predicate = ::isRetryable) {
             connectedBillingClient
                 .withClient { it.queryProductDetails(params) }
-                .also { it.billingResult.checkOk() }
+                .also { it.billingResult.checkOk(LogTag.GIAP_ERROR_QUERY_PRODUCT, "Products query error: $googlePlayPlanNames.") }
         }
         val productDetails = result.productDetailsList
         if (productDetails.isNullOrEmpty()) {
-            CoreLogger.i(LogTag.GIAP_ERROR, "Google products not found: $googlePlayPlanNames.")
+            CoreLogger.e(LogTag.GIAP_ERROR_QUERY_PRODUCT, "Products not match: $googlePlayPlanNames.")
         }
         productDetails?.map { it.wrap() }
     }
@@ -132,14 +132,19 @@ public class GoogleBillingRepositoryImpl @Inject internal constructor(
         val result = retry(predicate = ::isRetryable) {
             connectedBillingClient
                 .withClient { it.queryPurchasesAsync(params) }
-                .also { it.billingResult.checkOk() }
+                .also { it.billingResult.checkOk(LogTag.GIAP_ERROR_QUERY_PURCHASE) }
         }
         result.purchasesList.map { it.wrap() }
     }
 
-    private fun BillingResult.checkOk() {
+    private fun BillingResult.checkOk(logTag: String, message: String? = null) {
         if (responseCode != BillingResponseCode.OK) {
-            throw BillingClientError(responseCode, debugMessage)
+            val error = BillingClientError(responseCode, debugMessage)
+            when (message) {
+                null -> CoreLogger.e(tag = logTag, e = error)
+                else -> CoreLogger.e(tag = logTag, e = error, message = message)
+            }
+            throw error
         }
     }
 
