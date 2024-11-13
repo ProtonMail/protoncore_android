@@ -31,7 +31,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.auth.domain.entity.BillingDetails
 import me.proton.core.auth.domain.usecase.CreateLoginSession
-import me.proton.core.auth.domain.usecase.IsSsoEnabled
+import me.proton.core.auth.domain.feature.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.primaryKeyExists
 import me.proton.core.auth.presentation.LogTag

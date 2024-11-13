@@ -21,7 +21,7 @@ package me.proton.core.auth.data.usecase
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.auth.data.R
-import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
+import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager

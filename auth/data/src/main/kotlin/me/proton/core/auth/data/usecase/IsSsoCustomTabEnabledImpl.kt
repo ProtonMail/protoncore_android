@@ -21,8 +21,7 @@ package me.proton.core.auth.data.usecase
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.auth.data.R
-import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
-import me.proton.core.auth.domain.usecase.IsSsoEnabled
+import me.proton.core.auth.domain.feature.IsSsoCustomTabEnabled
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.FeatureId

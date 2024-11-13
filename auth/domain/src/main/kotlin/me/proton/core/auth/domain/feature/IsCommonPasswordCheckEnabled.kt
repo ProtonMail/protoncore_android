@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2023 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,9 +16,8 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase
+package me.proton.core.auth.domain.feature
 
-/** Checks if External SSO is enabled. */
-fun interface IsSsoEnabled {
-    operator fun invoke(): Boolean
-}
+import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
+
+interface IsCommonPasswordCheckEnabled : IsFeatureFlagEnabled

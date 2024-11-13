@@ -18,7 +18,7 @@
  */
 package me.proton.core.auth.test.fake
 
-import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
+import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.domain.entity.UserId
 import javax.inject.Inject
 import javax.inject.Singleton

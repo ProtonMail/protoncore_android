@@ -16,26 +16,9 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain.usecase
+package me.proton.core.auth.domain.feature
 
-import me.proton.core.domain.entity.UserId
-import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.seconds
-
-interface IsCredentialLessEnabled {
-
-    suspend operator fun invoke(userId: UserId? = null): Boolean
-
-    fun isLocalEnabled(): Boolean
-
-    suspend fun awaitIsRemoteDisabled(
-        userId: UserId? = null,
-        timeout: Duration = defaultAwaitTimeout
-    ): Boolean
-
-    @ExcludeFromCoverage
-    private companion object {
-        private val defaultAwaitTimeout = 3.seconds
-    }
+/** Checks if SSO Custom Tab is enabled. */
+fun interface IsSsoCustomTabEnabled {
+    operator fun invoke(): Boolean
 }

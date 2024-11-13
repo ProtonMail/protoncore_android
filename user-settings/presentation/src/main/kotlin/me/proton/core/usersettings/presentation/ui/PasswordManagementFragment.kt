@@ -38,7 +38,7 @@ import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecover
 import me.proton.core.accountrecovery.presentation.compose.ui.AccountRecoveryDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.ui.PasswordResetDialogActivity
 import me.proton.core.accountrecovery.presentation.compose.view.AccountRecoveryInfo
-import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
+import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.presentation.entity.fromEntity
 import me.proton.core.auth.presentation.viewmodel.Source
 import me.proton.core.compose.theme.ProtonTheme

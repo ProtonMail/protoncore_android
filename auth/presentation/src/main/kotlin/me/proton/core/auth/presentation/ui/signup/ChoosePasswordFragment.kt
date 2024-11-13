@@ -25,7 +25,7 @@ import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
-import me.proton.core.auth.domain.IsCommonPasswordCheckEnabled
+import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.FragmentSignupChoosePasswordBinding
 import me.proton.core.auth.presentation.util.setTextWithAnnotatedLink

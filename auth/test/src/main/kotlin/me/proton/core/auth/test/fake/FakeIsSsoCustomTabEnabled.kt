@@ -18,7 +18,7 @@
 
 package me.proton.core.auth.test.fake
 
-import me.proton.core.auth.domain.usecase.IsSsoCustomTabEnabled
+import me.proton.core.auth.domain.feature.IsSsoCustomTabEnabled
 import javax.inject.Inject
 import javax.inject.Singleton
 

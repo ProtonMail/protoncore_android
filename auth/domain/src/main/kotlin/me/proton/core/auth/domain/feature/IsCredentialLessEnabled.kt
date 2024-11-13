@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,8 +16,26 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.domain
+package me.proton.core.auth.domain.feature
 
-import me.proton.core.featureflag.domain.IsFeatureFlagEnabled
+import me.proton.core.domain.entity.UserId
+import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.seconds
 
-interface IsCommonPasswordCheckEnabled : IsFeatureFlagEnabled
+interface IsCredentialLessEnabled {
+
+    suspend operator fun invoke(userId: UserId? = null): Boolean
+
+    fun isLocalEnabled(): Boolean
+
+    suspend fun awaitIsRemoteDisabled(
+        userId: UserId? = null,
+        timeout: Duration = defaultAwaitTimeout
+    ): Boolean
+
+    @ExcludeFromCoverage
+    private companion object {
+        private val defaultAwaitTimeout = 3.seconds
+    }
+}

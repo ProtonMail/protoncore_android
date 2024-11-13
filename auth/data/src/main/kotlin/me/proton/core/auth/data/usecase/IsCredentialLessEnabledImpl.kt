@@ -22,7 +22,7 @@ import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.withTimeoutOrNull
 import me.proton.core.auth.data.R
-import me.proton.core.auth.domain.usecase.IsCredentialLessEnabled
+import me.proton.core.auth.domain.feature.IsCredentialLessEnabled
 import me.proton.core.domain.entity.UserId
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
