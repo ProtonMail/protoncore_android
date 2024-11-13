@@ -39,6 +39,9 @@ publishOption.shouldBePublishedAsLib = true
 
 android {
     namespace = "me.proton.core.humanverification.presentation"
+    buildFeatures {
+        buildConfig = true
+    }
 }
 
 dependencies {

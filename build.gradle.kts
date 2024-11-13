@@ -38,6 +38,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.dependencyAnalysis)
     alias(libs.plugins.kotlinx.kover) apply false
+    alias(libs.plugins.compose.compiler) apply false
 }
 
 buildscript {
@@ -107,7 +108,7 @@ tasks.register("generateChangelog", JavaExec::class.java) {
 }
 
 dependencyAnalysis {
-    dependencies {
+    structure {
         bundle("androidx-datastore") { includeGroup("androidx.datastore") }
         bundle("androidx-room") {
             includeGroup("androidx.room")
@@ -131,7 +132,6 @@ dependencyAnalysis {
     }
     issues {
         all {
-            ignoreKtx(true)
             onAny {
                 exclude(
                     "com.google.dagger:dagger-compiler",

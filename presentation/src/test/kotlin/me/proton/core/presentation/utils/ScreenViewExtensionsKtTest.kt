@@ -23,6 +23,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import androidx.savedstate.SavedStateRegistry
+import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.justRun
 import io.mockk.mockk
@@ -37,6 +38,7 @@ import java.util.concurrent.atomic.AtomicReference
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class ScreenViewExtensionsKtTest {
     @get:Rule
@@ -68,20 +70,21 @@ class ScreenViewExtensionsKtTest {
             every { consumeRestoredStateForKey(any()) } returns null
             justRun { registerSavedStateProvider(any(), any()) }
         }
-        val block = spyk({})
+        var blockCallCount = 0
+        val block = { blockCallCount += 1 }
 
         // WHEN
         lifecycleOwner.launchOnScreenView(savedStateRegistry, block)
         val lifecycleRegistry = requireNotNull(lifecycleRegistryRef.get())
 
         // THEN
-        verify(exactly = 0) { block() }
+        assertEquals(0, blockCallCount)
 
         // WHEN
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
 
         // THEN
-        verify(exactly = 1) { block() }
+        assertEquals(1, blockCallCount)
     }
 
     @Test
@@ -100,20 +103,21 @@ class ScreenViewExtensionsKtTest {
             every { consumeRestoredStateForKey(any()) } returns mockk() // <- simulate state for recreating
             justRun { registerSavedStateProvider(any(), any()) }
         }
-        val block = spyk({})
+        var blockCallCount = 0
+        val block = { blockCallCount += 1 }
 
         // WHEN
         lifecycleOwner.launchOnScreenView(savedStateRegistry, block)
         val lifecycleRegistry = requireNotNull(lifecycleRegistryRef.get())
 
         // THEN
-        verify(exactly = 0) { block() }
+        assertEquals(0, blockCallCount)
 
         // WHEN
         lifecycleRegistry.currentState = Lifecycle.State.CREATED
 
         // THEN
-        verify(exactly = 0) { block() }
+        assertEquals(0, blockCallCount)
     }
 
     @Test

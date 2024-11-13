@@ -33,6 +33,10 @@ protonCoverage {
 android {
     namespace = "me.proton.core.util.android.sentry"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         buildConfigField(
             "String",

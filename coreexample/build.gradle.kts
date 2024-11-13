@@ -27,6 +27,7 @@ import java.util.Properties
 plugins {
     protonAndroidApp
     protonDagger
+    alias(libs.plugins.compose.compiler)
     id("me.proton.core.gradle-plugins.environment-config")
     kotlin("plugin.serialization")
 }
@@ -52,11 +53,11 @@ val localProperties = Properties().apply {
 android {
     namespace = "me.proton.android.core.coreexample"
 
-    buildFeatures.compose = true
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = `compose compiler version`
+    buildFeatures {
+        buildConfig = true
+        compose = true
     }
+
     compileOptions {
         isCoreLibraryDesugaringEnabled = true
     }

@@ -31,6 +31,7 @@ import io.mockk.verify
 import org.junit.Rule
 import java.util.concurrent.atomic.AtomicReference
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -51,7 +52,8 @@ class BackPressedExtensionsKtTest {
             }
         }
         val onBackPressedDispatcher = OnBackPressedDispatcher()
-        val block = spyk({})
+        var blockCallCount = 0
+        val block = { blockCallCount += 1 }
 
         // WHEN move to RESUMED state
         lifecycleOwner.launchOnBackPressed(onBackPressedDispatcher, block)
@@ -65,7 +67,7 @@ class BackPressedExtensionsKtTest {
         onBackPressedDispatcher.onBackPressed()
 
         // THEN
-        verify(exactly = 1) { block() }
+        assertEquals(1, blockCallCount)
         assertFalse(onBackPressedDispatcher.hasEnabledCallbacks())
     }
 
@@ -85,7 +87,8 @@ class BackPressedExtensionsKtTest {
             every { isEnabled } returns true
         }
         onBackPressedDispatcher.addCallback(originalBackPressedCallback)
-        val block = spyk({})
+        var blockCallCount = 0
+        val block = { blockCallCount += 1 }
 
         // WHEN move to RESUMED state
         lifecycleOwner.launchOnBackPressed(onBackPressedDispatcher, block)
@@ -99,7 +102,7 @@ class BackPressedExtensionsKtTest {
         onBackPressedDispatcher.onBackPressed()
 
         // THEN
-        verify(exactly = 1) { block() }
+        assertEquals(1, blockCallCount)
         verify { originalBackPressedCallback.handleOnBackPressed() }
         verify(exactly = 0) { originalBackPressedCallback.remove() }
         assertTrue(onBackPressedDispatcher.hasEnabledCallbacks())

@@ -23,6 +23,7 @@ import me.proton.core.gradle.plugin.ComposeUiLibraryExtension
 import me.proton.core.gradle.plugin.PluginIds
 import me.proton.core.gradle.plugin.applyComposeUiConvention
 import me.proton.core.gradle.plugin.createProtonExt
+import org.gradle.api.Plugin
 import org.gradle.api.Project
 
 public class ComposeUiLibraryPlugin : BaseAndroidPlugin<ComposeUiLibraryExtension>() {
@@ -40,6 +41,7 @@ public class ComposeUiLibraryPlugin : BaseAndroidPlugin<ComposeUiLibraryExtensio
         super.apply(target)
         target.applyComposeUiConvention()
 
+        target.pluginManager.apply(PluginIds.composeCompiler)
         target.pluginManager.apply(PluginIds.paparazzi)
     }
 }

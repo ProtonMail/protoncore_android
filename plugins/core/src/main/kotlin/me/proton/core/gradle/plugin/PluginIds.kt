@@ -22,6 +22,8 @@ internal object PluginIds {
     const val androidApp = "com.android.application"
     const val androidLibrary = "com.android.library"
     const val androidTest = "com.android.test"
+    const val composeCompiler = "org.jetbrains.kotlin.plugin.compose"
+    const val dependencyAnalysis = "com.autonomousapps.dependency-analysis"
     const val hilt = "dagger.hilt.android.plugin"
     const val javaLibrary = "org.gradle.java-library"
     const val kapt = "org.jetbrains.kotlin.kapt"

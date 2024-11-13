@@ -34,6 +34,7 @@ public class KotlinLibraryPlugin : BuildConventionPlugin() {
         target.pluginManager.apply(PluginIds.javaLibrary)
         target.pluginManager.apply(PluginIds.kotlinJvm)
         target.pluginManager.apply(ProtonCoveragePlugin::class.java)
+        target.pluginManager.apply(PluginIds.dependencyAnalysis)
 
         val ext = target.createProtonExt<KotlinLibraryExtension>()
         target.applyJavaConvention()

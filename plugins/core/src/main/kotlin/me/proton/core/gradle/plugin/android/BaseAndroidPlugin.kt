@@ -38,6 +38,7 @@ public abstract class BaseAndroidPlugin<E> : BuildConventionPlugin() where E : K
 
         target.pluginManager.apply(androidPluginId)
         target.pluginManager.apply(PluginIds.kotlinAndroid)
+        target.pluginManager.apply(PluginIds.dependencyAnalysis)
 
         val ext = createPluginExtension(target)
         target.applyAndroidConvention(createConventionSettings())

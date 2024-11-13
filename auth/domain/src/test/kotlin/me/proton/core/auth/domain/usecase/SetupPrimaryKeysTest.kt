@@ -105,7 +105,7 @@ class SetupPrimaryKeysTest {
 
         tested.invoke(testUserId, encryptedPassword, mockk(), testDomain)
 
-        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any(), any(), any()) wasNot Called }
+        coVerify(exactly = 0) { userManager.setupPrimaryKeys(any(), any(), any(), any(), any(), any(), any()) }
         coVerify { userAddressRepository wasNot Called }
         coVerify { authRepository wasNot Called }
         coVerify { domainRepository wasNot Called }
@@ -184,7 +184,7 @@ class SetupPrimaryKeysTest {
 
         tested.invoke(testUserId, encryptedPassword, AccountType.External, testDomain)
 
-        coVerify { userManager.setupPrimaryKeys(any(), any(), any(), any(), any(), any(), any()) wasNot Called }
+        coVerify(exactly = 0) { userManager.setupPrimaryKeys(any(), any(), any(), any(), any(), any(), any()) }
         coVerify { userAddressRepository wasNot Called }
         coVerify { authRepository wasNot Called }
     }

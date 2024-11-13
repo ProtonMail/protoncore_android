@@ -53,10 +53,6 @@ class VerifyAddressChangeWasIncludedTest {
     private val getCurrentTime = mockk<GetCurrentTime>()
     private val verifySignedKeyListSignature = mockk<VerifySignedKeyListSignature>()
     private val verifyObsolescenceInclusion = mockk<VerifyObsolescenceInclusion>()
-    private val publicAddress = mockk<PublicAddress> {
-        every { email } returns testEmail
-        every { keys } returns emptyList()
-    }
     private val publicAddressRepository: PublicAddressRepository = mockk()
     private val testUserId = UserId("test-user-id")
     private val testEmail = "kt.test@proton.me"
@@ -72,6 +68,10 @@ class VerifyAddressChangeWasIncludedTest {
         every { isObsolete } returns false
     }
     private val currentTime = 10_000L
+    private val publicAddress = mockk<PublicAddress> {
+        every { email } returns testEmail
+        every { keys } returns emptyList()
+    }
 
     private val noSKLException = ApiException(
         ApiResult.Error.Http(httpCode = HttpResponseCodes.HTTP_UNPROCESSABLE, message = "test error")

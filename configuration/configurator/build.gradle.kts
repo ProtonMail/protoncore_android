@@ -25,6 +25,7 @@ import java.util.*
 plugins {
     protonAndroidApp
     protonDagger
+    alias(libs.plugins.compose.compiler)
     id("me.proton.core.gradle-plugins.environment-config")
     kotlin("plugin.serialization")
 }
@@ -60,10 +61,9 @@ android {
         buildConfigField("String", "UNLEASH_URL", getProperty("UNLEASH_URL").toBuildConfigValue())
     }
 
-    buildFeatures.compose = true
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = `compose compiler version`
+    buildFeatures {
+        buildConfig = true
+        compose = true
     }
 }
 
@@ -81,6 +81,7 @@ dependencies {
         project(Module.networkData),
         project(Module.networkDagger),
         project(Module.quark),
+        `compose-material-icons-core`,
         datastore,
         datastorePreferences,
         `hilt-navigation-compose`,

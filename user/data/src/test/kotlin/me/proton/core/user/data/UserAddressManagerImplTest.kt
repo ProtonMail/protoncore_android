@@ -76,12 +76,12 @@ class UserAddressManagerImplTest {
         every { addressId } returns addressIdExternal
         every { keys } returns listOf(addressKey)
     }
+    private val addressIdNew = AddressId("addressIdNew")
     private val addressCopy = mockk<UserAddress> {
         every { type } returns AddressType.Original
         every { addressId } returns addressIdNew
         every { keys } returns emptyList()
     }
-    private val addressIdNew = AddressId("addressIdNew")
     private val addressNew = mockk<UserAddress> {
         every { type } returns AddressType.Original
         every { addressId } returns addressIdNew

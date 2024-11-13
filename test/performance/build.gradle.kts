@@ -48,6 +48,10 @@ publishOption.shouldBePublishedAsLib = true
 android {
     namespace = "me.proton.core.test.performance"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         buildConfigField("String", "BUILD_COMMIT_SHA1", getCommitSha())
         buildConfigField("String", "CI_RUN_ID", getProperty("CI_JOB_ID", "unknown").toBuildConfigValue())
