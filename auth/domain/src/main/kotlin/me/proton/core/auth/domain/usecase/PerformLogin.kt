@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.domain.usecase
 
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.repository.AuthRepository
 import me.proton.core.challenge.domain.ChallengeManager
@@ -42,9 +43,10 @@ class PerformLogin @Inject constructor(
 ) {
     suspend operator fun invoke(
         username: String,
-        password: EncryptedString
+        password: EncryptedString,
+        info: AuthInfo.Srp? = null,
     ): SessionInfo {
-        val loginInfo = authRepository.getAuthInfoSrp(
+        val loginInfo = info ?: authRepository.getAuthInfoSrp(
             sessionId = null,
             username = username,
         )

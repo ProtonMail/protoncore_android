@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
+ *
+ * ProtonCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * ProtonCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package me.proton.core.auth.presentation.viewmodel
 
 import androidx.core.net.toUri
@@ -10,15 +28,13 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.domain.usecase.CreateLoginSsoSession
 import me.proton.core.auth.domain.usecase.GetAuthInfoSso
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.PostLoginSsoAccountSetup
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ApiResult
-import me.proton.core.network.domain.ResponseCodes
+import me.proton.core.network.domain.isSwitchToSrp
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.LoginAuthWithSsoTotal
@@ -64,7 +80,7 @@ class LoginSsoViewModel @Inject constructor(
         flow {
             emit(State.Processing())
             val result = getAuthInfoSso(sessionId = null, email = email)
-            emit(State.StartToken(result.ssoChallengeToken))
+            emit(State.StartToken(result.token))
         }.catchWhen(Throwable::isSwitchToSrp) {
             emit(State.SignInWithSrp(it))
         }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
@@ -125,10 +141,4 @@ class LoginSsoViewModel @Inject constructor(
     fun onScreenView(screenId: LoginScreenViewTotal.ScreenId) {
         observabilityManager.enqueue(LoginScreenViewTotal(screenId))
     }
-}
-
-private fun Throwable.isSwitchToSrp(): Boolean {
-    if (this !is ApiException) return false
-    val error = error as? ApiResult.Error.Http
-    return error?.proton?.code == ResponseCodes.AUTH_SWITCH_TO_SRP
 }

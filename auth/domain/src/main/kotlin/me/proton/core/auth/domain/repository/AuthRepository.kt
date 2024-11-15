@@ -32,7 +32,20 @@ import me.proton.core.network.domain.session.SessionId
 interface AuthRepository {
 
     /**
-     * Get Authentication Info (e.g. needed during login or password/locked scope).
+     * Get Authentication Info for SRP or SSO account.
+     *
+     * @return [AuthInfo], either [AuthInfo.Srp] or [AuthInfo.Sso].
+     *
+     * @see [getAuthInfoSrp]
+     * @see [getAuthInfoSso]
+     */
+    suspend fun getAuthInfoAuto(
+        sessionId: SessionId?,
+        username: String
+    ): AuthInfo
+
+    /**
+     * Get Authentication Info for SRP account.
      */
     suspend fun getAuthInfoSrp(
         sessionId: SessionId?,
@@ -40,7 +53,7 @@ interface AuthRepository {
     ): AuthInfo.Srp
 
     /**
-     * Get Authentication Info for SSO.
+     * Get Authentication Info for SSO account.
      */
     suspend fun getAuthInfoSso(
         sessionId: SessionId?,

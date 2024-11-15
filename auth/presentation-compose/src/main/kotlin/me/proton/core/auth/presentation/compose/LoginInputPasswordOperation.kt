@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2021 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,15 +16,13 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation
+package me.proton.core.auth.presentation.compose
 
-object LogTag {
-    /** Tag for marking when a login flow has failed with an exception. */
-    const val FLOW_ERROR_LOGIN = "core.auth.presentation.flow.error.login"
+public sealed interface LoginInputPasswordOperation
 
-    /** Tag for marking when a flow has failed with an exception, but it will be retried. */
-    const val FLOW_ERROR_RETRY = "core.auth.presentation.flow.retry"
-
-    /** Tag for marking when a 2fa flow has failed with an exception. */
-    const val FLOW_ERROR_2FA = "core.auth.presentation.flow.error.2fa"
+public sealed interface LoginInputPasswordAction : LoginInputPasswordOperation {
+    public data class SetPassword(
+        val username: String,
+        val password: String
+    ) : LoginInputPasswordAction
 }

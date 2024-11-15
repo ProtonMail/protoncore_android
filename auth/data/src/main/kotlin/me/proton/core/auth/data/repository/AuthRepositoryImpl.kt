@@ -69,6 +69,12 @@ class AuthRepositoryImpl @Inject constructor(
     private val validateServerProof: ValidateServerProof
 ) : AuthRepository {
 
+    override suspend fun getAuthInfoAuto(sessionId: SessionId?, username: String): AuthInfo =
+        provider.get<AuthenticationApi>(sessionId).invoke {
+            val request = AuthInfoRequest(username, AuthIntent.AUTO.value)
+            getAuthInfo(request).toAuthInfo(username)
+        }.valueOrThrow
+
     override suspend fun getAuthInfoSrp(sessionId: SessionId?, username: String): AuthInfo.Srp =
         provider.get<AuthenticationApi>(sessionId).invoke {
             val request = AuthInfoRequest(username, AuthIntent.PROTON.value)

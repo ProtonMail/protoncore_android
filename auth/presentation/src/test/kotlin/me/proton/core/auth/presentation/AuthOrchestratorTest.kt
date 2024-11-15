@@ -30,20 +30,20 @@ import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountDetails
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
+import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
 import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.AddAccountInput
-import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginSsoInput
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.TwoPassModeInput
-import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordInput
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.ui.StartAddAccount
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartLogin
 import me.proton.core.auth.presentation.ui.StartLoginSso
+import me.proton.core.auth.presentation.ui.StartLoginTwoStep
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
@@ -57,8 +57,13 @@ import kotlin.test.assertFailsWith
 
 class AuthOrchestratorTest {
 
+    private val isLoginTwoStepEnabled = mockk<IsLoginTwoStepEnabled> {
+        every { this@mockk.invoke() } returns false
+    }
+
     private val addAccountLauncher = mockk<ActivityResultLauncher<AddAccountInput>>(relaxed = true)
     private val loginLauncher = mockk<ActivityResultLauncher<LoginInput>>(relaxed = true)
+    private val loginTwoStepLauncher = mockk<ActivityResultLauncher<LoginInput>>(relaxed = true)
     private val loginSsoLauncher = mockk<ActivityResultLauncher<LoginSsoInput>>(relaxed = true)
     private val secondFactorLauncher = mockk<ActivityResultLauncher<SecondFactorInput>>(relaxed = true)
     private val twoPassModeLauncher = mockk<ActivityResultLauncher<TwoPassModeInput>>(relaxed = true)
@@ -68,6 +73,7 @@ class AuthOrchestratorTest {
     private val caller = mockk<ActivityResultCaller>(relaxed = true) {
         every { registerForActivityResult(StartAddAccount, any()) } returns addAccountLauncher
         every { registerForActivityResult(StartLogin, any()) } returns loginLauncher
+        every { registerForActivityResult(StartLoginTwoStep, any()) } returns loginTwoStepLauncher
         every { registerForActivityResult(StartLoginSso, any()) } returns loginSsoLauncher
         every { registerForActivityResult(StartSecondFactor, any()) } returns secondFactorLauncher
         every { registerForActivityResult(StartTwoPassMode, any()) } returns twoPassModeLauncher
@@ -79,7 +85,7 @@ class AuthOrchestratorTest {
 
     @Before
     fun beforeEveryTest() {
-        orchestrator = AuthOrchestrator()
+        orchestrator = AuthOrchestrator(isLoginTwoStepEnabled)
     }
 
     @Test
@@ -127,21 +133,35 @@ class AuthOrchestratorTest {
         // Given
         orchestrator.register(caller)
         val username = "test-username"
-        val password = "test-password"
-        val input = LoginInput(AccountType.Internal, username, password)
+        val input = LoginInput(AccountType.Internal, username)
         // When
-        orchestrator.startLoginWorkflow(AccountType.Internal, username, password)
+        orchestrator.startLoginWorkflow(AccountType.Internal, username)
         // Then
         verify(exactly = 1) { loginLauncher.launch(input) }
+    }
+
+    @Test
+    fun startLoginWorkflow_LoginTwoStep() = runTest {
+        // Given
+        every { isLoginTwoStepEnabled.invoke() } returns true
+
+        orchestrator.register(caller)
+        val username = "test-username"
+        val input = LoginInput(AccountType.Internal, username)
+        // When
+        orchestrator.startLoginWorkflow(AccountType.Internal, username)
+        // Then
+        verify(exactly = 1) { loginTwoStepLauncher.launch(input) }
+        verify(exactly = 0) { loginLauncher.launch(input) }
     }
 
     @Test
     fun `startLoginWorkflow username null`() = runTest {
         // Given
         orchestrator.register(caller)
-        val input = LoginInput(AccountType.Internal, null, null)
+        val input = LoginInput(AccountType.Internal, null)
         // When
-        orchestrator.startLoginWorkflow(AccountType.Internal, null, null)
+        orchestrator.startLoginWorkflow(AccountType.Internal, null)
         // Then
         verify(exactly = 1) { loginLauncher.launch(input) }
     }

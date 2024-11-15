@@ -29,13 +29,14 @@ import me.proton.core.auth.data.repository.AuthDeviceRemoteDataSourceImpl
 import me.proton.core.auth.data.repository.AuthDeviceRepositoryImpl
 import me.proton.core.auth.data.repository.AuthRepositoryImpl
 import me.proton.core.auth.data.repository.DeviceSecretRepositoryImpl
-import me.proton.core.auth.data.usecase.IsCommonPasswordCheckEnabledImpl
+import me.proton.core.auth.data.feature.IsCommonPasswordCheckEnabledImpl
 import me.proton.core.auth.data.repository.MemberDeviceLocalDataSourceImpl
 import me.proton.core.auth.data.repository.MemberDeviceRemoteDataSourceImpl
 import me.proton.core.auth.data.repository.MemberDeviceRepositoryImpl
-import me.proton.core.auth.data.usecase.IsCredentialLessEnabledImpl
-import me.proton.core.auth.data.usecase.IsSsoCustomTabEnabledImpl
-import me.proton.core.auth.data.usecase.IsSsoEnabledImpl
+import me.proton.core.auth.data.feature.IsCredentialLessEnabledImpl
+import me.proton.core.auth.data.feature.IsLoginTwoStepEnabledImpl
+import me.proton.core.auth.data.feature.IsSsoCustomTabEnabledImpl
+import me.proton.core.auth.data.feature.IsSsoEnabledImpl
 import me.proton.core.auth.domain.feature.IsCommonPasswordCheckEnabled
 import me.proton.core.auth.domain.feature.IsFido2Enabled
 import me.proton.core.auth.domain.repository.AuthDeviceLocalDataSource
@@ -47,6 +48,7 @@ import me.proton.core.auth.domain.repository.MemberDeviceLocalDataSource
 import me.proton.core.auth.domain.repository.MemberDeviceRemoteDataSource
 import me.proton.core.auth.domain.repository.MemberDeviceRepository
 import me.proton.core.auth.domain.feature.IsCredentialLessEnabled
+import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
 import me.proton.core.auth.domain.feature.IsSsoCustomTabEnabled
 import me.proton.core.auth.domain.feature.IsSsoEnabled
 import me.proton.core.network.domain.scopes.MissingScopeListener
@@ -95,6 +97,10 @@ public interface CoreAuthFeaturesModule {
     @Binds
     @Singleton
     public fun provideIsSsoCustomTabEnabled(impl: IsSsoCustomTabEnabledImpl): IsSsoCustomTabEnabled
+
+    @Binds
+    @Singleton
+    public fun provideIsLoginTwoStepEnabled(impl: IsLoginTwoStepEnabledImpl): IsLoginTwoStepEnabled
 
     @Binds
     @Singleton

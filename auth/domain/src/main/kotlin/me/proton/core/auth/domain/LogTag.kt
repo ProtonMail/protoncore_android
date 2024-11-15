@@ -27,4 +27,13 @@ object LogTag {
     const val UNPRIVATIZE_USER = "core.auth.domain.perform.backuppass.unprivatize"
     const val SETUP_KEYS = "core.auth.domain.perform.backuppass.setup.keys"
     const val CHANGE_BACKUP_PASSWORD = "core.auth.domain.perform.backuppass.change"
+
+    /** Tag for marking when a login flow has failed with an exception. */
+    const val FLOW_ERROR_LOGIN = "core.auth.presentation.flow.error.login"
+
+    /** Tag for marking when a flow has failed with an exception, but it will be retried. */
+    const val FLOW_ERROR_RETRY = "core.auth.presentation.flow.retry"
+
+    /** Tag for marking when a 2fa flow has failed with an exception. */
+    const val FLOW_ERROR_2FA = "core.auth.presentation.flow.error.2fa"
 }

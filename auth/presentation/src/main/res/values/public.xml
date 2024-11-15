@@ -3,5 +3,6 @@
     <public name="core_feature_auth_sso_redirect_scheme" type="string" />
     <public name="core_feature_auth_signup_show_congrats" type="bool" />
     <public name="core_feature_auth_signin_show_long_login_toast" type="bool" />
+    <public name="core_feature_auth_signin_show_troubleshoot_button" type="bool" />
     <public name="core_feature_auth_user_check_max_free_user_count" type="integer" />
 </resources>

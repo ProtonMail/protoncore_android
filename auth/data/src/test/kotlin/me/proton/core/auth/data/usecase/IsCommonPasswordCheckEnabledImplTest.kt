@@ -24,6 +24,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import me.proton.core.auth.data.R
+import me.proton.core.auth.data.feature.IsCommonPasswordCheckEnabledImpl
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import org.junit.Assert.*

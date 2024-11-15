@@ -49,8 +49,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collectLatest
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.ChangePassword
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceRejected
@@ -88,11 +89,10 @@ public fun DeviceSecretScreen(
     onErrorMessage: (String?) -> Unit = {},
     onNavigateToBackupPasswordInput: () -> Unit = {},
     onNavigateToRequestAdminHelp: () -> Unit = {},
-    externalAction: StateFlow<DeviceSecretAction?> = MutableStateFlow(null),
+    externalAction: SharedFlow<DeviceSecretAction> = MutableSharedFlow(),
     viewModel: DeviceSecretViewModel = hiltViewModel()
 ) {
-    val action by externalAction.collectAsStateWithLifecycle()
-    action?.let { viewModel.submit(it) }
+    LaunchedEffect(externalAction) { externalAction.collectLatest { viewModel.submit(it) } }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 

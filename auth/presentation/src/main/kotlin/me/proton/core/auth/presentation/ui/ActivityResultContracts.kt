@@ -21,7 +21,14 @@ package me.proton.core.auth.presentation.ui
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.provider.Browser
 import androidx.activity.result.contract.ActivityResultContract
+import androidx.browser.customtabs.CustomTabsIntent
+import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
+import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_OFF
+import androidx.browser.customtabs.CustomTabsSession
+import androidx.core.net.toUri
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
 import me.proton.core.auth.presentation.entity.ChooseAddressInput
@@ -47,9 +54,9 @@ object StartAddAccount : ActivityResultContract<AddAccountInput, AddAccountResul
             putExtra(AddAccountActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): AddAccountResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): AddAccountResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(AddAccountActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(AddAccountActivity.ARG_RESULT)
     }
 }
 
@@ -61,9 +68,9 @@ object StartLogin : ActivityResultContract<LoginInput, LoginResult?>() {
             putExtra(LoginActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): LoginResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): LoginResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(LoginActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(LoginActivity.ARG_RESULT)
     }
 }
 
@@ -75,9 +82,9 @@ object StartLoginTwoStep : ActivityResultContract<LoginInput, LoginResult?>() {
             putExtra(LoginActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): LoginResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): LoginResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(LoginActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(LoginActivity.ARG_RESULT)
     }
 }
 
@@ -89,35 +96,35 @@ object StartLoginSso : ActivityResultContract<LoginSsoInput, LoginSsoResult?>() 
             putExtra(LoginSsoActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): LoginSsoResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): LoginSsoResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(LoginSsoActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(LoginSsoActivity.ARG_RESULT)
     }
 }
 
 object StartSecondFactor : ActivityResultContract<SecondFactorInput, SecondFactorResult?>() {
 
-    override fun createIntent(context: Context, inupt: SecondFactorInput) =
+    override fun createIntent(context: Context, input: SecondFactorInput) =
         Intent(context, SecondFactorActivity::class.java).apply {
-            putExtra(SecondFactorActivity.ARG_INPUT, inupt)
+            putExtra(SecondFactorActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): SecondFactorResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): SecondFactorResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(SecondFactorActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(SecondFactorActivity.ARG_RESULT)
     }
 }
 
 object StartTwoPassMode : ActivityResultContract<TwoPassModeInput, TwoPassModeResult?>() {
 
-    override fun createIntent(context: Context, inupt: TwoPassModeInput) =
+    override fun createIntent(context: Context, input: TwoPassModeInput) =
         Intent(context, TwoPassModeActivity::class.java).apply {
-            putExtra(TwoPassModeActivity.ARG_INPUT, inupt)
+            putExtra(TwoPassModeActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): TwoPassModeResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): TwoPassModeResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(TwoPassModeActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(TwoPassModeActivity.ARG_RESULT)
     }
 }
 
@@ -128,9 +135,9 @@ object StartChooseAddress : ActivityResultContract<ChooseAddressInput, ChooseAdd
             putExtra(ChooseAddressActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): ChooseAddressResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): ChooseAddressResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(ChooseAddressActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(ChooseAddressActivity.ARG_RESULT)
     }
 }
 
@@ -147,7 +154,6 @@ object StartDeviceSecret : ActivityResultContract<String, DeviceSecretResult?>()
     }
 }
 
-// region signup
 object StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
 
     override fun createIntent(context: Context, input: SignUpInput) =
@@ -156,10 +162,31 @@ object StartSignup : ActivityResultContract<SignUpInput, SignUpResult?>() {
             putExtra(SignupActivity.ARG_INPUT, input)
         }
 
-    override fun parseResult(resultCode: Int, result: Intent?): SignUpResult? {
+    override fun parseResult(resultCode: Int, intent: Intent?): SignUpResult? {
         if (resultCode != Activity.RESULT_OK) return null
-        return result?.getParcelableExtra(SignupActivity.ARG_RESULT)
+        return intent?.getParcelableExtra(SignupActivity.ARG_RESULT)
     }
 }
 
-// endregion
+object StartCustomTab : ActivityResultContract<StartCustomTab.Input, Boolean>() {
+
+    data class Input(val url: String, val headers: Bundle, val session: CustomTabsSession?)
+
+    override fun createIntent(context: Context, input: Input): Intent =
+        CustomTabsIntent.Builder().apply {
+            input.session?.let { setSession(it) }
+            setShowTitle(false)
+            setBookmarksButtonEnabled(false)
+            setDownloadButtonEnabled(false)
+            setUrlBarHidingEnabled(false)
+            setColorScheme(COLOR_SCHEME_DARK)
+            setShareState(SHARE_STATE_OFF)
+        }.build().apply {
+            intent.putExtra(Browser.EXTRA_HEADERS, input.headers)
+            intent.data = input.url.toUri()
+        }.intent
+
+    override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
+        return resultCode == Activity.RESULT_OK
+    }
+}

@@ -18,22 +18,15 @@
 
 package me.proton.core.auth.presentation.ui
 
-import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.Browser
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.viewModels
 import androidx.browser.customtabs.CustomTabsCallback
 import androidx.browser.customtabs.CustomTabsClient
-import androidx.browser.customtabs.CustomTabsIntent
-import androidx.browser.customtabs.CustomTabsIntent.COLOR_SCHEME_DARK
-import androidx.browser.customtabs.CustomTabsIntent.SHARE_STATE_OFF
 import androidx.browser.customtabs.CustomTabsServiceConnection
 import androidx.browser.customtabs.CustomTabsSession
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.util.Consumer
 import androidx.lifecycle.flowWithLifecycle
@@ -113,7 +106,7 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
 
     // Handling result from CustomTabs.
     private val customTabResultLauncher =
-        registerForActivityResult(CustomTabResultContract) { result ->
+        registerForActivityResult(StartCustomTab) { result ->
             when (result) {
                 false -> viewModel.onIdentityProviderCancel()
                 else -> Unit
@@ -236,7 +229,7 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
 
         if (isSsoCustomTabEnabled() && customTabClient != null) {
             customTabResultLauncher.launch(
-                CustomTabResultContract.Input(
+                StartCustomTab.Input(
                     url = url,
                     headers = bundleOf(uidHeader, authHeader),
                     session = customTabSession
@@ -279,28 +272,5 @@ class LoginSsoActivity : AuthActivity<ActivityLoginSsoBinding>(ActivityLoginSsoB
         private const val PREFIX_LOGIN_ERROR = "login#error"
         const val ARG_INPUT = "arg.loginSsoInput"
         const val ARG_RESULT = "arg.loginSsoResult"
-    }
-
-    object CustomTabResultContract :
-        ActivityResultContract<CustomTabResultContract.Input, Boolean>() {
-        data class Input(val url: String, val headers: Bundle, val session: CustomTabsSession?)
-
-        override fun createIntent(context: Context, input: Input): Intent =
-            CustomTabsIntent.Builder().apply {
-                input.session?.let { setSession(it) }
-                setShowTitle(false)
-                setBookmarksButtonEnabled(false)
-                setDownloadButtonEnabled(false)
-                setUrlBarHidingEnabled(false)
-                setColorScheme(COLOR_SCHEME_DARK)
-                setShareState(SHARE_STATE_OFF)
-            }.build().apply {
-                intent.putExtra(Browser.EXTRA_HEADERS, input.headers)
-                intent.data = input.url.toUri()
-            }.intent
-
-        override fun parseResult(resultCode: Int, intent: Intent?): Boolean {
-            return resultCode == Activity.RESULT_OK
-        }
     }
 }

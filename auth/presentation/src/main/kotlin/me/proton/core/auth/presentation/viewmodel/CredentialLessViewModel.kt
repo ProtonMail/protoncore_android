@@ -25,15 +25,12 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
+import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.domain.usecase.CreateLoginLessSession
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.PostLoginLessAccountSetup
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.domain.entity.UserId
-import me.proton.core.network.domain.ApiException
-import me.proton.core.network.domain.ResponseCodes
-import me.proton.core.network.domain.ResponseCodes.ACCOUNT_CREDENTIALLESS_INVALID
-import me.proton.core.network.domain.hasProtonErrorCode
+import me.proton.core.network.domain.isCredentialLessDisabled
 import me.proton.core.presentation.viewmodel.ProtonViewModel
 import me.proton.core.util.kotlin.catchAll
 import me.proton.core.util.kotlin.catchWhen
@@ -87,7 +84,3 @@ internal class CredentialLessViewModel @Inject constructor(
     }
 }
 
-private fun Throwable.isCredentialLessDisabled() = when (this) {
-    is ApiException -> hasProtonErrorCode(ACCOUNT_CREDENTIALLESS_INVALID)
-    else -> false
-}

@@ -6,7 +6,7 @@ import io.mockk.MockKAnnotations
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import me.proton.core.auth.data.R
-import me.proton.core.auth.data.usecase.IsSsoEnabledImpl
+import me.proton.core.auth.data.feature.IsSsoEnabledImpl
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import kotlin.test.BeforeTest

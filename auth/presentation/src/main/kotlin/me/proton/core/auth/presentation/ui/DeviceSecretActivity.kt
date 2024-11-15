@@ -22,10 +22,12 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceSecretAction
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
@@ -46,12 +48,16 @@ class DeviceSecretActivity : ProtonActivity() {
         UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
     }
 
-    private val mutableAction = MutableStateFlow<DeviceSecretAction?>(null)
+    private val mutableAction = MutableSharedFlow<DeviceSecretAction>()
+
+    private fun emitAction(action: DeviceSecretAction) {
+        lifecycleScope.launch { mutableAction.emit(action) }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addOnBackPressedCallback { mutableAction.tryEmit(DeviceSecretAction.Close) }
+        addOnBackPressedCallback { emitAction(DeviceSecretAction.Close) }
 
         setContent {
             ProtonTheme {
@@ -93,11 +99,11 @@ class DeviceSecretActivity : ProtonActivity() {
 
     private fun onCloseMessage(message: String?) {
         onErrorMessage(message)
-        mutableAction.tryEmit(DeviceSecretAction.Close)
+        emitAction(DeviceSecretAction.Close)
     }
 
     private fun onReloadState() {
-        mutableAction.tryEmit(DeviceSecretAction.Load())
+        emitAction(DeviceSecretAction.Load())
     }
 
     private fun onErrorMessage(message: String?) {

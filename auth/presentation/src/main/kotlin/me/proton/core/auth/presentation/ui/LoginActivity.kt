@@ -34,12 +34,12 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
+import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityLoginBinding
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
 import me.proton.core.auth.presentation.entity.LoginSsoInput
-import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.viewmodel.LoginViewModel
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.utils.addOnBackPressedCallback
@@ -85,16 +85,10 @@ import javax.inject.Inject
     viewIds = ["usernameInput", "passwordInput"],
     priority = TelemetryPriority.Immediate
 )
-class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate),
-    UiComponentProductMetricsDelegateOwner {
-
-    // Additional button appearing when login fails and it's potentially caused by blocking.
-    // When product injects null no dedicated button will appear.
-    data class BlockingHelp(@StringRes val label: Int, val action: (Context) -> Unit)
+class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::inflate), UiComponentProductMetricsDelegateOwner {
 
     @Inject
-    @JvmField
-    var blockingHelp: BlockingHelp? = null
+    lateinit var helpOptionHandler: HelpOptionHandler
 
     private val viewModel by viewModels<LoginViewModel>()
 
@@ -103,11 +97,15 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
     }
 
     private val loginSsoResultLauncher = registerForActivityResult(StartLoginSso) {
-        if (it != null) onSuccess(UserId(it.userId), it.nextStep)
+        if (it != null) onSuccess(UserId(it.userId))
     }
 
     private val showLongLogin: Boolean by lazy {
         applicationContext.resources.getBoolean(R.bool.core_feature_auth_signin_show_long_login_toast)
+    }
+
+    private val showTroubleshootButton: Boolean by lazy {
+        applicationContext.resources.getBoolean(R.bool.core_feature_auth_signin_show_troubleshoot_button)
     }
 
     override val productMetricsDelegate: ProductMetricsDelegate get() = viewModel
@@ -134,7 +132,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     .onFailure { usernameInput.setInputError(getString(R.string.auth_login_assistive_text)) }
                     .onSuccess { usernameInput.clearInputError() }
             }
-            passwordInput.text = input.password
             passwordInput.setOnFocusLostListener { _, _ ->
                 passwordInput.validatePassword()
                     .onFailure { passwordInput.setInputError() }
@@ -142,12 +139,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             }
             passwordInput.setOnDoneActionListener { onSignInClicked() }
 
-            if (input.password != null) onSignInClicked()
-
-            blockingHelp?.let { blockingHelp ->
-                blockingHelpButton.onClick { blockingHelp.action(this@LoginActivity) }
-                blockingHelpButton.setText(blockingHelp.label)
-            }
+            blockingHelpButton.onClick { helpOptionHandler.onTroubleshoot(this@LoginActivity) }
+            blockingHelpButton.setText(R.string.auth_login_troubleshhot)
         }
 
         viewModel.state
@@ -186,10 +179,10 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result.error)
             is PostLoginAccountSetup.Result.Need.DeviceSecret -> error("Unexpected")
             is PostLoginAccountSetup.Result.Need.ChangePassword -> onChangePassword()
-            is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)
-            is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId, NextStep.SecondFactor)
-            is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId, NextStep.TwoPassMode)
-            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId, NextStep.None)
+            is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId)
         }.exhaustive
     }
 
@@ -199,12 +192,8 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
         supportFragmentManager.showPasswordChangeDialog(context = this)
     }
 
-    private fun onSuccess(
-        userId: UserId,
-        nextStep: NextStep
-    ) {
-        val intent = Intent()
-            .putExtra(ARG_RESULT, LoginResult(userId = userId.id, nextStep = nextStep))
+    private fun onSuccess(userId: UserId) {
+        val intent = Intent().putExtra(ARG_RESULT, LoginResult(userId = userId.id))
         setResult(Activity.RESULT_OK, intent)
         finish()
     }
@@ -247,7 +236,7 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 passwordInput.setInputError()
             }
         }
-        if (isPotentialBlocking && blockingHelp != null) {
+        if (isPotentialBlocking && showTroubleshootButton) {
             binding.blockingHelpButton.isVisible = true
         }
         showError(message)

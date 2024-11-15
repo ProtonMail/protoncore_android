@@ -25,8 +25,7 @@ sealed class SecondFactorResult : Parcelable {
 
     @Parcelize
     data class Success(
-        val userId: String,
-        val nextStep: NextStep,
+        val userId: String
     ) : SecondFactorResult()
 
     @Parcelize

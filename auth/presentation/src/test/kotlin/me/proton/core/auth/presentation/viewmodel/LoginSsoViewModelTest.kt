@@ -96,7 +96,7 @@ class LoginSsoViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutin
     fun `getAuth for SSO account StartToken`() = coroutinesTest {
         // GIVEN
         coEvery { getAuthInfo.invoke(any(), any()) } returns mockk {
-            every { ssoChallengeToken } returns "token"
+            every { token } returns "token"
         }
 
         viewModel.state.test {

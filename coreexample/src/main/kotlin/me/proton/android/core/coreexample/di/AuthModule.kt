@@ -29,7 +29,6 @@ import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.DefaultHelpOptionHandler
 import me.proton.core.auth.presentation.DefaultUserCheck
 import me.proton.core.auth.presentation.HelpOptionHandler
-import me.proton.core.auth.presentation.ui.LoginActivity
 import me.proton.core.user.domain.UserManager
 import javax.inject.Singleton
 
@@ -43,11 +42,6 @@ object AuthModule {
         accountManager: AccountManager,
         userManager: UserManager
     ): PostLoginAccountSetup.UserCheck = DefaultUserCheck(context, accountManager, userManager)
-
-    // If not-null additional help button appears after login fails with blocking. Used only by VPN.
-    @Provides
-    @Singleton
-    fun provideLoginBlockingHelp(): LoginActivity.BlockingHelp? = null
 
     @Provides
     @Singleton

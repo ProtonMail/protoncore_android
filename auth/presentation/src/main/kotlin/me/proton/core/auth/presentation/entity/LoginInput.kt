@@ -25,6 +25,5 @@ import me.proton.core.account.domain.entity.AccountType
 @Parcelize
 data class LoginInput(
     val requiredAccountType: AccountType,
-    val username: String? = null,
-    val password: String? = null
+    val username: String? = null
 ) : Parcelable

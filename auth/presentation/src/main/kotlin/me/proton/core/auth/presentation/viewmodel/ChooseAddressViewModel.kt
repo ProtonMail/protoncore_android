@@ -28,11 +28,11 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.domain.usecase.AccountAvailability
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
 import me.proton.core.auth.domain.usecase.primaryKeyExists
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.observability.toUnlockUserStatus
 import me.proton.core.auth.presentation.observability.toUserCheckStatus
 import me.proton.core.crypto.common.keystore.EncryptedString

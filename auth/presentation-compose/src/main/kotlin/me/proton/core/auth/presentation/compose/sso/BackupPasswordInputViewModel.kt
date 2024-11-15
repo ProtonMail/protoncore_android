@@ -56,6 +56,8 @@ import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputState.Suc
 import me.proton.core.compose.viewmodel.stopTimeoutMillis
 import me.proton.core.crypto.common.keystore.use
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.isActionNotAllowed
+import me.proton.core.network.domain.isMissingScope
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.LoginSsoActivateDeviceTotal

@@ -25,4 +25,5 @@ interface HelpOptionHandler {
     fun onForgotPassword(context: AppCompatActivity)
     fun onCustomerSupport(context: AppCompatActivity)
     fun onOtherSignInIssues(context: AppCompatActivity)
+    fun onTroubleshoot(context: AppCompatActivity)
 }

@@ -25,6 +25,7 @@ import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.account.domain.entity.SessionDetails
 import me.proton.core.account.domain.entity.SessionState
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.SessionInfo
 import me.proton.core.auth.domain.entity.getFido2AuthOptions
 import me.proton.core.crypto.common.keystore.EncryptedString
@@ -40,9 +41,10 @@ class CreateLoginSession @Inject constructor(
     suspend operator fun invoke(
         username: String,
         encryptedPassword: EncryptedString,
-        requiredAccountType: AccountType
+        requiredAccountType: AccountType,
+        info: AuthInfo.Srp? = null
     ): SessionInfo {
-        val sessionInfo = performLogin.invoke(username, encryptedPassword)
+        val sessionInfo = performLogin.invoke(username, encryptedPassword, info)
         handleSessionInfo(requiredAccountType, sessionInfo, encryptedPassword)
         return sessionInfo
     }

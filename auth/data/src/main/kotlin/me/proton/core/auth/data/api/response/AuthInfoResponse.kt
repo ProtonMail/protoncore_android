@@ -42,7 +42,8 @@ data class AuthInfoResponse(
 ) {
     fun toAuthInfo(username: String) = when {
         ssoChallengeToken != null -> AuthInfo.Sso(
-            ssoChallengeToken = ssoChallengeToken
+            username = username,
+            token = ssoChallengeToken
         )
 
         else -> AuthInfo.Srp(

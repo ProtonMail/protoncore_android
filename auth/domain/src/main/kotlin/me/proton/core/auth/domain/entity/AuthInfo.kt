@@ -34,6 +34,7 @@ sealed class AuthInfo {
     ) : AuthInfo()
 
     data class Sso(
-        val ssoChallengeToken: String
+        val username: String,
+        val token: String
     ) : AuthInfo()
 }

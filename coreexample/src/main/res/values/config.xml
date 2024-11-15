@@ -18,6 +18,7 @@
   -->
 
 <resources>
+    <bool name="core_feature_auth_signin_two_step_enabled">false</bool>
     <bool name="core_feature_account_recovery_enabled">true</bool>
     <bool name="core_feature_notifications_enabled">true</bool>
     <bool name="core_feature_storage_split_enabled">true</bool>

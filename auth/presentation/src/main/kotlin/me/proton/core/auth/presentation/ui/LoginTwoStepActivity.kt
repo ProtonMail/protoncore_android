@@ -21,55 +21,198 @@ package me.proton.core.auth.presentation.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import androidx.activity.compose.setContent
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.usecase.UserCheckAction
+import me.proton.core.auth.domain.usecase.UserCheckAction.OpenUrl
 import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.R
-import me.proton.core.auth.presentation.compose.LoginTwoStepScreen
-import me.proton.core.auth.presentation.compose.LoginTwoStepViewState
+import me.proton.core.auth.presentation.compose.LoginInputUsernameAction
+import me.proton.core.auth.presentation.compose.LoginRoutes
+import me.proton.core.auth.presentation.compose.LoginRoutes.addLoginInputPasswordScreen
+import me.proton.core.auth.presentation.compose.LoginRoutes.addLoginInputUsernameScreen
+import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
-import me.proton.core.auth.presentation.entity.NextStep
-import me.proton.core.auth.presentation.ui.LoginActivity.Companion.ARG_RESULT
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.ui.ProtonActivity
+import me.proton.core.network.data.di.BaseProtonApiUrl
+import me.proton.core.network.domain.client.ExtraHeaderProvider
+import me.proton.core.network.domain.session.SessionProvider
+import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.observability.domain.metrics.LoginScreenViewTotal
+import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderPageLoadTotal
+import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal
+import me.proton.core.observability.domain.metrics.LoginSsoIdentityProviderResultTotal.Status
+import me.proton.core.presentation.utils.SnackbarLength
 import me.proton.core.presentation.utils.addOnBackPressedCallback
+import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
+import me.proton.core.telemetry.domain.entity.TelemetryPriority
+import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.annotation.ProductMetrics
+import me.proton.core.telemetry.presentation.annotation.ScreenClosed
+import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
+import okhttp3.HttpUrl
 import javax.inject.Inject
 
-import me.proton.core.auth.presentation.compose.LoginTwoStepViewState.NextStep as ComposeNextStep
-
 @AndroidEntryPoint
-public class LoginTwoStepActivity : ProtonActivity() {
+@ProductMetrics(
+    group = "account.any.signup",
+    flow = "mobile_signup_full"
+)@ScreenDisplayed(
+    event = "fe.signin.displayed",
+    priority = TelemetryPriority.Immediate
+)
+@ScreenClosed(
+    event = "user.signin.closed",
+    priority = TelemetryPriority.Immediate
+)
+/*
+@ViewClicked(
+    event = "user.signin.clicked",
+    viewIds = ["signInButton"],
+    priority = TelemetryPriority.Immediate
+)
+@ViewFocused(
+    event = "user.signin.focused",
+    viewIds = ["usernameInput", "passwordInput"],
+    priority = TelemetryPriority.Immediate
+)*/
+class LoginTwoStepActivity : WebPageListenerActivity(), UiComponentProductMetricsDelegateOwner {
+
+    @Inject
+    @BaseProtonApiUrl
+    lateinit var baseApiUrl: HttpUrl
+
+    @Inject
+    lateinit var extraHeaderProvider: ExtraHeaderProvider
+
+    @Inject
+    lateinit var sessionProvider: SessionProvider
 
     @Inject
     lateinit var helpOptionHandler: HelpOptionHandler
 
+    @Inject
+    lateinit var observabilityManager: ObservabilityManager
+
+    private val input: LoginInput by lazy {
+        requireNotNull(intent?.extras?.getParcelable(LoginActivity.ARG_INPUT))
+    }
+
+    private val loginAction = MutableSharedFlow<LoginInputUsernameAction>()
+
+    private fun emitAction(action: LoginInputUsernameAction) {
+        lifecycleScope.launch { loginAction.emit(action) }
+    }
+
+    override fun onWebPageLoad(errorCode: Int?) {
+        observabilityManager.enqueue(LoginSsoIdentityProviderPageLoadTotal(errorCode))
+    }
+
+    override fun onWebPageCancel() {
+        observabilityManager.enqueue(LoginSsoIdentityProviderResultTotal(Status.cancel))
+    }
+
+    override fun onWebPageError() {
+        observabilityManager.enqueue(LoginSsoIdentityProviderResultTotal(Status.error))
+    }
+
+    override fun onWebPageSuccess(url: String) {
+        observabilityManager.enqueue(LoginSsoIdentityProviderResultTotal(Status.success))
+        // Ex: url = "proton://app-api.proton.domain/sso/login#token=token"
+        val params = url.toUri().fragment?.split("&")?.associate { param ->
+            val (key, value) = param.split("=")
+            Pair(key, value)
+        }
+        val token = requireNotNull(params?.getValue("token"))
+        emitAction(LoginInputUsernameAction.SetToken(token))
+    }
+
+    private fun onOpenWebPage(info: AuthInfo.Sso) = lifecycleScope.launch {
+        val sessionId = requireNotNull(sessionProvider.getSessionId(userId = null))
+        val session = requireNotNull(sessionProvider.getSession(sessionId))
+        val scheme = getString(R.string.core_feature_auth_sso_redirect_scheme_two_step)
+        val host = baseApiUrl.toUri().host
+        val url = "$baseApiUrl$AUTH_SSO_URL${info.token}?$REDIRECT_BASE_URL=$scheme://$host"
+        val uidHeader = UID_HEADER to session.sessionId.id
+        val authHeader = AUTH_HEADER to "$BEARER_HEADER ${session.accessToken}"
+        openWebPageUrl(
+            url = url,
+            successUrlRegex = PREFIX_LOGIN_TOKEN,
+            errorUrlRegex = PREFIX_LOGIN_ERROR,
+            extraHeaders = arrayOf(uidHeader, authHeader),
+        )
+        observabilityManager.enqueue(LoginScreenViewTotal(LoginScreenViewTotal.ScreenId.ssoIdentityProvider))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        addOnBackPressedCallback { onCloseClicked() }
+        addOnBackPressedCallback { onClose() }
 
         setContent {
             ProtonTheme {
-                LoginTwoStepScreen(
-                    onCloseClicked = { onCloseClicked() },
-                    onHelpClicked = { onHelpClicked() },
-                    onForgotUsernameClicked = { helpOptionHandler.onForgotUsername(this) },
-                    onForgotPasswordClicked = { helpOptionHandler.onForgotPassword(this) },
-                    onErrorMessage = { onErrorMessage(it) },
-                    onExternalAccountLoginNeeded = { onExternalAccountLoginNeeded() },
-                    onExternalAccountNotSupported = { onExternalAccountNotSupported() },
-                    onLoggedIn = { userId, nextStep -> onLoggedIn(userId, nextStep) },
-                )
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = LoginRoutes.Route.Login.Deeplink
+                ) {
+                    addLoginInputUsernameScreen(
+                        username = input.username,
+                        navController = navController,
+                        onClose = { onClose() },
+                        onErrorMessage = { message, action -> onErrorMessage(message, action) },
+                        onSuccess = { onSuccess(it) },
+                        onNavigateToHelp = { onHelpClicked() },
+                        onNavigateToSso = { onOpenWebPage(it) },
+                        onNavigateToForgotUsername = { onForgotUsername() },
+                        onNavigateToTroubleshoot = { onTroubleshoot() },
+                        onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
+                        onNavigateToChangePassword = { onChangePassword() },
+                        externalAction = loginAction
+                    )
+                    addLoginInputPasswordScreen(
+                        navController = navController,
+                        onErrorMessage = { message, action -> onErrorMessage(message, action) },
+                        onSuccess = { onSuccess(it) },
+                        onNavigateToHelp = { onHelpClicked() },
+                        onNavigateToForgotPassword = { onForgotPassword() },
+                        onNavigateToTroubleshoot = { onTroubleshoot() },
+                        onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
+                        onNavigateToChangePassword = { onChangePassword() }
+                    )
+                }
             }
         }
     }
 
-    private fun onCloseClicked() {
+    private fun onClose() {
         setResult(Activity.RESULT_CANCELED)
+        finish()
+    }
+
+    private fun onErrorMessage(message: String?, action: UserCheckAction?) {
+        when (action) {
+            null -> errorToast(message ?: getString(R.string.auth_login_general_error))
+            is OpenUrl -> errorAction(message, action.name) { openBrowserLink(action.url) }
+        }
+    }
+
+    private fun onSuccess(userId: UserId) {
+        val intent = Intent().putExtra(LoginActivity.ARG_RESULT, LoginResult(userId.id))
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
 
@@ -77,32 +220,20 @@ public class LoginTwoStepActivity : ProtonActivity() {
         startActivity(Intent(this, AuthHelpActivity::class.java))
     }
 
-    private fun onErrorMessage(message: String?) {
-        errorToast(message ?: getString(R.string.presentation_error_general))
+    private fun onForgotUsername() {
+        helpOptionHandler.onForgotUsername(this)
     }
 
-    private fun onLoggedIn(userId: UserId, nexStep: LoginTwoStepViewState.NextStep) {
-        when (nexStep) {
-            ComposeNextStep.None -> onSuccess(userId, NextStep.None)
-            ComposeNextStep.TwoPassMode -> onSuccess(userId, NextStep.TwoPassMode)
-            ComposeNextStep.SecondFactor -> onSuccess(userId, NextStep.SecondFactor)
-            ComposeNextStep.ChooseAddress -> onSuccess(userId, NextStep.ChooseAddress)
-            ComposeNextStep.ChangePassword -> onChangePassword()
-        }
+    private fun onForgotPassword() {
+        helpOptionHandler.onForgotPassword(this)
     }
 
-    private fun onSuccess(userId: UserId, nextStep: NextStep) {
-        val intent = Intent().putExtra(ARG_RESULT, LoginResult(userId.id, nextStep))
-        setResult(Activity.RESULT_OK, intent)
-        finish()
+    private fun onTroubleshoot() {
+        helpOptionHandler.onTroubleshoot(this)
     }
 
     private fun onChangePassword() {
         supportFragmentManager.showPasswordChangeDialog(context = this)
-    }
-
-    private fun onExternalAccountLoginNeeded() {
-        // Launch SSO login
     }
 
     private fun onExternalAccountNotSupported() {
@@ -115,5 +246,33 @@ public class LoginTwoStepActivity : ProtonActivity() {
             }
             .setNegativeButton(R.string.presentation_alert_cancel, null)
             .show()
+    }
+
+    private fun errorAction(
+        message: String?,
+        action: String,
+        actionOnClick: (() -> Unit)
+    ) {
+        getContentView()?.errorSnack(
+            message = message ?: getString(R.string.auth_login_general_error),
+            action = action,
+            actionOnClick = actionOnClick,
+            length = SnackbarLength.INDEFINITE
+        )
+    }
+
+    private fun getContentView(): View? = window.decorView
+        .findViewById<ViewGroup>(android.R.id.content)
+        .getChildAt(0)
+
+    companion object {
+        private const val UID_HEADER = "x-pm-uid"
+        private const val AUTH_SSO_URL = "auth/sso/"
+        private const val REDIRECT_BASE_URL = "FinalRedirectBaseUrl"
+        private const val AUTH_HEADER = "Authorization"
+        private const val BEARER_HEADER = "Bearer"
+        private const val TOKEN = "token"
+        private const val PREFIX_LOGIN_TOKEN = "login#$TOKEN"
+        private const val PREFIX_LOGIN_ERROR = "login#error"
     }
 }

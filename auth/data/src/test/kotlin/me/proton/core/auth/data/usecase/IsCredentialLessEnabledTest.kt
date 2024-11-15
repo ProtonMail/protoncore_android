@@ -10,6 +10,7 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.just
 import kotlinx.coroutines.test.runTest
 import me.proton.core.auth.data.R
+import me.proton.core.auth.data.feature.IsCredentialLessEnabledImpl
 import me.proton.core.featureflag.domain.ExperimentalProtonFeatureFlag
 import me.proton.core.featureflag.domain.FeatureFlagManager
 import me.proton.core.featureflag.domain.entity.Scope

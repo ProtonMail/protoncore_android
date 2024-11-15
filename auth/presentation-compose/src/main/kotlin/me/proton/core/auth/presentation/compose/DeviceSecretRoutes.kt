@@ -24,7 +24,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpScreen
 import me.proton.core.domain.entity.UserId
@@ -63,7 +63,7 @@ public object DeviceSecretRoutes {
         onCloseMessage: (String?) -> Unit,
         onErrorMessage: (String?) -> Unit,
         onSuccess: (userId: UserId) -> Unit,
-        externalAction: StateFlow<DeviceSecretAction?>
+        externalAction: SharedFlow<DeviceSecretAction>
     ) {
         composable(
             route = Route.Main.Deeplink,

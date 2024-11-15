@@ -23,6 +23,7 @@ import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
 import me.proton.core.auth.presentation.alert.confirmpass.StartConfirmPassword
 import me.proton.core.auth.presentation.entity.AddAccountInput
 import me.proton.core.auth.presentation.entity.AddAccountResult
@@ -54,7 +55,9 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
 import javax.inject.Inject
 
-class AuthOrchestrator @Inject constructor() {
+class AuthOrchestrator @Inject constructor(
+    private val isLoginTwoStepEnabled: IsLoginTwoStepEnabled
+) {
 
     // region result launchers
     private var addAccountWorkflowLauncher: ActivityResultLauncher<AddAccountInput>? = null
@@ -318,27 +321,17 @@ class AuthOrchestrator @Inject constructor() {
      */
     fun startLoginWorkflow(
         requiredAccountType: AccountType,
-        username: String? = null,
-        password: String? = null
+        username: String? = null
     ) {
-        checkRegistered(loginWorkflowLauncher).launch(
-            LoginInput(requiredAccountType, username, password)
-        )
-    }
-
-    /**
-     * Starts the Login TwoStep workflow.
-     *
-     * @see [onLoginResult]
-     */
-    fun startLoginTwoStepWorkflow(
-        requiredAccountType: AccountType,
-        username: String? = null,
-        password: String? = null
-    ) {
-        checkRegistered(loginTwoStepWorkflowLauncher).launch(
-            LoginInput(requiredAccountType, username, password)
-        )
+        if (isLoginTwoStepEnabled()) {
+            checkRegistered(loginTwoStepWorkflowLauncher).launch(
+                LoginInput(requiredAccountType, username)
+            )
+        } else {
+            checkRegistered(loginWorkflowLauncher).launch(
+                LoginInput(requiredAccountType, username)
+            )
+        }
     }
 
     /**

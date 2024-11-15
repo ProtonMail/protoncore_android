@@ -41,7 +41,6 @@ import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.Activity2faBinding
-import me.proton.core.auth.presentation.entity.NextStep
 import me.proton.core.auth.presentation.entity.SecondFactorInput
 import me.proton.core.auth.presentation.entity.SecondFactorResult
 import me.proton.core.auth.presentation.entity.TwoFAMechanisms
@@ -141,12 +140,12 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         when (result) {
             is PostLoginAccountSetup.Result.Error.UnlockPrimaryKeyError -> onUnlockUserError(result.error)
             is PostLoginAccountSetup.Result.Error.UserCheckError -> onUserCheckFailed(result)
-            is PostLoginAccountSetup.Result.Need.DeviceSecret -> onSuccess(result.userId, NextStep.DeviceSecret)
-            is PostLoginAccountSetup.Result.Need.ChangePassword -> onSuccess(result.userId, NextStep.None)
-            is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId, NextStep.ChooseAddress)
-            is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId, NextStep.SecondFactor)
-            is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId, NextStep.TwoPassMode)
-            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId, NextStep.None)
+            is PostLoginAccountSetup.Result.Need.DeviceSecret -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.ChangePassword -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.ChooseUsername -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.SecondFactor -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.Need.TwoPassMode -> onSuccess(result.userId)
+            is PostLoginAccountSetup.Result.AccountReady -> onSuccess(result.userId)
         }.exhaustive
     }
 
@@ -275,8 +274,8 @@ class SecondFactorActivity : AuthActivity<Activity2faBinding>(Activity2faBinding
         showError(message)
     }
 
-    private fun onSuccess(userId: UserId, nextStep: NextStep) {
-        setResultAndFinish(SecondFactorResult.Success(userId = userId.id, nextStep = nextStep))
+    private fun onSuccess(userId: UserId) {
+        setResultAndFinish(SecondFactorResult.Success(userId = userId.id))
     }
 
     private fun onUserCheckFailed(result: PostLoginAccountSetup.Result.Error.UserCheckError) {

@@ -66,8 +66,20 @@
 
         <activity
             android:name="me.proton.core.auth.presentation.ui.LoginTwoStepActivity"
+            android:exported="true"
+            android:launchMode="singleInstance"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/core_feature_auth_sso_redirect_scheme_two_step" />
+                <data android:path="/sso/login" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name="me.proton.core.auth.presentation.ui.LoginSsoActivity"

@@ -23,6 +23,5 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class LoginSsoResult(
-    val userId: String,
-    val nextStep: NextStep = NextStep.None,
+    val userId: String
 ) : Parcelable

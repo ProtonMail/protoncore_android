@@ -163,8 +163,8 @@ open class ApiException(val error: ApiResult.Error) : Exception(
  * Checks if the [ApiException.error] is an [ApiResult.Error.Http] with the given
  * proton [code] (e.g. one of the values in [ResponseCodes]).
  */
-fun ApiException.hasProtonErrorCode(code: Int): Boolean =
-    (error as? ApiResult.Error.Http)?.proton?.code == code
+fun ApiException.hasProtonErrorCode(vararg code: Int): Boolean =
+    ((error as? ApiResult.Error.Http)?.proton?.code ?: 0) in code
 
 /**
  * Return true if [ApiException.error] is a http error equals [code].

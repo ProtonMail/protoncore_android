@@ -28,8 +28,8 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.auth.domain.LogTag
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.ui.signup.SignupFinishedFragment
 import me.proton.core.auth.presentation.ui.signup.CreatingUserFragment

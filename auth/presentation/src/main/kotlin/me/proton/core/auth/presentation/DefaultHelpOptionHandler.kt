@@ -38,4 +38,8 @@ open class DefaultHelpOptionHandler : HelpOptionHandler {
     override fun onOtherSignInIssues(context: AppCompatActivity) {
         context.openBrowserLink(context.getString(R.string.common_login_problems_link))
     }
+
+    override fun onTroubleshoot(context: AppCompatActivity) {
+        context.openBrowserLink(context.getString(R.string.common_login_problems_link))
+    }
 }

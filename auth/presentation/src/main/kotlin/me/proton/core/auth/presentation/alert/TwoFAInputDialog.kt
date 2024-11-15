@@ -22,7 +22,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.view.LayoutInflater
 import androidx.activity.result.ActivityResultCaller
 import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
@@ -42,7 +41,6 @@ import kotlinx.coroutines.launch
 import me.proton.core.auth.fido.domain.entity.Fido2PublicKeyCredentialRequestOptions
 import me.proton.core.auth.fido.domain.entity.SecondFactorProof
 import me.proton.core.auth.fido.domain.usecase.PerformTwoFaWithSecurityKey
-import me.proton.core.auth.presentation.LogTag
 import me.proton.core.auth.presentation.databinding.Dialog2faInputBinding
 import me.proton.core.auth.presentation.entity.SecondFactorProofEntity
 import me.proton.core.auth.presentation.entity.TwoFAMechanisms
@@ -60,7 +58,6 @@ import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.onClick
 import me.proton.core.presentation.utils.openBrowserLink
-import me.proton.core.util.kotlin.CoreLogger
 import java.util.Optional
 import javax.inject.Inject
 import kotlin.jvm.optionals.getOrNull

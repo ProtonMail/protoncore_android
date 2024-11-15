@@ -64,8 +64,6 @@ internal class AddAccountFragment :
         requireNotNull(requireArguments().getParcelable<AddAccountInput>(ARG_ADD_ACCOUNT_INPUT))
     }
 
-    private var isLoginTwoStepEnabled: Boolean = false
-
     private val addAccountActivity by lazy { WeakReference(activity as AddAccountActivity) }
     private val authOrchestrator by lazy { addAccountActivity.get()?.authOrchestrator }
 
@@ -78,17 +76,10 @@ internal class AddAccountFragment :
         // }
 
         binding.signIn.onClick {
-            when (isLoginTwoStepEnabled) {
-                true -> authOrchestrator?.startLoginTwoStepWorkflow(
-                    requiredAccountType = input.requiredAccountType,
-                    username = input.loginUsername
-                )
-
-                false -> authOrchestrator?.startLoginWorkflow(
-                    requiredAccountType = input.requiredAccountType,
-                    username = input.loginUsername
-                )
-            }
+            authOrchestrator?.startLoginWorkflow(
+                requiredAccountType = input.requiredAccountType,
+                username = input.loginUsername
+            )
         }
         binding.signUp.onClick {
             authOrchestrator?.startSignupWorkflow(input.creatableAccountType)

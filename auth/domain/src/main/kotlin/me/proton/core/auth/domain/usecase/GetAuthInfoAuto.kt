@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2024 Proton Technologies AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,18 +16,24 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.compose
+package me.proton.core.auth.domain.usecase
 
-public sealed interface LoginTwoStepOperation
+import me.proton.core.auth.domain.entity.AuthInfo
+import me.proton.core.auth.domain.repository.AuthRepository
+import me.proton.core.network.domain.session.SessionId
+import me.proton.core.util.kotlin.coroutine.result
+import javax.inject.Inject
 
-public sealed interface LoginTwoStepAction : LoginTwoStepOperation {
-    public data class SetUsername(
-        val username: String
-    ) : LoginTwoStepAction
-
-    public data class SetPassword(
-        val password: String
-    ) : LoginTwoStepAction
-
-    public data object Close: LoginTwoStepAction
+class GetAuthInfoAuto @Inject constructor(
+    private val authRepository: AuthRepository
+) {
+    suspend operator fun invoke(
+        sessionId: SessionId?,
+        username: String
+    ): AuthInfo = result("getAuthInfoAuto") {
+        authRepository.getAuthInfoAuto(
+            sessionId = sessionId,
+            username = username
+        )
+    }
 }

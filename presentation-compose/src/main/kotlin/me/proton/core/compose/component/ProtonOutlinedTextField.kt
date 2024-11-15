@@ -120,6 +120,7 @@ fun ProtonOutlinedTextFieldWithError(
     helpText: String? = null,
     focusRequester: FocusRequester = remember { FocusRequester() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     label: (@Composable () -> Unit)? = null,
     maxLines: Int = MaxLines,
     placeholder: (@Composable () -> Unit)? = null,
@@ -135,6 +136,7 @@ fun ProtonOutlinedTextFieldWithError(
             enabled = enabled,
             isError = errorText != null,
             keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
             label = label,
             maxLines = maxLines,
             modifier = Modifier

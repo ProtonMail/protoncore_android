@@ -47,6 +47,15 @@
     <string name="auth_login_device_last_used_on_date">Last used on %s</string>
     <string name="auth_login_cancel">Cancel</string>
     <string name="auth_login_not_available">N/A</string>
+    <string name="auth_login_troubleshhot">Troubleshoot</string>
+
+    <string name="auth_login_external_account_unsupported_title">Proton address required</string>
+    <string name="auth_login_external_account_unsupported_message">Get a Proton Mail address linked to this account in your Proton web settings.</string>
+    <string name="auth_login_external_account_unsupported_help_action">Learn more</string>
+
+    <string name="auth_password_chooser_title">Change your password</string>
+    <string name="auth_password_chooser_description">To use the Proton app as a member of an organization, you first need to change your password by signing into Proton through a browser.</string>
+    <string name="auth_password_chooser_change">Change Password</string>
 
     <string name="auth_login_sso_main_signing_you_in">Signing you in</string>
     <string name="auth_login_sso_main_to_your_organization">to your organization</string>
