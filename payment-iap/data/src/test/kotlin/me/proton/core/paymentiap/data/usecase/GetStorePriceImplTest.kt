@@ -37,6 +37,7 @@ import org.junit.Test
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 
@@ -106,6 +107,6 @@ class GetStorePriceImplTest {
         coEvery { googleBillingRepository.getProductsDetails(any()) } throws BillingClientError(
             BillingResponseCode.SERVICE_TIMEOUT, "Service timeout"
         )
-        assertNull(tested(testPlanName))
+        assertFailsWith<BillingClientError> { tested(testPlanName) }
     }
 }

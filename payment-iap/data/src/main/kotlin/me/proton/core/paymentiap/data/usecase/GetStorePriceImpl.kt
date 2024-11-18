@@ -38,31 +38,26 @@ public class GetStorePriceImpl @Inject constructor(
 ) : GetStorePrice {
     override suspend fun invoke(planName: ProductId): ProductPrice? =
         billingRepositoryProvider.get().use { repository ->
-            try {
-                val details = repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
-                if (details == null) {
-                    CoreLogger.e(LogTag.PRICE_ERROR, "Plan $planName product details error.")
-                    null
-                }
-                else {
-                    val phases = details.pricingPhases()
-                    val current = phases.getOrNull(0)
-                    val default = phases.getOrNull(1)?.takeIf {
-                        it.priceAmountMicros != current?.priceAmountMicros &&
+            val details = repository.getProductsDetails(listOf(planName))?.firstOrNull()?.unwrap()
+            if (details == null) {
+                CoreLogger.e(LogTag.PRICE_ERROR, "Plan $planName product details error.")
+                null
+            } else {
+                val phases = details.pricingPhases()
+                val current = phases.getOrNull(0)
+                val default = phases.getOrNull(1)?.takeIf {
+                    it.priceAmountMicros != current?.priceAmountMicros &&
                             current?.recurrenceMode == ProductDetails.RecurrenceMode.FINITE_RECURRING &&
                             it.recurrenceMode == ProductDetails.RecurrenceMode.INFINITE_RECURRING
-                    }
-                    current?.let { price ->
-                        GoogleProductPrice(
-                            priceAmountMicros = price.priceAmountMicros,
-                            currency = price.priceCurrencyCode,
-                            formattedPriceAndCurrency = price.formattedPrice,
-                            defaultPriceAmountMicros = default?.priceAmountMicros,
-                        )
-                    }
                 }
-            } catch (ignored: BillingClientError) {
-                null
+                current?.let { price ->
+                    GoogleProductPrice(
+                        priceAmountMicros = price.priceAmountMicros,
+                        currency = price.priceCurrencyCode,
+                        formattedPriceAndCurrency = price.formattedPrice,
+                        defaultPriceAmountMicros = default?.priceAmountMicros,
+                    )
+                }
             }
         }
 }
