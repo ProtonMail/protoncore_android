@@ -55,6 +55,7 @@ public fun QuarkCommand.populate(
     scenario: Int = 0,
     isDevice: Boolean = false,
     isPhotos: Boolean = false,
+    isAnonymous: Boolean = false,
     sharingUser: User? = null
 ): Response =
     route("quark/drive:populate")
@@ -65,6 +66,7 @@ public fun QuarkCommand.populate(
                 "-S" to scenario.toString(),
                 isDevice.optionalArg("-d"),
                 isPhotos.optionalArg("--photo"),
+                isAnonymous.optionalArg("--anonymous"),
                 sharingUser?.name?.optionalArg("--sharing-username"),
                 sharingUser?.password?.optionalArg("--sharing-user-pass"),
             ).toEncodedArgs()
@@ -80,6 +82,7 @@ public fun QuarkCommand.populate(
     scenario: Int = 0,
     isDevice: Boolean = false,
     isPhotos: Boolean = false,
+    isAnonymous: Boolean = false,
     sharingUserName: String? = null,
     sharingUserPassword: String? = null
 ): Response =
@@ -91,6 +94,7 @@ public fun QuarkCommand.populate(
                 "-S" to scenario.toString(),
                 isDevice.optionalArg("-d"),
                 isPhotos.optionalArg("--photo"),
+                isAnonymous.optionalArg("--anonymous"),
                 sharingUserName?.optionalArg("--sharing-username"),
                 sharingUserPassword?.optionalArg("--sharing-user-pass"),
             ).toEncodedArgs()
