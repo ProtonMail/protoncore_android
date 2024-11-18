@@ -41,6 +41,7 @@ android {
 
 dependencies {
     api(
+        project(Module.deviceUtil),
         project(Module.paymentDomain),
         project(Module.paymentIapDomain)
     )

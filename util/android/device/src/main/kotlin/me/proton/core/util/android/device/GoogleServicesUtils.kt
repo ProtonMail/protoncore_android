@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,24 +16,22 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.implementation
+package me.proton.core.util.android.device
 
-plugins {
-    protonAndroidLibrary
-    protonDagger
+import android.content.Context
+
+public interface GoogleServicesUtils {
+    public fun getApkVersion(context: Context): Int
+    public fun isGooglePlayServicesAvailable(context: Context): GoogleServicesAvailability
 }
 
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.util.android.dagger"
-}
-
-dependencies {
-    implementation(
-        project(Module.kotlinUtil),
-        project(Module.androidUtilDatetime),
-        project(Module.deviceUtil),
-        project(Module.presentation),
-    )
+public enum class GoogleServicesAvailability {
+    Success,
+    ServiceMissing,
+    ServiceUpdating,
+    ServiceVersionUpdateRequired,
+    ServiceDisabled,
+    ServiceInvalid,
+    Unknown,
+    Unexpected
 }

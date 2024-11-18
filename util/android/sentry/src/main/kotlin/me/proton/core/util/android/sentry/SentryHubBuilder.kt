@@ -18,14 +18,10 @@
 
 package me.proton.core.util.android.sentry
 
-import android.content.Context
 import io.sentry.SentryLevel
 import io.sentry.android.core.AppLifecycleIntegration
 import io.sentry.android.core.SentryAndroidOptions
 import io.sentry.protocol.User
-import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.NetworkPrefs
-import me.proton.core.util.android.device.DeviceMetadata
 import java.io.File
 import javax.inject.Inject
 
@@ -33,7 +29,9 @@ import javax.inject.Inject
 private const val MAX_RELEASE_NAME_LEN = 200
 
 /** A builder for creating an instance of custom [SentryHub]. */
-public class SentryHubBuilder @Inject constructor() {
+public class SentryHubBuilder @Inject constructor(
+    private val customSentryTagsProcessor: CustomSentryTagsProcessor
+) {
     /**
      * Configures a standalone instance of [SentryHub],
      * which can be used independently of the global [io.sentry.Sentry] instance.
@@ -57,9 +55,6 @@ public class SentryHubBuilder @Inject constructor() {
      * @param additionalConfiguration Any additional configuration for [SentryAndroidOptions].
      */
     public operator fun invoke(
-        context: Context,
-        apiClient: ApiClient,
-        networkPrefs: NetworkPrefs,
         sentryDsn: String,
         allowedPackagePrefixes: Set<String> = setOf(""),
         allowedTagPrefixes: Set<String> = setOf(""),
@@ -94,12 +89,8 @@ public class SentryHubBuilder @Inject constructor() {
             else -> emptySet()
         }
         addEventProcessor(TimberTagEventFilter(allowedTagPrefixes = allowedTagPrefixes + uncaughtExceptionTag))
-        addEventProcessor(CustomSentryTagsProcessor(
-            context = context,
-            apiClient = apiClient,
-            deviceMetadata = DeviceMetadata(),
-            networkPrefs = networkPrefs
-        ))
+        addEventProcessor(customSentryTagsProcessor)
+
         cacheDirPath = cacheDir?.absolutePath
         environment = envName
         isEnableUncaughtExceptionHandler = shouldReportUncaughtExceptions

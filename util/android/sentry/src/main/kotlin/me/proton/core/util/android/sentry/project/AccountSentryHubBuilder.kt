@@ -42,8 +42,6 @@ public class AccountSentryHubBuilder @Inject constructor(
     @BaseProtonApiUrl private val apiUrl: HttpUrl,
     @ApplicationContext private val context: Context,
     private val getInstallationId: GetInstallationId,
-    private val apiClient: ApiClient,
-    private val networkPrefs: NetworkPrefs,
     private val accountSentryEnabled: IsAccountSentryLoggingEnabled
 ) {
     private val allowedPackagePrefixes = setOf(
@@ -112,10 +110,7 @@ public class AccountSentryHubBuilder @Inject constructor(
         additionalConfiguration: ((SentryAndroidOptions) -> Unit)? = null
     ): SentryHub {
         return builder(
-            context = context,
-            apiClient = apiClient,
             sentryDsn = sentryDsn.takeIf { accountSentryEnabled() }.orEmpty(),
-            networkPrefs = networkPrefs,
             allowedPackagePrefixes = allowedPackagePrefixes,
             allowedTagPrefixes = allowedTagPrefixes,
             cacheDir = File(context.cacheDir, "sentry-account"),

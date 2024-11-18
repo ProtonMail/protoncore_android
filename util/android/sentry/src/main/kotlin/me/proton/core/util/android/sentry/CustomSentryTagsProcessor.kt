@@ -19,23 +19,31 @@
 package me.proton.core.util.android.sentry
 
 import android.content.Context
+import dagger.hilt.android.qualifiers.ApplicationContext
 import io.sentry.EventProcessor
 import io.sentry.Hint
 import io.sentry.SentryEvent
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.device.DeviceMetadata
+import me.proton.core.util.android.device.GoogleServicesAvailability
+import me.proton.core.util.android.device.GoogleServicesUtils
 import me.proton.core.util.android.device.isDeviceRooted
+import java.util.Locale
+import java.util.Optional
+import java.util.TimeZone
 import javax.inject.Inject
+import kotlin.jvm.optionals.getOrNull
 
-internal class CustomSentryTagsProcessor @Inject constructor(
-    private val context: Context,
+public class CustomSentryTagsProcessor @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val apiClient: ApiClient,
     private val deviceMetadata: DeviceMetadata,
-    private val networkPrefs: NetworkPrefs
+    private val networkPrefs: NetworkPrefs,
+    private val googleServicesUtils: Optional<GoogleServicesUtils>
 ) : EventProcessor {
 
-    override fun process(event: SentryEvent, hint: Hint): SentryEvent? {
+    override fun process(event: SentryEvent, hint: Hint): SentryEvent {
         event.setTag(OS_NAME, OS_NAME_VALUE)
         event.setTag(OS_RELEASE, deviceMetadata.osRelease())
         event.setTag(OS_DISPLAY, deviceMetadata.osDisplay())
@@ -44,8 +52,17 @@ internal class CustomSentryTagsProcessor @Inject constructor(
         event.setTag(DEVICE_MODEL, deviceMetadata.deviceModel())
         event.setTag(APP_VERSION, apiClient.appVersionHeader)
         event.setTag(APP_ALT_ROUTING, (networkPrefs.activeAltBaseUrl != null).toString())
+        event.setTag(TIMEZONE, TimeZone.getDefault().id)
+        event.setTag(LOCALE, Locale.getDefault().toString())
+        event.setTag(GOOGLE_PLAY_SERVICES_AVAILABLE, getGooglePlayServicesAvailability().toString())
+        event.setTag(GOOGLE_PLAY_SERVICES_VERSION, getGooglePlayServicesVersion().toString())
         return event
     }
+
+    private fun getGooglePlayServicesAvailability(): GoogleServicesAvailability =
+        googleServicesUtils.getOrNull()?.isGooglePlayServicesAvailable(context) ?: GoogleServicesAvailability.Unknown
+
+    private fun getGooglePlayServicesVersion(): Int = googleServicesUtils.getOrNull()?.getApkVersion(context) ?: -1
 
     internal companion object {
         internal const val OS_NAME_VALUE = "Android"
@@ -57,5 +74,9 @@ internal class CustomSentryTagsProcessor @Inject constructor(
         internal const val DEVICE_MODEL = "device.model"
         internal const val APP_VERSION = "app.version"
         internal const val APP_ALT_ROUTING = "app.alternateRouting"
+        internal const val GOOGLE_PLAY_SERVICES_AVAILABLE = "google.play.services.available"
+        internal const val GOOGLE_PLAY_SERVICES_VERSION = "google.play.services.version"
+        internal const val LOCALE = "locale"
+        internal const val TIMEZONE = "timezone"
     }
 }

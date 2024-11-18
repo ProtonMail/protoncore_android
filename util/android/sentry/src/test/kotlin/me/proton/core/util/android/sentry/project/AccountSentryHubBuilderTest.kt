@@ -19,12 +19,9 @@
 package me.proton.core.util.android.sentry.project
 
 import android.content.Context
-import io.mockk.Called
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
-import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.sentry.GetInstallationId
 import me.proton.core.util.android.sentry.IsAccountSentryLoggingEnabled
 import me.proton.core.util.android.sentry.SentryHubBuilder
@@ -41,8 +38,6 @@ class AccountSentryHubBuilderTest {
     private val apiUrl = mockk<HttpUrl>(relaxed = true)
     private val context = mockk<Context>(relaxed = true)
     private val getInstallationId = mockk<GetInstallationId>(relaxed = true)
-    private val apiClient = mockk<ApiClient>(relaxed = true)
-    private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
     private val isAccountSentryLoggingEnabled = mockk<IsAccountSentryLoggingEnabled>(relaxed = true)
     // endregion
 
@@ -120,8 +115,6 @@ class AccountSentryHubBuilderTest {
             apiUrl = apiUrl,
             context = context,
             getInstallationId = getInstallationId,
-            apiClient = apiClient,
-            networkPrefs = networkPrefs,
             accountSentryEnabled = isAccountSentryLoggingEnabled
         )
     }
@@ -131,27 +124,28 @@ class AccountSentryHubBuilderTest {
         val dsn = "test-dsn"
         every { context.cacheDir } returns File("test-cache-dir")
         every { apiUrl.host } returns "test-host"
-        every { getInstallationId(
-            prefsName = ACCOUNT_SENTRY_PREFS_NAME,
-            key = KEY_INSTALLATION_ID
-        ) } returns "test-installation-id"
+        every {
+            getInstallationId(
+                prefsName = ACCOUNT_SENTRY_PREFS_NAME,
+                key = KEY_INSTALLATION_ID
+            )
+        } returns "test-installation-id"
         val result = accountSentryHubBuilder(sentryDsn = dsn)
 
         assertNotNull(result)
-        verify { sentryHubBuilder.invoke(
-            context = context,
-            apiClient = apiClient,
-            sentryDsn = dsn,
-            allowedPackagePrefixes = allowedPackagePrefixes,
-            allowedTagPrefixes = allowedTagPrefixes,
-            cacheDir = any(),
-            envName = "test-host",
-            inAppIncludes = listOf("me.proton.core"),
-            installationId = "test-installation-id",
-            releaseName = any(),
-            additionalConfiguration = null,
-            networkPrefs = networkPrefs
-        ) }
+        verify {
+            sentryHubBuilder.invoke(
+                sentryDsn = dsn,
+                allowedPackagePrefixes = allowedPackagePrefixes,
+                allowedTagPrefixes = allowedTagPrefixes,
+                cacheDir = any(),
+                envName = "test-host",
+                inAppIncludes = listOf("me.proton.core"),
+                installationId = "test-installation-id",
+                releaseName = any(),
+                additionalConfiguration = null
+            )
+        }
     }
 
     @Test
@@ -163,20 +157,19 @@ class AccountSentryHubBuilderTest {
         val result = accountSentryHubBuilder(sentryDsn = dsn, installationId = installationId)
 
         assertNotNull(result)
-        verify { sentryHubBuilder.invoke(
-            context = context,
-            apiClient = apiClient,
-            sentryDsn = dsn,
-            allowedPackagePrefixes = allowedPackagePrefixes,
-            allowedTagPrefixes = allowedTagPrefixes,
-            cacheDir = any(),
-            envName = "test-host",
-            inAppIncludes = listOf("me.proton.core"),
-            installationId = installationId,
-            releaseName = any(),
-            additionalConfiguration = null,
-            networkPrefs = networkPrefs
-        ) }
+        verify {
+            sentryHubBuilder.invoke(
+                sentryDsn = dsn,
+                allowedPackagePrefixes = allowedPackagePrefixes,
+                allowedTagPrefixes = allowedTagPrefixes,
+                cacheDir = any(),
+                envName = "test-host",
+                inAppIncludes = listOf("me.proton.core"),
+                installationId = installationId,
+                releaseName = any(),
+                additionalConfiguration = null
+            )
+        }
         verify(exactly = 0) { getInstallationId.invoke(any(), any()) }
     }
 }

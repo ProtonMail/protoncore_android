@@ -18,14 +18,11 @@
 
 package me.proton.core.util.android.sentry
 
-import android.content.Context
 import android.os.Looper
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.mockkStatic
 import io.mockk.unmockkAll
-import me.proton.core.network.domain.ApiClient
-import me.proton.core.network.domain.NetworkPrefs
 import timber.log.Timber
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
@@ -34,10 +31,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertIs
 
 class SentryHubBuilderTest {
-
-    private val context = mockk<Context>(relaxed = true)
-    private val apiClient = mockk<ApiClient>(relaxed = true)
-    private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
+    private val customSentryTagsProcessor = mockk<CustomSentryTagsProcessor>()
 
     private lateinit var tested: SentryHubBuilder
 
@@ -47,7 +41,7 @@ class SentryHubBuilderTest {
         every { Looper.getMainLooper() } returns mockk {
             every { thread } returns Thread.currentThread()
         }
-        tested = SentryHubBuilder()
+        tested = SentryHubBuilder(customSentryTagsProcessor)
     }
 
     @AfterTest
@@ -58,7 +52,7 @@ class SentryHubBuilderTest {
     @Test
     fun `installs TimberLoggerSentryTree`() {
         // WHEN
-        tested(context = context, apiClient = apiClient, sentryDsn = "", networkPrefs = networkPrefs)
+        tested(sentryDsn = "")
 
         // THEN
         assertEquals(1, Timber.treeCount)
@@ -68,11 +62,8 @@ class SentryHubBuilderTest {
     @Test(expected = IllegalArgumentException::class)
     fun `cannot overwrite environment option`() {
         tested(
-            context = context,
-            apiClient = apiClient,
             sentryDsn = "",
-            envName = "test",
-            networkPrefs = networkPrefs
+            envName = "test"
         ) {
             it.environment = "changed"
         }
@@ -80,7 +71,7 @@ class SentryHubBuilderTest {
 
     @Test
     fun `can set environment option`() {
-        tested(context = context, apiClient = apiClient, sentryDsn = "", envName = null, networkPrefs = networkPrefs) {
+        tested(sentryDsn = "", envName = null) {
             it.environment = "test"
         }
     }
@@ -88,11 +79,8 @@ class SentryHubBuilderTest {
     @Test(expected = IllegalArgumentException::class)
     fun `cannot overwrite release option`() {
         tested(
-            context = context,
-            apiClient = apiClient,
             sentryDsn = "",
-            releaseName = "test",
-            networkPrefs = networkPrefs
+            releaseName = "test"
         ) {
             it.release = "changed"
         }
@@ -101,11 +89,8 @@ class SentryHubBuilderTest {
     @Test
     fun `can set release option`() {
         tested(
-            context = context,
-            apiClient = apiClient,
             sentryDsn = "",
-            releaseName = null,
-            networkPrefs = networkPrefs
+            releaseName = null
         ) {
             it.release = "test"
         }

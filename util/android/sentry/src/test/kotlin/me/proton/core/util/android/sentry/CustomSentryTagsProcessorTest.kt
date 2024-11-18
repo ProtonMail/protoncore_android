@@ -28,16 +28,25 @@ import io.sentry.SentryEvent
 import me.proton.core.network.domain.ApiClient
 import me.proton.core.network.domain.NetworkPrefs
 import me.proton.core.util.android.device.DeviceMetadata
+import me.proton.core.util.android.device.GoogleServicesAvailability
+import me.proton.core.util.android.device.GoogleServicesUtils
 import me.proton.core.util.android.device.isDeviceRooted
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.APP_VERSION
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.DEVICE_MANUFACTURER
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.DEVICE_MODEL
+import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.GOOGLE_PLAY_SERVICES_AVAILABLE
+import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.GOOGLE_PLAY_SERVICES_VERSION
+import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.LOCALE
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.OS_NAME
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.OS_RELEASE
 import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.OS_ROOTED
+import me.proton.core.util.android.sentry.CustomSentryTagsProcessor.Companion.TIMEZONE
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import java.util.Locale
+import java.util.Optional
+import java.util.TimeZone
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -46,24 +55,34 @@ class CustomSentryTagsProcessorTest {
     private val apiClient = mockk<ApiClient>(relaxed = true)
     private val deviceMetadata = mockk<DeviceMetadata>(relaxed = true)
     private val networkPrefs = mockk<NetworkPrefs>(relaxed = true)
+    private val googleServicesUtils = mockk<GoogleServicesUtils>()
     private lateinit var tagsProcessor: CustomSentryTagsProcessor
+    private val defaultLocale = Locale.getDefault()
+    private val defaultTimeZone = TimeZone.getDefault()
 
     @Before
     fun beforeEveryTest() {
         mockkStatic("me.proton.core.util.android.device.DeviceUtilsKt")
-        tagsProcessor = CustomSentryTagsProcessor(context, apiClient, deviceMetadata, networkPrefs)
+        Locale.setDefault(Locale.forLanguageTag("fr-CH"))
+        TimeZone.setDefault(TimeZone.getTimeZone("Europe/Zurich"))
     }
 
     @After
     fun afterEveryTest() {
         unmockkStatic("me.proton.core.util.android.device.DeviceUtilsKt")
+        Locale.setDefault(defaultLocale)
+        TimeZone.setDefault(defaultTimeZone)
     }
 
     @Test
     fun `headers set properly`() {
+        tagsProcessor = makeTestTagsProcessor(Optional.of(googleServicesUtils))
+
         every { deviceMetadata.osRelease() } returns "TestOsRelease"
         every { deviceMetadata.manufacturer() } returns "TestManufacturer"
         every { deviceMetadata.deviceModel() } returns "TestDeviceModel"
+        every { googleServicesUtils.isGooglePlayServicesAvailable(any()) } returns GoogleServicesAvailability.Success
+        every { googleServicesUtils.getApkVersion(any()) } returns 123
 
         every { apiClient.appVersionHeader } returns "TestAppVersion"
         val event = SentryEvent()
@@ -72,16 +91,21 @@ class CustomSentryTagsProcessorTest {
 
         assertNotNull(eventReturned)
         assertNotNull(eventReturned.tags)
-        assertEquals(8, eventReturned.tags!!.size)
+        assertEquals(12, eventReturned.tags!!.size)
         assertEquals("TestOsRelease", eventReturned.getTag(OS_RELEASE))
         assertEquals("TestManufacturer", eventReturned.getTag(DEVICE_MANUFACTURER))
         assertEquals("TestDeviceModel", eventReturned.getTag(DEVICE_MODEL))
         assertEquals("TestAppVersion", eventReturned.getTag(APP_VERSION))
         assertEquals("Android", eventReturned.getTag(OS_NAME))
+        assertEquals("Success", eventReturned.getTag(GOOGLE_PLAY_SERVICES_AVAILABLE))
+        assertEquals("123", eventReturned.getTag(GOOGLE_PLAY_SERVICES_VERSION))
+        assertEquals("fr_CH", eventReturned.getTag(LOCALE))
+        assertEquals("Europe/Zurich", eventReturned.getTag(TIMEZONE))
     }
 
     @Test
     fun `device rooted true`() {
+        tagsProcessor = makeTestTagsProcessor(Optional.empty())
         every { isDeviceRooted(context) } returns true
         val event = SentryEvent()
         val hint = Hint()
@@ -92,6 +116,7 @@ class CustomSentryTagsProcessorTest {
 
     @Test
     fun `device rooted false`() {
+        tagsProcessor = makeTestTagsProcessor(Optional.empty())
         every { isDeviceRooted(context) } returns false
         val event = SentryEvent()
         val hint = Hint()
@@ -99,4 +124,12 @@ class CustomSentryTagsProcessorTest {
 
         assertEquals("false", eventReturned!!.getTag(OS_ROOTED))
     }
+
+    private fun makeTestTagsProcessor(googleServicesUtils: Optional<GoogleServicesUtils>) = CustomSentryTagsProcessor(
+        context,
+        apiClient,
+        deviceMetadata,
+        networkPrefs,
+        googleServicesUtils
+    )
 }
