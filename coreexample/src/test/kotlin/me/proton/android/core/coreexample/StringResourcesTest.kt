@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -16,37 +16,17 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-import studio.forface.easygradle.dsl.*
-import studio.forface.easygradle.dsl.android.*
+package me.proton.android.core.coreexample
 
-plugins {
-    protonAndroidLibrary
-}
+import android.os.Build
+import me.proton.core.test.android.BaseStringResourcesTest
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
-protonBuild {
-    apiModeDisabled()
-}
-
-protonCoverage.disabled.set(true)
-publishOption.shouldBePublishedAsLib = true
-
-android {
-    namespace = "me.proton.core.test.android"
-}
-
-dependencies {
-    implementation(
-        `android-test-core-ktx`,
-        `lifecycle-runtime`,
-        mockk
-    )
-
-    api(
-        project(Module.networkData),
-        project(Module.networkDomain),
-        `android-arch-testing`,
-        `coroutines-core`,
-        junit,
-        `lifecycle-common`,
-    )
-}
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [Build.VERSION_CODES.P, Build.VERSION_CODES.UPSIDE_DOWN_CAKE])
+class StringResourcesTest : BaseStringResourcesTest(
+    stringResourcesClass = R.string::class.java,
+    pluralsResourcesClass = R.plurals::class.java
+)

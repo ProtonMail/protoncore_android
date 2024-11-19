@@ -70,7 +70,7 @@ internal fun initVersions(libs: VersionCatalog) {
     `android-room version` =                    "2.6.1"
 
     `android-test version` =                    "1.5.0"
-    `robolectric version` =                     "4.11.1"
+    `robolectric version` =                     "4.14.1"
     // endregion
 
     // region Others
