@@ -1,0 +1,1 @@
+-keep class com.appmattus.certificatetransparency.internal.verifier.CertificateTransparencyTrustManagerExtended { *; }
