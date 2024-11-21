@@ -23,6 +23,7 @@ import me.proton.core.plan.domain.entity.Plan
 /**
  * Implement this interface to provide a client specific plans filtering function.
  */
+@Deprecated("This class is not used anymore. Please remove any usage of it.")
 interface ClientPlanFilter {
     fun filter(): (Plan) -> Boolean
 }

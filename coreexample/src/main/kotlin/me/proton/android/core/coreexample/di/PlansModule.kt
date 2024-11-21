@@ -22,7 +22,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import me.proton.core.plan.domain.ClientPlanFilter
 import me.proton.core.plan.domain.ProductOnlyPaidPlans
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
@@ -42,7 +41,4 @@ object PlansModule {
     @Provides
     @ProductOnlyPaidPlans
     fun provideProductOnlyPaidPlans() = false
-
-    @Provides
-    fun provideClientPlansFilterPredicate(): ClientPlanFilter? = null
 }
