@@ -38,7 +38,6 @@ import me.proton.core.plan.domain.LogTag
 import me.proton.core.plan.domain.PlanIconsEndpointProvider
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.DynamicSubscription
-import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.repository.PlansRepository
@@ -61,11 +60,7 @@ class PlansRepositoryImpl @Inject constructor(
     private val dynamicPlansCache =
         Cache.Builder().expireAfterWrite(1.minutes).build<String, DynamicPlans>()
 
-    private val plansCache =
-        Cache.Builder().expireAfterWrite(1.minutes).build<Unit, List<Plan>>()
-
     private fun clearPlansCache() {
-        plansCache.invalidateAll()
         dynamicPlansCache.invalidateAll()
     }
 
@@ -90,20 +85,6 @@ class PlansRepositoryImpl @Inject constructor(
     ): DynamicPlans = dynamicPlansCache.get(sessionUserId?.id ?: "") {
         getRemoteDynamicPlans(sessionUserId, appStore)
     }
-
-    /**
-     * Returns from the API all plans available for the user in the moment.
-     */
-    override suspend fun getPlans(sessionUserId: SessionUserId?) = plansCache.get(Unit) {
-        apiProvider.get<PlansApi>(sessionUserId).invoke {
-            getPlans().plans.map { it.toPlan() }
-        }.valueOrThrow
-    }
-
-    override suspend fun getPlansDefault(sessionUserId: SessionUserId?): Plan =
-        apiProvider.get<PlansApi>(sessionUserId).invoke {
-            getPlansDefault().plan.toPlan()
-        }.valueOrThrow
 
     override suspend fun validateSubscription(
         sessionUserId: SessionUserId?,

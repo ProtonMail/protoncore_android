@@ -22,10 +22,8 @@ import me.proton.core.network.data.protonApi.BaseRetrofitApi
 import me.proton.core.plan.data.api.request.CheckSubscription
 import me.proton.core.plan.data.api.request.CreateSubscription
 import me.proton.core.plan.data.api.response.CheckSubscriptionResponse
-import me.proton.core.plan.data.api.response.DefaultPlanResponse
 import me.proton.core.plan.data.api.response.DynamicPlansResponse
 import me.proton.core.plan.data.api.response.DynamicSubscriptionsResponse
-import me.proton.core.plan.data.api.response.PlansResponse
 import me.proton.core.plan.data.api.response.SubscriptionResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -40,18 +38,6 @@ internal interface PlansApi : BaseRetrofitApi {
      */
     @GET("payments/v5/plans")
     suspend fun getDynamicPlans(@Query("Vendor") appVendor: String): DynamicPlansResponse
-
-    /**
-     * Returns from the API all plans available for the user in the moment.
-     */
-    @GET("payments/v4/plans")
-    suspend fun getPlans(): PlansResponse
-
-    /**
-     * Returns the default plan values from the API.
-     */
-    @GET("payments/v4/plans/default")
-    suspend fun getPlansDefault(): DefaultPlanResponse
 
     /**
      * Creates new or updates the current active subscription.

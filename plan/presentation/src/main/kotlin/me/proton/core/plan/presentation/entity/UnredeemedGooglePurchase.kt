@@ -20,7 +20,6 @@ package me.proton.core.plan.presentation.entity
 
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.plan.domain.entity.DynamicPlan
-import me.proton.core.plan.domain.entity.Plan
 
 data class UnredeemedGooglePurchase(
     val googlePurchase: GooglePurchase,

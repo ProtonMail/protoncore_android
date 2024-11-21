@@ -22,7 +22,6 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportSignupPaidPlans
-import me.proton.core.plan.domain.usecase.GetPlans
 import javax.inject.Inject
 
 public class CanUpgradeToPaid @Inject constructor(

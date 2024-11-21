@@ -19,14 +19,7 @@
 package me.proton.core.plan.data.api
 
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.AppStore
 import me.proton.core.plan.data.api.request.CreateSubscription
-import me.proton.core.plan.domain.entity.MASK_CALENDAR
-import me.proton.core.plan.domain.entity.MASK_DRIVE
-import me.proton.core.plan.domain.entity.MASK_MAIL
-import me.proton.core.plan.domain.entity.MASK_VPN
-import me.proton.core.plan.domain.entity.PlanDuration
-import me.proton.core.plan.domain.entity.PlanVendorData
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.test.kotlin.BuildRetrofitApi
 import me.proton.core.test.kotlin.enqueueFromResourceFile
@@ -36,7 +29,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import kotlin.test.assertTrue
 
 class PlansApiTest {
     private lateinit var tested: PlansApi
@@ -51,98 +43,6 @@ class PlansApiTest {
     @AfterTest
     fun tearDown() {
         webServer.shutdown()
-    }
-
-    @Test
-    fun `get plans with vendor plan names`() = runTest {
-        // Given
-        webServer.enqueueFromResourceFile("GET/payments/v4/plans.json", javaClass.classLoader)
-
-        // When
-        val response = tested.getPlans()
-        val plans = response.plans.map { it.toPlan() }
-
-        // Then
-        assertEquals(3, plans.size)
-
-        assertEquals("mail2022", plans[0].name)
-        assertEquals("Mail Plus", plans[0].title)
-        assertEquals(1699698232, plans[0].offers!![0].endTime)
-        assertEquals(499, plans[0].pricing?.monthly)
-        assertEquals(4788, plans[0].pricing?.yearly)
-        assertEquals(8376, plans[0].pricing?.twoYearly)
-        assertEquals(1, plans[0].cycle)
-        assertEquals(true, plans[0].enabled)
-        assertEquals(499, plans[0].amount)
-        assertEquals(MASK_MAIL, plans[0].services)
-        assertEquals(
-            mapOf(
-                AppStore.GooglePlay to PlanVendorData(
-                    customerId = "cus_google_unCjt-CANFkU-RVD8s0y",
-                    names = mapOf(
-                        PlanDuration(12) to "googlemail_mail2022_12_renewing"
-                    )
-                )
-            ),
-            plans[0].vendors
-        )
-
-        assertEquals(MASK_MAIL or MASK_CALENDAR or MASK_DRIVE or MASK_VPN, plans[1].services)
-
-        assertEquals(false, plans[2].enabled)
-    }
-
-    @Test
-    fun `get plans with offers no endtime`() = runTest {
-        // Given
-        webServer.enqueueFromResourceFile("GET/payments/v4/plans-offers-no-endtime.json", javaClass.classLoader)
-
-        // When
-        val response = tested.getPlans()
-        val plans = response.plans.map { it.toPlan() }
-
-        // Then
-        assertEquals(3, plans.size)
-
-        assertEquals("mail2022", plans[0].name)
-        assertEquals("Mail Plus", plans[0].title)
-        assertNull(plans[0].offers!![0].endTime)
-        assertEquals(499, plans[0].pricing?.monthly)
-        assertEquals(4788, plans[0].pricing?.yearly)
-        assertEquals(8376, plans[0].pricing?.twoYearly)
-        assertEquals(1, plans[0].cycle)
-        assertEquals(true, plans[0].enabled)
-        assertEquals(499, plans[0].amount)
-        assertEquals(MASK_MAIL, plans[0].services)
-        assertEquals(
-            mapOf(
-                AppStore.GooglePlay to PlanVendorData(
-                    customerId = "cus_google_unCjt-CANFkU-RVD8s0y",
-                    names = mapOf(
-                        PlanDuration(12) to "googlemail_mail2022_12_renewing"
-                    )
-                )
-            ),
-            plans[0].vendors
-        )
-
-        assertEquals(MASK_MAIL or MASK_CALENDAR or MASK_DRIVE or MASK_VPN, plans[1].services)
-
-        assertEquals(false, plans[2].enabled)
-    }
-
-    @Test
-    fun `get plans without vendor plan names`() = runTest {
-        // Given
-        webServer.enqueueFromResourceFile("GET/payments/v4/plans-no-vendors.json", javaClass.classLoader)
-
-        // When
-        val response = tested.getPlans()
-        val plans = response.plans.map { it.toPlan() }
-
-        // Then
-        assertEquals(1, plans.size)
-        assertTrue(plans[0].vendors.isEmpty())
     }
 
     @Test

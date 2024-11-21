@@ -32,9 +32,6 @@ import me.proton.core.plan.domain.entity.DynamicPlanState
 import me.proton.core.plan.domain.entity.DynamicPlanType
 import me.proton.core.plan.domain.entity.DynamicPlanVendor
 import me.proton.core.plan.domain.entity.DynamicPlans
-import me.proton.core.plan.domain.entity.Plan
-import me.proton.core.plan.domain.entity.PlanPricing
-import me.proton.core.plan.domain.usecase.GetPlans
 import org.junit.Before
 import org.junit.Test
 import java.time.Instant

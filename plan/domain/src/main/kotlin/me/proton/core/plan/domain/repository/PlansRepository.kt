@@ -27,7 +27,6 @@ import me.proton.core.payment.domain.entity.SubscriptionStatus
 import me.proton.core.payment.domain.repository.PlanQuantity
 import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.DynamicSubscription
-import me.proton.core.plan.domain.entity.Plan
 import me.proton.core.plan.domain.entity.Subscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.util.kotlin.annotation.ExcludeFromCoverage
@@ -38,20 +37,6 @@ interface PlansRepository {
      * Returns a list of dynamic plans that are available for the user.
      */
     suspend fun getDynamicPlans(sessionUserId: SessionUserId?, appStore: AppStore): DynamicPlans
-
-    /**
-     * Returns from the API all plans available for the user in the moment.
-     */
-    suspend fun getPlans(
-        sessionUserId: SessionUserId?
-    ): List<Plan>
-
-    /**
-     * Returns from the API all plans available for the user in the moment.
-     */
-    suspend fun getPlansDefault(
-        sessionUserId: SessionUserId?
-    ): Plan
 
     // region subscription
     /**
