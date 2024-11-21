@@ -81,6 +81,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     private val testUserName = "test-username"
     private val testPassword = "test-password"
     private val testUserId = UserId("test-user-id")
+    private val requiredAccountType = AccountType.Internal
     // endregion
 
     private lateinit var viewModel: LoginViewModel
@@ -96,21 +97,21 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
     fun `login 2FA flow is handled correctly`() = coroutinesTest {
         // GIVEN
         val sessionInfo = mockSessionInfo(isSecondFactorNeeded = true)
-        coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
+        coEvery { createLoginSession.invoke(any(), any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any()
             )
         } returns PostLoginAccountSetup.Result.Need.SecondFactor(testUserId)
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+            viewModel.startLoginWorkflow(testUserName, testPassword)
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -134,18 +135,18 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any()
             )
         } returns PostLoginAccountSetup.Result.AccountReady(testUserId)
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+            viewModel.startLoginWorkflow(testUserName, testPassword)
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -172,18 +173,18 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any()
             )
         } throws ApiException(ApiResult.Error.NoInternet())
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+            viewModel.startLoginWorkflow(testUserName, testPassword)
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -215,7 +216,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+            viewModel.startLoginWorkflow(testUserName, testPassword)
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -236,18 +237,18 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any()
             )
         } returns PostLoginAccountSetup.Result.Need.ChangePassword(testUserId)
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, testPassword, requiredAccountType)
+            viewModel.startLoginWorkflow(testUserName, testPassword)
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -271,13 +272,13 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coEvery { createLoginSession.invoke(any(), any(), any()) } returns sessionInfo
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any(),
+                onSetupSuccess = any()
             )
         } throws ApiException(
             ApiResult.Error.Http(
@@ -289,7 +290,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, testPassword, mockk())
+            viewModel.startLoginWorkflow(testUserName, testPassword)
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -305,13 +306,13 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coVerify(exactly = 2) { createLoginSession.invoke(testUserName, testPassword, any()) }
         coVerify(exactly = 2) {
             postLoginAccountSetup.invoke(
-                any(),
-                testPassword,
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = testPassword,
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any(),
+                onSetupSuccess = any()
             )
         }
     }
@@ -331,7 +332,7 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
         viewModel.state.test {
             // WHEN
-            viewModel.startLoginWorkflow(testUserName, "invalid-password", mockk())
+            viewModel.startLoginWorkflow(testUserName, password = "invalid-password", mockk())
 
             // THEN
             assertIs<LoginViewModel.State.Processing>(awaitItem())
@@ -343,13 +344,13 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coVerify(exactly = 1) { createLoginSession.invoke(testUserName, any(), any()) }
         coVerify(exactly = 0) {
             postLoginAccountSetup.invoke(
-                any(),
-                testPassword,
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = testPassword,
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any(),
+                onSetupSuccess = any()
             )
         }
     }
@@ -422,15 +423,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         }
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any(),
+                onSetupSuccess = any(),
+                billingDetails = any(),
+                internalAddressDomain = any()
             )
         } coAnswers {
             result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Success }
@@ -445,7 +446,6 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         viewModel.startLoginWorkflow(
             username = testUserName,
             password = testPassword,
-            requiredAccountType = AccountType.Internal,
             loginMetricData = { loginData },
             unlockUserMetricData = { unlockData },
             userCheckMetricData = { userCheckData }
@@ -469,15 +469,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
 
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any(),
+                onSetupSuccess = any(),
+                billingDetails = any(),
+                internalAddressDomain = any()
             )
         } coAnswers {
             result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Error("error") }
@@ -489,7 +489,6 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         viewModel.startLoginWorkflow(
             username = testUserName,
             password = testPassword,
-            requiredAccountType = AccountType.Internal
         ).join()
 
         // THEN
@@ -523,15 +522,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         }
         coEvery {
             postLoginAccountSetup.invoke(
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any(),
-                any()
+                userId = any(),
+                encryptedPassword = any(),
+                requiredAccountType = any(),
+                isSecondFactorNeeded = any(),
+                isTwoPassModeNeeded = any(),
+                temporaryPassword = any(),
+                onSetupSuccess = any(),
+                billingDetails = any(),
+                internalAddressDomain = any()
             )
         } coAnswers {
             result("defaultUserCheck") { PostLoginAccountSetup.UserCheckResult.Success }
@@ -544,7 +543,6 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         viewModel.startLoginWorkflow(
             username = testUserName,
             password = testPassword,
-            requiredAccountType = AccountType.Internal
         ).join()
 
         // THEN
@@ -563,14 +561,15 @@ class LoginViewModelTest : ArchTest by ArchTest(), CoroutinesTest by CoroutinesT
         coJustRun { accountHandler.handleAccountDisabled(any()) }
 
         return LoginViewModel(
-            savedStateHandle,
-            accountHandler,
-            createLoginSession,
-            keyStoreCrypto,
-            postLoginAccountSetup,
-            isSsoEnabled,
-            observabilityManager,
-            telemetryManager
+            requiredAccountType = requiredAccountType,
+            savedStateHandle = savedStateHandle,
+            accountWorkflow = accountHandler,
+            createLoginSession = createLoginSession,
+            keyStoreCrypto = keyStoreCrypto,
+            postLoginAccountSetup = postLoginAccountSetup,
+            isSsoEnabled = isSsoEnabled,
+            observabilityManager = observabilityManager,
+            telemetryManager = telemetryManager
         )
     }
 

@@ -37,7 +37,7 @@ import me.proton.core.auth.presentation.alert.CancelCreateAccountDialog
 import me.proton.core.auth.presentation.databinding.FragmentSignupChooseInternalEmailBinding
 import me.proton.core.auth.presentation.ui.onLongState
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel
-import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.State
+import me.proton.core.auth.presentation.viewmodel.signup.ChooseInternalEmailViewModel.State.*
 import me.proton.core.auth.presentation.viewmodel.signup.ChooseUsernameViewModel
 import me.proton.core.auth.presentation.viewmodel.signup.SignupViewModel
 import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
@@ -56,6 +56,7 @@ import me.proton.core.telemetry.presentation.annotation.ViewClicked
 import me.proton.core.telemetry.presentation.annotation.ViewFocused
 import me.proton.core.user.domain.entity.Domain
 import me.proton.core.util.kotlin.exhaustive
+import javax.inject.Inject
 
 @AndroidEntryPoint
 @ProductMetrics(
@@ -74,13 +75,12 @@ import me.proton.core.util.kotlin.exhaustive
 )
 class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choose_internal_email) {
 
+    @Inject
+    lateinit var requiredAccountType: AccountType
+
     private val viewModel by viewModels<ChooseInternalEmailViewModel>()
     private val signupViewModel by activityViewModels<SignupViewModel>()
     private val binding by viewBinding(FragmentSignupChooseInternalEmailBinding::bind)
-
-    private val creatableAccountType by lazy {
-        AccountType.valueOf(requireNotNull(requireArguments().getString(ARG_INPUT_ACCOUNT_TYPE)))
-    }
 
     private val username by lazy { requireArguments().getString(ARG_INPUT_USERNAME) }
     private val domain by lazy { requireArguments().getString(ARG_INPUT_DOMAIN) }
@@ -116,7 +116,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             nextButton.onClick(::onNextClicked)
             switchButton.onClick(::onSwitchClicked)
 
-            when (creatableAccountType) {
+            when (requiredAccountType) {
                 AccountType.Username -> Unit
                 AccountType.Internal -> {
                     switchButton.visibility = View.GONE
@@ -138,17 +138,12 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
             .distinctUntilChanged()
             .onEach {
                 when (it) {
-                    is State.Idle -> showLoading(false)
-                    is State.Processing -> showLoading(true)
-                    is State.Ready -> onReady(it.username, it.domain, it.domains)
-                    is State.Success -> onUsernameAvailable(it.username, it.domain)
-                    is State.Error.DomainsNotAvailable -> onDomainsNotAvailable(
-                        it.error.getUserMessage(
-                            resources
-                        )
-                    )
-
-                    is State.Error.Message -> onError(it.error.getUserMessage(resources))
+                    is Idle -> showLoading(false)
+                    is Processing -> showLoading(true)
+                    is Ready -> onReady(it.username, it.domain, it.domains)
+                    is Success -> onUsernameAvailable(it.username, it.domain)
+                    is Error.DomainsNotAvailable -> onDomainsNotAvailable(it.error.getUserMessage(resources))
+                    is Error.Message -> onError(it.error.getUserMessage(resources))
                 }.exhaustive
             }
             .onLongState<ChooseUsernameViewModel.State.Processing> {
@@ -175,7 +170,7 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     }
 
     private fun onSwitchClicked() {
-        parentFragmentManager.replaceByExternalEmailChooser(creatableAccountType, cancellable)
+        parentFragmentManager.replaceByExternalEmailChooser(cancellable)
     }
 
     private fun onReady(username: String?, domain: String?, domains: List<Domain>) {
@@ -234,19 +229,16 @@ class ChooseInternalEmailFragment : SignupFragment(R.layout.fragment_signup_choo
     }
 
     companion object {
-        const val ARG_INPUT_ACCOUNT_TYPE = "arg.accountType"
         const val ARG_INPUT_CANCELLABLE = "arg.cancellable"
         const val ARG_INPUT_USERNAME = "arg.username"
         const val ARG_INPUT_DOMAIN = "arg.domain"
 
         operator fun invoke(
-            creatableAccountType: AccountType,
             cancellable: Boolean = true,
             username: String? = null,
             domain: String? = null,
         ) = ChooseInternalEmailFragment().apply {
             arguments = bundleOf(
-                ARG_INPUT_ACCOUNT_TYPE to creatableAccountType.name,
                 ARG_INPUT_CANCELLABLE to cancellable,
                 ARG_INPUT_USERNAME to username,
                 ARG_INPUT_DOMAIN to domain,

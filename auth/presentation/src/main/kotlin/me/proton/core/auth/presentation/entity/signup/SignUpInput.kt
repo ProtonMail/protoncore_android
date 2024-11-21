@@ -24,7 +24,6 @@ import me.proton.core.account.domain.entity.AccountType
 
 @Parcelize
 data class SignUpInput(
-    val creatableAccountType: AccountType,
     val cancellable: Boolean = true,
     val email: String? = null,
     val subscriptionDetails: SubscriptionDetails? = null

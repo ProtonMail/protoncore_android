@@ -61,7 +61,7 @@ public interface BaseExternalAccountSignupTests {
     }
 
     @Test
-    public fun happyPath(): Unit = withSignupActivity(AccountType.External) {
+    public fun happyPath(): Unit = withSignupActivity {
         ChooseExternalEmailRobot()
             .email(testUser.email)
             .next()
@@ -76,7 +76,7 @@ public interface BaseExternalAccountSignupTests {
     }
 
     @Test
-    public fun incorrectEmailVerificationCode(): Unit = withSignupActivity(AccountType.External) {
+    public fun incorrectEmailVerificationCode(): Unit = withSignupActivity {
         ChooseExternalEmailRobot()
             .email(testUser.email)
             .next()
@@ -88,23 +88,7 @@ public interface BaseExternalAccountSignupTests {
     }
 
     @Test
-    public fun externalSignupNotSupported(): Unit = withSignupActivity(AccountType.Internal) {
-        ChooseInternalEmailRobot()
-            .apply {
-                verify {
-                    domainInputDisplayed()
-                    nextButtonEnabled()
-                }
-            }
-            .username(testUser.email)
-            .next()
-            .verify {
-                errorSnackbarDisplayed("Username contains invalid characters")
-            }
-    }
-
-    @Test
-    public fun switchToInternalAndBack(): Unit = withSignupActivity(AccountType.External) {
+    public fun switchToInternalAndBack(): Unit = withSignupActivity {
         ChooseExternalEmailRobot()
             .switchSignupType()
             .verify {
@@ -122,19 +106,18 @@ public interface BaseExternalAccountSignupTests {
     }
 
     private companion object {
-        private fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
+        private fun launchSignupActivity(): ActivityScenario<SignupActivity> =
             ActivityScenario.launch(
                 StartSignup.createIntent(
                     ApplicationProvider.getApplicationContext(),
-                    SignUpInput(accountType)
+                    SignUpInput()
                 )
             )
 
         private inline fun withSignupActivity(
-            accountType: AccountType,
             body: (ActivityScenario<SignupActivity>) -> Unit
         ) {
-            launchSignupActivity(accountType).use(body)
+            launchSignupActivity().use(body)
         }
     }
 }

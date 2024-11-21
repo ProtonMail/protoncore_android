@@ -51,9 +51,9 @@ open class CoreexampleRobot : CoreRobot() {
 
     fun featureFlags(): FeatureFlagsRobot = scrollToAndClick(R.id.featureFlags)
     fun humanVerification(): HVRobot = scrollToAndClick(R.id.trigger_human_ver)
-    fun signupInternal(): ChooseInternalEmailRobot = scrollToAndClick(R.id.signupInternal)
-    fun signupExternal(): ChooseExternalEmailRobot = scrollToAndClick(R.id.signupExternal)
-    fun signupUsername(): ChooseUsernameRobot = scrollToAndClick(R.id.signupUsername)
+    fun signupInternal(): ChooseInternalEmailRobot = scrollToAndClick(R.id.sign_up)
+    fun signupExternal(): ChooseExternalEmailRobot = scrollToAndClick(R.id.sign_up)
+    fun signupUsername(): ChooseUsernameRobot = scrollToAndClick(R.id.sign_up)
     inline fun <reified T> logoutUser(user: User): T = clickUserButton(user)
     inline fun <reified T> clickUserButton(
         user: User,

@@ -54,8 +54,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountSwitcherViewModel @Inject constructor(
     private val accountManager: AccountManager,
-    private val userManager: UserManager,
-    private val requiredAccountType: AccountType = AccountType.Internal
+    private val userManager: UserManager
 ) : ViewModel() {
 
     sealed class Action {
@@ -133,8 +132,8 @@ class AccountSwitcherViewModel @Inject constructor(
 
     fun onDefaultAction(authOrchestrator: AuthOrchestrator) = onAction().onEach {
         when (it) {
-            is Action.Add -> authOrchestrator.startLoginWorkflow(requiredAccountType)
-            is Action.SignIn -> authOrchestrator.startLoginWorkflow(requiredAccountType, username = it.account.username)
+            is Action.Add -> authOrchestrator.startLoginWorkflow()
+            is Action.SignIn -> authOrchestrator.startLoginWorkflow(it.account.username)
             is Action.SignOut -> accountManager.disableAccount(it.account.userId)
             is Action.Remove -> accountManager.removeAccount(it.account.userId)
             is Action.SetPrimary -> accountManager.setAsPrimary(it.account.userId)

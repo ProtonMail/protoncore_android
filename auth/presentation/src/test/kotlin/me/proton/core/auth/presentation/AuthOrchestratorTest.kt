@@ -47,7 +47,6 @@ import me.proton.core.auth.presentation.ui.StartLoginTwoStep
 import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import org.junit.Before
 import org.junit.Test
@@ -121,9 +120,9 @@ class AuthOrchestratorTest {
     fun startAddAccountWorkflow() = runTest {
         // Given
         orchestrator.register(caller)
-        val input = AddAccountInput(AccountType.Internal, AccountType.Internal, Product.Mail, null)
+        val input = AddAccountInput(null)
         // When
-        orchestrator.startAddAccountWorkflow(AccountType.Internal, AccountType.Internal, Product.Mail)
+        orchestrator.startAddAccountWorkflow()
         // Then
         verify(exactly = 1) { addAccountLauncher.launch(input) }
     }
@@ -133,9 +132,9 @@ class AuthOrchestratorTest {
         // Given
         orchestrator.register(caller)
         val username = "test-username"
-        val input = LoginInput(AccountType.Internal, username)
+        val input = LoginInput(username)
         // When
-        orchestrator.startLoginWorkflow(AccountType.Internal, username)
+        orchestrator.startLoginWorkflow(username)
         // Then
         verify(exactly = 1) { loginLauncher.launch(input) }
     }
@@ -147,9 +146,9 @@ class AuthOrchestratorTest {
 
         orchestrator.register(caller)
         val username = "test-username"
-        val input = LoginInput(AccountType.Internal, username)
+        val input = LoginInput(username)
         // When
-        orchestrator.startLoginWorkflow(AccountType.Internal, username)
+        orchestrator.startLoginWorkflow(username)
         // Then
         verify(exactly = 1) { loginTwoStepLauncher.launch(input) }
         verify(exactly = 0) { loginLauncher.launch(input) }
@@ -159,9 +158,9 @@ class AuthOrchestratorTest {
     fun `startLoginWorkflow username null`() = runTest {
         // Given
         orchestrator.register(caller)
-        val input = LoginInput(AccountType.Internal, null)
+        val input = LoginInput(null)
         // When
-        orchestrator.startLoginWorkflow(AccountType.Internal, null)
+        orchestrator.startLoginWorkflow(null)
         // Then
         verify(exactly = 1) { loginLauncher.launch(input) }
     }
@@ -170,9 +169,9 @@ class AuthOrchestratorTest {
     fun `startLoginWorkflow default username password`() = runTest {
         // Given
         orchestrator.register(caller)
-        val input = LoginInput(AccountType.Internal)
+        val input = LoginInput()
         // When
-        orchestrator.startLoginWorkflow(AccountType.Internal)
+        orchestrator.startLoginWorkflow()
         // Then
         verify(exactly = 1) { loginLauncher.launch(input) }
     }
@@ -347,9 +346,9 @@ class AuthOrchestratorTest {
     fun `startSignupWorkflow`() = runTest {
         // Given
         orchestrator.register(caller)
-        val input = SignUpInput(AccountType.Internal)
+        val input = SignUpInput()
         // When
-        orchestrator.startSignupWorkflow(AccountType.Internal)
+        orchestrator.startSignupWorkflow()
         // Then
         verify(exactly = 1) { signUpLauncher.launch(input) }
     }
@@ -358,7 +357,7 @@ class AuthOrchestratorTest {
     fun `startSignupWorkflow default`() = runTest {
         // Given
         orchestrator.register(caller)
-        val input = SignUpInput(AccountType.Internal)
+        val input = SignUpInput()
         // When
         orchestrator.startSignupWorkflow()
         // Then

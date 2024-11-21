@@ -50,7 +50,6 @@ import me.proton.core.auth.presentation.ui.StartSecondFactor
 import me.proton.core.auth.presentation.ui.StartSignup
 import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
 import javax.inject.Inject
@@ -299,18 +298,10 @@ class AuthOrchestrator @Inject constructor(
      * @see [onAddAccountResult]
      */
     fun startAddAccountWorkflow(
-        requiredAccountType: AccountType,
-        creatableAccountType: AccountType,
-        product: Product,
-        loginUsername: String? = null
+        username: String? = null
     ) {
         checkRegistered(addAccountWorkflowLauncher).launch(
-            AddAccountInput(
-                requiredAccountType = requiredAccountType,
-                creatableAccountType = creatableAccountType,
-                product = product,
-                loginUsername = loginUsername
-            )
+            AddAccountInput(username = username)
         )
     }
 
@@ -320,16 +311,15 @@ class AuthOrchestrator @Inject constructor(
      * @see [onLoginResult]
      */
     fun startLoginWorkflow(
-        requiredAccountType: AccountType,
         username: String? = null
     ) {
         if (isLoginTwoStepEnabled()) {
             checkRegistered(loginTwoStepWorkflowLauncher).launch(
-                LoginInput(requiredAccountType, username)
+                LoginInput(username)
             )
         } else {
             checkRegistered(loginWorkflowLauncher).launch(
-                LoginInput(requiredAccountType, username)
+                LoginInput(username)
             )
         }
     }
@@ -399,9 +389,7 @@ class AuthOrchestrator @Inject constructor(
      * @see [onDeviceSecretResult]
      */
     fun startDeviceSecretWorkflow(account: Account) {
-        startDeviceSecretWorkflow(
-            userId = account.userId,
-        )
+        startDeviceSecretWorkflow(userId = account.userId)
     }
 
     /**
@@ -410,13 +398,12 @@ class AuthOrchestrator @Inject constructor(
      * Note, this flow will take care of creating the subscription, but not plan validation nor token conversion.
      */
     fun startSignupWorkflow(
-        creatableAccountType: AccountType = AccountType.Internal,
         cancellable: Boolean = true,
         email: String? = null,
         subscriptionDetails: SubscriptionDetails? = null
     ) {
         checkRegistered(signUpWorkflowLauncher).launch(
-            SignUpInput(creatableAccountType, cancellable, email, subscriptionDetails)
+            SignUpInput(cancellable, email, subscriptionDetails)
         )
     }
 

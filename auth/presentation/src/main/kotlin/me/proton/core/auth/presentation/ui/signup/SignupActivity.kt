@@ -90,6 +90,9 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
     @Inject
     lateinit var product: Product
 
+    @Inject
+    lateinit var requiredAccountType: AccountType
+
     private val input: SignUpInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT)) as SignUpInput
     }
@@ -105,16 +108,14 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
 
         if (savedInstanceState == null) {
             with(supportFragmentManager) {
-                when (input.creatableAccountType) {
+                when (requiredAccountType) {
                     AccountType.Username -> showUsernameChooser(
                         cancellable = input.cancellable
                     )
                     AccountType.Internal -> showInternalEmailChooser(
-                        creatableAccountType = input.creatableAccountType,
                         cancellable = input.cancellable
                     )
                     AccountType.External -> showExternalEmailChooser(
-                        creatableAccountType = input.creatableAccountType,
                         cancellable = input.cancellable,
                         email = input.email,
                         subscriptionDetails = input.subscriptionDetails
@@ -242,7 +243,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
         loginViewModel.startLoginWorkflowWithEncryptedPassword(
             state.username,
             state.password,
-            signUpViewModel.currentAccountType,
             billingDetails,
             loginMetricData = { SignupLoginTotal(it, signUpViewModel.currentAccountType) },
             unlockUserMetricData = { SignupUnlockUserTotalV1(it.toUnlockUserStatus()) },
@@ -287,7 +287,6 @@ class SignupActivity : AuthActivity<ActivitySignupBinding>(ActivitySignupBinding
                     ARG_RESULT,
                     with(signUpViewModel) {
                         SignUpResult(
-                            accountType = currentAccountType,
                             username = username,
                             domain = domain,
                             email = externalEmail,

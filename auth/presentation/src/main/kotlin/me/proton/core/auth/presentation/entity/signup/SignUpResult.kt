@@ -28,5 +28,4 @@ data class SignUpResult(
     val domain: String?,
     val email: String?,
     val userId: String,
-    val accountType: AccountType
 ) : Parcelable

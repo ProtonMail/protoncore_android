@@ -76,13 +76,10 @@ internal class AddAccountFragment :
         // }
 
         binding.signIn.onClick {
-            authOrchestrator?.startLoginWorkflow(
-                requiredAccountType = input.requiredAccountType,
-                username = input.loginUsername
-            )
+            authOrchestrator?.startLoginWorkflow(input.username)
         }
         binding.signUp.onClick {
-            authOrchestrator?.startSignupWorkflow(input.creatableAccountType)
+            authOrchestrator?.startSignupWorkflow()
         }
     }
 

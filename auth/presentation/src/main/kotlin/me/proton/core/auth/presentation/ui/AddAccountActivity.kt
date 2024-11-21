@@ -28,7 +28,6 @@ import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_FADE
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.databinding.ActivityAddAccountBinding
@@ -53,12 +52,7 @@ class AddAccountActivity :
     private var foregroundCall: (() -> Unit)? = null
 
     private val input: AddAccountInput by lazy {
-        intent?.extras?.getParcelable(ARG_INPUT) ?: AddAccountInput(
-            requiredAccountType = AccountType.Internal,
-            creatableAccountType = AccountType.Internal,
-            product = null,
-            loginUsername = null
-        )
+        intent?.extras?.getParcelable(ARG_INPUT) ?: AddAccountInput(username = null)
     }
 
     private val viewModel by viewModels<AddAccountViewModel>()

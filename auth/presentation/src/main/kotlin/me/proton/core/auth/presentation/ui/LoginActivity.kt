@@ -275,7 +275,6 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                     viewModel.startLoginWorkflow(
                         username = username,
                         password = password,
-                        requiredAccountType = input.requiredAccountType,
                         loginMetricData = null,
                         unlockUserMetricData = null,
                         userCheckMetricData = null

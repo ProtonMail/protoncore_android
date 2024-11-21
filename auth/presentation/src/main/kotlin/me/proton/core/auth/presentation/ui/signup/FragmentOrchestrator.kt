@@ -21,7 +21,6 @@ package me.proton.core.auth.presentation.ui.signup
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
 import me.proton.core.presentation.ui.alert.FragmentDialogResultLauncher
@@ -105,13 +104,12 @@ internal fun FragmentManager.showUsernameChooser(
 }
 
 internal fun FragmentManager.showInternalEmailChooser(
-    creatableAccountType: AccountType,
     cancellable: Boolean = true,
     username: String? = null,
     domain: String? = null,
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseInternalEmailFragment(creatableAccountType, cancellable, username, domain)
+    val fragment = ChooseInternalEmailFragment(cancellable, username, domain)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
@@ -120,13 +118,12 @@ internal fun FragmentManager.showInternalEmailChooser(
 }
 
 internal fun FragmentManager.showExternalEmailChooser(
-    creatableAccountType: AccountType,
     cancellable: Boolean = true,
     email: String? = null,
     subscriptionDetails: SubscriptionDetails? = null,
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_EXTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseExternalEmailFragment(creatableAccountType, cancellable, email, subscriptionDetails)
+    val fragment = ChooseExternalEmailFragment(cancellable, email, subscriptionDetails)
     inTransaction {
         setCustomAnimations(0, 0)
         add(containerId, fragment, TAG_EXTERNAL_EMAIL_CHOOSER)
@@ -135,13 +132,12 @@ internal fun FragmentManager.showExternalEmailChooser(
 }
 
 internal fun FragmentManager.replaceByInternalEmailChooser(
-    creatableAccountType: AccountType,
     cancellable: Boolean = true,
     username: String? = null,
     domain: String? = null,
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_INTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseInternalEmailFragment(creatableAccountType, cancellable, username, domain)
+    val fragment = ChooseInternalEmailFragment(cancellable, username, domain)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, fragment, TAG_INTERNAL_EMAIL_CHOOSER)
@@ -150,13 +146,12 @@ internal fun FragmentManager.replaceByInternalEmailChooser(
 }
 
 internal fun FragmentManager.replaceByExternalEmailChooser(
-    creatableAccountType: AccountType,
     cancellable: Boolean = true,
     email: String? = null,
     subscriptionDetails: SubscriptionDetails? = null,
     containerId: Int = android.R.id.content
 ) = findFragmentByTag(TAG_EXTERNAL_EMAIL_CHOOSER) ?: run {
-    val fragment = ChooseExternalEmailFragment(creatableAccountType, cancellable, email, subscriptionDetails)
+    val fragment = ChooseExternalEmailFragment(cancellable, email, subscriptionDetails)
     inTransaction {
         setCustomAnimations(0, 0)
         replace(containerId, fragment, TAG_EXTERNAL_EMAIL_CHOOSER)

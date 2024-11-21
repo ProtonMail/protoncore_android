@@ -35,7 +35,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountState
-import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.domain.getPrimaryAccount
 import me.proton.core.accountmanager.presentation.observe
@@ -56,7 +55,6 @@ import me.proton.core.auth.presentation.AuthOrchestrator
 import me.proton.core.auth.presentation.observe
 import me.proton.core.auth.presentation.onMissingScopeFailed
 import me.proton.core.auth.presentation.onMissingScopeSuccess
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeListener
 import me.proton.core.network.domain.scopes.Scope
@@ -66,8 +64,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val product: Product,
-    private val accountType: AccountType,
     private val accountManager: AccountManager,
     private var authOrchestrator: AuthOrchestrator,
     private val missingScopeListener: MissingScopeListener
@@ -110,10 +106,10 @@ class AccountViewModel @Inject constructor(
         with(authOrchestrator) {
             accountManager.observe(context.lifecycle, minActiveState = Lifecycle.State.CREATED)
                 .onSessionSecondFactorNeeded { startSecondFactorWorkflow(it) }
-                .onSessionSecondFactorFailed { signIn(username = it.username) }
+                .onSessionSecondFactorFailed { signIn(it.username) }
                 .onAccountTwoPassModeNeeded { startTwoPassModeWorkflow(it) }
                 .onAccountCreateAddressNeeded { startChooseAddressWorkflow(it) }
-                .onAccountCreateAccountNeeded { startSignupWorkflow(accountType, cancellable = false) }
+                .onAccountCreateAccountNeeded { startSignupWorkflow(cancellable = false) }
                 .onAccountCreateAccountFailed { accountManager.disableAccount(it.userId) }
                 .onAccountDeviceSecretNeeded { startDeviceSecretWorkflow(it) }
                 .onAccountDeviceSecretFailed { accountManager.disableAccount(it.userId) }
@@ -149,14 +145,11 @@ class AccountViewModel @Inject constructor(
 
     fun getPrimaryUserId() = accountManager.getPrimaryUserId()
 
-    fun signIn(username: String? = null) =
-        authOrchestrator.startLoginWorkflow(accountType, username = username)
+    fun add() = authOrchestrator.startAddAccountWorkflow()
 
-    fun add() = authOrchestrator.startAddAccountWorkflow(
-        requiredAccountType = accountType,
-        creatableAccountType = accountType,
-        product = product
-    )
+    fun signIn(username: String? = null) = authOrchestrator.startLoginWorkflow(username)
+
+    fun signUp() = authOrchestrator.startSignupWorkflow()
 
     fun onAccountClicked(userId: UserId) {
         viewModelScope.launch {
@@ -170,24 +163,6 @@ class AccountViewModel @Inject constructor(
                 AccountState.Disabled -> accountManager.removeAccount(account.userId)
                 else -> Unit
             }
-        }
-    }
-
-    fun onInternalSignUpClicked() {
-        viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow(creatableAccountType = AccountType.Internal)
-        }
-    }
-
-    fun onExternalSignUpClicked() {
-        viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow(creatableAccountType = AccountType.External)
-        }
-    }
-
-    fun onUsernameSignUpClicked() {
-        viewModelScope.launch {
-            authOrchestrator.startSignupWorkflow(creatableAccountType = AccountType.Username)
         }
     }
 }

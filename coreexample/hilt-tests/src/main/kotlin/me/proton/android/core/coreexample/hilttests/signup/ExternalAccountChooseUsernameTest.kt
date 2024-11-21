@@ -83,7 +83,7 @@ open class ExternalAccountChooseUsernameTest {
     }
 
     @Test
-    fun externalAccountSignupCorrectUI() = withSignupActivity(AccountType.External) {
+    fun externalAccountSignupCorrectUI() = withSignupActivity {
         chooseExternalEmailRobot
             .apply {
                 verify {
@@ -95,21 +95,18 @@ open class ExternalAccountChooseUsernameTest {
 
 
     private companion object {
-
-        private fun launchSignupActivity(accountType: AccountType): ActivityScenario<SignupActivity> =
+        private fun launchSignupActivity(): ActivityScenario<SignupActivity> =
             ActivityScenario.launch(
                 StartSignup.createIntent(
                     ApplicationProvider.getApplicationContext(),
-                    SignUpInput(accountType)
+                    SignUpInput()
                 )
             )
 
         private inline fun withSignupActivity(
-            accountType: AccountType,
             body: (ActivityScenario<SignupActivity>) -> Unit
         ) {
-            launchSignupActivity(accountType).use(body)
+            launchSignupActivity().use(body)
         }
-
     }
 }

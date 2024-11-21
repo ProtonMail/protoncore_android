@@ -1,6 +1,6 @@
 /*
- * Copyright (c) 2020 Proton Technologies AG
- * This file is part of Proton Technologies AG and ProtonCore.
+ * Copyright (c) 2024 Proton AG
+ * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,12 +16,18 @@
  * along with ProtonCore.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package me.proton.core.auth.presentation.entity
+package me.proton.core.auth.test.fake
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Parcelize
-data class LoginInput(
-    val username: String? = null
-) : Parcelable
+@Singleton
+public class FakeIsLoginTwoStepEnabled(
+    public var enabled: Boolean
+) : IsLoginTwoStepEnabled {
+    @Inject
+    public constructor() : this(enabled = false)
+
+    public override fun invoke(): Boolean = enabled
+}

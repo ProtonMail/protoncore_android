@@ -58,6 +58,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class LoginViewModel @Inject constructor(
+    private val requiredAccountType: AccountType,
     private val savedStateHandle: SavedStateHandle,
     private val accountWorkflow: AccountWorkflowHandler,
     private val createLoginSession: CreateLoginSession,
@@ -96,7 +97,6 @@ internal class LoginViewModel @Inject constructor(
     fun startLoginWorkflow(
         username: String,
         password: String,
-        requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null,
         loginMetricData: ((Result<*>) -> ObservabilityData)? = null,
         unlockUserMetricData: ((Result<*>) -> ObservabilityData)? = null,
@@ -104,7 +104,6 @@ internal class LoginViewModel @Inject constructor(
     ): Job = startLoginWorkflowWithEncryptedPassword(
         username = username,
         encryptedPassword = password.encrypt(keyStoreCrypto),
-        requiredAccountType = requiredAccountType,
         billingDetails = billingDetails,
         loginMetricData = loginMetricData,
         unlockUserMetricData = unlockUserMetricData,
@@ -114,7 +113,6 @@ internal class LoginViewModel @Inject constructor(
     fun startLoginWorkflowWithEncryptedPassword(
         username: String,
         encryptedPassword: EncryptedString,
-        requiredAccountType: AccountType,
         billingDetails: BillingDetails? = null,
         loginMetricData: ((Result<*>) -> ObservabilityData)? = null,
         unlockUserMetricData: ((Result<*>) -> ObservabilityData)? = null,

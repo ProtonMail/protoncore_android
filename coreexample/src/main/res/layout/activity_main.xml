@@ -117,27 +117,11 @@
                 android:orientation="horizontal">
 
                 <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/signupInternal"
+                    android:id="@+id/sign_up"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="@string/signup_internal" />
-
-                <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/signupExternal"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/default_top_margin"
-                    android:layout_weight="1"
-                    android:text="@string/signup_external" />
-
-                <me.proton.core.presentation.ui.view.ProtonProgressButton
-                    android:id="@+id/signupUsername"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/default_top_margin"
-                    android:layout_weight="1"
-                    android:text="@string/signup_username" />
+                    android:text="@string/signup" />
 
             </LinearLayout>
 

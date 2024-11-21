@@ -91,10 +91,10 @@ internal class CredentialLessWelcomeFragment : ProtonFragment(R.layout.fragment_
             viewModel.startLoginLessWorkflow()
         }
         binding.signIn.onClick {
-            authOrchestrator?.startLoginWorkflow(input.requiredAccountType, input.loginUsername)
+            authOrchestrator?.startLoginWorkflow(input.username)
         }
         binding.signUp.onClick {
-            authOrchestrator?.startSignupWorkflow(input.creatableAccountType)
+            authOrchestrator?.startSignupWorkflow()
         }
         binding.terms.setTextWithAnnotatedLink(R.string.auth_credentialless_terms, "terms") {
             parentFragmentManager.showTermsConditions()
