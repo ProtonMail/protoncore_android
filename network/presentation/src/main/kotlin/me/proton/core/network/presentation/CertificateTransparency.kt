@@ -41,10 +41,12 @@ public fun Context.installCertificateTransparencySupport(
     logger: CTLogger = CoreCTLogger(),
     diskCache: DiskCache = AndroidDiskCache(this@installCertificateTransparencySupport),
     failOnError: Boolean = true,
+    excludedCommonNames: List<String> = emptyList() // Needed in testing code
 ): Unit = installCertificateTransparencyProvider {
     this.logger = logger
     this.diskCache = diskCache
     this.failOnError = failOnError
+    excludedCommonNames.forEach { excludeCommonName(it) }
 }
 
 @ExcludeFromCoverage
