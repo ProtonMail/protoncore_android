@@ -79,14 +79,12 @@ class SetupProductMetricsTest {
 
         mockkStatic(::measureOnScreenDisplayed.declaringKotlinFile.qualifiedName!!)
         mockkStatic(::measureOnScreenClosed.declaringKotlinFile.qualifiedName!!)
-        mockkStatic(::measureOnViewClicked.declaringKotlinFile.qualifiedName!!)
-        mockkStatic(::measureOnViewFocused.declaringKotlinFile.qualifiedName!!)
         mockkStatic(LifecycleOwner::setupViewMetrics.declaringKotlinFile.qualifiedName!!)
 
         every { measureOnScreenDisplayed(any(), any(), any(), any(), any()) } returns mockk()
         every { measureOnScreenClosed(any(), any(), any(), any(), any()) } returns mockk()
-        every { measureOnViewClicked(any(), any(), any()) } returns mockk()
-        every { measureOnViewFocused(any(), any(), any()) } returns mockk()
+        every { measureOnViewClicked(any(), any(), any<Map<String, String>>()) } returns mockk()
+        every { measureOnViewFocused(any(), any(), any<Map<String, String>>()) } returns mockk()
 
         every { lifecycleOwner.lifecycle } returns lifecycle
         every { lifecycle.addObserver(any()) } answers {}
@@ -114,8 +112,8 @@ class SetupProductMetricsTest {
         // THEN
         verify(exactly = 0) { measureOnScreenDisplayed(any(), any(), any(), any(), any()) }
         verify(exactly = 0) { measureOnScreenClosed(any(), any(), any(), any(), any()) }
-        verify(exactly = 0) { measureOnViewClicked(any(), any(), any()) }
-        verify(exactly = 0) { measureOnViewFocused(any(), any(), any()) }
+        verify(exactly = 0) { measureOnViewClicked(any(), any(), any<Map<String, String>>()) }
+        verify(exactly = 0) { measureOnViewFocused(any(), any(), any<Map<String, String>>()) }
     }
 
     @Test

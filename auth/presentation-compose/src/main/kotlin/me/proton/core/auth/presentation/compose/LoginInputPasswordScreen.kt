@@ -42,6 +42,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -65,6 +66,10 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
+import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
+import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.measureOnViewClicked
+import me.proton.core.telemetry.presentation.measureOnViewFocused
 
 internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 
@@ -83,6 +88,18 @@ public fun LoginInputPasswordScreen(
     onNavigateToChangePassword: () -> Unit = {},
     viewModel: LoginInputPasswordViewModel = hiltViewModel()
 ) {
+    val delegateOwner = LocalProductMetricsDelegateOwner.current
+    val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
+        "ProductMetricsDelegate is not defined."
+    }
+    fun onPasswordInputFocused() {
+        measureOnViewFocused("user.signin.focused", delegate, "passwordInput", Immediate)
+    }
+    fun onContinueClicked(action: SetPassword) {
+        measureOnViewClicked("user.signin.clicked", delegate, "passwordContinue", Immediate)
+        viewModel.submit(action)
+    }
+
     val state by viewModel.state.collectAsStateWithLifecycle()
 
     LoginInputPasswordScreen(
@@ -99,7 +116,8 @@ public fun LoginInputPasswordScreen(
         onNavigateToExternalNotSupported = onNavigateToExternalNotSupported,
         onNavigateToChangePassword = onNavigateToChangePassword,
         onCloseClicked = onClose,
-        onContinueClicked = { viewModel.submit(it) },
+        onPasswordInputFocused = { onPasswordInputFocused() },
+        onContinueClicked = { onContinueClicked(it) },
         state = state
     )
 }
@@ -119,6 +137,7 @@ public fun LoginInputPasswordScreen(
     onNavigateToExternalNotSupported: () -> Unit = {},
     onNavigateToChangePassword: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
+    onPasswordInputFocused: () -> Unit = {},
     onContinueClicked: (SetPassword) -> Unit = {},
     state: LoginInputPasswordState = LoginInputPasswordState.Idle
 ) {
@@ -143,6 +162,7 @@ public fun LoginInputPasswordScreen(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onHelpClicked = onNavigateToHelp,
+        onPasswordInputFocused = onPasswordInputFocused,
         onContinueClicked = onContinueClicked,
         onForgotPasswordClicked = onNavigateToForgotPassword,
         onTroubleshootClicked = onNavigateToTroubleshoot,
@@ -158,6 +178,7 @@ public fun LoginInputPasswordScaffold(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onHelpClicked: () -> Unit = {},
+    onPasswordInputFocused: () -> Unit = {},
     onContinueClicked: (SetPassword) -> Unit = {},
     onForgotPasswordClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
@@ -173,7 +194,8 @@ public fun LoginInputPasswordScaffold(
     ) {
         LoginInputPasswordColumn(
             username = username,
-            onSignInClicked = onContinueClicked,
+            onPasswordInputFocused = onPasswordInputFocused,
+            onContinueClicked = onContinueClicked,
             onForgotPasswordClicked = onForgotPasswordClicked,
             onTroubleshootClicked = onTroubleshootClicked,
             protonLogo = protonLogo,
@@ -187,7 +209,8 @@ public fun LoginInputPasswordScaffold(
 @Composable
 public fun LoginInputPasswordColumn(
     username: String,
-    onSignInClicked: (SetPassword) -> Unit = {},
+    onPasswordInputFocused: () -> Unit = {},
+    onContinueClicked: (SetPassword) -> Unit = {},
     onForgotPasswordClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
     @DrawableRes protonLogo: Int = R.drawable.ic_logo_proton,
@@ -227,7 +250,8 @@ public fun LoginInputPasswordColumn(
         PasswordForm(
             username = username,
             enabled = !isLoading,
-            onSignInClicked = onSignInClicked,
+            onPasswordInputFocused = onPasswordInputFocused,
+            onContinueClicked = onContinueClicked,
             onForgotPasswordClicked = onForgotPasswordClicked,
             onTroubleshootClicked = onTroubleshootClicked,
             hasValidationError = hasValidationError,
@@ -239,7 +263,8 @@ public fun LoginInputPasswordColumn(
 @Composable
 private fun PasswordForm(
     username: String,
-    onSignInClicked: (SetPassword) -> Unit,
+    onPasswordInputFocused: () -> Unit,
+    onContinueClicked: (SetPassword) -> Unit,
     onForgotPasswordClicked: () -> Unit,
     onTroubleshootClicked: () -> Unit,
     hasValidationError: Boolean,
@@ -263,7 +288,7 @@ private fun PasswordForm(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password
             ),
-            keyboardActions = KeyboardActions { onSignInClicked(SetPassword(username, password)) },
+            keyboardActions = KeyboardActions { onContinueClicked(SetPassword(username, password)) },
             label = { Text(text = stringResource(id = R.string.auth_login_password)) },
             singleLine = true,
             modifier = Modifier
@@ -271,12 +296,13 @@ private fun PasswordForm(
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
                 .testTag(PASSWORD_FIELD_TAG)
+                .onFocusChanged { if (it.isFocused) onPasswordInputFocused() }
         )
 
         ProtonSolidButton(
             contained = false,
             loading = !enabled,
-            onClick = { onSignInClicked(SetPassword(username, password)) },
+            onClick = { onContinueClicked(SetPassword(username, password)) },
             modifier = Modifier
                 .padding(top = ProtonDimens.MediumSpacing)
                 .height(ProtonDimens.DefaultButtonMinHeight)
@@ -336,7 +362,8 @@ internal fun PasswordFormPreview() {
         PasswordForm(
             username = "test@protonmail.com",
             enabled = true,
-            onSignInClicked = {},
+            onPasswordInputFocused = {},
+            onContinueClicked = {},
             onForgotPasswordClicked = {},
             onTroubleshootClicked = {},
             hasValidationError = true,

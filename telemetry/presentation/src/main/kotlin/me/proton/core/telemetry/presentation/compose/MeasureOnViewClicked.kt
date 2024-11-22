@@ -18,36 +18,27 @@
 
 package me.proton.core.telemetry.presentation.compose
 
-import androidx.compose.runtime.Composable
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 
-@Composable
-public fun MeasureOnViewClicked(
-    event: String,
-    dimensions: Map<String, String> = emptyMap(),
-    priority: TelemetryPriority = TelemetryPriority.Default
-) {
-    val screenMetricsDelegateOwner = LocalProductMetricsDelegateOwner.current ?: return
-    val delegate = requireNotNull(screenMetricsDelegateOwner.productMetricsDelegate) {
-        "ProductMetricsDelegate is not defined."
-    }
-    measureOnViewClicked(
-        event = event,
-        delegate = delegate,
-        dimensions = dimensions,
-        priority = priority
-    )
-}
-
-@Composable
-public fun MeasureOnViewClicked(
+public fun Modifier.measureClicked(
     event: String,
     item: String,
     priority: TelemetryPriority = TelemetryPriority.Default
-): Unit = MeasureOnViewClicked(
-    event = event,
-    dimensions = mapOf(ProductMetricsDelegate.KEY_ITEM to item),
-    priority = priority
-)
+): Modifier = measureClicked(event, mapOf(ProductMetricsDelegate.KEY_ITEM to item), priority)
+
+public fun Modifier.measureClicked(
+    event: String,
+    dimensions: Map<String, String> = emptyMap(),
+    priority: TelemetryPriority = TelemetryPriority.Default
+): Modifier = composed {
+    val delegateOwner = LocalProductMetricsDelegateOwner.current ?: return@composed this
+    val delegate = requireNotNull(delegateOwner.productMetricsDelegate) {
+        "ProductMetricsDelegate is not defined."
+    }
+    this.clickable { measureOnViewClicked(event, delegate, dimensions, priority) }
+}

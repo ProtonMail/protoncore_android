@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
@@ -58,38 +59,15 @@ import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorSnack
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.presentation.utils.openBrowserLink
-import me.proton.core.telemetry.domain.entity.TelemetryPriority
-import me.proton.core.telemetry.presentation.UiComponentProductMetricsDelegateOwner
-import me.proton.core.telemetry.presentation.annotation.ProductMetrics
-import me.proton.core.telemetry.presentation.annotation.ScreenClosed
-import me.proton.core.telemetry.presentation.annotation.ScreenDisplayed
+import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import okhttp3.HttpUrl
 import javax.inject.Inject
 
 @AndroidEntryPoint
-@ProductMetrics(
-    group = "account.any.signup",
-    flow = "mobile_signup_full"
-)@ScreenDisplayed(
-    event = "fe.signin.displayed",
-    priority = TelemetryPriority.Immediate
-)
-@ScreenClosed(
-    event = "user.signin.closed",
-    priority = TelemetryPriority.Immediate
-)
-/*
-@ViewClicked(
-    event = "user.signin.clicked",
-    viewIds = ["signInButton"],
-    priority = TelemetryPriority.Immediate
-)
-@ViewFocused(
-    event = "user.signin.focused",
-    viewIds = ["usernameInput", "passwordInput"],
-    priority = TelemetryPriority.Immediate
-)*/
-class LoginTwoStepActivity : WebPageListenerActivity(), UiComponentProductMetricsDelegateOwner {
+class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOwner {
 
     @Inject
     @BaseProtonApiUrl
@@ -106,6 +84,15 @@ class LoginTwoStepActivity : WebPageListenerActivity(), UiComponentProductMetric
 
     @Inject
     lateinit var observabilityManager: ObservabilityManager
+
+    @Inject
+    lateinit var telemetryManager: TelemetryManager
+
+    override val productMetricsDelegate = object: ProductMetricsDelegate {
+        override val telemetryManager: TelemetryManager get() = this@LoginTwoStepActivity.telemetryManager
+        override val productGroup: String = "account.any.signup"
+        override val productFlow: String = "mobile_signup_full"
+    }
 
     private val input: LoginInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(LoginActivity.ARG_INPUT))
@@ -165,34 +152,36 @@ class LoginTwoStepActivity : WebPageListenerActivity(), UiComponentProductMetric
         setContent {
             ProtonTheme {
                 val navController = rememberNavController()
-                NavHost(
-                    navController = navController,
-                    startDestination = LoginRoutes.Route.Login.Deeplink
-                ) {
-                    addLoginInputUsernameScreen(
-                        username = input.username,
+                CompositionLocalProvider(LocalProductMetricsDelegateOwner provides this@LoginTwoStepActivity) {
+                    NavHost(
                         navController = navController,
-                        onClose = { onClose() },
-                        onErrorMessage = { message, action -> onErrorMessage(message, action) },
-                        onSuccess = { onSuccess(it) },
-                        onNavigateToHelp = { onHelpClicked() },
-                        onNavigateToSso = { onOpenWebPage(it) },
-                        onNavigateToForgotUsername = { onForgotUsername() },
-                        onNavigateToTroubleshoot = { onTroubleshoot() },
-                        onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
-                        onNavigateToChangePassword = { onChangePassword() },
-                        externalAction = loginAction
-                    )
-                    addLoginInputPasswordScreen(
-                        navController = navController,
-                        onErrorMessage = { message, action -> onErrorMessage(message, action) },
-                        onSuccess = { onSuccess(it) },
-                        onNavigateToHelp = { onHelpClicked() },
-                        onNavigateToForgotPassword = { onForgotPassword() },
-                        onNavigateToTroubleshoot = { onTroubleshoot() },
-                        onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
-                        onNavigateToChangePassword = { onChangePassword() }
-                    )
+                        startDestination = LoginRoutes.Route.Login.Deeplink
+                    ) {
+                        addLoginInputUsernameScreen(
+                            username = input.username,
+                            navController = navController,
+                            onClose = { onBackPressed() },
+                            onErrorMessage = { message, action -> onErrorMessage(message, action) },
+                            onSuccess = { onSuccess(it) },
+                            onNavigateToHelp = { onHelpClicked() },
+                            onNavigateToSso = { onOpenWebPage(it) },
+                            onNavigateToForgotUsername = { onForgotUsername() },
+                            onNavigateToTroubleshoot = { onTroubleshoot() },
+                            onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
+                            onNavigateToChangePassword = { onChangePassword() },
+                            externalAction = loginAction
+                        )
+                        addLoginInputPasswordScreen(
+                            navController = navController,
+                            onErrorMessage = { message, action -> onErrorMessage(message, action) },
+                            onSuccess = { onSuccess(it) },
+                            onNavigateToHelp = { onHelpClicked() },
+                            onNavigateToForgotPassword = { onForgotPassword() },
+                            onNavigateToTroubleshoot = { onTroubleshoot() },
+                            onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
+                            onNavigateToChangePassword = { onChangePassword() }
+                        )
+                    }
                 }
             }
         }

@@ -38,6 +38,21 @@ public fun LifecycleOwner.setupViewMetrics(
     lifecycle.addObserver(observer)
 }
 
+
+public fun measureOnViewClicked(
+    event: String,
+    delegate: ProductMetricsDelegate,
+    item: String,
+    priority: TelemetryPriority = TelemetryPriority.Default
+) {
+    measureOnViewClicked(
+        event = event,
+        delegate = delegate,
+        dimensions = mapOf(ProductMetricsDelegate.KEY_ITEM to item),
+        priority = priority
+    )
+}
+
 public fun measureOnViewClicked(
     event: String,
     delegate: ProductMetricsDelegate,
@@ -53,6 +68,20 @@ public fun measureOnViewClicked(
     delegate.telemetryManager.enqueue(
         userId = delegate.userId,
         event = telemetryEvent,
+        priority = priority
+    )
+}
+
+public fun measureOnViewFocused(
+    event: String,
+    delegate: ProductMetricsDelegate,
+    item: String,
+    priority: TelemetryPriority = TelemetryPriority.Default
+) {
+    measureOnViewFocused(
+        event = event,
+        delegate = delegate,
+        dimensions = mapOf(ProductMetricsDelegate.KEY_ITEM to item),
         priority = priority
     )
 }

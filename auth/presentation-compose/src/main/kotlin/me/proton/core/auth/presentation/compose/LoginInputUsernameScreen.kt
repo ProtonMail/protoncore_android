@@ -41,14 +41,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.autofill.AutofillNode
 import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.layout.boundsInWindow
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.LocalAutofill
-import androidx.compose.ui.platform.LocalAutofillTree
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -74,6 +69,12 @@ import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
+import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
+import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
+import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
+import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
+import me.proton.core.telemetry.presentation.measureOnViewClicked
+import me.proton.core.telemetry.presentation.measureOnViewFocused
 
 internal const val USERNAME_FIELD_TAG = "USERNAME_FIELD_TAG"
 
@@ -94,6 +95,21 @@ public fun LoginInputUsernameScreen(
     externalAction: SharedFlow<LoginInputUsernameAction> = MutableSharedFlow(),
     viewModel: LoginInputUsernameViewModel = hiltViewModel(),
 ) {
+    MeasureOnScreenDisplayed("fe.signin.displayed", priority = Immediate)
+    MeasureOnScreenClosed("user.signin.closed", priority = Immediate)
+
+    val delegateOwner = LocalProductMetricsDelegateOwner.current
+    val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
+        "ProductMetricsDelegate is not defined."
+    }
+    fun onUsernameInputFocused() {
+        measureOnViewFocused("user.signin.focused", delegate, "usernameInput", Immediate)
+    }
+    fun onContinueClicked(action: SetUsername) {
+        measureOnViewClicked("user.signin.clicked", delegate, "usernameContinue", Immediate)
+        viewModel.submit(action)
+    }
+
     LaunchedEffect(externalAction) { externalAction.collectLatest { viewModel.submit(it) } }
 
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -111,7 +127,8 @@ public fun LoginInputUsernameScreen(
         onNavigateToExternalNotSupported = onNavigateToExternalNotSupported,
         onNavigateToChangePassword = onNavigateToChangePassword,
         onCloseClicked = onClose,
-        onContinueClicked = { viewModel.submit(it) },
+        onUsernameInputFocused = { onUsernameInputFocused() },
+        onContinueClicked = { onContinueClicked(it) },
         onTroubleshootClicked = onNavigateToTroubleshoot,
         state = state
     )
@@ -131,6 +148,7 @@ public fun LoginInputUsernameScreen(
     onNavigateToExternalNotSupported: () -> Unit = {},
     onNavigateToChangePassword: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
+    onUsernameInputFocused: () -> Unit = {},
     onContinueClicked: (SetUsername) -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
     state: LoginInputUsernameState = LoginInputUsernameState.Idle
@@ -156,6 +174,7 @@ public fun LoginInputUsernameScreen(
         initialUsername = initialUsername,
         onCloseClicked = onCloseClicked,
         onHelpClicked = onNavigateToHelp,
+        onUsernameInputFocused = onUsernameInputFocused,
         onContinueClicked = onContinueClicked,
         onForgotUsernameClicked = onNavigateToForgotUsername,
         onTroubleshootClicked = onTroubleshootClicked,
@@ -171,6 +190,7 @@ public fun LoginInputUsernameScaffold(
     initialUsername: String? = null,
     onCloseClicked: () -> Unit = {},
     onHelpClicked: () -> Unit = {},
+    onUsernameInputFocused: () -> Unit = {},
     onContinueClicked: (SetUsername) -> Unit = {},
     onForgotUsernameClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
@@ -186,6 +206,7 @@ public fun LoginInputUsernameScaffold(
     ) {
         LoginInputUsernameColumn(
             initialUsername = initialUsername,
+            onUsernameInputFocused = onUsernameInputFocused,
             onContinueClicked = onContinueClicked,
             onForgotUsernameClicked = onForgotUsernameClicked,
             onTroubleshootClicked = onTroubleshootClicked,
@@ -200,6 +221,7 @@ public fun LoginInputUsernameScaffold(
 @Composable
 public fun LoginInputUsernameColumn(
     initialUsername: String? = null,
+    onUsernameInputFocused: () -> Unit = {},
     onContinueClicked: (SetUsername) -> Unit = {},
     onForgotUsernameClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
@@ -241,6 +263,7 @@ public fun LoginInputUsernameColumn(
         LoginForm(
             initialUsername = initialUsername,
             enabled = !isLoading,
+            onUsernameInputFocused = onUsernameInputFocused,
             onContinueClicked = onContinueClicked,
             onForgotUsernameClicked = onForgotUsernameClicked,
             onTroubleshootClicked = onTroubleshootClicked,
@@ -253,6 +276,7 @@ public fun LoginInputUsernameColumn(
 @Composable
 private fun LoginForm(
     initialUsername: String?,
+    onUsernameInputFocused: () -> Unit,
     onContinueClicked: (SetUsername) -> Unit,
     onForgotUsernameClicked: () -> Unit,
     onTroubleshootClicked: () -> Unit,
@@ -287,6 +311,7 @@ private fun LoginForm(
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
                 .testTag(USERNAME_FIELD_TAG)
+                .onFocusChanged { if (it.isFocused) onUsernameInputFocused() }
         )
 
         ProtonSolidButton(
@@ -350,6 +375,7 @@ internal fun LoginFormPreview() {
     ProtonTheme {
         LoginForm(
             initialUsername = null,
+            onUsernameInputFocused = {},
             onContinueClicked = {},
             onForgotUsernameClicked = {},
             onTroubleshootClicked = {},

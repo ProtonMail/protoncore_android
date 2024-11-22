@@ -38,6 +38,7 @@ android {
 dependencies {
     api(
         project(Module.presentation),
+        project(Module.telemetryPresentation),
         `compose-runtime`,
         `coroutines-core`,
         `lifecycle-viewModel`,

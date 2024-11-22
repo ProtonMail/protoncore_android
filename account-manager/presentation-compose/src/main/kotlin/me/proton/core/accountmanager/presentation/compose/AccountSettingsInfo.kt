@@ -39,10 +39,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -67,7 +63,8 @@ import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
-import me.proton.core.telemetry.presentation.compose.MeasureOnViewClicked
+import me.proton.core.telemetry.presentation.measureOnViewClicked
+import me.proton.core.telemetry.presentation.measureOnViewFocused
 
 @Composable
 fun AccountSettingsInfo(
@@ -121,30 +118,24 @@ fun AccountSettingsInfo(
     MeasureOnScreenDisplayed("fe.info_account.displayed", priority = Immediate)
     MeasureOnScreenClosed("user.info_account.closed", priority = Immediate)
 
-    var isSignUpClicked by remember { mutableStateOf(false) }
-    var isSignInClicked by remember { mutableStateOf(false) }
-
-    if (isSignUpClicked) {
-        MeasureOnViewClicked("user.info_account.clicked", item = "sign_up", Immediate)
-        isSignUpClicked = false
+    val delegateOwner = LocalProductMetricsDelegateOwner.current
+    val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
+        "ProductMetricsDelegate is not defined."
     }
-
-    if (isSignInClicked) {
-        MeasureOnViewClicked("user.info_account.clicked", item = "sign_in", Immediate)
-        isSignInClicked = false
+    fun signUpClicked() {
+        measureOnViewClicked("user.info_account.clicked", delegate, "sign_up", Immediate)
+        onSignUpClicked()
+    }
+    fun signInClicked() {
+        measureOnViewFocused("user.info_account.clicked", delegate, "sign_in", Immediate)
+        onSignInClicked()
     }
 
     when (state) {
         is AccountSettingsViewState.CredentialLess -> AccountSettingsCredentialLess(
             modifier = modifier,
-            onCreateAccountClicked = {
-                onSignUpClicked()
-                isSignUpClicked = true
-            },
-            onSignInClicked = {
-                onSignInClicked()
-                isSignInClicked = true
-            },
+            onCreateAccountClicked = { signUpClicked() },
+            onSignInClicked = { signInClicked() },
             signUpButtonGone = signUpButtonGone,
             signInButtonGone = signInButtonGone,
         )
