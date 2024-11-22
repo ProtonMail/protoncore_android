@@ -20,26 +20,35 @@ package me.proton.core.paymentiap.data.usecase
 
 import android.app.Activity
 import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingFlowParams.SubscriptionUpdateParams
+import com.android.billingclient.api.BillingFlowParams.SubscriptionUpdateParams.ReplacementMode
+import me.proton.core.domain.entity.UserId
+import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.repository.BillingClientError
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
+import me.proton.core.paymentiap.domain.LogTag
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.plan.domain.usecase.GetProductIdForCurrentSubscription
+import me.proton.core.util.kotlin.CoreLogger
 import javax.inject.Inject
 import javax.inject.Provider
 
 public class PrepareGiapPurchaseImpl @Inject constructor(
     private val billingRepository: Provider<GoogleBillingRepository<Activity>>,
-    private val findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
+    private val findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase,
+    private val getProductIdForCurrentSubscription: GetProductIdForCurrentSubscription
 ) : PrepareGiapPurchase {
     /**
      * @throws BillingClientError
      */
     override suspend fun invoke(
         googleCustomerId: String,
-        googleProductId: ProductId
+        googleProductId: ProductId,
+        userId: UserId?
     ): PrepareGiapPurchase.Result {
         val productsDetails = billingRepository.get().use {
             it.getProductsDetails(listOf(googleProductId))?.firstOrNull()?.unwrap()
@@ -63,8 +72,32 @@ public class PrepareGiapPurchaseImpl @Inject constructor(
         val billingFlowParams = BillingFlowParams.newBuilder()
             .setProductDetailsParamsList(productDetailsParamsList)
             .setObfuscatedAccountId(googleCustomerId)
+            .apply {
+                getExistingGooglePurchase(userId)?.let { currentGooglePurchase ->
+                    setSubscriptionUpdateParams(
+                        SubscriptionUpdateParams.newBuilder()
+                            .setOldPurchaseToken(currentGooglePurchase.purchaseToken.value)
+                            .setSubscriptionReplacementMode(ReplacementMode.CHARGE_PRORATED_PRICE)
+                            .build()
+                    )
+                }
+            }
             .build()
 
         return PrepareGiapPurchase.Result.Success(billingFlowParams.wrap())
+    }
+
+    private suspend fun getExistingGooglePurchase(userId: UserId?): GooglePurchase? {
+        val currentProductId = userId?.let { getProductIdForCurrentSubscription(it) } ?: return null
+        val existingPurchases = billingRepository.get().use { it.querySubscriptionPurchases() }
+        return existingPurchases.firstOrNull {
+            currentProductId in it.productIds
+        }.also {
+            CoreLogger.i(LogTag.GIAP_INFO, "$TAG, Existing subscription: $it")
+        }
+    }
+
+    private companion object {
+        private const val TAG = "PrepareGiapPurchaseImpl"
     }
 }

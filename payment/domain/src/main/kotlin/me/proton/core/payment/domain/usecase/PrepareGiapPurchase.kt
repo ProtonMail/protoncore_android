@@ -18,6 +18,7 @@
 
 package me.proton.core.payment.domain.usecase
 
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.entity.GoogleBillingFlowParams
 import me.proton.core.payment.domain.entity.GooglePurchase
 import me.proton.core.payment.domain.entity.ProductId
@@ -39,7 +40,8 @@ public interface PrepareGiapPurchase {
      */
     public suspend operator fun invoke(
         googleCustomerId: String,
-        googleProductId: ProductId
+        googleProductId: ProductId,
+        userId: UserId?
     ): Result
 
     public sealed class Result {

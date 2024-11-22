@@ -43,7 +43,8 @@ dependencies {
     api(
         project(Module.deviceUtil),
         project(Module.paymentDomain),
-        project(Module.paymentIapDomain)
+        project(Module.paymentIapDomain),
+        project(Module.planDomain)
     )
     implementation(
         project(Module.kotlinUtil),

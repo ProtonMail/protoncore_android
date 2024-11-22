@@ -101,7 +101,7 @@ class PerformGiapPurchaseImplTest {
         val cycle = SubscriptionCycle.YEARLY
         val billingClientError =
             BillingClientError(BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE, null)
-        coEvery { prepareGiapPurchase(any(), any()) } throws billingClientError
+        coEvery { prepareGiapPurchase(any(), any(), any()) } throws billingClientError
 
         // WHEN
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = null)
@@ -119,7 +119,7 @@ class PerformGiapPurchaseImplTest {
         val cycle = SubscriptionCycle.YEARLY
         val billingClientError =
             BillingClientError(BillingClient.BillingResponseCode.DEVELOPER_ERROR, null)
-        coEvery { prepareGiapPurchase(any(), any()) } throws billingClientError
+        coEvery { prepareGiapPurchase(any(), any(), any()) } throws billingClientError
 
         // WHEN
         val result = tested(mockk(), cycle.value, mailPlusPlan, userId = null)
@@ -139,7 +139,7 @@ class PerformGiapPurchaseImplTest {
         val billingClientError =
             BillingClientError(BillingClient.BillingResponseCode.USER_CANCELED, null)
 
-        coEvery { prepareGiapPurchase(any(), any()) } returns
+        coEvery { prepareGiapPurchase(any(), any(), any()) } returns
                 PrepareGiapPurchase.Result.Success(mockk())
         coEvery { launchGiapBillingFlow(any(), any(), any()) } returns
                 LaunchGiapBillingFlow.Result.PurchaseSuccess(purchase)
@@ -165,7 +165,7 @@ class PerformGiapPurchaseImplTest {
         val purchase = mockPurchase().wrap()
         val token = ProtonPaymentToken("payment-token")
 
-        coEvery { prepareGiapPurchase(any(), any()) } returns
+        coEvery { prepareGiapPurchase(any(), any(), any()) } returns
                 PrepareGiapPurchase.Result.Success(mockk())
         coEvery { launchGiapBillingFlow(any(), any(), any()) } returns
                 LaunchGiapBillingFlow.Result.PurchaseSuccess(purchase)
@@ -203,7 +203,7 @@ class PerformGiapPurchaseImplTest {
         val purchase = mockPurchase().wrap()
         val token = ProtonPaymentToken("payment-token")
 
-        coEvery { prepareGiapPurchase(any(), any()) } returns
+        coEvery { prepareGiapPurchase(any(), any(), any()) } returns
                 PrepareGiapPurchase.Result.Success(mockk())
         coEvery { launchGiapBillingFlow(any(), any(), any()) } returns
                 LaunchGiapBillingFlow.Result.PurchaseSuccess(purchase)

@@ -32,21 +32,28 @@ import io.mockk.mockkStatic
 import io.mockk.unmockkAll
 import kotlinx.coroutines.test.runTest
 import me.proton.core.payment.domain.entity.GooglePurchase
+import me.proton.core.payment.domain.entity.GooglePurchaseToken
 import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.repository.GoogleBillingRepository
 import me.proton.core.payment.domain.usecase.FindUnacknowledgedGooglePurchase
 import me.proton.core.payment.domain.usecase.PrepareGiapPurchase
+import me.proton.core.paymentiap.domain.entity.unwrap
 import me.proton.core.paymentiap.domain.entity.wrap
+import me.proton.core.plan.domain.usecase.GetProductIdForCurrentSubscription
 import kotlin.test.AfterTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
+import kotlin.test.assertTrue
 
 class PrepareGiapPurchaseImplTest {
     @MockK
     private lateinit var findUnacknowledgedGooglePurchase: FindUnacknowledgedGooglePurchase
+
+    @MockK
+    private lateinit var getProductIdForCurrentSubscription: GetProductIdForCurrentSubscription
 
     @MockK
     private lateinit var googleBillingRepository: GoogleBillingRepository<Activity>
@@ -69,13 +76,14 @@ class PrepareGiapPurchaseImplTest {
     fun setUp() {
         MockKAnnotations.init(this)
         mockkStatic(TextUtils::class)
-        every { TextUtils.isEmpty(any()) } returns true
-
+        every { TextUtils.isEmpty(any()) } answers { firstArg<CharSequence?>().isNullOrEmpty() }
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } returns emptyList()
         justRun { googleBillingRepository.close() }
 
         tested = PrepareGiapPurchaseImpl(
             { googleBillingRepository },
-            findUnacknowledgedGooglePurchase
+            findUnacknowledgedGooglePurchase,
+            getProductIdForCurrentSubscription
         )
     }
 
@@ -90,7 +98,7 @@ class PrepareGiapPurchaseImplTest {
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns null
 
         // WHEN
-        val result = tested(testCustomerId, testProductId)
+        val result = tested(testCustomerId, testProductId, mockk())
 
         // THEN
         assertEquals(PrepareGiapPurchase.Result.ProductDetailsNotFound, result)
@@ -102,7 +110,7 @@ class PrepareGiapPurchaseImplTest {
         coEvery { googleBillingRepository.getProductsDetails(any()) } returns emptyList()
 
         // WHEN
-        val result = tested(testCustomerId, testProductId)
+        val result = tested(testCustomerId, testProductId, mockk())
 
         // THEN
         assertEquals(PrepareGiapPurchase.Result.ProductDetailsNotFound, result)
@@ -111,14 +119,12 @@ class PrepareGiapPurchaseImplTest {
     @Test
     fun `unredeemed purchase`() = runTest {
         // GIVEN
-        coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
-            testProductDetails
-        )
+        coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(testProductDetails)
         val purchase = mockk<GooglePurchase>()
         coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns purchase
 
         // WHEN
-        val result = tested(testCustomerId, testProductId)
+        val result = tested(testCustomerId, testProductId, mockk())
 
         // THEN
         assertEquals(PrepareGiapPurchase.Result.Unredeemed(purchase), result)
@@ -136,22 +142,60 @@ class PrepareGiapPurchaseImplTest {
 
         // WHEN & THEN
         assertFailsWith<IllegalArgumentException> {
-            tested(testCustomerId, testProductId)
+            tested(testCustomerId, testProductId, mockk())
         }
     }
 
     @Test
     fun `successful result`() = runTest {
         // GIVEN
-        coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(
-            testProductDetails
+        coEvery { getProductIdForCurrentSubscription(any()) } returns testProductId
+        coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(testProductDetails)
+        coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
+
+        // WHEN
+        val result = tested(testCustomerId, testProductId, mockk())
+
+        // THEN
+        assertIs<PrepareGiapPurchase.Result.Success>(result)
+    }
+
+    @Test
+    fun `existing subscription`() = runTest {
+        // GIVEN
+        coEvery { getProductIdForCurrentSubscription(any()) } returns testProductId
+        coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(testProductDetails)
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } returns
+                listOf(mockedGooglePurchase("t1", listOf(testProductId)))
+        coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
+
+        // WHEN
+        val result = tested(testCustomerId, testProductId, mockk())
+
+        // THEN
+        assertIs<PrepareGiapPurchase.Result.Success>(result)
+    }
+
+    @Test
+    fun `multiple existing subscription`() = runTest {
+        // GIVEN
+        coEvery { getProductIdForCurrentSubscription(any()) } returns testProductId
+        coEvery { googleBillingRepository.getProductsDetails(any()) } returns listOf(testProductDetails)
+        coEvery { googleBillingRepository.querySubscriptionPurchases() } returns listOf(
+            mockedGooglePurchase("t1", listOf(ProductId("another-product-id"))),
+            mockedGooglePurchase("t2", listOf(testProductId))
         )
         coEvery { findUnacknowledgedGooglePurchase.byProduct(any()) } returns null
 
         // WHEN
-        val result = tested(testCustomerId, testProductId)
+        val result = tested(testCustomerId, testProductId, mockk())
 
         // THEN
         assertIs<PrepareGiapPurchase.Result.Success>(result)
+    }
+
+    private fun mockedGooglePurchase(token: String, testProductIds: List<ProductId>) = mockk<GooglePurchase> {
+        every { productIds } returns testProductIds
+        every { purchaseToken } returns GooglePurchaseToken(token)
     }
 }

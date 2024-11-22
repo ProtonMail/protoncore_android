@@ -66,7 +66,7 @@ public class PerformGiapPurchaseImpl @Inject constructor(
         return try {
             val vendorPlanDetails = plan.findGooglePlanDetails(cycle)
             val googleProductId = ProductId(vendorPlanDetails.productId)
-            val prepareResult = prepareGiapPurchase(vendorPlanDetails.customerId, googleProductId)
+            val prepareResult = prepareGiapPurchase(vendorPlanDetails.customerId, googleProductId, userId)
             onPrepareGiapPurchaseResult(
                 activity = activity,
                 cycle = cycle,
