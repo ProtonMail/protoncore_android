@@ -39,6 +39,7 @@ dependencies {
     api(
         project(Module.presentation),
         project(Module.telemetryPresentation),
+        project(Module.challengePresentationCompose),
         `compose-runtime`,
         `coroutines-core`,
         `lifecycle-viewModel`,

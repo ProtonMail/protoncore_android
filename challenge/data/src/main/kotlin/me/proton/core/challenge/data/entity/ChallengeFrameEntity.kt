@@ -43,3 +43,13 @@ public data class ChallengeFrameEntity(
         keys = keys
     )
 }
+
+internal fun ChallengeFrameDetails.toEntity() = ChallengeFrameEntity(
+    challengeFrame = challengeFrame,
+    flow = flow,
+    focusTime = focusTime,
+    clicks = clicks,
+    copy = copy,
+    paste = paste,
+    keys = keys
+)

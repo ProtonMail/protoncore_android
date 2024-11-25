@@ -269,6 +269,7 @@ public object Module {
     public const val challengeDomain: String = ":challenge:challenge-domain"
     public const val challengeData: String = ":challenge:challenge-data"
     public const val challengePresentation: String = ":challenge:challenge-presentation"
+    public const val challengePresentationCompose: String = ":challenge:challenge-presentation-compose"
 
     // Observability
     public const val observability: String = ":observability"

@@ -24,15 +24,7 @@ public interface ChallengeManager {
 
     public suspend fun resetFlow(flow: String)
 
-    public suspend fun addOrUpdateFrameToFlow(
-        flow: String,
-        challengeFrame: String,
-        focusTime: List<Int>,
-        clicks: Int,
-        copies: List<String>,
-        pastes: List<String>,
-        keys: List<String>
-    )
+    public suspend fun addOrUpdateFrameToFlow(frame: ChallengeFrameDetails)
 
     public suspend fun getFramesByFlowName(flow: String): List<ChallengeFrameDetails>
 
@@ -48,4 +40,3 @@ public suspend inline fun <R> ChallengeManager.useFlow(
     resetFlow(flowName)
     return result
 }
-

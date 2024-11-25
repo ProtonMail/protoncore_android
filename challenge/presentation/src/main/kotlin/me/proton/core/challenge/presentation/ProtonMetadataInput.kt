@@ -33,6 +33,7 @@ import androidx.viewbinding.ViewBinding
 import com.google.android.material.textfield.TextInputLayout
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.presentation.ProtonCopyPasteEditText.OnCopyPasteListener
 import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding
 import me.proton.core.challenge.presentation.databinding.ProtonMetadataInputBinding.inflate
@@ -111,13 +112,15 @@ public class ProtonMetadataInput : ProtonInput, OnKeyListener, OnTouchListener,
 
     public suspend fun flush() {
         challengeManager.addOrUpdateFrameToFlow(
-            flow = flow,
-            challengeFrame = frame,
-            focusTime = focusList.toList(), // Pass a copy so it doesn't change when focusList is being mutated.
-            clicks = clickCount,
-            copies = copyList.toList(),
-            pastes = pasteList.toList(),
-            keys = keyList.toList()
+            ChallengeFrameDetails(
+                flow = flow,
+                challengeFrame = frame,
+                focusTime = focusList.toList(), // Pass a copy so it doesn't change when focusList is being mutated.
+                clicks = clickCount,
+                copy = copyList.toList(),
+                paste = pasteList.toList(),
+                keys = keyList.toList()
+            )
         )
     }
 

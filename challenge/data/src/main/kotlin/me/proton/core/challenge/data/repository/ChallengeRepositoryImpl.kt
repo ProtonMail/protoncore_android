@@ -19,13 +19,13 @@
 package me.proton.core.challenge.data.repository
 
 import me.proton.core.challenge.data.db.ChallengeDatabase
-import me.proton.core.challenge.data.entity.ChallengeFrameEntity
+import me.proton.core.challenge.data.entity.toEntity
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.challenge.domain.repository.ChallengeRepository
 import javax.inject.Inject
 
 public class ChallengeRepositoryImpl @Inject constructor(
-    private val db: ChallengeDatabase
+    db: ChallengeDatabase
 ) : ChallengeRepository {
 
     private val challengeDao = db.challengeFramesDao()
@@ -37,18 +37,7 @@ public class ChallengeRepositoryImpl @Inject constructor(
         challengeDao.getByFlowAndFrame(flow = flow, frame = frame)?.toFrameDetails()
 
     override suspend fun insertFrameDetails(challengeFrameDetails: ChallengeFrameDetails) {
-        db.inTransaction {
-            val frameDetails = ChallengeFrameEntity(
-                challengeFrame = challengeFrameDetails.challengeFrame,
-                flow = challengeFrameDetails.flow,
-                focusTime = challengeFrameDetails.focusTime,
-                clicks = challengeFrameDetails.clicks,
-                copy = challengeFrameDetails.copy,
-                paste = challengeFrameDetails.paste,
-                keys = challengeFrameDetails.keys
-            )
-            challengeDao.insertOrUpdate(frameDetails)
-        }
+        challengeDao.insertOrUpdate(challengeFrameDetails.toEntity())
     }
 
     override suspend fun deleteFrames(flow: String) {

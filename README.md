@@ -225,6 +225,7 @@ Core libraries coordinates can be found under [coordinates section](#coordinates
 | me.proton.core:challenge-data                        |
 | me.proton.core:challenge-domain                      |
 | me.proton.core:challenge-presentation                |
+| me.proton.core:challenge-presentation-compose        |
 | me.proton.core:telemetry                             |
 | me.proton.core:telemetry-dagger                      |
 | me.proton.core:telemetry-data                        |

@@ -31,24 +31,7 @@ public class ChallengeManagerImpl @Inject constructor(
         challengeRepository.deleteFrames(flow)
     }
 
-    override suspend fun addOrUpdateFrameToFlow(
-        flow: String,
-        challengeFrame: String,
-        focusTime: List<Int>,
-        clicks: Int,
-        copies: List<String>,
-        pastes: List<String>,
-        keys: List<String>
-    ) {
-        val frame = ChallengeFrameDetails(
-            flow = flow,
-            challengeFrame = challengeFrame,
-            focusTime = focusTime,
-            clicks = clicks,
-            copy = copies,
-            paste = pastes,
-            keys = keys
-        )
+    override suspend fun addOrUpdateFrameToFlow(frame: ChallengeFrameDetails) {
         challengeRepository.insertFrameDetails(frame)
     }
 

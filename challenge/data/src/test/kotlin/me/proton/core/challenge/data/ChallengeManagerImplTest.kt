@@ -41,7 +41,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `reset flow calls repository delete`(): Unit = runTest {
+    public fun resetFlowCallsRepositoryDelete(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         coEvery { repository.deleteFrames(testFlow) } returns Unit
@@ -52,7 +52,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `get frames by flow returns correctly`(): Unit = runTest {
+    public fun getFramesByFlowReturnsCorrectly(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         val testChallengeFrame = ChallengeFrameDetails(
@@ -76,7 +76,7 @@ public class ChallengeManagerImplTest {
     }
 
     @Test
-    public fun `get frames by flow and frame name returns correctly`(): Unit = runTest {
+    public fun getFramesByFlowAndFrameNameReturnsCorrectly(): Unit = runTest {
         // Given
         val testFlow = "test-flow"
         val testChallengeFrame = ChallengeFrameDetails(
@@ -108,7 +108,17 @@ public class ChallengeManagerImplTest {
         val challengeFrame = "test-frame"
         coEvery { repository.insertFrameDetails(any()) } returns Unit
         // When
-        manager.addOrUpdateFrameToFlow(testFlow, challengeFrame, listOf(0), 0, emptyList(), emptyList(), emptyList())
+        manager.addOrUpdateFrameToFlow(
+            ChallengeFrameDetails(
+                flow = testFlow,
+                challengeFrame = challengeFrame,
+                focusTime = listOf(0),
+                clicks = 0,
+                copy = emptyList(),
+                paste = emptyList(),
+                keys = emptyList()
+            )
+        )
         // Then
         val frame = ChallengeFrameDetails(
             testFlow, challengeFrame, listOf(0), 0, emptyList(), emptyList(), emptyList()

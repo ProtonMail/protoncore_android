@@ -49,21 +49,28 @@ import me.proton.core.auth.presentation.compose.LoginInputUsernameState.UserChec
 import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ValidationError
 import me.proton.core.auth.presentation.compose.LoginRoutes.Arg.getUsername
 import me.proton.core.auth.presentation.compose.LoginRoutes.Arg.setUsername
+import me.proton.core.challenge.domain.ChallengeManager
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.telemetry.domain.TelemetryContext
 import me.proton.core.telemetry.domain.TelemetryManager
+import me.proton.core.util.kotlin.CoroutineScopeProvider
 import javax.inject.Inject
 
 @HiltViewModel
 public class LoginInputUsernameViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val loginFlow: LoginFlow,
+    private val scopeProvider: CoroutineScopeProvider,
+    private val challengeManager: ChallengeManager,
     public override val observabilityManager: ObservabilityManager,
-    public override val telemetryManager: TelemetryManager
+    public override val telemetryManager: TelemetryManager,
 ) : ViewModel(), ObservabilityContext, TelemetryContext {
+
+    private val globalScope = scopeProvider.GlobalIOSupervisedScope
 
     private val mutableAction = MutableSharedFlow<LoginInputUsernameAction>()
 
@@ -76,6 +83,10 @@ public class LoginInputUsernameViewModel @Inject constructor(
 
     public fun submit(action: LoginInputUsernameAction): Job = viewModelScope.launch {
         mutableAction.emit(action)
+    }
+
+    public fun onFrameUpdated(frame: ChallengeFrameDetails): Job = globalScope.launch {
+        challengeManager.addOrUpdateFrameToFlow(frame)
     }
 
     private fun onValidateUsername(action: LoginInputUsernameAction.SetUsername) = flow {

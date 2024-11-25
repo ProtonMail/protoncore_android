@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Proton AG
+ * Copyright (c) 2024 Proton AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -19,24 +19,28 @@
 import studio.forface.easygradle.dsl.*
 
 plugins {
-    protonAndroidLibrary
+    protonComposeUiLibrary
+    protonDagger
 }
 
-protonCoverage.disabled.set(true)
 publishOption.shouldBePublishedAsLib = true
 
+protonCoverage {
+    disabled.set(true)
+}
+
 android {
-    namespace = "me.proton.core.challenge"
+    namespace = "me.proton.core.challenge.presentation.compose"
 }
 
 dependencies {
     api(
-        project(Module.challengeDagger),
-        project(Module.challengeData),
+        project(Module.presentationCompose),
+        `compose-runtime`,
+    )
+
+    implementation(
         project(Module.challengeDomain),
-        project(Module.challengePresentation),
-        project(Module.challengePresentationCompose),
+        `compose-foundation`,
     )
 }
-
-dependencyAnalysis.issues { onAny { severity("ignore") } }

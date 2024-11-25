@@ -55,11 +55,16 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.usecase.UserCheckAction
 import me.proton.core.auth.presentation.compose.LoginInputUsernameAction.SetUsername
+import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
+import me.proton.core.challenge.presentation.compose.LocalClipManager
+import me.proton.core.challenge.presentation.compose.LocalClipManager.OnClipChangedDisposableEffect
+import me.proton.core.challenge.presentation.compose.payload
 import me.proton.core.compose.autofill.autofill
 import me.proton.core.compose.component.ProtonOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
@@ -130,6 +135,7 @@ public fun LoginInputUsernameScreen(
         onUsernameInputFocused = { onUsernameInputFocused() },
         onContinueClicked = { onContinueClicked(it) },
         onTroubleshootClicked = onNavigateToTroubleshoot,
+        onFrameUpdated = { viewModel.onFrameUpdated(it) },
         state = state
     )
 }
@@ -151,6 +157,7 @@ public fun LoginInputUsernameScreen(
     onUsernameInputFocused: () -> Unit = {},
     onContinueClicked: (SetUsername) -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
+    onFrameUpdated: (ChallengeFrameDetails) -> Unit = {},
     state: LoginInputUsernameState = LoginInputUsernameState.Idle
 ) {
     LaunchedEffect(state) {
@@ -178,6 +185,7 @@ public fun LoginInputUsernameScreen(
         onContinueClicked = onContinueClicked,
         onForgotUsernameClicked = onNavigateToForgotUsername,
         onTroubleshootClicked = onTroubleshootClicked,
+        onFrameUpdated = onFrameUpdated,
         hasValidationError = state is LoginInputUsernameState.ValidationError,
         isTroubleshootVisible = (state as? LoginInputUsernameState.Error)?.isPotentialBlocking ?: false,
         isLoading = state.isLoading
@@ -194,6 +202,7 @@ public fun LoginInputUsernameScaffold(
     onContinueClicked: (SetUsername) -> Unit = {},
     onForgotUsernameClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
+    onFrameUpdated: (ChallengeFrameDetails) -> Unit = {},
     @DrawableRes protonLogo: Int = R.drawable.ic_logo_proton,
     hasValidationError: Boolean = false,
     isTroubleshootVisible: Boolean = false,
@@ -210,6 +219,7 @@ public fun LoginInputUsernameScaffold(
             onContinueClicked = onContinueClicked,
             onForgotUsernameClicked = onForgotUsernameClicked,
             onTroubleshootClicked = onTroubleshootClicked,
+            onFrameUpdated = onFrameUpdated,
             protonLogo = protonLogo,
             hasValidationError = hasValidationError,
             isTroubleshootVisible = isTroubleshootVisible,
@@ -225,6 +235,7 @@ public fun LoginInputUsernameColumn(
     onContinueClicked: (SetUsername) -> Unit = {},
     onForgotUsernameClicked: () -> Unit = {},
     onTroubleshootClicked: () -> Unit = {},
+    onFrameUpdated: (ChallengeFrameDetails) -> Unit = {},
     @DrawableRes protonLogo: Int = R.drawable.ic_logo_proton,
     @StringRes titleText: Int = R.string.auth_login_sign_in,
     @StringRes subtitleText: Int = R.string.auth_login_details,
@@ -267,6 +278,7 @@ public fun LoginInputUsernameColumn(
             onContinueClicked = onContinueClicked,
             onForgotUsernameClicked = onForgotUsernameClicked,
             onTroubleshootClicked = onTroubleshootClicked,
+            onFrameUpdated = onFrameUpdated,
             hasValidationError = hasValidationError,
             isTroubleshootVisible = isTroubleshootVisible
         )
@@ -280,10 +292,16 @@ private fun LoginForm(
     onContinueClicked: (SetUsername) -> Unit,
     onForgotUsernameClicked: () -> Unit,
     onTroubleshootClicked: () -> Unit,
+    onFrameUpdated: (ChallengeFrameDetails) -> Unit,
     hasValidationError: Boolean,
     isTroubleshootVisible: Boolean,
     enabled: Boolean
 ) {
+    val clipManager = LocalClipManager.current
+    val textCopied = remember { MutableStateFlow("") }
+    clipManager?.OnClipChangedDisposableEffect { textCopied.value = it }
+
+    val textChange = remember { MutableStateFlow("" to "") }
     val assistiveText = stringResource(R.string.auth_login_assistive_text)
     var username by rememberSaveable { mutableStateOf(initialUsername ?: "") }
     val focusRequester = remember { FocusRequester() }
@@ -298,7 +316,10 @@ private fun LoginForm(
     ) {
         ProtonOutlinedTextFieldWithError(
             text = username,
-            onValueChanged = { username = it },
+            onValueChanged = { new ->
+                textChange.value = textChange.value.second to new
+                username = new
+            },
             enabled = enabled,
             errorText = if (hasValidationError) assistiveText else null,
             focusRequester = focusRequester,
@@ -312,6 +333,7 @@ private fun LoginForm(
                 .padding(top = ProtonDimens.DefaultSpacing)
                 .testTag(USERNAME_FIELD_TAG)
                 .onFocusChanged { if (it.isFocused) onUsernameInputFocused() }
+                .payload("login", "username", textChange, textCopied, onFrameUpdated)
         )
 
         ProtonSolidButton(
@@ -379,6 +401,7 @@ internal fun LoginFormPreview() {
             onContinueClicked = {},
             onForgotUsernameClicked = {},
             onTroubleshootClicked = {},
+            onFrameUpdated = {},
             hasValidationError = true,
             isTroubleshootVisible = true,
             enabled = true
