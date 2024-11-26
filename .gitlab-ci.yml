@@ -1,8 +1,4 @@
 include:
-  - project: 'agarroux/publish-github'
-    ref: master
-    file: '/jobs/release.gitlab-ci.yml'
-
   - project: 'translations/generator'
     ref: master
     file: '/jobs/sync-crowdin.gitlab-ci.yml'
@@ -12,6 +8,8 @@ include:
     file: '/jobs/commit-locales.gitlab-ci.yml'
 
   - local: '/ci/templates-shared/appetize-integration.yml'
+
+  - local: '/ci/templates-shared/github-sync.yml'
 
   - local: '/ci/templates/git.gitlab-ci.yml'
 
@@ -440,13 +438,13 @@ trigger-new-libs-release:
 
 release-publish-github:
   stage: publish
-  tags:
-    - shared-small
+  extends: .release-publish-github-shared
   variables:
-    RELEASE_SYNC_PUBLIC_URL: git@github.com:ProtonMail/protoncore_android.git
-    RELEASE_SYNC_TO_BRANCH: 'main'
-    RELEASE_SYNC_FROM_BRANCH: 'main'
-  extends: .release-sync-commit-shared
+    OAUTH_URL: "https://oauth2:${GITHUB_PAT}@github.com/ProtonMail/protoncore_android.git"
+    RELEASE_SYNC_TO_BRANCH: "main"
+    RELEASE_SYNC_FROM_BRANCH: "main"
+  rules:
+    - if: $CI_COMMIT_BRANCH == 'main'
 
 publish-libs:
   extends: .gradle-job

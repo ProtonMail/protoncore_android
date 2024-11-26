@@ -1,0 +1,42 @@
+#  Add in your includes:
+#
+# - project: 'proton/mobile/android/proton-libs'
+#   ref: main
+#   file: '/ci/templates-shared/github-sync.yml'
+#
+#  Create PAT for repository you want to sync to
+#  Then add corresponding job to your main CI .yml
+#
+# release-publish-github:
+#  extends: .release-publish-github
+#  variables:
+#    OAUTH_URL: "https://oauth2:${GH_TOKEN}@github.com/organization/repo.git"
+#    RELEASE_SYNC_FROM_BRANCH: "main" // local gitlab branch
+#    RELEASE_SYNC_TO_BRANCH: "release" // remote github branch
+
+.release-publish-github-shared:
+  tags:
+    - shared-small
+  script:
+    # Validate the OAUTH_URL
+    - |
+      if [[ -z "${OAUTH_URL}" ]]; then
+        echo "ERROR: OAUTH_URL is not set. Please provide a valid URL as an environment variable."
+        exit 1
+      fi
+    - git fetch origin ${RELEASE_SYNC_FROM_BRANCH}
+    - git checkout ${RELEASE_SYNC_FROM_BRANCH}
+    # Add GitHub as a remote
+    - git remote add github ${OAUTH_URL}
+    # Handle LFS
+    - |
+      if grep -q "filter=lfs" .gitattributes 2>/dev/null; then
+        echo "Git LFS detected. Handling LFS objects..."
+        git lfs fetch --all origin ${RELEASE_SYNC_FROM_BRANCH}
+        git lfs push --all github ${RELEASE_SYNC_FROM_BRANCH}
+      else
+        echo "Git LFS not detected. Skipping LFS steps."
+      fi
+
+    # Push the specified branch to GitHub
+    - git push github ${RELEASE_SYNC_FROM_BRANCH}:${RELEASE_SYNC_TO_BRANCH} --force
