@@ -18,6 +18,7 @@
 
 package me.proton.core.auth.presentation
 
+import android.content.Context
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
 import io.mockk.every
@@ -56,6 +57,8 @@ import kotlin.test.assertFailsWith
 
 class AuthOrchestratorTest {
 
+    private val context = mockk<Context>(relaxed = true)
+
     private val isLoginTwoStepEnabled = mockk<IsLoginTwoStepEnabled> {
         every { this@mockk.invoke() } returns false
     }
@@ -84,7 +87,7 @@ class AuthOrchestratorTest {
 
     @Before
     fun beforeEveryTest() {
-        orchestrator = AuthOrchestrator(isLoginTwoStepEnabled)
+        orchestrator = AuthOrchestrator(context, isLoginTwoStepEnabled)
     }
 
     @Test

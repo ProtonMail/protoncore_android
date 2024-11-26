@@ -23,6 +23,5 @@
     <bool name="core_feature_auth_signin_show_long_login_toast">false</bool>
     <bool name="core_feature_auth_signin_show_troubleshoot_button">false</bool>
     <string name="core_feature_auth_sso_redirect_scheme" translatable="false">proton</string>
-    <string name="core_feature_auth_sso_redirect_scheme_two_step" translatable="false">proton2</string>
     <integer name="core_feature_auth_user_check_max_free_user_count">1</integer>
 </resources>

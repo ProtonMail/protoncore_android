@@ -18,9 +18,11 @@
 
 package me.proton.core.auth.presentation
 
+import android.content.Context
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultCaller
 import androidx.activity.result.ActivityResultLauncher
+import dagger.hilt.android.qualifiers.ApplicationContext
 import me.proton.core.account.domain.entity.Account
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.domain.feature.IsLoginTwoStepEnabled
@@ -41,6 +43,8 @@ import me.proton.core.auth.presentation.entity.confirmpass.ConfirmPasswordResult
 import me.proton.core.auth.presentation.entity.signup.SignUpInput
 import me.proton.core.auth.presentation.entity.signup.SignUpResult
 import me.proton.core.auth.presentation.entity.signup.SubscriptionDetails
+import me.proton.core.auth.presentation.ui.LoginSsoActivity
+import me.proton.core.auth.presentation.ui.LoginTwoStepActivity
 import me.proton.core.auth.presentation.ui.StartAddAccount
 import me.proton.core.auth.presentation.ui.StartChooseAddress
 import me.proton.core.auth.presentation.ui.StartDeviceSecret
@@ -52,9 +56,12 @@ import me.proton.core.auth.presentation.ui.StartTwoPassMode
 import me.proton.core.crypto.common.keystore.EncryptedString
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.scopes.MissingScopeState
+import me.proton.core.presentation.utils.setComponentSettings
 import javax.inject.Inject
 
 class AuthOrchestrator @Inject constructor(
+    @ApplicationContext
+    private val context: Context,
     private val isLoginTwoStepEnabled: IsLoginTwoStepEnabled
 ) {
 
@@ -314,10 +321,16 @@ class AuthOrchestrator @Inject constructor(
         username: String? = null
     ) {
         if (isLoginTwoStepEnabled()) {
+            // Disable LoginSsoActivity and let LoginTwoStepActivity handle redirect.
+            context.setComponentSettings<LoginSsoActivity>(enabled = false)
+            context.setComponentSettings<LoginTwoStepActivity>(enabled = true)
             checkRegistered(loginTwoStepWorkflowLauncher).launch(
                 LoginInput(username)
             )
         } else {
+            // Disable LoginTwoStepActivity and let LoginSsoActivity handle redirect.
+            context.setComponentSettings<LoginTwoStepActivity>(enabled = false)
+            context.setComponentSettings<LoginSsoActivity>(enabled = true)
             checkRegistered(loginWorkflowLauncher).launch(
                 LoginInput(username)
             )
