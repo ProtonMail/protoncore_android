@@ -11,6 +11,37 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.3.0] - 2024-11-27
+
+### Chores
+
+- payment-iap: Add billing error log for error fetching prices.
+
+### Features
+
+- auth: Added Two Steps Login support.
+- util-android-sentry: Additional tags when reporting with Sentry.
+
+### Bug Fixes
+
+- auth: Removed CustomTabs/ProtonWebView Activities from history/recents.
+- network-presentation: Enable excluding common names for certificate transparency in testing.
+- proguard-rules: Add missing rule for certificatetransparency library.
+
+### Refactoring
+
+- auth:
+  - Merged LoginSspActivity and LoginTwoStepActivity redirect schemes.
+  - Added SignIn Username Challenge Frame.
+  - Replaced/added Telemetry event for Signup/SignIn (LoginTwoStep).
+  - Removed requiredAccountType param from AuthOrchestrator functions.
+  - Refactored Login flows (LoginTwoStep).
+  - Moved features classes to feature folder.
+- payment-iap:
+  - Don't catch `BillingClientError` when getting store price.
+  - The `BillingClientError` exception will be thrown, so that the clients can know
+    when there was an issue with Google Billing Client.
+
 ## [29.2.0] - 2024-11-12
 
 ### Chores
