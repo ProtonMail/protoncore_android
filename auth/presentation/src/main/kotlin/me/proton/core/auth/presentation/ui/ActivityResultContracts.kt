@@ -184,6 +184,9 @@ object StartCustomTab : ActivityResultContract<StartCustomTab.Input, Boolean>() 
         }.build().apply {
             intent.putExtra(Browser.EXTRA_HEADERS, input.headers)
             intent.data = input.url.toUri()
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+            intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
         }.intent
 
     override fun parseResult(resultCode: Int, intent: Intent?): Boolean {

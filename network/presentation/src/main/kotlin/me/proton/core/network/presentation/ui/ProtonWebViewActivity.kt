@@ -218,6 +218,8 @@ public class ProtonWebViewActivity : ProtonSecureActivity<ProtonWebviewActivityB
             override fun createIntent(context: Context, input: Input): Intent =
                 Intent(context, ProtonWebViewActivity::class.java).apply {
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                    addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
                     putExtra(ARG_INPUT, input)
                 }
 
