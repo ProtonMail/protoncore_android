@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -305,11 +306,6 @@ private fun LoginForm(
     val assistiveText = stringResource(R.string.auth_login_assistive_text)
     var username by rememberSaveable { mutableStateOf(initialUsername ?: "") }
     val focusRequester = remember { FocusRequester() }
-    LaunchedEffect(Unit) {
-        if (initialUsername == null) {
-            focusRequester.requestFocus()
-        }
-    }
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -332,6 +328,7 @@ private fun LoginForm(
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
                 .testTag(USERNAME_FIELD_TAG)
+                .onGloballyPositioned { if (initialUsername == null) { focusRequester.requestFocus() } }
                 .onFocusChanged { if (it.isFocused) onUsernameInputFocused() }
                 .payload("login", "username", textChange, textCopied, onFrameUpdated)
         )

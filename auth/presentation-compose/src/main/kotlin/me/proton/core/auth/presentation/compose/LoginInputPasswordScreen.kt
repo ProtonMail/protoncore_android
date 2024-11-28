@@ -43,6 +43,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -273,7 +274,6 @@ private fun PasswordForm(
 ) {
     var password by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
-    LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -296,6 +296,7 @@ private fun PasswordForm(
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
                 .testTag(PASSWORD_FIELD_TAG)
+                .onGloballyPositioned { focusRequester.requestFocus() }
                 .onFocusChanged { if (it.isFocused) onPasswordInputFocused() }
         )
 
