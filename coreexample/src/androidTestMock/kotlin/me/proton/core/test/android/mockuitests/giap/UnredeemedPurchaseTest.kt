@@ -65,9 +65,7 @@ class UnredeemedPurchaseTest : SampleMockTest() {
 
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUsername)
-            .fillPassword(testPassword)
-            .login()
+            .login(testUsername, testPassword)
 
         waitForPrimaryAccount()
         appInitializer.initializeComponent(UnredeemedPurchaseInitializer::class.java)
@@ -98,9 +96,7 @@ class UnredeemedPurchaseTest : SampleMockTest() {
 
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUsername)
-            .fillPassword(testPassword)
-            .login()
+            .login(testUsername, testPassword)
 
         waitForPrimaryAccount()
         appInitializer.initializeComponent(UnredeemedPurchaseInitializer::class.java)

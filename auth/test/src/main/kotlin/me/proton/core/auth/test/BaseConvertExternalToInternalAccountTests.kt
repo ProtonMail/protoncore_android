@@ -50,9 +50,7 @@ public abstract class BaseConvertExternalToInternalAccountTests {
     public fun convertWithKeys() {
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUser.externalEmail)
-            .fillPassword(testUser.password)
-            .login()
+            .login(testUser.externalEmail, testUser.password)
 
         ChooseInternalAddressRobot
             .apply {
@@ -74,9 +72,7 @@ public abstract class BaseConvertExternalToInternalAccountTests {
     public fun convertNoKeys() {
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUser.externalEmail)
-            .fillPassword(testUser.password)
-            .login()
+            .login(testUser.externalEmail, testUser.password)
 
         ChooseInternalAddressRobot
             .apply {
@@ -101,9 +97,7 @@ public abstract class BaseConvertExternalToInternalAccountTests {
     public fun convertWithMailboxPassword() {
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUser.externalEmail)
-            .fillPassword(testUser.password)
-            .login()
+            .login(testUser.externalEmail, testUser.password)
 
         ChooseInternalAddressRobot
             .apply {

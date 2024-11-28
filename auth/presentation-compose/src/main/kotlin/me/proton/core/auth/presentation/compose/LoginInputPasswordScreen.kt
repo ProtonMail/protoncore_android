@@ -44,7 +44,6 @@ import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -71,8 +70,6 @@ import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 import me.proton.core.telemetry.presentation.measureOnViewFocused
-
-internal const val PASSWORD_FIELD_TAG = "PASSWORD_FIELD_TAG"
 
 @Composable
 public fun LoginInputPasswordScreen(
@@ -295,7 +292,6 @@ private fun PasswordForm(
                 .autofill(AutofillType.Password) { password = it }
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
-                .testTag(PASSWORD_FIELD_TAG)
                 .onGloballyPositioned { focusRequester.requestFocus() }
                 .onFocusChanged { if (it.isFocused) onPasswordInputFocused() }
         )

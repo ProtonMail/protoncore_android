@@ -41,9 +41,7 @@ public interface BaseConvertedAccountWithSeededUserTests {
         val username = randomUsername()
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUser.externalEmail)
-            .fillPassword(testUser.password)
-            .login()
+            .login(testUser.externalEmail, testUser.password)
 
         ChooseInternalAddressRobot
             .apply {
@@ -63,9 +61,7 @@ public interface BaseConvertedAccountWithSeededUserTests {
     public fun chooseInternalAddressIsClosed() {
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(testUser.externalEmail)
-            .fillPassword(testUser.password)
-            .login()
+            .login(testUser.externalEmail, testUser.password)
 
         ChooseInternalAddressRobot
             .apply {

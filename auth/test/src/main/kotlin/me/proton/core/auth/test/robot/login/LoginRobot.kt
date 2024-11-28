@@ -18,42 +18,45 @@
 
 package me.proton.core.auth.test.robot.login
 
-import me.proton.core.auth.presentation.R
-import me.proton.core.test.android.instrumented.matchers.inputFieldMatcher
 import me.proton.core.test.quark.data.User
-import me.proton.test.fusion.Fusion.view
 
-/** Corresponds to [me.proton.core.auth.presentation.ui.LoginActivity]. */
 public object LoginRobot {
-    private val usernameInput = view.withCustomMatcher(inputFieldMatcher(R.id.usernameInput))
-    private val passwordInput = view.withCustomMatcher(inputFieldMatcher(R.id.passwordInput))
-    private val helpButton = view.withId(R.id.login_menu_help)
-    private val signInButton = view.withId(R.id.signInButton)
-    private val signInWithSSOButton = view.withId(R.id.signInWithSsoButton)
 
-    public fun fillUsername(username: String): LoginRobot = apply {
-        usernameInput.typeText(username)
+    public fun login(
+        username: String,
+        password: String,
+        isLoginTwoStepEnabled: Boolean = false
+    ): LoginRobot = apply {
+        when (isLoginTwoStepEnabled) {
+            true -> LoginTwoStepRobot
+                .fillUsername(username)
+                .clickContinue()
+                .fillPassword(password)
+                .clickContinue()
+
+            false -> LoginLegacyRobot
+                .fillUsername(username)
+                .fillPassword(password)
+                .login()
+        }
     }
 
-    public fun fillPassword(password: String): LoginRobot = apply {
-        passwordInput.typeText(password)
+    public fun login(
+        user: User,
+        isLoginTwoStepEnabled: Boolean = false
+    ): LoginRobot = apply {
+        when (isLoginTwoStepEnabled) {
+            true -> LoginTwoStepRobot.login(user)
+            false -> LoginLegacyRobot.login(user)
+        }
     }
 
-    public fun help() {
-        helpButton.click()
-    }
-
-    public fun login() {
-        signInButton.click()
-    }
-
-    public fun login(user: User) {
-        fillUsername(user.name)
-        fillPassword(user.password)
-        login()
-    }
-
-    public fun signInWithSSO() {
-        signInWithSSOButton.click()
+    public fun help(
+        isLoginTwoStepEnabled: Boolean = false
+    ): LoginHelpRobot = LoginHelpRobot.apply {
+        when (isLoginTwoStepEnabled) {
+            true -> LoginTwoStepRobot.clickHelp()
+            false -> LoginLegacyRobot.help()
+        }
     }
 }

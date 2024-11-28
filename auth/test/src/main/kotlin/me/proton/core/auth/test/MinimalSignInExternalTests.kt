@@ -23,7 +23,7 @@ import androidx.test.core.app.ApplicationProvider
 import me.proton.core.account.domain.entity.AccountType
 import me.proton.core.auth.test.flow.SignInFlow
 import me.proton.core.auth.test.robot.AddAccountRobot
-import me.proton.core.auth.test.robot.login.LoginRobot
+import me.proton.core.auth.test.robot.login.LoginLegacyRobot
 import kotlin.test.Test
 
 /**
@@ -43,7 +43,7 @@ public interface MinimalSignInExternalTests {
     public fun signInWithSsoHappyPath() {
         if (isSsoEnabled) {
             AddAccountRobot.clickSignIn()
-            LoginRobot.signInWithSSO()
+            LoginLegacyRobot.signInWithSSO()
             SignInFlow.signInSso()
 
             verifyAfter()

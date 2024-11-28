@@ -45,7 +45,6 @@ import androidx.compose.ui.autofill.AutofillType
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -81,8 +80,6 @@ import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
 import me.proton.core.telemetry.presentation.measureOnViewClicked
 import me.proton.core.telemetry.presentation.measureOnViewFocused
-
-internal const val USERNAME_FIELD_TAG = "USERNAME_FIELD_TAG"
 
 @Composable
 public fun LoginInputUsernameScreen(
@@ -327,7 +324,6 @@ private fun LoginForm(
                 .autofill(AutofillType.Username) { username = it }
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
-                .testTag(USERNAME_FIELD_TAG)
                 .onGloballyPositioned { if (initialUsername == null) { focusRequester.requestFocus() } }
                 .onFocusChanged { if (it.isFocused) onUsernameInputFocused() }
                 .payload("login", "username", textChange, textCopied, onFrameUpdated)

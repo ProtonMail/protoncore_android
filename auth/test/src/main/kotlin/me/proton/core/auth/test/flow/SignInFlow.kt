@@ -30,11 +30,12 @@ public object SignInFlow {
      * Internal Account simple happy path:
      * - Enter email/password.
      */
-    public fun signInInternal(username: String, password: String) {
-        LoginRobot
-            .fillUsername(username)
-            .fillPassword(password)
-            .login()
+    public fun signInInternal(
+        username: String,
+        password: String,
+        isLoginTwoStepEnabled: Boolean = false
+    ) {
+        LoginRobot.login(username, password, isLoginTwoStepEnabled)
     }
 
     /**
@@ -42,11 +43,13 @@ public object SignInFlow {
      * - Enter email/password.
      * - Enter TwoPass.
      */
-    public fun signInInternalTwoPass(username: String, password: String, mailboxPassword: String) {
-        LoginRobot
-            .fillUsername(username)
-            .fillPassword(password)
-            .login()
+    public fun signInInternalTwoPass(
+        username: String,
+        password: String,
+        mailboxPassword: String,
+        isLoginTwoStepEnabled: Boolean = false
+    ) {
+        signInInternal(username, password, isLoginTwoStepEnabled)
         TwoPassRobot
             .fillMailboxPassword(mailboxPassword)
             .unlock()
@@ -59,11 +62,13 @@ public object SignInFlow {
      * - Autofill username.
      * - Select primary domain.
      */
-    public fun signInExternal(email: String, password: String, username: String) {
-        LoginRobot
-            .fillUsername(email)
-            .fillPassword(password)
-            .login()
+    public fun signInExternal(
+        email: String,
+        password: String,
+        username: String,
+        isLoginTwoStepEnabled: Boolean = false
+    ) {
+        signInInternal(email, password, isLoginTwoStepEnabled)
 
         ChooseInternalAddressRobot
             .apply {

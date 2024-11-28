@@ -43,10 +43,13 @@ public object AddAccountRobot {
         return SignUpRobot
     }
 
-    public fun uiElementsDisplayed(timeout: Duration = FusionConfig.Espresso.waitTimeout.get()) {
+    public fun uiElementsDisplayed(
+        timeout: Duration = FusionConfig.Espresso.waitTimeout.get()
+    ): AddAccountRobot {
         signInButton.await(timeout = timeout) {
             signInButton.checkIsDisplayed()
             signUpButton.checkIsDisplayed()
         }
+        return AddAccountRobot
     }
 }

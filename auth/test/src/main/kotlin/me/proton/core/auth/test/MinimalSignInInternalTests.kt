@@ -59,9 +59,7 @@ public interface MinimalSignInInternalTests {
 
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(user.name)
-            .fillPassword(user.password)
-            .login()
+            .login(user.email, user.password)
 
         TwoPassRobot
             .fillMailboxPassword(user.passphrase)
@@ -82,9 +80,7 @@ public interface MinimalSignInInternalTests {
 
         AddAccountRobot
             .clickSignIn()
-            .fillUsername(user.email)
-            .fillPassword(user.password)
-            .login()
+            .login(user.email, user.password)
 
         ChooseInternalAddressRobot
             .apply {
