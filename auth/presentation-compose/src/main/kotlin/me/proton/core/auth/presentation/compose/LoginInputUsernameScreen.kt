@@ -75,11 +75,10 @@ import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
-import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
-import me.proton.core.telemetry.presentation.measureOnViewClicked
-import me.proton.core.telemetry.presentation.measureOnViewFocused
+import me.proton.core.telemetry.presentation.compose.rememberClickedMeasureOperation
+import me.proton.core.telemetry.presentation.compose.rememberFocusedMeasureOperation
 
 @Composable
 public fun LoginInputUsernameScreen(
@@ -101,15 +100,14 @@ public fun LoginInputUsernameScreen(
     MeasureOnScreenDisplayed("fe.signin.displayed", priority = Immediate)
     MeasureOnScreenClosed("user.signin.closed", priority = Immediate)
 
-    val delegateOwner = LocalProductMetricsDelegateOwner.current
-    val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
-        "ProductMetricsDelegate is not defined."
-    }
+    val focusOp = rememberFocusedMeasureOperation("user.signin.focused", "usernameInput", Immediate)
+    val clickOp = rememberClickedMeasureOperation("user.signin.clicked", "usernameContinue", Immediate)
+
     fun onUsernameInputFocused() {
-        measureOnViewFocused("user.signin.focused", delegate, "usernameInput", Immediate)
+        focusOp.measure()
     }
     fun onContinueClicked(action: SetUsername) {
-        measureOnViewClicked("user.signin.clicked", delegate, "usernameContinue", Immediate)
+        clickOp.measure()
         viewModel.submit(action)
     }
 
@@ -324,7 +322,11 @@ private fun LoginForm(
                 .autofill(AutofillType.Username) { username = it }
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
-                .onGloballyPositioned { if (initialUsername == null) { focusRequester.requestFocus() } }
+                .onGloballyPositioned {
+                    if (initialUsername == null) {
+                        focusRequester.requestFocus()
+                    }
+                }
                 .onFocusChanged { if (it.isFocused) onUsernameInputFocused() }
                 .payload("login", "username", textChange, textCopied, onFrameUpdated)
         )

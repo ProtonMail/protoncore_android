@@ -67,9 +67,8 @@ import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
 import me.proton.core.domain.entity.UserId
 import me.proton.core.telemetry.domain.entity.TelemetryPriority.Immediate
-import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
-import me.proton.core.telemetry.presentation.measureOnViewClicked
-import me.proton.core.telemetry.presentation.measureOnViewFocused
+import me.proton.core.telemetry.presentation.compose.rememberClickedMeasureOperation
+import me.proton.core.telemetry.presentation.compose.rememberFocusedMeasureOperation
 
 @Composable
 public fun LoginInputPasswordScreen(
@@ -86,15 +85,14 @@ public fun LoginInputPasswordScreen(
     onNavigateToChangePassword: () -> Unit = {},
     viewModel: LoginInputPasswordViewModel = hiltViewModel()
 ) {
-    val delegateOwner = LocalProductMetricsDelegateOwner.current
-    val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
-        "ProductMetricsDelegate is not defined."
-    }
+    val focusedOp = rememberFocusedMeasureOperation("user.signin.focused", "passwordInput", Immediate)
+    val clickedOp = rememberClickedMeasureOperation("user.signin.clicked", "passwordContinue", Immediate)
+
     fun onPasswordInputFocused() {
-        measureOnViewFocused("user.signin.focused", delegate, "passwordInput", Immediate)
+        focusedOp.measure()
     }
     fun onContinueClicked(action: SetPassword) {
-        measureOnViewClicked("user.signin.clicked", delegate, "passwordContinue", Immediate)
+        clickedOp.measure()
         viewModel.submit(action)
     }
 

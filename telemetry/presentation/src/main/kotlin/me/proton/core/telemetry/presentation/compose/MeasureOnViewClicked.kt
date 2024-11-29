@@ -19,11 +19,29 @@
 package me.proton.core.telemetry.presentation.compose
 
 import androidx.compose.foundation.clickable
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.measureOnViewClicked
+
+@Composable
+public fun rememberClickedMeasureOperation(
+    event: String,
+    item: String,
+    priority: TelemetryPriority = TelemetryPriority.Default,
+    delegateOwner: ProductMetricsDelegateOwner? = LocalProductMetricsDelegateOwner.current
+): MeasureOperation = remember {
+    MeasureOperation {
+        val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
+            "ProductMetricsDelegate is not defined."
+        }
+        measureOnViewClicked(event, delegate, item, priority)
+    }
+}
 
 public fun Modifier.measureClicked(
     event: String,

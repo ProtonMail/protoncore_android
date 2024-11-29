@@ -18,12 +18,30 @@
 
 package me.proton.core.telemetry.presentation.compose
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.focus.onFocusChanged
 import me.proton.core.telemetry.domain.entity.TelemetryPriority
 import me.proton.core.telemetry.presentation.ProductMetricsDelegate
+import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.measureOnViewFocused
+
+@Composable
+public fun rememberFocusedMeasureOperation(
+    event: String,
+    item: String,
+    priority: TelemetryPriority = TelemetryPriority.Default,
+    delegateOwner: ProductMetricsDelegateOwner? = LocalProductMetricsDelegateOwner.current
+): MeasureOperation = remember {
+    MeasureOperation {
+        val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
+            "ProductMetricsDelegate is not defined."
+        }
+        measureOnViewFocused(event, delegate, item, priority)
+    }
+}
 
 public fun Modifier.measureFocused(
     event: String,
