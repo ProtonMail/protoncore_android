@@ -11,6 +11,17 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.3.1] - 2024-11-29
+
+### Bug Fixes
+
+- auth: Fixed IllegalStateException: requestAutofill called before onChildPositioned().
+
+### Refactoring
+
+- Improved MeasureOnViewClicked/MeasureOnViewFocused.
+- payment: Changed BillingClientError super class from Throwable to Exception.
+
 ## [29.3.0] - 2024-11-27
 
 ### Chores
