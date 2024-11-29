@@ -76,7 +76,7 @@ public interface GoogleBillingRepository<A: Any> : AutoCloseable {
 public data class BillingClientError(
     public val responseCode: Int?,
     public val debugMessage: String?
-) : Throwable("responseCode: $responseCode message: $debugMessage")
+) : Exception("responseCode: $responseCode message: $debugMessage")
 
 public interface ConnectedBillingClientInterface<A : Any> {
     public suspend fun launchBilling(activity: A, billingFlowParams: GoogleBillingFlowParams)
