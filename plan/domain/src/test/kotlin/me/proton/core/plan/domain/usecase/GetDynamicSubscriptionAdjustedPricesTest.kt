@@ -24,7 +24,6 @@ import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
@@ -33,13 +32,9 @@ import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.entity.ProductPrice
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.payment.domain.usecase.PaymentProvider
-import me.proton.core.plan.domain.entity.DynamicPlans
 import me.proton.core.plan.domain.entity.dynamicSubscription
 import me.proton.core.plan.domain.entity.dynamicSubscriptionPaid
 import me.proton.core.plan.domain.entity.dynamicSubscriptionPaidProtonManaged
-import me.proton.core.plan.domain.entity.freePlan
-import me.proton.core.plan.domain.entity.mailPlusPlan
-import me.proton.core.plan.domain.entity.unlimitedPlan
 import me.proton.core.plan.domain.repository.PlansRepository
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
@@ -51,6 +46,9 @@ import kotlin.test.assertFailsWith
 class GetDynamicSubscriptionAdjustedPricesTest {
     // region mocks
     @MockK
+    private lateinit var getProductIdForCurrentSubscription: GetProductIdForCurrentSubscription
+
+    @MockK
     private lateinit var storePrices: GetStorePrice
 
     @MockK
@@ -58,6 +56,7 @@ class GetDynamicSubscriptionAdjustedPricesTest {
     // endregion
 
     // region test data
+    private val testProductId = ProductId("googlemail_plus_1_renewing")
     private val testUserId = UserId("test-user-id")
     private val testSubscription = dynamicSubscription
     private val testPaidSubscription = dynamicSubscriptionPaid
@@ -76,8 +75,8 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         optionalStorePrices = mockk(relaxed = true)
         useCase = GetDynamicSubscriptionAdjustedPrices(
             repository,
-            AppStore.GooglePlay,
-            optionalStorePrices
+            optionalStorePrices,
+            getProductIdForCurrentSubscription
         )
     }
 
@@ -99,19 +98,13 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         // GIVEN
         coEvery { optionalStorePrices.isPresent } returns true
         every { optionalStorePrices.get() } returns storePrices
-        coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns ProductPrice(
+        coEvery { storePrices.invoke(testProductId) } returns ProductPrice(
             provider = PaymentProvider.GoogleInAppPurchase,
             priceAmountMicros = 1000000,
             currency = "USD",
             formattedPriceAndCurrency = "USD 100"
         )
-        coEvery { repository.getDynamicPlans(any(), any()) } returns DynamicPlans(
-            defaultCycle = null,
-            plans = listOf(
-                freePlan,
-                unlimitedPlan,
-            )
-        )
+        coEvery { getProductIdForCurrentSubscription(testUserId) } returns testProductId
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testPaidSubscriptions
         // WHEN
         val result = useCase.invoke(testUserId)
@@ -124,19 +117,13 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         // GIVEN
         coEvery { optionalStorePrices.isPresent } returns true
         every { optionalStorePrices.get() } returns storePrices
-        coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns ProductPrice(
+        coEvery { storePrices.invoke(testProductId) } returns ProductPrice(
             provider = PaymentProvider.GoogleInAppPurchase,
             priceAmountMicros = 1000000,
             currency = "CHF",
             formattedPriceAndCurrency = "CHF 100"
         )
-        coEvery { repository.getDynamicPlans(any(), any()) } returns DynamicPlans(
-            defaultCycle = null,
-            plans = listOf(
-                freePlan,
-                mailPlusPlan,
-            )
-        )
+        coEvery { getProductIdForCurrentSubscription(testUserId) } returns null
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testPaidSubscriptions
         // WHEN
         val result = useCase.invoke(testUserId)
@@ -150,14 +137,8 @@ class GetDynamicSubscriptionAdjustedPricesTest {
         coEvery { optionalStorePrices.isPresent } returns true
         every { optionalStorePrices.get() } returns storePrices
         coEvery { repository.getDynamicSubscriptions(testUserId) } returns testPaidSubscriptionsProtonManaged
-        coEvery { repository.getDynamicPlans(any(), any()) } returns DynamicPlans(
-            defaultCycle = null,
-            plans = listOf(
-                freePlan,
-                unlimitedPlan,
-            )
-        )
-        coEvery { storePrices.invoke(ProductId("googlemail_plus_1_renewing")) } returns ProductPrice(
+        coEvery { getProductIdForCurrentSubscription(testUserId) } returns testProductId
+        coEvery { storePrices.invoke(testProductId) } returns ProductPrice(
             provider = PaymentProvider.GoogleInAppPurchase,
             priceAmountMicros = 1000000,
             currency = "CHF",

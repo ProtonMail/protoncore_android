@@ -18,9 +18,7 @@
 
 package me.proton.core.plan.domain.usecase
 
-import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
-import me.proton.core.payment.domain.entity.ProductId
 import me.proton.core.payment.domain.usecase.GetStorePrice
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.entity.SubscriptionManagement
@@ -36,8 +34,8 @@ import javax.inject.Inject
 @Suppress("ReturnCount")
 class GetDynamicSubscriptionAdjustedPrices @Inject constructor(
     private val plansRepository: PlansRepository,
-    private val appStore: AppStore,
-    private val getStorePrice: Optional<GetStorePrice>
+    private val getStorePrice: Optional<GetStorePrice>,
+    private val getProductIdForCurrentSubscription: GetProductIdForCurrentSubscription
 ) {
     suspend operator fun invoke(userId: UserId): DynamicSubscription {
         val dynamicSubscription = plansRepository.getDynamicSubscriptions(userId).first()
@@ -45,16 +43,10 @@ class GetDynamicSubscriptionAdjustedPrices @Inject constructor(
         if (dynamicSubscription.cycleMonths == null) return dynamicSubscription
         if (!getStorePrice.isPresent) return dynamicSubscription
 
-        // we pass null for userId in the getDynamicPlans because API will omit the paid plans for a paid user
-        val plans = plansRepository.getDynamicPlans(null, appStore).plans
-        val plan = plans.firstOrNull { it.name == dynamicSubscription.name }
+        val productId = getProductIdForCurrentSubscription(userId)
             ?: return dynamicSubscription.copy(amount = null, currency = null)
 
-        val instance = plan.instances[dynamicSubscription.cycleMonths]
-        val productId = instance?.vendors?.get(AppStore.GooglePlay)?.productId
-            ?: return dynamicSubscription.copy(amount = null, currency = null)
-
-        val storePrice = getStorePrice.get().invoke(ProductId(productId))
+        val storePrice = getStorePrice.get().invoke(productId)
             ?: return dynamicSubscription.copy(amount = null, currency = null)
 
         return dynamicSubscription.copy(
