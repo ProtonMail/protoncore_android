@@ -59,7 +59,7 @@ import me.proton.core.observability.domain.metrics.SignupScreenViewTotalV1
 import me.proton.core.observability.domain.metrics.common.AccountTypeLabels
 import me.proton.core.observability.domain.metrics.common.toObservabilityAccountType
 import me.proton.core.payment.presentation.PaymentsOrchestrator
-import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
+import me.proton.core.plan.domain.usecase.CanUpgrade
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.savedstate.flowState
 import me.proton.core.presentation.savedstate.state
@@ -84,7 +84,7 @@ internal class SignupViewModel @Inject constructor(
     private val challengeManager: ChallengeManager,
     private val challengeConfig: SignupChallengeConfig,
     override val observabilityManager: ObservabilityManager,
-    private val canUpgradeToPaid: CanUpgradeToPaid,
+    private val canUpgradeToPaid: CanUpgrade,
     override val telemetryManager: TelemetryManager,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel(), ObservabilityContext, ProductMetricsDelegateAuth, TelemetryContext {

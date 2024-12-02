@@ -37,7 +37,6 @@ public object SubscriptionRobot {
     private val upgradeYourPlanText =
         view.withId(R.id.title).withText(R.string.plans_upgrade_your_plan)
     private val upgradeYourPlanTitle = view.withText(R.string.plans_upgrade_your_plan)
-    private val cannotUpgrade = view.withText(R.string.plans_can_not_upgrade_from_mobile)
     private val managementInfo = view.withId(R.id.management_info)
     private val noUpgradeAvailableTextView = view.withText(R.string.plans_no_upgrade_available)
 
@@ -116,10 +115,6 @@ public object SubscriptionRobot {
 
     public fun verifyNoPaidPlansAreShown() {
         planSelection.checkIsNotDisplayed()
-    }
-
-    public fun verifyCannotUpgradeFromMobile() {
-        cannotUpgrade.checkIsDisplayed()
     }
 
     public fun verifyNoUpgradeAvailable() {

@@ -197,5 +197,6 @@ class PrepareGiapPurchaseImplTest {
     private fun mockedGooglePurchase(token: String, testProductIds: List<ProductId>) = mockk<GooglePurchase> {
         every { productIds } returns testProductIds
         every { purchaseToken } returns GooglePurchaseToken(token)
+        every { customerId } returns null
     }
 }

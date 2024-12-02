@@ -44,6 +44,7 @@ public data class DynamicSubscription(
 
     val renew: Boolean? = null,
     val external: SubscriptionManagement? = null,
+    val deeplink: String? = null,
 
     val decorations: List<DynamicDecoration> = emptyList(),
     val entitlements: List<DynamicEntitlement> = emptyList(),

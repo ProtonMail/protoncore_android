@@ -17,4 +17,5 @@
   -->
 <resources>
     <bool name="core_feature_payments_v5_enabled">false</bool>
+    <bool name="core_feature_mobile_upgrades_enabled">false</bool>
 </resources>

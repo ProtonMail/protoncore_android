@@ -31,10 +31,9 @@ class GetProductIdForCurrentSubscription @Inject constructor(
     suspend operator fun invoke(userId: UserId): ProductId? {
         val dynamicSubscription = plansRepository.getDynamicSubscriptions(userId).first()
 
-        // we pass null for userId in the getDynamicPlans because API will omit the paid plans for a paid user
+        // backwards compatibility: we pass null for userId in the getDynamicPlans because API will omit the paid plans for a paid user
         val plans = plansRepository.getDynamicPlans(null, appStore).plans
         val plan = plans.firstOrNull { it.name == dynamicSubscription.name }
-
         val instance = plan?.instances?.get(dynamicSubscription.cycleMonths)
         return instance?.vendors?.get(AppStore.GooglePlay)?.productId?.let {
             ProductId(it)

@@ -36,6 +36,7 @@ import me.proton.core.observability.domain.metrics.CheckoutGetDynamicSubscriptio
 import me.proton.core.observability.domain.metrics.CheckoutScreenViewTotal
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
+import me.proton.core.plan.domain.usecase.HasUserCredits
 import me.proton.core.plan.domain.usecase.GetDynamicSubscriptionAdjustedPrices
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.entity.DynamicUser
@@ -51,6 +52,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
     private val observeUserCurrency: ObserveUserCurrency,
     private val getDynamicSubscriptionAdjustedPrices: GetDynamicSubscriptionAdjustedPrices,
     private val canUpgradeFromMobile: CanUpgradeFromMobile,
+    private val hasUserCredits: HasUserCredits
 ) : ProtonViewModel(), ObservabilityContext {
 
     sealed class State {
@@ -60,7 +62,9 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         data class Success(
             val dynamicSubscription: DynamicSubscription,
             val canUpgradeFromMobile: Boolean,
+            val hasCredits: Boolean,
             val userCurrency: String,
+            val currentStoreProductId: String?
         ) : State()
     }
 
@@ -82,7 +86,7 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
         .flatMapLatest { userId -> observeUserCurrency(userId).distinctUntilChanged().map { userId to it } }
         .flatMapLatest { (userId, currency) -> loadSubscription(userId, currency) }
 
-    private suspend fun loadSubscription(userId: UserId?, currency: String) = flowWithResultContext {
+    private suspend fun loadSubscription(userId: UserId?, currency: String, currentStoreProductId: String? = null) = flowWithResultContext {
         onResultEnqueueObservability("getDynamicSubscriptions") { CheckoutGetDynamicSubscriptionTotal(this) }
         emit(State.Loading)
         when (userId) {
@@ -91,7 +95,9 @@ internal class DynamicSubscriptionViewModel @Inject constructor(
                 State.Success(
                     dynamicSubscription = getDynamicSubscriptionAdjustedPrices(userId),
                     canUpgradeFromMobile = canUpgradeFromMobile.invoke(userId),
-                    userCurrency = currency
+                    hasCredits = hasUserCredits(userId),
+                    userCurrency = currency,
+                    currentStoreProductId = currentStoreProductId
                 )
             )
         }

@@ -66,6 +66,8 @@ internal data class DynamicSubscriptionResponse(
     val renew: Int? = null,
     @SerialName("External")
     val external: Int? = null,
+    @SerialName("Deeplink")
+    val deeplink: String? = null,
     @SerialName("Decorations")
     val decorations: List<DynamicDecorationResource>? = null,
     @SerialName("Entitlements")
@@ -92,6 +94,7 @@ internal data class DynamicSubscriptionResponse(
         renewAmount = renewAmount,
         renew = renew?.toBooleanOrFalse(),
         external = SubscriptionManagement.map[external],
+        deeplink = deeplink,
         decorations = decorations?.mapNotNull { it.toDynamicPlanDecoration() } ?: emptyList(),
         entitlements = entitlements?.mapNotNull { it.toDynamicPlanEntitlement(iconsEndpoint) } ?: emptyList(),
         customerId = customerId

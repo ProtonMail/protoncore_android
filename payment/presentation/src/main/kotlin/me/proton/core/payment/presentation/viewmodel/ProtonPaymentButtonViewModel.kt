@@ -52,6 +52,8 @@ import me.proton.core.payment.domain.usecase.PaymentProvider.GoogleInAppPurchase
 import me.proton.core.payment.presentation.LogTag
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent.Error
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.entity.SubscriptionManagement
+import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.presentation.viewmodel.ProtonViewModel
@@ -68,6 +70,7 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
     private val getPreferredPaymentProvider: GetPreferredPaymentProvider,
     override val observabilityManager: ObservabilityManager,
     private val performGiapPurchase: Optional<PerformGiapPurchase<Activity>>,
+    private val getCurrentSubscription: GetDynamicSubscription
 ) : ProtonViewModel(), ObservabilityContext {
     private val attachedButtonIds = mutableSetOf<Int>()
     private val buttonStates = mutableMapOf<Int, MutableStateFlow<ButtonState>>()
@@ -102,6 +105,14 @@ internal class ProtonPaymentButtonViewModel @Inject constructor(
 
         val lastEvent = flow {
             emit(ProtonPaymentEvent.Loading)
+
+            val subscription = userId?.let { getCurrentSubscription(it) }
+            if (subscription?.external != null && subscription.external == SubscriptionManagement.GOOGLE_MANAGED
+                && subscription.deeplink != null
+            ) {
+                emit(Error.SubscriptionManagedByOtherApp(userId, subscription.deeplink!!))
+                return@flow
+            }
 
             when (resolvedPaymentProvider) {
                 CardPayment ->
@@ -246,6 +257,11 @@ public sealed class ProtonPaymentEvent {
             public val googlePurchase: GooglePurchase,
             public val originalCurrency: String,
             public val plan: DynamicPlan,
+        ) : Error()
+
+        public class SubscriptionManagedByOtherApp(
+            public val userId: UserId,
+            public val deeplink: String
         ) : Error()
 
         public object GoogleProductDetailsNotFound : Error()

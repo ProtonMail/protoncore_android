@@ -37,7 +37,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.humanverification.presentation.HumanVerificationInitializer
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
+import me.proton.core.plan.domain.usecase.CanUpgrade
 import me.proton.core.test.android.instrumented.ProtonTest
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
@@ -70,7 +70,7 @@ class VpnUsernameAccountSignupTests : BaseUsernameAccountSignupTests,
     val accountType: AccountType = AccountType.Username
 
     @BindValue
-    val canUpgradeToPaid: CanUpgradeToPaid = mockk {
+    val canUpgradeToPaid: CanUpgrade = mockk {
         coEvery { this@mockk.invoke(any()) } returns false
     }
 

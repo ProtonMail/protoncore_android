@@ -69,6 +69,25 @@ fun Context.openMarketLink() {
     }
 }
 
+fun Context.openMarketSubscription(purchasedProductId: String?) {
+    val uri = when (purchasedProductId) {
+        null -> Uri.parse("https://play.google.com/store/account/subscriptions")
+        else -> Uri.parse(getString(R.string.play_store_app_subscription, purchasedProductId, packageName))
+    }
+    val storeIntent = Intent(Intent.ACTION_VIEW, uri).apply {
+        addFlags(
+            Intent.FLAG_ACTIVITY_NO_HISTORY or
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+        )
+    }
+    when (storeIntent.resolveActivity(packageManager)) {
+        // we will open app market details if we can not open any deeplink, should be very rare case
+        null -> openBrowserLink("https://play.google.com/store/apps/details?id=$packageName")
+        else -> startActivity(storeIntent)
+    }
+}
+
 fun FragmentActivity.hideKeyboard() {
     val focus = currentFocus
     focus?.clearFocus()

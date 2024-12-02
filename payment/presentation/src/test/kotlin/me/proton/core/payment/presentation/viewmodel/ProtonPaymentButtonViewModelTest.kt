@@ -44,6 +44,7 @@ import me.proton.core.payment.domain.usecase.GetPreferredPaymentProvider
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.payment.presentation.viewmodel.ProtonPaymentButtonViewModel.ButtonState
 import me.proton.core.plan.domain.entity.DynamicPlan
+import me.proton.core.plan.domain.usecase.GetDynamicSubscription
 import me.proton.core.plan.domain.usecase.PerformGiapPurchase
 import me.proton.core.presentation.app.ActivityProvider
 import me.proton.core.test.kotlin.CoroutinesTest
@@ -66,6 +67,9 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
     @MockK
     private lateinit var getPreferredPaymentProvider: GetPreferredPaymentProvider
 
+    @MockK
+    private lateinit var getCurrentSubscription: GetDynamicSubscription
+
     @MockK(relaxed = true)
     private lateinit var observabilityManager: ObservabilityManager
 
@@ -83,7 +87,8 @@ class ProtonPaymentButtonViewModelTest : CoroutinesTest by CoroutinesTest() {
             Optional.of(convertToObservabilityGiapStatus),
             getPreferredPaymentProvider,
             observabilityManager,
-            Optional.of(performGiapPurchase)
+            Optional.of(performGiapPurchase),
+            getCurrentSubscription
         )
     }
 

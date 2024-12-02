@@ -18,11 +18,16 @@
 
 package me.proton.core.plan.domain.usecase
 
+import io.mockk.MockKAnnotations
 import io.mockk.coEvery
+import io.mockk.every
+import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
+import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import org.junit.Before
 import org.junit.Test
 import kotlin.test.assertFalse
@@ -30,15 +35,22 @@ import kotlin.test.assertTrue
 
 class CanUpgradeFromMobileTest {
 
-    private val getAvailablePaymentProviders: GetAvailablePaymentProviders = mockk()
+    @MockK
+    private lateinit var getAvailablePaymentProviders: GetAvailablePaymentProviders
 
+    @MockK(relaxed = true)
+    private lateinit var getCurrentSubscription: GetDynamicSubscription
+
+    private val testUserId = UserId("user-id")
     private lateinit var useCase: CanUpgradeFromMobile
 
     @Before
     fun beforeEveryTest() {
+        MockKAnnotations.init(this)
         useCase = CanUpgradeFromMobile(
             supportPaidPlans = true,
-            getAvailablePaymentProviders = getAvailablePaymentProviders
+            getAvailablePaymentProviders = getAvailablePaymentProviders,
+            getCurrentSubscription = getCurrentSubscription
         )
     }
 
@@ -47,10 +59,11 @@ class CanUpgradeFromMobileTest {
         // GIVEN
         useCase = CanUpgradeFromMobile(
             supportPaidPlans = false,
-            getAvailablePaymentProviders = getAvailablePaymentProviders
+            getAvailablePaymentProviders = getAvailablePaymentProviders,
+            getCurrentSubscription = getCurrentSubscription
         )
         // WHEN
-        val result = useCase()
+        val result = useCase(testUserId)
         // THEN
         assertFalse(result)
     }
@@ -60,7 +73,7 @@ class CanUpgradeFromMobileTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns emptySet()
         // WHEN
-        val result = useCase()
+        val result = useCase(testUserId)
         // THEN
         assertFalse(result)
     }
@@ -70,21 +83,40 @@ class CanUpgradeFromMobileTest {
         // GIVEN
         coEvery { getAvailablePaymentProviders() } returns setOf(PaymentProvider.PayPal)
         // WHEN
-        val result = useCase()
+        val result = useCase(testUserId)
         // THEN
         assertFalse(result)
     }
 
     @Test
-    fun `can upgrade returns true when payment providers available`() = runTest {
+    fun `can upgrade returns true for Google Managed Subscription when payment providers available`() = runTest {
         // GIVEN
+        coEvery { getCurrentSubscription(testUserId) } returns mockk {
+            every { external } returns SubscriptionManagement.GOOGLE_MANAGED
+        }
         coEvery { getAvailablePaymentProviders() } returns setOf(
             PaymentProvider.CardPayment,
             PaymentProvider.GoogleInAppPurchase
         )
         // WHEN
-        val result = useCase()
+        val result = useCase(testUserId)
         // THEN
         assertTrue(result)
+    }
+
+    @Test
+    fun `can upgrade returns false for Proton Managed when payment providers available`() = runTest {
+        // GIVEN
+        coEvery { getCurrentSubscription(testUserId) } returns mockk {
+            every { external } returns SubscriptionManagement.PROTON_MANAGED
+        }
+        coEvery { getAvailablePaymentProviders() } returns setOf(
+            PaymentProvider.CardPayment,
+            PaymentProvider.GoogleInAppPurchase
+        )
+        // WHEN
+        val result = useCase(testUserId)
+        // THEN
+        assertFalse(result)
     }
 }

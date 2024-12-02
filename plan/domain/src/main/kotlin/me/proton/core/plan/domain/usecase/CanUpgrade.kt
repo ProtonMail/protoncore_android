@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -24,13 +24,13 @@ import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportSignupPaidPlans
 import javax.inject.Inject
 
-public class CanUpgradeToPaid @Inject constructor(
-    @SupportSignupPaidPlans public val supportPaidPlans: Boolean,
+class CanUpgrade @Inject constructor(
+    @SupportSignupPaidPlans val supportPaidPlans: Boolean,
     private val getPlans: GetDynamicPlans,
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders
 ) {
 
-    public suspend operator fun invoke(userId: UserId? = null): Boolean {
+    suspend operator fun invoke(userId: UserId? = null): Boolean {
         if (!supportPaidPlans) {
             return false
         }

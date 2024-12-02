@@ -34,7 +34,7 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import me.proton.core.network.domain.client.ExtraHeaderProvider
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
-import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
+import me.proton.core.plan.domain.usecase.CanUpgrade
 import me.proton.core.test.quark.Quark
 import me.proton.core.test.quark.data.User
 import org.junit.Rule
@@ -71,7 +71,7 @@ class DriveExternalAccountSignupTests : BaseExternalAccountSignupTests {
     val accountType: AccountType = AccountType.External
 
     @BindValue
-    val canUpgradeToPaid: CanUpgradeToPaid = mockk {
+    val canUpgradeToPaid: CanUpgrade = mockk {
         coEvery { this@mockk.invoke(any()) } returns false
     }
 

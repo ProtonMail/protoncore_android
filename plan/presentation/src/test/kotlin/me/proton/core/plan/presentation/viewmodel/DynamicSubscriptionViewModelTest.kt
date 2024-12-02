@@ -27,6 +27,7 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.domain.usecase.CanUpgradeFromMobile
+import me.proton.core.plan.domain.usecase.HasUserCredits
 import me.proton.core.plan.domain.usecase.GetDynamicSubscriptionAdjustedPrices
 import me.proton.core.plan.domain.usecase.ObserveUserCurrency
 import me.proton.core.plan.presentation.usecase.ObserveUserId
@@ -65,6 +66,10 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
         coEvery { this@mockk.invoke(any()) } returns true
     }
 
+    private val hasUserCredits = mockk<HasUserCredits> {
+        coEvery { this@mockk.invoke(any()) } returns false
+    }
+
     private lateinit var viewModel: DynamicSubscriptionViewModel
 
     @Before
@@ -74,7 +79,8 @@ class DynamicSubscriptionViewModelTest : ArchTest by ArchTest(),
             observeUserId = observeUserId,
             observeUserCurrency = observeUserCurrency,
             getDynamicSubscriptionAdjustedPrices = getDynamicSubscriptionAdjustedPrices,
-            canUpgradeFromMobile = canUpgradeFromMobile
+            canUpgradeFromMobile = canUpgradeFromMobile,
+            hasUserCredits = hasUserCredits
         )
     }
 

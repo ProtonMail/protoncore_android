@@ -35,6 +35,7 @@ publishOption.shouldBePublishedAsLib = true
 
 dependencies {
     api(
+        project(Module.accountManagerDomain),
         project(Module.domain),
         project(Module.featureFlagDomain),
         project(Module.networkDomain),

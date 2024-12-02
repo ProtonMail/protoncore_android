@@ -77,7 +77,7 @@ public class PrepareGiapPurchaseImpl @Inject constructor(
                     setSubscriptionUpdateParams(
                         SubscriptionUpdateParams.newBuilder()
                             .setOldPurchaseToken(currentGooglePurchase.purchaseToken.value)
-                            .setSubscriptionReplacementMode(ReplacementMode.CHARGE_PRORATED_PRICE)
+                            .setSubscriptionReplacementMode(ReplacementMode.WITH_TIME_PRORATION)
                             .build()
                     )
                 }

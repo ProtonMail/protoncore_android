@@ -23,6 +23,7 @@ import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
+import me.proton.core.payment.domain.IsMobileUpgradesEnabled
 import me.proton.core.user.domain.UserManager
 import javax.inject.Inject
 
@@ -31,7 +32,8 @@ public class GetAvailablePaymentProviders @Inject internal constructor(
     private val userManager: UserManager,
     private val appStore: AppStore,
     private val getPaymentStatus: GetPaymentStatus,
-    private val protonIAPBillingLibrary: ProtonIAPBillingLibrary
+    private val protonIAPBillingLibrary: ProtonIAPBillingLibrary,
+    private val isMobileUpgradesEnabled: IsMobileUpgradesEnabled
 ) {
     /**
      * Returns a set of [payment providers][PaymentProvider] which can be offered to the user.
@@ -56,11 +58,17 @@ public class GetAvailablePaymentProviders @Inject internal constructor(
             // and not allow GIAP since it can lead to incorrect state on the BE
             true
         }
+
         return buildSet {
             if (paymentStatus?.card == true) add(PaymentProvider.CardPayment)
             if (paymentStatus?.paypal == true) add(PaymentProvider.PayPal)
-            if (paymentStatus?.inApp == true && isBuiltForGooglePlay() && !hasPreviousPurchase)
-                add(PaymentProvider.GoogleInAppPurchase)
+            if (paymentStatus?.inApp == true && isBuiltForGooglePlay()) {
+                if (isMobileUpgradesEnabled(user)) {
+                    add(PaymentProvider.GoogleInAppPurchase)
+                } else if (!hasPreviousPurchase) {
+                    add(PaymentProvider.GoogleInAppPurchase)
+                }
+            }
         }
     }
 

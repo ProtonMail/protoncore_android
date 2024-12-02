@@ -24,22 +24,23 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.onEach
+import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.plan.domain.entity.DynamicDecoration
 import me.proton.core.plan.domain.entity.DynamicSubscription
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicSubscriptionBinding
+import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.plan.presentation.entity.toStringRes
 import me.proton.core.plan.presentation.view.formatRenew
 import me.proton.core.plan.presentation.view.toView
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel.Action
 import me.proton.core.plan.presentation.viewmodel.DynamicSubscriptionViewModel.State
-import me.proton.core.plan.presentation.entity.DynamicUser
 import me.proton.core.presentation.ui.ProtonFragment
 import me.proton.core.presentation.utils.formatCentsPriceDefaultLocale
-import me.proton.core.network.presentation.util.getUserMessage
 import me.proton.core.presentation.utils.launchOnScreenView
 import me.proton.core.presentation.utils.onClick
+import me.proton.core.presentation.utils.openMarketSubscription
 import me.proton.core.presentation.utils.viewBinding
 
 @Suppress("TooManyFunctions")
@@ -79,7 +80,7 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         showLoading(true)
     }
 
-    private fun onError(error: Throwable?) = with(binding) {
+    private fun onError(error: Throwable?) {
         showLoading(false)
         val message = error?.getUserMessage(resources)
         showError(message ?: getString(R.string.presentation_error_general))
@@ -92,7 +93,13 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
 
     private fun onSuccess(state: State.Success) {
         showLoading(false)
-        showSubscription(state.dynamicSubscription, state.canUpgradeFromMobile, state.userCurrency)
+        showSubscription(
+            state.dynamicSubscription,
+            state.canUpgradeFromMobile,
+            state.hasCredits,
+            state.userCurrency,
+            state.currentStoreProductId
+        )
     }
 
     private fun showLoading(loading: Boolean) = with(binding) {
@@ -108,7 +115,9 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
     private fun showSubscription(
         subscription: DynamicSubscription,
         canUpgradeFromMobile: Boolean,
-        userCurrency: String
+        hasCredits: Boolean,
+        userCurrency: String,
+        currentStoreProductId: String?
     ) = with(binding.dynamicPlan) {
         title = subscription.title
         description = subscription.description
@@ -126,9 +135,16 @@ class DynamicSubscriptionFragment : ProtonFragment(R.layout.fragment_dynamic_sub
         entitlements.removeAllViews()
         subscription.entitlements.forEach { entitlements.addView(it.toView(context)) }
     }.also {
-        subscription.external.toStringRes(canUpgradeFromMobile)?.let {
-            binding.managementInfo.setText(it)
-            binding.managementInfo.isVisible = true
+        with(binding) {
+            subscription.external.toStringRes(canUpgradeFromMobile)?.let {
+                managementInfo.setText(it)
+                managementInfo.isVisible = true
+            }
+            playStoreSubscriptionManagement.isVisible = canUpgradeFromMobile
+            creditsInfo.isVisible = hasCredits
+            playStoreSubscriptionManagement.onClick {
+                requireContext().openMarketSubscription(currentStoreProductId)
+            }
         }
     }
 }

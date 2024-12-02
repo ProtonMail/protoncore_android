@@ -22,15 +22,21 @@ import me.proton.core.domain.entity.UserId
 import me.proton.core.payment.domain.usecase.GetAvailablePaymentProviders
 import me.proton.core.payment.domain.usecase.PaymentProvider
 import me.proton.core.plan.domain.SupportUpgradePaidPlans
+import me.proton.core.plan.domain.entity.SubscriptionManagement
 import javax.inject.Inject
 
-public class CanUpgradeFromMobile @Inject constructor(
-    @SupportUpgradePaidPlans public val supportPaidPlans: Boolean,
-    private val getAvailablePaymentProviders: GetAvailablePaymentProviders
+class CanUpgradeFromMobile @Inject constructor(
+    @SupportUpgradePaidPlans val supportPaidPlans: Boolean,
+    private val getAvailablePaymentProviders: GetAvailablePaymentProviders,
+    private val getCurrentSubscription: GetDynamicSubscription
 ) {
 
-    public suspend operator fun invoke(userId: UserId? = null): Boolean {
+    suspend operator fun invoke(userId: UserId): Boolean {
         if (!supportPaidPlans) {
+            return false
+        }
+        val subscription = getCurrentSubscription(userId)
+        if (subscription.external != null && subscription.external != SubscriptionManagement.GOOGLE_MANAGED) {
             return false
         }
         val paymentProviders = getAvailablePaymentProviders().filter {

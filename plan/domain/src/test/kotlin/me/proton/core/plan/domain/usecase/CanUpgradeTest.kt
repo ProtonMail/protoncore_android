@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Proton Technologies AG
+ * Copyright (c) 2024 Proton Technologies AG
  * This file is part of Proton AG and ProtonCore.
  *
  * ProtonCore is free software: you can redistribute it and/or modify
@@ -38,7 +38,7 @@ import java.time.Instant
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class CanUpgradeToPaidTest {
+class CanUpgradeTest {
     // region mocks
     private val getPlans: GetDynamicPlans = mockk()
     private val getAvailablePaymentProviders: GetAvailablePaymentProviders = mockk()
@@ -86,11 +86,11 @@ class CanUpgradeToPaidTest {
     )
     // endregion
 
-    private lateinit var useCase: CanUpgradeToPaid
+    private lateinit var useCase: CanUpgrade
 
     @Before
     fun beforeEveryTest() {
-        useCase = CanUpgradeToPaid(
+        useCase = CanUpgrade(
             supportPaidPlans = true,
             getPlans = getPlans,
             getAvailablePaymentProviders = getAvailablePaymentProviders
@@ -100,7 +100,7 @@ class CanUpgradeToPaidTest {
     @Test
     fun `can upgrade returns false when support paid is false`() = runTest {
         // GIVEN
-        useCase = CanUpgradeToPaid(
+        useCase = CanUpgrade(
             supportPaidPlans = false,
             getPlans = getPlans,
             getAvailablePaymentProviders = getAvailablePaymentProviders

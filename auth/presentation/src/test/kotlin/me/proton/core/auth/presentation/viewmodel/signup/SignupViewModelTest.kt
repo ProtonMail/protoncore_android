@@ -58,7 +58,7 @@ import me.proton.core.payment.domain.entity.SubscriptionCycle
 import me.proton.core.payment.presentation.PaymentsOrchestrator
 import me.proton.core.payment.presentation.entity.BillingResult
 import me.proton.core.plan.domain.entity.SubscriptionManagement
-import me.proton.core.plan.domain.usecase.CanUpgradeToPaid
+import me.proton.core.plan.domain.usecase.CanUpgrade
 import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.presentation.utils.InputValidationResult
 import me.proton.core.presentation.utils.ValidationType
@@ -115,7 +115,7 @@ class SignupViewModelTest : ArchTest by ArchTest(), CoroutinesTest by Coroutines
     private lateinit var telemetryManager: TelemetryManager
 
     @MockK(relaxed = true)
-    private lateinit var canUpgradeToPaid: CanUpgradeToPaid
+    private lateinit var canUpgradeToPaid: CanUpgrade
 
     @MockK(relaxed = true)
     private lateinit var authRepository: AuthRepository

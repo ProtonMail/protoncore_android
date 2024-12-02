@@ -18,6 +18,7 @@
 
 package me.proton.core.plan.presentation.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
@@ -43,6 +44,7 @@ import me.proton.core.payment.presentation.viewmodel.ProtonPaymentEvent
 import me.proton.core.plan.domain.entity.DynamicPlan
 import me.proton.core.plan.domain.entity.SubscriptionManagement
 import me.proton.core.plan.domain.entity.isFree
+import me.proton.core.plan.presentation.PlansOrchestrator
 import me.proton.core.plan.presentation.R
 import me.proton.core.plan.presentation.databinding.FragmentDynamicPlanSelectionBinding
 import me.proton.core.plan.presentation.entity.DynamicPlanFilters
@@ -67,6 +69,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
 
     @Inject
     lateinit var paymentsOrchestrator: PaymentsOrchestrator
+    @Inject
+    lateinit var plansOrchestrator: PlansOrchestrator
 
     private val binding by viewBinding(FragmentDynamicPlanSelectionBinding::bind)
     private val viewModel by viewModels<DynamicPlanSelectionViewModel>()
@@ -232,6 +236,8 @@ class DynamicPlanSelectionFragment : ProtonFragment(R.layout.fragment_dynamic_pl
             is ProtonPaymentEvent.Error.GiapUnredeemed -> onGiapUnredeemed(event)
             is ProtonPaymentEvent.Error.UserCancelled -> viewModel.perform(Action.SetBillingCanceled)
             is ProtonPaymentEvent.Error.GoogleProductDetailsNotFound -> view?.errorSnack(R.string.payments_error_google_prices)
+            is ProtonPaymentEvent.Error.SubscriptionManagedByOtherApp ->
+                plansOrchestrator.startUpgradeExternalWorkflow(event.userId, event.deeplink)
             is ProtonPaymentEvent.Error -> view?.errorSnack(R.string.payments_general_error)
             is ProtonPaymentEvent.GiapSuccess -> onGiapSuccess(event)
             is ProtonPaymentEvent.StartRegularBillingFlow -> startRegularBillingFlow(

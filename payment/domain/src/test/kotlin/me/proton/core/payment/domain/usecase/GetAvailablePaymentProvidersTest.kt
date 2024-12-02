@@ -29,6 +29,8 @@ import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.domain.ApiException
 import me.proton.core.network.domain.ApiResult
+import me.proton.core.payment.domain.FakeIsMobileUpgradesEnabled
+import me.proton.core.payment.domain.IsMobileUpgradesEnabled
 import me.proton.core.payment.domain.entity.PaymentStatus
 import me.proton.core.user.domain.UserManager
 import kotlin.test.BeforeTest
@@ -43,8 +45,11 @@ class GetAvailablePaymentProvidersTest {
     private lateinit var protonIAPBillingLibrary: ProtonIAPBillingLibrary
     private lateinit var tested: GetAvailablePaymentProviders
 
+    private lateinit var isMobileUpgradesEnabled: IsMobileUpgradesEnabled
+
     @BeforeTest
     fun setUp() {
+        isMobileUpgradesEnabled = FakeIsMobileUpgradesEnabled(false)
         accountManager = mockk { every { getPrimaryUserId() } returns flowOf(null) }
         userManager = mockk(relaxed = true)
         getPaymentStatus = mockk()
@@ -162,6 +167,16 @@ class GetAvailablePaymentProvidersTest {
     }
 
     @Test
+    fun `get user only throws API exception mobile upgrades`() = runTest {
+        tested = makeTested(AppStore.GooglePlay, FakeIsMobileUpgradesEnabled(true))
+        coEvery { userManager.getUser(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+        mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = true, inApp = true, paypal = false))
+
+        assertEquals(setOf(PaymentProvider.CardPayment, PaymentProvider.GoogleInAppPurchase), tested(UserId("test-user-id")))
+    }
+
+    @Test
     fun `get user only throws API exception IAP only`() = runTest {
         tested = makeTested(AppStore.GooglePlay)
         coEvery { userManager.getUser(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
@@ -169,6 +184,16 @@ class GetAvailablePaymentProvidersTest {
         mockPaymentStatus(PaymentStatus(card = false, inApp = true, paypal = false))
 
         assertEquals(0, tested(UserId("test-user-id")).size)
+    }
+
+    @Test
+    fun `get user only throws API exception IAP only mobile upgrades`() = runTest {
+        tested = makeTested(AppStore.GooglePlay, FakeIsMobileUpgradesEnabled(true))
+        coEvery { userManager.getUser(any(), any()) } throws ApiException(ApiResult.Error.Http(500, "Server error"))
+        mockGoogleIAP(true)
+        mockPaymentStatus(PaymentStatus(card = false, inApp = true, paypal = false))
+
+        assertEquals(1, tested(UserId("test-user-id")).size)
     }
 
     private fun mockGoogleIAP(available: Boolean) {
@@ -179,12 +204,13 @@ class GetAvailablePaymentProvidersTest {
         coEvery { getPaymentStatus.invoke(any(), any()) } returns paymentStatus
     }
 
-    private fun makeTested(appStore: AppStore): GetAvailablePaymentProviders =
+    private fun makeTested(appStore: AppStore, mobileUpgradesEnabled: IsMobileUpgradesEnabled = isMobileUpgradesEnabled): GetAvailablePaymentProviders =
         GetAvailablePaymentProviders(
             accountManager,
             userManager,
             appStore,
             getPaymentStatus,
-            protonIAPBillingLibrary
+            protonIAPBillingLibrary,
+            mobileUpgradesEnabled
         )
 }
