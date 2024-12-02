@@ -11,6 +11,21 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [30.0.0] - 2024-12-02
+
+### Chore
+
+- build:
+  - Build platform update.
+      - Gradle 8.7 -> 8.9
+      - AGP 8.5.2 -> 8.7.2
+      - Compose 1.6.8 -> 1.7.5
+      - Compose Material3 1.2.1 -> 1.3.1
+      - Dependency Analysis plugin 1.25.0 -> 2.4.2
+      - Kotlin 1.9.25 -> 2.0.21
+      - Removed explicit version of `kotlinCompilerExtensionVersion`. Now, it's managed by `compose-compiler` plugin.
+      - Remove deprecated `android.defaults.buildfeatures.buildconfig` setting from `gradle.properties`. Use `buildFeatures.buildConfig = true` for any module that needs to generate `BuildConfig` class.
+
 ## [29.3.2] - 2024-12-02
 
 ### Bug Fixes
