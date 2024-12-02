@@ -11,6 +11,12 @@ If needed, you can also manually update this file (provided the general structur
 
 ## [Unreleased]
 
+## [29.3.2] - 2024-12-02
+
+### Bug Fixes
+
+- account-manager: Fixed AccountSettingsInfo Preview.
+
 ## [29.3.1] - 2024-11-29
 
 ### Bug Fixes
