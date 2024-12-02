@@ -63,8 +63,7 @@ import me.proton.core.telemetry.presentation.ProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.LocalProductMetricsDelegateOwner
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenClosed
 import me.proton.core.telemetry.presentation.compose.MeasureOnScreenDisplayed
-import me.proton.core.telemetry.presentation.measureOnViewClicked
-import me.proton.core.telemetry.presentation.measureOnViewFocused
+import me.proton.core.telemetry.presentation.compose.rememberClickedMeasureOperation
 
 @Composable
 fun AccountSettingsInfo(
@@ -118,16 +117,15 @@ fun AccountSettingsInfo(
     MeasureOnScreenDisplayed("fe.info_account.displayed", priority = Immediate)
     MeasureOnScreenClosed("user.info_account.closed", priority = Immediate)
 
-    val delegateOwner = LocalProductMetricsDelegateOwner.current
-    val delegate = requireNotNull(delegateOwner?.productMetricsDelegate) {
-        "ProductMetricsDelegate is not defined."
-    }
+    val signUpClickedOp = rememberClickedMeasureOperation("user.info_account.clicked", "sign_up", Immediate)
+    val signInClickedOp = rememberClickedMeasureOperation("user.info_account.clicked", "sign_in", Immediate)
+
     fun signUpClicked() {
-        measureOnViewClicked("user.info_account.clicked", delegate, "sign_up", Immediate)
+        signUpClickedOp.measure()
         onSignUpClicked()
     }
     fun signInClicked() {
-        measureOnViewFocused("user.info_account.clicked", delegate, "sign_in", Immediate)
+        signInClickedOp.measure()
         onSignInClicked()
     }
 
