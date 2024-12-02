@@ -460,7 +460,7 @@ publish-libs:
     ORG_GRADLE_PROJECT_androidDevChannelWebhook: $ANDROID_DEVS_CHANNEL_WEBHOOK
   script:
     - ./gradlew publishToSonatype closeAndReleaseSonatypeStagingRepository
-    - ./gradlew notifyNewRelease
+    # - ./gradlew notifyNewRelease
   rules:
     - if: $CI_COMMIT_BRANCH =~ /^release\/libs\/.*/ # stable release with notification
 
