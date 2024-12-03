@@ -79,6 +79,7 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.util.formatBold
 
 @Composable
 public fun MemberApprovalScreen(
@@ -251,8 +252,7 @@ private fun ConfirmationCodeInputScreen(
 
         Text(
             modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-            text = stringResource(
-                R.string.auth_login_signin_requested_subtitle,
+            text = stringResource(R.string.auth_login_signin_requested_subtitle).formatBold(
                 data.email ?: "..."
             ),
             style = ProtonTypography.Default.defaultSmallWeak

@@ -52,6 +52,7 @@ import me.proton.core.compose.theme.ProtonDimens
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
+import me.proton.core.compose.util.formatBold
 
 @Composable
 public fun WaitingAdminScreen(
@@ -134,8 +135,7 @@ public fun WaitingAdminScaffold(
 
                 Text(
                     modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
-                    text = stringResource(
-                        id = R.string.auth_login_share_confirmation_code_with_admin_subtitle,
+                    text = stringResource(R.string.auth_login_share_confirmation_code_with_admin_subtitle).formatBold(
                         adminEmail ?: "...",
                         username ?: "..."
                     ),
