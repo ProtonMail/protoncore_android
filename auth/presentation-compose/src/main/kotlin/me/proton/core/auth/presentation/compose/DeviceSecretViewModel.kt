@@ -52,6 +52,7 @@ import me.proton.core.auth.domain.usecase.sso.CreateAuthDevice
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.Arg.getUserId
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.ChangePassword
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
+import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceGranted
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceRejected
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Error
 import me.proton.core.auth.presentation.compose.DeviceSecretViewState.FirstLogin
@@ -67,6 +68,7 @@ import me.proton.core.observability.domain.metrics.LoginSsoAssociateDeviceTotal
 import me.proton.core.observability.domain.metrics.LoginSsoCreateDeviceTotal
 import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal
 import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.close
+import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.deviceGranted
 import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.deviceRejected
 import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.error
 import me.proton.core.observability.domain.metrics.LoginSsoDeviceSecretScreenStateTotal.StateId.loading
@@ -109,6 +111,7 @@ public class DeviceSecretViewModel @Inject constructor(
         when (action) {
             is DeviceSecretAction.Close -> onClose()
             is DeviceSecretAction.Load -> onLoad(action.background)
+            is DeviceSecretAction.Continue -> onContinue()
         }
     }.distinctUntilChanged().onEach { state ->
         enqueueScreenState(state)
@@ -121,6 +124,7 @@ public class DeviceSecretViewModel @Inject constructor(
     private fun enqueueScreenState(state: DeviceSecretViewState) = when (state) {
         is Close -> close
         is ChangePassword -> passwordChange
+        is DeviceGranted -> deviceGranted
         is DeviceRejected -> deviceRejected
         is FirstLogin -> passwordSetup
         is InvalidSecret.NoDevice.BackupPassword -> passwordInput
@@ -259,9 +263,20 @@ public class DeviceSecretViewModel @Inject constructor(
             is SetupResult.Error.UnlockPrimaryKeyError -> emit(Error(email = state.value.email, null))
             is SetupResult.Error.UserCheckError -> emit(Error(email = state.value.email, result.error.localizedMessage))
             is SetupResult.Need -> when (result) {
-                is PostLoginAccountSetup.Result.Need.ChangePassword -> emitAll(onChangePassword())
+                is PostLoginAccountSetup.Result.Need.ChangePassword -> emitAll(onDeviceGranted())
                 else -> error("Unexpected state for Global SSO user.")
             }
+        }
+    }
+
+    private fun onDeviceGranted(): Flow<DeviceSecretViewState> = flow {
+        emit(DeviceGranted(email = state.value.email))
+    }
+
+    private fun onContinue(): Flow<DeviceSecretViewState> = flow {
+        when (state.value) {
+            is DeviceGranted -> emitAll(onChangePassword())
+            else -> submit(DeviceSecretAction.Load())
         }
     }
 

@@ -50,12 +50,12 @@ import me.proton.core.compose.theme.ProtonTypography
 import me.proton.core.compose.theme.defaultSmallWeak
 
 @Composable
-public fun RequestAccessDeniedScreen(
+public fun AccessDeniedScreen(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onBackToSignInClicked: () -> Unit = {}
 ) {
-    RequestAccessResultScreen(
+    AccessResultScreen(
         modifier = modifier,
         onClose = onCloseClicked,
         onButtonClicked = onBackToSignInClicked,
@@ -67,12 +67,12 @@ public fun RequestAccessDeniedScreen(
 }
 
 @Composable
-public fun RequestAccessGrantedScreen(
+public fun AccessGrantedScreen(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onContinueClicked: () -> Unit = {}
 ) {
-    RequestAccessResultScreen(
+    AccessResultScreen(
         modifier = modifier,
         onClose = onCloseClicked,
         onButtonClicked = onContinueClicked,
@@ -84,7 +84,7 @@ public fun RequestAccessGrantedScreen(
 }
 
 @Composable
-public fun RequestAccessResultScreen(
+public fun AccessResultScreen(
     modifier: Modifier = Modifier,
     onClose: () -> Unit = {},
     onButtonClicked: () -> Unit = {},
@@ -162,7 +162,7 @@ public fun RequestAccessResultScreen(
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun AccessGrantedScreenPreview() {
     ProtonTheme {
-        RequestAccessGrantedScreen()
+        AccessGrantedScreen()
     }
 }
 
@@ -171,6 +171,6 @@ private fun AccessGrantedScreenPreview() {
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
 private fun AccessDeniedScreenPreview() {
     ProtonTheme {
-        RequestAccessDeniedScreen()
+        AccessDeniedScreen()
     }
 }

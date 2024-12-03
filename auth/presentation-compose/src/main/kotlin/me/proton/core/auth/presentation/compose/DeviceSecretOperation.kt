@@ -25,5 +25,7 @@ public sealed interface DeviceSecretAction : DeviceSecretOperation {
         val background: Boolean = false,
         val unused: Long = System.currentTimeMillis()
     ) : DeviceSecretAction
+
     public data object Close : DeviceSecretAction
+    public data object Continue : DeviceSecretAction
 }

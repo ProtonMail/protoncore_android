@@ -38,16 +38,22 @@ public sealed class DeviceSecretViewState(public open val email: String?) {
     }
 
     /**
-     * When: After Admin approval.
-     * Next: Change password.
-     */
-    public data class ChangePassword(override val email: String?) : DeviceSecretViewState(email)
-
-    /**
      * When: After Member/Admin reject.
-     * Next: Logout.
+     * Next step: Logout.
      */
     public data class DeviceRejected(override val email: String?) : DeviceSecretViewState(email)
+
+    /**
+     * When: After Admin granted.
+     * Next step: Change password.
+     */
+    public data class DeviceGranted(override val email: String?) : DeviceSecretViewState(email)
+
+    /**
+     * When: After Admin approval / DeviceGranted.
+     * Next step: Update password, Logged in.
+     */
+    public data class ChangePassword(override val email: String?) : DeviceSecretViewState(email)
 
     public data class Error(
         override val email: String?,

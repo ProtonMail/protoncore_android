@@ -17,7 +17,7 @@ class AccessResultScreenTest {
     fun `access granted screen`() {
         paparazzi.snapshot {
             ProtonTheme {
-                RequestAccessGrantedScreen()
+                AccessGrantedScreen()
             }
         }
     }
@@ -26,7 +26,7 @@ class AccessResultScreenTest {
     fun `access denied screen`() {
         paparazzi.snapshot {
             ProtonTheme {
-                RequestAccessDeniedScreen()
+                AccessDeniedScreen()
             }
         }
     }

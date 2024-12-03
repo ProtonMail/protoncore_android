@@ -25,7 +25,7 @@ import me.proton.core.observability.domain.entity.SchemaId
 
 @Serializable
 @Schema(description = "Screen state during the SSO device secret flows.")
-@SchemaId("https://proton.me/android_core_auth_sso_deviceSecret_screenState_total_v1.schema.json")
+@SchemaId("https://proton.me/android_core_auth_sso_deviceSecret_screenState_total_v2.schema.json")
 public data class LoginSsoDeviceSecretScreenStateTotal(
     override val Labels: LabelsData,
     @Required override val Value: Long = 1
@@ -47,6 +47,7 @@ public data class LoginSsoDeviceSecretScreenStateTotal(
         waitingAdmin,
         waitingMember,
         deviceRejected,
+        deviceGranted,
         close,
         error,
         loading,

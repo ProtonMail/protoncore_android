@@ -56,11 +56,11 @@ import me.proton.core.compose.theme.ProtonTypography
 
 @Composable
 public fun BackupPasswordChangeScreen(
-    onCloseClicked: () -> Unit,
-    onCloseMessage: (String?) -> Unit,
-    onErrorMessage: (String?) -> Unit,
-    onSuccess: () -> Unit,
     modifier: Modifier = Modifier,
+    onCloseClicked: () -> Unit = {},
+    onCloseMessage: (String?) -> Unit = {},
+    onErrorMessage: (String?) -> Unit = {},
+    onSuccess: () -> Unit = {},
     viewModel: BackupPasswordChangeViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()

@@ -52,18 +52,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.collectLatest
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.ChangePassword
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Close
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.DeviceRejected
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Error
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.FirstLogin
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.InvalidSecret
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Loading
-import me.proton.core.auth.presentation.compose.DeviceSecretViewState.Success
+import me.proton.core.auth.presentation.compose.DeviceSecretViewState.*
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordChangeScreen
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.sso.BackupPasswordSetupScreen
-import me.proton.core.auth.presentation.compose.sso.RequestAccessDeniedScreen
+import me.proton.core.auth.presentation.compose.sso.AccessDeniedScreen
+import me.proton.core.auth.presentation.compose.sso.AccessGrantedScreen
 import me.proton.core.auth.presentation.compose.sso.RequestAdminHelpScreen
 import me.proton.core.auth.presentation.compose.sso.WaitingAdminScreen
 import me.proton.core.auth.presentation.compose.sso.WaitingMemberScreen
@@ -87,8 +81,8 @@ public fun DeviceSecretScreen(
     onSuccess: (userId: UserId) -> Unit = {},
     onCloseMessage: (String?) -> Unit = {},
     onErrorMessage: (String?) -> Unit = {},
-    onNavigateToBackupPasswordInput: () -> Unit = {},
     onNavigateToRequestAdminHelp: () -> Unit = {},
+    onNavigateToBackupPasswordInput: () -> Unit = {},
     externalAction: SharedFlow<DeviceSecretAction> = MutableSharedFlow(),
     viewModel: DeviceSecretViewModel = hiltViewModel()
 ) {
@@ -104,6 +98,7 @@ public fun DeviceSecretScreen(
         onSuccess = onSuccess,
         onReloadState = { viewModel.submit(DeviceSecretAction.Load()) },
         onCloseClicked = { viewModel.submit(DeviceSecretAction.Close) },
+        onContinueClicked = { viewModel.submit(DeviceSecretAction.Continue) },
         onNavigateToRequestAdminHelp = onNavigateToRequestAdminHelp,
         onNavigateToBackupPasswordInput = onNavigateToBackupPasswordInput,
         state = state
@@ -119,6 +114,7 @@ public fun DeviceSecretScreen(
     onErrorMessage: (String?) -> Unit = {},
     onReloadState: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
+    onContinueClicked: () -> Unit = {},
     onNavigateToRequestAdminHelp: () -> Unit = {},
     onNavigateToBackupPasswordInput: () -> Unit = {},
     state: DeviceSecretViewState
@@ -180,10 +176,16 @@ public fun DeviceSecretScreen(
             onSuccess = onReloadState,
         )
 
-        is DeviceRejected -> RequestAccessDeniedScreen(
+        is DeviceRejected -> AccessDeniedScreen(
             modifier = modifier,
             onCloseClicked = onCloseClicked,
             onBackToSignInClicked = onCloseClicked
+        )
+
+        is DeviceGranted -> AccessGrantedScreen(
+            modifier = modifier,
+            onCloseClicked = onContinueClicked,
+            onContinueClicked = onContinueClicked
         )
 
         is ChangePassword -> BackupPasswordChangeScreen(
