@@ -23,7 +23,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ExperimentalMaterialApi
@@ -35,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import me.proton.core.auth.domain.entity.AuthDeviceId
 import me.proton.core.auth.domain.entity.AuthDevicePlatform
 import me.proton.core.auth.presentation.compose.R
@@ -78,8 +78,7 @@ internal fun AuthDeviceLazyColumn(
         } else if (devices.isEmpty()) {
             item {
                 Text(
-                    modifier = Modifier
-                        .padding(top = ProtonDimens.MediumSpacing),
+                    modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
                     text = stringResource(id = R.string.auth_login_no_devices_available),
                     style = ProtonTypography.Default.defaultSmallWeak
                 )
@@ -108,49 +107,65 @@ internal fun AuthDeviceListItem(
     lastActivityVisible: Boolean = true,
     trailing: @Composable (() -> Unit)? = null,
 ) {
-    ListItem(
-        modifier = modifier,
-        icon = {
-            if (iconVisible) {
-                Icon(
-                    modifier = Modifier.size(ProtonDimens.DefaultIconSize),
-                    painter = when (device?.platform) {
-                        null,
-                        AuthDevicePlatform.Android,
-                        AuthDevicePlatform.IOS -> painterResource(id = R.drawable.ic_proton_mobile)
-
-                        else -> painterResource(id = R.drawable.ic_proton_tv)
-                    },
-                    contentDescription = null
-                )
-            }
-        },
-        text = {
-            if (nameVisible) {
-                Text(
-                    text = device?.name ?: "",
-                    style = ProtonTypography.Default.defaultNorm
-                )
-            }
-        },
-        secondaryText = {
-            Column {
-                if (clientNameVisible) {
-                    Text(
-                        text = device?.localizedClientName ?: "",
-                        style = ProtonTypography.Default.defaultSmallWeak
-                    )
-                }
-                if (lastActivityVisible) {
-                    Text(
-                        text = device?.lastActivityReadable ?: stringResource(R.string.auth_login_not_available),
-                        style = ProtonTypography.Default.defaultSmallWeak
-                    )
-                }
-            }
-        },
-        trailing = { trailing?.invoke() }
+    @Composable
+    fun icon() = Icon(
+        modifier = Modifier.padding(start = 8.dp, end = 8.dp),
+        contentDescription = null,
+        painter = when (device?.platform) {
+            null,
+            AuthDevicePlatform.Android,
+            AuthDevicePlatform.IOS -> painterResource(R.drawable.ic_proton_mobile)
+            else -> painterResource(R.drawable.ic_proton_tv)
+        }
     )
+
+    @Composable
+    fun primaryText() = Text(
+        text = device?.name ?: "",
+        style = ProtonTypography.Default.defaultNorm
+    )
+
+    @Composable
+    fun secondaryText() =Text(
+        text = device?.localizedClientName ?: "",
+        style = ProtonTypography.Default.defaultSmallWeak
+    )
+
+    @Composable
+    fun tertiaryText() = Text(
+        text = device?.lastActivityReadable ?: stringResource(R.string.auth_login_not_available),
+        style = ProtonTypography.Default.defaultSmallWeak
+    )
+
+    when {
+        clientNameVisible && lastActivityVisible -> ListItem(
+            modifier = modifier,
+            icon = { if (iconVisible) { icon() } },
+            text = { if (nameVisible) { primaryText() } },
+            secondaryText = { Column { secondaryText(); tertiaryText() } },
+            trailing = { trailing?.invoke() }
+        )
+        clientNameVisible -> ListItem(
+            modifier = modifier,
+            icon = { if (iconVisible) { icon() } },
+            text = { if (nameVisible) { primaryText() } },
+            secondaryText = { secondaryText() },
+            trailing = { trailing?.invoke() }
+        )
+        lastActivityVisible -> ListItem(
+            modifier = modifier,
+            icon = { if (iconVisible) { icon() } },
+            text = { if (nameVisible) { primaryText() } },
+            secondaryText = { tertiaryText() },
+            trailing = { trailing?.invoke() }
+        )
+        else -> ListItem(
+            modifier = modifier,
+            icon = { if (iconVisible) { icon() } },
+            text = { if (nameVisible) { primaryText() } },
+            trailing = { trailing?.invoke() }
+        )
+    }
 }
 
 @Composable
@@ -201,6 +216,46 @@ public fun AvailableDeviceListItemPreview() {
     ProtonTheme {
         AuthDeviceListItem(
             modifier = Modifier.padding(ProtonDimens.SmallSpacing),
+            device = AuthDeviceData(
+                deviceId = AuthDeviceId(""),
+                name = "Google Pixel 8",
+                localizedClientName = "Proton Pass for Android",
+                platform = AuthDevicePlatform.Android,
+                lastActivityTime = 0,
+                lastActivityReadable = "Last used 24 minutes ago"
+            )
+        )
+    }
+}
+
+@Preview(name = "Light mode", showBackground = true)
+@Composable
+public fun AvailableDeviceOneLineListItemPreview() {
+    ProtonTheme {
+        AuthDeviceListItem(
+            modifier = Modifier.padding(ProtonDimens.SmallSpacing),
+            clientNameVisible = false,
+            lastActivityVisible = false,
+            device = AuthDeviceData(
+                deviceId = AuthDeviceId(""),
+                name = "Google Pixel 8",
+                localizedClientName = "Proton Pass for Android",
+                platform = AuthDevicePlatform.Android,
+                lastActivityTime = 0,
+                lastActivityReadable = "Last used 24 minutes ago"
+            )
+        )
+    }
+}
+
+@Preview(name = "Light mode", showBackground = true)
+@Composable
+public fun AvailableDeviceTwoLineListItemPreview() {
+    ProtonTheme {
+        AuthDeviceListItem(
+            modifier = Modifier.padding(ProtonDimens.SmallSpacing),
+            clientNameVisible = true,
+            lastActivityVisible = false,
             device = AuthDeviceData(
                 deviceId = AuthDeviceId(""),
                 name = "Google Pixel 8",
