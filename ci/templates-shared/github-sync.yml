@@ -24,7 +24,7 @@
         echo "ERROR: OAUTH_URL is not set. Please provide a valid URL as an environment variable."
         exit 1
       fi
-    - git fetch origin ${RELEASE_SYNC_FROM_BRANCH}
+    - git fetch origin ${RELEASE_SYNC_FROM_BRANCH} --unshallow
     - git checkout ${RELEASE_SYNC_FROM_BRANCH}
     # Add GitHub as a remote
     - git remote add github ${OAUTH_URL}
