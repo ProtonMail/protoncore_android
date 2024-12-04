@@ -26,6 +26,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import me.proton.core.account.domain.entity.AccountType
+import me.proton.core.compose.theme.AppTheme
+import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.AppStore
 import me.proton.core.domain.entity.Product
 import javax.inject.Singleton
@@ -44,6 +46,14 @@ object ApplicationModule {
     @Provides
     @Singleton
     fun provideRequiredAccountType(): AccountType = AccountType.Internal
+}
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppThemeModule {
+
+    @Provides
+    fun provideAppTheme() = AppTheme { content -> ProtonTheme { content() } }
 }
 
 @Module

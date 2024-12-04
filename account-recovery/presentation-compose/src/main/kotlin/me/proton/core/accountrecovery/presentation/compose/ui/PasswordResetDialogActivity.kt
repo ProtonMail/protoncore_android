@@ -27,16 +27,20 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
-import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.network.presentation.util.getUserMessage
+import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.presentation.utils.successToast
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class PasswordResetDialogActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     private val input: AccountRecoveryDialogInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -48,7 +52,7 @@ class PasswordResetDialogActivity : ProtonActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            ProtonTheme {
+            appTheme {
                 NavHost(
                     navController = rememberNavController(),
                     startDestination = Route.Reset.Deeplink

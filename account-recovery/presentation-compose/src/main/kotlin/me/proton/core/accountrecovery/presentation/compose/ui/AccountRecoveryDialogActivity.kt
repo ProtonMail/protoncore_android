@@ -28,16 +28,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.accountmanager.presentation.AccountManagerOrchestrator
 import me.proton.core.accountrecovery.presentation.compose.R
 import me.proton.core.accountrecovery.presentation.compose.entity.AccountRecoveryDialogInput
-import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.domain.entity.UserId
-import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
 import me.proton.core.network.presentation.util.getUserMessage
+import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.successToast
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class AccountRecoveryDialogActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     @Inject
     lateinit var accountManagerOrchestrator: AccountManagerOrchestrator
@@ -58,7 +61,7 @@ class AccountRecoveryDialogActivity : ProtonActivity() {
         accountManagerOrchestrator.register(this)
 
         setContent {
-            ProtonTheme {
+            appTheme {
                 NavHost(
                     navController = rememberNavController(),
                     startDestination = Route.Recovery.Deeplink

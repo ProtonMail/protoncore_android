@@ -23,17 +23,23 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import dagger.hilt.android.AndroidEntryPoint
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.openBrowserLink
 import me.proton.core.usersettings.presentation.compose.R
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SecurityKeysActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProtonTheme {
+            appTheme {
                 SecurityKeysScreen(
                     onAddSecurityKeyClicked = {
                         openBrowserLink(getString(R.string.add_security_key_link))

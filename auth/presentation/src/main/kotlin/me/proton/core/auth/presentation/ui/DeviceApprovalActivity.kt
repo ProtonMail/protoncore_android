@@ -28,13 +28,18 @@ import dagger.hilt.android.AndroidEntryPoint
 import me.proton.core.auth.presentation.R
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.Route
 import me.proton.core.auth.presentation.compose.DeviceApprovalRoutes.addMemberApprovalScreen
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.errorToast
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeviceApprovalActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     private val memberUserId: UserId?
         get() = intent.getStringExtra(KEY_MEMBER_USER_ID)?.let { UserId(it) }
@@ -46,7 +51,7 @@ class DeviceApprovalActivity : ProtonActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            ProtonTheme {
+            appTheme {
                 NavHost(
                     navController = rememberNavController(),
                     startDestination = getStartDestination()

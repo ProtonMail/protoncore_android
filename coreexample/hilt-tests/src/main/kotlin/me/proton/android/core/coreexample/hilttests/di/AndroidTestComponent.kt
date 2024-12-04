@@ -53,6 +53,7 @@ import kotlin.time.toJavaDuration
     ]
 )
 object AndroidTestComponent {
+
     @Provides
     @Singleton
     fun provideIsAccountRecoveryEnabled(): IsAccountRecoveryEnabled = mockk(relaxed = true)

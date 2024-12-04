@@ -27,12 +27,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.parcelize.Parcelize
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.compose.theme.ProtonTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeviceRecoveryDialogActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     private val input: DeviceRecoveryDialogInput by lazy {
         requireNotNull(intent?.extras?.getParcelable(ARG_INPUT))
@@ -43,7 +48,7 @@ class DeviceRecoveryDialogActivity : ProtonActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProtonTheme {
+            appTheme {
                 NavHost(
                     navController = rememberNavController(),
                     startDestination = DeviceRecoveryDeeplink.Recovery.Deeplink

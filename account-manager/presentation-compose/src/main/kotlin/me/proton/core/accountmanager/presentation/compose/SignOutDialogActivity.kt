@@ -29,13 +29,16 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import me.proton.core.accountmanager.domain.AccountManager
 import me.proton.core.accountmanager.presentation.compose.entity.SignOutDialogInput
-import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class SignOutDialogActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     @Inject
     lateinit var accountManager: AccountManager
@@ -53,7 +56,7 @@ class SignOutDialogActivity : ProtonActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ProtonTheme {
+            appTheme {
                 SignOutDialog(
                     onDismiss = { finish() },
                     onDisableAccount = { onDisableAccount() },

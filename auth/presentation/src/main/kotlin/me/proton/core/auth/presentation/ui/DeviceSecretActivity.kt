@@ -35,14 +35,18 @@ import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addRequestAdm
 import me.proton.core.auth.presentation.entity.DeviceSecretResult
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addBackupPasswordInputScreen
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes.addMainScreen
-import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.presentation.ui.ProtonActivity
 import me.proton.core.presentation.utils.addOnBackPressedCallback
 import me.proton.core.presentation.utils.errorToast
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DeviceSecretActivity : ProtonActivity() {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     private val userId: UserId by lazy {
         UserId(requireNotNull(intent.getStringExtra(ARG_INPUT)))
@@ -60,7 +64,7 @@ class DeviceSecretActivity : ProtonActivity() {
         addOnBackPressedCallback { emitAction(DeviceSecretAction.Close) }
 
         setContent {
-            ProtonTheme {
+            appTheme {
                 val navController = rememberNavController()
                 NavHost(
                     navController = navController,

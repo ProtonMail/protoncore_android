@@ -44,7 +44,7 @@ import me.proton.core.auth.presentation.compose.LoginRoutes.addLoginInputPasswor
 import me.proton.core.auth.presentation.compose.LoginRoutes.addLoginInputUsernameScreen
 import me.proton.core.auth.presentation.entity.LoginInput
 import me.proton.core.auth.presentation.entity.LoginResult
-import me.proton.core.compose.theme.ProtonTheme
+import me.proton.core.compose.theme.AppTheme
 import me.proton.core.domain.entity.UserId
 import me.proton.core.network.data.di.BaseProtonApiUrl
 import me.proton.core.network.domain.client.ExtraHeaderProvider
@@ -68,6 +68,9 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOwner {
+
+    @Inject
+    lateinit var appTheme: AppTheme
 
     @Inject
     @BaseProtonApiUrl
@@ -150,7 +153,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
         addOnBackPressedCallback { onClose() }
 
         setContent {
-            ProtonTheme {
+            appTheme {
                 val navController = rememberNavController()
                 CompositionLocalProvider(LocalProductMetricsDelegateOwner provides this@LoginTwoStepActivity) {
                     NavHost(
