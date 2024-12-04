@@ -26,6 +26,65 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 
+/**
+ * App Theme to provide for wrapping Compose screen.
+ *
+ * [AppTheme] should use [ProtonTheme] or [ProtonTheme3] for compatibility and consistency reasons.
+ *
+ * Example of usage:
+ * ```kotlin
+ * @Provides
+ * fun provideAppTheme() = AppTheme { content ->
+ *     MyAppTheme { content() }
+ * }
+ * ...
+ * @Composable
+ * fun MyAppTheme(
+ *     isDark: Boolean = isNightMode(),
+ *     colors: ProtonColors = if (isDark) ProtonColors.Dark else ProtonColors.Light,
+ *     typography: ProtonTypography = ProtonTypography.Default,
+ *     shapes: ProtonShapes = ProtonShapes(),
+ *     content: @Composable () -> Unit
+ * ) {
+ *     ProtonTheme(
+ *         isDark = isDark,
+ *         colors = colors.copy(
+ *             brandNorm = Color(0xFF5252CC),
+ *             interactionNorm = Color(0xFF8A6EFF),
+ *         ),
+ *         typography = ProtonTypography.Default.copy(
+ *             hero = typography.hero.copy(fontSize = 30.sp),
+ *         ),
+ *         shapes = shapes.copy(
+ *             small = RoundedCornerShape(Radius.small + Radius.small),
+ *             medium = RoundedCornerShape(Radius.medium + Radius.small),
+ *             large = RoundedCornerShape(Radius.large + Radius.small),
+ *         ),
+ *         content = content
+ *     )
+ * }
+ * ...
+ * @AndroidEntryPoint
+ * class MyActivity : ProtonActivity() {
+ *     ...
+ *     @Inject lateinit var appTheme: AppTheme
+ *     ...
+ *     override fun onCreate(savedInstanceState: Bundle?) {
+ *         super.onCreate(savedInstanceState)
+ *         ...
+ *         setContent {
+ *             appTheme {
+ *                 ...
+ *             }
+ *         }
+ *     }
+ * }
+ * ````
+ */
+fun interface AppTheme {
+    @Composable
+    operator fun invoke(content: @Composable () -> Unit)
+}
 
 @Composable
 fun ProtonTheme3(
