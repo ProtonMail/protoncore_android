@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -109,6 +110,7 @@ private fun ConfirmationCodeDigit(
         modifier = Modifier
             .padding(ProtonDimens.ExtraSmallSpacing)
             .size(height = 52.dp, width = 41.dp),
+        shape = ProtonTheme.shapes.small,
         backgroundColor = ProtonTheme.colors.backgroundSecondary,
         contentColor = ProtonTheme.colors.textNorm,
         elevation = 0.dp
