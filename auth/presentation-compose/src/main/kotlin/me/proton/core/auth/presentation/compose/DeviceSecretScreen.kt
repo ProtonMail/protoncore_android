@@ -269,6 +269,7 @@ public fun DeviceSecretScaffold(
                 )
                 Card(
                     modifier = Modifier.padding(top = ProtonDimens.MediumSpacing),
+                    shape = ProtonTheme.shapes.small,
                     backgroundColor = Color.Transparent,
                     contentColor = ProtonTheme.colors.textNorm,
                     border = BorderStroke(1.dp, ProtonTheme.colors.separatorNorm),
