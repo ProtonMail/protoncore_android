@@ -26,6 +26,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Icon
@@ -118,7 +119,7 @@ public fun AccessResultScreen(
             Column(modifier = Modifier.padding(ProtonDimens.DefaultSpacing)) {
                 Image(
                     modifier = Modifier
-                        .height(64.dp)
+                        .size(80.dp)
                         .align(Alignment.CenterHorizontally),
                     painter = painterResource(icon),
                     contentDescription = null,

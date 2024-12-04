@@ -84,9 +84,9 @@
     <string name="backup_password_no_key_salts">No Key Salts.</string>
 
     <string name="auth_login_back_to_sign_in">Back to sign-in</string>
-    <string name="auth_login_access_denied">Access Denied</string>
+    <string name="auth_login_access_denied">Access denied</string>
     <string name="auth_login_access_denied_contact_admin">Contact your administrator if the problem persists.</string>
-    <string name="auth_login_access_granted">Access Granted</string>
+    <string name="auth_login_access_granted">Access granted</string>
     <string name="auth_login_access_granted_info">For your security, you have been signed out of all your other active devices. Before accessing your account, you’ll need to enter a new backup password.</string>
 
     <string name="auth_login_ask_admin_for_access">Ask your administrator for access?</string>
