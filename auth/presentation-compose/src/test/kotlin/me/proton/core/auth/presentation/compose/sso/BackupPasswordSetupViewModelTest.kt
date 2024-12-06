@@ -21,6 +21,8 @@ package me.proton.core.auth.presentation.compose.sso
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
 import io.mockk.MockKAnnotations
+import io.mockk.coEvery
+import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import me.proton.core.auth.domain.repository.DeviceSecretRepository
 import me.proton.core.auth.domain.usecase.SetupPrimaryKeys
@@ -28,6 +30,7 @@ import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.auth.presentation.compose.DeviceSecretRoutes
 import me.proton.core.crypto.common.context.CryptoContext
 import me.proton.core.observability.domain.ObservabilityManager
+import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.test.kotlin.CoroutinesTest
 import me.proton.core.usersettings.domain.repository.OrganizationRepository
 import kotlin.test.BeforeTest
@@ -38,6 +41,9 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
 
     @MockK
     private lateinit var context: CryptoContext
+
+    @MockK
+    private lateinit var invalidPasswordProvider: InvalidPasswordProvider
 
     @MockK
     private lateinit var observabilityManager: ObservabilityManager
@@ -59,9 +65,14 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
     @BeforeTest
     fun setUp() {
         MockKAnnotations.init(this)
+
+        coEvery { invalidPasswordProvider.init() } returns Unit
+        every { invalidPasswordProvider.isPasswordCommon(any()) } returns false
+
         tested = BackupPasswordSetupViewModel(
             savedStateHandle = SavedStateHandle(mapOf(DeviceSecretRoutes.Arg.KEY_USER_ID to "user-id")),
             context = context,
+            invalidPasswordProvider = invalidPasswordProvider,
             deviceSecretRepository = deviceSecretRepository,
             verifyUnprivatization = verifyUnprivatization,
             setupPrimaryKeys = setupPrimaryKeys,
@@ -84,6 +95,28 @@ class BackupPasswordSetupViewModelTest : CoroutinesTest by CoroutinesTest() {
                 expected = BackupPasswordSetupState.FormError(
                     data = BackupPasswordSetupData(),
                     cause = PasswordFormError.PasswordTooShort
+                ),
+                actual = awaitItem()
+            )
+        }
+    }
+
+    @Test
+    fun `password too common`() = coroutinesTest {
+        every { invalidPasswordProvider.isPasswordCommon(any()) } returns true
+
+        tested.state.test {
+            assertEquals(BackupPasswordSetupState.Idle(BackupPasswordSetupData()), awaitItem())
+
+            // WHEN
+            tested.submit(BackupPasswordSetupAction.SetPassword("12345678", "12345678")).join()
+
+            // THEN
+            assertEquals(BackupPasswordSetupState.Loading(BackupPasswordSetupData()), awaitItem())
+            assertEquals(
+                expected = BackupPasswordSetupState.FormError(
+                    data = BackupPasswordSetupData(),
+                    cause = PasswordFormError.PasswordTooCommon
                 ),
                 actual = awaitItem()
             )

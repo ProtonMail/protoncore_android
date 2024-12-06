@@ -81,6 +81,24 @@ class BackupPasswordSetupScreenTest {
     }
 
     @Test
+    fun `passwords too common`() {
+        paparazzi.snapshot {
+            ProtonTheme {
+                BackupPasswordSetupScreen(
+                    state = FormError(
+                        data = BackupPasswordSetupData(
+                            organizationAdminEmail = "admin@example.test",
+                            organizationIcon = null,
+                            organizationName = "Example Organization",
+                        ),
+                        cause = PasswordFormError.PasswordTooCommon
+                    )
+                )
+            }
+        }
+    }
+
+    @Test
     fun `passwords do not match`() {
         paparazzi.snapshot {
             ProtonTheme {

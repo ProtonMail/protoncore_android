@@ -46,6 +46,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import me.proton.core.auth.presentation.compose.R
+import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordTooCommon
+import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordTooShort
+import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordsDoNotMatch
 import me.proton.core.compose.component.ProtonPasswordOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -97,8 +100,7 @@ public fun BackupPasswordChangeScreen(
         modifier = modifier,
         onCloseClicked = onCloseClicked,
         onContinueClicked = onContinueClicked,
-        isPasswordTooShort = state.isPasswordTooShort(),
-        arePasswordsNotMatching = state.arePasswordsNotMatching(),
+        formError = (state as? BackupPasswordChangeState.FormError)?.cause,
         isLoading = state is BackupPasswordChangeState.Loading
     )
 }
@@ -108,8 +110,7 @@ public fun BackupPasswordChangeScaffold(
     modifier: Modifier = Modifier,
     onCloseClicked: () -> Unit = {},
     onContinueClicked: (BackupPasswordChangeAction.ChangePassword) -> Unit = {},
-    isPasswordTooShort: Boolean = false,
-    arePasswordsNotMatching: Boolean = false,
+    formError: PasswordFormError? = null,
     isLoading: Boolean = false,
 ) {
     Scaffold(
@@ -138,12 +139,16 @@ public fun BackupPasswordChangeScaffold(
                     .padding(ProtonDimens.DefaultSpacing),
             ) {
 
-                val errorTooShort = stringResource(R.string.backup_password_setup_password_too_short)
-                val errorNotMatch = stringResource(R.string.backup_password_setup_password_not_matching)
+                val error = when (formError) {
+                    null -> null
+                    PasswordTooShort -> stringResource(R.string.backup_password_setup_password_too_short)
+                    PasswordTooCommon -> stringResource(R.string.backup_password_setup_password_too_common)
+                    PasswordsDoNotMatch -> stringResource(R.string.backup_password_setup_password_not_matching)
+                }
 
                 BackupPasswordChangeForm(
-                    backupPasswordError = errorTooShort.takeIf { isPasswordTooShort },
-                    backupPasswordRepeatedError = errorNotMatch.takeIf { arePasswordsNotMatching },
+                    backupPasswordError = error,
+                    backupPasswordRepeatedError = error?.takeIf { formError is PasswordsDoNotMatch },
                     onContinueClicked = onContinueClicked,
                     isLoading = isLoading,
                 )

@@ -56,11 +56,11 @@ import me.proton.core.observability.domain.metrics.LoginSsoLoadOrganizationTotal
 import me.proton.core.observability.domain.metrics.LoginSsoSetupPrimaryKeysTotal
 import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal
 import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus
-import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failure
 import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failurePublicAddressKeysError
 import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failureUnprivatizeStateError
 import me.proton.core.observability.domain.metrics.LoginSsoVerifyUnprivatizationTotal.VerifyStatus.failureVerificationError
 import me.proton.core.presentation.utils.InputValidationResult
+import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -73,12 +73,17 @@ import javax.inject.Inject
 public class BackupPasswordSetupViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val context: CryptoContext,
+    private val invalidPasswordProvider: InvalidPasswordProvider,
     private val deviceSecretRepository: DeviceSecretRepository,
     private val verifyUnprivatization: VerifyUnprivatization,
     private val setupPrimaryKeys: SetupPrimaryKeys,
     private val organizationRepository: OrganizationRepository,
     override val observabilityManager: ObservabilityManager,
 ) : ViewModel(), ObservabilityContext {
+
+    init {
+        viewModelScope.launch { invalidPasswordProvider.init() }
+    }
 
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
@@ -155,14 +160,22 @@ public class BackupPasswordSetupViewModel @Inject constructor(
         }.onSuccess {
             InputValidationResult(
                 text = action.backupPassword,
-                validationType = ValidationType.PasswordMatch,
-                additionalText = action.repeatBackupPassword
+                validationType = ValidationType.InvalidPassword,
+                provider = invalidPasswordProvider
             ).onFailure {
-                emit(FormError(state.value.data, PasswordFormError.PasswordsDoNotMatch))
+                emit(FormError(state.value.data, PasswordFormError.PasswordTooCommon))
             }.onSuccess {
-                when (val organizationPublicKey = state.value.data.organizationPublicKey) {
-                    null -> emit(Error(state.value.data, null))
-                    else -> emitAll(onSetupPrimaryKeys(action.backupPassword, organizationPublicKey))
+                InputValidationResult(
+                    text = action.backupPassword,
+                    validationType = ValidationType.PasswordMatch,
+                    additionalText = action.repeatBackupPassword
+                ).onFailure {
+                    emit(FormError(state.value.data, PasswordFormError.PasswordsDoNotMatch))
+                }.onSuccess {
+                    when (val organizationPublicKey = state.value.data.organizationPublicKey) {
+                        null -> emit(Error(state.value.data, null))
+                        else -> emitAll(onSetupPrimaryKeys(action.backupPassword, organizationPublicKey))
+                    }
                 }
             }
         }

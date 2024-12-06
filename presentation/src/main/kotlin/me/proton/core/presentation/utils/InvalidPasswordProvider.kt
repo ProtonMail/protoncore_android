@@ -19,10 +19,16 @@
 package me.proton.core.presentation.utils
 
 import android.content.Context
+import dagger.Reusable
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class InvalidPasswordProvider(private val context: Context) {
+@Reusable
+class InvalidPasswordProvider @Inject constructor(
+    @ApplicationContext private val context: Context
+) {
 
     private var commonPasswords: Set<String>? = null
 

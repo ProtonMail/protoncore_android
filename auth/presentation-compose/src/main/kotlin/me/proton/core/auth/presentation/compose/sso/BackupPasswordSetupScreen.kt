@@ -55,6 +55,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import me.proton.core.auth.presentation.compose.R
+import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordTooCommon
+import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordTooShort
+import me.proton.core.auth.presentation.compose.sso.PasswordFormError.PasswordsDoNotMatch
 import me.proton.core.compose.component.ProtonPasswordOutlinedTextFieldWithError
 import me.proton.core.compose.component.ProtonSolidButton
 import me.proton.core.compose.component.appbar.ProtonTopAppBar
@@ -110,8 +113,7 @@ public fun BackupPasswordSetupScreen(
         organizationAdminEmail = state.data.organizationAdminEmail,
         organizationIcon = state.data.organizationIcon,
         organizationName = state.data.organizationName,
-        isPasswordTooShort = state.isPasswordTooShort(),
-        arePasswordsNotMatching = state.arePasswordsNotMatching(),
+        formError = (state as? BackupPasswordSetupState.FormError)?.cause,
         isLoading = state is BackupPasswordSetupState.Loading
     )
 }
@@ -124,8 +126,7 @@ public fun BackupPasswordSetupScaffold(
     organizationAdminEmail: String? = null,
     organizationIcon: Any? = null,
     organizationName: String? = null,
-    isPasswordTooShort: Boolean = false,
-    arePasswordsNotMatching: Boolean = false,
+    formError: PasswordFormError? = null,
     isLoading: Boolean = false,
 ) {
     Scaffold(
@@ -163,12 +164,16 @@ public fun BackupPasswordSetupScaffold(
                     color = LocalColors.current.separatorNorm
                 )
 
-                val errorTooShort = stringResource(R.string.backup_password_setup_password_too_short)
-                val errorNotMatch = stringResource(R.string.backup_password_setup_password_not_matching)
+                val error = when (formError) {
+                    null -> null
+                    PasswordTooShort -> stringResource(R.string.backup_password_setup_password_too_short)
+                    PasswordTooCommon -> stringResource(R.string.backup_password_setup_password_too_common)
+                    PasswordsDoNotMatch -> stringResource(R.string.backup_password_setup_password_not_matching)
+                }
 
                 BackupPasswordSetupForm(
-                    backupPasswordError = errorTooShort.takeIf { isPasswordTooShort },
-                    backupPasswordRepeatedError = errorNotMatch.takeIf { arePasswordsNotMatching },
+                    backupPasswordError = error,
+                    backupPasswordRepeatedError = error?.takeIf { formError is PasswordsDoNotMatch },
                     onContinueClicked = onContinueClicked,
                     isLoading = isLoading,
                     modifier = Modifier
@@ -289,7 +294,6 @@ private fun BackupPasswordSetupForm(
 
 @Preview
 @Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
-@Preview(device = Devices.TABLET)
 @Composable
 private fun BackupPasswordSetupScreenPreview() {
     ProtonTheme {
@@ -299,6 +303,23 @@ private fun BackupPasswordSetupScreenPreview() {
                     organizationAdminEmail = "admin@company.test",
                     organizationName = "The Company",
                 )
+            )
+        )
+    }
+}
+
+@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES)
+@Composable
+private fun BackupPasswordSetupScreenFormErrorPreview() {
+    ProtonTheme {
+        BackupPasswordSetupScreen(
+            state = BackupPasswordSetupState.FormError(
+                data = BackupPasswordSetupData(
+                    organizationAdminEmail = "admin@company.test",
+                    organizationName = "The Company",
+                ),
+                cause = PasswordsDoNotMatch
             )
         )
     }

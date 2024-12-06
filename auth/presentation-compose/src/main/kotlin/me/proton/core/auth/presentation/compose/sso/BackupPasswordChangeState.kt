@@ -29,12 +29,3 @@ public sealed interface BackupPasswordChangeState {
 
     public data object Success : BackupPasswordChangeState
 }
-
-internal fun BackupPasswordChangeState.formErrorOrNull(): PasswordFormError? =
-    (this as? BackupPasswordChangeState.FormError)?.cause
-
-internal fun BackupPasswordChangeState.isPasswordTooShort(): Boolean =
-    formErrorOrNull() == PasswordFormError.PasswordTooShort
-
-internal fun BackupPasswordChangeState.arePasswordsNotMatching(): Boolean =
-    formErrorOrNull() == PasswordFormError.PasswordsDoNotMatch

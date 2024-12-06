@@ -50,6 +50,7 @@ import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
 import me.proton.core.observability.domain.metrics.LoginSsoChangePasswordTotal
 import me.proton.core.presentation.utils.InputValidationResult
+import me.proton.core.presentation.utils.InvalidPasswordProvider
 import me.proton.core.presentation.utils.ValidationType
 import me.proton.core.presentation.utils.onFailure
 import me.proton.core.presentation.utils.onSuccess
@@ -62,9 +63,14 @@ import javax.inject.Inject
 public class BackupPasswordChangeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val context: CryptoContext,
+    private val invalidPasswordProvider: InvalidPasswordProvider,
     private val changeBackupPassword: ChangeBackupPassword,
     override val observabilityManager: ObservabilityManager
 ) : ViewModel(), ObservabilityContext {
+
+    init {
+        viewModelScope.launch { invalidPasswordProvider.init() }
+    }
 
     private val userId: UserId by lazy { savedStateHandle.getUserId() }
 
@@ -91,12 +97,20 @@ public class BackupPasswordChangeViewModel @Inject constructor(
         }.onSuccess {
             InputValidationResult(
                 text = action.backupPassword,
-                validationType = ValidationType.PasswordMatch,
-                additionalText = action.repeatBackupPassword
+                validationType = ValidationType.InvalidPassword,
+                provider = invalidPasswordProvider
             ).onFailure {
-                emit(FormError(PasswordFormError.PasswordsDoNotMatch))
+                emit(FormError(PasswordFormError.PasswordTooCommon))
             }.onSuccess {
-                emitAll(onChangeBackupPassword(action.backupPassword))
+                InputValidationResult(
+                    text = action.backupPassword,
+                    validationType = ValidationType.PasswordMatch,
+                    additionalText = action.repeatBackupPassword
+                ).onFailure {
+                    emit(FormError(PasswordFormError.PasswordsDoNotMatch))
+                }.onSuccess {
+                    emitAll(onChangeBackupPassword(action.backupPassword))
+                }
             }
         }
     }

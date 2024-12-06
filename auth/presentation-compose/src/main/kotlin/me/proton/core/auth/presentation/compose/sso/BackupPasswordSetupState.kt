@@ -43,12 +43,3 @@ public sealed class BackupPasswordSetupState(
         override val data: BackupPasswordSetupData
     ) : BackupPasswordSetupState(data)
 }
-
-internal fun BackupPasswordSetupState.formErrorOrNull(): PasswordFormError? =
-    (this as? BackupPasswordSetupState.FormError)?.cause
-
-internal fun BackupPasswordSetupState.isPasswordTooShort(): Boolean =
-    formErrorOrNull() == PasswordFormError.PasswordTooShort
-
-internal fun BackupPasswordSetupState.arePasswordsNotMatching(): Boolean =
-    formErrorOrNull() == PasswordFormError.PasswordsDoNotMatch
