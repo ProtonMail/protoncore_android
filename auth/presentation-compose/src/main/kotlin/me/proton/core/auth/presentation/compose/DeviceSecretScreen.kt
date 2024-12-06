@@ -19,6 +19,7 @@
 package me.proton.core.auth.presentation.compose
 
 import android.content.res.Configuration
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -90,19 +91,21 @@ public fun DeviceSecretScreen(
 
     val state by viewModel.state.collectAsStateWithLifecycle()
 
-    DeviceSecretScreen(
-        modifier = modifier,
-        onClose = onClose,
-        onCloseMessage = onCloseMessage,
-        onErrorMessage = onErrorMessage,
-        onSuccess = onSuccess,
-        onReloadState = { viewModel.submit(DeviceSecretAction.Load()) },
-        onCloseClicked = { viewModel.submit(DeviceSecretAction.Close) },
-        onContinueClicked = { viewModel.submit(DeviceSecretAction.Continue) },
-        onNavigateToRequestAdminHelp = onNavigateToRequestAdminHelp,
-        onNavigateToBackupPasswordInput = onNavigateToBackupPasswordInput,
-        state = state
-    )
+    Crossfade(state, label = "DeviceSecretScreen state fade") {
+        DeviceSecretScreen(
+            modifier = modifier,
+            onClose = onClose,
+            onCloseMessage = onCloseMessage,
+            onErrorMessage = onErrorMessage,
+            onSuccess = onSuccess,
+            onReloadState = { viewModel.submit(DeviceSecretAction.Load()) },
+            onCloseClicked = { viewModel.submit(DeviceSecretAction.Close) },
+            onContinueClicked = { viewModel.submit(DeviceSecretAction.Continue) },
+            onNavigateToRequestAdminHelp = onNavigateToRequestAdminHelp,
+            onNavigateToBackupPasswordInput = onNavigateToBackupPasswordInput,
+            state = it
+        )
+    }
 }
 
 @Composable
