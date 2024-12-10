@@ -42,9 +42,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -300,7 +297,6 @@ private fun LoginForm(
     val textChange = remember { MutableStateFlow("" to "") }
     val assistiveText = stringResource(R.string.auth_login_assistive_text)
     var username by rememberSaveable { mutableStateOf(initialUsername ?: "") }
-    val focusRequester = remember { FocusRequester() }
 
     Column(
         modifier = Modifier.padding(16.dp)
@@ -313,7 +309,8 @@ private fun LoginForm(
             },
             enabled = enabled,
             errorText = if (hasValidationError) assistiveText else null,
-            focusRequester = focusRequester,
+            requestFocus = { initialUsername == null },
+            onFocusChanged = { if (it) onUsernameInputFocused() },
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions { onContinueClicked(SetUsername(username)) },
             label = { Text(text = stringResource(id = R.string.auth_login_username)) },
@@ -322,12 +319,6 @@ private fun LoginForm(
                 .autofill(AutofillType.Username) { username = it }
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
-                .onGloballyPositioned {
-                    if (initialUsername == null) {
-                        focusRequester.requestFocus()
-                    }
-                }
-                .onFocusChanged { if (it.isFocused) onUsernameInputFocused() }
                 .payload("login", "username", textChange, textCopied, onFrameUpdated)
         )
 

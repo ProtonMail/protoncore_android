@@ -29,12 +29,16 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextFieldColors
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
@@ -118,7 +122,8 @@ fun ProtonOutlinedTextFieldWithError(
     enabled: Boolean = true,
     errorText: String? = null,
     helpText: String? = null,
-    focusRequester: FocusRequester = remember { FocusRequester() },
+    requestFocus: () -> Boolean = { false },
+    onFocusChanged: (Boolean) -> Unit = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     label: (@Composable () -> Unit)? = null,
@@ -128,6 +133,8 @@ fun ProtonOutlinedTextFieldWithError(
     onValueChanged: (String) -> Unit,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
+    val focusRequester = remember { FocusRequester() }
+    var textFieldLoaded by remember { mutableStateOf(false) }
     Column(modifier = modifier) {
         OutlinedTextField(
             value = text,
@@ -142,6 +149,15 @@ fun ProtonOutlinedTextFieldWithError(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
+                .onGloballyPositioned {
+                    if (!textFieldLoaded) {
+                        if (requestFocus()) {
+                            focusRequester.requestFocus()
+                        }
+                        textFieldLoaded = true
+                    }
+                }
+                .onFocusChanged { onFocusChanged(it.isFocused) }
                 .testTag(PROTON_OUTLINED_TEXT_INPUT_TAG),
             placeholder = placeholder,
             singleLine = singleLine,
@@ -161,53 +177,6 @@ fun ProtonOutlinedTextFieldWithError(
             } else {
                 ProtonTheme.colors.notificationError
             }
-        )
-    }
-}
-
-@Composable
-fun ProtonOutlinedTextFieldWithError(
-    textFieldValue: MutableState<TextFieldValue>,
-    onValueChanged: (TextFieldValue) -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    errorText: String? = null,
-    focusRequester: FocusRequester = remember { FocusRequester() },
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    label: (@Composable () -> Unit)? = null,
-    maxLines: Int = MaxLines,
-    placeholder: (@Composable () -> Unit)? = null,
-    singleLine: Boolean = false,
-    visualTransformation: VisualTransformation = VisualTransformation.None
-) {
-    Column(modifier = modifier) {
-        OutlinedTextField(
-            value = textFieldValue.value,
-            onValueChange = onValueChanged,
-            colors = TextFieldDefaults.protonOutlineTextFieldColors(),
-            enabled = enabled,
-            isError = errorText != null,
-            keyboardOptions = keyboardOptions,
-            label = label,
-            maxLines = maxLines,
-            modifier = Modifier
-                .fillMaxWidth()
-                .focusRequester(focusRequester)
-                .testTag(PROTON_OUTLINED_TEXT_INPUT_TAG),
-            placeholder = placeholder,
-            singleLine = singleLine,
-            textStyle = ProtonTheme.typography.defaultNorm,
-            visualTransformation = visualTransformation
-        )
-        Text(
-            text = errorText ?: "",
-            maxLines = maxLines,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = ProtonDimens.ExtraSmallSpacing),
-            overflow = TextOverflow.Ellipsis,
-            style = ProtonTheme.typography.captionNorm,
-            color = ProtonTheme.colors.notificationError
         )
     }
 }

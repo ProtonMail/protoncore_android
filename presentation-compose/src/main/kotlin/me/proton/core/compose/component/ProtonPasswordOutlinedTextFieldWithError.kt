@@ -37,6 +37,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -60,7 +62,8 @@ fun ProtonPasswordOutlinedTextFieldWithError(
     enabled: Boolean = true,
     passwordVisible: Boolean = false,
     errorText: String? = null,
-    focusRequester: FocusRequester = remember { FocusRequester() },
+    requestFocus: () -> Boolean = { false },
+    onFocusChanged: (Boolean) -> Unit = {},
     keyboardOptions: KeyboardOptions = KeyboardOptions(
         keyboardType = KeyboardType.Password
     ),
@@ -74,7 +77,8 @@ fun ProtonPasswordOutlinedTextFieldWithError(
     var passwordVisualTransformationEnabled by remember(passwordVisible) {
         mutableStateOf(passwordVisible)
     }
-
+    val focusRequester = remember { FocusRequester() }
+    var textFieldLoaded by remember { mutableStateOf(false) }
     Column(modifier = modifier) {
         OutlinedTextField(
             value = text,
@@ -99,6 +103,15 @@ fun ProtonPasswordOutlinedTextFieldWithError(
             modifier = Modifier
                 .fillMaxWidth()
                 .focusRequester(focusRequester)
+                .onGloballyPositioned {
+                    if (!textFieldLoaded) {
+                        if (requestFocus()) {
+                            focusRequester.requestFocus()
+                        }
+                        textFieldLoaded = true
+                    }
+                }
+                .onFocusChanged { onFocusChanged(it.isFocused) }
                 .testTag(PROTON_OUTLINED_TEXT_INPUT_TAG),
             placeholder = placeholder,
             singleLine = singleLine,

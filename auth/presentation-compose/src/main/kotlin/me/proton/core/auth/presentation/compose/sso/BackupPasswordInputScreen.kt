@@ -152,6 +152,7 @@ public fun BackupPasswordInputScreen(
                 ProtonPasswordOutlinedTextFieldWithError(
                     text = password,
                     onValueChanged = { password = it },
+                    requestFocus = { true },
                     enabled = !isLoading,
                     singleLine = true,
                     label = { Text(text = stringResource(id = R.string.backup_password_input_label)) },

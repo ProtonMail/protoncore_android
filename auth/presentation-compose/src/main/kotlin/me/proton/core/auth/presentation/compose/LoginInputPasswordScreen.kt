@@ -41,9 +41,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.autofill.AutofillType
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -268,8 +265,6 @@ private fun PasswordForm(
     enabled: Boolean
 ) {
     var password by remember { mutableStateOf("") }
-    val focusRequester = remember { FocusRequester() }
-
     Column(
         modifier = Modifier.padding(16.dp)
     ) {
@@ -278,7 +273,8 @@ private fun PasswordForm(
             onValueChanged = { password = it },
             enabled = enabled,
             errorText = if (hasValidationError) "" else null,
-            focusRequester = focusRequester,
+            requestFocus = { true },
+            onFocusChanged = { if (it) onPasswordInputFocused() },
             keyboardOptions = KeyboardOptions(
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password
@@ -290,8 +286,6 @@ private fun PasswordForm(
                 .autofill(AutofillType.Password) { password = it }
                 .fillMaxWidth()
                 .padding(top = ProtonDimens.DefaultSpacing)
-                .onGloballyPositioned { focusRequester.requestFocus() }
-                .onFocusChanged { if (it.isFocused) onPasswordInputFocused() }
         )
 
         ProtonSolidButton(
