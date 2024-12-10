@@ -17,16 +17,25 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.input.key.onInterceptKeyBeforeSoftKeyboard
 import androidx.compose.ui.input.pointer.motionEventSpy
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.filterNotNull
 import me.proton.core.challenge.domain.entity.ChallengeFrameDetails
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
+/**
+ * @param payloadController Optional controller to manually [flush][PayloadController.flush] payload data.
+ *  Note: When [PayloadController.flush] is called, then [onFrameUpdated] is also called.
+ */
 @OptIn(ExperimentalComposeUiApi::class)
 public fun Modifier.payload(
     flow: String,
     frame: String,
     onTextChanged: Flow<Pair<String, String>>,
     onTextCopied: Flow<String>,
-    onFrameUpdated: (ChallengeFrameDetails) -> Unit
+    onFrameUpdated: (ChallengeFrameDetails) -> Unit,
+    payloadController: PayloadController? = null
 ): Modifier = composed {
     var clickCount: Int by remember(flow, frame) { mutableIntStateOf(0) }
     var lastFocusTimeMillis: Long by remember(flow, frame) { mutableLongStateOf(0L) }
@@ -35,17 +44,15 @@ public fun Modifier.payload(
     val copyList: MutableList<String> = remember(flow, frame) { mutableStateListOf() }
     val pasteList: MutableList<String> = remember(flow, frame) { mutableStateListOf() }
 
-    fun updateFrame() = onFrameUpdated(
-        ChallengeFrameDetails(
-            flow = flow,
-            challengeFrame = frame,
-            focusTime = focusList,
-            clicks = clickCount,
-            copy = copyList,
-            paste = pasteList,
-            keys = keyList
-        )
-    )
+    fun updateFrame(): ChallengeFrameDetails = ChallengeFrameDetails(
+        flow = flow,
+        challengeFrame = frame,
+        focusTime = focusList,
+        clicks = clickCount,
+        copy = copyList,
+        paste = pasteList,
+        keys = keyList
+    ).also(onFrameUpdated)
 
     fun onFocusChanged(isFocused: Boolean) {
         if (isFocused) {
@@ -122,15 +129,34 @@ public fun Modifier.payload(
         }
     }
 
-    DisposableEffect(flow, frame) {
+    DisposableEffect(flow, frame, payloadController) {
         updateFrame()
         onDispose { updateFrame() }
+    }
+
+    LaunchedEffect(flow, frame, payloadController) {
+        payloadController?.flushSignal?.collect { callback ->
+            val details = updateFrame()
+            callback(details)
+        }
     }
 
     this
         .onFocusChanged { state -> onFocusChanged(state.isFocused) }
         .onInterceptKeyBeforeSoftKeyboard { event -> onKeyEvent(event.nativeKeyEvent) }
         .motionEventSpy { event -> onMotionEvent(event) }
+}
+
+public class PayloadController {
+
+    private val _flushSignal = MutableStateFlow<((ChallengeFrameDetails) -> Unit)?>(null)
+    internal val flushSignal: Flow<(ChallengeFrameDetails) -> Unit> = _flushSignal.filterNotNull()
+
+    public suspend fun flush(): ChallengeFrameDetails = suspendCoroutine { continuation ->
+        _flushSignal.value = { details ->
+            continuation.resume(details)
+        }
+    }
 }
 
 internal object Keys {
