@@ -24,15 +24,19 @@ import io.mockk.coVerify
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
-import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
+import me.proton.core.accountmanager.domain.SessionManager
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.entity.UnprivatizationInfo
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
 import me.proton.core.crypto.common.keystore.EncryptedString
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.ApiException
+import me.proton.core.network.domain.ApiResult.Error
+import me.proton.core.network.domain.ResponseCodes
 import me.proton.core.network.domain.session.SessionId
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.entity.User
@@ -53,6 +57,7 @@ class PostLoginSsoAccountSetupTest {
 
     private lateinit var checkDeviceSecret: CheckDeviceSecret
     private lateinit var decryptEncryptedSecret: DecryptEncryptedSecret
+    private lateinit var authDeviceRepository: AuthDeviceRepository
 
     private lateinit var user: User
     private lateinit var sessionId: SessionId
@@ -62,12 +67,16 @@ class PostLoginSsoAccountSetupTest {
     private val testUserId: UserId = UserId("user-id")
     private val passphrase = EncryptedByteArray(ByteArray(0))
 
+    private val infoError = ApiException(Error.Http(ResponseCodes.NOT_EXISTS, "error"))
+    private val infoSuccess = mockk<UnprivatizationInfo>()
+
     @Before
     fun setUp() {
         accountWorkflowHandler = mockk()
 
         user = mockk {
-            every { flags } returns emptyMap()
+            every { this@mockk.flags } returns emptyMap()
+            every { this@mockk.keys } returns emptyList()
         }
         sessionId = mockk()
         userCheck = mockk {
@@ -77,14 +86,15 @@ class PostLoginSsoAccountSetupTest {
             coEvery { this@mockk.invoke(any(), any<EncryptedString>()) } returns UserManager.UnlockResult.Success
         }
         userManager = mockk {
-            coEvery { getUser(any(), any()) } returns user
+            coEvery { this@mockk.getUser(any(), any()) } returns user
+            coEvery { this@mockk.unlockWithPassphrase(any(), any()) } returns UserManager.UnlockResult.Success
         }
         passphraseRepository = mockk {
-            coEvery { getPassphrase(any()) } returns passphrase
+            coEvery { this@mockk.getPassphrase(any()) } returns passphrase
         }
         sessionManager = mockk {
-            coEvery { getSessionId(any()) } returns sessionId
-            coEvery { refreshScopes(any()) } returns Unit
+            coEvery { this@mockk.getSessionId(any()) } returns sessionId
+            coEvery { this@mockk.refreshScopes(any()) } returns Unit
         }
         checkDeviceSecret = mockk {
             coEvery { this@mockk.invoke(any()) } returns null
@@ -92,11 +102,14 @@ class PostLoginSsoAccountSetupTest {
         decryptEncryptedSecret = mockk {
             coEvery { this@mockk.invoke(any(), any()) } returns null
         }
+        authDeviceRepository = mockk {
+            coEvery { this@mockk.getUnprivatizationInfo(any<UserId>()) } throws infoError
+        }
     }
 
     @Test
     fun `user check error`() = runTest {
-        tested = mockTested(Product.Vpn)
+        tested = mockTested()
 
         val setupError = mockk<PostLoginAccountSetup.UserCheckResult.Error>()
         val sessionInfo = mockSessionInfo()
@@ -111,7 +124,7 @@ class PostLoginSsoAccountSetupTest {
 
     @Test
     fun `user check success`() = runTest {
-        tested = mockTested(Product.Vpn)
+        tested = mockTested()
 
         val setupSuccess = mockk<PostLoginAccountSetup.UserCheckResult.Success>()
         val sessionInfo = mockSessionInfo()
@@ -124,15 +137,30 @@ class PostLoginSsoAccountSetupTest {
         coVerify { accountWorkflowHandler.handleAccountReady(testUserId) }
     }
 
-    private fun mockTested(product: Product) = PostLoginSsoAccountSetup(
+    @Test
+    fun `verify check success start device secret workflow`() = runTest {
+        coEvery { authDeviceRepository.getUnprivatizationInfo(any<UserId>()) } returns infoSuccess
+        coEvery { passphraseRepository.getPassphrase(any()) } returns null
+
+        tested = mockTested()
+
+        val sessionInfo = mockSessionInfo()
+        coJustRun { accountWorkflowHandler.handleDeviceSecretNeeded(any()) }
+
+        val result = tested.invoke(sessionInfo.userId)
+        assertTrue(result is PostLoginAccountSetup.Result.Need.DeviceSecret)
+        coVerify { accountWorkflowHandler.handleDeviceSecretNeeded(testUserId) }
+    }
+
+    private fun mockTested() = PostLoginSsoAccountSetup(
         accountWorkflow = accountWorkflowHandler,
         userCheck = userCheck,
         userManager = userManager,
         sessionManager = sessionManager,
-        product = product,
         passphraseRepository = passphraseRepository,
         checkDeviceSecret = checkDeviceSecret,
-        decryptEncryptedSecret = decryptEncryptedSecret
+        decryptEncryptedSecret = decryptEncryptedSecret,
+        authDeviceRepository = authDeviceRepository
     )
 
     private fun mockSessionInfo(

@@ -20,12 +20,14 @@ package me.proton.core.auth.domain.usecase
 
 import me.proton.core.accountmanager.domain.AccountWorkflowHandler
 import me.proton.core.accountmanager.domain.SessionManager
+import me.proton.core.auth.domain.repository.AuthDeviceRepository
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup.Result
 import me.proton.core.auth.domain.usecase.sso.CheckDeviceSecret
 import me.proton.core.auth.domain.usecase.sso.DecryptEncryptedSecret
+import me.proton.core.auth.domain.usecase.sso.VerifyUnprivatization
 import me.proton.core.crypto.common.keystore.EncryptedByteArray
-import me.proton.core.domain.entity.Product
 import me.proton.core.domain.entity.UserId
+import me.proton.core.network.domain.isNotExists
 import me.proton.core.user.domain.UserManager
 import me.proton.core.user.domain.UserManager.UnlockResult
 import me.proton.core.user.domain.extension.hasTemporaryPassword
@@ -40,16 +42,27 @@ class PostLoginSsoAccountSetup @Inject constructor(
     private val userCheck: PostLoginAccountSetup.UserCheck,
     private val userManager: UserManager,
     private val sessionManager: SessionManager,
-    private val product: Product,
     private val passphraseRepository: PassphraseRepository,
     private val checkDeviceSecret: CheckDeviceSecret,
-    private val decryptEncryptedSecret: DecryptEncryptedSecret
+    private val decryptEncryptedSecret: DecryptEncryptedSecret,
+    private val authDeviceRepository: AuthDeviceRepository
 ) {
     suspend operator fun invoke(userId: UserId): Result {
         // Make sure we have a fresh User in DB.
-        userManager.getUser(userId, refresh = true)
+        val user = userManager.getUser(userId, refresh = true)
         return when {
-            product == Product.Vpn -> userCheck(userId)
+            user.keys.isEmpty() -> firstLoginCheck(userId)
+            else -> secretCheck(userId)
+        }
+    }
+
+    private suspend fun firstLoginCheck(userId: UserId): Result {
+        // Try to get UnprivatizationInfo, if NotExists (2501), fallback on userCheck only.
+        val result = runCatching { authDeviceRepository.getUnprivatizationInfo(userId) }
+        val exception = result.exceptionOrNull()
+        return when {
+            exception == null -> secretCheck(userId)
+            exception.isNotExists() -> userCheck(userId)
             else -> secretCheck(userId)
         }
     }

@@ -23,6 +23,7 @@ import me.proton.core.network.domain.ResponseCodes.APP_VERSION_NOT_SUPPORTED_FOR
 import me.proton.core.network.domain.ResponseCodes.AUTH_SWITCH_TO_SRP
 import me.proton.core.network.domain.ResponseCodes.AUTH_SWITCH_TO_SSO
 import me.proton.core.network.domain.ResponseCodes.NOT_ALLOWED
+import me.proton.core.network.domain.ResponseCodes.NOT_EXISTS
 import me.proton.core.network.domain.ResponseCodes.PASSWORD_WRONG
 import me.proton.core.network.domain.ResponseCodes.SCOPE_REAUTH_LOCKED
 import me.proton.core.network.domain.ResponseCodes.SCOPE_REAUTH_PASSWORD
@@ -33,6 +34,7 @@ fun Throwable.isApiProtonError(vararg code: Int) = when (this) {
 }
 
 fun Throwable.isActionNotAllowed() = isApiProtonError(NOT_ALLOWED)
+fun Throwable.isNotExists() = isApiProtonError(NOT_EXISTS)
 fun Throwable.isCredentialLessDisabled() = isApiProtonError(ACCOUNT_CREDENTIALLESS_INVALID)
 fun Throwable.isExternalNotSupported() = isApiProtonError(APP_VERSION_NOT_SUPPORTED_FOR_EXTERNAL_ACCOUNTS)
 fun Throwable.isMissingScope() = isApiProtonError(SCOPE_REAUTH_LOCKED, SCOPE_REAUTH_PASSWORD)
