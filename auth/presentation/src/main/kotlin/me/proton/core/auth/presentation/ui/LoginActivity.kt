@@ -31,6 +31,7 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import me.proton.core.auth.domain.feature.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.PostLoginAccountSetup
 import me.proton.core.auth.presentation.HelpOptionHandler
 import me.proton.core.auth.presentation.R
@@ -87,6 +88,9 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     @Inject
     lateinit var helpOptionHandler: HelpOptionHandler
+
+    @Inject
+    lateinit var isSsoEnabled: IsSsoEnabled
 
     private val viewModel by viewModels<LoginViewModel>()
 
@@ -203,10 +207,12 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
 
     private fun onSignInWithSso(result: LoginViewModel.State.SignInWithSso) {
         showLoading(false)
-        normToast(
-            result.error.getUserMessage(resources) ?: getString(R.string.auth_login_general_error)
-        )
-        loginSsoResultLauncher.launch(LoginSsoInput(result.email))
+        if (isSsoEnabled()) {
+            normToast(result.error.getUserMessage(resources) ?: getString(R.string.auth_login_general_error))
+            loginSsoResultLauncher.launch(LoginSsoInput(result.email))
+        } else {
+            onExternalSsoNotSupported()
+        }
     }
 
     private fun onExternalAccountNotSupported() {
@@ -220,6 +226,15 @@ class LoginActivity : AuthActivity<ActivityLoginBinding>(ActivityLoginBinding::i
                 showExternalAccountHelpPage()
             }
             .setNegativeButton(me.proton.core.presentation.R.string.presentation_alert_cancel, null)
+            .show()
+    }
+
+    private fun onExternalSsoNotSupported() {
+        MaterialAlertDialogBuilder(this)
+            .setCancelable(true)
+            .setTitle(R.string.auth_login_external_sso_unsupported_title)
+            .setMessage(R.string.auth_login_external_sso_unsupported_message)
+            .setPositiveButton(R.string.auth_login_external_sso_unsupported_action, null)
             .show()
     }
 

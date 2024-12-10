@@ -89,7 +89,8 @@ public fun LoginInputUsernameScreen(
     onNavigateToSso: (AuthInfo.Sso) -> Unit = {},
     onNavigateToForgotUsername: () -> Unit = {},
     onNavigateToTroubleshoot: () -> Unit = {},
-    onNavigateToExternalNotSupported: () -> Unit = {},
+    onNavigateToExternalEmailNotSupported: () -> Unit = {},
+    onNavigateToExternalSsoNotSupported: () -> Unit = {},
     onNavigateToChangePassword: () -> Unit = {},
     externalAction: SharedFlow<LoginInputUsernameAction> = MutableSharedFlow(),
     viewModel: LoginInputUsernameViewModel = hiltViewModel(),
@@ -122,7 +123,8 @@ public fun LoginInputUsernameScreen(
         onNavigateToSrp = onNavigateToSrp,
         onNavigateToSso = onNavigateToSso,
         onNavigateToForgotUsername = onNavigateToForgotUsername,
-        onNavigateToExternalNotSupported = onNavigateToExternalNotSupported,
+        onNavigateToExternalEmailNotSupported = onNavigateToExternalEmailNotSupported,
+        onNavigateToExternalSsoNotSupported = onNavigateToExternalSsoNotSupported,
         onNavigateToChangePassword = onNavigateToChangePassword,
         onCloseClicked = onClose,
         onUsernameInputFocused = { onUsernameInputFocused() },
@@ -144,7 +146,8 @@ public fun LoginInputUsernameScreen(
     onNavigateToSrp: (AuthInfo.Srp) -> Unit = {},
     onNavigateToSso: (AuthInfo.Sso) -> Unit = {},
     onNavigateToForgotUsername: () -> Unit = {},
-    onNavigateToExternalNotSupported: () -> Unit = {},
+    onNavigateToExternalEmailNotSupported: () -> Unit = {},
+    onNavigateToExternalSsoNotSupported: () -> Unit = {},
     onNavigateToChangePassword: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
     onUsernameInputFocused: () -> Unit = {},
@@ -160,7 +163,8 @@ public fun LoginInputUsernameScreen(
             is LoginInputUsernameState.Close -> onClose()
             is LoginInputUsernameState.ValidationError -> Unit
             is LoginInputUsernameState.Error -> onErrorMessage(state.message, null)
-            is LoginInputUsernameState.ExternalNotSupported -> onNavigateToExternalNotSupported()
+            is LoginInputUsernameState.ExternalEmailNotSupported -> onNavigateToExternalEmailNotSupported()
+            is LoginInputUsernameState.ExternalSsoNotSupported -> onNavigateToExternalSsoNotSupported()
             is LoginInputUsernameState.NeedSrp -> onNavigateToSrp(state.authInfo)
             is LoginInputUsernameState.NeedSso -> onNavigateToSso(state.authInfo)
             is LoginInputUsernameState.Success -> onSuccess(state.userId)

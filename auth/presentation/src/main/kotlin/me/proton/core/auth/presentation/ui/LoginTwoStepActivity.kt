@@ -170,7 +170,8 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
                             onNavigateToSso = { onOpenWebPage(it) },
                             onNavigateToForgotUsername = { onForgotUsername() },
                             onNavigateToTroubleshoot = { onTroubleshoot() },
-                            onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
+                            onNavigateToExternalEmailNotSupported = { onExternalEmailNotSupported() },
+                            onNavigateToExternalSsoNotSupported = { onExternalSsoNotSupported() },
                             onNavigateToChangePassword = { onChangePassword() },
                             externalAction = loginAction
                         )
@@ -181,7 +182,8 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
                             onNavigateToHelp = { onHelpClicked() },
                             onNavigateToForgotPassword = { onForgotPassword() },
                             onNavigateToTroubleshoot = { onTroubleshoot() },
-                            onNavigateToExternalNotSupported = { onExternalAccountNotSupported() },
+                            onNavigateToExternalEmailNotSupported = { onExternalEmailNotSupported() },
+                            onNavigateToExternalSsoNotSupported = { onExternalSsoNotSupported() },
                             onNavigateToChangePassword = { onChangePassword() }
                         )
                     }
@@ -228,7 +230,7 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
         supportFragmentManager.showPasswordChangeDialog(context = this)
     }
 
-    private fun onExternalAccountNotSupported() {
+    private fun onExternalEmailNotSupported() {
         MaterialAlertDialogBuilder(this)
             .setCancelable(false)
             .setTitle(R.string.auth_login_external_account_unsupported_title)
@@ -237,6 +239,15 @@ class LoginTwoStepActivity : WebPageListenerActivity(), ProductMetricsDelegateOw
                 openBrowserLink(getString(R.string.external_account_help_link))
             }
             .setNegativeButton(R.string.presentation_alert_cancel, null)
+            .show()
+    }
+
+    private fun onExternalSsoNotSupported() {
+        MaterialAlertDialogBuilder(this)
+            .setCancelable(true)
+            .setTitle(R.string.auth_login_external_sso_unsupported_title)
+            .setMessage(R.string.auth_login_external_sso_unsupported_message)
+            .setPositiveButton(R.string.auth_login_external_sso_unsupported_action, null)
             .show()
     }
 

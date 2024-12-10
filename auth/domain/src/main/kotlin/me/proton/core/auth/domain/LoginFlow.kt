@@ -27,6 +27,7 @@ import me.proton.core.auth.domain.LoginState.Error
 import me.proton.core.auth.domain.LoginState.LoggedIn
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.entity.SessionInfo
+import me.proton.core.auth.domain.feature.IsSsoEnabled
 import me.proton.core.auth.domain.usecase.CreateLoginSession
 import me.proton.core.auth.domain.usecase.CreateLoginSsoSession
 import me.proton.core.auth.domain.usecase.GetAuthInfoAuto
@@ -67,6 +68,7 @@ class LoginFlow @Inject constructor(
     private val requiredAccountType: AccountType,
     private val keyStoreCrypto: KeyStoreCrypto,
     private val accountWorkflow: AccountWorkflowHandler,
+    private val isSsoEnabled: IsSsoEnabled,
     private val getAuthInfoAuto: GetAuthInfoAuto,
     private val getAuthInfoSrp: GetAuthInfoSrp,
     private val getAuthInfoSso: GetAuthInfoSso,
@@ -98,14 +100,22 @@ class LoginFlow @Inject constructor(
 
     private fun onGetAuthInfo(username: String): Flow<LoginState> = flow {
         emit(LoginState.Processing)
-        val info = getAuthInfoAuto.invoke(sessionId = null, username = username).putInfo()
+        val info = if (isSsoEnabled()) {
+            getAuthInfoAuto.invoke(sessionId = null, username = username).putInfo()
+        } else {
+            getAuthInfoSrp.invoke(sessionId = null, username = username).putInfo()
+        }
         emit(LoginState.NeedAuthSecret(info))
     }.catchWhen(Throwable::isSwitchToSrp) {
         val info = getAuthInfoSrp.invoke(sessionId = null, username = username)
         emit(LoginState.NeedAuthSecret(info))
     }.catchWhen(Throwable::isSwitchToSso) {
-        val info = getAuthInfoSso.invoke(sessionId = null, email = username)
-        emit(LoginState.NeedAuthSecret(info))
+        if (isSsoEnabled()) {
+            val info = getAuthInfoSso.invoke(sessionId = null, email = username)
+            emit(LoginState.NeedAuthSecret(info))
+        } else {
+            emit(Error.ExternalSsoNotSupported)
+        }
     }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
         emit(Error.Message(it, it.isPotentialBlocking()))
     }
@@ -122,7 +132,7 @@ class LoginFlow @Inject constructor(
     }.catchWhen(Throwable::isWrongPassword) {
         emit(Error.InvalidPassword(it))
     }.catchWhen(Throwable::isExternalNotSupported) {
-        emit(Error.ExternalNotSupported(it))
+        emit(Error.ExternalEmailNotSupported(it))
     }.catchWhen(Throwable::isSwitchToSso) {
         emit(Error.SwitchToSso(username, it))
     }.catchAll(LogTag.FLOW_ERROR_LOGIN) {
@@ -139,7 +149,7 @@ class LoginFlow @Inject constructor(
     }.catchWhen(Throwable::isWrongPassword) {
         emit(Error.InvalidPassword(it))
     }.catchWhen(Throwable::isExternalNotSupported) {
-        emit(Error.ExternalNotSupported(it))
+        emit(Error.ExternalEmailNotSupported(it))
     }.catchWhen(Throwable::isSwitchToSrp) {
         emit(Error.SwitchToSrp(username, it))
     }.catchAll(LogTag.FLOW_ERROR_LOGIN) {

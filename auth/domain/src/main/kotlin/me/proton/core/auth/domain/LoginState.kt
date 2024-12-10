@@ -32,7 +32,8 @@ sealed interface LoginState {
         data class SwitchToSrp(val username: String, val error: Throwable) : Error
         data class SwitchToSso(val username: String, val error: Throwable) : Error
         data class InvalidPassword(val error: Throwable) : Error
-        data class ExternalNotSupported(val error: Throwable) : Error
+        data class ExternalEmailNotSupported(val error: Throwable) : Error
+        data object ExternalSsoNotSupported : Error
         data class UserCheck(val message: String, val action: UserCheckAction? = null) : Error
         data object UnlockPrimaryKey : Error
         data object ChangePassword : Error

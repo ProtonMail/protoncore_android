@@ -39,7 +39,8 @@ import me.proton.core.auth.domain.LoginState
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ChangePassword
 import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Error
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ExternalNotSupported
+import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ExternalEmailNotSupported
+import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ExternalSsoNotSupported
 import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Idle
 import me.proton.core.auth.presentation.compose.LoginInputUsernameState.NeedSrp
 import me.proton.core.auth.presentation.compose.LoginInputUsernameState.NeedSso
@@ -113,7 +114,8 @@ public class LoginInputUsernameViewModel @Inject constructor(
             is LoginState.Error.SwitchToSrp -> Error(it.error.message)
             is LoginState.Error.SwitchToSso -> Error(it.error.message)
             is LoginState.Error.InvalidPassword -> Error(it.error.message)
-            is LoginState.Error.ExternalNotSupported -> ExternalNotSupported
+            is LoginState.Error.ExternalEmailNotSupported -> ExternalEmailNotSupported
+            is LoginState.Error.ExternalSsoNotSupported -> ExternalSsoNotSupported
             is LoginState.Error.UserCheck -> UserCheckError(it.message, it.action)
             is LoginState.Error.UnlockPrimaryKey -> Error(null)
             is LoginState.Error.ChangePassword -> ChangePassword

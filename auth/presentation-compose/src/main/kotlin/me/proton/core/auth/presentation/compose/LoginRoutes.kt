@@ -60,7 +60,8 @@ public object LoginRoutes {
         onNavigateToSso: (AuthInfo.Sso) -> Unit = {},
         onNavigateToForgotUsername: () -> Unit = {},
         onNavigateToTroubleshoot: () -> Unit = {},
-        onNavigateToExternalNotSupported: () -> Unit = {},
+        onNavigateToExternalEmailNotSupported: () -> Unit = {},
+        onNavigateToExternalSsoNotSupported: () -> Unit = {},
         onNavigateToChangePassword: () -> Unit = {},
         externalAction: SharedFlow<LoginInputUsernameAction> = MutableSharedFlow(),
     ) {
@@ -83,7 +84,8 @@ public object LoginRoutes {
                 onNavigateToSso = { onNavigateToSso(it) },
                 onNavigateToForgotUsername = { onNavigateToForgotUsername() },
                 onNavigateToTroubleshoot = { onNavigateToTroubleshoot() },
-                onNavigateToExternalNotSupported = { onNavigateToExternalNotSupported() },
+                onNavigateToExternalEmailNotSupported = { onNavigateToExternalEmailNotSupported() },
+                onNavigateToExternalSsoNotSupported = { onNavigateToExternalSsoNotSupported() },
                 onNavigateToChangePassword = { onNavigateToChangePassword() },
                 externalAction = externalAction
             )
@@ -97,7 +99,8 @@ public object LoginRoutes {
         onNavigateToHelp: () -> Unit = {},
         onNavigateToForgotPassword: () -> Unit = {},
         onNavigateToTroubleshoot: () -> Unit = {},
-        onNavigateToExternalNotSupported: () -> Unit = {},
+        onNavigateToExternalEmailNotSupported: () -> Unit = {},
+        onNavigateToExternalSsoNotSupported: () -> Unit = {},
         onNavigateToChangePassword: () -> Unit = {}
     ) {
         composable(
@@ -117,7 +120,8 @@ public object LoginRoutes {
                 onNavigateToSso = { navController.popBackStack() },
                 onNavigateToForgotPassword = { onNavigateToForgotPassword() },
                 onNavigateToTroubleshoot = { onNavigateToTroubleshoot() },
-                onNavigateToExternalNotSupported = { onNavigateToExternalNotSupported() },
+                onNavigateToExternalEmailNotSupported = { onNavigateToExternalEmailNotSupported() },
+                onNavigateToExternalSsoNotSupported = { onNavigateToExternalSsoNotSupported() },
                 onNavigateToChangePassword = { onNavigateToChangePassword() }
             )
         }

@@ -78,7 +78,8 @@ public fun LoginInputPasswordScreen(
     onNavigateToSso: (AuthInfo.Sso) -> Unit = {},
     onNavigateToForgotPassword: () -> Unit = {},
     onNavigateToTroubleshoot: () -> Unit = {},
-    onNavigateToExternalNotSupported: () -> Unit = {},
+    onNavigateToExternalEmailNotSupported: () -> Unit = {},
+    onNavigateToExternalSsoNotSupported: () -> Unit = {},
     onNavigateToChangePassword: () -> Unit = {},
     viewModel: LoginInputPasswordViewModel = hiltViewModel()
 ) {
@@ -106,7 +107,8 @@ public fun LoginInputPasswordScreen(
         onNavigateToSso = onNavigateToSso,
         onNavigateToForgotPassword = onNavigateToForgotPassword,
         onNavigateToTroubleshoot = onNavigateToTroubleshoot,
-        onNavigateToExternalNotSupported = onNavigateToExternalNotSupported,
+        onNavigateToExternalEmailNotSupported = onNavigateToExternalEmailNotSupported,
+        onNavigateToExternalSsoNotSupported = onNavigateToExternalSsoNotSupported,
         onNavigateToChangePassword = onNavigateToChangePassword,
         onCloseClicked = onClose,
         onPasswordInputFocused = { onPasswordInputFocused() },
@@ -127,7 +129,8 @@ public fun LoginInputPasswordScreen(
     onNavigateToSso: (AuthInfo.Sso) -> Unit = {},
     onNavigateToForgotPassword: () -> Unit = {},
     onNavigateToTroubleshoot: () -> Unit = {},
-    onNavigateToExternalNotSupported: () -> Unit = {},
+    onNavigateToExternalEmailNotSupported: () -> Unit = {},
+    onNavigateToExternalSsoNotSupported: () -> Unit = {},
     onNavigateToChangePassword: () -> Unit = {},
     onCloseClicked: () -> Unit = {},
     onPasswordInputFocused: () -> Unit = {},
@@ -141,7 +144,8 @@ public fun LoginInputPasswordScreen(
             is LoginInputPasswordState.Close -> onClose()
             is LoginInputPasswordState.ValidationError -> Unit
             is LoginInputPasswordState.Error -> onErrorMessage(state.message, null)
-            is LoginInputPasswordState.ExternalNotSupported -> onNavigateToExternalNotSupported()
+            is LoginInputPasswordState.ExternalEmailNotSupported -> onNavigateToExternalEmailNotSupported()
+            is LoginInputPasswordState.ExternalSsoNotSupported -> onNavigateToExternalSsoNotSupported()
             is LoginInputPasswordState.NeedSrp -> onNavigateToSrp(state.authInfo)
             is LoginInputPasswordState.NeedSso -> onNavigateToSso(state.authInfo)
             is LoginInputPasswordState.Success -> onSuccess(state.userId)

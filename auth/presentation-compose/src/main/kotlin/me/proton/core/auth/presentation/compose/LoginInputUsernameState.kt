@@ -27,7 +27,8 @@ public sealed interface LoginInputUsernameState {
     public data object Close : LoginInputUsernameState
     public data object Processing : LoginInputUsernameState
     public data object ValidationError : LoginInputUsernameState
-    public data object ExternalNotSupported : LoginInputUsernameState
+    public data object ExternalEmailNotSupported : LoginInputUsernameState
+    public data object ExternalSsoNotSupported : LoginInputUsernameState
     public data object ChangePassword : LoginInputUsernameState
     public data class NeedSrp(val authInfo: AuthInfo.Srp) : LoginInputUsernameState
     public data class NeedSso(val authInfo: AuthInfo.Sso) : LoginInputUsernameState
@@ -49,7 +50,8 @@ public sealed interface LoginInputUsernameState {
             is Idle,
             is Error,
             is ChangePassword,
-            is ExternalNotSupported,
+            is ExternalEmailNotSupported,
+            is ExternalSsoNotSupported,
             is UserCheckError,
             is ValidationError -> false
         }

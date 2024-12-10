@@ -39,7 +39,6 @@ import me.proton.core.auth.domain.LoginState
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.ChangePassword
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.Error
-import me.proton.core.auth.presentation.compose.LoginInputPasswordState.ExternalNotSupported
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.Idle
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.NeedSrp
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.NeedSso
@@ -47,6 +46,8 @@ import me.proton.core.auth.presentation.compose.LoginInputPasswordState.Processi
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.Success
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.UserCheckError
 import me.proton.core.auth.presentation.compose.LoginInputPasswordState.ValidationError
+import me.proton.core.auth.presentation.compose.LoginInputPasswordState.ExternalEmailNotSupported
+import me.proton.core.auth.presentation.compose.LoginInputPasswordState.ExternalSsoNotSupported
 import me.proton.core.auth.presentation.compose.LoginRoutes.Arg.getUsername
 import me.proton.core.observability.domain.ObservabilityContext
 import me.proton.core.observability.domain.ObservabilityManager
@@ -98,7 +99,8 @@ public class LoginInputPasswordViewModel @Inject constructor(
             is LoginState.Error.SwitchToSrp -> Error(it.error.message)
             is LoginState.Error.SwitchToSso -> Error(it.error.message)
             is LoginState.Error.InvalidPassword -> Error(it.error.message)
-            is LoginState.Error.ExternalNotSupported -> ExternalNotSupported
+            is LoginState.Error.ExternalEmailNotSupported -> ExternalEmailNotSupported
+            is LoginState.Error.ExternalSsoNotSupported -> ExternalSsoNotSupported
             is LoginState.Error.UserCheck -> UserCheckError(it.message, it.action)
             is LoginState.Error.UnlockPrimaryKey -> Error(null)
             is LoginState.Error.ChangePassword -> ChangePassword

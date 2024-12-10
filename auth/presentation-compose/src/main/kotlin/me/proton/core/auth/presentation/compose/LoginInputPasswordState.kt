@@ -20,17 +20,6 @@ package me.proton.core.auth.presentation.compose
 
 import me.proton.core.auth.domain.entity.AuthInfo
 import me.proton.core.auth.domain.usecase.UserCheckAction
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ChangePassword
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Close
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Error
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ExternalNotSupported
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Idle
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.NeedSrp
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.NeedSso
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Processing
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.Success
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.UserCheckError
-import me.proton.core.auth.presentation.compose.LoginInputUsernameState.ValidationError
 import me.proton.core.domain.entity.UserId
 
 public sealed interface LoginInputPasswordState {
@@ -38,7 +27,8 @@ public sealed interface LoginInputPasswordState {
     public data object Close : LoginInputPasswordState
     public data object Processing : LoginInputPasswordState
     public data object ValidationError : LoginInputPasswordState
-    public data object ExternalNotSupported : LoginInputPasswordState
+    public data object ExternalEmailNotSupported : LoginInputPasswordState
+    public data object ExternalSsoNotSupported : LoginInputPasswordState
     public data object ChangePassword : LoginInputPasswordState
     public data class NeedSrp(val authInfo: AuthInfo.Srp) : LoginInputPasswordState
     public data class NeedSso(val authInfo: AuthInfo.Sso) : LoginInputPasswordState
@@ -60,7 +50,8 @@ public sealed interface LoginInputPasswordState {
             is Idle,
             is Error,
             is ChangePassword,
-            is ExternalNotSupported,
+            is ExternalEmailNotSupported,
+            is ExternalSsoNotSupported,
             is UserCheckError,
             is ValidationError -> false
         }
