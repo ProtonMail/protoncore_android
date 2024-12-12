@@ -48,7 +48,7 @@ class CreateAuthDevice @Inject constructor(
         val userHasKeys = user.keys.isNotEmpty()
 
         // Fetch via GET /addresses the address keys of the primary address
-        val userAddresses = userManager.getAddresses(userId)
+        val userAddresses = userManager.getAddresses(userId, refresh = true)
         val primaryPrivateKey = userAddresses.primary()?.keys?.primary()?.privateKey
         val primaryPublicKey = primaryPrivateKey?.publicKey(context)
 
